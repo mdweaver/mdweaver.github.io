@@ -43,7 +43,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
-  color: $darkerGray;
+  color: #F8F8FF;
   font-weight: bold;
 
   line-height: 1.7;
@@ -72,7 +72,7 @@ h3 {
 
 h4 {
   font-size: 18px;
-  color: $gray;
+  color: #F8F8FF;
 }
 
 p {
@@ -80,7 +80,7 @@ p {
 }
 
 a {
-  color: $blue;
+  color: $lightGray;
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
@@ -128,7 +128,7 @@ img {
 
 .date {
   font-style: italic;
-  color: $gray;
+  color: $lightGray;
 }
 
 // Specify the color of the selection
