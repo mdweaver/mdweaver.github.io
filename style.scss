@@ -25,7 +25,7 @@ body {
 
 .containerMasthead {
   margin: 0 auto;
-  max-width: 1500px;
+  max-width: 100%;
   padding: 0 10px;
   width: 1500px;
   background-image: url("https://dl.dropboxusercontent.com/u/8139153/rail_bg.png");
@@ -33,7 +33,7 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 1500px;
+  max-width: 100%;
   padding: 0 10px;
   width: 1500px;
 }
@@ -210,7 +210,7 @@ img {
 
 .site-description {
   margin: -5px 0 0 0;
-  color: $gray;
+  color: $lightGray;
   font-size: 16px;
 
   @include mobile {
