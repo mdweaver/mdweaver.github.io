@@ -23,12 +23,19 @@ body {
   color: $white;
 }
 
-.container {
+.containerMasthead {
   margin: 0 auto;
   max-width: 1500px;
   padding: 0 10px;
   width: 1500px;
   background-image: url("https://dl.dropboxusercontent.com/u/8139153/rail_bg.png");
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1500px;
+  padding: 0 10px;
+  width: 1500px;
 }
 
 h1, h2, h3, h4, h5, h6 {
