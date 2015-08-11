@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 ---
 ##About
 <img src="https://dl.dropboxusercontent.com/u/8139153/flannel.jpg" width="300px" style="float:right">
