@@ -25,10 +25,9 @@ body {
 
 .container {
   margin: 0 auto;
-  max-width: 740px;
+  max-width: 100%;
   padding: 0 10px;
   width: 100%;
-  background-image: url("https://dl.dropboxusercontent.com/u/8139153/rail_bg.png");
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -152,11 +151,12 @@ img {
 //
 
 .wrapper-masthead {
-  margin-bottom: 200px;
+  margin-bottom: 25%;
 }
 
 .masthead {
   padding: 20px 0;
+  background-image: url("https://dl.dropboxusercontent.com/u/8139153/rail_bg.png");
   border-bottom: 1px solid $lightGray;
   
 
