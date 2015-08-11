@@ -18,30 +18,22 @@ html {
 }
 
 body {
-	background: $black;
+	background: $white;
   font: 18px/1.4 $helvetica;
-  color: $white;
+  color: $darkGray;
 }
 
-.container-masthead {
+.container {
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 1500px;
   padding: 0 10px;
   width: 1500px;
   background-image: url("https://dl.dropboxusercontent.com/u/8139153/rail_bg.png");
 }
 
-.container {
-  margin: 0 auto;
-  max-width: 100%;
-  padding: 0 10px;
-  width: 1500px;
-  background: $black;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
-  color: $lighterGray;
+  color: $darkerGray;
   font-weight: bold;
 
   line-height: 1.7;
@@ -70,6 +62,7 @@ h3 {
 
 h4 {
   font-size: 18px;
+  color: $gray;
 }
 
 p {
@@ -201,7 +194,7 @@ img {
 
 .site-name {
   margin: 0;
-  color: $white;
+  color: $darkGray;
   cursor: pointer;
   font-family: $helveticaNeue;
   font-weight: 300;
@@ -211,7 +204,7 @@ img {
 
 .site-description {
   margin: -5px 0 0 0;
-  color: $lightGray;
+  color: $gray;
   font-size: 16px;
 
   @include mobile {
@@ -234,7 +227,7 @@ nav {
 
   a {
     margin-left: 20px;
-    color: $lighterGray;
+    color: $darkGray;
     text-align: right;
     font-weight: 300;
     letter-spacing: 1px;
