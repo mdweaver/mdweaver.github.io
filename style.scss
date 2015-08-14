@@ -168,9 +168,9 @@ img {
 .masthead {
   height: 100;
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 15px; 
   @include mobile {
     text-align: center;
-  padding: 0 15px;  
   }
 }
 
