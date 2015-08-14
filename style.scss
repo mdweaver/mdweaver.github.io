@@ -41,6 +41,10 @@ body {
   background-position: center; 
 }
 
+.entry{
+ padding: 0 30px;	
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
   color: #F8F8FF;
@@ -152,6 +156,8 @@ img {
 .clearfix:after {
     clear: both;
 }
+
+
 
 /*********************/
 /* LAYOUT / SECTIONS */
