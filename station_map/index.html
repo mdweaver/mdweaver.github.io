@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Michael Weaver | Railway Station Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="https://dl.dropboxusercontent.com/u/8139153/favicon.ico" />
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.12/themes/css/cartodb.css" />
+
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .layer_selector {
+                background: #000000;
+                border-radius: 4px;
+                padding: 0;
+                border: 1px solid #999;
+                width: 75px;
+                box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px;
+                font: 22px 'Helvetica';
+                position: absolute;
+                right: 20px;
+                bottom: 25%;
+                text-align: center;
+            }
+            
+            .layer_selector > p {
+                font-weight: bold;
+                color: #666666;
+                padding: 14px 14px 12px 14px;
+                cursor: pointer;
+                border-bottom: 1px solid #999;
+            }
+            
+            .layer_selector ul {
+                padding: 0px 0px 0px 0px;
+                margin: 0;
+                list-style-type: none;
+                bottom: 0px;
+                border-radius: 0px;
+            }
+            .layer_selector li {
+                font-weight: bold;
+                padding: 0px;
+                font-size: 22px;
+                color: #FFFFFF;
+                cursor: pointer;
+                border-bottom: 1px solid #999;
+            }
+
+            .layer_selector li:hover {
+                background-color: #A9A9A9;
+                cursor: pointer;
+            }
+            .layer_selector li.sql_selected,
+            .layer_selector li.cartocss_selected {
+                background-color: #A9A9A9;
+            }
+    </style>
+
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 500px; margin-left: 0px; margin-top: 0px; top: 0px; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(255, 255, 255); text-align: left; font-size: 25px;"><strong>Railroad stations in 1880 and 1910</strong></div>    </div></div>
+
+    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 330px; margin-left: 0px; margin-top: 0px; top: 7%; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(200, 200, 200); text-align: left; font-size: 12px;">This map presents railroad stations in the United States, Canada, and Mexico in 1880 and 1910. These stations were identified from 1880 and 1910 issues of the <strong>Official Guide to the Railways</strong>, each of which contains an <a href="http://books.google.com/books?id=vcYsAQAAMAAJ&dq=editions%3Awifo43eIogMC&pg=RA1-PA607#v=onepage&q&f=false">Index of Railway Stations</a>. These years have been scanned, digitized, and geocoded with help from the Stanford University and Yale University libraries.</div> </div></div>
+
+
+
+    <div id="layers" class="layer_selector">
+        <ul>
+            <li data="1880">1880
+            </li>
+            <li data="1910">1910
+            </li>
+        </ul>
+    </div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.12/cartodb.js"></script>
+
+    <!-- Place your code in the script tags below -->
+    <script>
+    window.onload = function () {
+
+        function createSelector(layers) {
+            var layerchosen = "";
+            var $options = $(".layer_selector").find("li");
+            var on1 = true;
+            var on2 = false;
+
+            layers[1].show();
+            layers[2].hide();
+
+            $options.click(function(e) {
+                var $li = $(e.target);
+                var selected = +$li.attr('data');
+
+                $options.removeClass('selected');
+                $li.addClass('selected');
+                
+                if (selected === 1880) {
+                    if (on1) {
+                        layers[2].hide();
+                        layers[1].show();
+                        on1 = true;
+                        on2 = false;
+                    } else {
+                        layers[2].hide();
+                        layers[1].show();
+                        on1 = true;
+                        on2 = false;
+                    }
+                    layers[1].render()
+                } else if (selected === 1910) {
+                    if (on2) {
+                        layers[1].hide();
+                        layers[2].show();
+                        on1 = false;
+                        on2 = true;
+                    } else {
+                        layers[1].hide();
+                        layers[2].show();
+                        on1 = false;
+                        on2= true;
+                    }
+                    layers[2].render()
+                }
+            });
+        }
+
+        cartodb.createVis('map','https://mdweaver107.cartodb.com/api/v2/viz/884f1e5a-ef3e-11e4-aadd-0e018d66dc29/viz.json', {center_lat:'39.833333', center_lon:'-98.583333', zoom:'4'})
+            .done(function(vis, layers) {
+                // do stuff here
+
+
+                console.log(layers.length);
+                createSelector(layers);
+            })
+            .error(function(err) {
+                console.log("error: " + err);
+            });
+        }
+    </script>
+  </body>
+</html>
