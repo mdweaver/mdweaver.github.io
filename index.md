@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-<img src="https://dl.dropboxusercontent.com/u/8139153/flannel.jpg" width="300px" style="float:right">
+<img src="https://dl.dropboxusercontent.com/u/8139153/flannel.jpg" width="300px" style="float:right; padding:10px">
 
 I am a PhD candidate in Political Science at Yale University. 
 My am interested in the politics of violence. 
