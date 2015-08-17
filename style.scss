@@ -43,6 +43,10 @@ body {
 
 .entry{
  padding: 0 30px;	
+ a {
+ 	color: #lightGray;
+ 	text-decoration: underline;
+ }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -88,7 +92,7 @@ a {
   text-decoration: none;
 	cursor: pointer;
   &:hover, &:active {
-    color: $gray;
+    color: $darkGray;
   }
 }
 
@@ -156,8 +160,6 @@ img {
 .clearfix:after {
     clear: both;
 }
-
-
 
 /*********************/
 /* LAYOUT / SECTIONS */
