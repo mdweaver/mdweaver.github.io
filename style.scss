@@ -42,10 +42,13 @@ body {
 }
 
 .entry{
- padding: 0 30px;	
+ padding: 0 100px;
  a {
  	color: #lightGray;
  	text-decoration: underline;
+ }
+ @include mobile{
+ 	padding: 0 0;
  }
 }
 
