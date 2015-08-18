@@ -5,7 +5,7 @@ permalink: /research/
 ---
 ##Dissertation<a name="dissertation"></a>
 
-##Papers
+##Papers<a name="publications"></a>
 <a href='https://dl.dropboxusercontent.com/u/8139153/NellisWeaverRosenzweig-APSA2015.pdf'>*"Do parties matter for ethnic violence? Evidence from India,"*</a> (Under review)
 
 *with Gareth Nellis and Steven Rosenzweig*
@@ -17,7 +17,7 @@ Ethnic-group conflict is among the most serious threats facing young democracies
 What are the political consequences of ethnic violence? Research over several decades suggests that ethnic political parties benefit from ethnic violence. While these claims are widespread and are the foundation for many theoretical explanations of ethnic politics, there are good reasons to doubt that ethnic violence necessarily causes support for ethnic political parties. Moreover, these claims have not been systematically tested. In this paper, I suggest that the effects of ethnic violence on support for ethnic political parties are differ (and may be opposite) for individuals with and without an ethnonationalist ideology. I test these arguments using a novel research design and data from Northern Ireland. I find that the average effect of both inter- and intra-group violence on support for ethnic parties is nil. This is because violence causes  people who hold an ethnonationalist ideology to support ethnic parties, while it causes people who don't to oppose them.
 
 
-##Working papers
+##Working papers<a name="papers"></a>
 
 *Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement*
 
