@@ -56,7 +56,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica;
   color: #F8F8FF;
-  font-weight: bold;
+  font-weight: normal;
+  letter-spacing: 1px;
 
   line-height: 1.7;
   margin: 1em 0 15px;
@@ -90,6 +91,7 @@ h4 {
 p {
   margin: 15px 0;
   font-weight: normal;
+  letter-spacing: 1px;
 }
 
 a {
