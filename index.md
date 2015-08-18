@@ -11,4 +11,4 @@ My dissertation, <a href="http://mdweaver.github.io/research#dissertation">"Publ
 
 My other research projects examine the effects of violence on support for ethnic parties, the effects of equal rights protests on racial disparities in policing, and the political activities of veterans of the US Civil War.
 
-I am also interested in making data accessible and engaging for the general public using interactive visualization. For examples of my work, please see my <a href="http://mdweaver.github.io/maps/">Maps</a> page.
+I am also interested in making data accessible and engaging for the general public using interactive visualization. For examples of my work, please see my <a href="http://mdweaver.github.io/maps/">maps</a>.
