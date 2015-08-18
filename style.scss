@@ -92,6 +92,7 @@ p {
   margin: 15px 0;
   font-weight: normal;
   letter-spacing: 1px;
+  line-height: 110%;
 }
 
 a {
@@ -220,7 +221,7 @@ img {
   margin: 0;
   color: $white;
   cursor: pointer;
-  font-family: $helveticaNeue;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica;
   font-weight: 300;
   font-size: 28px;
   letter-spacing: 1px;
