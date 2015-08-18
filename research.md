@@ -6,7 +6,7 @@ permalink: /research/
 ##Dissertation<a name="dissertation"></a>
 
 ##Papers<a name="publications"></a>
-<a href='https://dl.dropboxusercontent.com/u/8139153/NellisWeaverRosenzweig-APSA2015.pdf'>*"Do parties matter for ethnic violence? Evidence from India,"*</a> (Under review)
+*"<a href='https://dl.dropboxusercontent.com/u/8139153/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Under review)
 
 *with Gareth Nellis and Steven Rosenzweig*
 
