@@ -18,8 +18,9 @@ html {
 }
 
 body {
-	background: $black;
-  font: 18px/1.4 $helvetica;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica;
+  background: $black;
+  font: 18px/1.4;
   color: $white;
 }
 
