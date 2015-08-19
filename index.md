@@ -3,6 +3,7 @@ layout: page
 ---
 <img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:left; padding:25px">
 
+<div style="margin-left: 325px">
 I am a PhD candidate in Political Science at Yale University. 
 My am interested in the politics of violence. 
 In particular, I study the legitimation of state and non-state violence as well as the causes and consequences of ethnic violence.
@@ -12,3 +13,4 @@ My dissertation, <a href="http://mdweaver.github.io/research#dissertation">"Publ
 My other research projects examine the effects of violence on support for ethnic parties, the effects of equal rights protests on racial disparities in policing, and the political activities of veterans of the US Civil War.
 
 I am also interested in making data accessible and engaging for the general public using interactive visualization. For examples of my work, please see my <a href="http://mdweaver.github.io/maps/">maps</a>.
+</div>
