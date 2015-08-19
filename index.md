@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-<img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:right; padding:25px">
+<img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:left; padding:25px">
 
 I am a PhD candidate in Political Science at Yale University. 
 My am interested in the politics of violence. 
