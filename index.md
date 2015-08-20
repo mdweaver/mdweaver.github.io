@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-<img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:right; padding-left: 30px;">
+<img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:right; padding-left: 30px; @include moble{padding-top: 30px; float:bottom;}">
 
 <div style="margin-right: 325px">
 <p>
