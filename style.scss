@@ -51,6 +51,11 @@ body {
  @include mobile{
  	padding: 0 0;
  }
+ div {
+ 	@include mobile{
+ 	margin: 0px;
+ 	}
+     }
 }
 
 .page{
@@ -145,6 +150,10 @@ strong, b {
 
 img {
   max-width: 100%;
+  @include mobile {
+    float: bottom;
+    padding: 30px 0px;
+  }
 }
 
 // Fixes images in popup boxes from Google Translate
