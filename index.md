@@ -3,7 +3,7 @@ layout: page
 ---
 <img src="https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/suit1.png" width="325px" style="float:right; padding-left: 30px; @include moble{padding-top: 30px; float:bottom;}">
 
-<div style="margin-right: 325px">
+<div style="margin-right: 325px; @include moble{margin-right: 0px;}">
 <p>
 I am a PhD candidate in Political Science at Yale University. 
 My am interested in the politics of violence. 
