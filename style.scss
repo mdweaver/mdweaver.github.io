@@ -187,6 +187,7 @@ img {
   padding: 0 15px; 
   @include mobile {
     text-align: center;
+    height: 100px;
   }
 }
 
