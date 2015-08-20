@@ -6,7 +6,7 @@ layout: page
 <div style="margin-right: 325px;">
 <p>
 I am a PhD candidate in Political Science at Yale University. 
-My am interested in the politics of violence. 
+I am interested in the politics of violence. 
 In particular, I study the legitimation of state and non-state violence as well as the causes and consequences of ethnic violence.
 </p>
 <p>
