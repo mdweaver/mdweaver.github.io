@@ -105,7 +105,7 @@ h4 {
 
 p {
   margin: 15px 0;
-  font-weight: normal;
+  font-weight: 100;
   letter-spacing: 1px;
   line-height: 110%;
 }
@@ -248,7 +248,7 @@ img {
   color: $white;
   cursor: pointer;
   font-family:  "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
-  font-weight: 300;
+  font-weight: 200;
   font-size: 28px;
   letter-spacing: 1px;
 }
@@ -281,7 +281,7 @@ nav {
     margin-left: 20px;
     color: $white;
     text-align: right;
-    font-weight: 300;
+    font-weight: 200;
     letter-spacing: 1px;
 
     @include mobile {
