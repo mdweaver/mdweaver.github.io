@@ -205,6 +205,8 @@ img {
   height: 75px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 0 15px; 
+  position:fixed;
+  z-index:100;
   @include mobile {
     text-align: center;
     height: 125px;
