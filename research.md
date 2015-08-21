@@ -10,9 +10,13 @@ permalink: /research/
 
 *with Gareth Nellis and Steven Rosenzweig*
 
+<details>
+<summary>Abstract</summary>
 Ethnic-group conflict is among the most serious threats facing young democracies. In this paper, we investigate whether the partisanship of incumbent politicians affects the incidence and severity of local ethnic violence. We theorize that incumbents from multiethnic parties with long-standing attachments to victimized minority groups face uniquely strong incentives to quell ethnic unrest. To test our argument, we use a novel application of the regression-discontinuity design and show that as-if random victory by candidates representing India's Congress party in close state assembly elections between 1962 and 2000 reduced Hindu-Muslim rioting. The effects are large. Simulations suggest that had Congress lost all close elections in this period, India would have experienced 10 percent more riots. Additional analyses corroborate the mechanisms underlying our theory. Our findings shed new light on parties' connection to ethnic conflict, the relevance of party labels in developing states, and the puzzle of democratic consolidation in ethnically-divided societies.
 
 Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-nation/bjp-gains-in-polls-after-every-riot-says-yale-study/articleshow/45378840.cms">Economic Times</a>, <a href="http://www.livemint.com/Opinion/5zyfXWWbWZHDDmyCqpAuvO/The-alchemy-of-HinduMuslim-riots-in-India.html">Hindustani Times (Live Mint)</a>, <a href="http://scroll.in/article/690416/electing-congress-mlas-reduce-chances-of-riots-by-32-says-new-yale-study/">scroll.in</a>, <a href="http://qz.com/298281/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/">quartz</a>, <a href="http://navbharattimes.indiatimes.com/india/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/articleshow/45241370.cms">Navbharat Times (in Hindi)</a>, and <a href="http://www.azhimukham.com/news/2604/congress-mlas-reduce-chances-of-hindu-muslim-riots-yale-study">Azhimukham (in Malayalam)</a>.
+</details>
+
 
 *"A Two-Edged Sword: the risks and rewards of violence for ethnic parties,"* (Under review)
 
