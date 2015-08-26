@@ -16,7 +16,7 @@ Lynching in the United States was once a violent public ritual that widely prais
 ##Papers<a name="publications"></a>
 ###*"<a href='https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Under review)
 
-*with Gareth Nellis and Steven Rosenzweig*
+*with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
 
 <details>
 <summary>Abstract</summary>
