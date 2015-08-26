@@ -5,7 +5,8 @@ permalink: /research/
 ---
 ##Dissertation<a name="dissertation"></a>
 
-*"Publicity and the de-legitimation of lynching"*
+###*"Publicity and the de-legitimation of lynching"*
+
 Lynching in the United States was once a violent public ritual that widely praised and implicitly justified in public, but by the late 1920s lynching was universally portrayed as an abhorrent and deeply shameful act. How did the lynching come to be seen for the atrocity that it is? How does the public reception of violence change from applause to opprobrium?
 <details>
 <summary>Read more...</summary>
@@ -13,7 +14,7 @@ Lynching in the United States was once a violent public ritual that widely prais
 
 
 ##Papers<a name="publications"></a>
-*"<a href='https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Under review)
+###*"<a href='https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Under review)
 
 *with Gareth Nellis and Steven Rosenzweig*
 
@@ -25,7 +26,7 @@ Ethnic-group conflict is among the most serious threats facing young democracies
 Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-nation/bjp-gains-in-polls-after-every-riot-says-yale-study/articleshow/45378840.cms">Economic Times</a>, <a href="http://www.livemint.com/Opinion/5zyfXWWbWZHDDmyCqpAuvO/The-alchemy-of-HinduMuslim-riots-in-India.html">Hindustani Times (Live Mint)</a>, <a href="http://scroll.in/article/690416/electing-congress-mlas-reduce-chances-of-riots-by-32-says-new-yale-study/">scroll.in</a>, <a href="http://qz.com/298281/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/">quartz</a>, <a href="http://navbharattimes.indiatimes.com/india/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/articleshow/45241370.cms">Navbharat Times (in Hindi)</a>, and <a href="http://www.azhimukham.com/news/2604/congress-mlas-reduce-chances-of-hindu-muslim-riots-yale-study">Azhimukham (in Malayalam)</a>.
 
 
-*"A Two-Edged Sword: the risks and rewards of violence for ethnic parties,"* (Under review)
+###*"A Two-Edged Sword: the risks and rewards of violence for ethnic parties,"* (Under review)
 
 <details>
 <summary>Abstract</summary>
@@ -34,7 +35,7 @@ What are the political consequences of ethnic violence? Research over several de
 
 ##Working papers<a name="papers"></a>
 
-*"Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement"*
+###*"Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement"*
 
 <details>
 <summary>Abstract</summary>
@@ -43,7 +44,7 @@ How are ethnic boundaries altered in the wake of challenges to ethnic hierarchy?
 
 ##Ongoing projects<a name="projects"></a>
 
-*"From Service to Suffrage: U.S. Civil War veterans, the experience of combat, and support for black suffrage."*
+###*"From Service to Suffrage: U.S. Civil War veterans, the experience of combat, and support for black suffrage."*
 
 <details>
 <summary>Abstract</summary>
@@ -51,7 +52,7 @@ How does war shape post-conflict politics? One important source of change comes 
 </details>
 
 
-*"Waging freedom: Black Civil War veterans and the fight to redeem the promise of rights"*
+###*"Waging freedom: Black Civil War veterans and the fight to redeem the promise of rights"*
 
 <details>
 <summary>Abstract</summary>
