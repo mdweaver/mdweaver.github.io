@@ -39,7 +39,7 @@ Ethnic-group conflict is among the most serious threats facing young democracies
 Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-nation/bjp-gains-in-polls-after-every-riot-says-yale-study/articleshow/45378840.cms">Economic Times</a>, <a href="http://www.livemint.com/Opinion/5zyfXWWbWZHDDmyCqpAuvO/The-alchemy-of-HinduMuslim-riots-in-India.html">Hindustani Times (Live Mint)</a>, <a href="http://scroll.in/article/690416/electing-congress-mlas-reduce-chances-of-riots-by-32-says-new-yale-study/">scroll.in</a>, <a href="http://qz.com/298281/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/">quartz</a>, <a href="http://navbharattimes.indiatimes.com/india/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/articleshow/45241370.cms">Navbharat Times (in Hindi)</a>, and <a href="http://www.azhimukham.com/news/2604/congress-mlas-reduce-chances-of-hindu-muslim-riots-yale-study">Azhimukham (in Malayalam)</a>.
 
 
-####*"A Two-Edged Sword: the risks and rewards of violence for ethnic parties,"* (Under review)
+####*"A Two-Edged Sword: the risks and rewards of violence for ethnic parties,"* (Revise and Resubmit at the Quarterly Journal of Political Science)
 
 <details>
 <summary>Abstract</summary>
