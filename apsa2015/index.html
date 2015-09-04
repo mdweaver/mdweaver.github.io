@@ -157,7 +157,7 @@ September 4, 2015
 
 --
 
-###Dueling
+###Death Penalty
 
 --
 
@@ -206,7 +206,7 @@ layout:false
 * Technological change => greater reach
 
 ###2. Publicity breeds criticism and scandal
-* Social movements include black voices
+* Social movements => inclusion of black voices
 ]
 
 ---
@@ -219,7 +219,7 @@ layout:false
 * Technological change => greater reach
 
 ###2. Publicity breeds criticism and scandal
-* Social movements include black voices
+* Social movements => inclusion of black voices
 
 ###3. Bad publicity turns Southern elites against lynching
 
@@ -235,19 +235,152 @@ layout:false
 * Technological change => greater reach
 
 ###2. Publicity breeds criticism and scandal
-* Social movements include black voices
+* Social movements => inclusion of black voices
 
 ###3. Bad publicity turns Southern elites against lynching
 
 ###4. With opposition of local elites, lynching declines
 ]
 
+
 ---
+template:inverse
+
+#Part 1:
+##Technology & Publicity
+
+---
+
+.left-column[
+  ## Argument
+  ###Publicity
+]
+
+
+.right-column[
+###Turn of the century...
+
+saw massive expansion of 
+
+- transportation networks (railroads)
+- communication networks (telegraph)
+- news services (e.g., Associated Press)
+
+]
+
+---
+
+.left-column[
+  ## Argument
+  ###Publicity
+]
+
+
+.right-column[
+###Turn of the century...
+
+saw massive expansion of 
+
+- transportation networks (railroads)
+- communication networks (telegraph)
+- news services (e.g., Associated Press)
+
+... which made the country smaller
+
+- reduced travel times for people and information
+- created a public eager for national news
+
+]
+
+---
+
+.left-column[
+  ## Argument
+  ###Publicity
+]
+
+
+.right-column[
+###Turn of the century...
+
+saw massive expansion of 
+
+- transportation networks (railroads)
+- communication networks (telegraph)
+- news services (e.g., Associated Press)
+
+... which made the country smaller
+
+- reduced travel times for people and information
+- created a public eager for national news
+
+###Lynchings attract more publicity
+]
+
+---
+
+.left-column[
+  ## Argument
+  ###Publicity
+  ###Criticism
+]
+
+.right-column[
+Breaking news of lynchings free from locality had three implications:
+
+1. Loss of control over narrative
+
+2. New audiences unsympathetic to lynchers
+
+3. No ability to coerce critics
+
+Lynching events could become national scandals
+  * Cost to reputation motivated politicians, business owners, sheriffs
+]
+
+
+---
+.left-column[
+  ## Argument
+  ###Publicity
+  ###Criticism
+  ###Implications
+]
+
+.right-column[
+
+Difficult to test directly
+
+####Three testable implications
+
+The probability that a lynching is reported in a newspaper:
+
+1. **decreases with geographic distance** between the lynching and the paper.
+
+2. **increases** as **travel times become smaller** between the lynching and the paper.
+
+3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+
+]
+
+
+
+---
+
+template:inverse
+
+##How do we test this?
+
+
+---
+
+
 template:inverse
 
 ##The data
 
 ---
+
 .left-column[
   ##Data
   ###Newspapers
@@ -360,130 +493,11 @@ template:inverse
 ]
 
 ---
+
+
 template:inverse
 
-#Part 1:
-##Technology & Publicity
-
----
-
-.left-column[
-  ## Argument
-  ###Publicity
-]
-
-
-.right-column[
-###Turn of the century...
-
-saw massive expansion of 
-
-- transportation networks (railroads)
-- communication networks (telegraph)
-- news services (e.g., Associated Press)
-
-]
-
-
----
-
-.left-column[
-  ## Argument
-  ###Publicity
-]
-
-
-.right-column[
-###Turn of the century...
-
-saw massive expansion of 
-
-- transportation networks (railroads)
-- communication networks (telegraph)
-- news services (e.g., Associated Press)
-
-... which made the country smaller
-
-- reduced travel times for people and information
-- created a public eager for national news
-
-]
-
----
-
-.left-column[
-  ## Argument
-  ###Publicity
-]
-
-
-.right-column[
-###Turn of the century...
-
-saw massive expansion of 
-
-- transportation networks (railroads)
-- communication networks (telegraph)
-- news services (e.g., Associated Press)
-
-... which made the country smaller
-
-- reduced travel times for people and information
-- created a public eager for national news
-
-###Lynchings attract more publicity
-]
-
----
-
-.left-column[
-  ## Argument
-  ###Publicity
-  ###Criticism
-]
-
-.right-column[
-Breaking news of lynchings free from locality had three implications:
-
-1. Loss of control over narrative
-
-2. New audiences unsympathetic to lynchers
-
-3. No ability to coerce critics
-
-Lynching events could become national scandals
-  * Cost to reputation motivated politicians, business owners, sheriffs
-]
-
-
----
-.left-column[
-  ## Argument
-  ###Publicity
-  ###Criticism
-  ###Implications
-]
-
-.right-column[
-
-Difficult to test directly
-
-####Three testable implications
-
-The probability that a lynching is reported in a newspaper:
-
-1. **decreases with geographic distance** between the lynching and the paper.
-
-2. **increases** as **travel times become smaller** between the lynching and the paper.
-
-3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
-
-]
-
----
-template:inverse
-
-##How do we test this?
+##The analysis
 
 ---
 
@@ -507,33 +521,33 @@ Design
 ---
 
 class: center, middle
-Probability of lynching mention by distance NEED NEW IMAGE
+Probability of lynching mention by distance
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/distanceplot.png" width="75%" height="75%"</img>
-
----
-
-class: center, middle
-
-Probability of lynching mention by betweenness centrality NEED NEW IMAGE
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/panel_network.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistancePlot.png" width="75%" height="75%"</img>
 
 ---
 
 class: center, middle
 
-Probability of lynching mention by eigenvector centrality NEED NEW IMAGE
+Probability of lynching mention by betweenness centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/panel_network.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustBetweennessPlot.png" width="75%" height="75%"</img>
 
 ---
 
 class: center, middle
 
-Probability of lynching mention by travel time saved <br> across distances (in days) NEED NEW IMAGE
+Probability of lynching mention by eigenvector centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/travelgains.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustEigenvectorPlot.png" width="75%" height="75%"</img>
+
+---
+
+class: center, middle
+
+Probability of lynching mention by travel time saved <br> across distances (in days)
+
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/timeSplinesPredictedProbability.png" width="75%" height="75%"</img>
 
 ---
 template:inverse
@@ -550,10 +564,7 @@ template:inverse
 .right-column[
 ###Does publicity produce criticism?
 * Measure criticism: keywords/phrases
-* Criticism as function of 
-  * distance
-  * local history of lynching
-  * intensity of coverage
+* Criticism greater at greater distances
 
   NEED IMAGE OF PROLYNCHING COVERAGE
 ]
@@ -597,7 +608,7 @@ After anti-lynching publicity campaigns:
 
 ####Endogeneity of railroads
 * Travel-time/centrality are not result of local construction
-* Instrument?: land grant railroads
+* Instrument: land grant railroads
 
 ####Information or importance?
   * Telegraph data (one state panel)
@@ -609,24 +620,6 @@ After anti-lynching publicity campaigns:
 
 .left-column[
   ##Conclusion
-  ###Scope
-]
-
-.right-column[
-
-###Non-state violence
-
-###De-legitimation
-
-###Power imbalance is not extreme
-
-]
-
----
-
-.left-column[
-  ##Conclusion
-  ###Scope
   ###Relevance
 ]
 
@@ -645,7 +638,6 @@ communication technology disrupted violent regime
 
 .left-column[
   ##Conclusion
-  ###Scope
   ###Relevance
   ###Today
 ]
