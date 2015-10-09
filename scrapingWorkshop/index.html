@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Sans'; }
+      h1, h2, h3 {
+        font-family: 'Droid Sans';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 1em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 70%;
+        float: right;
+        padding-top: 4em;
+      }
+
+      .left-column-1 {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+
+      .right-column-1 {
+        width: 70%;
+        float: right;
+        padding-top: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: inverse
+layout: true
+class: center, middle, inverse
+
+---
+
+#Introduction to Webscraping
+
+Michael Weaver
+
+Yale University
+
+October 9, 2015
+---
+
+##What is it?
+
+--
+
+###Automate navigation of web
+
+--
+
+###Structured data
+
+--
+
+###Large web-based databases
+
+--
+
+###Save time
+
+
+---
+
+
+##What is it good for?
+
+--
+
+###Accessing databases
+
+--
+
+###Collecting original data 
+
+--
+
+###Using web services
+
+
+---
+layout: false
+
+.left-column[
+##Uses
+###Databases
+]
+.right-column[
+
+###Access databases
+
+Service records of US Civil War soldiers
+  
+Searching historical newspaper archives
+
+Data on dams in India
+]
+
+---
+.left-column[
+##Uses
+###Databases
+###Collect
+]
+.right-column[
+###Collect new data
+
+Social media activity
+
+Connections between blogs
+
+Government reports
+]
+
+---
+
+.left-column[
+##Uses
+###Databases
+###Collect
+###Services
+]
+.right-column[
+###Use web services
+
+Geocoding
+
+Gender of names
+
+Translation
+
+]
+
+---
+
+template:inverse
+
+##How do you do it?
+
+---
+
+
+.left-column[
+##How
+###Languages
+]
+.right-column[
+###Programming Languages
+
+
+Perl
+
+Python
+
+R
+
+etc.
+]
+
+---
+
+.left-column[
+##How
+###Languages
+###Packages
+]
+.right-column[
+###Packages/modules
+
+Make life easier
+
+Easy to start
+
+R: ```httr```, ```rvest```
+
+Python: ```requests```, ```BeautifulSoup```, ```selenium```
+
+]
+
+---
+
+template:inverse
+
+##Flavors
+
+---
+
+.left-column[
+##Varieties
+###APIs
+]
+
+.right-column[
+###APIs
+
+"Application Programming Interface"
+
+* Request data from database based on parameters
+
+Characteristics
+
+* Request specific data
+* Data returned in highly structured format
+  * JSON, XML
+* Just the data, no markup
+* Hourly/daily limits
+
+Uses:
+  * Databases:
+    * Twitter, Facebook, Instagram
+    * FCC Broadband
+  * Services:
+    * Google Maps
+    * Genderizer
+]
+
+---
+
+
+.left-column[
+##Varieties
+###APIs
+###Scraping
+]
+
+.right-column[
+###Scraping HTML
+
+Data is arrayed visually on a page
+
+Parse HTML to get the data (usually tables)
+
+####GET
+
+Query is embedded within the HTML:
+
+```
+http://chroniclingamerica.loc.gov/search/pages/results/
+?proxtext=test
+```
+
+Or data is paginated:
+
+```
+http://chroniclingamerica.loc.gov/search/titles/results/
+?&page=2&sort=relevance
+```
+
+####POST
+
+Fill/submit 'forms'
+
+]
+
+---
+.left-column[
+##Varieties
+###APIs
+###Scraping
+###Other
+]
+
+.right-column[
+###Downloading
+
+Automate file downloads
+
+Public datasets broken in many parts
+
+]
+
+---
+
+template:inverse
+
+##Examples
+
+---
+
+.left-column[
+##APIs
+###Basics
+]
+
+.right-column[
+
+Easiest to use
+
+Usually a guide
+
+Usually need a key
+
+Procedure:
+  1. Construct the API 'call'
+    * URL with various parameters
+  2. Submit the request
+  3. Parse returned data
+    * JSON, XML
+]
+
+---
+
+.left-column[
+##APIs
+###Basics
+###The call
+]
+
+.right-column[
+###Example: Google Maps
+
+Geocoding API
+
+https://developers.google.com/maps/documentation/geocoding/intro
+
+1. ```https://maps.googleapis.com/maps/api/geocode/```
+2. ```json?```
+3. ```address=219+Prospect+St,+New+Haven,+CT+06511```
+4. ```key=AIzaSyBRwkNgdC_su7y7aBwcdncgc54w8R2Xp68```
+  
+All together:
+
+```
+https://maps.googleapis.com/maps/api/geocode/
+json?address=219+Prospect+St,+New+Haven,+CT+06511
+&key=AIzaSyBRwkNgdC_su7y7aBwcdncgc54w8R2Xp68
+```
+Tips:
+
+1. look at API guide to see options
+2. Encode text for URL: "%20"
+
+]
+
+
+---
+
+.left-column[
+##APIs
+###Basics
+###The request
+]
+
+.right-column[
+###Submitting the request
+
+```python
+import requests
+import json
+
+stub = "https://maps.googleapis.com/maps/api/geocode/json?"
+address = "address=219+Prospect+St,+New+Haven,+CT+06511"
+key = "key=AIzaSyBRwkNgdC_su7y7aBwcdncgc54w8R2Xp68"
+
+url = "&".join((stub,address,key))
+
+response = requests.get(url)
+
+print response.text
+```
+]
+
+---
+
+.left-column[
+##APIs
+###Basics
+###The request
+###The response
+]
+
+.right-column[
+###JSON
+
+Hierarchical data format
+  * Lists, key:value pairs
+  * Dictionaries in Python
+  * Lists in R
+
+[google maps json](https://maps.googleapis.com/maps/api/geocode/json?address=219+Prospect+St,+New+Haven,+CT+06511&key=AIzaSyBRwkNgdC_su7y7aBwcdncgc54w8R2Xp68)
+
+Explore: http://jsonviewer.stack.hu/
+
+Tools to parse:
+  * Python: ```json```
+  * R: ```jsonlite```
+
+```python
+parsed = json.loads(response.text)
+parsed['results']
+parsed['results'][0]
+parsed['results'][0]['geometry']['location']
+```
+]
+---
+
+.left-column[
+##HTML
+###Basics
+]
+
+.right-column[
+Without API, data is formatted for visual display
+
+Steps are similar:
+
+1. Create URL / form
+2. Submit request / post form
+3. Parse data
+
+]
+
+---
+
+.left-column[
+##HTML
+###Basics
+###GET
+]
+
+.right-column[
+###GET
+
+Type of request
+
+1. Fixed content (you are scraping data over specific pages)
+2. Search/query database: like API, query embedded in URL
+  * May be no guide to the query
+
+[example](http://chroniclingamerica.loc.gov/search/titles/results/?&page=2)
+
+```python
+import requests
+from bs4 import BeautifulSoup
+url = "http://chroniclingamerica.loc.gov/search/titles/results/?&page=2"
+
+out = requests.get(url)
+
+soup = BeautifulSoup(out.text)
+soup.find('ul', class_='results_list').find_all('li')[0]
+```
+]
+
+---
+
+.left-column[
+##HTML
+###Basics
+###GET
+###POST
+]
+
+.right-column[
+###POST
+
+Type of request
+
+HTML page includes a 'form'
+
+* You must find the form and complete the values
+* May be easy or complicated
+* Inspect the request in your browser
+
+[example](https://www.newspapers.com/signon.php)
+
+```python
+import requests
+import lxml.html
+
+signin_url = "https://www.newspapers.com/signon.php"
+
+session = requests.session()
+
+#Log in
+signin = session.get(signin_url)
+doc = lxml.html.fromstring(signin.text)
+signin_form = doc.forms[0]
+signin_form.form_values()
+```
+]
+
+---
+.left-column[
+##HTML
+###Basics
+###GET
+###POST
+###Parse
+]
+
+.right-column[
+###Parsing HTML
+
+Options:
+
+* xpath: in most languages
+* css selector: R, Python
+* beautifulsoup: python
+
+How to find tags, class, id, attributes, etc.?
+  * Chrome: right click => inspect element
+  * Safari: right click => inspect element
+    * Must enable "Show Developer Menu" in preferences
+  * Firefox: right click => inspect element
+
+Help:
+
+* http://flukeout.github.io/
+* http://www.crummy.com/software/BeautifulSoup/bs4/doc/
+* Regular expressions: http://www.regexr.com/
+
+]
+
+---
+
+template:inverse
+
+##Be nice
+
+--
+
+###Limit your requests
+
+--
+
+###May need permission
+
+---
+template:inverse
+
+##Troubleshooting
+
+---
+
+.left-column[
+##Trouble
+###Cookies
+]
+
+.right-column[
+###Cookies and sessions
+
+Logging in, cookies may be required to access pages
+
+Packages like ```httr``` in R and ```requests``` in Python help to handle this.
+
+]
+
+---
+
+.left-column[
+##Trouble
+###Cookies
+###Headers
+]
+
+.right-column[
+###Headers
+
+Page may not load if request headers are wrong
+
+Use browser to look at headers of successful requests (inspect element)
+
+[example](http://chroniclingamerica.loc.gov/)
+
+
+]
+
+---
+
+
+.left-column[
+##Trouble
+###Cookies
+###Headers
+###Dynamic
+]
+
+.right-column[
+###Dynamic pages
+
+Some pages load data dynamically: can't access the data from the HTML
+
+Explore how the page loads 
+
+[example](http://www.newspapers.com)
+
+]
+
+---
+
+
+.left-column[
+##Trouble
+###Cookies
+###Headers
+###Dynamic
+]
+
+.right-column[
+###Dynamic pages
+
+Some pages load data dynamically: can't access the data from the HTML
+
+Explore how the page loads 
+
+[example](http://www.newspapers.com)
+
+APIs under the hood
+
+* No documentation: reverse engineer
+
+]
+
+---
+.left-column[
+##Trouble
+###Cookies
+###Headers
+###Dynamic
+###Errors
+]
+
+.right-column[
+###Error handling
+
+Usually scraping many pages
+
+What happens when pages fail to load?
+
+* Connection times out
+* Read times out
+* Other errors
+
+```python
+while True:
+  try:
+    get_latlong = requests.get(dam_latlong_call, timeout=(2,10))
+    break
+  except requests.exceptions.ConnectionError:
+    print "trying again..."
+    sleep(5)
+  except requests.exceptions.ReadTimeout:
+    print "trying again..."
+    sleep(5)  
+```
+
+]
+
+---
+template:inverse
+
+##Questions????
+
+
+---
+
+Resources:
+
+[Guide to scraping in R](http://gastonsanchez.com/work/webdata/getting_web_data_r1_introduction.pdf)
+  
+http://docs.python-requests.org/en/latest/
+
+StackExchange, StackOverflow
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
