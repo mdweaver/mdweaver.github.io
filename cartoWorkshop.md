@@ -1,3 +1,10 @@
+---
+layout: page
+title: 
+permalink: /cartoWorkshop/
+---
+
+
 # CartoDB / PostGIS Workshop
 ### Michael Weaver
 ### Yale University
