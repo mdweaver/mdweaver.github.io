@@ -4,6 +4,8 @@ title:
 permalink: /cartoWorkshop/
 ---
 
+Link to this page:
+https://goo.gl/89AL1D
 
 # CartoDB / PostGIS Workshop
 ### Michael Weaver
