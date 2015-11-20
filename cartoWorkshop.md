@@ -33,7 +33,7 @@ Online service
 
 [evictions in SF](http://www.antievictionmappingproject.net/ellis.html)
 
-[my own maps](http://mdweaver.gitub.io/maps)
+[my own maps](http://mdweaver.github.io/maps)
 
 ### Advantages
 
