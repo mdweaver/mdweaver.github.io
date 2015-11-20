@@ -26,9 +26,13 @@ Online service
 ## What can it do?
 
 [trees in NYC](http://jillhubley.com/project/nyctrees/#all)
+
 [subway status NYC](http://www.datapolitan.com/mta_station_repair_status/)
+
 [British navy in WWI](http://www.theguardian.com/news/datablog/interactive/2012/oct/01/first-world-war-royal-navy-ships-mapped)
+
 [evictions in SF](http://www.antievictionmappingproject.net/ellis.html)
+
 [my own maps](mdweaver.gitub.io/maps)
 
 ### Advantages
