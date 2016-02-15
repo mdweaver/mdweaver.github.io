@@ -27,7 +27,7 @@ My research on public debates about lynching shows that expanding the publicity 
 
 
 ##Papers<a name="publications"></a>
-####*"<a href='https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Revise and Resubmit at the Quarterly Journal of Political Science)
+####*"<a href='https://dl.dropboxusercontent.com/u/8139153/mdweaver_github_io/NellisWeaverRosenzweig-APSA2015.pdf'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Conditionally Accepted at the Quarterly Journal of Political Science)
 
 *with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
 
@@ -46,14 +46,15 @@ Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-n
 What are the political consequences of ethnic violence? Research over several decades suggests that ethnic political parties benefit from ethnic violence. While these claims are widespread and are the foundation for many theoretical explanations of ethnic politics, there are good reasons to doubt that ethnic violence necessarily causes support for ethnic political parties. Moreover, these claims have not been systematically tested. In this paper, I suggest that the effects of ethnic violence on support for ethnic political parties differ (and may be opposite) for individuals with and without an ethnonationalist ideology. I test these arguments using a novel research design and data from Northern Ireland. I find that the average effect of both inter- and intra-group violence on support for ethnic parties is nil. This is because violence causes  people who hold an ethnonationalist ideology to support ethnic parties, while it causes people who don't to oppose them.
 </details>
 
-##Working papers<a name="papers"></a>
-
-####*"Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement"*
+####*"Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement"* "Under review"
 
 <details>
 <summary>Abstract</summary>
 How are ethnic boundaries altered in the wake of challenges to ethnic hierarchy? While ethnic boundaries may evolve in the longterm, I argue that in moments of rupture boundaries can change quickly. Mass incarceration and police stop-and-frisk policies evidence the fact that the security apparatus of the state can institutionalize racial and ethnic boundaries through the threat of and use of violence. In this paper, I examine how the 1966 Campaign by the Chicago Freedom Movement led by Martin Luther King, Jr. and the Southern Christian Leadership Conference altered the police behavior towards, and thus the racial boundary of, the black community in American cities. I use unique data, collected in 1966, on the details of nearly twenty thousand police-citizen interactions in Chicago, Boston, and DC. In the midst of this data collection, the SCLC began housing demonstrations in Chicago. I exploit this coincidence to test whether the protests led the policing of black communities and the application of state power at the racial boundary, to intensify or abate. By showing how the police responded to protest against the racial status quo, this paper furthers understanding of the intersection of race and criminal law. More generally, this paper employs a strong research design and unique data on ethnic practices at the micro-level to show that the contents of ethnic boundaries change quickly during social upheaval.
 </details>
+
+##Working papers<a name="papers"></a>
+
 
 ##Ongoing projects<a name="projects"></a>
 
