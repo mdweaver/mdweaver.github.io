@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Practice Job Talk</title>
+    <title>PSGSA Presentation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -152,7 +152,7 @@ Michael Weaver
 
 Yale University
 
-December 3, 2015
+March 12, 2016
 ---
 
 --
@@ -191,13 +191,6 @@ template:inverse
 template:inverse
 
 <img src="https://dl.dropboxusercontent.com/u/8139153/presentation/lynching_innocent.png" width="90%" </img>
-
----
-template:inverse
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/clippings/sheriff_fails_to_act.png" width="90%" </img>
-
-*New York Age* 1/17/1931
 
 ---
 
@@ -481,7 +474,7 @@ Press coverage of lynching is more critical when the paper:
 
 1. is at a greater distance
 
-2. is in a place without a history of lynching
+2. is in a place without a history or culture of lynching
 
 ]
 
@@ -547,7 +540,7 @@ template:inverse
 
 ###Railroad networks
 
-* Yearly data from 1880 and 1900
+* Yearly data from 1880 and 1900 (1911)
   * Period of rapid growth (more than doubles)
   * 3109 counties in continental US
   * Network centrality of counties
@@ -579,16 +572,9 @@ class:center, middle
   * Travel time between counties
 
 * Railroad stations for each year between 1880 and 1910
-  * Scanned station lists for each year
-  * Digitizing text, geocoding
   * Proximity to rail stations
 
 ]
-
----
-class: center, middle
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/official_guide.png" height="60%" width = "60%" </img>
 
 ---
 
@@ -608,14 +594,13 @@ template:inverse
 
 ###Lynching events
   
-* Best possible national lynching database
-* 1880 to 1930s
-* Sources: historians, NAACP, and Tuskegee Institute.
+* Compiling best possible national lynching database
+* 1880 to 1940s
+* Sources: historians, NAACP, and Chicago Tribune.
 
 ]
 
 ---
-
 
 template:inverse
 
@@ -632,7 +617,7 @@ template:inverse
  
 ###Observations
 * Issues appearing within a week of a lynching
-* Issue - lynching pairs
+* Issue-Lynching pairs
 
 ###Design
 * Panel analysis, multi-way clustering
@@ -660,6 +645,42 @@ class: center, middle
 Probability of lynching mention by eigenvector centrality <br> (deciles)
 
 <img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustEigenvectorPlot.png" width="75%" height="75%"</img>
+
+---
+class: center,middle
+
+Effects are not concentrated at close distances:
+
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/BetweennessByDistancePlot.png" width="75%" height="75%"</img>
+
+---
+class: center,middle
+
+
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/EigenvectorByDistancePlot.png" width="75%" height="75%"</img>
+
+
+---
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+
+###Three implications
+
+The probability that a lynching is reported in a newspaper:
+
+1. **increases** as distance **decreases** between the lynching and the paper. ![check][]
+
+2. **increases** as travel times **decrease** between the lynching and the paper. ![check][]
+
+3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**. ![check][]
+
+]
+[check]:http://www.clker.com/cliparts/8/9/4/9/1240848155298205944thatsmyboy_Simple_Red_Checkmark.svg.med.png
 
 ---
 
