@@ -8,9 +8,6 @@
       @import url(https://fonts.googleapis.com/css?family=Droid+Sans:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      .MathJax {
-        font-size: 1em;
-      }
       body { font-family: 'Droid Sans'; }
       h1, h2, h3 {
         font-family: 'Droid Sans';
@@ -516,6 +513,7 @@ Refuted pro-lynching claims
 
       // Setup MathJax
       MathJax.Hub.Config({
+        "HTML-CSS": { scale: 200, linebreaks: { automatic: true } }, 
           tex2jax: {
           skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
           }
