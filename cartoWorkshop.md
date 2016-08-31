@@ -1,58 +1,40 @@
----
-layout: page
-title: 
-permalink: /cartoWorkshop/
----
-
-Link to this page:
-https://goo.gl/89AL1D
-
-# CartoDB / PostGIS Workshop
+# CartoDB / PostGIS Guide
 ### Michael Weaver
 ### Yale University
-### November 20, 2015
 
 ---
 
-##What is CartoDB?
-Online service
+## What is CartoDB?
 
-* hosts geospatial / tabular data (using PostGIS)
-* automates design / building of interactive maps
-* hosts maps online
-* tools for customizing your maps
-* free entry-level accounts
+CartoDB is a web-based platform hat integrates geospatial software (PostGIS) with powerful and easy-to-use interactive mapping tools.
 
-## What can it do?
+Key features:
+ 1. Hosts your geospatial and other tabular data in the cloud.
+ 2. Built on the powerful PostgreSQL data platform
+ 3. Tools for automated design and hosting of interactive maps
+ 4. Free entry-level accounts
+ 5. Highly customizable:
 
-[trees in NYC](http://jillhubley.com/project/nyctrees/#all)
+	* map the results of complex queries
+	* tailor the design of your map using cartocss
+	* build custom interactivity using the CartoDB API.
 
-[subway status NYC](http://www.datapolitan.com/mta_station_repair_status/)
+## Examples
 
-[British navy in WWI](http://www.theguardian.com/news/datablog/interactive/2012/oct/01/first-world-war-royal-navy-ships-mapped)
+[Trees in NYC](http://jillhubley.com/project/nyctrees/#all)
 
-[evictions in SF](http://www.antievictionmappingproject.net/ellis.html)
+[Subway Status NYC](http://www.datapolitan.com/mta_station_repair_status/)
 
-[my own maps](http://mdweaver.github.io/maps)
+[British Navy in WWI](http://www.theguardian.com/news/datablog/interactive/2012/oct/01/first-world-war-royal-navy-ships-mapped)
 
-### Advantages
+[Evictions in SF](http://www.antievictionmappingproject.net/ellis.html)
 
-* Very easy to start making polished maps
-	* Customization is more involved...
-	* But [lots of resources](http://cartodb.github.io/training/)
-* Free access to powerful GIS tools
-	* Runs on PostGIS in the cloud
-	* Script-based queries
+[CartoDB Gallery](https://cartodb.com/gallery/)
 
-### Limitations
-
-* Free academic accounts come with ~250 MB of space
-* Access to maps/data only when online
-
-## Getting started
+[My maps](http://mdweaver.github.io/maps)
 
 ### Get an account
-Free accounts for university affiliates: 
+Free accounts for university affiliates:
 https://cartodb.com/signup?plan=academy
 
 ### Load data
@@ -135,7 +117,7 @@ Use the Filter tool on the toolbar to intuitively select subsets of your data. A
 ###More advanced usage
 We can merge tables in PostGIS either by columns or geometry
 
-Common uses: 
+Common uses:
 
 * Points in polygons
 	* in which area is a point located?
@@ -149,32 +131,32 @@ Let's do an example of points in Polygon:
 
 * How many points in a polygon
 ```sql
-select nh_wards.*, count(*) AS issue_count 
-FROM nh_wards, scf 
-WHERE 
-st_contains(nh_wards.the_geom,scf.the_geom) 
+select nh_wards.*, count(*) AS issue_count
+FROM nh_wards, scf
+WHERE
+st_contains(nh_wards.the_geom,scf.the_geom)
 GROUP BY nh_wards.cartodb_id;
 ```
 * Which polygon contains a point
 ```sql
 select scf.*, nh_wards.wards_desc
-FROM nh_wards, scf 
-WHERE 
-st_contains(nh_wards.the_geom,scf.the_geom) 
+FROM nh_wards, scf
+WHERE
+st_contains(nh_wards.the_geom,scf.the_geom)
 ```
 
 * Which wards border each other?
 ```sql
 SELECT wards_1.*, wards_2.wards_desc as neighboring_ward
-FROM nh_wards as wards_1, nh_wards as wards_2 
+FROM nh_wards as wards_1, nh_wards as wards_2
 WHERE ST_DWithin(wards_1.the_geom::geography, wards_2.the_geom::geography, 10)
 ```
 
 * Count SCF issues in a radius around an issue
 ```sql
-SELECT points_1.*, count(*) as count_10m 
-FROM scf as points_1, scf as points_2 
-WHERE ST_DWithin(points_1.the_geom::geography, points_2.the_geom::geography, 10) and 
+SELECT points_1.*, count(*) as count_10m
+FROM scf as points_1, scf as points_2
+WHERE ST_DWithin(points_1.the_geom::geography, points_2.the_geom::geography, 10) and
 GROUP BY points_1.cartodb_id
 ```
 
