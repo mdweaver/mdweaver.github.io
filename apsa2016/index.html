@@ -138,8 +138,9 @@ class: center, middle, inverse
 
 ---
 
-#Union Veterans and Support for African American Suffrage
-## (and Reconstruction)
+#Union Veterans,
+##African American Suffrage,
+##and Reconstruction
 
 Michael Weaver
 
@@ -178,7 +179,7 @@ September 1, 2016
 
 ---
 
-##How did Americans come to support a revolutionary party that
+##How did many Americans come to support a revolutionary party that
 
 -- 
 
@@ -188,75 +189,83 @@ September 1, 2016
 
 --
 
-#### End slavery with the 13th Amendment (and the Army)
+#### Ended slavery with the 13th Amendment (and the Army)
 
-#### Extend civil and voting rights with the 14th and 15th Amendments 
+#### Extended civil and political rights by law and by force 
 
 ---
-
-#The obvious answer:
-
-##The Civil War
 
 --
 
-##But how did the war transform politics?
+##The Civil War
+
+---
+
+##Veterans
 
 ---
 layout:false
 
-.left-column-1[##Veterans
-###Context
+.left-column[##Veterans
+###Postwar
 ]
 
 
-.right-column-1[
+.right-column[
 ### Veterans a large share of the electorate
-#### Due to restrictions on suffrage: veterans were between ? and ? percent of voting age males in Northern states by 1870. 
+#### More than two million Northern men served
+#### Restrictions on suffrage magnify their influence
 
 ### Civil War veterans central in politics of early American welfare state
-#### (Skocpol 1995; )
 
 ]
 
 ---
 layout:false
 
-.left-column-1[##Veterans
-###Context
-###Importance
+.left-column[##Veterans
+###Postwar
+###Evidence
 ]
 
 
-.right-column-1[
+.right-column[
 ### Veterans shape politics after returning home
-(Jha and Wilkinson 2012, )
+(Jha and Wilkinson 2012, Bellows and Miguel 2009)
 
 ### Veterans are more politically active than non-veterans
-(Blattman 2009)
+(Teigen 2006, Blattman 2009)
 
-### Combat veterans take on more "hawkish" positions
+### Combat veterans adopt "hawkish" positions
 (Grossman et al 2015, Koenin 2015)
 ]
 
 ---
 layout:false
 
-.left-column-1[##Veterans
-###Context
-###Importance
+.left-column[##Veterans
+###Prewar
+###Evidence
 ###Expectations
 ]
 
 
-.right-column-1[
-### 1. Republican and Democratic politician expected veterans to oppose suffrage
-  #### Democrats solicited veterans by arguing that Republicans would needlessly drag out the conflict or use their suffering in the war to pursue "social equality"
+.right-column[
 
-### 2. Veterans experience of combat made them more hawkish, less willing to accept return to pre-war normal in the South. Support suffrage bc it is framed as necessary to create "loyal" constituency in the South.
-  ### Republican campaigning on reconstruction legislation; democrats as traitors (copperheads)
+###Oppose Suffrage
 
-### 3. Inter-group contact: very small black population in the North before the war. most soldiers did not live in areas where they would know many blacks. War exposed them by serving alongside black units in combat, meeting freed men and women who fled to Union lines.
+* Contemporaries expected veterans to return *more* racist
+
+###Support Suffrage
+
+####Combat experience 
+  * Made veterans opposed to pre-war status quo in the South
+  * Suffrage punishes Secessionists; creates "loyal" constituency in the South.
+
+####Inter-group contact
+  * Serving the South exposed soldiers to many more African Americans
+  * Interaction might weaken prejudice
+
 ]
 
 ---
@@ -268,23 +277,48 @@ template:inverse
 layout:false
 
 .left-column-1[##Data
-###Iowa
+###Why Iowa?
 ]
 
 
 .right-column-1[
-### Why Iowa?
+### Good starting point
 
 * Veterans listed by residence
-* Good state data on elections, eligible voters.
+* Good data on elections, eligible voters
 * Suffrage votes before and after election
 
 
 ]
 
+---
+layout:false
+
+.left-column-1[##Data
+###Why Iowa?
+###Veterans
+]
+
+
+.right-column-1[
+### Civil War Data Base
+
+* Relational database of soldiers, units, battles
+
+* 4 million+ soldiers, varying levels of personal data
+
+* Iowa units recorded pre-war residence
+
+* Possible to match to census by name, age, and other identifiers
+
+### Measurement
+* County-level
+* Number of Veterans / Number of military-age males in 1860
+
+]
+
 
 ---
-
 
 layout:false
 
@@ -302,27 +336,26 @@ layout:false
 
 ]
 
----
-
-
-layout:false
-
-.left-column[##Design
-###Panel
-###Identification
-]
-
-.right-column[
-
-
-
-]
 
 ---
 template:inverse
 
 ##Results:
 
+---
+
+layout:false
+
+.left-column[##Results
+]
+
+
+.right-column[
+
+1. More veterans is associated with *more* support for suffrage
+
+
+]
 
 ---
 class: center, middle
@@ -347,52 +380,118 @@ class: center, middle
 
 ---
 
-template:inverse
+layout:false
 
-##How do we test this?
+.left-column[##Results
+]
 
----
-template:inverse
 
-<iframe width='100%' height='100%' frameborder='0' src='https://yale.cartodb.com/u/mdweaver/viz/f809ecd4-f98e-11e4-8453-0e9d821ea90d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+.right-column[
+
+1. More veterans is associated with *more* support for suffrage
+
+2. This effect is conditional on combat experience
+
+]
 
 ---
 class: center, middle
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/official_guide.png" height="60%" width = "60%" </img>
+Marginal Effects, Linear interaction
+
+<img src="https://dl.dropboxusercontent.com/u/8139153/apsa2016/combat_interaction_linear_diff.svg" width="75%" height="75%"</img>
 
 ---
-
-class: center, middle
-Probability of lynching mention by distance
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistancePlot.png" width="75%" height="75%"</img>
-
----
-
 class: center, middle
 
-Probability of lynching mention by betweenness centrality <br> (deciles)
+Marginal Effects, Kernel estimator
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustBetweennessPlot.png" width="75%" height="75%"</img>
-
----
-
-class: center, middle
-
-Probability of lynching mention by eigenvector centrality <br> (deciles)
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustEigenvectorPlot.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/apsa2016/combat_interaction_kernel_diff.svg" width="75%" height="75%"</img>
 
 ---
 
-class: center, middle
+layout:false
 
-Probability of lynching mention by travel time saved <br> across distances (in days)
+.left-column[##Results
+]
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/timeSplinesPredictedProbability.png" width="75%" height="75%"</img>
+
+.right-column[
+
+1. More veterans is associated with postwar *increase* in votes for suffrage
+
+2. This effect is conditional on combat experience
+
+3. More veterans associated with postwar *increase* in votes for GOP
+
+]
 
 ---
+class:center, middle
+
+<table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3">Republican Voteshare</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Lagged Republican Voteshare</td><td></td><td></td><td>0.796<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td>(0.018)</td></tr>
+<tr><td style="text-align:left">Post War x Veterans (%)</td><td>0.265<sup>***</sup></td><td>0.410<sup>*</sup></td><td>0.129<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.173)</td><td>(0.034)</td></tr>
+<tr><td style="text-align:left">Lagged DV</td><td>no</td><td>no</td><td>yes</td></tr>
+<tr><td style="text-align:left">County FEs</td><td>yes</td><td>yes</td><td>no</td></tr>
+<tr><td style="text-align:left">Year FEs</td><td>no</td><td>yes</td><td>yes</td></tr>
+<tr><td style="text-align:left">N</td><td>2,278</td><td>2,278</td><td>2,186</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.626</td><td>0.712</td><td>0.733</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.610</td><td>0.697</td><td>0.730</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td colspan="4" style="text-align:left"><sup>*</sup>p < .05; <sup>**</sup>p < .01; <sup>***</sup>p < .001</td></tr>
+</table>
+
+---
+
+layout:false
+
+.left-column[##Results
+]
+
+
+.right-column[
+
+1. More veterans is associated with postwar *increase* in votes for suffrage
+
+2. This effect is conditional on combat experience
+
+3. More veterans associated with postwar *increase* in votes for GOP
+
+4. Parallel trends assumption holds: identified?
+
+]
+
+---
+
+<img src="https://dl.dropboxusercontent.com/u/8139153/apsa2016/gop_panel_parallel.svg" width="75%" height="75%"</img>
+
+
+---
+
+
+layout:false
+
+.left-column[##Results
+]
+
+
+.right-column[
+
+1. More veterans is associated with postwar *increase* in votes for suffrage
+
+2. This effect is conditional on combat experience
+
+3. More veterans associated with postwar *increase* in votes for GOP
+
+4. Parallel trends assumption holds: identified?
+
+]
+
+---
+
 template:inverse
 
 ##What's next?
@@ -400,125 +499,50 @@ template:inverse
 ---
 
 .left-column[
-  ##Next steps
+##Next steps
+###Measurement
   
 ]
 
 .right-column[
 
+
+1. Match veterans to pre- and post-war counties
+  * By residence
+  * Using Census schedules
+
+2. Instrument for enlistment rates?
+  * Draft quotas?
+
 ]
+
+---
+
+.left-column[
+##Next steps
+###Measurement
+###Analysis
+  
+]
+
+.right-column[
+
+
+1. Replicate analyses for suffrage votes in WI, NY
+
+2. Extend analysis of GOP voteshare to all Northern States
+
+3. Effects on composition of Reconstruction Congress?
+
+
+]
+
 
 ---
 
 template:inverse
 
 #Thank you
-
----
-template:inverse
-
-#Extra slides
-
-
----
-
-##Equations
-
-
-
-####Network centrality model
-`$$Y_{ijt} =  \alpha_{year} + \alpha_{county i} + \alpha_{county j} + \boldsymbol{\beta}*\mathbf{CountyNetworkCentrality_{i}}$$`
-`$$  + \boldsymbol{\gamma}*\mathbf{Distance_{ijt}} + \varepsilon_{i} + \varepsilon_{j}$$`
-
-####Travel time model
-`$$Y_{ijt} =  \alpha_{year} + \alpha_{county i} + \alpha_{county j} + \beta_1*LandTravelTime$$`
-`$$ + \beta_2*RailTravelTime + \varepsilon_{i} +  \varepsilon_{j}$$`
-
----
-
-
-.left-column[
-  ## Background
-
-  ###Lynching
-  ###Lynching discourse
-]
-
-.right-column[
-
-###Arguments in favor
-* Inefficiency/corruption of justice system
-* Popular sovereignty
-* Law does not deter criminals
-* Threat of black criminality/sexuality
-* 'Natural' response to rape
-
-]
-
----
-.left-column[
-  ## Background
-
-  ###Lynching
-  ###Lynching discourse
-]
-
-.right-column[
-
-###Justificatory Narratives
-
-* Protagonists
-  * Sober, rational, all/leading citizens of town
-  * Passive voice: no individuals did the lynching
-  * Lynching was natural/unavoidable response
-* Antagonists
-  * Black men dehumanized: "savages", "brutes", "beasts"
-  * Assumed to be guilty
-  * By default shown as sexually aggressive, criminals
-* Lynched *because* guilty
-
-]
-
----
-
-.left-column[
-  ## Background
-
-  ###Lynching
-  ###Lynching discourse
-  ###Antilynching discourse
-]
-
-.right-column[
-
-###Arguments
-
-Refuted pro-lynching claims
-
-* e.g. rape alleged in minority of cases
-* Lynching a threat to law and order
-* Lynching part of a system of racial violence
-  * e.g. Du Bois: "The police is the mob. The courts are the lynchers."
-
-###Narratives
-  Black voices counter white narratives about lynching
-  * NAACP investigations
-  * Ida Wells publications
-  * Scottsboro Trials
-]
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
