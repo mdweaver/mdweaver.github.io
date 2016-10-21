@@ -410,7 +410,7 @@ Lynching events could become national scandals
 
 template:inverse
 
-##How do we test this?
+##How do I test this?
 
 ---
 
@@ -431,7 +431,7 @@ template:inverse
 
 9+ million newspaper issues from 1880 to 1940:
 
-* > 3000 newspapers papers, nation-wide
+* more than 3000 papers, nation-wide
 * Big-city dailies, small-town weeklies
 * 1.2 million articles explicitly mention lynching
 ]
@@ -451,11 +451,11 @@ template:inverse
 
 .right-column[
 
-###Railroad networks
+###Railroad data
 
-* Yearly from 1880 to 1900
-  * Period of rapid growth (more than doubles)
-  * Network centrality of counties
+Yearly from 1880 to 1900
+  * Miles of track more than doubles
+  * Centrality in the network
   * Travel time between counties
 ]
 
@@ -470,8 +470,7 @@ template:inverse
 
 template:inverse
 
-##The findings
-
+##Results
 ---
 .left-column[
   ## Results
@@ -495,7 +494,7 @@ class: center, middle
 
 Probability of lynching mention by distance
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistance_Article.svg" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistance_Mentions.svg" width="75%" height="75%"</img>
 
 
 ---
@@ -576,7 +575,7 @@ The probability that a lynching is reported in a newspaper:
 
 Coverage of lynching is more critical
 
-4. as the distance from the lynching to the newspaper **increases**. ![check][]
+4. as the **distance** from the lynching to the newspaper **increases**. ![check][]
 
 
 ]
@@ -584,68 +583,51 @@ Coverage of lynching is more critical
 ---
 template:inverse
 
-###Coverage of lynching employed more critical rhetoric (and less supportive language) at greater distances
+###More distant newspapers employed more critical rhetoric (and less supportive language)
 
 ---
 template:inverse
 
-##What's next?
+##What about agency?
 
 ---
 
 .left-column[
   ##Next steps
-  ###Criticism
+  ###Activists
 ]
 
 .right-column[
-###Does publicity produce criticism?
-* Measure criticism: keywords/phrases ![check][]
-
-* Is press coverage of lynching is more critical when the paper:
-  1. is at a greater distance
-  2. is in a place without a history or culture of lynching
+###Newspaper editors didn't start the rhetorical change
+Black activists 
+* investigated lynchings (at their peril)
+* published alternative narratives
+* cultivated relationships with the white press
 
 ]
+
+---
+
+template:inverse
+
+##Did public condemnation reduce lynching?
 
 ---
 
 .left-column[
   ##Next steps
-  ###Criticism
-  ###Technology
+  ###Activists
+  ###Shaming?
 ]
 
 .right-column[
-####Proximity to important nodes
 
-* Geocoding exact location of lynching events
+###Tentatively:
 
-* Transcribe and geocode railroad stations
-	* Lists for each year between 1880 and 1910 
-
-* Transcribe and geocode telegraph offices 
-	* Western Union books from 1870s through 1920s
-
-#### Crowdsourcing transcription
-
-* Real-time geocoding and mapping of new stations/offices
-* Public access to the data
+Lynchings declined faster in counties more integrated in communication networks.
 
 ]
 
-
----
-
-class: center, middle
-
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/official_guide.png" height="60%" width = "60%" </img>
-
----
-
-
-template:inverse
-<iframe width='100%' height='95%' frameborder='0' src='http://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 ---
 
@@ -664,26 +646,13 @@ template:inverse
 
 
 
+
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
     <script type="text/javascript">
       var slideshow = remark.create();
-
-      // Setup MathJax
-      MathJax.Hub.Config({
-          tex2jax: {
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-          }
-      });
-      MathJax.Hub.Queue(function() {
-          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
-              return(elem.SourceElement());
-          }).parent().addClass('has-jax');
-      });
-
-      MathJax.Hub.Configured();
     </script>
   </body>
 </html>
