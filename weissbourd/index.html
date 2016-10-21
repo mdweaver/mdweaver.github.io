@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Beyond Boundaries Talk</title>
+    <title>Weissbourd Symposium</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -198,6 +198,7 @@ template:inverse
 ##Publicity Shocks
 
 ---
+layout:false
 
 .left-column[
 ##Argument
@@ -228,7 +229,7 @@ template:inverse
 .right-column[
 ###1. Increase in publicity
 * Technological change => greater reach
-* Social movements => inclusion of black voices
+* Activist campaigns => inclusion of black voices
 ]
 
 ---
@@ -242,7 +243,7 @@ template:inverse
 .right-column[
 ###1. Increase in publicity
 * Technological change => greater reach
-* Social movements => inclusion of black voices
+* Activist campaigns => inclusion of black voices
 
 ###2. Publicity breeds criticism and scandal
 ]
@@ -256,7 +257,7 @@ template:inverse
 .right-column[
 ###1. Increase in publicity
 * Technological change => greater reach
-* Social movements => inclusion of black voices
+* Activist campaigns => inclusion of black voices
 
 ###2. Publicity breeds criticism and scandal
 
@@ -286,7 +287,7 @@ template:inverse
 .right-column[
 ###1. Increase in publicity
 * Technological change => greater reach
-* Social movements => inclusion of black voices
+* Activist campaigns => inclusion of black voices
 
 
 ###2. Publicity breeds criticism and scandal
@@ -438,7 +439,7 @@ template:inverse
 ---
 template:inverse
 
-<iframe width='100%' height='100%' frameborder='0' src='http://yale.cartodb.com/u/mdweaver/viz/ffd06ece-8545-11e4-a898-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+<iframe width='100%' height='100%' frameborder='0' src='http://yale.cartodb.com/u/mdweaver/viz/ffd06ece-8545-11e4-a898-0e018d66dc29/embed_map?zoom=' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 ---
 
@@ -478,7 +479,7 @@ template:inverse
 
 .right-column[
 
-###Three implications
+###Four implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -494,7 +495,7 @@ class: center, middle
 
 Probability of lynching mention by distance
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistancePlot.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/rawDistance_Article.svg" width="75%" height="75%"</img>
 
 
 ---
@@ -504,7 +505,7 @@ Probability of lynching mention by distance
 
 .right-column[
 
-###Three implications
+###Four implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -528,7 +529,7 @@ template:inverse
 
 .right-column[
 
-###Three implications
+###Four implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -547,14 +548,43 @@ class: center, middle
 
 Probability of lynching mention by betweenness centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustBetweennessPlot.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/betweenness_baseline_any_article.svg" width="75%" height="75%"</img>
 
 ---
 class: center, middle
 
 Probability of lynching mention by eigenvector centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/robustEigenvectorPlot.png" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/eigenvector_baseline_any_article.svg" width="75%" height="75%"</img>
+
+---
+.left-column[
+  ## Results
+]
+
+.right-column[
+
+###Four implications
+
+The probability that a lynching is reported in a newspaper:
+
+1. **increases** as distance **decreases** between the lynching and the paper. ![check][]
+
+2. **increases** as travel times **decrease** between the lynching and the paper. ![check][]
+
+3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**. ![check][]
+
+Coverage of lynching is more critical
+
+4. as the distance from the lynching to the newspaper **increases**. ![check][]
+
+
+]
+[check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+---
+template:inverse
+
+###Coverage of lynching employed more critical rhetoric (and less supportive language) at greater distances
 
 ---
 template:inverse
@@ -630,7 +660,7 @@ template:inverse
 
 ##Newspapers in sample over time
 
-<iframe width="100%" height="95%" frameborder="0" src="https://mdweaver107.cartodb.com/viz/b49b091c-6656-11e5-bbf5-0e9d9d43ad5d/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+<iframe width="100%" height="95%" frameborder="0" src="https://mdweaver107.cartodb.com/viz/b49b091c-6656-11e5-bbf5-0e9d9d43ad5d/embed_map?zoom=4&center_lat=39.83&center_lon=-98.583" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 
 
