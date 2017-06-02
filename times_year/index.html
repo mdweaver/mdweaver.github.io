@@ -240,7 +240,7 @@
            ]
          });
          $('#map').append(legend.render().el);
-        cartodb.createLayer(map, 'https://mdweaver107.cartodb.com/api/v2/viz/a79d1612-f29b-11e4-937f-0e0c41326911/viz.json').addTo(map).on('done', function(layer) {
+        cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/a79d1612-f29b-11e4-937f-0e0c41326911/viz.json').addTo(map).on('done', function(layer) {
           var counties = layer.getSubLayer(0); 
           counties.setInteractivity('cartodb_id, fips, name, time')
           counties.setInteraction(true);
