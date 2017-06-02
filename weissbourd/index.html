@@ -152,7 +152,25 @@ Michael Weaver
 
 University of Chicago
 
-October 22, 2016
+June 2, 2017
+
+---
+layout:false
+
+
+.left-column[
+##Outline
+]
+
+.right-column[
+### Question
+### Current Research
+### Limitations
+### Next steps
+]
+
+---
+template:inverse
 
 ---
 
@@ -186,7 +204,7 @@ template:inverse
 ##How did this take place?
 
 ---
-
+template:inverse
 ---
 
 template:inverse
@@ -229,7 +247,6 @@ layout:false
 ]
 
 ---
-
 
 .left-column[##Argument
 ###Publicity
@@ -425,11 +442,14 @@ template:inverse
 
 ###Historical "big data"
 
+Measuring discourse
+
 9+ million newspaper issues from 1880 to 1940:
 
+* ChroniclingAmerica, Newspapers.com, NewspaperArchive, AHN
 * more than 3000 papers, nation-wide
 * Big-city dailies, small-town weeklies
-* 1.2 million articles explicitly mention lynching
+* 1.2 million pages explicitly mention lynching
 ]
 
 ---
@@ -453,6 +473,7 @@ Yearly from 1880 to 1900
   * Miles of track more than doubled
   * Centrality in the network
   * Travel time between counties
+  * "Access" to press/audiences
 ]
 
 
@@ -461,20 +482,19 @@ template:inverse
 
 <iframe width='100%' height='100%' frameborder='0' src='http://mdweaver.github.io/times_year' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
-
 ---
 
 template:inverse
 
-##Results
+##Analysis
 ---
 .left-column[
-  ## Results
+  ## Analysis
 ]
 
 .right-column[
 
-###Four implications
+###Five implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -500,7 +520,7 @@ Probability of lynching mention by distance
 
 .right-column[
 
-###Four implications
+###Five implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -524,7 +544,7 @@ template:inverse
 
 .right-column[
 
-###Four implications
+###Five implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -543,14 +563,14 @@ class: center, middle
 
 Probability of lynching mention by betweenness centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/betweenness_baseline_any_article.svg" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/betweenness_baseline_any_article.svg" width="75%" height="75%"></img>
 
 ---
 class: center, middle
 
 Probability of lynching mention by eigenvector centrality <br> (deciles)
 
-<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/eigenvector_baseline_any_article.svg" width="75%" height="75%"</img>
+<img src="https://dl.dropboxusercontent.com/u/8139153/presentation/eigenvector_baseline_any_article.svg" width="75%" height="75%"></img>
 
 ---
 .left-column[
@@ -559,7 +579,152 @@ Probability of lynching mention by eigenvector centrality <br> (deciles)
 
 .right-column[
 
-###Four implications
+###Five implications
+
+The probability that a lynching is reported in a newspaper:
+
+1. **increases** as distance **decreases** between the lynching and the paper. ![check][]
+
+2. **increases** as travel times **decrease** between the lynching and the paper. ![check][]
+
+3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**. ![check][]
+
+Coverage of lynching is more critical
+
+4. as the **distance** from the lynching to the newspaper **increases**.
+
+
+]
+[check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+
+---
+template:inverse
+
+## How do you measure discourse?
+
+---
+
+## First, some background
+
+---
+.left-column[
+  ## Discourses
+  ### Pro-
+]
+
+.right-column[
+
+###Arguments in favor
+* Inefficiency/corruption of justice system
+* Popular sovereignty
+* Law does not deter criminals
+* Threat of black criminality/sexuality
+* 'Natural' response to rape
+
+]
+
+---
+.left-column[
+  ## Discourses
+  ### Pro-
+]
+
+.right-column[
+
+###Justificatory Narratives
+
+* Protagonists
+  * Sober, rational, all/leading citizens of town
+  * Passive voice: no individuals did the lynching
+  * Lynching was natural/unavoidable response
+* Antagonists
+  * Black men dehumanized: "savages", "brutes", "beasts"
+  * Assumed to be guilty
+  * By default shown as sexually aggressive, criminals
+* Lynched *because* guilty
+
+]
+
+---
+
+.left-column[
+  ## Discourses
+  ### Pro-
+  ### Anti-
+]
+
+.right-column[
+
+###Arguments
+
+Refuted pro-lynching claims
+
+* e.g. rape alleged in minority of cases
+* Lynching a threat to law and order
+* Lynching part of a system of racial violence
+  * e.g. Du Bois: "The police is the mob. The courts are the lynchers."
+
+###Narratives
+  Black voices counter white narratives about lynching
+  * NAACP investigations
+  * Ida Wells publications
+  * Scottsboro Trials
+]
+
+---
+
+.left-column[
+  ## Discourses
+  ### Pro-
+  ### Anti-
+  ### Measure
+]
+
+.right-column[
+
+### Measurement
+
+* Keywords and phrases corresponding to pro- and anti-lynching rhetoric
+* Appearance of keywords in articles
+* Scaled:
+
+`$$scaled_j =  \left( \frac{1}{n_d} \sum_{i=1}^{n_d} discourseWord_i \right) - \left( \frac{1}{n} \sum_{i=1}^{n} Word_i \right)$$`
+
+]
+
+---
+
+.left-column[
+  ## Discourses
+  ### Pro-
+  ### Anti-
+  ### Measure
+]
+
+.right-column[
+
+### Measurement
+
+- Scaling accounts for relative frequency of discourse keywords compared to relative frequency of all words.
+- Take difference between anti- and pro- lynching discourse.
+
+]
+
+
+---
+template:inverse
+
+### Find that coverage is more critical at greater distances
+
+
+---
+.left-column[
+  ## Results
+]
+
+.right-column[
+
+###Five implications
 
 The probability that a lynching is reported in a newspaper:
 
@@ -576,54 +741,408 @@ Coverage of lynching is more critical
 
 ]
 [check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+
+---
+.left-column[
+  ## Results
+]
+
+.right-column[
+
+###Five implications
+
+Lynching declines faster:
+
+5. in places more 'exposed' to national public sphere ![check][]
+
+]
+[check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+
+
 ---
 template:inverse
 
-###More distant coverage used more critical (and less justificatory) rhetoric 
+### Find that lynching rates are lower in places with
+
+#### increasing railroad centrality 
+#### greater 'access' to places with newspapers/circulation
 
 ---
 template:inverse
 
-##What about agency?
+## Limitations?
 
 ---
 
 .left-column[
-  ##Next steps
-  ###Activists
+  ## Limitations
 ]
 
 .right-column[
-###Newspaper editors didn't start the rhetorical change
-Black activists 
-* investigated lynchings (at their peril)
-* published alternative narratives
-* orchestrated anti-lynching publicity campaigns
-* cultivated relationships with the white press
+
+### Discourse
+
+* Which anti-lynching discourses won out?
+* Where did they emerge?
+* How were coded defenses of lynching used?
+* Did white newspapers adopt language from activists?
+
+### Keywords are too blunt to answer these questions
+
 
 ]
-
----
-
-template:inverse
-
-##Did public condemnation reduce lynching?
 
 ---
 
 .left-column[
-  ##Next steps
-  ###Activists
-  ###Shaming?
+  ## Limitations
 ]
 
 .right-column[
-###Difficult to prove, but tentatively:
 
-####Lynching rates declined faster in counties more central in railroad networks.
+### Keywords
+
+* Ignore context, frequency
+* Keyword lists incomplete (and ambiguous!)
+
+### But... we can't read millions of pages
 
 ]
 
+
+---
+
+.left-column[
+  ## Improvements
+  ### Data
+
+]
+
+.right-column[
+
+### New data
+
+Full text versus keyword searches
+
+* 3 archives (ChroniclingAmerica, Newspapers.com, NewspaperArchive)
+* 16 million issues between 1870 and 1940.
+* 9 million issues, 70 million pages obtained so far
+
+]
+
+
+---
+
+.left-column[
+  ## Improvements
+  ### Data
+
+]
+
+.right-column[
+
+### Advantage:
+
+* More information, more context
+* Identify more words/phrases associated with discourses
+* Apply machine learning tools to 'read'/'classify' texts
+
+]
+
+
+---
+
+
+.left-column[
+  ## Improvements
+  ### Data
+  ### Tools
+
+]
+
+.right-column[
+
+### How to classify?:
+
+Many common options:
+
+* LDA, LSI, SVM, etc.
+* Tools create 'bag of words' for each document
+* Supervised, unsupervised classification of documents, based on co-occurrence of words.
+
+
+]
+
+---
+class: center, middle
+
+<img src="http://cdn.iopscience.com/images/0305-4470/37/12/L01/Full/jpa176315ueq02.gif" width="75%" height="75%"></img>
+
+---
+
+
+.left-column[
+  ## Improvements
+  ### Data
+  ### Tools
+  ### Problem
+
+]
+
+.right-column[
+
+### Cannot easily use BoW with newspaper data!
+
+Why not?
+
+]
+
+---
+
+RICHMOND, VA., SATURDAY, JUNE 2, 1917. ? TEN PAGES.
+-??VrVK" ?RAIN
+PRICE, TWO CENTS
+rOUIHOLD GANED
+Crown Prince Partly Suc
+cessful in Attacks Near
+Moulin-de-Laffaux.
+FORCED TO RETIRE FROM
+MOST OF WON POSITIONS
+Both London and Berlin Report
+Increased Artillery Firing
+in Ypres Sector.
+J
+NO CHANGKS O.N OTHKR FRONTS
+Internal Opposition Faring New Rus
+sian Gn\eminent Grows
+More Serious.
+Continuing his isolated attacks
+against the French lines. tli<? i Itimun
+Crown Prince on Friday thr*w his
+troops forward north of Moulin-de
+Laffaux. ?hcrc the battle front bends
+northeast of Solutions and against the
+battle-scarred positions ti hill 3(M. oil
+the Verdun front.
+Checked on Thursday in his attempt
+to hold positions won on Mont Maut.
+in Champagne. the ? rown prince h.id
+better success in his efforts to break
+the French line ne.n- Moulin-de-Laffaux
+The Germans gained a foothold in mmiic
+advanced trench**, and. while counter
+attacks by the French troops forced
+them to retire from most of the ele
+ments taken, they still maintain tenure
+of a portion of them French artillery
+tire sufficed to check the litrman etforts
+against hill 304. the Hermans suffering
+heavy losseF
+
+---
+
+?HE Daily ]ftiwj& Sormii and im\n Issoes — 8 Editions DaUr. no Sunday sumo*. ^ Tenuis or subscription. •it '\ \L i "copr^S hbu fliirettTHE DAILY NEWd, 133 W»v,,Chlc.itc,Ill *nlert.l si P.O. at lihlcnin), III.. UHcanUnu matter ''' 'i m!-ii ■ ,r ■ u,.oi,','!. '.'.'} «.v«.:« T"lr.l «ebl !.«■«*»> finn • „v.-t.., ill a-a.lP'K) i'mf\'\'"l>."!rVl. '"""'"f.ulH li. » n I * Huirly.ic long the .ona of the board of n from adverse crltl-owtpapnr discussion, I n problem ot such y ni Hint with which leal, wits bent fur the t. JI.MiuothoUAir.r ctt mitny occasions y possibly linvo boon o Is now ft cllrcot n«-u.,.1 lew Itself such otillaMti (tEil the time nit not bo .-opeuloil. It should imcliilod nt to niiy of Its in ii I n i It stands, It represents the igunl In ouo of th« greatest Ih.i ooiinlry. Within thellfu-ikIii K'ltieratlon it oily of mure ii i 'iiiiliitluii hits risen on the >■> M etilgati, mid tho birth of ury will probably witness Its .eronsml to two millions. Tho i:r..w-i|i «( Chicago has crcly ) pcoplo ot lllr: research, cxhiius- nit will permanently dispose igo senate problem. Side by • sanitary problem the dot ot iiifrelal waterwSy to toiiolll MI'-ls-lppi valley and tho been worked out and Is •o In the prormitdi'nlnsgo law. fit >• of Hie Joint project was eitcnil by Iho nYurwhollu-Ive vote ot tho peoplo ot tho ' [aw v III] clli," mi. s l.illc of repealing tin uy thU organized olW *■> ns lo radically chung- it ennnot rulse sul mlj'.ers, In carry o' law. This class '■pie, the fundd will .', of Hie drainage i utatlon In demanding ) b« had In ell mallei* ivcirnre "( lief Citizens. will reap the Leuillts waterway project, fllicl, >f.n slinre uf tho cost s.iniii 
+
+---
+
+.left-column[
+  ## Improvements
+  ### Data
+  ### Tools
+  ### Problem
+
+]
+
+.right-column[
+
+### Cannot easily use BoW with newspaper data!
+
+Too many transcription errors!
+
+"Word" matrix would either:
+
+1. throw out lots of text
+2. matrix would be HUGE
+
+Can't OCR images again: 
+
+* Images are proprietary (some sites)
+* Too much time
+
+]
+
+
+---
+template:inverse
+
+# What to do?
+
+---
+
+
+.left-column[
+  ## Improvements
+  ### Data
+  ### Tools
+  ### Problem
+  ### Solution?
+]
+
+.right-column[
+
+### Word Embeddings
+
+Algorithms examine word context to places words in a 'low dimensional space'
+
+* word2vec (Google)
+* GLoVE (Stanford)
+* fastText (Facebook)
+
+Rather than a matrix of all words and all documents:
+
+* Each word is a point in k-dimensional space
+
+]
+
+---
+class: center, middle
+
+word2vec
+
+<img src="https://i.ytimg.com/vi/xMwx2A_o5r4/maxresdefault.jpg" width="75%" height="75%"></img>
+
+---
+class: center, middle
+
+2d
+<img src="https://www.tensorflow.org/images/tsne.png" width="75%" height="75%"></img>
+
+
+---
+class: center, middle
+
+3d
+<img src="https://ai2-s2-public.s3.amazonaws.com/figures/2016-11-08/6c807b9500d96e349bcd3b6215e2b8a0392576b4/3-Figure1-1.png" width="100%" height="75%"></img>
+
+---
+
+.left-column[
+  ## Improvements
+  ### Data
+  ### Tools
+  ### Problem
+  ### Solution?
+]
+
+.right-column[
+
+### Word Embeddings
+
+Nice properties:
+
+* Performs well on analogies:
+* Man : King :: Woman : ? => Queen
+
+Importantly:
+
+* Spelling variations appear as similar in vector space:
+* Uses only nearby words (computationally easy)
+* Shown to work well with large amounts of data
+
+
+]
+
+---
+model trained on 10000 pages
+
+```python
+>>> model.most_similar(['negro'])
+[(u'negroes', 0.6612796783447266), 
+(u'negro_who', 0.6406577825546265), 
+(u'three_negroes', 0.6346499919891357), 
+(u'lynched', 0.6319043636322021), 
+(u'four_negroes', 0.6086046695709229), 
+(u'negro_named', 0.602995753288269), 
+(u'ne_gro', 0.5969215035438538), 
+(u'another_negro', 0.5911403894424438), 
+(u'was_lynched', 0.587907612323761), 
+(u'negroes_who', 0.581841230392456)]
+```
+---
+model trained on 10000 pages
+
+```python
+model.most_similar(['president'])
+[(u'vice_president', 0.6757242679595947), 
+(u'elected_vice', 0.6535314917564392), 
+(u'piesident', 0.6531698703765869), 
+(u'vico_president', 0.6483473777770996), 
+(u'vice_presi', 0.6471863985061646), 
+(u'rresident', 0.6465880870819092), 
+(u'presideut', 0.6442601084709167), 
+(u'third_vice', 0.6406596899032593), 
+(u'vice_presi_dent', 0.6399085521697998), 
+(u'elected_president', 0.6370867490768433)]
+```
+---
+template:inverse
+
+# How to use this?
+
+---
+
+.left-column[
+  ## Workflow
+]
+
+.right-column[
+
+1. Clean text
+
+2. Train word vectors
+
+3. Create document-level scores
+
+4. Train document classifier
+
+]
+
+---
+
+.left-column[
+  ## Workflow
+]
+
+.right-column[
+
+Happy to discuss specifics (and suggestions) in Q & A
+
+1. **What should be "cleaned"?** e.g. remove punctuation? stop words? words not in dictionary?
+
+2. **Which model?** and which parameter settings?
+
+3. **How to aggregate scores to documents?** 
+
+	* mean? weighted mean? other?
+
+4. **Which classifier??**
+	
+	* How many categories?
+	* How many trained examples?
+
+]
+
+---
+template:inverse
+
+## Broader relevance?
+
+---
+template:inverse
+
+### Currently in planning stage
+
+## Suggestions welcome!
 
 ---
 
@@ -631,15 +1150,6 @@ template:inverse
 
 #Thank you
 
----
-template:inverse
-
----
-template:inverse
-
-##Newspapers in sample over time
-
-<iframe width="100%" height="95%" frameborder="0" src="https://mdweaver107.cartodb.com/viz/b49b091c-6656-11e5-bbf5-0e9d9d43ad5d/embed_map?zoom=5&center_lat=39.83&center_lon=-98.583" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 
 
@@ -650,6 +1160,20 @@ template:inverse
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
     <script type="text/javascript">
       var slideshow = remark.create();
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+          tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
     </script>
   </body>
 </html>
