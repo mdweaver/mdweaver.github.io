@@ -454,16 +454,6 @@ A claim from **personal experience**:
 
 - We **observe** the world **selectively**
 
-# What is social science?
-
-## Monday {.build}
-
-### What are the bases for claims?
-
-### What are **unscientific** bases for claims?
-
-### Today: what makes social science different?
-
 ## Unscientific bases for claims: {.build}
 
 ### Authority
@@ -472,59 +462,7 @@ A claim from **personal experience**:
 
 ### Personal experience
 
-### Not an exhaustive list
-
-
-
-## Bases for Claims: Personal experience
-
-### Personal experience can be misleading:
-
->- We **generalize too quickly** from a small number of cases and our experience
-
-## {.build}
-
-### "I have a gluten intolerance. I had [some product] a few times and each time I felt sick to my stomach afterwards."
-
-### "Donald Trump is protecting manufacturing jobs. Carrier kept jobs after he pressured them."
-
-## Bases for Claims: Personal experience
-
-### Personal experience can be misleading:
-
-- We **generalize too quickly** from a small number of cases and our experience
-
->- Our exposure to the world may be **skewed**
-
-##
-
-### "Poverty isn't a problem here, I don't know anyone who had trouble making ends meet."
-
-
-## Bases for Claims: Personal experience
-
-### Personal experience can be misleading:
-
-- We **generalize too quickly** from a small number of cases and our experience
-
-- Our exposure to the world may be **skewed**
-
->- We **observe** the world **selectively**
-
-##
-
-### "I'm afraid of going to large public events out of fear of a terrorist attack or mass shooting. But I drive to work everyday."
-
-## Bases for Claims: Personal experience
-
-### Personal experience can be misleading:
-
-- We **generalize too quickly** from a small number of cases and our experience
-
-- Our exposure to the world may be **skewed**
-
-- We **observe** the world **selectively**
-
+### What are scientific bases for claims?
 
 ## Science not always preferred:
 
@@ -535,375 +473,162 @@ A claim from **personal experience**:
 [Click me](https://www.vox.com/2017/12/16/16784498/cdc-seven-words-science-transgender-fetus)
 
 
-# Scientific bases for claims:
+## Features of Science:
 
-## Features of Science: {.build}
+### Recapitulate Wednesday
 
-### Transparent procedures
-
-### Systematic use of evidence
-
-###Test claim against alternatives
-
-### Acknowledge uncertainty
-
-## Transparent procedures {.build}
-
-### How did you arrive at your conclusion
-
-- What data / observations did you use?
-- What comparisons did you make?
-- What choices as a researcher did you make, and why
-
-### Why?
-
-- Others can know the assumptions required to find result
-- Others can question your choices
-- Others can replicate your work
-
-## Systematic Use of Evidence {.build}
-
-### Observations we make:
-
-- Based on clear rules for selection
-- clear rules for comparison
-- avoids "cherry-picking" 
-
-### Doesn't need to be statistical:
-
-- We can do this using historical evidence, personal observation
-- As long as we set clear rules and procedures to minimize "cherry-picking"
-
-## Consider alternatives {.build}
-
-### Why?
-
-- Openness to being wrong
-- One positive piece of evidence can be consistent with many claims
-
-### Test your claim against other competing claims
-
-- Whichever claim "survives" many different tests is best
-
-## Acknowledge uncertainty
-
-Two ways:
-
-### Limitations of your finding:
-
-- Openness about how your evidence could still be wrong
-- What questions remain unanswered after your study (what didn't it tell us)
-
-### How certain or precise are our answers?
-
-- Acknowledge possibility of chance relationships
-- Given this, how "confident" can we be about our results being real?
+### Today: what are key aspects of science
 
 
-# An example
 
-## An issue {.build}
+## Issue:
 
-#### Political views tied to upbringing, deep beliefs, cultural values
+how do people change their minds?
 
-- Not easy to change 
-- Challenging belief on one issue can call all into question
+political views can be attached to deep values, lifelong beliefs
+- changing your mind can call all other values into question
 
-#### But people do change their values on important questions
+how can people change their views despite these obstacles?
 
-# How does this happen?
+## How did people change their minds about gay marriage?
 
-## One example: 
-
-### How did people change their minds about same-sex marriage?
-
-- lots of opposition, rooted in cultural norms, religious belief, tradition
-
-- attitudes changed within generations
-
-## One example: {.centered}
-
-<img src="./gay_marriage_attitudes.png" height=100%>
+- lots of opposition, rooted in cultural norms, religious belief
+- how did many people change their views?
 
 ## One answer:
 
-### Contact with a person who is homosexual can change minds
-
-- So-called "contact hypothesis" applied to many excluded minorities
-
-- Contact may humanize the other group, encourage taking their perspective, dispel prejudices
+- meeting/knowing a person who is gay and hearing their perspective can be more persuasive
 
 ## Some evidence
 
-<iframe width=100% src="https://www.youtube.com/embed/fw9yvuVOp6A?autoplay=0" frameborder="0" allowfullscreen></iframe>
+videos: 
 
-## Some evidence
+son rob portman?
 
-<iframe width=100% src="https://www.youtube.com/embed/alx2fB9Hu1k?start=24&end=113&autoplay=0" frameborder="0" allowfullscreen></iframe>
+## 
 
-## What are the bases of these claims? {.build}
+what are the basis of these claims?
 
-### Personal experience
+## Should we believe them?
 
-### Common sense
+- lots of other things change
+    - television
+    - public presence
+    - political leaders advocating for it
+    
+- people who were more open to changing their minds are the ones children come out to, maintain relationship with,
 
-### Authority?
+- people more open to changing their minds more likely to get spoken to about it
 
-## Does this prove contact works?
+- people likely to meet and discuss with people who are homosexual might be in places that have weaker cultural norms (people choose where to live)
 
-### Many other things are changing, not just contact:
+## An investigation
 
-- Portrayals on television
-- Public figures who are homosexual
-- Political leaders/religious leaders suppoting same-sex marriage
+### Experiment
 
-## Does this prove contact works?
+Does exposure to persuasive message from homosexual/heterosexual person make a difference?
 
-### Who has contact?
+## Experimental setup
 
-#### People to whom ...
+- During campaign in CA
 
-- Children, relatives, or friends come out
-- Strangers reveal their sexual orientation
+- X number people solicited to enter online survey
 
-... may be more open-minded and persuadable. That is why they have these experiences.
+- people randomized to receive different possible treatments:
+  - canvasser for gay rights who is straight/gay
+  - canvasser for ? who is ?
+  - no visit
 
-## Does this prove contact works?
-
-### Where does contact happen?
-
-#### Places where ...
-
-- People are likely to meet and talk to people who are homosexual 
-
-... may have weaker cultural norms or institutions opposing same-sex marriage. More tolerant places may be more attractive to gay people or make them more comfortable being out. Thus, contact occurs in more tolerant places.
-
-## An investigation {.build}
-
-### Researchers conduct an experiment:
-
-Can a single conversation change minds on divisive social issues, such as same-sex marriage?
-
-Are conversations about same-sex marriage more persuasive when they are with a gay person?
-
-## An investigation: set up
-
-- Gay-rights organization canvassed for same-sex marriage in California
-- Researchers worked with them to randomize which people received different "treatments"
-
-### Subjects
-
-- 972 registered voters 
-- living in precincts that voted to ban same-sex marriage in 2008
-
-## An investigation: set up
-
-### Treatments
-
-Subjects either saw:
-
-- Canvasser **for** same-sex marriage who was **straight** or **gay**
-- Canvasser **for** recycling program who was **straight** or **gay**
-- No canvasser
-
-### Survey
-
-- Answered survey questions about homosexuality, same-sex marriage
-- From 5 days after canvass to 280 days
-
+- Over the following days and weeks, people continued to participate in the survey
+  - answer questions about attitudes on homosexuals, gay marriage
+  
 ## Findings:
 
-<img src="./lacour_1.png" width = 60%>
+Figure:
 
-## Transparent Procedures: {.build}
+- main results: more of an effect and persistent effect of gay canvassers
 
-### Paper: 4 pages
+## Transparent Procedures:
 
-### Supplementary Appendix: 24 pages
+how did they get their survey sample
 
-## Treatments:
+## what were the experimental treatments
 
-<img src="./lacour_3.png" height = 100%>
+## how were people assigned to treatment
 
-## Who was treated?
-
-<img src="./lacour_2.png" height = 100%>
-
-## How did they get treated?
-
-<img src="./lacour_4.png" height = 100%>
-
-## What were the survey questions?
-
-<img src="./lacour_5.png" width = 100%>
+## What were the survey questions they answered
 
 ## Systematic use of evidence:
 
-## What was the sample?
+- what is the sample
 
-<img src="./lacour_8.png" width = 100%>
+- did they discard any data?
 
-## What were the comparisons?
-
-<img src="./lacour_9.png" width = 100%>
+- show us all of the results (not just the ones that speak the best)
 
 ## Systematic use of evidence
 
-<img src="./lacour_10.png" width = 100%>
+- figures show change
 
-## Consider alternatives: {.build}
+## possible bias
 
-### Could it be that some event (other than canvass) led to change?
+- not blind: what do canvassers know? 
 
-- If only compared before/after conversation with gay canvasser, would be a problem
-
-##
-
-<img src="./lacour_11.png" width = 100%>
-
-## Consider alternatives:
-
-### But different treatments help:
-
-- Can compare to "control" with no exposure
-- Can compare to straight pro-marriage equality canvasser
-
-## Consider alternatives:
-
-### Could it be that effect is from having someone come to the door?
-
-- Not the content or the contact, simply being canvassed
-
-##
-
-<img src="./lacour_11.png" width = 100%>
-
-## Consider alternatives:
-
-### Placebo treatments help:
-
-- Recycling treatments show no effects
-- Rule out "canvass-only" effect
-
-## Consider alternatives:
-
-### What if gay canvassers are different that straight in other ways?
-
-- Might be better able to articulate issue
-- Might be more motivated, so more persuasive
-- Might be different in other ways that make them persuasive
-
-## Canvassers rate themselves similar:
-
-<img src="./lacour_7a.png" width = 100%>
-
-## MTurkers rate canvassers similar:
-
-<img src="./lacour_7b.png" width = 100%>
-
-## Canvassers seem equally motivated
-
-<img src="./lacour_12.png" width = 100%>
-
-## Canvassers gave similar pitch
-
-<img src="./lacour_14.png" width = 100%>
-
-## More transparency!
-
-<img src="./lacour_6.png" width = 100%>
+- how do they prevent bias? what can they say?
 
 ## Uncertainty
 
-### Statistical uncertainty
-### Uncertainty in conclusions
+results have confidence intervals
 
-## Results have confidence intervals
+- limits to results in the paper
 
-<img src="./lacour_11.png" width = 100%>
+## Testing our argument against alternatives:
 
-## Results leave questions
+What could go wrong?
 
-<img src="./lacour_15.png" width = 70%>
+- is it just any appeal/argument, but who delivers iT?
+  - compare two different treatments
+  
+- is it just any visit that changes your mind? 
+  - or could something else have changed like a major event that changed minds?
+  - placebo treatments
+  
+- could it be that the effects are ephemeral (only change people with weak views and they go back to what they thought before)
+  - long term change
+ 
+- is this just about the particular question we asked? across multiple questions
 
-## Results leave questions
+## What is important here
 
-<img src="./lacour_16.png" width = 100%>
+four key attributes: all are vital 
 
-## Takeaway: {.build}
+but...
 
-#### Transparency
-#### Systematic evidence
-#### Considering alternatives
-#### Acknowledging uncertainty
+transparency is key
 
-### Key attributes: all are vital 
+## Why?
 
-## BUT
+clip on lacour faking data, broockman and kalla replicating the paper
 
-# Transparency is key
+## Shouldn't this concern us?
 
-## Why? {.build}
+Well, a little...
 
-<img src="./lacour_17.png" width = 80%>
+But:
 
-## WHAAAAAAAT?!
+researchers saw important question, more work needed and tried to reproduce the study
 
-<iframe width=100% src="https://www.youtube.com/embed/zyLcNWFbwsc?start=890&end=1080&autoplay=0" frameborder="0" allowfullscreen></iframe>
+- could not come up with same result (not enough people signed up)
+- but because of transparent procedures, something seemed fishy. able to evaluate the rest of the study
 
-## Shouldn't this concern us? {.build}
+## But replication is valuable:
 
-### YES
+New study:
 
-### BUT
-
->- Researchers saw important question
->- Uncertainty => more work needed 
->- Attempt to reproduce the study
->- Could not come up with same result 
-
-#### Transparent procedures helped reveal the fraud!
-
-## Replication is valuable!
-
-Broockman and Kalla ultimately run new experiment!
-
-<img src="./bk_1.png" width = 100%>
-
-## New experiment
-
-- Trans-rights organization canvassed to reduce transphobia in Miama, FL
-- Researchers worked with them to randomize which people received different "treatments"
-
-### Subjects
-
-- 1825 registered voters 
-- Drawn from responders to invitation to join online survey
-
-## New experiment
-
-### Treatments
-
-Subjects either saw:
-
-- Canvasser on law againts transgender discrimination who was **cis-gender** or **transgender**
-- Canvasser **for** recycling program who was **cis-gender** or **transgender**
-
-### Survey
-
-- Answered survey questions about discrimination law, transgender tolerance
-- From 3 days after canvass to 3 months
 
 ## Finding
 
-Canvasser asking people to consider time when they were judged negatively for being different
+## 
 
-- Substantially reduced opposition to discrimination law; increased tolerance
-- Effects were persistent even 3 months out
-- Effects did **not** depend on gender identity of the canvasser.
-
-##
-
-<img src="./bk_2.png" width = 100%>
 
 
