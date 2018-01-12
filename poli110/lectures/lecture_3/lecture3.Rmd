@@ -751,6 +751,59 @@ Subjects either saw:
 
 <img src="./lacour_10.png" width = 100%>
 
+
+
+# What is social science
+
+## Wednesday: Recap
+
+- Identified attributes of social scientific evidence
+
+- Contrasted to unscientific evidence
+
+- Examples
+
+
+## Key attributes
+
+### Transparent procedures
+
+### Systematic use of evidence
+
+###Test claim against alternatives
+
+### Acknowledge uncertainty
+
+## Example: {.build}
+
+### How do people change their minds on important issues?
+
+### How do people change their minds about same-sex marriage?
+
+### Does contact with gay canvasser make appeals for same-sex marriage more persuasive?
+
+## Basic details of study
+
+- Experiment on registered voters
+
+- Two treatment, Two placebo, One control group
+
+- Surveyed over 9 months
+
+>- **Gay canvassers for same-sex marriage increase support, even months out**
+
+## Study is scientific {.build}
+
+### Transparent procedures
+
+- detailed explanation of methods
+
+### Systematic evidence
+
+- Clear rules for who was included, how assigned treatment
+
+### Consider alternatives?
+
 ## Consider alternatives: {.build}
 
 ### Could it be that some event (other than canvass) led to change?
@@ -888,22 +941,319 @@ Subjects either saw:
 
 - Canvasser on law againts transgender discrimination who was **cis-gender** or **transgender**
 - Canvasser **for** recycling program who was **cis-gender** or **transgender**
+- Canvasser in treatment: asked people to consider time when they were judged negatively for being different
 
 ### Survey
 
 - Answered survey questions about discrimination law, transgender tolerance
 - From 3 days after canvass to 3 months
 
-## Finding
+## Findings {.build}
 
-Canvasser asking people to consider time when they were judged negatively for being different
-
-- Substantially reduced opposition to discrimination law; increased tolerance
-- Effects were persistent even 3 months out
-- Effects did **not** depend on gender identity of the canvasser.
+### Substantially reduced opposition to discrimination law; increased tolerance
+### Effects were persistent even 3 months out
+### Effects did **not** depend on gender identity of the canvasser.
 
 ##
 
 <img src="./bk_2.png" width = 100%>
 
+# Another example
 
+## Ethnic and Religious violence {.build}
+
+### Major problem today
+
+### Major problem in much of 20th century
+
+## Rohingya Muslims in Myanmar
+
+## Ethnic cleansing in {.build}
+
+### Syria, Iraq
+
+### Georgia/Abkhazia
+
+### Rwanda
+
+### Balkans
+
+### Northern Ireland
+
+### Israel-Palestine
+
+### Indian Partition
+
+### Holocaust
+
+### Armenian Genocide
+
+## Multiculturalism Policy:
+
+### Looking at these cases, and example of India from last week...
+
+... do government policies that recognize and accommodate ethnic, cultural, religious difference
+
+- create integration, cooperation, and peace?
+- foster division and conflict?
+
+## Research question:
+
+### Do government policies aimed at increasing tolerance and cooperation between ethnic groups actually reduce conflict?
+
+## Some evidence:
+
+<iframe width=100% src="https://www.youtube.com/embed/UKG76HF24_k?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+
+## Difficult to answer:
+
+### How do we know state multicultural policy works or not?
+
+>- Attitudes might change for other reasons
+>- Attitudes might not change but would have been worse without policy
+>- What kinds of places get multicultural policies versus not?
+>- What kinds of places actually enforce policy vs. not?
+
+## A social scientific approach: 
+
+### Question:
+
+> Can interethnic relationships be durably transformed by a state or government in a way that outlives the government itself?
+
+## Study Design:
+
+<img src="./romania_1.png" width=80%>
+
+## Study Design:
+
+### Use history
+
+- Neighboring regions of Romania: **Transnistria** and **Bessarabia**
+- Primarily qualitative/historical comparison
+
+### BOTH regions:
+
+- Part of Russian Empire until 1918
+- Government supported very anti-Semitic policies
+- Waves of pogroms against Jews
+
+## Study Design:
+
+### Divergence:
+
+- **Transnistria** became part of Soviet Union
+- **Bessarabia** became part of Romania
+- Soviet Union made policies to stop bigotry toward Jews, integrate Jews
+- Romania continued state anti-Semitic policies
+
+### Governments fall
+
+- 1941, both regions become Romania with Nazi-backed regime
+- Romanians some of most active collaborators
+
+## Findings: {.build}
+
+From accounts of survivors:
+
+### Bessarabia
+
+- Gentiles active collaborators with Nazis
+- Widespread violence against Jews
+
+### Transnistria
+
+- Gentiles far less likely to work with Nazis
+- Actively protected Jews
+
+
+### State policy mattered
+
+- Even after Soviet Union lost control
+
+## Findings:
+
+### Survivor account from Bessarabia:
+
+> "[w]hen the war broke out the Moldovans immediately burned down our house. They were the ones who helped the Germans, they burned houses and people. ... The Moldovans were worse than the SS. ... They started to burn houses, chase out people. ... We didn't have anything that could be taken away, they were searching and grabbing from [Jews] who had things."
+
+
+## Findings:
+
+### Survivor account from Transnistria:
+
+> "The majority [of the locals] did not perceive the Jews with alienation ... but rather ... the majority perceived the occupying power as alien, but the Jews as theirs."
+
+## Findings:
+
+<img src="./romania_8.png" width=100%>
+
+
+## Why should we believe this? {.build}
+
+### Couldn't they be cherry picking?
+
+### Isn't this just (second-hand) personal experience?
+
+## Acknowledge uncertainty
+
+<img src="./romania_2.png" width=100%>
+
+## Systematic Evidence
+
+<img src="./romania_5.png" width=100%>
+
+## Systematic Evidence
+
+<img src="./romania_6.png" width=100%>
+
+## Systematic Evidence
+
+### How did they get their survivor accounts?
+
+- Holocaust Museum in Washington, DC and Israel
+- All testimony of survivors in these regions
+- Random sample of 50
+- Identify reports of interactions between Jews and Non-Jews
+- Categorize interactions
+
+## Systematic Evidence
+
+Validate survivors
+
+<img src="./romania_3.png" width=100%>
+
+## Systematic Evidence
+
+<img src="./romania_4.png" width=100%>
+
+## Transparent Procedures:
+
+<img src="./romania_7.png" width=100%>
+
+## Transparent Procedures:
+
+We could replicate this data:
+
+- Go to archives
+- Select sample
+- Use their clear rules for classification
+
+## Transparent Procedures:
+
+<img src="./romania_8.png" width=100%>
+
+
+## Acknowledge uncertainty
+
+<img src="./romania_10.png" width=100%>
+
+## Consider alternatives: {.build}
+
+<img src="./romania_11.png" width=100%>
+
+#### Maybe Ukrainians more tolerant of Jews, more Ukrainians in Transnistria.
+
+>- It isn't government policy
+
+## Consider alternatives:
+
+<img src="./romania_12.png" width=100%>
+
+#### Ukrainians outside USSR active in Holocaust
+
+>- Something about the USSR
+
+## Consider alternatives:
+
+<img src="./romania_13.png" width=100%>
+
+#### Maybe Jews in Bessarabia were wealthier, more desirable target for violence
+
+>- Difference is due to opportunity/motive for violence, not government policy
+
+## Consider alternatives:
+
+<img src="./romania_15.png" width=100%>
+
+#### Some Jews in Transnistria were better off, benefited from Soviets but no violence
+
+## Consider alternatives:
+
+<img src="./romania_14.png" width=100%>
+
+#### No violence against other wealthy minorities in Bessarabia
+
+## What they *could* have said: {.build}
+
+### Trust us, we're experts!
+
+>- authority
+
+### We've spent lots of time there, Bessarabia is more anti-Semitic
+
+>- personal experience
+
+### Soviets were inclusive, of course that made a difference
+
+>- commonsense
+
+## What did they do? {.build .columns-2}
+
+### Transparent procedures
+
+### Systematic evidence
+
+- Clear rules for collection, coding
+- Validation against other sources
+
+### Consider alternatives
+
+- Consider several possible objections/counter-arguments
+- Go looking for evidence that would prove them wrong
+
+<p class="forceBreak"></p>
+
+
+### Acknowledge Uncertainty
+
+- open about possible problems
+- limits of evidence
+- consider statistical variability
+
+## Why do they do this? {.build}
+
+### Credibility
+
+### Do we need to believe every study?
+
+### No.
+
+## Science as collective, on-going {.build}
+
+### Individual studies may be wrong
+
+### But
+
+### A *community* of researchers can:
+
+>- Evaluate work of others (transparency)
+>- Replicate prior work (transparency)
+>- Identify/eliminate errors (systematic evidence, acknowledge **statistical** uncertainty)
+>- Test claims against additional counter arguments (consider alternatives)
+
+## Features of science
+
+### Because of this, science can challenge other bases for claims:
+
+- Give counter-intuitive answers (against common-sense)
+- Challenge our personal impressions
+- Challenge "authorities"
+
+## Next
+
+### What kinds of claims are there?
+
+### What claims can be scientifically evaluated?
+
+# Slides posted this weekend

@@ -626,9 +626,44 @@ researchers saw important question, more work needed and tried to reproduce the 
 New study:
 
 
-## Finding
+# What is social science
 
-## 
+## Wednesday
+
+- Key attributes of social science evidence (vs. unscientific evidence)
+
+
+## Key attributes
+
+## Example:
+
+topic
+
+question
+
+study question
+
+## Basic details of study
+
+## study meets attributes
+
+## details on fraud
+
+...
+
+## why transparency helps
+
+## broockman replication paper
+
+# Another example:
+
+## Multicultural policy
+
+## can state intervention make a difference
+
+## Example:
+
+##
 
 
 
