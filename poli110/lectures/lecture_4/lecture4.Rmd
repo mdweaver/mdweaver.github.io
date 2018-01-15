@@ -1,0 +1,302 @@
+---
+title: "Investigating Politics"
+author: "Michael Weaver"
+date: "January 15, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```Set up column break```
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+h3, h4 {font-weight: bold;
+        color: #515151;}
+</style>
+
+
+# Types of Claims
+
+## Last week {.build}
+
+### What are claims?
+
+### What are bases for claims?
+
+- scientific 
+- unscientific
+
+## This week {.build}
+
+### What kinds of questions are there?
+
+### What kinds of claims (answers) are there?
+
+### How to tell them apart?
+
+### Which are answerable?
+
+#
+
+## Some questions: {.build}
+
+### - How many firearms homicides took place in the U.S. and Canada in 2016?
+
+### -What percentage of income is earned by the richest 1% of Canadians?
+
+### - What percentage of Canadians use cannabis recreationally?
+
+# What kinds of questions are these?
+
+## Some claims {.build}
+
+### - Canada had 223 and the US had 11004 firearms homicides in 2016.
+
+### -The top 1% of Canadians make about 14% of all income.
+
+### - About 16% of Canadians over the age of 15 use cannabis.
+
+## Descriptive claims:
+
+### *Descriptive* claim:
+
+#### Claim about something that is (was) in the world or the state of the world
+
+## Some new questions {.build}
+
+### - Why does the U.S. have more firearms homicides per capita than Canada?
+
+### - Why has the share of income going to the top 1% increased nearly twofold since 1977?
+
+### - Would legalizing cannabis result in higher rates of impaired driving?
+
+## What kinds of questions are these?
+
+### How are they different from the first set?
+
+## Some new claims {.build}
+
+### - The US has more firearms homicides per capita than Canada because the US has laxer gun laws than Canada.
+
+### - Income inequality in Canada is higher than 40 years ago, because tax rates on the highest earners have been reduced.
+
+### - Legalizing cannabis would cause in higher rates of impaired driving.
+
+## Causal claims:
+
+### Claims about:
+
+- the **effect** that one thing has (had) on another thing
+- the **cause** of some event or thing in the world
+
+## Causal claims:
+
+### How to recognize them:
+
+Causal claims include a **causal verb**. E.g.:
+
+> "causes", "influences","makes happen", "increases", "decreases", "results in", "was necessary for", etc.
+
+## Causal claims: Variations
+
+### *Why* an event/condition/choice happens or doesn't happen:
+
+>- Riots in Ayodhya happened **because** the BJP led a provocative march.
+
+## Causal claims: Variations
+
+### *Why* an event/condition/choice happens or doesn't happen:
+
+-  Riots in Ayodhya happened **because** the BJP led a provocative march.
+
+### The *conditions* under which an event/outcome/choice *happens*:
+
+>- Contact with someone from an oppressed group can change opinions about that group **only when** people have little knowledge or experience with that group.
+
+## Causal claims: Variations
+
+### The *effect* of an event/condition on other things:
+
+>- Government multicultural policies in favor of tolerance **reduce** ethnic hatreds.
+
+## Causal claims: Variations
+
+### The *effect* of an event/condition on other things:
+
+- Government multicultural policies in favor of tolerance **reduce** ethnic hatreds.
+
+### The *process* through which one thing affects another:
+
+>- Secular political parties **prevent** religious violence **by** deploying police more aggressively.
+
+## Causal claims: Variations
+
+### *Why* an event/condition/choice happens or doesn't happen:
+
+### The *conditions* under which an event/outcome/choice *happens*:
+
+### The *effect* of an event/condition on other things:
+
+### The *process* through which one thing affects another:
+
+
+## How are *causal* claims different? {.build}
+
+### The city of Chicago has strict gun laws and a high gun-related murder rate.
+
+>- is this descriptive or causal?
+
+>- NOT causal
+
+## Descriptive and causal claims: {.build}
+
+### How are they related?
+
+- Descriptive claims basis for causal claim
+
+### What would causal claim be without descriptive claims?
+
+## Examples: {.build}
+
+### - The US has more firearms homicides per capita than Canada because the US has laxer gun laws than Canada.
+
+### - Income inequality in Canada is higher than 40 years ago, because tax rates on the highest earners have been reduced.
+
+### - Legalizing cannabis would cause in higher rates of impaired driving.
+
+## Some more questions  {.build}
+
+### - Should the US have stricter gun control?
+
+### - Should the taxes on the richest Canadians be increased?
+
+### - Should new regulations place restrictions on driving while using cannabis?
+
+## What kinds of questions are these?
+
+## Some more claims:  {.build}
+
+### - The US **should** enact stricter gun control
+
+### - Parliament **should** increase taxes on the rich.
+
+### - New regulations **should** make it illegal to drive while using cannabis.
+
+## Normative/Prescriptive Claims: {.build}
+
+### Claims about what *should or should not* be (or have been) done.
+
+- Claims about what is "right" or "wrong"
+- Claims abut "too much", "enough", "not enough" of something
+    - implies that something *should* change
+
+## Relationship to descriptive claims:
+
+### Could we have a prescriptive claim without descriptive claims?
+
+## Examples {.build}
+
+### - British voters did the right thing for their country by voting for "Brexit".
+
+### - China is better off under its current government than it would be as a competitive democracy.
+
+### - The US and its allies should have intervened in Syria to stop violence in 2011
+
+
+## Relationship to descriptive claims:
+
+### Could we have a prescriptive claim without causal claims?
+
+## Examples {.build}
+
+### - British voters did the right thing for their country by voting for "Brexit".
+
+### - China is better off under its current government than it would be as a competitive democracy.
+
+### - The US and its allies should have intervened in Syria to stop violence in 2011
+
+## Housing prices in BC {.build}
+
+### - Are housing prices in BC too high?
+
+### - Why have housing prices in BC increased dramatically in the past 15 years?
+
+### - Why has the NDP opposed a ban on foreign ownership of property?
+
+### - Should the BC government limit property ownership to residents?
+
+### - How many people commute to Vancouver for work and cannot afford to live there?
+
+## Housing prices in BC
+
+### - Are housing prices in BC too high? *prescriptive*
+
+### - Why have housing prices in BC increased dramatically in the past 15 years? *causal*
+
+### - Why has the NDP opposed a ban on foreign ownership of property? *causal*
+
+### - Should the BC government limit property ownership to residents? *prescriptive*
+
+### - How many people commute to Vancouver for work and cannot afford to live there? *descriptive*
+
+
+## Summary:
+
+### Descriptive claims
+
+- No explicit statement that one thing causes another
+
+- correlation $\neq$ causation
+
+## 
+
+#### During years in which more (fewer) Japanese passenger cars were sold in the US there were more (fewer) vehicular suicides in the US.
+
+<img src="./chart.png" width=100%>
+
+## Summary:
+
+### Causal claims
+
+- **Explicit** statement that one thing exerts influence on another
+    - (increase, reduce, prevent, cause, make happen, is necessary, etc.)
+
+## Summary: {.build}
+
+### Causal claims
+
+Does this claim imply that, *if* we could directly change one thing, then we would see a change in the other?
+
+
+## Summary:
+
+### Example:
+
+"Countries with more women in the legislature have more protections for womens' reproductive and marital rights."
+
+>- Is this a causal claim?
+
+### Example:
+
+"The entry of more women into a legislature results in more legal protections for womens' reproductive and marital rights."
+
+>- If we forced more women into government, we would expect to see a change. CAUSAL
+
+## Summary: 
+
+### Prescriptive/normative
+
+- Builds on descriptive, causal claims
+- But we must invoke some value-judgment about what is desirable/undesirable
+
+
+## Wednesday:
+
+### How are these types of claims related?
+
+### Which types of claims can be judged **scientifically**?
+
+
