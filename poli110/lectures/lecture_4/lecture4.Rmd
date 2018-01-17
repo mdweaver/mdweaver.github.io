@@ -3,10 +3,15 @@ title: "Investigating Politics"
 author: "Michael Weaver"
 date: "January 15, 2018"
 output: ioslides_presentation
+df_print: paged
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html") 
+require(magrittr)
+require(kableExtra)
+require(knitr)
 ```
 
 
@@ -218,6 +223,16 @@ Causal claims include a **causal verb**. E.g.:
 
 ### - The US and its allies should have intervened in Syria to stop violence in 2011
 
+# Types of Claims
+
+## Recap {.build}
+
+### Descriptive claims
+
+### Causal claims
+
+### Normative/prescriptive claims
+
 ## Housing prices in BC {.build}
 
 ### - Are housing prices in BC too high?
@@ -242,7 +257,6 @@ Causal claims include a **causal verb**. E.g.:
 
 ### - How many people commute to Vancouver for work and cannot afford to live there? *descriptive*
 
-
 ## Summary:
 
 ### Descriptive claims
@@ -251,7 +265,7 @@ Causal claims include a **causal verb**. E.g.:
 
 - correlation $\neq$ causation
 
-## 
+## {.build}
 
 #### During years in which more (fewer) Japanese passenger cars were sold in the US there were more (fewer) vehicular suicides in the US.
 
@@ -287,16 +301,244 @@ Does this claim imply that, *if* we could directly change one thing, then we wou
 
 ## Summary: 
 
-### Prescriptive/normative
+### Prescriptive/normative {.build}
 
-- Builds on descriptive, causal claims
-- But we must invoke some value-judgment about what is desirable/undesirable
+Build on descriptive, causal claims
+
+**also** must invoke some value about what is desirable/undesirable
+
+##
+
+```{r}
+
+data.frame(
+  Type = c("Descriptive", 'Causal', "Prescriptive"),
+  Definition = c("...about a thing in the world",
+                 "...about effect of one thing on another",
+                 "...about what should (not) be done"),
+  Terms = c("how many, is an X",
+            "causes, increases, influences",
+            "should, too much/few, enough"),
+  Attribute = c("no cause stated", "y would not happen without x", "what ought to be"),
+  Dependence = c('none', 'descriptive', 'descriptive,causal'),
+  `Can be false` = c('yes', 'yes', 'no')
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+
+```
 
 
-## Wednesday:
+## Empirical claims:
 
-### How are these types of claims related?
+### Questions that can be answered by
 
-### Which types of claims can be judged **scientifically**?
+- observing the world
+- giving evidence
+
+### Claims that can be justified with:
+
+- observation
+- evidence
+
+## Empirical claims {.build}
+
+### Descriptive
+
+- YES
+
+### Causal
+
+- YES
+
+### Prescriptive
+
+- NOT ENOUGH
+
+- Always includes a **value judgment**
+
+
+## What is a value judgment?
+
+### It isn't
+
+- A claim someone bases on their opinion 
+
+- A claim someone bases on personal experience
+
+- A claim that we can't persuade someone to drop
+
+### Why not?
+
+- People can vehemently assert an opinion that is contrary to evidenc
+
+- Personal experience can be factually incorrect
+
+- Stubbornness to evidence doesn't make it irrelevant
+
+## Flat earth
+
+<img src="./flat_earth.png" width = 60%>
+
+## Flat earth
+
+<img src="./curvature.jpg" width = 100%>
+
+## Birthers
+
+<img src="./trump_birther.jpg">
+
+## Crime
+
+<img src="./trump_crime.png">
+
+## Crime
+
+<img src="./violent_crime_trend.png" width=100%>
+
+## What is a value judgment? {.build}
+
+Just because you can't persuade **some person** with the evidence, doesn't make it a value judgment
+
+### Value judgements:
+
+- goals/ideals for what should happen, how things should be
+- rules for judging which things are better or worse
+
+## Why can't this be empirical?
+
+Can't science tell us how to:
+
+>- grow the economy
+>- live longer
+>- alleviate poverty
+>- reverse climate change
+
+Couldn't it bring us happiness?
+
+## Interlude {.build}
+
+### What is the best music?
+
+### How would we judge?
+
+What criteria do we use?
+
+### How would we scientifically decide which criteria?
+
+## Another example: {.build}
+
+> You have heard that it was said, "An eye for an eye and a tooth for a tooth." But I say to you, Do not resist the one who is evil. But if anyone slaps you on the right cheek, turn to him the other also. And if anyone would sue you and take your tunic, let him have your cloak as well.
+
+### How would we scientifically decide it is correct?
+
+### What other values are **inconsistent** with this?
+
+## Another example: {.build}
+
+Should we donate mosquito nets to stop malaria?
+
+### Evidence
+
+- Malaria kills ~500k per year
+- Half of global population possibly exposed
+- Mosquito nets reduce likelihood of exposure
+- For each 100 to 1000 nets, 1 death prevented
+- Cost of mosquito nets is low
+
+### Answer is obvious!
+
+What **value** does it pre-suppose?
+
+What **value** might be in conflict with this?
+
+## Values:
+
+> "Science is meaningless because it gives no answer to our question, the only question important for us: 'What shall we do and how shall we live?' Science can't tell us how to live or how to die."
+> - Leo Tolstoi
+
+### Values are in conflict
+
+- Only way to bring them into alignment is to assume a higher order: religion, ideology, philosophy
+
+- But in science we want to work without presupposition/assumption
+
+## What good is science...
+
+### ... if it can't tell us what to do?
+
+## What good is science? {.build}
+
+### "Mosquito nets prevent malaria"
+
+- "A causes B" $\neq$ "we should do A"
+
+- How do we **value** B? 
+
+### But...
+
+- What if mosquite nets don't prevent malaria
+
+- Assuming less malaria is good, resources are finite
+
+- "A does not cause B" is informative!
+
+## Connecting types of claims: {.build}
+
+### Should the BC government spend more on welfare for the poor?
+
+#### a prescriptive question
+
+#### But what *empirical* questions does it raise?
+
+## What would you want to know... {.build}
+
+#### before spending more on welfare for the poor?
+
+## What would you want to know...
+
+- What proportion of British Columbians are poor? (descriptive)
+
+- How many people receive welfare benefits in BC now? (descriptive)
+
+- What are current welfare benefits? (descriptive)
+
+- What is the total cost of current welfare programs? (descriptive)
+
+- Does welfare make recipients financially better off? (causal)
+
+- Do more generous welfare benefits lead to lower employment for recipients? (causal)
+
+- Does welfare cause "culture of dependency" (causal)
+
+- What are effects of welfare on recipient's long-term incomes? (causal)
+
+
+## What would you want to know...
+
+One **descriptive** observation:
+
+- A single person with multiple barriers to work receives $282 per month from the province
+
+## What would you want to know...
+<img src="./bc_welfare_trend.png" width=100%>
+
+## What would you want to know...
+
+### *Causal* findings:
+
+- Receiving welfare reduces employment among recipients
+
+- Receiving welfare does not cause "dependency"
+
+- Receiving welfare as a child does not make it more likely when an adult
+
+>- Reducing welfare increases employment, but does not increase disposable income
+
+## Can we answer the question now?
+
+### Which values would lead us to say "yes"
+
+and increase welfare spending?
+
+### Which values would lead us to say "no"
 
 
