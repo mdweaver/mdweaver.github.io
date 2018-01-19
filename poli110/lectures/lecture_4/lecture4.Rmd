@@ -485,15 +485,15 @@ What **value** might be in conflict with this?
 
 ### Should the BC government spend more on welfare for the poor?
 
-#### a prescriptive question
+### a prescriptive question
 
-#### But what *empirical* questions does it raise?
+### But what *empirical* questions does it raise?
 
 ## What would you want to know... {.build}
 
 #### before spending more on welfare for the poor?
 
-## What would you want to know...
+## What would you want to know... {.build}
 
 - What proportion of British Columbians are poor? (descriptive)
 
@@ -533,12 +533,118 @@ One **descriptive** observation:
 
 >- Reducing welfare increases employment, but does not increase disposable income
 
-## Can we answer the question now?
+## Can we answer the question now? {.build}
 
 ### Which values would lead us to say "yes"
 
 and increase welfare spending?
 
 ### Which values would lead us to say "no"
+
+## Connecting types of claims: {.build}
+
+### Should the BC adopt proportional representation?
+
+### a prescriptive question
+
+### But what *empirical* questions does it raise?
+
+## What would you want to know... {.build}
+
+#### before voting on a switch to proportional representation?
+
+>- What is proportional representation (PR)?
+
+>- What kind of electoral system does BC have now?
+
+>- What countries use PR?
+
+>- What would composition of legislature be if last election used PR rules?
+
+##
+
+<iframe width=100% src="https://www.youtube.com/embed/laUPeXZlPEg?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+##
+
+0:50 to 4:00
+
+<iframe src="https://www.cbc.ca/i/caffeine/syndicate/?mediaId=1134285891784" width=100% frameborder="0" allowfullscreen></iframe>
+
+## What would you want to know... {.build}
+
+#### before voting on a switch to proportional representation?
+
+>- Does introducing PR increase the number of political parties with seats?
+
+>- Does introducing PR/having more parties improve representation of different groups?
+
+>- Does PR weaken the accountability of legislatures (party lists, not local legislator)?
+
+>- Does PR cause unstable governments because of coalition politics?
+
+>- Does PR cause extremist parties to have more influence?
+
+>- Does first-past-the-post with create accountability?
+
+>- Does FPP create more effective/productive legislatures?
+
+## What would you want to know... {.build}
+
+### *Causal* findings: 
+
+>- PR often creates better representation
+
+>- PR creates more coalition governments, which spend more money
+
+>- More parties makes accountability difficult
+
+>- PR sometimes increases power of small, extremist parties
+
+## Can we answer the question now? {.build}
+
+### Which values would lead us to say "yes"
+
+and choose PR
+
+### Which values would lead us to say "no"
+
+and oppose PR
+
+## Are these values in conflict?
+
+**"Democratic Representation"**: government should incorporate/voice the views of all 
+
+**"Political liberalism"**: governments/parties should peacefully accept and acknowledge their differences, ensure basic rights/protections for all
+
+**"Democratic Accountability"**: governments/parties/legislators can be punished or rewarded for their behavior by the people
+
+## Clarification {.build}
+
+### Social science can't tell us which value is right
+
+
+### But can clarify:
+
+- Can tell us which electoral system achieves which value
+
+- Can tell us when values are in conflict
+    - Force us to choose which we think is more important
+    - Force us to consider different options that might reconcile
+    
+# Focus on Causation
+
+## Why causation? {.build}
+
+### Prescription *requires* answers to *causal* questions
+
+- not always easy/possible to answer
+
+### **Prediction** requires causal knowledge
+
+
+### Without prediction, without causes, there is no understanding
+    
+- Need to know **why** things happen
 
 
