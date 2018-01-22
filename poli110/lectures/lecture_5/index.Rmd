@@ -87,18 +87,55 @@ Causality **requires** a counterfactual claim.
 
 ### Definition
 
-"C is a cause of E" *necessarily means*:
+"C is a cause of E" **necessarily implies**:
 
 #### If C had not happened, E would not have happened
-
 
 ### What is one causal claim
 
 ### Restate as counterfactual
 
-## Counterfactuals: 
+## Counterfactuals: {.build}
 
-What if we could rerun history:
+### What is the object of a counterfactual claim?
+
+It is a claim about the **same** thing, person, country, world **but**
+
+with a **different** exposure to the supposed **cause**
+
+### It compares the same thing/unit to itself, not to something else
+
+### Everything is the same **except** the **cause**
+
+## Counterfactuals and potential outcomes:
+
+### Potential outcomes:
+
+- The state of a unit/person/country/world under different exposures, whether factual or counterfactual
+
+### Example:
+
+1. If the United States had invaded Iraq, then ISIS would have been created
+2. If the United states had not invaded Iraq, then ISIS would not have been created
+
+## Counterfactuals and potential outcomes:
+
+A potential outcomes table
+
+```{r}
+
+data.frame(Unit = 'The world',
+ Invasion = c("?"),
+ `ISIS if invade` = c('Yes'),
+ `ISIS if not invade`= c('No'),
+ ISIS = c("?")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+
+```
+
+## Counterfactuals and potential outcomes: 
+
+What if we could look at multiple universes?
 
 ```{r}
 
@@ -112,19 +149,7 @@ data.frame(
 
 ```
 
-## Counterfactuals: 
-
-```{r}
-data.frame(
- Universe = c("Factual", "Counterfactual"),
- Invasion = c("Yes", "No"),
- `ISIS if invade` = c('Yes', 'Yes'),
- `ISIS if not invade`= c('No', 'No'),
- ISIS = c("Yes", "No")
-) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
-```
-
-## Counterfactuals: 
+## Counterfactuals and potential outcomes: 
 
 More generally: 
 
@@ -138,6 +163,20 @@ data.frame(
 ) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
 ```
 
+## Counterfactuals: 
+
+What we actually see:
+
+```{r}
+data.frame(
+ Universe = c("Factual", "Counterfactual"),
+ Invasion = c("Yes", "No"),
+ `ISIS if invade` = c('Yes', '?'),
+ `ISIS if not invade`= c('?', '?'),
+ ISIS = c("Yes", "?")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+```
+
 ## Counterfactuals:
 
 ### Recall:
@@ -145,6 +184,12 @@ data.frame(
 Causal claims imply descriptive claims.
 
 What descriptive claims are implied here?
+
+### Sexism in the United States *caused* the victory of Donald Trump over Hillary Clinton
+
+- **If** there were **less sexism** in the US, then Trump **would not** have won.
+
+## Counterfactuals:
 
 ```{r}
 data.frame(
@@ -156,16 +201,17 @@ data.frame(
 ) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
 ```
 
-## Counterfactuals:
+## Counterfactuals: {.build}
 
-### Potential Outcomes
+### What if the two universes were different in more than one way?
 
 ```{r}
 data.frame(
- Universe = c("Factual", "Counterfactual"),
+ Universe = c(1:2),
  Sexism = c("Yes", "No"),
- `Trump if sexism` = c('Yes', 'No'),
- `Trump if not sexism`= c('No', 'No'),
+ Racism = c("Yes", "No"),
+ `Trump if sexism` = c('Yes', '**No**'),
+ `Trump if not sexism`= c('**Yes**', 'No'),
  Trump = c("Yes", "No")
 ) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
 ```
