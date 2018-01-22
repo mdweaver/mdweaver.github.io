@@ -1,0 +1,368 @@
+---
+title: "Investigating Politics"
+author: "Michael Weaver"
+date: "January 22, 2018"
+output: ioslides_presentation
+df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(knitr.table.format = "html") 
+require(magrittr)
+require(kableExtra)
+require(knitr)
+```
+
+
+```Set up column break```
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+h3, h4 {font-weight: bold;
+        color: #515151;}
+</style>
+
+
+# Causal Claims
+
+## Why causation? {.build}
+
+### Prescription *requires* answers to *causal* questions
+
+- not always easy/possible to answer
+
+### **Prediction** requires causal knowledge
+
+
+### Without prediction, without causes, there is no understanding
+    
+- Need to know **why** things happen
+
+
+## Causal questions in politics: {.build}
+
+### 1. Effects of policies and institutions
+
+- Helps answer: which policies or institutions should we adopt/change
+
+### 2. Causes of policy and political actions
+
+- Why do governments/political actors make the choices they do?
+- Why do political actors/institutions often **fail** to meet our prescriptive ideals?
+- Why do political outcomes vary so widely?
+
+## Causal questions in politics: {.build}
+
+### 3. Causes of *inputs* into political choices
+
+- What causes some actors to be more powerful than others
+- Why do political actors **want** certain things?
+
+
+## Causal claims {.build}
+
+### 1. The U.S. invasion of Iraq *caused* the creation of ISIS
+
+### 2. Sexism in the United States *caused* the victory of Donald Trump over Hillary Clinton
+
+### 3. The threat of nuclear war **caused** the United States and Soviet Union to avoid going to war.
+
+## Counterfactuals: {.build}
+
+### The U.S. invasion of Iraq *caused* the creation of ISIS
+
+- **If** the US **did not invade** Iraq, ISIS **would not** have been created
+
+### Sexism in the United States *caused* the victory of Donald Trump over Hillary Clinton
+
+- **If** there were **less sexism** in the US, then Trump **would not** have won.
+
+### The threat of nuclear war **caused** the United States and Soviet Union to avoid going to war.
+
+- **If** nuclear weapons **had not** existed, the US and USSR would have gone to war.
+
+## Counterfactuals: {.build}
+
+Causality **requires** a counterfactual claim.
+
+### Definition
+
+"C is a cause of E" *necessarily means*:
+
+#### If C had not happened, E would not have happened
+
+
+### What is one causal claim
+
+### Restate as counterfactual
+
+## Counterfactuals: 
+
+What if we could rerun history:
+
+```{r}
+
+data.frame(
+ Universe = 1:2,
+ Invasion = c("Yes", "No"),
+ `ISIS if invade` = c('Yes', 'Yes'),
+ `ISIS if not invade`= c('No', 'No'),
+ ISIS = c("Yes", "No")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+
+```
+
+## Counterfactuals: 
+
+```{r}
+data.frame(
+ Universe = c("Factual", "Counterfactual"),
+ Invasion = c("Yes", "No"),
+ `ISIS if invade` = c('Yes', 'Yes'),
+ `ISIS if not invade`= c('No', 'No'),
+ ISIS = c("Yes", "No")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+```
+
+## Counterfactuals: 
+
+More generally: 
+
+```{r}
+data.frame(
+ Universe = c("Factual", "Counterfactual"),
+ C = c("Yes", "No"),
+ `E if C` = c('Yes', 'Yes'),
+ `E if not C`= c('No', 'No'),
+ E = c("Yes", "No")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+```
+
+## Counterfactuals:
+
+### Recall:
+
+Causal claims imply descriptive claims.
+
+What descriptive claims are implied here?
+
+```{r}
+data.frame(
+ Universe = c("Factual", "Counterfactual"),
+ Sexism = c("Yes", "No"),
+ `Trump if sexism` = c('Yes', 'Yes'),
+ `Trump if not sexism`= c('No', 'No'),
+ Trump = c("Yes", "No")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+```
+
+## Counterfactuals:
+
+### Potential Outcomes
+
+```{r}
+data.frame(
+ Universe = c("Factual", "Counterfactual"),
+ Sexism = c("Yes", "No"),
+ `Trump if sexism` = c('Yes', 'No'),
+ `Trump if not sexism`= c('No', 'No'),
+ Trump = c("Yes", "No")
+) %>% kable(., format = 'pandoc', padding=3) # %>%  kable_styling(., bootstrap_options = c("striped", "hover","condensed"), full_width = T)
+```
+
+## Counterfactual trouble: {.build}
+
+### - We can only observe the world in one state, not both
+
+### - We only observe history once, can't rerun it.
+
+### - "Fundamental Problem of Causal Inference"
+
+# Types of causes
+
+## First World War: {.build}
+
+### World historical event
+
+- War between all great powers
+
+- Decline or dissolution of empires
+
+- Emergence of Communism
+
+- United States becomes dominant
+
+
+### Horrific human cost:
+
+- ~ 9 million combat deaths; ~ 8 million civilian deaths
+
+- Set in motion Second World War
+
+### What was the cause?
+
+
+##
+
+<iframe width=100% src="https://www.youtube.com/embed/XRcg_t2oJkc?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+## Was it this?
+
+<img src="./assassination.jpeg" width=100%>
+
+## Was it this?
+
+<iframe src="https://www.newspapers.com/clippings/embed_clipping/?id=16766024&w=394&h=394" scrolling="no" frameBorder="0" width=100% style="border: 3px double #efefef;background: #333 url(https://www.newspapers.com/i/loadingAnimation.gif) no-repeat 50% 50%;"></iframe>
+
+## *Structural* causes
+
+1. Ethno-national tensions within Austria-Hungary
+
+2. Imperialism / competition over resources
+
+3. Militarism and aggressive aims
+
+4. Structure of alliances
+
+## "Triggering Event"? {.build}
+
+### Was assassination the cause?
+
+### Was Russian mobilization the cause?
+
+### Would war have happened anyway?
+
+
+## The Arab Spring {.build}
+
+### The cause.
+
+- Mohamed Bouazizi, Tunisian peddler self immolates
+
+- His death sparks popular anger, massive protest
+
+- One month later, Tunisian government (under Ben Ali) falls
+
+- Protest sweeps the region
+
+### The cause?
+
+## Cause of Tunisian regime change {.build}
+
+### Bouazizi's death $\xrightarrow{\text{protest}}$ Regime collapse
+
+### What, if anything, would you add to this explanation?
+
+## Cause of Tunisian regime change {.build}
+
+### Oppressive Rule
+
+### $\xrightarrow{\text{hopelessness/anger}}$ 
+
+### Bouazizi's death
+
+### $\xrightarrow{\text{protest}}$ 
+
+### Regime collapse
+
+## Cause of Tunisian regime change
+
+### Consider the counter-factual...
+
+- Could protest and regime collapse have happened even if Bouazizi had not died?
+
+- Maybe oppressive rule made lots of people angry, ready to protest
+
+
+
+## Cause of Tunisian regime change {.build}
+
+### Oppressive Rule
+
+### $\xrightarrow{\text{hopelessness/anger}}$ 
+
+### Someone starts hunger strike
+
+### $\xrightarrow{\text{protest}}$ 
+
+### Regime collapse
+
+## Cause of Tunisian regime change
+
+### Oppressive Rule
+
+### $\xrightarrow{\text{hopelessness/anger}}$ 
+
+### Someone else self-immolates
+
+### $\xrightarrow{\text{protest}}$ 
+
+### Regime collapse
+
+## Cause of Tunisian regime change
+
+### Oppressive Rule (*structural cause*)
+
+### $\xrightarrow{\text{hopelessness/anger}}$ 
+
+### Bouazizi's death (*triggering event*)
+
+### $\xrightarrow{\text{protest}}$ 
+
+### Regime collapse
+
+## Structural causes vs. triggering event
+
+### Triggering event:
+
+- Details **how or when** some outcome/event happens
+
+- **Fails** to meet **counterfactual** definition of a cause
+    - triggers are **substitutable**
+    - **Some** trigger necessary, but **specific** trigger is not
+
+## Structural causes vs. triggering event
+    
+### Recognizing triggering events:
+
+**Triggering event** is event that:
+
+- Generates outocome **only in combination** with structural causes
+    - is not sufficient
+
+- Could have been **substituted** by other events that were also likely
+    - is not necessary
+    
+## Identify the triggering event: {.build}
+
+### Global Financial Crisis of 2008
+
+1. Inequality
+
+2. Weak regulatory structures
+
+3. Collapse of Lehman Brothers investment bank
+
+
+### Riots in Ferguson, Missouri: 2014
+
+1. Failure of Grand Jury to indict police officer who shot Mike Brown
+
+2. Systemic racial bias in police stops
+
+3. Ferguson city reliance on tickets and fines for revenue
+
+## Structural causes
+
+Social science interested in **structural causes** 
+
+Want causal **patterns/regularities**
+
+### Why?
+
+1. What conditions **generally** necessary for an outcome
+    - Revolutions don't generally **require** Mohamed Bouazizi
+2. What conditions **generally** contribute to outcomes
+    - Self-immolation of peddlers does not **typically** lead to revolution
+
+
