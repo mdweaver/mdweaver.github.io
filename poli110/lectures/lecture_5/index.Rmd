@@ -8,20 +8,15 @@ df_print: paged
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-options(knitr.table.format = "html") 
 require(magrittr)
 require(kableExtra)
 require(knitr)
 ```
-
-
-```Set up column break```
 <style>
 .forceBreak { -webkit-column-break-after: always; break-after: column; }
 h3, h4 {font-weight: bold;
         color: #515151;}
 </style>
-
 
 # Causal Claims
 
@@ -411,4 +406,349 @@ Want causal **patterns/regularities**
 2. What conditions **generally** contribute to outcomes
     - Self-immolation of peddlers does not **typically** lead to revolution
 
+### Structural Causes $\xrightarrow{}$ Portable Knowledge
 
+# Structure vs. Agency
+
+## Structural causes vs. individual choices {.build}
+
+### Common to explain the world through individuals:
+
+- Individuals' choices
+- Individuals' qualities
+
+### e.g.
+
+- Charisma / skill of political candidates
+- Brilliance/incompetence of generals in war
+- Celebrity bringing attention to a cause
+- Individual responsible for atrocity
+
+### Why?
+
+- Gives us characters, a narrative, maybe exciting
+
+## Structural causes vs. individual choices
+
+### BUT
+
+Individual choices can be **produced** by structural causes
+
+>- E.g., Gavrilo Princip shot the Archduke, but why was he in town, with a political agenda, armed with a pistol?
+
+Individual qualities can be **selected** by structural causes
+
+>- Why was what someone like Hitler saying in 1920s Germany attractive?
+>- Parties with more public support may have a better pool of qualified candidates
+
+## Structural causes vs. individual choices {.build}
+
+Political interactions are sum of individual choices, but:
+
+1. Individual choices are often **produced by** structural factors
+    - Constraints on what you can do
+    - Incentives/motivations for what to do
+    - Resources available
+    - Grievances that drive action
+2. Individuals are **selected** for by structural factors
+    - Structures make certain traits favorable 
+    - Structures attract individuals with certain traits
+    
+## Structural causes vs. individual choices
+
+Political interactions are sum of individual choices, but:
+
+3. Individual choices **overwhelmed** by structural forces
+    - Individual chocies may only matter at the margins
+    - E.g.: capability of generals on Eastern Front in Second World War
+    
+## Structural causes vs. individual choices  {.build}
+
+### Why did Trump win and Clinton lose?
+
+### Clinton was "weak" candidate
+
+- Baggage of Benghazi
+- Those **emails**
+- Cozy with big business
+- Political "insider"
+- Not "relatable"/"likeable"
+
+## Structural causes vs. individual choices  {.build}
+
+### Why did Trump win and Clinton lose?
+
+### Trump was "strong" candidate?
+
+- Political 'outsider'
+- No ties to the "swamp"
+- Charismatic?
+- Knew how to mobilize white voters
+
+## Structural causes vs. individual choices 
+
+<img src="./trump_stable_genius.png" width=70%>
+
+## Why did Trump win and Clinton lose?
+
+### Incumbency?
+
+- Voters reject two-term incumbents
+
+### Economy?
+
+- Economy weak
+
+## Why did Trump win and Clinton lose?
+
+<img src="./presidentialelectionoutcome-by-tenureadjustedincomegrowth-us-1948to2016.png" width=100%>
+
+
+## Why did Trump win and Clinton lose?
+
+### Incumbency?
+
+- Voters reject two-term incumbents
+
+### Economy?
+
+- Economy weak
+
+### Anti-immigration
+
+- Rise in sentiment pre-dates Trump
+- Backlash against Obama?
+
+### Gender Bias
+
+# Kinds of causality
+
+## A puzzle:
+
+### How could war happen between two countries that know each others' capabilities?
+
+### War is costly...
+
+and if capabilities are known, they can reach a settlement
+
+## An example: US and Soviet Union
+
+<img src='./Cuban_missiles.jpg' width=70%>
+
+## Cuban missile range
+
+<img src='./missile_range.jpg' width=60%>
+
+## US missiles
+
+<img src='./us_missiles.gif' width=70%>
+
+## US Blockade
+
+<img src='./blockade.jpg' width=100%>
+
+
+## War averted
+
+<img src='./blockade_over.jpg' width=100%>
+
+## War avoided
+
+### Capabilities of both sides known, agreement reached
+
+## Saddam and the US:
+
+<img src='./saddam_grievances.png' width=100%>
+
+## US response
+
+<img src='./saddam_us_response.png' width=100%>
+
+
+## A greenlight?
+
+<img src='./saddam_greenlight.png' width=100%>
+
+
+## War
+
+<img src='./desert_storm.jpg' width=100%>
+
+## A causal claim
+
+### For war to happen, there must be strategic miscalculation
+
+### Strategic miscalculation is a *necessary condition* for war
+
+## Necessary conditions:
+
+### If a causal claim is:
+
+"Condition C **must happen** for outcome E to occur."
+
+### Then:
+
+Condition C is a **necessary** condition for E
+
+
+
+## Necessary conditions:
+
+### __Necessary Condition__
+
+> A cause without which an effect cannot occur
+
+### **But note**:
+
+Does not imply: "If condition C, effect E will occur."
+
+Only: "Without condition C, effect E will **not** occur."
+
+## Necessary conditions: Example {.build}
+
+A large middle class is a necessary condition for emergence of democracy
+
+## China's growing middle class
+
+<img src="./china_middle_class.png" width=80%>
+
+Will China become democracy?
+
+## Why has the Syrian Civil War been so long?
+
+### Arab Spring
+
+- Affected many countries
+- Unlike most, in Syria this led to long-term Civil War
+
+## Why a Syrian Civil War?
+
+1. Assad government tied to ethnic minority
+
+2. Assad government backed by regional allies (Iran, Hezbollah)
+
+3. Opposition was fragmented
+
+4. Opposition backed by wealthy Gulf States, US, Turkey
+
+5. Kurdish population divides coalition against Assad
+
+6. Presence of experienced fighters/insurgents from Iraq
+
+## *Many* necessary conditions
+
+1. Assad government tied to ethnic minority
+
+2. Assad government backed by regional allies (Iran, Hezbollah)
+
+3. Opposition was fragmented
+
+4. Opposition backed by wealthy Gulf States, US, Turkey
+
+5. Kurdish population divides coalition against  Assad
+
+6. Presence of experienced fighters/insurgents from Iraq
+
+## Conjunctural causation
+
+When an effect $E$ depends on a combination of causes:
+
+$\lbrace C_1, C_2, \dots, C_k \rbrace \in \mathbb{C}$
+
+### __Multiple necessary conditions__
+
+Effect happens only when more than one cause is present
+
+>- Plant growth requires **both** water and sunlight
+>- Revolutions require **both** material deprivation AND arbitrary rule
+>- War requires **both** miscalculation AND offensive capabilities
+
+## Conjunctural causation
+
+When an effect $C\xrightarrow{} E$ depends on some other cause $D$
+
+### __Conditional Effects__
+
+- Hour of sunlight causes
+    - 1 cm of plant growth **without rain**
+    - 2 cm of plant growth **with rain**
+- Secular political parties cause:
+    - Fewer communal riots **when religious minorities are numerous and electorally relevant**
+    - No change in communal riots **when religious minorities are electorally irrelevant**
+
+## Example:
+
+Indian National Congress and communal riots:
+
+<img src='./qjps_4.png' width=50%>
+
+
+## Conditional effect of INC
+
+<img src='./qjps_5.png' width=70%>
+
+## Sufficient conditions
+
+### In contrast to __necessary conditions__
+
+**Sufficient condition**: a cause that **always** produces an effect.
+
+### **Examples**:
+
+- Fire is sufficient cause of heat
+- Social science examples?
+    - Rare, conjunctural causation is the norm.
+    
+## Multiple causation
+
+### Different from **conjunctural causation**
+
+**Multiple causation**:
+
+> When there is **more than one set of causes** that produce an effect
+
+$A \rightarrow{} E$ OR $C \rightarrow{} E$
+
+### Examples:
+
+What causes political leaders to fall from power?
+
+- Military defeat (Argentina, 1980s)
+- Economic decline (Gorbachev, 1990)
+- Personal scandal (Nixon, 1974)
+
+## Multiple __and__ conjunctural causation
+
+### We can combine these two ideas:
+
+#### $A + B \rightarrow{} E$
+
+or
+
+#### $C + D \rightarrow{} E$
+    
+## Multiple __and__ conjunctural causation
+
+### Example: Why do civil wars happen?
+
+1. Combination of ethnic diversity **and** political inequality between groups (Sri Lanka,Sudan)
+2. Combination of foreign meddling **and** ideological polarization (Nicaragua, Spain)
+
+
+# Summary
+
+## Key takeaways: {.build}
+
+### *Counterfactual* definition of causality
+
+### Structural causes vs.
+
+- Triggering events
+- Individual actions/qualities
+
+### Necessary and sufficient causes
+
+### Complex causality
+
+- Conjunctural causation
+- Multiple causation
