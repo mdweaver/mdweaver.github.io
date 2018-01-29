@@ -323,6 +323,14 @@ Identified structural causes of WWI:
 - Structural cause and trigger **necessary**
 - But triggers are idiosyncratic, unknowable
 
+## Interlude: Coin flips:
+
+<iframe src="https://www.youtube.com/embed/AYnJv68T3MM" width=100% frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Interlude: Coin flips:
+
+<img src="./coin_flip.png" width=60%>
+
 ## Why probabilistic causal claims?
 
 ### Sometimes unnecessary:
@@ -338,6 +346,8 @@ but
 ### Causal complexity
 
 - Many causal factors that are unknown
+    - multiple necessary conditions
+    - conditional causal effects
 - Creates appearance of randomness
 
 ## Causes of democratization
@@ -370,6 +380,43 @@ C|Yes|Yes|Yes|No
 D|Yes|No|Yes|**No**
 E|No|Yes|Yes|**No**
 
+
+## Causes of voter turnout
+
+Person|Shame|Vote?
+-------+-----+-----
+A|Yes|Yes
+B|Yes|Yes
+C|Yes|No
+D|No|Yes
+E|No|No
+F|No|No
+
+## Causes of voter turnout
+
+Person|Shame|Degree|Vote?
+-------+-----+-------+-----
+A|Yes|Yes|Yes
+B|Yes|No|Yes
+C|Yes|No|No
+D|No|Yes|Yes
+E|No|No|No
+F|No|No|No
+
+
+## Causes of voter turnout
+
+Person|Shame|Degree|Urban|Vote?
+-------+-----+-------+----+-----
+A|Yes|Yes|Yes|Yes
+B|Yes|No|Yes|Yes
+C|Yes|No|No|No
+D|No|Yes|Yes|Yes
+E|No|No|Yes|No
+F|No|No|No|No
+
+
+
 ## Why probabilistic causal claims?
 
 Do not need to assert social world is **fundamentally** random.
@@ -381,6 +428,151 @@ Conjunctural causation + many causes:
 - **Multiple necessary conditions** abound
 - **Conditional effects** abound
 - Additional conditions are unknown/too many to count
+
+
+### Complexity makes certainty ~~impossible~~ really hard
+
+## Systematic and Random
+
+Social life has both:
+
+- systematic/deterministic component
+- "random" or probabilistic component
+
+### Example:
+
+1. In a jar with twice as many red balls as green, what is probability of pulling a red?
+2. In a jar with four times as many green balls as red, what is probability of pulling a red?
+
+## Systematic and Random
+
+
+### Systematic component:
+
+Number of balls of each type
+
+### Random component:
+
+Process of blindly grabbing creates uncertainty
+
+## Systematic and Random {.build}
+
+### Democracy and growth:
+
+- Increasing democracy like adding "growth"-colored balls in the jar (systematic)
+- Complex/conjunctural causation is like process of pulling from the jar (random/probabilistic)
+
+### Shaming and voter turnout
+
+- Shaming someone is like adding "turnout"-colored balls to the jar (systematic)
+- Complex/conjunctural causation is process of pulling from the jar (random/probabilistic)
+
+## Triggering events vs. Random causes
+
+### Triggering Event:
+
+- Works conditional on structural/systematic causes (conjunctural causation)
+- Trigger by itself has little causal effect
+
+### Random cause:
+
+- Produces an effect **independent** of structural causes
+- E.g.: highly-educated, high-income citizen does not vote because of the flu 
+
+# Specific vs. General knowledge
+
+## Rwandan Civil War
+
+<img src="./rwanda_war_map.jpg" width=100%>
+
+## Causes of Rwandan Civil War
+
+### Case-specific
+
+- Belgian colonial policies on race
+- Hutu-Tutsi ethnic rivalry
+- Tutsi exiles/refugees
+
+### General:
+
+Of what is Rwandan Civil war a case/instance/example?
+
+>- Genocide?
+>- Civil war?
+>- Revolution/regime change?
+
+## Causes of Rwandan Civil War
+
+### General
+
+Civil War:
+
+- Compare Rwanda to many other places that could have had civil wars
+- Maybe general causes are:
+    - colonial race/ethnic policies (in general)
+    - ethnic diversity (in general)
+
+
+## Specific vs General Knowledge
+
+### Specific
+
+What caused the rise of the right-wing nationalist party Fidesz in Hungary?
+
+- Corruption of predecessor leftwing governments
+- Lack of economic growth in Hungary after joining EU
+- Large number of migrants fleeing to Europe from Middle East/Africa
+
+Explains one **case**
+
+## Specific vs General Knowledge
+
+
+### General
+
+What causes ethno-nationalist parties to become powerful?
+
+- Threat to status of dominant ethnic group
+- Loss of control over policy to international organizations/other countries
+
+Explains a **class of phenomena**
+
+## Specific vs General Knowledge
+
+### Specific
+
+What caused inequality in Canada to rise?
+
+- Tax cuts by Liberals and PCs 
+- Weakness of labor unions
+
+### General
+
+What causes inequality to rise in capitalist economies?
+
+- Weakening the political power of lower-income groups
+- Reducing government tools to redistribute wealth
+
+
+## Moving from specific to general:
+
+- Remove **proper nouns** (subject/objects of causes/effects are general)
+- Change in **tense**
+    - **specific** $\xrightarrow{}$ past tense
+    - **general** $\xrightarrow{}$ present tense
+- Cause, effect, context are conceptual, not concrete cases
+
+## Moving from specific to general:
+
+### Specific:
+
+Laws that eased restrictions on gun purchases in Missouri in 2006 caused an increase the state's homicide rate.
+
+### General
+
+1. **Cause**: Missouri law $\xrightarrow{}$ Laws that reduce barriers to gun availability
+2. **Effect**: Missouri homicide rate $\xrightarrow{}$ homicide rates
+3. **Context**: Missouri $\xrightarrow{}$ places with effective governments
 
 
 
