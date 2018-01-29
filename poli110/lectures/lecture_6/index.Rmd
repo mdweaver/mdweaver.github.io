@@ -363,7 +363,7 @@ E|No|**No**
 ## Causes of democratization
 
 Country|Growth|Middle class|Democratize?
--------+------+------------
+-------+------+------------+-----------
 A|Yes|Yes|Yes
 B|Yes|Yes|No
 C|Yes|Yes|No
@@ -373,7 +373,7 @@ E|No|Yes|**No**
 ## Causes of democratization
 
 Country|Growth|Middle class|Pressure|Democratize?
--------+------+------------
+-------+------+------------+--------+------------
 A|Yes|Yes|Yes|Yes
 B|Yes|Yes|No|**No**
 C|Yes|Yes|Yes|No
