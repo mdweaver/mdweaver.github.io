@@ -575,4 +575,112 @@ Laws that eased restrictions on gun purchases in Missouri in 2006 caused an incr
 3. **Context**: Missouri $\xrightarrow{}$ places with effective governments
 
 
+## What is this a case of?
+
+<img src="./romania_1.png" width = 100%>
+
+## What is the *specific* claim? {.build}
+
+### Soviet pro-Semitic policies caused (*cause*)
+
+### better treatment of Jews (*effect*)
+
+### in Transnistria versus Bessarabia in WWII (*context*)
+
+## Which is the general *cause*?
+
+### What are "Soviet pro-semitic policies" instance of?
+
+- Policies to promote religious tolerance?
+
+- Policies to integrate minority group?
+
+- Multicultural policy?
+
+## What is the general *effect*?
+
+### What is "better treatment of Jews" a case of?
+
+- Treatment of minority religious group by majority?
+
+- Behavior of dominant ethnic group during genocide?
+
+- Behavior of dominant ethnic group during foreign occupation?
+
+- Degree of ethnic/religious conflict?
+
+## What is the general *context*?
+
+### What is the context of Romania in WWII a case of?
+
+- Occupied country during war?
+
+- Country in midst of genocide?
+
+- New country that unifies an ethnic homeland?
+
+## Specific to General to Specific
+
+### Building and testing theory
+
+- **Specific** cases generate insights/ideas about **general** phenomena
+
+- **General** theories **tested** against specific cases
+
+- **General** theories help **explain** specific cases
+
+
+## From Specific to General
+
+Why do civil wars/insurgencies happen?
+
+## From Specific to General
+
+<img src="./napoleon_mountains.jpg" width=50%>
+
+## From Specific to General
+
+<img src="./jews_forests.jpg" width=80%>
+
+## From Specific to General
+
+<img src="./italy_mountains.jpg" width=100%>
+
+## From Specific to General
+
+<img src="./castro_mountains.jpg" width=80%>
+
+## From Specific to General
+
+### Rough, mountainous terrain enables insurgency
+
+- Costly for government/occupiers to maintain presence
+- Easy to hide
+- Locals know/use the land
+
+## From General to Specific
+
+<img src="./rough_terrain.png" width=60%>
+
+## From General to Specific
+
+### Can we explain civil/war insurgency in Afghanistan?
+
+## From General to Specific
+
+<img src="./afghan_war_1_mountains_alt.gif" width=100%>
+
+## From General to Specific
+
+<img src="./afghan_war_2_mountains.jpg" width=100%>
+
+## From General to Specific
+
+<img src="./soviet_afghan_war_mountains.jpg" width=100%>
+
+## From General to Specific
+
+<img src="./taliban_mountains.jpg" width=100%>
+
+
 
