@@ -171,13 +171,29 @@ Wealthy countries are less likely to experience civil war. Why?
 2. Wealth $\xrightarrow{}$ Higher standard of living $\xrightarrow{}$ Fewer grievances $\xrightarrow{}$ Weak support for change $\xrightarrow{}$ Less civil war
 2. Wealth $\xrightarrow{}$ Lots of job opportunities $\xrightarrow{}$ Fewer listless young men $\xrightarrow{}$ Fewer rebel recruits $\xrightarrow{}$ Less civil war
 
-## Common causal logics: {.build}
+# Common Causal Logics
 
-Why do individuals not take action to achieve societal goals?
+## Overthrowing autocrats
+
+### Government oppresses citizens $\xrightarrow{}$
+
+Citizens have grievances $\xrightarrow{}$
+
+Desire for revolution is strong/widely shared $\xrightarrow{}$
+
+Individual action does not tip the scales/ Protest is costly $\xrightarrow{}$
+
+Individuals let others protest $\xrightarrow{}$
+
+### Insufficient protest to change regime
+
+## This is a common causal logic: {.build}
+
+Why do individuals not take action to achieve collective goals they all share?
 
 - E.g.: People want to stop climate change, but don't cut carbon footprint
 
-## Collective Action Problems {.build}
+## Collective Action Problems {.build} 
 
 When: 
 
@@ -204,6 +220,7 @@ Helps us explain:
 
 - Why deeply unpopular governments go unchallenged
 
+>- Dorm rooms / shared flats are messy.
 
 ## Common Causal Logics
 
@@ -217,13 +234,17 @@ Competition and learning lead to efficiency
 
 ## But keyboards:
 
-<img src="./qwerty.jpeg" width=100%>
+1873
+
+<img src="./qwerty.png" width=100%>
 
 ## But keyboards:
 
-<img src="./dvorak.png" width=100%>
+1936
 
-## Path Dependence:
+<img src="./dvorak.gif" width=100%>
+
+## Path Dependence: {.build}
 
 Silly keyboard due to time-specific tech problem  $\xrightarrow{}$
 
@@ -231,7 +252,7 @@ Lots of firms buy silly keyboard  $\xrightarrow{}$
 
 Lots of typists learn silly keyboard  $\xrightarrow{}$
 
-NEW, BETTER KEYBOARD (1932)
+NEW, BETTER KEYBOARD (1936)
 
 $\xrightarrow{}$ Still sensible for firms to buy silly keyboard
  
@@ -239,6 +260,133 @@ $\xrightarrow{}$ Still more sensible for typists to learn silly typing
   
 $\xrightarrow{}$ Stuck with silly keyboard
    
+## Path Dependence: {.build}
+
+Contribution pension system started (pay in \$, get out \$) 
+
+$\xrightarrow{}$ Workers pay in contributions
+
+$\xrightarrow{}$ Workers accumulate "earned"/entitlement benefits
+
+$\xrightarrow{}$ Workers save less privately for retirement
+
+$\xrightarrow{}$ Cutting pension benefits is politically risky
+
+$\xrightarrow{}$ Pension system intact, even with conservative government
+
+## Path Dependence {.build}
+
+Policy implemented, institution created, product introduced
+
+$\xrightarrow{}$ Actors use and adapt to policy, institution, product
+
+$\xrightarrow{}$ Given adaptation, less costly to stick with status quo than change
+
+$\xrightarrow{}$ Stability of original arrangement in face of challenges, better options
+
+**Self-reinforcing** logic over time.
+
+## Economic perceptions:
+
+Huh?
+
+<img src="./economic_perceptions.jpg" width=90%>
+
+## Economic perceptions: {.build}
+
+### Citizens have values
+
+$\xrightarrow{}$ Citizens chose party based on values
+
+$\xrightarrow{}$ Citizens gather information that supports party choice/values
+
+$\xrightarrow{}$ Perceptions of reality determined by partisanship
+
+## Motivated Reasoning
+
+People gather information for some reason
+
+- One reason could be accuracy
+- One reason could be for **pleasure** of having worldview **validated**
+
+If people are emotionally attached to beliefs
+
+- it feels good to be told your beliefs are right
+- search for information or believe information that **reinforce their beliefs**
+- **more information** makes motivated reasoning **worse**
+
+## Motivated Reasoning helps explain:
+
+- Why partisans are far apart on many issues (e.g. Democrats and Republicans in the US)
+- Why Trump still has supporters, despite scandal
+- Why US entered unwinnable war in Vietnam
+
+
+# Why causal logics matter
+
+## Why do we need to spell out causal logic?
+
+Why isn't the validity of a simple causal claim enough?
+
+## Competing Causal Logics
+
+Wealthy countries are less likely to experience civil war. Why?
+
+### Three different logics
+
+1. Wealth $\xrightarrow{}$ Larger defense budget $\xrightarrow{}$ Rivals deterred $\xrightarrow{}$ Less civil war
+2. Wealth $\xrightarrow{}$ Higher standard of living $\xrightarrow{}$ Fewer grievances $\xrightarrow{}$ Weak support for change $\xrightarrow{}$ Less civil war
+2. Wealth $\xrightarrow{}$ Lots of job opportunities $\xrightarrow{}$ Fewer listless young men $\xrightarrow{}$ Fewer rebel recruits $\xrightarrow{}$ Less civil war
+
+## If you were a rebel... {.build}
+
+### What would you do if...
+
+... (1) were true?
+
+- Undercut tax revenue? Target economic productivity?
+  
+... (2) were true?
+
+- propaganda? 
+  
+... (3) were true?
+
+- Attempt to shut down major employment areas?
+
+## If you were a government... {.build}
+
+### What would you do if...
+
+... (1) were true?
+
+- Improve tax collection, spend more on security forces?
+  
+... (2) were true?
+
+- Distribute existing wealth better, provide services, propaganda?
+  
+... (3) were true?
+
+- Create a jobs program (keep people busy)?
+
+## Causal logics matter because: {.build}
+
+### They tell us *how* a cause creates an effect
+
+- this can help refine the **scope** (generality) of the causal claim
+    
+### They suggest *other* causes
+
+- If $C \xrightarrow{} e_1 \xrightarrow{} e_2 \xrightarrow{} e_3 \xrightarrow{} E$
+- We can find a $D$ that also affects $e_1, e_2, \dots$
+    
+### They improve prescriptive claims
+
+- We can't change $C$
+- We **can** change $e_1$ or $e_2$, etc.
+- Policies require specifics: causal logics give us more specifics on **how**
+
 
 
 
