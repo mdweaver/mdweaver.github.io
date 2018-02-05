@@ -1,0 +1,285 @@
+---
+title: "Investigating Politics"
+author: "Michael Weaver"
+date: "February 5, 2018"
+output: ioslides_presentation
+df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(magrittr)
+require(kableExtra)
+require(knitr)
+```
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+h3, h4 {font-weight: bold;
+        color: #515151;}
+</style>
+
+# Concepts
+
+## From Theory to Empirics {.build}
+
+### Until now:
+
+Posing questions, making claims
+
+### Now
+
+Answering questions, evaluating claims
+
+
+## From Theory to Empirics
+
+### What is the first step?
+
+## Some claims: {.build}
+
+The election of ethnic political parties cause an increase in ethnic violence.
+
+Democratic governments improve the health of their citizens.
+
+Technologies that favor offensive over defensive warfare make war more likely to occur.
+
+Introducing proportional representation causes a decline in the accountability of legislators.
+
+## Before we evalute these claims
+
+### What are the first things we need to know?
+
+## Before we evalute these claims
+
+The election of **ethnic political parties** cause an increase in **ethnic violence**.
+
+### What are...
+
+- ethnic political parties?
+- ethnic violence?
+
+What do these mean? How would we recognize them?
+
+## Before we evalute these claims
+
+**Democratic** governments improve the **health of their citizens**.
+
+### What are...
+
+- democracies?
+- health?
+
+What do these mean? How would we recognize them?
+
+## Before we evalute these claims
+
+Technologies that favor **offensive** over **defensive** warfare make **war** more likely to occur.
+
+### What are...
+
+- Offensive technologies?
+- Defensive technologies?
+- Wars?
+
+What do these mean? How would we recognize them?
+
+
+## Before we evalute these claims
+
+Introducing **proportional representation** causes a decline in the **accountability** of legislators.
+
+### What is
+
+- Proportional representation?
+- Accountability?
+
+What do these mean? How would we recognize them?
+
+## What we need:
+
+**Concepts**: abstract definitions that are used to describe phenomena, groups, individuals, and their attributes.
+
+- Help us clarify what causal or descriptive claims mean.
+
+
+## Concepts:
+
+### More attributes
+
+- **General**, not specific
+    - no proper nouns
+    
+## Concepts:
+
+Aren't these really easy?
+
+## Concepts:
+
+What is a ...
+
+### Democracy
+
+## Concepts:
+
+What is a ...
+
+### War
+
+## A procedure:
+
+1. List all cases where concept clearly applies...
+    - E.g., everyone would agree that Canada is a democracy
+2. Propose a "covering definition".
+    - A definition that would apply concept to all clear cases
+3. Does this definition include other cases that intuitively do not belong
+    - This includes both actual or hypothetical cases
+4. Go back to 2, reformulate definition
+    - avoid many of conditions using "or", add criteria to fit a sintle idiosyncratic case
+
+## A procedure:
+
+Repeat 3 and 4 until:
+
+- No more exceptions you can think of
+- Remaining exceptions are borderline cases where no one has a strong intuition on whether they fit the category
+
+## An example: "Ethnic violence"
+
+### 1. What are the "clear" cases?
+
+>- Holocaust, Rwandan Genocide, Ethnic Cleansing in Balkans, KKK attacks against African Americans
+
+
+## An example: "Ethnic violence" {.build}
+
+### 2. A "covering" definition?
+
+>- "ethnic violence is violence between ethnic groups"
+
+## An example: "Ethnic violence" {.build}
+
+"ethnic violence is violence between ethnic groups"
+
+### 3. Are there exceptions to this rule?
+
+>- white American mugged by an African American?
+>- fight between fans of Brazil and Argentina national football teams?
+
+### Fit the rule, but are they "ethnic violence"
+
+- Is mugging "economic crime" rather than "hate crime"?
+
+
+## An example: "Ethnic violence"
+
+- Are attacks on an ethnic group to take their land, jobs, material goods "ethnic violence" in absence of "hatred"?
+- What if soldier from separatist armed group plants a bomb that kills many from a different ethnic group. Soldier may lack hatred, does it count?
+- Could mugging be ethnic violence if ethnicity of victim is pretext for theft?
+- Can wars between countries be "ethnic violence"?
+
+## An example: "Ethnic violence"
+
+### Refined definition:
+
+Violence is "ethnic" if it involves members of different ethnic groups and either:
+
+1. it is motivated by hatred or dislike of ethnic others;
+
+2. The criterion for selecting victims is ethnicity;
+
+3. it is committed on behalf of in in the name of an ethnic group, or against those claiming to represent an ethnic group (and because of that)
+
+and at least one of the actors is not a state.
+
+
+## Another concept: "natural amenities"
+
+In the 1990s, the US government sought to evaluate the best and worst places in American with respect to the natural scenery and climate.
+
+**natural amenities**: "physical characteristics of an area that enhance the location as a place to live"
+
+## Natural amenities
+
+<img src='./amenities_map.jpg' width=100%>
+
+## Natural amenities
+
+Vancouver would probably rank "very high" on natural amenities. 
+
+### But
+
+Just what physical characteristics "enhance a location as a place to live"?
+
+## Natural amenities
+
+Several dimensions of "natural amenities"
+
+### According to the US Department of Agriculture:
+
+- Warm winters
+- Winter sunlight
+- Temperate summer
+- Low summer humidity
+- Topographic variation
+- Surface water
+
+## Dimensions of a concept: {.build}
+
+**dimensions of a concept**: phenomena that both:
+
+1. Are **part** of the concept
+
+2. Could exist, disappear, change **independently** of one another. They are **not redundant**
+
+### Dimensions are like "sub-concepts"
+
+### Why do dimensions matter?
+
+- Clarify causal logics
+- Moving from concept to measurement
+
+## Example: Multiculturalism and conflict
+
+claim:
+
+### "**Multicultural policy** reduces **ethnic conflict**"
+
+## Multicultural policy:
+
+Defining the concept:
+
+> "Forms of public recognition, support, or accommodation for ethnocultural minorities to maintain and express their distinct identities and practices."
+
+## Multicultural policy:
+
+A multidimensional concept (for immigrant minorities):
+
+- **Formal state commitment** to MCP:
+- Multiculturalism in **school curricula**
+- Required diversity in **media**
+- Exemptions from **dress codes**
+- Permitting **dual citizenship**
+- **Funding ethnic groups/organizations**
+- **Funding** bilingual/mother-tongue instruction
+- **Affirmative action** for disadvantaged minorities
+
+## Multicultural policy:
+
+<img src='./mcp_index.gif' width=100%>
+
+## Multicultural policy:
+
+Does it matter **which** dimensions are present and absent?
+
+- Different dimensions may have different **effects**
+- Should inform our theory, causal logics
+- Conversely, need to **measure** correct dimension of concept as it corresponds to theory
+
+# From Concepts to Measurement
+
+## Once we have concepts... {.build}
+
+### What do we do?
+
+- Identify **variables**
+- Propose **measures**
