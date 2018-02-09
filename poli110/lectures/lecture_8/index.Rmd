@@ -603,7 +603,7 @@ This is a variable: what values does it take?
 - Counts of events
 - Rates (unemployment, language spoken, political party preference)
 
-## Choosing the right variable:
+## Choosing the right variable: {.build}
 
 ### Gun Violence:
 
@@ -638,5 +638,106 @@ Which is best?
     - No units (percentile, rankings)
     - May **directly** compare cases (rankings, percentiles)
     - May facilitate standard comparisons (ratios)
+
+## Variables and Causal Claims: {.build}
+
+### Causal Claim:
+
+Mass mobilization for war expands suffrage.
+
+### Cause is "mass mobilization for war"
+
+### Outcome is "expanded suffrage" 
+
+## Variables and Causal Claims: {.build}
+
+### Causal Claim:
+
+Mass mobilization for war expands suffrage.
+
+**Variable**: fraction of  population in military service during wartime
+
+**Variable**: fraction of  population eligible to vote
+
+
+
+## Variables and Causal Claims: {.build}
+
+### Causal Claim:
+
+A **higher proportion of the population in wartime military service** causes an increase in the **fraction of the population eligible to vote**. 
+
+**Independent Variable**: fraction of  population in military service during wartime
+
+**Dependent Variable**: fraction of  population eligible to vote
+
+## Variables and Causal Claims: {.build}
+
+### Independent variable:
+
+The variable capturing the purported **cause** in a causal claim.
+
+- often denoted as "IV" or "X" or "right-hand"
+
+### Dependent variable:
+
+The variable capturing the purported **outcome** in a causal claim.
+
+- often denoted as "DV" or "Y" or "left-hand"
+
+### Why this nomenclature?
+
+Statistical models
+
+$Y = f(X)$ or $DV = f(IV)$
+
+
+##  Variables and Causal Claims:
+
+### Causal Claim: 
+
+Ethnic diversity  causes poorer economic growth.
+
+**Independent Variable**: **level** of ethnic diversity
+
+**Dependent Variable**: **rate** of economic growth
+
+
+##  Variables and Causal Claims:
+
+### Causal Claim: 
+
+A greater **level of ethnic diversity** causes a lower **rate of economic growth**.
+
+**Independent Variable**: **level** of ethnic diversity
+
+**Dependent Variable**: **rate** of economic growth
+
+##  Causal Theory:
+
+### Causal Theory:
+
+A set of **general** causal claims about cause/effect of some phenomenon. It must include:
+
+- An independent variable (IV)
+- A dependent variable (DV)
+- What is the effect of IV on DV
+- Causal logic through which effect happens
+  
+Causal theories turn causal claims into something **testable**.
+
+## A Causal Theory:
+
+1. General causal claim: "A lower **level of material resources** increases the **likelihood of civil war** in a country."
+2. IV and DV: 
+    - IV: **level of material resources**
+    - DV: **likelihood of civil war**
+3. Causal Logic:
+    - Fewer material resources $\xrightarrow{}$
+    - Poor job prospects for young men $\xrightarrow{}$
+    - Opportunity cost of joining armed group is lower $\xrightarrow{}$
+    - Young men more likely to join armed groups $\xrightarrow{}$
+    - Armed groups have easy recruitment $\xrightarrow{}$
+    - Easier to start/sustain a war against the state
 
 
