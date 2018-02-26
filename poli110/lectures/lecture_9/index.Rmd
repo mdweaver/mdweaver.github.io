@@ -1,0 +1,416 @@
+---
+title: "Investigating Politics"
+author: "Michael Weaver"
+date: "February 26, 2018"
+output: ioslides_presentation
+df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(magrittr)
+require(kableExtra)
+require(knitr)
+```
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+h3, h4 {font-weight: bold;
+        color: #515151;}
+</style>
+
+# Measurement
+
+## Recap {.build}
+
+
+### Concept 
+
+### $\xrightarrow{}$
+
+### Variable 
+
+- Something **observable** that captures/maps onto concept
+
+### $\xrightarrow{}$
+
+### Measure:
+
+- Procedure for observing the variable
+
+## Concept to Measurement:
+
+### Concept:
+
+- An **abstract** definition for characteristics of or types of phenomena, groups, or individuals.
+
+### Variable:
+
+A **measurable property** of a phenomena, group, or individual that takes on different values (it *vari*es). Maps onto a concept.
+
+### Measure:
+
+A **procedure** for determining the value of a variable for **specific cases** based on **observation**.
+
+
+## Concept to Measurement: Concepts
+
+**dimensions of a concept**: phenomena that both:
+
+1. Are **part** of the concept
+
+2. Could exist, disappear, change **independently** of one another. They are **not redundant**
+
+
+## Concept to Measurement: Variables 
+
+### Levels of Measurement:
+
+- Nominal
+- Ordinal
+- Interval
+- Ratio
+
+### Choices:
+
+- Absolute levels
+- Relative levels
+
+## Testing Claims:
+
+### Causal Theory vs. Causal Claim
+
+- Concepts $\xrightarrow{}$ Variables
+    - Independent (Cause) and Dependent (Outcome) Variables
+- Direction of effect
+- Causal logic
+
+# But how do we decide what measurement to use?
+
+# Examples
+
+## Political Knowledge:
+
+### Democracy:
+
+- Does democratic governance require that citizens have sufficient knowledge to make decisions?
+
+### What might they need to know?
+
+>- What are government policies?
+>- What policies do parties/candidates support?
+>- What are effects of various policies on their (citizen's) interests?
+
+
+## Political Knowledge:
+
+What do people actually know?
+
+### Not a lot:
+
+
+
+## Political Knowledge:
+
+Does the kind of knowledge required for democracy correspond to questions about current events, institutional rules of government? 
+
+### Two measures:
+
+- Survey people on factual questions; more correct answers mean more knowledge
+
+- Interviewer talks with person for a two hours, then rates their knowledge.
+
+
+## Racial Bias in Police Shootings
+
+Recent renewal of long-standing controversy:
+
+### Is police/government violence in the US biased against African Americans?
+
+### How would we know?
+
+One way is to think of "statistical discrimination":
+
+- Are African Americans treated differently to white Americans in otherwise identical situations?
+- Requires measuring things like "objective threat" to a police officer posed by a suspect
+
+## Racial Bias in Police Shootings
+
+How do we measure "objective threat" in a civilian-police officer interaction?
+
+## Guns {.build}
+
+### Gun Control vs Self Defense
+
+Many argue that guns provide a means of self-defense and can deter crime
+
+### Measurement
+
+How would we measure whether this occurs?
+
+## Guns
+
+### Survey people 
+
+Ask about their use of firearms, ask if they use in self-defense, then obtain details to clarify whether it was in fact a use of a firearm in a situation with another person.
+
+Ask about whether these incidents occurred during criminal actions
+
+# Problems
+
+## Measurement Trouble
+
+### Validity
+
+**validity of a measure**: 
+
+- Degree of fit between a measurement procedure for a variable, and the concept that the variable is intended to capture
+- How well as measure "captures" or "maps onto" the concept
+
+
+## Measurement Trouble
+
+### Threats to validity
+
+Validity can break down in two places:
+
+1. Concept $\xrightarrow{Mismatch}$ Variable
+2. Variable $\xrightarrow{Mismatch}$ Measure
+
+
+## Measurement Trouble
+
+### Threats to validity
+
+1. Measure does not cover **enough**s of the concept:
+    - Measure only captures some but not all relevant **dimensions** of the concept
+    
+    
+## Measurement Trouble {.build}
+
+**Concept**: Political knowledge needed for democratic citizen
+
+**Variable**: Recall of factual questions about current politicians, political parties
+
+**Measure**: Survey containing a list of factual questions
+
+### Factual recall may not capture all of the kinds of knowledge that is relevant
+
+- Knowing you and all of your neighbors lost their jobs and are struggling might be enough information to vote against incumbent
+
+- Breakdown at Concept/Variable
+
+
+## Measurement Trouble {.build}
+
+**Concept**: Political Participation in Democracy
+
+**Variable**: Frequency with which a person participates in political activity
+
+**Measure**: Survey containing questions about frequency of voting in elections
+
+### Voting may not be the only kind of political activity that is relevant
+
+- Working on  campaigns, protesting, writing to representatives could also be participation
+- Breakdown at Variable/Measure
+
+
+## Measurement Trouble
+
+### Threats to validity
+
+1. Measure does not cover **enough** of the concept:
+    - Measure only captures some but not all relevant **dimensions** of the concept
+2. Measure covers things **outside** the concept:
+    - Could cover somethings inside the concept, or **nothing** inside the concept
+    
+## Measurement Trouble {.build}
+
+**Concept**: Political knowledge needed for democratic citizen
+
+**Variable**: Level of perceptiveness about politics and political issues
+
+**Measure**: Survey where interviewer rates respondent after questions and discussion.
+
+### Interviewer may bring in things outside of "political knowledge" when rating
+
+- Respondent's verbal skills/ agreement between interviewer and respondent
+- Breakdown at Variable/Measure
+
+## Measurement Trouble {.build}
+
+**Concept**: Self Defense Gun Use
+
+**Variable**: Event where person deters crime using a firearm
+
+**Measure**: Survey where people report their use of firearms to deter crimes
+
+### People may be bad at reporting their use of guns
+
+- Respondents perceive crimes that are not there (people actually use their weapons to threaten others)
+- Respondents inflate their ego by exaggerating threat (estimated 400,000 murders prevented by firearms annually)
+- Breakdown at Variable/Measure
+
+## Measurement Trouble {.build}
+
+**Concept**: Political Corruption
+
+**Variable**: Rate of corruption among individual politicians in a place
+
+**Measure**: Rate of corruption prosecutions among politicians in a place
+
+### Does this capture **anything** inside the concept?
+
+- Places with lots of corruption do not prosecute corruption
+- Places with low corruption successfully prosecute corruption
+- Breakdown at Variable/Measure
+
+## Measurement Trouble {.build}
+
+**Concept**: Framing/Racial Priming of government social programs
+
+**Variable**: Portrayal of social programs as "Welfare" or "Assistance to the Poor"
+
+**Measure**: Survey people on support for "welfare" or "assistance to the poor"
+
+### Does this capture the concept?
+
+- "Welfare" might have racial connotation in the US.
+- But, people actually think of different policies when asked about "welfare" and "assistance to the poor".
+- Variable captures both framing AND policy preferences.
+- Breakdown at Concept/Variable
+
+## Measurement Trouble {.build}
+
+**Concept**: Racism
+
+**Variable**: Opposition to having neighbor of a different race
+
+**Measure**: Survey people on opposition to having a neighbor of a different race
+
+### Does this capture the concept?
+
+- People are unlikely to be truthful: desirability bias
+- Breakdown at Variable/Measure
+
+## Measurement Trouble:
+
+### List Experiments?
+
+> "I am going to read ou a list of things that sometimes make people angry, after I read them just tell me HOW MANY of them upset you. I don't want to know which ones."
+
+## Measurement Trouble {.columns-2}
+
+1. Increase in gasoline tax
+2. Professional athletes with multi-million $ contract
+3. Large industrial corporations polluting
+4. Construction of high-rise in your neighborhood
+
+<p class="forceBreak"></p>
+
+1. Increase in gasoline tax
+2. Professional athletes with multi-million dollar contract
+3. Large industrial corporations polluting
+4. Black family moving in next door
+
+
+## Measurement Trouble
+
+### Threats to validity
+
+1. Measure does not cover **enough** of the concept:
+    - Measure only captures some but not all relevant **dimensions** of the concept
+2. Measure covers things **outside** the concept:
+    - Could cover somethings inside the concept, or **nothing** inside the concept
+    - Measure of concept cannot be a **cause** or an **effect** of the concept
+3. Measure captures different things across units: **non-comparability**
+
+## Measurement Trouble {.build}
+
+**Concept**: Objective threat to police
+
+**Variable**: Possession of a weapon by suspect
+
+**Measure**: Reported possession of weapon in police officer report after Officer Involved Shooting
+
+### Does this capture the concept?
+
+- Police might report item as a weapon differently in case of black vs. white suspect
+- Measurement is not the same across units
+- Breakdown at Variable/Measure
+
+
+## Measurement Trouble {.build}
+
+**Concept**: Exposure to political information
+
+**Variable**: Frequency of reading a newspaper
+
+**Measure**: Survey of people asking for frequency with which they read a newspaper
+
+### Does this capture the concept?
+
+- If we want to compare exposure to political information over time, this could be a problem
+- In the 1940s/1950s, newspapers major source of information, but now televisiona nd internet more common.
+- Breakdown at Concept/Variable
+
+## Measurement Trouble
+
+### Reliability
+
+**reliability of a measure**: 
+
+- How consistently a measurement procedure produces the same result, when repeated for the same case
+    - If two researchers use same procedure, do they get the same result?
+    
+## Reliability vs Validity {.vcenter .flexbox}
+
+<img src="./Reliability_and_validity.svg" width=60%>
+
+## Reliability vs Validity
+
+### Measuring Individual Income:
+
+|               | **Less Valid**                             | **More Valid**                 |
+|:-------------:|-----------------------------------------|-----------------------------|
+| **Less Reliable** | Are you high, middle, or low income?    | What is your annual income? |
+| **More Reliable** | What is the make and model of your car? | Tax Records                 |
+
+
+
+## Measurement Trouble
+
+### Threats to Reliability
+
+1. Room for researcher **interpretation**. **Imprecise** procedures for measurement
+    - Expert Ratings (e.g. democracy)
+    - Assessing motives (e.g. Donald Trump and "Muslim ban")
+    - Assessing motives (e.g. Police shootings)
+    
+## Measurement Trouble
+
+<img src="./fryer_coding.png" width=100%>
+
+## Measurement Trouble
+
+<img src="./romania_7.png" width=100%>
+
+## Measurement Trouble
+
+### Threats to Reliability
+
+1. Room for researcher **interpretation**. Imprecise procedures for measurement
+    - Expert Ratings (e.g. democracy)
+    - Assessing motives (e.g. Donald Trump and "Muslim ban")
+    - Assessing motives (e.g. Police shootings)
+2. **Instability**: measurement may be unstable over time, even when underlying phenomenon is stable.
+    - People's responses to interview questions change
+    - Survey response can change due to "randomness": memory/recall, different circumstances
+    - Repeated measures can help
+
+
+## Measurement Trouble
+
+<img src="./drumpf.png" width=100%>
+
+
+
