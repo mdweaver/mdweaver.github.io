@@ -1,0 +1,653 @@
+---
+title: "Investigating Politics"
+author: "Michael Weaver"
+date: "March 5, 2018"
+output: ioslides_presentation
+df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(magrittr)
+require(kableExtra)
+require(knitr)
+require(ggplot2)
+require(gtools)
+```
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+h3, h4 {font-weight: bold;
+        color: #515151;}
+</style>
+
+# Testing Causal Theories
+
+## Recap {.build}
+
+### Causal Theory
+
+- Concepts $\xrightarrow{}$ Variables
+    - Independent (Cause) and Dependent (Outcome) Variables
+- Direction of effect
+- Causal logic
+
+## Testing
+
+### Based on causal theory:
+
+**hypotheses**: a statement about what *we should expect to observe* if a causal claim is true. (Also could call this *empirical prediction*)
+
+
+## Testing {.build}
+
+Causal theory may generate several hypotheses:
+
+- based on main causal claim
+- based on steps in causal logic
+
+### What are hypotheses for causal claims?
+
+Presence of cause and presence of effect. Absence of cause and absence of effect.
+
+Higher/lower levels of X (cause) appear Higher/lower levels of Y (outcome).
+
+# Examples
+
+## Economic growth and democracy
+
+Claim:
+
+#### Higher rates of economic growth cause democratization to be more likely
+
+## Economic growth and democracy
+
+<img src="./growth_democracy.png" width=100%>
+
+## Firearms and crime
+
+Claim:
+
+#### Higher rates of firearms ownership cause crime to be less likely
+
+## Firearms and crime
+
+<img src="./guns_2.png" width=100%>
+
+## Economic growth and Civil War
+
+Claim: 
+
+#### Lower rates of economic growth cause civil war to be more likely
+
+## Economic growth and Civil War
+
+<img src="./civilwar_growth.png" width=100%>
+
+## Nick Cage and Drownings:
+
+Claim:
+
+#### Higher rates of Nick Cage films cause a higher rate of drowning deaths? 
+
+## Nick Cage and Drownings:
+
+<img src="./nick_cage.svg" width=100%>
+
+## Not enough
+
+Maybe we've been lead astray.
+
+## Counterfactual Causality
+
+### Claim:
+
+X causes Y.
+
+### Implies:
+
+If X does not happen then Y would not happen
+
+## Our examples as counterfactuals:
+
+1. If economy had grown less (more), countries would have been less (more) democratic
+2. If there were more (fewer) guns, there would be less (more) crime.
+3. If there were more (less) economic growth, civil would be less (more) likely
+4. If Nick Cage were in fewer (more) films, fewer (more) people would die by drowning
+
+## Thinking Counterfactually
+
+### Claim
+
+X causes Y
+
+### Implies
+
+If claim is true, then in **one case** with some level of X and some level of Y:
+
+If that case had a **different** level of X, then the level of Y would have been **different**.
+
+## How do we observe this?
+
+1. We can't make the same country have less economic growth and see if it doesn't democratize
+2. We can't make the US gun ownership rate not change in the past and see if crime stays high
+3. We can't make the same country have more economic growth to see if it prevents civil war
+4. We can't unmake (or unsee) Ghost Rider 2 to see if fewer people would have died in 2012
+
+## Fundamental Problem of Causal Inference
+
+We never can observe a case under the counterfactual condition: we can only observe a case under one (the factual) condition.
+
+## Let's see this in action:
+
+We want to test whether $X$ causes higher $Y$.
+
+For sake of simplicity, imagine a situation with $5$ cases. 
+
+Each observation is indexed by $i$.
+
+$X_i:$ value of cause $X$ for case $i$. $1$ for cause is present, $0$ for cause is absent
+
+$Y_i:$ The outcome (dependent variable) for $i$
+
+## What we can see
+
+| i | $Y_i$ | $X_i$ |
+|---|---------|--------|
+| 1 | 6 | 1 |
+| 2 | 2 | 0 | 
+| 3 | 8| 1 | 
+| 4 | 4 | 0 |
+| 5 | 6 | 1 |
+
+## Evidence for the claim? {.build}
+
+Take average of $Y$ for $X = 1$ and for $X = 0$ and take the difference:
+
+(1) $$\frac{6 + 8 + 6}{3} - \frac{2 + 4}{2}$$
+
+(2) $$ \frac{20}{3} - \frac{6}{2}$$
+
+(3) $$ \frac{20}{3} - \frac{9}{3} = \frac{11}{3}$$
+
+### Having $X$ seems to mean higher $Y$
+
+## Let's not get too excited
+
+Fundamental Problem of Causal Inference:
+
+- We don't know what cases would have looked like if they had the **other** value of $X$.
+- That is: we don't know what they would look like under the counterfactual.
+
+## We can imagine though
+
+Counterfactual causality means that every case has a value for the outcome that it **would take** under the factual and counterfactual conditions. We call these **potential outcomes**
+
+## We can imagine though
+
+We want to test whether $X$ causes higher $Y$.
+
+For sake of simplicity, imagine a situation with $5$ cases. 
+
+Each observation is indexed by $i$.
+
+$X_i:$ value of cause $X$ for case $i$. $1$ for cause is present, $0$ for cause is absent
+
+$Y_i^0:$ The outcome (dependent variable) for $i$ when $X_i = 0$
+
+$Y_i^1:$ The outcome (dependent variable) for $i$ when $X_i = 1$
+
+## If we saw the potential outcomes:
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 6 | 6 | 0 |
+| 2 | 2 | 2 | 0 |
+| 3 | 8 | 8 | 0 |
+| 4 | 4 | 4 | 0 |
+| 5 | 6 | 6 | 0 |
+
+## Did our test work?
+
+### Our test: compare $Y$ for $X = 1$ and $X = 0$
+
+We found that $Y$ was $\frac{11}{3}$ higher when $X = 1$
+
+### Truth: $Y_i^1 - Y_i^0$ 
+
+The truth is the average difference for each case between condtion with $X$ and condition without $X$
+
+Truth is that there is **no difference**
+
+## But can only see *factual* outcome
+
+**fundamental problem of causal inference**:
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | ? | 6 | ? |
+| 2 | 2 | ? | ? |
+| 3 | ?| 8 | ? |
+| 4 | 4 | ? | ? |
+| 5 | ? | 6 | ? |
+
+## What good is this?
+
+- We can't trust comparing higher/lower levels of X and Y
+- We can't observe cases in counterfactual condition
+
+So, we still have fundamental problem of causal inference.
+
+Can we learn **anything** about causality?
+
+## Causal claims and Hypotheses {.build}
+
+### We started with this:
+
+1. Higher/lower levels of X (cause) appear with Higher/lower levels of Y (outcome).
+
+### But we need something else:
+
+2. Comparison between cases that are very similar (next best thing to seeing case under both cause, absence of cause)
+
+### Why?
+
+if causes deterministic: cases that have exact same set of causes acting on them behave exactly the same. 
+
+## Mill's Method of Difference
+
+Claim: $X$ is cause of $Y$
+
+$A,B,C$ are other possible causes of $Y$.
+
+|  | **Case 1** | **Case 2** |
+|-------|------------|------------|
+| **X** | 1 | 0 |
+| **A** | **1** | **1** |
+| **B** | **0** | **0** |
+| **C** | **1** | **1** |
+| **Y** | 1 | 0 |
+
+## Mill's Method of Difference
+
+|  | **Case 1** | **Case 2** |
+|-------|------------|------------|
+| **X** | **1** | **0** |
+| **A** | 1 | 1 |
+| **B** | 0 | 0 |
+| **C** | 1 | 1 |
+| **Y** | **1** | **0** |
+
+## Mill's Method of Difference
+
+### Problem!
+
+|  | **Case 1** | **Case 2** |
+|-------|------------|------------|
+| **X** | **1** | **0** |
+| **A** | 1 | 1 |
+| **B** | 0 | 0 |
+| **C** | 1 | 1 |
+| **Y** | **1** | **1** |
+
+## Mill's Method of Difference
+
+### Problem!
+
+|  | **Case 1** | **Case 2** |
+|-------|------------|------------|
+| **X** | **1** | **0** |
+| **A** | 1 | 1 |
+| **B** | **1** | **0** |
+| **C** | 1 | 1 |
+| **Y** | 1 | 0 |
+
+
+## Comparative Method:
+
+If causal claim that $X \rightarrow Y$, then:
+
+We generate **empirical prediction**:
+
+> If we observe **two cases** to be the same in all relevant respects except for value of $X$, then we should observe that the two cases differ in the value of $Y$
+
+This **empirical prediction** based on a causal claim is called **comparative method** or **method of difference** (via John Stuart Mill)
+
+## Difficulty:
+
+What are the **relevant similarities**?  How many things need to be the same? How do we identify them?
+
+## Difficulty:
+
+1. Society is complex, humans and our institutions have lots of possible attributes, exposure to lots of different causes
+2. We might not know all possible causes
+3. Very difficult to actually measure all of these causes
+4. Even if we did, might not find case that is exactly the same
+
+## Worst Case Scenario:
+
+### Claim:
+
+$X \rightarrow Y$
+
+but also the case that $\lbrace W_1, W_2, \ldots, W_\infty \rbrace \rightarrow Y$
+
+### if true
+
+1. We can't observe all $W_1, W_2, \ldots, W_\infty$
+2. Unlikely to find cases that are the same on all $\mathbf{W}$
+
+## What do we do? {.build}
+
+We've been trying to find a factual case $j$ that can be a counterfactual for the factual case $i$: identical on all attributes except the cause $X$. 
+
+### But, we've had a devil of a time doing it.
+
+Why? No reason to assume any case is exactly like another. 
+
+## What do we do? {.build}
+
+Maybe we've been doing this wrong.
+
+Instead of finding counterfactual for each case $i$...
+
+### ... what if we looked for counterfactuals *on average*?
+
+## Solving the FPCI
+
+The fundamental problem of causal inference states we can't observe both $Y_i^1$ (outcome when exposed to cause) and and $Y_i^0$ (outcome when not exposed to cause) for a given $i$. 
+
+But we can get around this if we look at many cases $i \in \lbrace 1 \ldots n \rbrace$ and take the average. 
+
+## How?
+
+We cannot know each individual causal effect: $\tau_i = Y_i^1 - Y_i^0$
+
+But the **average causal effect** is the average of all individual causal effects:
+
+$ACE = \frac{1}{n}\sum\limits_i^n{\tau_i}$
+
+So it is also equal to this:
+
+$ACE = \frac{1}{n}\sum\limits_i^n (Y_i^1 - Y_i^0)$
+
+## How?
+
+Which means it can be the difference between the averages of both potential outcomes:
+
+$ACE = \Big( \frac{1}{n}\sum\limits_i^n Y_i^1 \Big) - \Big( \frac{1}{n}\sum\limits_i^n Y_i^0 \Big)$
+
+## How?
+
+But does this help us?
+
+$ACE = \Big( \frac{1}{n}\sum\limits_i^n Y_i^1 \Big) - \Big( \frac{1}{n}\sum\limits_i^n Y_i^0 \Big)$
+
+- $\frac{1}{n}\sum\limits_i^n Y_i^1$ is the average over all cases of the potential outcome when the cause is present.
+- $\frac{1}{n}\sum\limits_i^n Y_i^0$ is the average over all cases of the potential outcome when the cause is absent.
+- The FPIC means that for any case, we only observe $Y_i^1$ or $Y_i^0$, not both.
+
+## How?
+
+At best we can observe:
+
+1. $\frac{1}{n}\sum\limits_i^n (Y_i^1 | X_i = 1)$: The average of $Y$ when $X$ is present for the cases where $X$ is actually present
+2. $\frac{1}{n}\sum\limits_i^n (Y_i^0 | X_i = 0)$: The average of $Y$ when $X$ is absent for the cases where $X$ is actually absent
+
+And we know from above that this can go wrong:
+
+## 
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | ? | 6 | ? |
+| 2 | 2 | ? | ? |
+| 3 | ?| 8 | ? |
+| 4 | 4 | ? | ? |
+| 5 | ? | 6 | ? |
+
+##
+
+Take average for $X = 1$ and for $X = 0$ and take the difference:
+
+(1) $$ \frac{6 + 8 + 6}{3} - \frac{2 + 4}{2}$$
+
+(2) $$ \frac{20}{3} - \frac{6}{2}$$
+
+(3) $$ \frac{20}{3} - \frac{9}{3} = \frac{11}{3}$$
+
+## 
+
+True effect is $0$ !
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 6 | 6 | 0 |
+| 2 | 2 | 2 | 0 |
+| 3 | 8 | 8 | 0 |
+| 4 | 4 | 4 | 0 |
+| 5 | 6 | 6 | 0 |
+
+## What do we need?
+
+1. If the average outcome for cases with cause $X$ were similar to what the average outcome **would be** in the presence of $X$ for cases **without** $X$.
+2. If the average outcome for cases without $X$ were similar to what the average outcome **would be** in the absence of $X$ for cases **with** $X$ 
+
+Then: 
+
+- $\frac{1}{n}\sum\limits_i^n (Y_i^1|X_i = 1) = \frac{1}{n}\sum\limits_i^n (Y_i^1)$
+- $\frac{1}{n}\sum\limits_i^n (Y_i^0|X_i = 0) = \frac{1}{n}\sum\limits_i^n (Y_i^0)$
+
+## What do we need?
+
+### That'd be great! 
+
+But we don't **know** the counterfactual outcomes, so how can we ensure they are similar?
+
+## How?
+
+Wait... 
+
+### Didn't we just see a problem like this?
+
+- We had a **population** we want to describe, but it was too large to observe every case
+- We wanted a **sample** that looked like the population
+
+### Random Sampling
+
+A procedure that let us get a sample such that:
+
+- Mean of sample is unbiased estimate of mean of population
+
+## What do we need? {.build}
+
+### If we *randomly* sampled
+
+Some cases to get $X$ and some cases to not get $X$
+
+#### Then...
+
+1. The average $Y^1$ for cases with $X$ would be a sample of the average counterfactual $Y^1$ for cases without $X$
+2. The average $Y^0$ for cases without $X$ would be a sample of the average counterfactual $Y^0$ for cases with $X$.
+
+#### AND
+
+$ACE = \frac{1}{n}\sum\limits_i^n (Y_i^1 | X_i = 1) - \frac{1}{n}\sum\limits_i^n (Y_i^0 | X_i = 0)$
+
+All of which **is observable** because it is **factual**
+
+## What is this miraculous procedure? {.build}
+
+If you haven't guessed it:
+
+This is the precise logic of a **randomized experiment**.
+
+### It works because:
+
+All cases have equal chance of being exposed to cause.
+
+## How do experiments work?
+
+But how can this work? 
+
+We are sampling, so couldn't a sample be **wrong**?
+
+# Take out writing tools
+
+## Let's work through it
+
+We have this table of potential outcomes:
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 5 | 9 | 1 |
+| 2 | 4 | 8 | 3 |
+| 3 | 3 | 7 | 5 |
+| 4 | 2 | 6 | 7 |
+
+## Let's work through it
+
+What the true average causal effect?
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 5 | 9 | 1 |
+| 2 | 4 | 8 | 3 |
+| 3 | 3 | 7 | 5 |
+| 4 | 2 | 6 | 7 |
+
+
+## Let's work through it
+
+
+$$\frac{1 + 3 + 5 + 7}{4} = 4$$
+
+
+## Let's work through it
+
+Let's run a randomized experiment: write down all possible treatment groups of size $2$ (e.g. (1,2)) 
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 5 | 9 | 1 |
+| 2 | 4 | 8 | 3 |
+| 3 | 3 | 7 | 5 |
+| 4 | 2 | 6 | 7 |
+
+## Let's work through it
+
+```{r, echo = F}
+
+kable(t(combn(1:4, 2)))
+
+```
+
+## Let's work through it
+
+Calculate the average $Y^1$ for every possible treatment group
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | 5 | **9** | 1 |
+| 2 | 4 | **8** | 3 |
+| 3 | 3 | **7** | 5 |
+| 4 | 2 | **6** | 7 |
+
+## Let's work through it
+
+Calculate the average $Y^0$ for every corresponding control group
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+|---|---------|--------|-----------------|
+| 1 | **5** | 9 | 1 |
+| 2 | **4** | 8 | 3 |
+| 3 | **3** | 7 | 5 |
+| 4 | **2** | 6 | 7 |
+
+## Let's work through it
+
+
+```{r, echo = F}
+
+po_table = data.frame(i = 1:4, y0 = 5:2, y1 = 9:6)
+assign = t(combn(1:4, 2))
+
+effects = data.frame(T_Group = paste(assign[,1], assign[2], sep = ","),
+           Y_1 = apply(assign, 1, function(x) mean(po_table$y1[x]) ),
+           Y_0 = apply(assign, 1, function(x) mean(po_table$y0[-x]) )
+           )
+
+kable(effects)
+```
+
+## Let's work through it
+
+Calculate the average causal effect for every possible experiment (Treated - Control)
+
+```{r, echo = F}
+kable(effects)
+```
+
+## Let's work through it
+
+```{r, echo = F}
+effects$ACE = effects$Y_1 - effects$Y_0
+
+kable(effects)
+```
+
+## Let's work through it
+
+What is the average effect across all possible experiments?
+
+```{r, echo = F}
+effects$ACE = effects$Y_1 - effects$Y_0
+
+kable(effects)
+```
+
+## Let's work through it
+
+
+$$\frac{6 + 5 + 4 + 4 + 3 + 2}{6} = 4$$
+
+## Let's work through it
+
+```{r, echo =F}
+
+hist(effects$ACE, xlab = "Estimated Causal Effects", main = "Outcomes of All Possible Experiments",
+     breaks = seq(1.5, 6.5,1))
+abline(v = 4, lwd = 4)
+
+```
+
+## Randomized Experiments: {.build}
+
+Using random assignment to treatment and control:
+
+- Let's us have two samples that are, on average, counterfactuals for each other
+- Let's us address FPCI at aggregate, not individual level
+
+### Can't always do experiments
+
+But, understanding experiments will help us understand
+
+1. what can go wrong in the absence of randomization
+2. and what we can do to fix it
+
+
+
+<!-- ## Let's go back to our example: -->
+
+<!-- table: biased BUT now we have Covariate -->
+
+<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+
+<!-- ## Let's go back to our example: -->
+
+<!-- table: biased BUT now we have Covariate -->
+
+<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+
+<!-- THIS TIME IT IS BIASED -->
+
+
