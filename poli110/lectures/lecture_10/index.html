@@ -854,11 +854,62 @@ h3, h4 {font-weight: bold;
 
 <p>All cases have equal chance of being exposed to cause.</p>
 
+</article></slide><slide class=''><hgroup><h2>Recap:</h2></hgroup><article  id="recap-1">
+
+<h3>Testing causal theories</h3>
+
+<p>We need to generate <strong>emprirical predictions</strong> or <strong>hypotheses</strong> about what we will observe if the causal theory is correct</p>
+
+</article></slide><slide class=''><hgroup><h2>Recap:</h2></hgroup><article  id="recap-2">
+
+<h3>Testing causal theories</h3>
+
+<p>Causality implies a counterfactual.</p>
+
+<p>Empirical Predictions for causal theories are that:</p>
+
+<ol>
+<li>When we change the level of the independent variable (cause) for a specific case</li>
+<li>The change in the level of the independent variable results in change in dependent variable (outcome)</li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Recap:</h2></hgroup><article  id="recap-3">
+
+<h3>Testing causal theories</h3>
+
+<p>But we can&#39;t change the level of the independent variable for a case:</p>
+
+<p><strong>Fundamental Problem of Causal Inference</strong>: key part empirical prediction about causal theory is <strong>never observable</strong></p>
+
+</article></slide><slide class=''><hgroup><h2>Recap:</h2></hgroup><article  id="recap-4" class="build">
+
+<h3>Testing causal theories</h3>
+
+<p><strong>Fundamental Problem of Causal Inference</strong> is solvable when</p>
+
+<ol>
+<li>we look at groups of cases in aggregate</li>
+<li>we randomly sample cases to get exposed to the cause/not</li>
+</ol>
+
+<h3>An experiment</h3>
+
 </article></slide><slide class=''><hgroup><h2>How do experiments work?</h2></hgroup><article  id="how-do-experiments-work">
 
-<p>But how can this work?</p>
+<h3>Randomly assigning exposure to cause</h3>
 
-<p>We are sampling, so couldn&#39;t a sample be <strong>wrong</strong>?</p>
+<p>&quot;Treatment&quot; and &quot;Control&quot; group have same potential outcomes</p>
+
+<p><strong>because</strong> they are two random samples from the same population</p>
+
+<ul>
+<li>Treatment group factual outcomes are same as counterfactual outcomes for Control</li>
+<li>Control group factual outcomes are same as counterfactual outcomes for Treatment</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>How do experiments work?</h2></hgroup><article  id="how-do-experiments-work-1">
+
+<p>Best way to understand is to do it!</p>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Take out writing tools</h2></hgroup><article  id="take-out-writing-tools">
 
@@ -877,25 +928,25 @@ h3, h4 {font-weight: bold;
 <td align="left">1</td>
 <td align="left">5</td>
 <td align="left">9</td>
-<td align="left">1</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">4</td>
 <td align="left">8</td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">3</td>
 <td align="left">7</td>
-<td align="left">5</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">2</td>
 <td align="left">6</td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
 </table>
 
@@ -914,25 +965,25 @@ h3, h4 {font-weight: bold;
 <td align="left">1</td>
 <td align="left">5</td>
 <td align="left">9</td>
-<td align="left">1</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">4</td>
 <td align="left">8</td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">3</td>
 <td align="left">7</td>
-<td align="left">5</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">2</td>
 <td align="left">6</td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
 </table>
 
@@ -955,25 +1006,25 @@ h3, h4 {font-weight: bold;
 <td align="left">1</td>
 <td align="left">5</td>
 <td align="left">9</td>
-<td align="left">1</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">4</td>
 <td align="left">8</td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">3</td>
 <td align="left">7</td>
-<td align="left">5</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">2</td>
 <td align="left">6</td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
 </table>
 
@@ -1021,25 +1072,25 @@ h3, h4 {font-weight: bold;
 <td align="left">1</td>
 <td align="left">5</td>
 <td align="left"><strong>9</strong></td>
-<td align="left">1</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left">4</td>
 <td align="left"><strong>8</strong></td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left">3</td>
 <td align="left"><strong>7</strong></td>
-<td align="left">5</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left">2</td>
 <td align="left"><strong>6</strong></td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
 </table>
 
@@ -1058,25 +1109,25 @@ h3, h4 {font-weight: bold;
 <td align="left">1</td>
 <td align="left"><strong>5</strong></td>
 <td align="left">9</td>
-<td align="left">1</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
 <td align="left"><strong>4</strong></td>
 <td align="left">8</td>
-<td align="left">3</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">3</td>
 <td align="left"><strong>3</strong></td>
 <td align="left">7</td>
-<td align="left">5</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">4</td>
 <td align="left"><strong>2</strong></td>
 <td align="left">6</td>
-<td align="left">7</td>
+<td align="left">4</td>
 </tr>
 </table>
 
@@ -1266,37 +1317,612 @@ h3, h4 {font-weight: bold;
 
 <p><img src="data:image/png;base64,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" width="720" /></p>
 
+</article></slide><slide class=''><hgroup><h2>Let&#39;s work through it</h2></hgroup><article  id="lets-work-through-it-13">
+
+<p>Why does this work?</p>
+
+<p>If you wanted:</p>
+
+<ul>
+<li>you can compare \(Y^1\) for the treatment groups and \(Y^1\) for the control to see if they are the same</li>
+<li>you can compare \(Y^0\) for the control groups and \(Y^0\) for the treatment to see if they are the same</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Let&#39;s work through it</h2></hgroup><article  id="lets-work-through-it-14">
+
+<p>Average of \(Y^1\) for treated groups (factual outcome): 7.5 Average of \(Y^1\) for control groups (counterfactual outcome): 7.5</p>
+
+<p>Average of \(Y^0\) for control groups (factual outcome): 3.5 Average of \(Y^0\) for treated groups (counterfactual outcome): 3.5</p>
+
 </article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments" class="build">
 
 <p>Using random assignment to treatment and control:</p>
 
 <ul>
-<li>Let&#39;s us have two samples that are, on average, counterfactuals for each other</li>
-<li>Let&#39;s us address FPCI at aggregate, not individual level</li>
+<li>Lets us have two samples that are, on average, counterfactuals for each other</li>
+<li>Lets us address FPCI at aggregate, not individual level</li>
 </ul>
 
-<h3>Can&#39;t always do experiments</h3>
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-1" class="build">
 
-<p>But, understanding experiments will help us understand</p>
+<h3>What happens when we fail to randomize?</h3>
+
+<p>1 and 2 always get treated, 3 and 4 never do.</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">i</th>
+<th align="left">\(Y_i^0\)</th>
+<th align="left">\(Y_i^1\)</th>
+<th align="left">\(Y_i^1 - Y_i^0\)</th>
+<th align="left">\(X_i\)</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">5</td>
+<td align="left">9</td>
+<td align="left">4</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">4</td>
+<td align="left">8</td>
+<td align="left">4</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">0</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-2" class="build">
+
+<h3>What happens when we fail to randomize?</h3>
+
+<p>\[\frac{9+8}{2} - \frac{3+2}{2} = \frac{12}{2} \neq 4\]</p>
+
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-3" class="build">
+
+<p>We can imagine cases with different potential outcomes have different attributes:</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">i</th>
+<th align="left">\(Y_i^0\)</th>
+<th align="left">\(Y_i^1\)</th>
+<th align="left">\(Y_i^1 - Y_i^0\)</th>
+<th align="left">\(X_i\)</th>
+<th align="left">\(W_i\)</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">5</td>
+<td align="left">9</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">4</td>
+<td align="left">8</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-4" class="build">
+
+<p>Presence of \(W\) is fine if: \(W\) unrelated to cause \(X\)</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">i</th>
+<th align="left">\(Y_i^0\)</th>
+<th align="left">\(Y_i^1\)</th>
+<th align="left">\(Y_i^1 - Y_i^0\)</th>
+<th align="left">\(X_i\)</th>
+<th align="left">\(W_i\)</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-5" class="build">
+
+<p>Presence of \(W\) is fine if: \(W\) unrelated to outcome \(Y\)</p>
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">i</th>
+<th align="left">\(Y_i^0\)</th>
+<th align="left">\(Y_i^1\)</th>
+<th align="left">\(Y_i^1 - Y_i^0\)</th>
+<th align="left">\(X_i\)</th>
+<th align="left">\(W_i\)</th>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">7</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td align="left"><strong>0</strong></td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>Randomized Experiments:</h2></hgroup><article  id="randomized-experiments-6" class="build">
+
+<p>Randomization ensures that, on average, no relationship between \(X\) and \(W\).</p>
+
+<h3>But things can go wrong</h3>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments">
+
+<h3>Internal Validity</h3>
+
+<p>A study has <strong>internal validity</strong> when the causal effect of \(X\) on \(Y\) it finds is not biased (systematically incorrect).</p>
+
+<h3>Threats to internal validity</h3>
 
 <ol>
-<li>what can go wrong in the absence of randomization</li>
-<li>and what we can do to fix it</li>
+<li><strong>Selection Bias</strong></li>
+<li><strong>Non-excludability</strong></li>
+<li><strong>Systematic Measurement Error</strong></li>
 </ol>
 
-<!-- ## Let's go back to our example: -->
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-1">
 
-<!-- table: biased BUT now we have Covariate -->
+<h3>Selection Bias:</h3>
 
-<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+<p><strong>selection bias</strong>: When cases that receive a &quot;treatment&quot; or &quot;cause&quot; have different potential outcomes from those that do not.</p>
 
-<!-- ## Let's go back to our example: -->
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-2">
 
-<!-- table: biased BUT now we have Covariate -->
+<h3>Selection Bias:</h3>
 
-<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+<p>Consider this experiment:</p>
 
-<!-- THIS TIME IT IS BIASED --></article></slide>
+<ul>
+<li>We want to evaluate the effect of emergency housing assistance on homelessness prevention.</li>
+<li>We give assistance to the first 100 people to show up and compare them to the second 100 people.</li>
+</ul>
+
+<h3>Problem?</h3>
+
+<ul>
+<li>People with greater need OR better resources/capabilities show up first</li>
+<li>Different needs or different resources probably related to propensity to become homeless</li>
+<li>Exposure to treatment related to other factors that might affect outcome!</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-3">
+
+<h3>Non-excludability</h3>
+
+<p><strong>non-excludability</strong> occurs when the treatment in an experiment bundles multiple different treatments</p>
+
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-4">
+
+<h3>Non-excludability</h3>
+
+<p>Does an apple a day keep the doctor away?</p>
+
+<ul>
+<li>Some people assigned to eat apples, some are not.</li>
+<li>To ensure people eat apples, we remind them every day to eat apples and give them a financial incentive to eat it.</li>
+</ul>
+
+<h3>Problem?</h3>
+
+<ul>
+<li>Are the effects we see due to apples? To being reminded every day? To being paid?</li>
+<li>Lots of differences between treatment and control.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-5">
+
+<h3>Systematic Measurement Error</h3>
+
+<p><strong>systematic measurement error</strong>: error produced when our measurement procedure obtains scores that are, on average, too high or too low.</p>
+
+</article></slide><slide class=''><hgroup><h2>Threats to Internal Validity</h2></hgroup><article  id="threats-to-internal-validity-6">
+
+<h3>Systematic Measurement Error</h3>
+
+<p>We randomly assign some people to be shamed into voting (we remind them of their past voting record)</p>
+
+<p>We measure whether people exposed to this treatment have higher <strong>self-reported</strong> voting rates</p>
+
+<h3>Problem?</h3>
+
+<ul>
+<li>If we see a difference between treatment and control, is it due to actual differences in voting?</li>
+<li>Or is it due to people who are shamed self-reporting differently?</li>
+<li>Treatment affects results of measurement procedures \(\rightarrow\) measurement bias</li>
+<li><strong>Only</strong> a problem <strong>when</strong> measurement bias is <strong>related to treatment</strong></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Experiments:</h2></hgroup><article  id="experiments">
+
+<h3>Randomization of cause</h3>
+
+<ul>
+<li>Allows us to actually observe a counter-factual</li>
+<li>Directly tests causal theory
+
+<ul>
+<li>Allows us to see whether the change in \(Y\) due to \(X\) is in the right direction</li>
+<li>Allows us to see whether \(Y\) changes due to \(X\) relative to the counterfactual.</li>
+</ul></li>
+</ul>
+
+<h3>Problems are solvable</h3>
+
+<ul>
+<li>Selection bias, non-excludability, measurement bias all solvable</li>
+<li>Better design of experiment</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Experiments:</h2></hgroup><article  id="experiments-1" class="build">
+
+<p>One conclusion: only do experiments.</p>
+
+<h3>But that could be a problem&#8230;</h3>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-1">
+
+<h3>External Validity</h3>
+
+<p><strong>external validity</strong> is the degree to which the causal relationship we find in a study matches the causal relationship and the context identified in a causal theory</p>
+
+<ul>
+<li>Study has <strong>external validity</strong> if the relationship found can generalize to all the cases to which our causal theory applies
+
+<ul>
+<li>If our study suffers from <strong>sampling bias</strong>, then our study may lack external validity</li>
+</ul></li>
+<li>Study has <strong>external validity</strong> if the cause in the study is the same as the cause in our causal theory
+
+<ul>
+<li>If our independent variable/cause in the study lacks <strong>validity</strong> then our study may lack external validity</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>External Validity:</h2></hgroup><article  id="external-validity-1">
+
+<p>Broockman and Kalla (2015): Does perspective taking change minds about minority groups?</p>
+
+<p>Sample</p>
+
+<ul>
+<li>Invite tens of thousands of people to join a survey</li>
+<li>Of the ~1500 that respond, randomly assign in two groups</li>
+</ul>
+
+<p>Treatment</p>
+
+<ul>
+<li>One group gets canvasser for transgender rights</li>
+<li>Other gets canvasser for recycling</li>
+</ul>
+
+<p>Outcome</p>
+
+<ul>
+<li>Survey responses on attitudes about transgender people, their rights</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-2" class="build">
+
+<h3>External Validity:</h3>
+
+<p>Broockman and Kalla (2015)</p>
+
+<p>Sample</p>
+
+<ul>
+<li><strong>Invite tens of thousands</strong> of people to join a survey</li>
+<li><strong>Of the ~1500 that respond</strong>, randomly assign in two groups</li>
+</ul>
+
+<h3>Problem:</h3>
+
+<ul>
+<li>Will the effect of talking with canvasser hold for vast majority who won&#39;t join a survey?</li>
+<li>Sample in the experiment not the same as the population implied by the causal theory.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-3">
+
+<h3>External Validity:</h3>
+
+<p>Does exposure to partisan media change people&#39;s political attitudes and make them more extreme? (E.g. Fox News, Breitbart)</p>
+
+<p>Sample: Randomly chosen group of US adults</p>
+
+<p>Treatment:</p>
+
+<ul>
+<li>Randomly exposed to 2 hours of partisan news or non-partisan movie</li>
+</ul>
+
+<p>Outcome:</p>
+
+<ul>
+<li>Survey questions about political leaning, attitudes about key political issues</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-4">
+
+<h3>External Validity:</h3>
+
+<p>Treatment:</p>
+
+<ul>
+<li>Randomly <strong>exposed to 2 hours</strong> of partisan news or non-partisan movie</li>
+</ul>
+
+<h3>Problem:</h3>
+
+<ul>
+<li>Is this short treatment the same as years of exposure on cable TV or internet news consumption?</li>
+<li>If we find no effect of 2 hours of watching, does this mean that emergence of partisan news didn&#39;t cause change in Americans&#39; political attitudes?</li>
+<li>Cause we can manipulate in experiment not the same as cause in causal theory</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-5">
+
+<h3>Always a Trade-off:</h3>
+
+<p>More <strong>internal validity</strong> (unbiased calculation of causal effect) comes at the cost in <strong>external validity</strong> (relevance of study sample or cause to the causal theory)</p>
+
+<h3>Why?</h3>
+
+<p>Many relevant contexts for causal theories and interesting causes cannot or should not be manipulated at random:</p>
+
+<ul>
+<li>What causes democratization?</li>
+<li>What causes war or ethnic violence?</li>
+<li>What causes economic growth?</li>
+<li>Why were civil rights extended to oppressed minority groups?</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Problems with Experiments:</h2></hgroup><article  id="problems-with-experiments-6">
+
+<h3>We can&#39;t use experiments to text many causal theories</h3>
+
+<h3>What approaches can we use instead?</h3>
+
+<ol>
+<li>Comparative Method</li>
+<li>Correlation</li>
+</ol>
+
+<h3>Aren&#39;t they flawed?</h3>
+
+<p>Yes, but now that we know how and why experiments work, we can make these better.</p>
+
+<!-- ## Comparative Method -->
+
+<!-- restate what it is -->
+
+<!-- ## What do we know now? -->
+
+<!-- - don't need ALL possible values to be the same -->
+
+<!-- - Need to be the same on things that can affect both X and Y -->
+
+<!-- ## Examples: -->
+
+<!-- ## Conjunctural Causation: -->
+
+<!-- example -->
+
+<!-- ## Correlation -->
+
+<!-- Suggests causation: -->
+
+<!-- **correlation**: degree to which two variables vary **together** on average -->
+
+<!-- What can it tell us about causal link? -->
+
+<!-- - Causal theory says y moves with x. Should see them move together -->
+
+<!-- - Should move in the direction suggested by the theory -->
+
+<!-- - High X and High Y, or High X, Low Y -->
+
+<!-- contrast to comparative method: -->
+
+<!-- - look at correlations across more than two cases (usually a large number) -->
+
+<!-- - can compare correlation at the same time **across units** -->
+
+<!-- - can compare correlation within units **over time** -->
+
+<!-- ## Correlation -->
+
+<!-- correlation quartet -->
+
+<!-- ## Correlation -->
+
+<!-- Can observe clear relationships but low correlation -->
+
+<!-- ## Correlation as test -->
+
+<!-- examples -->
+
+<!-- ## Correlation as test: -->
+
+<!-- entire move from theory to evidence -->
+
+<!-- ## Correlation: -->
+
+<!-- empirical prediction is that x and y should be correlated -->
+
+<!-- positive correlation -->
+
+<!-- negative correlation -->
+
+<!-- ## Correlation: -->
+
+<!-- Typically: -->
+
+<!-- We use one specific mathematical concept of correlation that implies moving together **linearly**. -->
+
+<!-- This can be confusing, though... -->
+
+<!-- ## Correlation -->
+
+<!-- Weak -->
+
+<!-- vs  -->
+
+<!-- STrong -->
+
+<!-- ## Correlation -->
+
+<!-- examples: across units -->
+
+<!-- - how correlation can tell us if there is something going on -->
+
+<!-- ## Correlation -->
+
+<!-- Exampes: across time -->
+
+<!-- ## correlation  -->
+
+<!-- randomness? -->
+
+<!-- could we see a pattern that is purely by chance? -->
+
+<!-- - appearance of correlation but is result of random noise -->
+
+<!-- ##  -->
+
+<!-- random relationships by chance -->
+
+<!-- ## -->
+
+<!-- statistics -->
+
+<!-- probability of getting a relationship like this by chance, if there is no relationship -->
+
+<!-- more cases, tighter relationship makes it less likely relationship is by chance -->
+
+<!-- fewer cases, looser relationship more likely relationship is by chance -->
+
+<!-- ## Statistical Significance -->
+
+<!-- - how likely to get this by chance. -->
+
+<!-- - higher significance means less likely we observe this by chance -->
+
+<!-- ## P Value -->
+
+<!-- a numerical measure of significance of a relationship: -->
+
+<!-- - how likely is it that we would get this pattern by chance, ASSUMING NO RELATIONSHIP -->
+
+<!-- low p value is better: often .05, but not magic. -->
+
+<!-- - p value is useless if you do it many times... you will still BY CHANCE obtain a value of .05 or less. -->
+
+<!-- ## Examples -->
+
+<!-- - strong -->
+
+<!-- - weak -->
+
+<!-- - weak with low n -->
+
+<!-- - stronger with larger n -->
+
+<!-- - strong but high p bc not linear --></article></slide>
 
 
   <slide class="backdrop"></slide>

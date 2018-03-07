@@ -485,11 +485,58 @@ This is the precise logic of a **randomized experiment**.
 
 All cases have equal chance of being exposed to cause.
 
+## Recap:
+
+### Testing causal theories
+
+We need to generate **emprirical predictions** or **hypotheses** about what we will observe if the causal theory is correct
+
+## Recap:
+
+### Testing causal theories
+
+Causality implies a counterfactual.
+
+Empirical Predictions for causal theories are that:
+
+1. When we change the level of the independent variable (cause) for a specific case
+2. The change in the level of the independent variable results in change in dependent variable (outcome)
+
+
+## Recap:
+
+### Testing causal theories
+
+But we can't change the level of the independent variable for a case:
+
+**Fundamental Problem of Causal Inference**: key part empirical prediction about causal theory is **never observable**
+
+## Recap: {.build}
+
+### Testing causal theories
+
+**Fundamental Problem of Causal Inference** is solvable when 
+
+1. we look at groups of cases in aggregate
+2. we randomly sample cases to get exposed to the cause/not
+
+### An experiment
+
 ## How do experiments work?
 
-But how can this work? 
+### Randomly assigning exposure to cause
 
-We are sampling, so couldn't a sample be **wrong**?
+"Treatment" and "Control" group have same potential outcomes
+
+**because** they are two random samples from the same population
+
+- Treatment group factual outcomes are same as counterfactual outcomes for Control
+- Control group factual outcomes are same as counterfactual outcomes for Treatment
+
+
+## How do experiments work?
+
+Best way to understand is to do it!
 
 # Take out writing tools
 
@@ -499,10 +546,10 @@ We have this table of potential outcomes:
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
-| 1 | 5 | 9 | 1 |
-| 2 | 4 | 8 | 3 |
-| 3 | 3 | 7 | 5 |
-| 4 | 2 | 6 | 7 |
+| 1 | 5 | 9 | 4 |
+| 2 | 4 | 8 | 4 |
+| 3 | 3 | 7 | 4 |
+| 4 | 2 | 6 | 4 |
 
 ## Let's work through it
 
@@ -510,10 +557,10 @@ What the true average causal effect?
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
-| 1 | 5 | 9 | 1 |
-| 2 | 4 | 8 | 3 |
-| 3 | 3 | 7 | 5 |
-| 4 | 2 | 6 | 7 |
+| 1 | 5 | 9 | 4 |
+| 2 | 4 | 8 | 4 |
+| 3 | 3 | 7 | 4 |
+| 4 | 2 | 6 | 4 |
 
 
 ## Let's work through it
@@ -528,10 +575,10 @@ Let's run a randomized experiment: write down all possible treatment groups of s
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
-| 1 | 5 | 9 | 1 |
-| 2 | 4 | 8 | 3 |
-| 3 | 3 | 7 | 5 |
-| 4 | 2 | 6 | 7 |
+| 1 | 5 | 9 | 4 |
+| 2 | 4 | 8 | 4 |
+| 3 | 3 | 7 | 4 |
+| 4 | 2 | 6 | 4 |
 
 ## Let's work through it
 
@@ -547,10 +594,10 @@ Calculate the average $Y^1$ for every possible treatment group
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
-| 1 | 5 | **9** | 1 |
-| 2 | 4 | **8** | 3 |
-| 3 | 3 | **7** | 5 |
-| 4 | 2 | **6** | 7 |
+| 1 | 5 | **9** | 4 |
+| 2 | 4 | **8** | 4 |
+| 3 | 3 | **7** | 4 |
+| 4 | 2 | **6** | 4 |
 
 ## Let's work through it
 
@@ -558,10 +605,10 @@ Calculate the average $Y^0$ for every corresponding control group
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
-| 1 | **5** | 9 | 1 |
-| 2 | **4** | 8 | 3 |
-| 3 | **3** | 7 | 5 |
-| 4 | **2** | 6 | 7 |
+| 1 | **5** | 9 | 4 |
+| 2 | **4** | 8 | 4 |
+| 3 | **3** | 7 | 4 |
+| 4 | **2** | 6 | 4 |
 
 ## Let's work through it
 
@@ -620,34 +667,428 @@ abline(v = 4, lwd = 4)
 
 ```
 
+## Let's work through it
+
+Why does this work?
+
+If you wanted: 
+
+- you can compare $Y^1$ for the treatment groups and $Y^1$ for the control to see if they are the same
+- you can compare $Y^0$ for the control groups and $Y^0$ for the treatment to see if they are the same
+
+## Let's work through it
+
+```{r, echo =F, include = F}
+effects$Y_1_0 = apply(assign, 1, function(x) mean(po_table$y1[-x]) )
+effects$Y_0_1 = apply(assign, 1, function(x) mean(po_table$y0[x]))
+```
+
+Average of $Y^1$ for treated groups (factual outcome): `r mean(effects$Y_1)`
+Average of $Y^1$ for control groups (counterfactual outcome): `r mean(effects$Y_1_0)`
+
+Average of $Y^0$ for control groups (factual outcome): `r mean(effects$Y_0)`
+Average of $Y^0$ for treated groups (counterfactual outcome): `r mean(effects$Y_0_1)`
+
+
 ## Randomized Experiments: {.build}
 
 Using random assignment to treatment and control:
 
-- Let's us have two samples that are, on average, counterfactuals for each other
-- Let's us address FPCI at aggregate, not individual level
+- Lets us have two samples that are, on average, counterfactuals for each other
+- Lets us address FPCI at aggregate, not individual level
 
-### Can't always do experiments
+## Randomized Experiments: {.build}
 
-But, understanding experiments will help us understand
+### What happens when we fail to randomize?
 
-1. what can go wrong in the absence of randomization
-2. and what we can do to fix it
+1 and 2 always get treated, 3 and 4 never do.
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$
+|---|---------|--------|-----------------|--|
+| 1 | 5 | 9 | 4 |1|
+| 2 | 4 | 8 | 4 |1|
+| 3 | 3 | 7 | 4 |0|
+| 4 | 2 | 6 | 4 |0|
+
+## Randomized Experiments: {.build}
+
+### What happens when we fail to randomize?
+
+$$\frac{9+8}{2} - \frac{3+2}{2} = \frac{12}{2} \neq 4$$
+
+## Randomized Experiments: {.build}
+
+We can imagine cases with different potential outcomes have different attributes:
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ |
+|---|---------|--------|-----------------|--|--|
+| 1 | 5 | 9 | 4 |1|**1**|
+| 2 | 4 | 8 | 4 |1|**1**|
+| 3 | 3 | 7 | 4 |0|**0**|
+| 4 | 2 | 6 | 4 |0|**0**|
+
+## Randomized Experiments: {.build}
+
+Presence of $W$ is fine if: $W$ unrelated to cause $X$
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ |
+|---|---------|--------|-----------------|--|--|
+| 1 | 3 | 7 | 4 |1|**1**|
+| 2 | 2 | 6 | 4 |1|**0**|
+| 3 | 3 | 7 | 4 |0|**1**|
+| 4 | 2 | 6 | 4 |0|**0**|
+
+## Randomized Experiments: {.build}
+
+Presence of $W$ is fine if: $W$ unrelated to outcome $Y$
+
+| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ |
+|---|---------|--------|-----------------|--|--|
+| 1 | 3 | 7 | 4 |1|**1**|
+| 2 | 2 | 6 | 4 |1|**1**|
+| 3 | 3 | 7 | 4 |0|**0**|
+| 4 | 2 | 6 | 4 |0|**0**|
+
+## Randomized Experiments: {.build}
+
+Randomization ensures that, on average, no relationship between $X$ and $W$.
+
+### But things can go wrong
+
+## Problems with Experiments:
+
+### Internal Validity
+
+A study has **internal validity** when the causal effect of $X$ on $Y$ it finds is not biased (systematically incorrect).
+
+### Threats to internal validity
+
+1. **Selection Bias**
+2. **Non-excludability**
+3. **Systematic Measurement Error**
+
+## Threats to Internal Validity
+
+### Selection Bias:
+
+**selection bias**: When cases that receive a "treatment" or "cause" have different potential outcomes from those that do not.
+
+## Threats to Internal Validity
+
+### Selection Bias:
+
+Consider this experiment:
+
+- We want to evaluate the effect of emergency housing assistance on homelessness prevention.
+- We give assistance to the first 100 people to show up and compare them to the second 100 people.
+
+### Problem?
+
+- People with greater need OR better resources/capabilities show up first
+- Different needs or different resources probably related to propensity to become homeless
+- Exposure to treatment related to other factors that might affect outcome!
+
+## Threats to Internal Validity
+
+### Non-excludability
+
+**non-excludability** occurs when the treatment in an experiment bundles multiple different treatments
+
+## Threats to Internal Validity
+
+### Non-excludability
+
+Does an apple a day keep the doctor away?
+
+- Some people assigned to eat apples, some are not.
+- To ensure people eat apples, we remind them every day to eat apples and give them a financial incentive to eat it.
+
+### Problem?
+
+- Are the effects we see due to apples? To being reminded every day? To being paid?
+- Lots of differences between treatment and control. 
+
+## Threats to Internal Validity
+
+### Systematic Measurement Error
+
+**systematic measurement error**: error produced when our measurement procedure obtains scores that are, on average, too high or too low.
+
+
+## Threats to Internal Validity
+
+### Systematic Measurement Error
+
+We randomly assign some people to be shamed into voting (we remind them of their past voting record)
+
+We measure whether people exposed to this treatment have higher **self-reported** voting rates
+
+### Problem?
+
+- If we see a difference between treatment and control, is it due to actual differences in voting?
+- Or is it due to people who are shamed self-reporting differently?
+- Treatment affects results of measurement procedures $\rightarrow$ measurement bias
+- **Only** a problem **when** measurement bias is **related to treatment**
+
+## Experiments:
+
+### Randomization of cause
+
+- Allows us to actually observe a counter-factual
+- Directly tests causal theory
+    - Allows us to see whether the change in $Y$ due to $X$ is in the right direction
+    - Allows us to see whether $Y$ changes due to $X$ relative to the counterfactual.
+    
+### Problems are solvable
+
+- Selection bias, non-excludability, measurement bias all solvable
+- Better design of experiment
+
+## Experiments: {.build}
+
+One conclusion: only do experiments.
+
+### But that could be a problem...
+
+## Problems with Experiments:
+
+### External Validity
+
+**external validity** is the degree to which the causal relationship we find in a study matches the causal relationship and the context identified in a causal theory
+
+- Study has **external validity** if the relationship found can generalize to all the cases to which our causal theory applies
+    - If our study suffers from **sampling bias**, then our study may lack external validity
+- Study has **external validity** if the cause in the study is the same as the cause in our causal theory
+    - If our independent variable/cause in the study lacks **validity** then our study may lack external validity
+
+
+## External Validity:
+
+Broockman and Kalla (2015): Does perspective taking change minds about minority groups?
+
+Sample
+
+- Invite tens of thousands of people to join a survey
+- Of the ~1500 that respond, randomly assign in two groups
+
+Treatment
+
+- One group gets canvasser for transgender rights
+- Other gets canvasser for recycling
+
+Outcome
+
+- Survey responses on attitudes about transgender people, their rights
+
+## Problems with Experiments: {.build}
+
+### External Validity:
+
+Broockman and Kalla (2015)
+
+Sample
+
+- **Invite tens of thousands** of people to join a survey
+- **Of the ~1500 that respond**, randomly assign in two groups
+
+### Problem:
+
+- Will the effect of talking with canvasser hold for vast majority who won't join a survey?
+- Sample in the experiment not the same as the population implied by the causal theory.
+
+## Problems with Experiments:
+
+### External Validity:
+
+Does exposure to partisan media change people's political attitudes and make them more extreme? (E.g. Fox News, Breitbart)
+
+Sample: Randomly chosen group of US adults
+
+Treatment:
+
+- Randomly exposed to 2 hours of partisan news or non-partisan movie
+
+Outcome:
+
+- Survey questions about political leaning, attitudes about key political issues
+
+## Problems with Experiments:
+
+### External Validity:
+
+Treatment:
+
+- Randomly **exposed to 2 hours** of partisan news or non-partisan movie
+
+### Problem:
+
+- Is this short treatment the same as years of exposure on cable TV or internet news consumption?
+- If we find no effect of 2 hours of watching, does this mean that emergence of partisan news didn't cause change in Americans' political attitudes?
+- Cause we can manipulate in experiment not the same as cause in causal theory
+
+## Problems with Experiments:
+
+### Always a Trade-off:
+
+More **internal validity** (unbiased calculation of causal effect) comes at the cost in **external validity** (relevance of study sample or cause to the causal theory)
+
+### Why?
+
+Many relevant contexts for causal theories and interesting causes cannot or should not be manipulated at random:
+
+- What causes democratization?
+- What causes war or ethnic violence?
+- What causes economic growth?
+- Why were civil rights extended to oppressed minority groups?
+    
+## Problems with Experiments:
+
+### We can't use experiments to text many causal theories
+
+### What approaches can we use instead?
+
+1. Comparative Method
+2. Correlation
+
+### Aren't they flawed?
+
+Yes, but now that we know how and why experiments work, we can make these better.
+
+
+<!-- ## Comparative Method -->
+
+<!-- restate what it is -->
+
+<!-- ## What do we know now? -->
+
+<!-- - don't need ALL possible values to be the same -->
+<!-- - Need to be the same on things that can affect both X and Y -->
+
+<!-- ## Examples: -->
+
+
+<!-- ## Conjunctural Causation: -->
+
+<!-- example -->
+
+
+<!-- ## Correlation -->
+
+<!-- Suggests causation: -->
+
+<!-- **correlation**: degree to which two variables vary **together** on average -->
+
+<!-- What can it tell us about causal link? -->
+
+<!-- - Causal theory says y moves with x. Should see them move together -->
+<!-- - Should move in the direction suggested by the theory -->
+<!-- - High X and High Y, or High X, Low Y -->
+
+<!-- contrast to comparative method: -->
+
+<!-- - look at correlations across more than two cases (usually a large number) -->
+<!-- - can compare correlation at the same time **across units** -->
+<!-- - can compare correlation within units **over time** -->
+
+<!-- ## Correlation -->
+
+<!-- correlation quartet -->
+
+
+<!-- ## Correlation -->
+
+<!-- Can observe clear relationships but low correlation -->
+
+
+<!-- ## Correlation as test -->
+
+<!-- examples -->
+
+<!-- ## Correlation as test: -->
+
+<!-- entire move from theory to evidence -->
 
 
 
-<!-- ## Let's go back to our example: -->
+<!-- ## Correlation: -->
 
-<!-- table: biased BUT now we have Covariate -->
+<!-- empirical prediction is that x and y should be correlated -->
 
-<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+<!-- positive correlation -->
+<!-- negative correlation -->
 
-<!-- ## Let's go back to our example: -->
+<!-- ## Correlation: -->
 
-<!-- table: biased BUT now we have Covariate -->
+<!-- Typically: -->
 
-<!-- let's calculate the difference between treated and untreated WITHIN each group that has the same value of X -->
+<!-- We use one specific mathematical concept of correlation that implies moving together **linearly**. -->
 
-<!-- THIS TIME IT IS BIASED -->
+<!-- This can be confusing, though... -->
+
+<!-- ## Correlation -->
+
+<!-- Weak -->
+
+<!-- vs  -->
+
+<!-- STrong -->
+
+<!-- ## Correlation -->
+
+<!-- examples: across units -->
+<!-- - how correlation can tell us if there is something going on -->
+
+<!-- ## Correlation -->
+
+<!-- Exampes: across time -->
+
+<!-- ## correlation  -->
+
+<!-- randomness? -->
+
+<!-- could we see a pattern that is purely by chance? -->
+
+<!-- - appearance of correlation but is result of random noise -->
+
+<!-- ##  -->
+
+<!-- random relationships by chance -->
+
+<!-- ## -->
+
+<!-- statistics -->
+
+<!-- probability of getting a relationship like this by chance, if there is no relationship -->
+
+<!-- more cases, tighter relationship makes it less likely relationship is by chance -->
+
+<!-- fewer cases, looser relationship more likely relationship is by chance -->
+
+<!-- ## Statistical Significance -->
+
+<!-- - how likely to get this by chance. -->
+
+<!-- - higher significance means less likely we observe this by chance -->
+
+<!-- ## P Value -->
+
+<!-- a numerical measure of significance of a relationship: -->
+
+<!-- - how likely is it that we would get this pattern by chance, ASSUMING NO RELATIONSHIP -->
+
+<!-- low p value is better: often .05, but not magic. -->
+
+<!-- - p value is useless if you do it many times... you will still BY CHANCE obtain a value of .05 or less. -->
 
 
+<!-- ## Examples -->
+
+<!-- - strong -->
+
+<!-- - weak -->
+
+<!-- - weak with low n -->
+
+<!-- - stronger with larger n -->
+
+<!-- - strong but high p bc not linear -->
