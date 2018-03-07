@@ -553,6 +553,20 @@ We have this table of potential outcomes:
 
 ## Let's work through it
 
+Could be: effect of campaign ad on campaign contributions:
+
+
+| i | (\$) without ad | (\$) with ad | (\$) with - (\$) without |
+|---|---------|--------|-----------------|
+| 1 | 5 | 9 | 4 |
+| 2 | 4 | 8 | 4 |
+| 3 | 3 | 7 | 4 |
+| 4 | 2 | 6 | 4 |
+
+
+
+## Let's work through it
+
 What the true average causal effect?
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
@@ -566,12 +580,25 @@ What the true average causal effect?
 ## Let's work through it
 
 
-$$\frac{1 + 3 + 5 + 7}{4} = 4$$
+$$\frac{4 + 4 + 4 + 4}{4} = 4$$
 
 
 ## Let's work through it
 
-Let's run a randomized experiment: write down all possible treatment groups of size $2$ (e.g. (1,2)) 
+Let's run a randomized experiment:
+
+- We will put 2 people in treatment (see the campaign ad)
+- We will put 2 people in control (don't see the ad)
+
+When we do this at random:
+
+- we are choosing one possible partition of the sample 
+- there are several possible partitions into Treatment/Control
+- each possible partition is equally likely
+
+## Let's work through it
+
+Write down all possible treatment groups of size $2$ (e.g. (1,2)) 
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
@@ -582,15 +609,18 @@ Let's run a randomized experiment: write down all possible treatment groups of s
 
 ## Let's work through it
 
-```{r, echo = F}
+All possible treatment groups
 
-kable(t(combn(1:4, 2)))
+```{r, echo = F}
+assign = t(combn(1:4, 2))
+
+kable(as.data.frame(assign))
 
 ```
 
 ## Let's work through it
 
-Calculate the average $Y^1$ for every possible treatment group
+Calculate the average $Y^1$ (\$ with ad) for every possible treatment (ad) group
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
@@ -601,7 +631,7 @@ Calculate the average $Y^1$ for every possible treatment group
 
 ## Let's work through it
 
-Calculate the average $Y^0$ for every corresponding control group
+Calculate the average $Y^0$ (\$ with ad) for every corresponding control (no ad) group
 
 | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
 |---|---------|--------|-----------------|
@@ -628,7 +658,7 @@ kable(effects)
 
 ## Let's work through it
 
-Calculate the average causal effect for every possible experiment (Treated - Control)
+Calculate the average causal effect for every possible experiment ((\$) ad - (\$) no ad) or $Y^1 - Y^0$
 
 ```{r, echo = F}
 kable(effects)
@@ -647,7 +677,6 @@ kable(effects)
 What is the average effect across all possible experiments?
 
 ```{r, echo = F}
-effects$ACE = effects$Y_1 - effects$Y_0
 
 kable(effects)
 ```
@@ -684,9 +713,13 @@ effects$Y_0_1 = apply(assign, 1, function(x) mean(po_table$y0[x]))
 ```
 
 Average of $Y^1$ for treated groups (factual outcome): `r mean(effects$Y_1)`
+
 Average of $Y^1$ for control groups (counterfactual outcome): `r mean(effects$Y_1_0)`
 
+#### 
+
 Average of $Y^0$ for control groups (factual outcome): `r mean(effects$Y_0)`
+
 Average of $Y^0$ for treated groups (counterfactual outcome): `r mean(effects$Y_0_1)`
 
 
