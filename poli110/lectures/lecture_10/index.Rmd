@@ -648,7 +648,7 @@ Calculate the average $Y^0$ (\$ with ad) for every corresponding control (no ad)
 po_table = data.frame(i = 1:4, y0 = 5:2, y1 = 9:6)
 assign = t(combn(1:4, 2))
 
-effects = data.frame(T_Group = paste(assign[,1], assign[2], sep = ","),
+effects = data.frame(T_Group = paste(assign[,1], assign[,2], sep = ","),
            Y_1 = apply(assign, 1, function(x) mean(po_table$y1[x]) ),
            Y_0 = apply(assign, 1, function(x) mean(po_table$y0[-x]) )
            )
