@@ -987,95 +987,367 @@ Many relevant contexts for causal theories and interesting causes cannot or shou
 
 Yes, but now that we know how and why experiments work, we can make these better.
 
+## Comparative Method:
 
-<!-- ## Comparative Method -->
+If causal claim that $X \rightarrow Y$, then:
 
-<!-- restate what it is -->
+We generate **empirical prediction**:
 
-<!-- ## What do we know now? -->
+> If we observe **two cases** to be the same in all relevant respects except for value of $X$, then we should observe that the two cases differ in the value of $Y$
 
-<!-- - don't need ALL possible values to be the same -->
-<!-- - Need to be the same on things that can affect both X and Y -->
+This **empirical prediction** based on a causal claim is called **comparative method** or **method of difference** (via John Stuart Mill)
+
+
+## What do we know now?
+
+1. We don't need cases to be **identical** on **all** attributes
+2. They need to be the **identical** on attributes related to both **cause** ($X$) and **outcome** ($Y$)
+    - In short: identical on factors that affect $Y$ and are related to or affect $X$
 
 <!-- ## Examples: -->
 
+## Example:
 
-<!-- ## Conjunctural Causation: -->
+### Question:
 
-<!-- example -->
+What causes states to create laws designed to exclude and dominate people based on race?
+
+### Causal claim:
+
+Attempts to resolve conflicts within the dominant (more powerful) racial group in a society lead to the creation of a legal regime that excludes other groups.
+
+## Example
+
+### What are *other* possible causes that could be related?
+
+1. Some dominant groups more prone to in-fighting and exclusion?
+    - Maybe colonizing groups. diverse backgrounds $\rightarrow$ in-fighting
+    - Colonizers $\rightarrow$ more likely to use legal exclusion
+2. Some relationships between dominant and oppressed groups more prone to in-fighting and exclusion?
+    - Slavery $\rightarrow$ conflicting interests within dominant group (owners, non-owners)
+    - Slavery $\rightarrow$ provides a framework to continue legal discrimination in the future
+
+## Example
+
+### What are *other* possible causes that could be related?
+
+3. Legal exclusion more popular at some times rather than others:
+    - Racial exclusion easily justified in some eras
+    - Exclusion not seen as acceptable today, so other methods used
+    
+## Example
+
+### Comparison
+
+|  | **United States** | **Brazil** |
+|-------|------------|------------|
+| **White In-fighting** | **YES** | **NO** |
+| **Dominant group** | White Europeans | White Europeans |
+| **Form of Domination** | Slavery | Slavery |
+| **Settler Colonialism** | Yes | Yes |
+| **Era** | 1860s-1960s | 1880s-1960s |
+| **Legal Discrimination** | **YES** | **NO** |
+
+## Example {.build}
+
+### Question:
+
+What causes the spread of **cholera**?
+
+### Causal claim:
+
+Contaminated water causes cholera outbreaks
+
+### Obvious?
+
+To us, but not in mid-19th century England
+
+## Example
+
+### Background
+
+19th Century London saw repeated outbreaks of cholera, with mass death
+
+- Dominant view was that "miasmas" or bad air caused diseases like cholera
+
+### A novel idea...
+
+No theory of germs, but
+
+- John Snow, MD didn't buy into "miasmas"
+- Published an essay *On the Mode of Communication of Cholera* in 1849
+- Suggested that polluted water was means of communication
 
 
-<!-- ## Correlation -->
+## ... but poorly received
 
-<!-- Suggests causation: -->
+<iframe width=100% src="https://www.youtube.com/embed/d44LyYL3GkY?autoplay=0" frameborder="0" allowfullscreen></iframe>
 
-<!-- **correlation**: degree to which two variables vary **together** on average -->
+## 
 
-<!-- What can it tell us about causal link? -->
+<iframe width=100% src="https://www.youtube.com/embed/JKQrJk9iKOg?start=49&end=58&autoplay=0" frameborder="0" allowfullscreen></iframe>
 
-<!-- - Causal theory says y moves with x. Should see them move together -->
-<!-- - Should move in the direction suggested by the theory -->
-<!-- - High X and High Y, or High X, Low Y -->
+## Broad Street Pump Outbreak (1854)
 
-<!-- contrast to comparative method: -->
+|  | **Brewers** | **Broad St. Residents** |
+|-------|------------|------------|
+| **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
+| **Location** | Near pump | Near pump |
+| **Miasmas?** | Same | Same |
+| **Timing** | Same | Same |
+| **Cholera** | **No** | **Yes** |
 
-<!-- - look at correlations across more than two cases (usually a large number) -->
-<!-- - can compare correlation at the same time **across units** -->
-<!-- - can compare correlation within units **over time** -->
+## Conjunctural Causation:
 
-<!-- ## Correlation -->
+### Recall:
 
-<!-- correlation quartet -->
+**conjunctural causation**: when effect depends on combination of causes
+
+**multiple necessary conditions**: effect occurs when only in presence of more than one cause
+
+- Plant growth requires water **and** sunlight
+- Cholera transmission requires both the bacteria **and** water
+
+### Comparative method
+
+- Can help us see when there are multiple **necessary conditions**
+
+## Broad Street Pump Outbreak (1854)
+
+|  | **Brewers** | **Broad St. Residents** |
+|-------|------------|------------|
+| **Cholera Bacteria** | **No** | **Yes** |
+| **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
+| **Location** | Near pump | Near pump |
+| **Miasmas?** | Same | Same |
+| **Timing** | Same | Same |
+| **Cholera** | **No** | **Yes** |
+
+## Correlation
+
+### Can be **clue** to causality
+
+### Empirical Prediction
+
+If $X \rightarrow Y$ or $X$ causes $Y$, then $X$ and $Y$ will be correlated
+
+### Why?
+
+If $X$ causes $Y$, a shift in $X$ implies a change in the value of $Y$
+
+- So values of $X$ and $Y$ should move together in the direction stated by the causal theory
 
 
-<!-- ## Correlation -->
+## Correlation
 
-<!-- Can observe clear relationships but low correlation -->
+### What is it?
+
+**correlation**: an association or relationship between the values taken by two variables (X and Y)
+
+### Contrast to comparative method
+
+**correlation**:
+
+- look for patterns across **many** cases, rather than two or a few
+- look at correlation **across units** at the same time
+- look at correlation **across time** in the same units
 
 
-<!-- ## Correlation as test -->
+## Correlation
 
-<!-- examples -->
+### What is it?
 
-<!-- ## Correlation as test: -->
+**correlation**: also has specific **mathematical** definition (you don't need to memorize):
 
-<!-- entire move from theory to evidence -->
+$$r = \frac{\sum_{i}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i^n(x_i - \bar{x})^2}\sqrt{\sum_i^n (y_i - \bar{y})^2}}$$
+
+## Correlation
+
+### What is it?
+
+**mathematically**: correlation is the degree of **linear** association between $X$ and $Y$
+
+- Takes values between $-1$ and $1$
+- Values close to $1$ or $-1$ suggest **high** degree of *linear* association
+- Values close to $0$ suggest **low** degree of *linear* association
+- Value of correlation does not tell us **how much** $Y$ changes with $X$
 
 
+## Correlation
 
-<!-- ## Correlation: -->
+### What is it?
 
-<!-- empirical prediction is that x and y should be correlated -->
 
-<!-- positive correlation -->
-<!-- negative correlation -->
+**negative correlation**: (correlation $< 0$) values of $X$ and $Y$ move in opposite direction:
 
-<!-- ## Correlation: -->
+- higher values of $X$ appear with lower values of $Y$
+- lower values of $X$ appear with higher values of $Y$
 
-<!-- Typically: -->
+**positive correlation**: (correlation $> 0$) values of $X$ and $Y$ move in same direction:
 
-<!-- We use one specific mathematical concept of correlation that implies moving together **linearly**. -->
+- higher values of $X$ appear with higher values of $Y$
+- lower values of $X$ appear with lower values of $Y$
 
-<!-- This can be confusing, though... -->
+## Correlation
 
-<!-- ## Correlation -->
+<img src="./correlation_examples.svg" width=100%>
 
-<!-- Weak -->
+## Correlation
 
-<!-- vs  -->
+```{r, echo = F}
 
-<!-- STrong -->
+x = rnorm(100)
+y = 1.5*x + rnorm(100)
 
-<!-- ## Correlation -->
+plot(x, y, main = 'Positive Correlation')
 
-<!-- examples: across units -->
-<!-- - how correlation can tell us if there is something going on -->
+```
 
-<!-- ## Correlation -->
+## Correlation
 
-<!-- Exampes: across time -->
+```{r, echo = F}
 
-<!-- ## correlation  -->
+x = rnorm(100)
+y = -1.5*x + rnorm(100)
+
+plot(x, y, main = 'Negative Correlation')
+
+```
+
+## Correlation
+
+- It is possible to see **perfect correlation** but small change in $Y$ across $X$
+
+- It is possible to see **low correlation** but large change in $Y$ across $X$
+
+- It is possible to see **perfect nonlinear relationship** between $X$ and $Y$ with $0$ correlation
+
+
+## Correlation:
+
+**weak correlation**: values for $X$ and $Y$ do not cluster along line
+
+**strong correlation**: values for $X$ and $Y$ cluster strongly along a line
+
+**strength of correlation** unrelated to the **slope** of line describing $X,Y$ relationship
+
+## Correlation
+
+```{r, echo = F}
+
+x = rnorm(100)
+y = 1.5*x + rnorm(100, sd = 5)
+lims = range(y)
+plot(x, y, main = 'Weak Positive Correlation', ylim = lims)
+
+```
+
+## Correlation
+
+```{r, echo = F}
+
+x = rnorm(100)
+y = 0.5*x + rnorm(100, sd = 0.1)
+
+plot(x, y, main = 'Strong Positive Correlation', ylim = lims)
+
+```
+
+
+## Correlation as test
+
+### Causal Theory
+
+Higher gun ownership rates cause higher rates of firearm homicide
+
+
+### Expected correlation:
+
+If theory is correct: we expect **positive correlation** between gun ownership rate and firearms homicides
+
+## Correlation Test: across units
+
+<img src="./gun_violence.jpg" width=100%>
+
+
+## From Theory to Evidence
+
+1. Identify Phenomenon we want to explain
+    - Why does it happen?
+2. Develop **causal theory**
+    - What is the **cause** and its effect?
+    - What is the causal logic?
+3. How would we know theory is right?
+    - Formulate **hypothesis** about what we observe if theory is right
+4. If $X \rightarrow Y$, variables should move together
+    - Cause $X$ and outcome $Y$ are correlated
+
+
+## From Theory to Evidence
+
+(5) Test: 
+
+    - measure $X$ and $Y$. Are they correlated?
+    - If yes: evidence for theory
+    - If no: evidence against theory
+    
+## From Theory to Evidence
+
+### Identify a Phenomenon:
+
+<img src="./crime_over_time.png" width=100%>
+
+## From Theory to Evidence
+
+### Identify a Phenomenon:
+
+Why did US violent crime rates spike and then decline from the 1970s-1990s?
+
+## From Theory to Evidence
+
+### Develop a Causal Theory
+
+Widespread use of and then ban on leaded gasoline caused increase and decline in crime
+
+Leaded gasoline $\rightarrow$ Particulate lead in the air 
+
+$\rightarrow$  children exposed to lead  $\rightarrow$ lead poisoning 
+
+$\rightarrow$  education, aggression, inhibition problems 
+
+$\rightarrow$ criminal behavior
+
+## From Theory to Evidence
+
+### Empirical Prediction
+
+If theory is true: positive correlation between childhood lead exposure and adult criminality
+
+If theory is true: birth cohorts with more lead exposure have higher criminality rates in adulthood
+
+A **positive correlation** betwen lead exposure and crime rates
+
+## From Theory to Evidence
+
+### Correlation Test: across time (New Orleans)
+
+<img src="./lead_crime_nola.jpg" width=80%>
+
+## From Theory to Evidence {.build}
+
+### Does test support causal claim?
+
+>- In this case, yes.
+>- Doesn't **prove** causality, but is support for it
+
+
+### How do we get *internal validity*
+
+- We can get external validity on important questions
+    - with comparative method
+    - correlation
+- how can we get closer to **internal validity** of experiments?
+    - how can we get empirical evidence on counterfactual?
 
 <!-- randomness? -->
 
