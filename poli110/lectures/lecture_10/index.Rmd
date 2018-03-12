@@ -1037,14 +1037,22 @@ Attempts to resolve conflicts within the dominant (more powerful) racial group i
     
 ## Example
 
+|  | **In-fighting** (cause, X) | **Exclusion** (effect, Y) |
+|-------|------------|------------|
+| **Dominant group** | Settler Colonials from<br>diverse so more<br>divided | Settler Colonials<br>more likely to legally<br>exclude the colonized  |
+| **Form of Domination** | Slavery creates conflict<br>b/t owners and non-owners | Slavery is legal category<br>basis for legal exclusion |
+| **Timing** | Newly created states<br>may have infighting<br>bc rules are new | Racial exclusion<br>more "acceptable"" in<br>19th and 20th c. |
+
+## Example
+
 ### Comparison
 
 |  | **United States** | **Brazil** |
 |-------|------------|------------|
 | **White In-fighting** | **YES** | **NO** |
 | **Dominant group** | White Europeans | White Europeans |
-| **Form of Domination** | Slavery | Slavery |
 | **Settler Colonialism** | Yes | Yes |
+| **Form of Domination** | Slavery | Slavery |
 | **Era** | 1860s-1960s | 1880s-1960s |
 | **Legal Discrimination** | **YES** | **NO** |
 
@@ -1087,15 +1095,66 @@ No theory of germs, but
 
 <iframe width=100% src="https://www.youtube.com/embed/JKQrJk9iKOg?start=49&end=58&autoplay=0" frameborder="0" allowfullscreen></iframe>
 
+## What to match on?
+
+If the **cause** or $X$ is exposure to contaminated water, are there other factors **related** to water supply and also could cause cholera?
+
+1. Location:
+    - Water supply is determined by where you are. But "miasma" is a gas and also is located in an area.
+    - Miasmas might cause cholera
+2. Timing:
+    - Water supply contamination might occur at one specific time, but so might miasmas
+    - Miasmas might appear at some point in time and cause cholera
+
+## What comparison?
+
+Comparing water quality and cholera in:
+
+- two **different** areas
+- or in the same area at **different** times 
+
+would not rule out **miasma** as explanation for cholera.
+
+- Miasma might be related to water quality across places
+- Miasma might be related to water quality across time
+- Miasma could cause cholera
+
 ## Broad Street Pump Outbreak (1854)
+
+In August 1854: Soho area of London hit by cholera
+
+- 500+ deaths in the immediate area of Cambrdige Street and Broad Street
+- Snow suspects it is related to Broad Street Pump
+
+## Broad Street Pump Outbreak (1854)
+
+<img src="./snow_broad_st.jpg" width=100%>
+
+
+## Broad Street Pump Outbreak (1854)
+
+Near the outbreak
 
 |  | **Brewers** | **Broad St. Residents** |
 |-------|------------|------------|
 | **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
 | **Location** | Near pump | Near pump |
-| **Miasmas?** | Same | Same |
-| **Timing** | Same | Same |
+| **Miasmas?** | Yes? | Yes? |
+| **Timing** |  Aug. 1854 |  Aug. 1854 |
 | **Cholera** | **No** | **Yes** |
+
+
+## Broad Street Pump Outbreak (1854)
+
+Far from outbreak 
+
+|  | **Lady and Niece** | **Non-Soho Residents** |
+|-------|------------|------------|
+| **Water Source** | **Broad Street Pump** | **Another Pump** |
+| **Location** | Far from Broad St. | Far from Broad St. |
+| **Miasmas?** | No | No |
+| **Timing** |  Aug. 1854 |  Aug. 1854 |
+| **Cholera** | **Yes** | **No** |
 
 ## Conjunctural Causation:
 
@@ -1119,8 +1178,8 @@ No theory of germs, but
 | **Cholera Bacteria** | **No** | **Yes** |
 | **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
 | **Location** | Near pump | Near pump |
-| **Miasmas?** | Same | Same |
-| **Timing** | Same | Same |
+| **Miasmas?** | Yes? | Yes? |
+| **Timing** | Aug. 1854 | Aug. 1854 |
 | **Cholera** | **No** | **Yes** |
 
 ## Correlation
@@ -1170,13 +1229,12 @@ $$r = \frac{\sum_{i}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i^n(x_i - \bar
 - Takes values between $-1$ and $1$
 - Values close to $1$ or $-1$ suggest **high** degree of *linear* association
 - Values close to $0$ suggest **low** degree of *linear* association
-- Value of correlation does not tell us **how much** $Y$ changes with $X$
+- Value of correlation does **not** tell us **how much** $Y$ changes with $X$
 
 
 ## Correlation
 
 ### What is it?
-
 
 **negative correlation**: (correlation $< 0$) values of $X$ and $Y$ move in opposite direction:
 
