@@ -973,6 +973,10 @@ Many relevant contexts for causal theories and interesting causes cannot or shou
 - What causes war or ethnic violence?
 - What causes economic growth?
 - Why were civil rights extended to oppressed minority groups?
+
+## Experiments, visually:
+
+<img src="./box_model.png" width=100%>
     
 ## Problems with Experiments:
 
@@ -1397,6 +1401,10 @@ A **positive correlation** betwen lead exposure and crime rates
 
 >- In this case, yes.
 >- Doesn't **prove** causality, but is support for it
+
+## Correlation
+
+
 
 
 ### How do we get *internal validity*
