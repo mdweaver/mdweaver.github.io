@@ -1099,16 +1099,22 @@ No theory of germs, but
 
 <iframe width=100% src="https://www.youtube.com/embed/JKQrJk9iKOg?start=49&end=58&autoplay=0" frameborder="0" allowfullscreen></iframe>
 
-## What to match on?
+## 
+
+<img src="./John_Snow.jpg" width=60%>
+
+## What to compare?
 
 If the **cause** or $X$ is exposure to contaminated water, are there other factors **related** to water supply and also could cause cholera?
 
-1. Location:
-    - Water supply is determined by where you are. But "miasma" is a gas and also is located in an area.
+1. Two Locations:
+    - Water supply is determined by where you are. One might have contamination, the other not.
+    - But "miasma" is a gas and also in a place. Could be related to water supply.
     - Miasmas might cause cholera
-2. Timing:
-    - Water supply contamination might occur at one specific time, but so might miasmas
-    - Miasmas might appear at some point in time and cause cholera
+2. Tome times:
+    - Water supply contamination might occur at one specific time, not the other.
+    - But miasmas might come and go and be related to water quality change
+    - Miasmas might cause cholera
 
 ## What comparison?
 
@@ -1179,8 +1185,8 @@ Far from outbreak
 
 |  | **Brewers** | **Broad St. Residents** |
 |-------|------------|------------|
-| **Cholera Bacteria** | **No** | **Yes** |
-| **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
+| **Cholera Bacteria** | **Yes** | **Yes** |
+| **In Water Source** | **No** | **Yes** |
 | **Location** | Near pump | Near pump |
 | **Miasmas?** | Yes? | Yes? |
 | **Timing** | Aug. 1854 | Aug. 1854 |
@@ -1404,16 +1410,23 @@ A **positive correlation** betwen lead exposure and crime rates
 
 ## Correlation
 
+How do we know a correlation is valid?
+
+### Two problems:
+
+Variants of what we've seen before
+
+- Random error
+- Bias
 
 
+<!-- ### How do we get *internal validity* -->
 
-### How do we get *internal validity*
-
-- We can get external validity on important questions
-    - with comparative method
-    - correlation
-- how can we get closer to **internal validity** of experiments?
-    - how can we get empirical evidence on counterfactual?
+<!-- - We can get external validity on important questions -->
+<!--     - with comparative method -->
+<!--     - correlation -->
+<!-- - how can we get closer to **internal validity** of experiments? -->
+<!--     - how can we get empirical evidence on counterfactual? -->
 
 <!-- randomness? -->
 
