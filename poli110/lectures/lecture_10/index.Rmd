@@ -13,6 +13,9 @@ require(kableExtra)
 require(knitr)
 require(ggplot2)
 require(gtools)
+require(dagR)
+require(data.table)
+require(MASS)
 ```
 <style>
 .forceBreak { -webkit-column-break-after: always; break-after: column; }
@@ -973,6 +976,10 @@ Many relevant contexts for causal theories and interesting causes cannot or shou
 - What causes war or ethnic violence?
 - What causes economic growth?
 - Why were civil rights extended to oppressed minority groups?
+
+## Experiments, visually:
+
+<img src="./box_model.png" width=100%>
     
 ## Problems with Experiments:
 
@@ -1037,14 +1044,22 @@ Attempts to resolve conflicts within the dominant (more powerful) racial group i
     
 ## Example
 
+|  | **In-fighting** (cause, X) | **Exclusion** (effect, Y) |
+|-------|------------|------------|
+| **Dominant group** | Settler Colonials from<br>diverse so more<br>divided | Settler Colonials<br>more likely to legally<br>exclude the colonized  |
+| **Form of Domination** | Slavery creates conflict<br>b/t owners and non-owners | Slavery is legal category<br>basis for legal exclusion |
+| **Timing** | Newly created states<br>may have infighting<br>bc rules are new | Racial exclusion<br>more "acceptable"" in<br>19th and 20th c. |
+
+## Example
+
 ### Comparison
 
 |  | **United States** | **Brazil** |
 |-------|------------|------------|
 | **White In-fighting** | **YES** | **NO** |
 | **Dominant group** | White Europeans | White Europeans |
-| **Form of Domination** | Slavery | Slavery |
 | **Settler Colonialism** | Yes | Yes |
+| **Form of Domination** | Slavery | Slavery |
 | **Era** | 1860s-1960s | 1880s-1960s |
 | **Legal Discrimination** | **YES** | **NO** |
 
@@ -1087,15 +1102,72 @@ No theory of germs, but
 
 <iframe width=100% src="https://www.youtube.com/embed/JKQrJk9iKOg?start=49&end=58&autoplay=0" frameborder="0" allowfullscreen></iframe>
 
+## 
+
+<img src="./John_Snow.jpg" width=60%>
+
+## What to compare?
+
+If the **cause** or $X$ is exposure to contaminated water, are there other factors **related** to water supply and also could cause cholera?
+
+1. Two Locations:
+    - Water supply is determined by where you are. One might have contamination, the other not.
+    - But "miasma" is a gas and also in a place. Could be related to water supply.
+    - Miasmas might cause cholera
+2. Tome times:
+    - Water supply contamination might occur at one specific time, not the other.
+    - But miasmas might come and go and be related to water quality change
+    - Miasmas might cause cholera
+
+## What comparison?
+
+Comparing water quality and cholera in:
+
+- two **different** areas
+- or in the same area at **different** times 
+
+would not rule out **miasma** as explanation for cholera.
+
+- Miasma might be related to water quality across places
+- Miasma might be related to water quality across time
+- Miasma could cause cholera
+
 ## Broad Street Pump Outbreak (1854)
+
+In August 1854: Soho area of London hit by cholera
+
+- 500+ deaths in the immediate area of Cambrdige Street and Broad Street
+- Snow suspects it is related to Broad Street Pump
+
+## Broad Street Pump Outbreak (1854)
+
+<img src="./snow_broad_st.jpg" width=100%>
+
+
+## Broad Street Pump Outbreak (1854)
+
+Near the outbreak
 
 |  | **Brewers** | **Broad St. Residents** |
 |-------|------------|------------|
 | **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
 | **Location** | Near pump | Near pump |
-| **Miasmas?** | Same | Same |
-| **Timing** | Same | Same |
+| **Miasmas?** | Yes? | Yes? |
+| **Timing** |  Aug. 1854 |  Aug. 1854 |
 | **Cholera** | **No** | **Yes** |
+
+
+## Broad Street Pump Outbreak (1854)
+
+Far from outbreak 
+
+|  | **Lady and Niece** | **Non-Soho Residents** |
+|-------|------------|------------|
+| **Water Source** | **Broad Street Pump** | **Another Pump** |
+| **Location** | Far from Broad St. | Far from Broad St. |
+| **Miasmas?** | No | No |
+| **Timing** |  Aug. 1854 |  Aug. 1854 |
+| **Cholera** | **Yes** | **No** |
 
 ## Conjunctural Causation:
 
@@ -1116,11 +1188,11 @@ No theory of germs, but
 
 |  | **Brewers** | **Broad St. Residents** |
 |-------|------------|------------|
-| **Cholera Bacteria** | **No** | **Yes** |
-| **Water Source** | **Brewery Well**/<br>**Beer** | **Pump** |
+| **Cholera Bacteria** | **Yes** | **Yes** |
+| **In Water Source** | **No** | **Yes** |
 | **Location** | Near pump | Near pump |
-| **Miasmas?** | Same | Same |
-| **Timing** | Same | Same |
+| **Miasmas?** | Yes? | Yes? |
+| **Timing** | Aug. 1854 | Aug. 1854 |
 | **Cholera** | **No** | **Yes** |
 
 ## Correlation
@@ -1170,13 +1242,12 @@ $$r = \frac{\sum_{i}^n (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_i^n(x_i - \bar
 - Takes values between $-1$ and $1$
 - Values close to $1$ or $-1$ suggest **high** degree of *linear* association
 - Values close to $0$ suggest **low** degree of *linear* association
-- Value of correlation does not tell us **how much** $Y$ changes with $X$
+- Value of correlation does **not** tell us **how much** $Y$ changes with $X$
 
 
 ## Correlation
 
 ### What is it?
-
 
 **negative correlation**: (correlation $< 0$) values of $X$ and $Y$ move in opposite direction:
 
@@ -1340,60 +1411,519 @@ A **positive correlation** betwen lead exposure and crime rates
 >- In this case, yes.
 >- Doesn't **prove** causality, but is support for it
 
+## Correlation
 
-### How do we get *internal validity*
+How do we know a correlation is valid?
 
-- We can get external validity on important questions
-    - with comparative method
-    - correlation
-- how can we get closer to **internal validity** of experiments?
-    - how can we get empirical evidence on counterfactual?
+### Two problems:
 
-<!-- randomness? -->
+Variants of what we've seen before
 
-<!-- could we see a pattern that is purely by chance? -->
+- Random association
+- Bias
 
-<!-- - appearance of correlation but is result of random noise -->
+## Correlation: Random association
 
-<!-- ##  -->
+How do we know a correlation is **systematic**?
 
-<!-- random relationships by chance -->
+- How do we know that it is not simply a pattern by random chance?
+- Apparent patterns can be produced by pure randomness
 
-<!-- ## -->
+## Correlation: Random association
 
-<!-- statistics -->
+<iframe width=100% src="https://www.youtube.com/embed/no_elVGGgW8?autoplay=0" frameborder="0" allowfullscreen></iframe>
 
-<!-- probability of getting a relationship like this by chance, if there is no relationship -->
+## Correlation: Random association
 
-<!-- more cases, tighter relationship makes it less likely relationship is by chance -->
+<img src="./nick_cage.svg" width=100%>
 
-<!-- fewer cases, looser relationship more likely relationship is by chance -->
+## Correlation: Random association
 
-<!-- ## Statistical Significance -->
+If you look at enough possible sets of variables, you might find a strong correlation
 
-<!-- - how likely to get this by chance. -->
+- But it could have happened by chance!
+- So a correlation might not be "real"
 
-<!-- - higher significance means less likely we observe this by chance -->
+## Correlation: Random association
 
-<!-- ## P Value -->
+```{r, echo = F}
+crime = fread('./crime.csv')
+crime[, gun_ownership := as.numeric(gsub('%', '', gun_ownership))]
 
-<!-- a numerical measure of significance of a relationship: -->
+c = cor.test(crime$gun_ownership, crime$gun_murder_percapita)
 
-<!-- - how likely is it that we would get this pattern by chance, ASSUMING NO RELATIONSHIP -->
+plot(crime$gun_ownership, crime$gun_murder_percapita, xlab = "Gun Owners (%)", ylab = "Firearms Homicides Per Capita",
+     main = 'Gun ownership and Gun Homicide')
+abline(lm(gun_murder_percapita ~ gun_ownership, data=crime))
+```
 
-<!-- low p value is better: often .05, but not magic. -->
 
-<!-- - p value is useless if you do it many times... you will still BY CHANCE obtain a value of .05 or less. -->
+## Correlation: Random association
 
+### How would we know...
+
+... if the correlation we see is a random pattern or not?
+
+## Random association: Statistics
+
+Field of statistics investigates properties of **chance** events (stochastic processes):
+
+- Probability theory tells us how likely events are to happen, given chance
+- Can tell us how likely correlation of some value is to happen by chance
+
+
+## Random association: Statistics
+
+### How?
+
+1. Compute correlation of $X$ and $Y$
+2. How many **cases** do we have?
+    - Patterns with many cases less likely to be random
+    - Law of large numbers
+3. Assign a probability that the correlation we see would have happened by chance
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(5)
+  y = rnorm(5)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "5 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)),pos =4 )
+
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+plot(x,y, main = "5 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)), pos =4 )
+text(mean(x) + sd(x),mean(y), labels = paste0("Tries: ", counter))
+```
+
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(10)
+  y = rnorm(10)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "10 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)), pos =4)
+
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+plot(x,y, main = "10 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)), pos =4)
+text(mean(x) + sd(x),mean(y), labels = paste0("Tries: ", counter))
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(15)
+  y = rnorm(15)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "15 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)), pos =4)
+
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+plot(x,y, main = "15 observations, x and y unrelated")
+text(mean(x) - sd(x),mean(y), labels = paste0("Correlation: ", round(c, 2)), pos =4)
+text(mean(x) + sd(x),mean(y), labels = paste0("Tries: ", counter))
+```
+
+## Random association: Statistics
+
+### More cases there are...
+
+### ... and stronger the correlation is ...
+
+### ... less likely pattern is by chance.
+
+## Random association: Statistics
+
+### Same $N$, Stronger correlation
+
+```{r, echo = F}
+par(mfrow = c(1,2))
+a1 = mvrnorm(10, mu = c(0,0), Sigma = matrix(c(1,0.5,0.5,1), byrow = T, ncol = 2))
+a2 = mvrnorm(10, mu = c(0,0), Sigma = matrix(c(1,0.9,0.9,1), byrow = T, ncol = 2))
+
+plot(a1[,1], a1[,2], main = "Weak => Possibly random", xlab = 'x', ylab = 'y', xlim = range(rbind(a1,a2)), ylim = range(rbind(a1,a2)))
+abline(lm(a1[,2] ~ a1[,1]))
+plot(a2[,1], a2[,2], main = "Strong => Less likely to be random", xlab = 'x', ylab = 'y',
+     xlim = range(rbind(a1,a2)), ylim = range(rbind(a1,a2)))
+abline(lm(a2[,2] ~ a2[,1]))
+
+```
+
+
+## Random association: Statistics
+
+### Same Correlation, More cases
+
+```{r, echo = F}
+par(mfrow = c(1,2))
+b1 = mvrnorm(50, mu = c(0,0), Sigma = matrix(c(1,0.5,0.5,1), byrow = T, ncol = 2))
+b2 = mvrnorm(500, mu = c(0,0), Sigma = matrix(c(1,0.5,0.5,1), byrow = T, ncol = 2))
+
+plot(b1[,1], b1[,2], main = "Few => Possibly random", xlab = 'x', ylab = 'y',
+     xlim = range(rbind(b1,b2)), ylim = range(rbind(b1,b2)))
+abline(lm(b1[,2] ~ b1[,1]))
+plot(b2[,1], b2[,2], main = "Many => Less likely to be random", xlab = 'x', ylab = 'y',
+     xlim = range(rbind(b1,b2)), ylim = range(rbind(b1,b2)))
+abline(lm(b2[,2] ~ b2[,1]))
+par(mfrow = c(1,1))
+
+```
+
+## Random association: Statistics
+
+**statistical significance**: 
+
+> An indication of **how likely** correlation we observe could have happened purely by chance.
+
+> **higher** degree of statistical significance indicates correlation is **less** likely to have happened by chance
+
+## Random association: Statistics
+
+$p$**value**:
+
+> A numerical measure of **statistical significance**. Puts a number on how likely observed correlation would have occurred by chance, **assuming** the truth is $0$ correlation.
+
+> It is a probability, so is between $0$ and $1$.
+
+> **Lower** $p$-value indicates **greater** statistical significance
+
+$p < 0.05$ often used as threshold for "significant" result. 
+
+- but it is not a magic number
+- Can observe $p < 0.05$ by chance ($\frac{1}{20}$)
+
+## Random association: Statistics
+
+$p$**value**:
+
+Be wary of $p$-hacking:
+
+- $p$ values become meaningless if we look at many associations, then only report the ones that are "significant".
+
+### Why?
+
+- We will see some low p-values by chance when we look at lots of associations
+
+## Significant?
+
+<img src="https://imgs.xkcd.com/comics/significant.png" width=30%>
+
+
+## Random association?
+
+```{r, echo = F}
+crime = fread('./crime.csv')
+crime[, gun_ownership := as.numeric(gsub('%', '', gun_ownership))]
+
+c = cor.test(crime$gun_ownership, crime$gun_murder_percapita)
+
+plot(crime$gun_ownership, crime$gun_murder_percapita, xlab = "Gun Owners (%)", ylab = "Firearms Homicides Per Capita",
+     main = 'Gun ownership and Gun Homicide')
+abline(lm(gun_murder_percapita ~ gun_ownership, data=crime))
+```
+
+
+## Random association?
+
+```{r, echo = F}
+plot(crime$gun_ownership, crime$gun_murder_percapita, xlab = "Gun Owners (%)", ylab = "Firearms Homicides Per Capita",
+     main = 'Gun ownership and Gun Homicide')
+abline(lm(gun_murder_percapita ~ gun_ownership, data=crime))
+text(10,10, paste0("Correlation: ", round(c$estimate, 2)), pos = 4)
+text(10,7.5, paste0("p-value: ", round(c$p.value, 2)), pos = 4)
+
+```
+
+## Random association?
+
+<img src='./romania_1.png' width=80%>
+
+## Random association?
+
+<img src='./romania_9.png' width=100%>
+
+## Random association?
+
+<img src='./romania_10.png' width=100%>
+
+## Bigger Problems
+
+### Problems with Correlation
+
+1. Random association
+    - Solution: Statistical significance
+2. BIAS
+    - or "confounding"
+    - Not so easy!
+    
+    
+## 
+
+<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
+
+##
+
+<img src="./chocolate_1.png" width=90%>
+
+## What is happening?
+
+<img src="./chocolate_2.png" width=80%>
+
+## What is happening?
+
+**spurious correlation**:
+
+> when two variables are correlated but the correlation is **not** the result of a causal relationship between those two variables
+
+- Suggests at third or additional variables that affect them.
+
+### Think about experiments:
+
+- A situation where another factor is related to both $X$ and $Y$
+
+## Spurious Correlation
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1),
+        arcs = c(1, 0, 1,-1),
+        symbols = c('X','Z','Y'))
+invisible(dag.draw(dag, legend = F))
+text(dag$x[2], dag$y[1] + 0.05, "Cause?")
+
+```
+
+## Spurious Correlation
+
+```{r, echo = F}
+
+invisible(dag.draw(add.arc(dag, arc = c(1,3), type = 1), legend = F, noxy=1))
+text(dag$x[2], dag$y[1], "Correlation; Not causal!")
+
+```
+
+## Spurious Correlation
+
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1),
+        arcs = c(1, 0, 1,-1),
+        symbols = c('Chocolate','Wealth','Nobels'))
+invisible(dag.draw(dag, legend = F))
+text(dag$x[2], dag$y[1] + 0.05, "Cause?")
+
+```
+
+## Spurious Correlation
+
+```{r, echo = F}
+
+invisible(dag.draw(add.arc(dag, arc = c(1,3), type = 1), legend = F, noxy=1))
+text(dag$x[2], dag$y[1], "Correlation; Not causal!")
+
+```
+
+## Spurious Correlation
+
+```{r, echo = F}
+
+invisible(dag.draw(add.arc(dag, arc = c(1,3), type = 1), legend = F, noxy=1))
+text(mean(dag$x[1:2]), mean(dag$y[1:2]), "Causes\nIncrease")
+text(mean(dag$x[2:3]), mean(dag$y[2:3]), "Causes\nIncrease")
+text(dag$x[2], dag$y[1], "Positive Correlation")
+```
+
+
+## Spurious Correlation?
+
+```{r, echo = F}
+riots = fread('./IndiaElections.csv')
+plot(riots$INC_voteshare, riots$COUNT_1yr, xlab = "INC Voteshare", ylab = "Hindu Muslim Riot (count)", main = "Riots and Secular Party Votes")
+abline(lm(COUNT_1yr ~ INC_voteshare, riots), col = 'red', lwd = 2)
+c = cor.test(riots$INC_voteshare, riots$COUNT_1yr)
+text(.6, 6, paste0("Correlation: ", round(c$estimate, 2)), pos = 4)
+text(.6, 5, paste0("P-value: ", round(c$p.value, 5)), pos = 4)
+
+```
+
+
+## Spurious Correlation
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1),
+        arcs = c(1, 0, 1,-1),
+        symbols = c('INC Votes','Religious Harmony','Riots'))
+invisible(dag.draw(dag, legend = F))
+text(dag$x[2], dag$y[1] + 0.05, "Cause?")
+
+```
+
+## Spurious Correlation
+
+```{r, echo = F}
+
+invisible(dag.draw(add.arc(dag, arc = c(1,3), type = 1), legend = F, noxy=1))
+text(mean(dag$x[1:2]), mean(dag$y[1:2]), "Causes\nIncrease")
+text(mean(dag$x[2:3]), mean(dag$y[2:3]), "Causes\nDecrease")
+text(dag$x[2], dag$y[1], "Negative Correlation")
+```
+
+
+## Spurious Correlation?
+
+Income growth and vote for incumbent party
+
+<img src="./incomegrowth.png" width=100%>
+
+## Many possible causes
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1,1,1),
+        arcs = c(1,-1,2,-1,3,-1),
+        symbols = c('Income Growth','Campaign Spending', 'War Casuaties', 'Party Ideology' ,'Incumbent Vote (%)'))
+invisible(dag.draw(dag, legend = F))
+```
+
+## Spurious Correlation?
+
+<img src="./incomegrowth.png" width=100%>
+
+## Spurious Correlation?
+
+Even if correlation reflects **causal** link...
+
+we may still see an imperfect correlation, because other factors cause outcome
+
+### Recall...
+
+This is similar to logic behind probabilistic causal claims
+
+## Spurious Correlation?
+
+<img src='./postoffice_climatechange.jpg' width=100%>
+
+## Spurious Correlation?
+
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1),
+        arcs = c(1, 0, 1,-1),
+        symbols = c('Postal Charges','Economic Growth','Global Temp.'))
+invisible(dag.draw(dag, legend = F))
+text(dag$x[2], dag$y[1] + 0.05, "Cause?")
+
+```
+
+
+## Spurious Correlation?
+
+```{r, echo = F}
+
+invisible(dag.draw(add.arc(dag, arc = c(1,3), type = 1), legend = F, noxy=1))
+text(mean(dag$x[1:2]), mean(dag$y[1:2]), "Causes\nIncrease")
+text(mean(dag$x[2:3]), mean(dag$y[2:3]), "Causes\nIncrease")
+text(dag$x[2], dag$y[1], "Positive Correlation")
+```
+
+
+## Spurious Correlations
+
+Why does this happen so often?
+
+- Causes often are "clustered" together
+    - low income and low education
+    - democracy and high national wealth
+    - democratic institutions, liberal culture
+    - consumer spending and scientific spending
+
+As a result:
+
+- $X$ and $Z$ cause $Y$, and $X$ often correlation with $Z$.
+
+
+<!-- ## Beware Third Variables? -->
+
+<!-- Antecedent -->
+<!-- -define -->
+
+<!-- Intervening -->
+<!-- -define -->
 
 <!-- ## Examples -->
 
-<!-- - strong -->
+<!-- which is which? -->
 
-<!-- - weak -->
+<!-- ## Reverse Causation -->
 
-<!-- - weak with low n -->
+<!-- what is it? -->
 
-<!-- - stronger with larger n -->
+<!-- ## Reverse Causation -->
 
-<!-- - strong but high p bc not linear -->
+<!-- examples -->
+
+<!-- ## Reverse CAusation -->
+
+<!-- why does it happen? -->
+
+<!-- ##  -->
+
+<!-- Summary: -->
+
+<!-- correlation problem? -->
+
+<!-- - spurious, third variable, bias? -->
+<!-- - antecedent,  -->
+<!-- - intervening -->
+<!-- - reverse  -->
+
+<!-- ## -->
+
+<!-- Bias vs Random Association: -->
+
+<!-- - we find a seeming pattern by chance -->
+<!-- - we find a pattern that appears consistent and non-random but does not result from causal relationship $X \rightarrow Y$ -->
+
+
+
+
+
+
