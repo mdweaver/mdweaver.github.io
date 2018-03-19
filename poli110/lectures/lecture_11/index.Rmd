@@ -199,7 +199,7 @@ Two approaches to make correlation work like the comparative method
 1. **adjustment**-based
     - Identify possible **confounding** variables (e.g. $W$)
     - Measure these variables
-    - explicitly **adjust** our correlation between $X$ and $Y$, **accounting** for confounding variables
+    - explicitly **adjust** our correlation between $X$ and $Y$
     - "**conditioning**" on confounding variables
 2. **design**-based
     - Carefully choose **cases** for comparison
@@ -265,7 +265,7 @@ It is **like**:
 - correlation of $X$ and $Y$ within groups where $X$ and $Y$ are held constant
 
 
-It is not this **EXACTLY**
+It is not this **EXACTLY**, but similar
 
 
 ## Conditioning: Example
