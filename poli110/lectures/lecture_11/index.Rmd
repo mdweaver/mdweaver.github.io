@@ -27,6 +27,12 @@ h3, h4 {font-weight: bold;
 
 # Midterm Grades
 
+## Midterm performance:
+
+Original Average $\approx 60$%
+
+Similar across tutorial sections
+
 ## Midterm scaling:
 
 $$ScaledPoints = (MidtermPoints - 27.4) \cdot 0.715 + 32.6$$
@@ -35,7 +41,7 @@ New Average: $70.9$%
 
 ## Homework Scaling:
 
-This week
+It is possible
 
 # From Correlation to Causality
 
@@ -95,6 +101,8 @@ $$\frac{9+8}{2} - \frac{3+2}{2} = \frac{12}{2} \neq 4$$
 ### $X$ causes $Y$...
 
 but $W$ makes effect of $X$ look too big
+
+$W$ is a **confounding variable**
     
 ## What is the problem?
 
@@ -155,11 +163,10 @@ We observe $X,Y$ correlated...
 - So correlation is biased.
     - Could be entirely spurious (no true causal effect of $X$ on $Y$)
     - Or different from true effect of $X$. Observed effect too big/too small
+    - These other factors $W_1 \ldots W_n$ are called **confounding variables**
 
 
 ## What can we do?
-
-### Recall...
 
 **Comparative Method:**
 
@@ -173,9 +180,7 @@ We generate **empirical prediction**:
 2. They need to be the **identical** on attributes related to both **cause** ($X$) and **outcome** ($Y$)
     - In short: identical on factors that affect $Y$ and are related to or affect $X$
 
-## What can we do?
-
-What does comparative method do?
+## What does comparative method do?
 
 1. Examines whether $Y$ changes when $X$ changes
 2. Within pairs of cases where **confounding** variables held constant
@@ -218,6 +223,7 @@ An experiment is **design**-based solution:
 - We have **good reason** to believe that correlation implies causation:
     - Not because we **explicitly** identified and accounted for **confounding** variables
     - Because **design** (random assignment of treatment) eliminates confounding
+    - Wouldn't work if we compared randomly assigned treatment group non-random control
 
 ## Solutions: Experiment
 
@@ -254,6 +260,8 @@ The goal is to:
 
 **conditioning**: the process of holding other variables constant while looking at relationship between $X$ and $Y$.
 
+- Remaining correlation between $X$ and $Y$ after conditioning on other variables **cannot** result from confounding by those variables
+
 
 ## Solutions: Examples
 
@@ -262,11 +270,10 @@ How to think about **adjustment**/**conditioning**:
 It is **like**:
 
 - **many** applications of comparative method simultaneously
-- correlation of $X$ and $Y$ within groups where $X$ and $Y$ are held constant
+- correlation of $X$ and $Y$ within groups where other variables $W_1 \ldots W_k$ are held constant
+- Change in $X$ and $Y$ cannot be due to change in variables we condition on **because** these other variables are held constant
 
-
-It is not this **EXACTLY**, but similar
-
+It is not this process **EXACTLY**, but similar
 
 ## Conditioning: Example
 
@@ -403,8 +410,8 @@ Conditioning! Calculate effect of peacekeeping where Intense War is $1$
 |-----------|---------|---------|-------|-------|-------|----------|
 | treated | 20 | 10 | 1 | 0 | 20 | 10 |
 | treated | 20 | 10 | 1 | 0 | 20 | 10 |
-| treated |  $\mathbf{15}$  |  $\mathbf{5}$  |  $\mathbf{1}$ | 1 | $\mathbf{15}$ | 10 |
 | untreated | 20 | 10 | 0 | 0 | 10 | 10 |
+| treated |  $\mathbf{15}$  |  $\mathbf{5}$  |  $\mathbf{1}$ | 1 | $\mathbf{15}$ | 10 |
 | untreated |  $\mathbf{15}$  |  $\mathbf{5}$  | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
 | untreated |  $\mathbf{15}$  |  $\mathbf{5}$  | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
 
@@ -423,8 +430,8 @@ $$\frac{15}{1} - \frac{5 + 5}{2} = \frac{10}{1} = 10$$
 |-----------|---------|---------|-------|-------|-------|----------|
 | treated | $\mathbf{20}$ | $\mathbf{10}$ | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
 | treated | $\mathbf{20}$ | $\mathbf{10}$ | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
-| treated | 15 | 5 | 1 | 1 | 15 | 10 |
 | untreated | $\mathbf{20}$ | $\mathbf{10}$ | $\mathbf{0}$ | 0 | $\mathbf{10}$ | 10 |
+| treated | 15 | 5 | 1 | 1 | 15 | 10 |
 | untreated | 15 | 5 | 0 | 1 | 5 | 10 |
 | untreated | 15 | 5 | 0 | 1 | 5 | 10 |
 
