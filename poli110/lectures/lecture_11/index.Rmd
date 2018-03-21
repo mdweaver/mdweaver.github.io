@@ -577,13 +577,477 @@ Holding county-attributes constant:
 Unadjusted correlation between guns and homicide: **biased downward**
 
 
-<!-- ## Adjustment -->
+## Adjustment
 
-<!-- Limitations: -->
+### Limitations:
 
-<!-- 1. Typically only so many variables we can condition on: -->
-<!--     - mathematically constrained -->
-<!--     - just like comparative method, can't find similar cases -->
-<!--     - could prevent us from conditioning on all sources of bias -->
-<!-- 2. We must **know** and **measure correctly** all variables that produce bias. -->
-<!--     - Otherwise, adjustment/conditioning does not work -->
+1. Typically only so many variables we can condition on:
+    - mathematically constrained
+    - just like comparative method, can't find similar cases
+    - could prevent us from conditioning on all sources of bias
+2. For adjustment/conditioning to work, we must
+    - correctly **identify all** possible confounding variables
+    - correctly **measure** confounding variables. (Even RANDOM measurement error is a problem)
+
+Let's see what happens when this goes wrong...
+
+
+----
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | 20 | 10 | 1 | 0 | 20 | 10 |
+| treated | 20 | 10 | 1 | 0 | 20 | 10 |
+| treated | 15 | 5 | 1 | 1 | 15 | 10 |
+| untreated | 18 | 8 | 0 | 0 | 8 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+
+----
+
+What is the true effect?
+
+$$\frac{10 + 10 + 10 + 10 + 10 + 10}{6} = 10$$
+
+----
+
+What is the **unconditional** effect of UN peacekeeping?
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | 20 | 10 | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
+| treated | 20 | 10 | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
+| treated | 15 | 5 | $\mathbf{1}$ | 1 | $\mathbf{15}$ | 10 |
+| untreated | 18 | 8 | 0 | 0 | 8 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+
+----
+
+What is the **unconditional** effect of UN peacekeeping?
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | 20 | 10 | 1 | 0 | 20 | 10 |
+| treated | 20 | 10 | 1 | 0 | 20 | 10 |
+| treated | 15 | 5 | 1 | 1 | 15 | 10 |
+| untreated | 18 | 8 | $\mathbf{0}$ | 0 | $\mathbf{8}$ | 10 |
+| untreated | 15 | 5 | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
+| untreated | 15 | 5 | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
+
+----
+
+What is the **unconditional** effect of UN peacekeeping?
+
+$$\frac{20+20+15}{3} - \frac{8+5+5}{3} = \frac{37}{3} \neq 10$$
+
+Let's try to condition on War Intensity
+
+----
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | 20 | 10 | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
+| treated | 20 | 10 | $\mathbf{1}$ | 0 | $\mathbf{20}$ | 10 |
+| untreated | 18 | 8 | $\mathbf{0}$ | 0 | $\mathbf{8}$ | 10 |
+| treated | 15 | 5 | 1 | 1 | 15 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+
+----
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | 20 | 10 | 1| 0 | 20 | 10 |
+| treated | 20 | 10 | 1 | 0 | 20 | 10 |
+| untreated | 18 | 8 | 0 | 0 | 8 | 10 |
+| treated | 15 | 5 | $\mathbf{1}$ | 1 | $\mathbf{15}$ | 10 |
+| untreated | 15 | 5 | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
+| untreated | 15 | 5 | $\mathbf{0}$ | 1 | $\mathbf{5}$ | 10 |
+
+----
+
+When War Intensity is "low" (0):
+
+$$\frac{20 + 20}{2} - \frac{8}{1} = 12 \neq 10$$
+
+When War Intensity is "high" (1):
+
+$$\frac{15}{1} - \frac{5+5}{2} =  10$$
+
+We still have **bias** in the "low" war intensity group... why?
+
+----
+
+|  | $Peace_i^{UN}$ | $Peace_i^{noUN}$ | $UN_i$ | $WarIntense_i$ | $Peace_i^{Obs}$ | $Effect_i$ |
+|-----------|---------|---------|-------|-------|-------|----------|
+| treated | $\mathbf{20}$ | $\mathbf{10}$ | $\mathbf{1}$ | $\mathbf{0}$ | 20 | 10 |
+| treated | $\mathbf{20}$ | $\mathbf{10}$ | $\mathbf{1}$ | $\mathbf{0}$ | 20 | 10 |
+| untreated | $\mathbf{18}$ | $\mathbf{8}$ | $\mathbf{0}$ | $\mathbf{0}$ | 8 | 10 |
+| treated | 15 | 5 | 1 | 1 | 15 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+| untreated | 15 | 5 | 0 | 1 | 5 | 10 |
+
+## Why do we see bias...
+
+... even after conditioning?
+
+Within the "low" war intensity group:
+
+- Countries with peacekeeping have different **potential outcomes** from countries **without** peacekeeping
+    - That is: countries with and without peacekeeping in this group are **not** counterfactuals
+    - **because** they differ on some other **confounding variable**
+- Country with "low" war intensity and without peacekeeping
+    - Is, for some reason, more likely to relapse into war
+    - Possibly not selected for peacekeeping because of this
+
+If we fail to condition on **all** confounding variables, still have bias
+
+- But the most confounding variables we adjust/condition on, bias gets smaller
+
+## Adjustment: Lessons
+
+If we ...
+
+1. ... can't think of **all** confounding variables
+2. ... can't measure **all** confounding variables
+4. ... can't find cases that **match** on all confounding variables
+5. ... can think of more confounding variables than cases
+
+... then adjustment/conditioning might not work
+
+- and correlation between $X,Y$ might have **bias**
+
+## Adjustment:
+
+### In summary:
+
+**Adjustment**/**conditioning**: adjusts correlation of $X$ (cause) and $Y$ (outcome) to account for confounding variables
+
+- Examines correlation of $X,Y$ within groups that have same values for confounding variables
+- Rules out these factors as sources of spurious correlation
+- Essentially we assume: within these groups, cause $X$ is **as-if** randomly assigned 
+
+This works... 
+
+### IF (big "if")
+
+- We correctly identify and measure **all** confounding variables
+- We can never be certain this is true: we can only argue that we have done this
+    
+    
+# Design-Based Solutions
+
+## Design
+
+**design-based** solutions to **spurious correlation** or **confounding**:
+
+- Do **not** identify and measure all confounding variables
+- Choose a comparison that eliminates effects of **many** known and **unknown** confounding variables
+
+### Types of designs:
+
+1. Comparison across cases **known to be similar** at same time
+2. Comparison of **same case** across time
+    - Sometimes called "interrupted time series"
+3. Comparison of groups of cases with **as-if random** exposure to cause
+    - "natural" experiments. Randomness without researcher manipulation
+    
+## Design: Similar Cases
+
+
+Whether using correlation or comparative method:
+
+- We can look at cases that we expect to be similar on many attributes (usually due to spatial and temporal proximity)
+    - Compare provinces/states within countries, rather than different countries
+    - Compare districts/towns within provinces rather than different provinces
+    - Compares people within neighborhoods rather than across different areas
+    
+What does this do? Comparisons like this:
+
+- Conditions on/eliminates **all confounding variable** that are the **same** across cases
+    - e.g. all confounding variables at country, province, neighborhood-level
+
+## Similar Cases: Example {.build}
+
+### Minimum Wage Laws
+
+Do minimum wage laws actually improve wages?
+
+- Could cause employers to employ fewer people
+- Or could cause wages to rise, without a change in who is employed
+
+### Naive comparison:
+
+Correlate unemployment with minimum wage laws across countries
+
+### Any problems?
+
+## Similar Cases
+
+<img src="./minimum_wage_countries.png" width=80%>
+
+## Similar Cases: Example {.build}
+
+Countries with different minimum wages likely differ in many ways:
+
+- Political power of labor
+- Unemployment insurance
+- Health coverage
+- Cultural/political institutions
+
+### A better design?
+
+Compare minimum-wage laws and unemployment **across provinces** within the same country
+
+- Would keep **country-level** variables the same
+- Fewer possible variables to condition/adjust for
+
+## Similar Cases
+
+<img src="./minimum_wage_states.jpg" width=60%>
+
+## Even better?
+
+<img src="./minimum_wage_counties.jpg" width=80%>
+
+## Even better?
+
+Compare minimum-wage laws and unemployment **across border-counties** within the same country, on the **same provincial border**
+
+### Advantage?
+
+Provinces/states might also differ from each other in many ways:
+
+- Counties/districts on province/state borders probably similar in MORE ways
+- **Fewer differences** between these counties, **except** for minimum wage law
+
+## Similar Cases: Example
+
+Does the structure of **race** in American cause African Americans to have lower income?
+
+### Naive comparison:
+
+Look at incomes of African Americans versus whites
+
+### Problems:
+
+Lots of historical causes of lower African American incomes, hard to find contemporary effects.
+
+- Major problems are neighborhoods: access to resources (lack thereof) where you grow up. Too many factors to control for
+
+## Similar Cases:
+
+### One solution:
+
+Economists at Stanford, Harvard, Census:
+
+- Compare African American children and white children from families with 
+    - same parental income, same family structure, **within the same census tracts**
+- As adults, African American children have lower incomes than white.
+
+**within neighborhood** comparison:
+
+- Eliminates many confounding variables **without** measuring them directly and adjusting.
+
+## Similar Cases: Example
+
+<img src="./romania_1.png" width=80%>
+
+## Similar Cases: Example
+
+### Why two neighboring regions in Romania?
+
+Similar historical background:
+
+- Same experience under Russian Empire
+- Same experience under Romanian/Nazi government
+
+Similar historical context:
+
+- Same exposure to ongoing war, genocide
+- Same exposure to culture/events during WW2
+
+Hard to match all of these attributes individually, choice of comparison helps
+        
+
+## Design:
+
+If we extend logic of **similar cases**:
+
+- Maybe the best approximate counter-factual for a case is... itself
+
+
+### How can we compare a case to itself?
+
+- Compare case to itself before and after cause changes
+- Sometimes called "interrupted time-series"
+
+## Design:
+
+### Same Case over Time
+
+What does comparison of case to itself do?
+
+- Any **unchanging** attribute of case is held constant
+- Eliminates all confounding variables that are constant for the case
+    - All without identifying, measuring those variables
+
+    
+## Same Unit: Example
+
+### Does speed enforcement reduce traffic fatalities?
+
+### Naive comparison:
+
+Correlate speed enforcement and fatalities across states 
+
+### Problem?
+
+- States are still probably different from each other in many ways
+
+## Same Unit: Example
+
+### A better comparison?
+
+In 1956, Connecticut government responded to traffic deaths by increasing state police enforcement of speed limit and stronger fines/sentences
+
+We can compare Connecticut pre- and post- "crackdown"
+
+## Same Unit: Example
+
+<img src="./ct_1.png" width = 50%>
+
+## Same Unit: Example
+
+### Advantage:
+
+- All unchanging attributes of CT accounted for
+
+### Disadvantages:
+
+- Other rapidly-changing attributes not accounted for (weather, safety of vehicles)
+- Can't address long-term trends leading to decline in fatalities (road safety, medical procedures)
+- Does crackdown change measurement, but not phenomenon? (Measurement bias)
+- Is this change large or small compared to years with no change in the law?
+- "Regression to the mean": 1955 was extreme year, expect 1956 to be lower
+
+## Same Unit: Example
+
+### How can we improve this?
+
+- What was the trend in CT prior to law?
+    - Was it going down/up
+    - Was it stable/unstable?
+- What were other states (without the law) doing?
+    - Do they share major trends?
+    - Only CT should see the effect.
+
+## Same Unit: Example
+
+<img src="./ct_2.png" width = 50%>
+
+## Same Unit: Example
+
+<img src="./ct_3.png" width = 60%>
+
+
+## Same Unit: Example
+
+### NYPD and Stop, Question, Frisk
+
+- Policy used by police for years
+- Permitted officers to stop people on the street
+- Accusations that many stops were racial profiling/harassment
+
+
+Can police leadership change officer behavior?
+
+Can police leadership cause officers to reduce racial profiling
+
+## Same Unit: Example
+
+### Design:
+
+In March 2013, NYPD leadership suddenly mandated that officers had to provide a justification for SQF stops when submitting their reports.
+
+- Possibility of penalty for unjustified stops
+- Compare application of SQF pre- and post- announcement
+
+### Measure:
+
+Measure police profiling using "success rate" of weapons stops
+
+- **Higher** success rate indicates correct targeting
+- **Lower** success rate indicates profiling
+ 
+## Same Unit: Example
+
+<img src="./mummolo_1.png" width = 70%>
+
+## Same Unit: Example
+
+<img src="./mummolo_2.png" width = 100%>
+
+## Same Unit: Example
+
+### Role of argument:
+
+- Looks at sudden event over the course of a couple days (fewer other things change)
+- Looks at long-term trends (no pattern)
+- Shows policy change was unanticipated
+    - no ability to change behavior before policy
+    - policy not induced by change in police profiling
+- Tests whether measurement bias at play
+
+Argument for design **assumptions** replaces argument for including all variables
+
+## Same Unit and Similar Units
+
+Looking at **same case** over time:
+
+- Eliminates **unchanging** confounding variables for that case
+- Does not address confounding variables that **change** with time
+
+Looking at **similar cases** at the same time:
+
+- Eliminates shared confounding variables (both **historical** and **contemporaneous**)
+- Does not address confounding variables that are **different between cases**
+
+## Design
+
+Can we design a comparison that combines these approaches?
+
+- Eliminates **unchanging** confounding variables for a case
+- Eliminates confounding variables that **change over time** but are **shared** by similar cases?
+
+## Design: Differences in Differences
+
+### Short answer: YES
+
+### Long answer:
+
+Yes, if we make some assumptions.
+
+<!-- ## Differences in Differences -->
+
+<!-- Similar units at same time -->
+<!--   - same geographic area, etc experience shared trends over time by virtue of being similar -->
+
+<!-- Same unit across time -->
+<!--   - Same units across time: eliminates unchanging variables -->
+
+<!-- ## Difference in Difference: -->
+
+<!-- Table: -->
+<!-- First Difference (within unit) -->
+
+<!-- Second Difference (between units) -->
+
+<!-- ## Difference in Difference -->
+
+
+
+
+
+
