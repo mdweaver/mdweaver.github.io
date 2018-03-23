@@ -1029,25 +1029,256 @@ Can we design a comparison that combines these approaches?
 
 Yes, if we make some assumptions.
 
-<!-- ## Differences in Differences -->
+## Differences in Differences
 
-<!-- Similar units at same time -->
-<!--   - same geographic area, etc experience shared trends over time by virtue of being similar -->
+### Similar units at same points in time
 
-<!-- Same unit across time -->
-<!--   - Same units across time: eliminates unchanging variables -->
+- Similar units experience shared shifts over time
+      - E.g.: States in the same region experience similar weather patterns, changes in auto safety, long-term trends in highway safety
+      - E.g.: States in the same country experience same stock market, monetary policy, shifts in federal government policy
 
-<!-- ## Difference in Difference: -->
+## Differences in Differences
 
-<!-- Table: -->
-<!-- First Difference (within unit) -->
+### Same unit across time
 
-<!-- Second Difference (between units) -->
-
-<!-- ## Difference in Difference -->
-
+- Same units across time have shared unchanging attributes
+    - E.g.: Some states have more hills/forests that make traffic less safe
+    - E.g.: Some states have different industries/history of unions that affect unemployment
 
 
+## Differences in Differences:
+
+**difference in difference**: difference (between cases) in difference (within cases)
+
+Consider 2 states $State_A$ and $State_B$ at two times $Time_0$ and $Time_1$
+
+- $State_A$ implements a higher minimum wage between $Time_0$ and $Time_1$
+- $State_B$ does not change its minimum wage
+
+So:
+
+- $State_{?}Diff = State_? Time_1 - State_? Time_0$ gives us change in unemployment in $State_?$...
+    - holding **unchanging attributes of state** constant
+- $State_{A}Diff - State_{B}Diff$ gives us change in unemployment in $A$ vs $B$
+    - holding **shared trends of both states** constant
+
+
+## Difference in Difference:
+
+|                   | $Time_0$ | $Time_1$ | **First Difference** |
+|-------------------|:--------:|:--------:|:----------------:|
+| $State_A$         |   $7.3$  |   $7.8$  |       $0.5$      |
+| $State_B$         |   $6.2$  |   $6.8$  |       $0.6$      |
+| **Second Difference** |          |          |      $-0.1$      |
+
+## Difference in Difference
+
+```{r, echo = F}
+
+dd = data.frame(State = rep(LETTERS[1:2], each = 2),
+                Time = rep(0:1, 2),
+                Unemployment = c(7.3,7.8,6.2,6.8)
+                )
+
+plot(dd$Time,dd$Unemployment, type= 'n', main = "Difference in Difference", xlab = "Time", ylab = "Unemployment Rate (%)", ylim = c(6,8))
+points(dd[dd$State == "A", "Time"], dd[dd$State == "A", "Unemployment"])
+points(dd[dd$State == "B", "Time"], dd[dd$State == "B", "Unemployment"], col = 'red')
+lines(dd[dd$State == "A", "Time"], dd[dd$State == "A", "Unemployment"])
+lines(dd[dd$State == "B", "Time"], dd[dd$State == "B", "Unemployment"], col = 'red')
+text(dd[dd$State == "A", "Time"][1], dd[dd$State == "A", "Unemployment"][1], pos = 1, label = 'A')
+text(dd[dd$State == "B", "Time"][1], dd[dd$State == "B", "Unemployment"][1], pos = 3, label = 'B')
+abline(v = 0.5, lty = 2, col = 'gray50')
+lines(0:1, c(7.3,7.9), lty = 2)
+
+```
+
+
+## Difference in Difference: Gun Violence
+
+
+Consider 2 states $State_A$ and $State_B$ at two times $Time_0$ and $Time_1$
+
+- $State_A$ tightens gun regulations between $Time_0$ and $Time_1$
+- $State_B$ does not change its gun laws
+
+
+## Difference in Difference: Gun Violence
+
+
+|                   | $Time_0$ | $Time_1$ | **First Difference** |
+|-------------------|:--------:|:--------:|:----------------:|
+| $State_A$         |   $5.3$  |   $5.4$  |       $0.1$      |
+| $State_B$         |   $2.1$  |   $2.7$  |       $0.6$      |
+| **Second Difference** |          |          |      $-0.5$      |
+
+## Difference in Difference
+
+```{r, echo = F}
+
+dd = data.frame(State = rep(LETTERS[1:2], each = 2),
+                Time = rep(0:1, 2),
+                Unemployment = c(5.3,5.4,2.1,2.7)
+                )
+
+plot(dd$Time,dd$Unemployment, type= 'n', main = "Difference in Difference", xlab = "Time", ylab = "Homicide Rate (per 100K)",
+                ylim = c(2,6))
+points(dd[dd$State == "A", "Time"], dd[dd$State == "A", "Unemployment"])
+points(dd[dd$State == "B", "Time"], dd[dd$State == "B", "Unemployment"], col = 'red')
+lines(dd[dd$State == "A", "Time"], dd[dd$State == "A", "Unemployment"])
+lines(dd[dd$State == "B", "Time"], dd[dd$State == "B", "Unemployment"], col = 'red')
+text(dd[dd$State == "A", "Time"][1], dd[dd$State == "A", "Unemployment"][1], pos = 1, label = 'A')
+text(dd[dd$State == "B", "Time"][1], dd[dd$State == "B", "Unemployment"][1], pos = 3, label = 'B')
+abline(v = 0.5, lty = 2, col = 'gray50')
+lines(0:1, c(5.3,5.9), lty = 2)
+```
+
+## Differences in Differences:
+
+### Difference (b/t cases) in Difference (w/in units)
+
+**first difference**: within cases over time holds fixed all **unchanging** confounding variables for each case
+
+**second difference**: between cases over the same time holds fixed all **shared trends** over time
+
+### Counterfactual:
+
+In terms of counterfactuals:
+
+- Two cases may not be counterfactuals for each other (many unchanging differences between cases)
+- But after **first difference**, their **trends** are counterfactuals for each other
+
+### Assumption:
+
+How do we **know** that trend in untreated case is **counterfactual** for trend in treated case?
+
+## Differences in Differences:
+
+<img src="./ap_dd.png" width=90%>
+
+## Difference in Difference: For Real
+
+Does Minimum Wage increase affect unemployment?
+
+- Card and Krueger look at change in law in NJ in April 1992
+    - Compare employment in fastfood restaurants in NJ and nearby countries in PA
+    
+## Difference in Difference: For Real
+
+<img src="./ck_map.png" width=100%>
+
+
+## Difference in Difference: For Real
+
+### Why not look only at NJ vs PA after the law?
+
+- NJ and PA may be different in many ways that affect baseline fastfood employment. 
+    - Differences we see could be due to **confounding** variables that are constant within states
+
+### Why not look at NJ pre- and post- law?
+
+- Maybe national or regional economy was changing as well, or seasonal changes in employment
+    - Differences we see could be due to **confounding** variables that change over time
+
+## Difference in Difference: For Real
+
+<img src="./ck_diff.png" width=100%>
+
+
+## Difference in Difference: Questions {.build}
+
+### How does NJ change vs. PA?
+
+- Looks like NJ sees the same or higher employment after April 1992
+- Difference in Difference shows no increase in unemployment with minimum wage
+
+### How do pre-law trends compare?
+
+- NJ employment is ~flat
+- PA is trending down, or trending up (depending on which counties)
+- Is PA trend counterfactual for NJ trend?
+
+## Difference in Difference:
+
+### For Difference in Difference to work:
+
+Assumption that "treated" and "untreated" **trends** are counterfactuals
+
+- This is called "parallel trends" assumption
+- Can never **know** it is true (because of FPCI)
+- But we can see if it **plausible**
+- Are the trends similar **prior** to the change in the cause?
+
+## Diff-in-Diff: Parallel Trends
+
+<img src="./ct_3.png" width = 60%>
+
+## Diff-in-Diff: Parallel Trends
+
+### Speeding:
+
+- State with spike in speeding deaths passes law in response
+    - Decline could be due to the law
+    - But also return to normal deaths, after anomaly
+    - Compared to other states, violates **parallel trends**
+    - "Control" state trends not counterfactuals
+
+## Diff-in-Diff: Parallel Trends
+
+### Gun Control:
+
+- State with spike in gun-deaths
+    - Could pass gun-control law in response
+    - Is decline in gun-deaths due to the law?
+    - Because of pre-law spike, may not have **parallel trends**
+    - "Control" state trends not counterfactuals
+
+
+## Diff-in-Diff: Parallel Trends?
+
+What do we do if we can't find another case that we think has the same **trend** as the case with treatment?
+
+- One option is to "create" one, by weighting many other cases.
+- "Synthetic control": a sort of mathematical Frankenstein counter-factual that looks the same on pre-treatment trends.
+- Let's us compare, more plausible that trends are counterfactuals
+
+## Diff-in-Diff: Parallel Trends? {.build}
+
+### Gun Laws:
+
+In 1995, Connecticut passed law requiring permit-to-purchase a handgun.
+
+- Did increasing obstacles to obtaining a weapon lead to fewer firearm homicides?
+- Did reducing firearms lead to an increase in non-firearm homicides?
+
+### Researchers find a "synthetic" Connecticut
+
+## Diff-in-Diff: Parallel Trends?
+
+<img src="./ctguns_1.png" width = 70%>
+
+## Diff-in-Diff: Parallel Trends?
+
+<img src="./ctguns_1.png" width = 80%>
+
+## Diff-in-Diff: Parallel Trends?
+
+### Parallel trends?
+
+"Frankenstein" Connecticut has same pre-law trends in:
+
+- Firearm homicides
+- Non-firearm homicides
+
+as the Real Connecticut
+
+### Effects?
+
+Compared to the "control", Real Connecticut:
+
+- Has no change in non-firearm homicides
+- Decline in firearm homicides
+
+Gun control causes fewer overall homicides, by stopping firearm homicides
 
 
 
