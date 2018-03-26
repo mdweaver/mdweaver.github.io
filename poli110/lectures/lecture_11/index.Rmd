@@ -1147,6 +1147,8 @@ In terms of counterfactuals:
 - Two cases may not be counterfactuals for each other (many unchanging differences between cases)
 - But after **first difference**, their **trends** are counterfactuals for each other
 
+## Differences in Differences:
+
 ### Assumption:
 
 How do we **know** that trend in untreated case is **counterfactual** for trend in treated case?
@@ -1222,6 +1224,57 @@ Assumption that "treated" and "untreated" **trends** are counterfactuals
     - Compared to other states, violates **parallel trends**
     - "Control" state trends not counterfactuals
 
+
+## Diff-in-Diff: Guns and Violence {.build}
+
+Does increase in gun ownership lead to more violence?
+
+### Evidence so far
+
+- 0 correlation when we don't adjust
+- positive correlation when we adjust
+
+### A design-based approach?
+
+## Diff-in-Diff: Guns and Violence
+
+### Design:
+
+- December 2012, Sandy Hook shooting raised debate on gun control
+- Gun purchases rose dramatically following the shooting
+- But some states have longer waiting periods than others
+
+### Difference-in-difference
+
+Do states with no waiting periods...
+
+- see relatively more gun purchases post-Sandy Hook?
+- see relatively more gun violence post-Sandy Hook?
+- holding state/county unchanging attributes constant
+- holding national trends constant
+
+## Diff-in-Diff: Parallel Trends
+
+
+<img src='./koenig_1.png' width=100%>
+
+## Diff-in-Diff: Parallel Trends
+
+<img src='./koenig_2.png' width=100%>
+
+## Diff-in-Diff: Guns and Violence
+
+Assumptions appear to hold:
+
+- Counties in states with and without waiting periods have similar trends
+- In both states, an increase in **demand** for guns, but policy limits number obtained
+
+
+## Diff-in-Diff: Guns and Violence
+
+<img src='./koenig_3.png' width=100%>
+
+
 ## Diff-in-Diff: Parallel Trends
 
 ### Gun Control:
@@ -1279,6 +1332,267 @@ Compared to the "control", Real Connecticut:
 - Decline in firearm homicides
 
 Gun control causes fewer overall homicides, by stopping firearm homicides
+
+
+## Design-based
+
+### Natural Experiments
+
+Compare groups of cases that differ in exposure to cause **at random** by nature
+
+- Eliminate **all** confounding variables **if** assumption of **randomness** is true
+
+### Varieties:
+
+**standard**: lotteries, simple random process of assigning treatment
+
+**regression discontinuity**: fancy phrase for when treatment is assigned at a cut-off
+
+**instrumental variables**: **antecendent variable** to our cause is **random**ly assigned
+
+
+## Natural Experiments
+
+**standard** natural experiments:
+
+- Look for a cases for which exposure to our cause is **random**
+
+### Examples:
+
+- Truly random: lotteries
+    - Draft lotteries and military service
+    - Winning money and lottery
+    - Access to government policy
+- "As-if" randomization due to unrelated factors
+    - e.g. effect of police on crime when police positions chosen to protect synagogues
+    - e.g. exposure to cholera water
+    
+## John Snow, again
+
+In 1854, Cholera broke out again...
+
+This time, Snow was ready to get serious.
+
+## John Snow, again
+
+Noticed a difference between two water suppliers:
+
+1. Southwark & Vauxhall Co.: Collected water from area downstream of sewers on the Thames
+2. Lambeth Co.: Previously collected water near sewers, but recently relocated upstream of London (cleaner water)
+
+Importantly:
+
+- Both companies competed in the **same area**, pipes of both companies on the same streets
+- Customer base the same 
+
+----
+
+<img src="./snow_1.png" width = 70%>
+
+## John Snow, again
+
+<img src="./snow_2.png" width = 70%>
+
+## John Snow, again
+
+Snow's contention is:
+
+- Exposure to contaminated water in these districts **as-if random**
+
+### Collects data
+
+- Identifies number of houses receiving water from these companies
+- Identifies water supply of all cholera deaths (goes door-to-door, develops water test)
+- Compares **mortality rate** in these two groups
+
+## John Snow, again
+
+<img src="./snow_3.png" width = 100%>
+
+## Natural Experiments
+
+**regression discontinuity** natural experiments:
+
+1. "Treatment" or cause changes at some cut-off: e.g.
+    - income-based requirements to get welfare
+    - percent of votes to win election
+2. Cases **close** to the cutoff are similar
+    - random events like rain, or being sick shift cases to one side or the other
+    - how close?
+3. Assuming...
+    - Cases do not **know** the cutoff
+    - and/or cases cannot game the system switch sides
+
+## RD: Example: {.build}
+
+### Do *secular* political parties *stop* religious violence?
+
+### Maybe:
+
+- Might back minority rights to ensure religious equality
+- Religious violence might make religious parties more attractive
+- More committed to law and order?
+
+### Maybe not:
+
+- may be hard for politicians to stop violence
+- stopping violence may be seen as "taking sides", alienating voters
+- *all* political parties motivated to maintain law and order
+
+## A social scientific approach:
+
+Looking at MLAs in India between 1961 and 2000
+
+- Does having a "secular" MLA reduce religious violence?
+    - Does having MLA from Indian National Congress (party of Gandhi, Nehru) reduce violence?
+    - INC portrayed itself, seen as protector of minorities
+
+## The study
+
+What can we compare?
+
+- Districts in which Congress MLA barely won, versus barely lost
+
+Why?
+
+- Logic of regression discontinuity says they should be as-if random
+- So... no confounding variables to produce spurious correlation
+
+## Close elections (less than 1%)
+
+### Like a coin flip
+
+<img src='./qjps_1.png' width=80%>
+
+
+## Close elections (less than 1%)
+
+### INC win unrelated to pre-election variables
+
+<img src='./qjps_2.png' width=60%>
+
+## Results
+
+<img src='./qjps_4.png' width=60%>
+
+## Results: {.build}
+
+Places where Congress MLA barely wins:
+
+- Fewer riots, less likely to have **any** riots
+- Less intense riots    
+    
+
+## Natural Experiments
+
+**instrumental variable** natural experiments:
+
+We isolate changes in our cause $X$ due to **randomness** in **antecedent variable** $Z$
+
+- If **antecedent variable** (cause of) $X$ is random
+- Can find random variation in $X$
+- **IF** antecedent variable does not affect $Y$ **except** through $X$
+
+
+## Instrumental variables
+
+```{r, echo = F}
+par(mfrow = c(1,1))
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1,1),
+        arcs = c(1, 0, 1,-1,2,0),
+        symbols = c('X','W','Z','Y'))
+invisible(dag.draw(add.arc(dag, arc = c(1,4), type = 1), legend = F, noxy=1))
+
+```
+
+
+
+## Instrumental variables
+
+```{r, echo = F}
+par(mfrow = c(1,1))
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1,1),
+        arcs = c( 1,-1,2,0),
+        symbols = c('X','W','Z','Y'))
+invisible(dag.draw(dag, legend = F, noxy=2))
+text(mean(dag$x[c(1,4)]), dag$y[1], "Effect X due to Z unbiased", pos = 1)
+```
+
+## Instrumental variables Example
+
+### Economic growth and Civil War
+
+Does increasing economic growth **decrease** likelihood of civil war?
+
+### Empirical Evidence:
+
+- Correlation between high wealth and low civil war
+- Possibly spurious
+
+## Instrumental variables Example
+
+Instead of adjusting for possible confounders...
+
+#### What randomly changes economic growth?
+
+### Miguel et al 2004
+
+1. Examines civil war in Africa
+2. **Shocks** in rainfall (deviation from norm)
+    - Affect the economy (droughts bad for crops, e.g.)
+    - Are random (no weather control)
+3. Changes in economy **due** to **rain shocks** are as-if random
+
+## Instrumental variables Example
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1,1),
+        arcs = c(1, 0, 1,-1,2,0), xgap = 0.1, ygap = 0.1,
+        symbols = c('Economic\nGrowth','Confounders','Rainfall','Civil\nWar'))
+invisible(dag.draw(add.arc(dag, arc = c(1,4), type = 1), legend = F, noxy=1))
+text(mean(dag$x[c(1,4)]), dag$y[1], "Possibly spurious", pos = 1)
+```
+
+## Instrumental variables Example
+
+```{r, echo = F}
+dag <- dag.init(y.name = "", x.name = "", 
+        covs = c(1,1),
+        arcs = c( 1,-1,2,0), xgap = 0.1, ygap = 0.1,
+        symbols = c('Economic\nGrowth','Confounders','Rainfall','Civil\nWar'))
+invisible(dag.draw(add.arc(dag, arc = c(1,2), type = 1), legend = F, noxy=2))
+text(mean(dag$x[c(1,4)]), dag$y[1], "Growth via Rainfall unbiased", pos = 1)
+```
+
+## Instrumental variables Example
+
+<img src='./miguel_1.png' width=90%>
+
+## Instrumental variables Example
+
+<img src='./miguel_2.png' width=90%>
+
+## Instrumental variables Example
+
+<img src='./miguel_3.png' width=70%>
+
+## Instrumental variables Example
+
+Different solutions, different answers:
+
+1. Adjusting for confounding variabels
+    - Find **no** significant effect
+2. Difference in Difference (country, year "fixed effects")
+    - Find **no** significant effect
+3. Instrumental Variables (rainfall shocks):
+    - Growth causes significant **decrease** in civil war
+    
+
+
+
 
 
 
