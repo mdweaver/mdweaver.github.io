@@ -43,24 +43,24 @@ If $X \rightarrow Y$:
 
 It is possible that  $X,Y$ are correlated, without causation
 
-## $W \rightarrow X$
+<!-- ## $W \rightarrow X$ -->
 
-| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ |
-|---|---------|--------|-----------------|--|--|
-| 1 | 5 | 9 | 4 |$\mathbf{1}$|$\mathbf{1}$|
-| 2 | 4 | 8 | 4 |$\mathbf{1}$|$\mathbf{1}$|
-| 3 | 3 | 7 | 4 |$\mathbf{0}$|$\mathbf{0}$|
-| 4 | 2 | 6 | 4 |$\mathbf{0}$|$\mathbf{0}$|
+<!-- | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ | -->
+<!-- |---|---------|--------|-----------------|--|--| -->
+<!-- | 1 | 5 | 9 | 4 |$\mathbf{1}$|$\mathbf{1}$| -->
+<!-- | 2 | 4 | 8 | 4 |$\mathbf{1}$|$\mathbf{1}$| -->
+<!-- | 3 | 3 | 7 | 4 |$\mathbf{0}$|$\mathbf{0}$| -->
+<!-- | 4 | 2 | 6 | 4 |$\mathbf{0}$|$\mathbf{0}$| -->
 
 
-## $W \rightarrow Y$
+<!-- ## $W \rightarrow Y$ -->
 
-| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ |
-|---|---------|--------|-----------------|--|--|
-| 1 | $\mathbf{5}$ | $\mathbf{9}$ | 4 |1|$\mathbf{1}$|
-| 2 | $\mathbf{4}$ | $\mathbf{8}$ | 4 |1|$\mathbf{1}$|
-| 3 | $\mathbf{3}$ |  $\mathbf{7}$| 4 |0|$\mathbf{0}$|
-| 4 | $\mathbf{2}$ | $\mathbf{6}$ | 4 |0|$\mathbf{0}$|
+<!-- | i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ | $X_i$ | $W_i$ | -->
+<!-- |---|---------|--------|-----------------|--|--| -->
+<!-- | 1 | $\mathbf{5}$ | $\mathbf{9}$ | 4 |1|$\mathbf{1}$| -->
+<!-- | 2 | $\mathbf{4}$ | $\mathbf{8}$ | 4 |1|$\mathbf{1}$| -->
+<!-- | 3 | $\mathbf{3}$ |  $\mathbf{7}$| 4 |0|$\mathbf{0}$| -->
+<!-- | 4 | $\mathbf{2}$ | $\mathbf{6}$ | 4 |0|$\mathbf{0}$| -->
 
 
 ## What is the problem?
@@ -227,6 +227,8 @@ text(dag$x[2], dag$y[1] + 0.05, "Spurious Negative Correlation", pos = 3)
     - effect of $X \rightarrow Y$ appears **too weak** compared to **truth**
     - effect of $X \rightarrow Y$ appears **wrong direction** compared to **truth**
 
+## Spurious Correlation:
+
 ### Bias
 
 All of these are examples of **bias**: true causal relationship of $X,Y$ not observed due to **confounding**
@@ -237,10 +239,10 @@ All of these are examples of **bias**: true causal relationship of $X,Y$ not obs
 
 ### What you need to know:
 
-1. What is confounding
 2. What is spurious correlation/bias?
 2. Why does it happen?
-3. What are the different forms it can take
+1. What is confounding?
+3. What are the different forms it can take?
 4. If we know **direction** of effects of $W$ on both $X,Y$, what is direction of **bias**/**spurious** relationship
 
 # Solutions for Confounding
@@ -257,7 +259,7 @@ All of these are examples of **bias**: true causal relationship of $X,Y$ not obs
 
 ## Adjustment
 
-1. **How it fixes confounding**: 
+* **How it fixes confounding**: 
     - Holds confounding variables constant, can no longer induce spurious correlation
     - **conditioning** looks at correlation of $X,Y$ holding **confounding variables** constant
     
@@ -305,9 +307,7 @@ text(dag$x[2], dag$y[1] , "True Correlation", pos = 1)
 * **What confounding is removed**:
     - Removes confounding from **all measured variables** used in **conditioning**
     - **Does not** remove confounding from **unmeasured**/**mis-measured** variables
-* **Key Assumptions** (things to be argued for): 
-    - Condition on **all** confounding variables 
-    - No measurement error on confounding variables
+
 
 ## Adjustment: No Conditioning
 
@@ -432,8 +432,8 @@ Compare cases in same **place** and **time** with different exposure to the caus
     - Holds confounding variables **constant**, can no longer induce spurious correlation
 * **What confounding is removed**:
     - Removes confounding from **all measured/unmeasured variables** that are **the same** for compared cases
-    - Does not account for **unchanging** variables that  **differ** between cases 
-    - Does not account for **changing** variables that  **differ** between cases 
+    - Does not account for **unchanging** variables that  **differ** between cases (e.g. different housing quality)
+    - Does not account for **changing** variables that  **differ** between cases (e.g. location of **new** schools)
 
 ## Design: Similar Cases
 
@@ -443,7 +443,7 @@ Compare cases in same **place** and **time** with different exposure to the caus
 * **Methods**:
     - Finding cases close in time and space 
 * **Tradeoff**
-    - Very similar cases available for only **some** relevant cases, **lower external validity**
+    - **Very similar cases** with different $X$ not possible for all relevant cases, **lower external validity**
     - Requires fewer assumptions about confounding variables, **higher internal validity**
 
 ## Design: Same Case
@@ -502,8 +502,8 @@ Compare same case to itself over time
 ## Design: Same Case
 
 * **Key Assumptions** (to conclude no remaining bias): 
-    - No confounding variables that **change over time** for *this* case
-    - No confounding variables that **change over time** for *all* cases
+    - No confounding variables that **change over time** for *this* case (e.g. Terrorist bombing in NYC)
+    - No confounding variables that **change over time** for *all* cases (e.g. #BlackLivesMatter)
 * **Methods**:
     - "interrupted time series"
 * **Tradeoff**
@@ -563,9 +563,9 @@ Compare same case to itself over time against another case to itself
     - Holds confounding variables **constant**, can no longer induce spurious correlation
 * **What confounding is removed**:
     - Removes confounding from **all measured/unmeasured variables** that are 
-        - **unchanging** for each case
-        - **changing** over time and shared by **all cases** (shared trend)
-    - Does not remove confounding variables that **change** over time but **differ** across cases (case-specific trends)
+        - **unchanging** for each case (e.g. history of NJ, PA)
+        - **changing** over time and shared by **all cases** (shared trends; e.g. changing national/regional economy)
+    - Does not remove confounding variables that **change** over time but **differ** across cases (case-specific trends; e.g. PA /NJ have different voting trends)
 
 ## Design: Diff-in-Diff
 
