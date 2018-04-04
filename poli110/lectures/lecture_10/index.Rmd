@@ -1412,31 +1412,10 @@ A **positive correlation** betwen lead exposure and crime rates
 >- Doesn't **prove** causality, but is support for it
 
 ## Correlation
-<<<<<<< HEAD
 
 How do we know a correlation is valid?
 
 ### Two problems:
-=======
-
-How do we know a correlation is valid?
-
-### Two problems:
-
-Variants of what we've seen before
-
-- Random error
-- Bias
-
-
-<!-- ### How do we get *internal validity* -->
-
-<!-- - We can get external validity on important questions -->
-<!--     - with comparative method -->
-<!--     - correlation -->
-<!-- - how can we get closer to **internal validity** of experiments? -->
-<!--     - how can we get empirical evidence on counterfactual? -->
->>>>>>> master
 
 Variants of what we've seen before
 
