@@ -650,28 +650,97 @@ saw massive expansion of
 <iframe width='100%' height='100%' frameborder='0' src='https://mdweaver.github.io/times_year' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 ---
+
+
 .left-column[
-  ## Argument
-  ###Publicity
-  ###Criticism
-  ###Implications
+   ## Tests
+  ### Reach
+]
+
+
+.right-column[
+
+### Difficult to test
+
+Emergence of national public sphere...
+
+- was caused by complex interactions of technology, government policy, economic interests
+- grew monotonically over time
+
+### Variation at national level not useful
+
+]
+
+---
+
+
+.left-column[
+  ## Tests
+  ### Reach
 ]
 
 .right-column[
 
-###Three implications
+###Technology as *interface* to publicity
 
-Difficult to test directly
-
-The probability that a lynching is reported in a newspaper:
-
-1. **increases** as distance **decreases** between the lynching and the paper.
-
-2. **increases** as travel times **decrease** between the lynching and the paper.
-
-3. **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+- Differential access to communication technology...
+- implies differential exposure to new publicity
 
 ]
+
+---
+
+
+.left-column[
+  ## Tests
+  ### Reach
+]
+
+.right-column[
+### Five implications of the argument
+
+Access to communication technology determines publicity.
+
+**The probability that a lynching is reported:**
+
+(1) **increases** as distance **decreases** between the lynching and the paper.
+
+(2) **increases** as travel times **decrease** between the lynching and the paper.
+
+(3) **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+
+]
+
+[check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+
+
+---
+
+
+.left-column[
+  ## Tests
+  ### Reach
+]
+
+.right-column[
+### Five implications of the argument
+
+Exposure to publicity yields criticism, fewer lynchings.
+
+**Coverage** of lynching is **more critical**:
+
+(4) as the **distance** from the lynching to the newspaper **increases**.
+
+Lynching **declines faster**:
+
+(5) in places with **more exposure** to national public sphere
+
+
+]
+
+[check]:http://servepapers247.com/wp-content/uploads/2013/05/Checkmark-Red.png
+
+
 
 ---
 
@@ -704,7 +773,7 @@ Cornerstone of the project
   * Nation-wide coverage
   * Big-city dailies, small town weeklies
   
-* 8 million+ unique issues between 1880 and 1940
+* 9 million+ unique issues between 1880 and 1940
 
 * Searchable content
   * 1.2 million articles mention "lynching"
@@ -718,7 +787,17 @@ template:inverse
 ##Newspapers in sample over time
 
 <iframe width="100%" height="95%" frameborder="0" src="https://mdweaver107.cartodb.com/viz/b49b091c-6656-11e5-bbf5-0e9d9d43ad5d/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+
 ---
+
+coverage rates by states
+
+---
+
+coverage rates over time
+
+---
+
 template:inverse
 
 <iframe width='100%' height='100%' frameborder='0' src='https://yale.cartodb.com/u/mdweaver/viz/ffd06ece-8545-11e4-a898-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
@@ -735,53 +814,18 @@ template:inverse
 
 ###Railroad networks
 
-* Yearly data from 1880 and 1900
+Yearly data from 1880 and 1900
   * Period of rapid growth (more than doubles)
   * 3109 counties in continental US
   * Network centrality of counties
   * Travel time between counties
+  * Proxy for telegraph network
 ]
 
 ---
 class:center, middle
 
 <iframe width='100%' height='100%' frameborder='0' src='https://mdweaver.github.io/times_year' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-
----
-
-.left-column[
-  ##Data
-  ###Newspapers
-  ###Railroads
-]
-
-.right-column[
-  
-
-###Railroad networks
-
-* Yearly data from 1880 and 1900
-  * Period of rapid growth (more than doubles)
-  * 3109 counties in continental US
-  * Network centrality of counties
-  * Travel time between counties
-
-* Railroad stations for each year between 1880 and 1910
-  * Scanned station lists for each year
-  * Digitizing text, geocoding
-  * Proximity to rail stations
-
-]
-
----
-class: center, middle
-
-<img src="./figures/official_guide.png" height="60%" width = "60%" </img>
-
----
-
-template:inverse
-<iframe width='100%' height='95%' frameborder='0' src='https://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 ---
 
@@ -797,8 +841,11 @@ template:inverse
 ###Lynching events
   
 * No complete national lynching database
-* 1880 to 1930s
-* Sources: historians, NAACP, and Tuskegee Institute.
+* 1880 to 1930s, ~ 4000 *reported* events
+* Sources:
+  * Historians, Sociologists
+  * NAACP
+  * Chicago Tribune
 
 ]
 
@@ -807,7 +854,7 @@ template:inverse
 
 template:inverse
 
-##The analysis
+##Analysis
 
 ---
 
@@ -818,38 +865,201 @@ template:inverse
 
 .right-column[
  
-###Observations
+### Observations
 * Issues appearing within a week of a lynching
 * Issue - lynching pairs
 
-###Design
+### Design
 * Panel analysis, multi-way clustering
 * Year, publication, lynching county fixed effects
-* Publication-county, lynching-county covariates (population, GDP)
+* Publication-county, lynching-county covariates (population, agricultural and industrial output, local railroad network)
 ]
+
+
+---
+
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+### Five implications of the argument
+
+Access to communication technology determines publicity.
+
+**The probability that a lynching is reported:**
+
+![check][] (1) **increases** as distance **decreases** between the lynching and the paper. 
+
+(2) **increases** as travel times **decrease** between the lynching and the paper.
+
+(3) **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+
+]
+
+[check]:./check-mark-3-24.png
 
 ---
 class: center, middle
 
 Probability of lynching mention by distance
 
-<img src="./figures/rawDistancePlot.png" width="75%" height="75%"</img>
+<img src="./figures/rawDistance_Article.svg" width="75%" height="75%"</img>
+
+---
+
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+### Five implications of the argument
+
+Access to communication technology determines publicity.
+
+**The probability that a lynching is reported:**
+
+![check][] (1) **increases** as distance **decreases** between the lynching and the paper. 
+
+![check][] (2) **increases** as travel times **decrease** between the lynching and the paper. (Closesness increases)
+
+(3) **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+
+]
+
+[check]:./check-mark-3-24.png
 
 ---
 class: center, middle
 
-Probability of lynching mention by betweenness centrality <br> (deciles)
+Probability of lynching mention by travel times
 
-<img src="./figures/robustBetweennessPlot.png" width="75%" height="75%"</img>
+<img src="./figures/time_effects.png" width="100%" height="75%"</img>
+
+
+---
+
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+### Five implications of the argument
+
+Access to communication technology determines publicity.
+
+**The probability that a lynching is reported:**
+
+![check][] (1) **increases** as distance **decreases** between the lynching and the paper. 
+
+![check][] (2) **increases** as travel times **decrease** between the lynching and the paper. (Closesness increases)
+
+![check][] (3) **increases** when the lynching occurred in an area more **central in communication and transportation networks**.
+
+]
+
+[check]:./check-mark-3-24.png
 
 ---
 class: center, middle
 
-Probability of lynching mention by eigenvector centrality <br> (deciles)
+Probability of lynching mention betweenness centrality: Dyads
 
-<img src="./figures/robustEigenvectorPlot.png" width="75%" height="75%"</img>
+<img src="./figures/betweenness_dyads.png" width="100%" height="75%"</img>
+
 
 ---
+
+
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+### Five implications of the argument
+
+Exposure to publicity yields criticism, fewer lynchings.
+
+**Coverage** of lynching is **more critical**:
+
+![check][] (4) as the **distance** from the lynching to the newspaper **increases**.
+
+Lynching **declines faster**:
+
+(5) in places with **more exposure** to national public sphere
+
+
+]
+
+[check]:./check-mark-3-24.png
+
+---
+
+class: center, middle
+
+Anti-Lynching - Pro-Lynching Discourse
+
+<img src="./figures/discourse_table.png" width="100%" height="75%"</img>
+
+
+---
+
+
+.left-column[
+  ## Analysis
+  ### Design
+  ### Results
+]
+
+.right-column[
+### Five implications of the argument
+
+Exposure to publicity yields criticism, fewer lynchings.
+
+**Coverage** of lynching is **more critical**:
+
+![check][] (4) as the **distance** from the lynching to the newspaper **increases**.
+
+Lynching **declines faster**:
+
+![check][] (5) in places with **more exposure** to national public sphere
+
+
+]
+
+[check]:./check-mark-3-24.png
+
+
+---
+
+class: center, middle
+
+Access to higher circulation daily papers inhibits lynching
+
+
+<img src="./figures/circ_access.png" width="100%" height="75%"</img>
+
+
+---
+
+class: center, middle
+
+Circulation, not population.
+
+
+<img src="./figures/pop_access.png" width="100%" height="75%"</img>
+
+
+---
+
 
 .left-column[
   ## Analysis
@@ -859,19 +1069,19 @@ Probability of lynching mention by eigenvector centrality <br> (deciles)
 ]
 
 .right-column[
-###Endogeneity
-* Network attributes not locally determined
-* Instrument: landgrant railways
+###Railroads Endogenous
+* but network attributes not locally determined
+* conditioned on local railroad construction
 
 ###Alternative interpretations
 * Importance, not information
-  * Population, economic output
-  * Directly measure telegraph
+  * Condition on population, economic output
+  * Access to circulation, not to population
 
 ###Text
 * Broad but limited depth
-* Keywords are simplification
-  * Proquest 
+* Keywords are drastic simplification
+  * Validation: manual coding, full text 
  
  ]
 
@@ -884,33 +1094,16 @@ template:inverse
 
 .left-column[
   ##Next steps
-  ###Criticism
-]
-
-.right-column[
-###Does publicity produce criticism?
-* Measure criticism: keywords/phrases
-* Criticism greater at greater distances
-]
-
-
----
-
-.left-column[
-  ##Next steps
-  ###Criticism
   ###Activists
 ]
 
 .right-column[
-###Did activists change the frame?
-  * Interrupted time series:
+###Did **activists** change the frame?
+  * Activist campaigns and changes in press coverage
     * Ida Wells
     * NAACP press releases
     * Scottsboro trials
     * Congressional hearings
-  * NAACP investigations:
-    * compare press coverage of lynchings 
 ]
 ---
 
@@ -922,55 +1115,74 @@ template:inverse
 ]
 
 .right-column[
-###Does criticism stop lynching?
-After lynching with major public backlash:
+###Does **criticism** stop lynching?
+
+After lynchings with major public backlash/anti-lynching campaigns:
 * Lynchings foiled
 * Local elites argue against lynching (newspapers)
 * Proposed anti-lynching legislation
-* Instrument for press scrutiny
-  * Major national/global events immediately prior to lynching
-
-After anti-lynching publicity campaigns:
-* ASWPL pledges
-* diff-in-diff
 ]
 
 ---
 
 .left-column[
   ##Conclusion
-  ###Relevance
+  ###Scope
 ]
 
 .right-column[
 
-###Scope
-  * Violence is "local"
-  * Power disparities
-  * Perpetrators care about reputation
-    * Who are their peers?
-    * Trade
-    * Higher jurisdiction
+
+||**State Violence**|**Non-state Violence**|
+|:-|:-:|:-:|
+|**Legitimation**<br>|Refugee/Immigrant Detention,<br>Nazi ethnic cleansing|'Stand Your Ground',<br>Rebel governance|
+|**De-legitimation**<br>|Death penalty,<br>Due process|*Lynching*,<br>Widow burning|
+
 ]
 
 ---
 
 .left-column[
   ##Conclusion
-  ###Relevance
-  ###Example
+  ###Scope
 ]
 
 .right-column[
 
-###Policing
-Graphic video of police killings
 
-New project: police shootings, wireless networks, press coverage
+||**State Violence**|**Non-state Violence**|
+|:-|:-:|:-:|
+|**Legitimation**<br>|Refugee/Immigrant Detention,<br>Nazi ethnic cleansing|'Stand Your Ground',<br>Rebel governance|
+|**De-legitimation**<br>|Death penalty,<br>Due process|**Lynching**,<br>**Widow burning**|
 
 ]
 
 ---
+
+.left-column[
+  ##Conclusion
+  ###Scope
+]
+
+.right-column[
+
+Based on theory about publicity...
+
+### Where might this argument travel?
+
+Cases in which 
+
+* Violence relatively "local"
+* Power disparity
+* Perpetrators value their reputation
+  - Who are "peers"?
+  - Economic/trade relations
+  - Shared jurisdictions
+
+### Most likely: processes of national/regional integration
+
+]
+
 
 template:inverse
 
@@ -980,6 +1192,54 @@ template:inverse
 template:inverse
 
 #Extra slides
+
+---
+
+links to material
+[the agenda](#agenda)
+
+---
+
+lynching keywords table
+
+---
+
+window coverage plot
+
+---
+
+.left-column[
+  ##Data
+  ###Newspapers
+  ###Railroads
+]
+
+.right-column[
+  
+
+###Railroad networks
+
+* Railroad stations for each year between 1880 and 1910
+  * Scanned station lists for each year
+  * Digitizing text, geocoding
+  * Proximity to rail stations
+
+* Telegraph offices
+  * Scanned lists
+  * Digitizing text, geocoding
+
+]
+
+---
+class: center, middle
+
+<img src="./figures/official_guide.png" height="60%" width = "60%" </img>
+
+---
+
+template:inverse
+<iframe width='100%' height='95%' frameborder='0' src='https://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+
 
 
 ---
