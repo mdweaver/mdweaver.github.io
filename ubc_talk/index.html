@@ -400,7 +400,7 @@ template:inverse
 .right-column[
 ### Under some conditions...
 
-1.** News of violence reaches new audience**
+1. **News of violence reaches new audience**
 2. **New audience is interested**
 3. **New audience is critical**/persuaded by victims
 4. **News of criticism reaches locality**
@@ -518,11 +518,13 @@ template:inverse
 ]
 
 ---
-template:inverse
 
-<img src="./clippings/ida_wells_speech_1.png" width="75%"  </img>
+template:inverse
+<img src="./clippings/ida_wells_speech_1.png" width="60%" </img>
+
 
 ---
+
 template:inverse
 <img src="./clippings/ida_wells_speech_2.png" width="60%" </img>
 
@@ -905,10 +907,10 @@ template:inverse
  
 ### Observations
 * Issues appearing within a week of a lynching
-* Issue - lynching pairs
+* **Issue - lynching pairs**
 
 ### Design
-* Panel analysis, multi-way clustering
+* **Panel analysis**, multi-way clustering
 * Year, publication, lynching county fixed effects
 * Publication-county, lynching-county covariates (population, agricultural and industrial output, local railroad network)
 ]
@@ -1080,7 +1082,7 @@ Lynching **declines faster**:
 
 class: center, middle
 
-Access to higher circulation daily papers inhibits lynching
+[Access](#access) to higher circulation daily papers inhibits lynching
 
 
 <img src="./figures/circ_access.png" width="100%" height="75%"</img>
@@ -1095,35 +1097,6 @@ Circulation, not population.
 
 <img src="./figures/pop_access.png" width="100%" height="75%"</img>
 
-
----
-
-
-.left-column[
-  ## Analysis
-  ### Design
-  ### Results
-  ### Limits
-]
-
-.right-column[
-###Railroads Endogenous
-* but network attributes not locally determined
-* conditioned on local railroad construction
-
-###Alternative interpretations
-* Importance, not information
-  * Condition on population, economic output
-  * Access to circulation, not to population
-* Reduced or hidden lynchings?
-* "Supply" or "demand"?
-
-###Text
-* Broad but limited depth
-* Keywords are drastic simplification
-  * Validation: manual coding, full text 
- 
- ]
 
 ---
 template:inverse
@@ -1243,20 +1216,30 @@ Cases in which
 .right-column[
 ### Legacy of Anti-Lynching Movement
 
-- Should not be overly rosy about conclusions
-- Anti-lynching argument was for "law and order"
-- How do dynamics of publicity work against state violence?
+- Publicity effective, but...
+- Should not be overly sanguine
+- "Law and Order"
+
+
+
+]
+
+
+---
+template:inverse
 
 --
 
-Du Bois: "The police is the mob. The courts are the lynchers."
+### Du Bois: "The police is the mob. The courts are the lynchers."
 
-]
+
 ---
 
 template:inverse
 
 #Thank you
+
+---
 
 ---
 template:inverse
@@ -1265,113 +1248,58 @@ template:inverse
 
 ---
 
-links to material
-[the agenda](#agenda)
+title: extras
 
----
+#### Analysis
 
-name: aggregate_result
+- [model specification](#equations)
+- [coverage (not dyads)](#aggregate_result)
+- [effects over distance](#distance_result)
+- [limits](#limits)
+- [access](#access)
 
-<img src="./figures/betweenness_events.png" width="100%" height="75%"</img>
+#### Data
+- [railroad extensions](#railroad_extension)
+- [coverage validation (window)](#coverage_window)
+- [coverage validation (accuracy)](#coverage_accuracy)
+- [discourse measures](#keywords)
+- [discourse extensions](#text_extension)
 
----
+#### Background
 
-name: distance_result
-
-<img src="./figures/effects_over_distance.png" width="100%" height="75%"</img>
-
-
----
-
-name: partisanship
-
-<img src="./figures/newspaper_partisanship.png" width="100%" height="75%"</img>
-
----
-
-<img src="./figures/southern_paper_gop.png" width="100%" height="75%"</img>
+- [lynching discourses](#lynching_discourse)
+- [newspaper partisanship](#partisanship)
 
 
 ---
-
-name:coverage_window
-
-<img src="./figures/coverage_to_date.png" width="100%" height="75%"</img>
-
-
-
----
-name:coverage_accuracy
-
-<img src="./figures/tpr_to_date.png" width="100%" height="75%"</img>
-
-
----
-
-<img src="./figures/ppv_to_date.png" width="100%" height="75%"</img>
-
-
----
-name:keywords
-
-<img src="./figures/pro_lynching.png" width="100%" height="75%"</img>
-
----
-
-<img src="./figures/anti_lynching.png" width="100%" height="75%"</img>
-
-
----
-
-name:railroad_extension
+name:limits
 
 .left-column[
-  ##Data
-  ###Railroads
+  ## Analysis
+  ### Limits
+  [extras](#extras)
 ]
 
 .right-column[
-  
+###Railroads Endogenous?
+* but network attributes not locally determined
+* conditioned on local railroad construction
 
-###Railroad networks
+###Alternative interpretations
+* Importance, not information
+  * Condition on population, economic output
+  * Access to circulation, not to population
+* Reduced or hidden lynchings?
+* "Supply" or "demand"?
 
-* Railroad stations for each year between 1880 and 1910
-  * Scanned station lists for each year
-  * Digitizing text, geocoding
-  * Proximity to rail stations
+###Text
+* Broad but limited depth
+* Keywords are drastic simplification
+  * Validation: manual coding, full text 
+ 
+ ]
 
-* Telegraph offices
-  * Scanned lists
-  * Digitizing text, geocoding
 
-]
-
----
-class: center, middle
-
-<img src="./figures/official_guide.png" height="60%" width = "60%" </img>
-
----
-
-template:inverse
-<iframe width='100%' height='95%' frameborder='0' src='https://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-
----
-name:text_extension
-
-.left-column[
-   ##Data
-  ###Newspapers
-]
-
-.right-column[
-###Which argument against lynching were effective?
-
-- Messy full text from ~85 million pages of news
-- RAs classified discourses about ~2000 articles on lynching
-- Look for spread and use of anti-lynching discourses across time and space
-
-]
 
 
 ---
@@ -1399,6 +1327,178 @@ Lynchings_{it} = \alpha_i + \alpha_t + \beta_1 Access_{it} + \mathbf{X_{it}\beta
 \end{split}
 \end{equation}$$`
 
+ [extras](#extras)
+
+
+---
+name:access
+
+### Media Access
+
+`$$MediaAccess_i = \sum\limits_{i \neq j}^{j} Circulation_j * \tau_{ij}^{-1}$$`
+
+ [extras](#extras)
+
+ [return](#75)
+
+---
+
+
+name: aggregate_result
+
+Centrality Results (aggregated to the event, fraction of papers)
+
+
+<img src="./figures/betweenness_events.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+
+name: distance_result
+
+
+
+<img src="./figures/effects_across_distance.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+name: partisanship
+
+
+Fraction of daily Republican papers Republican by region
+
+
+<img src="./figures/newspaper_partisanship.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+Fraction of all papers Republican (south)
+
+
+<img src="./figures/southern_paper_gop.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+
+---
+
+name:coverage_window
+
+Fraction of event-related articles from time of event
+
+<img src="./figures/coverage_to_date.png" width="100%" height="75%"</img>
+
+
+ [extras](#extras)
+
+---
+name:coverage_accuracy
+
+
+TPR of article-event matching over time from event
+
+
+<img src="./figures/tpr_to_date.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+PPV of article-event matching over time from event
+
+
+<img src="./figures/ppv_to_date.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+name:keywords
+
+<img src="./figures/pro_lynching.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+<img src="./figures/anti_lynching.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+### Discourse scaling
+
+`$$\begin{equation}\label{eq:discourse_scale}
+scaledDiscourse_j =  \left( \frac{1}{n_d} \sum_{i=1}^{n_d} discourseWord_i \right) - \left( \frac{1}{n} \sum_{i=1}^{n} Word_i \right)
+\end{equation}$$`
+
+ [extras](#extras)
+
+---
+
+name:railroad_extension
+
+.left-column[
+  ##Data
+  ###Railroads
+   [extras](#extras)
+
+]
+
+.right-column[
+  
+
+###Railroad networks
+
+* Railroad stations for each year between 1880 and 1910
+  * Scanned station lists for each year
+  * Digitizing text, geocoding
+  * Proximity to rail stations
+
+* Telegraph offices
+  * Scanned lists
+  * Digitizing text, geocoding
+
+]
+
+---
+class: center, middle
+
+<img src="./figures/official_guide.png" height="60%" width = "60%" </img>
+
+ [extras](#extras)
+
+---
+
+template:inverse
+<iframe width='100%' height='95%' frameborder='0' src='https://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+
+ [extras](#extras)
+
+---
+name:text_extension
+
+.left-column[
+   ##Data
+  ###Newspapers
+   [extras](#extras)
+
+]
+
+.right-column[
+###Which argument against lynching were effective?
+
+- Messy full text from ~85 million pages of news
+- RAs classified discourses about ~2000 articles on lynching
+- Look for spread and use of anti-lynching discourses across time and space
+
+]
 ---
 
 name:lynching_discourse
@@ -1406,6 +1506,8 @@ name:lynching_discourse
 .left-column[
   ## Background
   ###Lynching discourse
+   [extras](#extras)
+
 ]
 
 .right-column[
@@ -1424,6 +1526,8 @@ name:lynching_discourse
   ## Background
 
   ###Lynching discourse
+   [extras](#extras)
+
 ]
 
 .right-column[
@@ -1449,6 +1553,8 @@ name:lynching_discourse
 
   ###Lynching discourse
   ###Antilynching discourse
+   [extras](#extras)
+
 ]
 
 .right-column[
