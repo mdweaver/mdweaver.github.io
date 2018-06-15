@@ -27,7 +27,11 @@
                     <header>USAGE</header>
                     <p class="open-sans">Select your preferred kind of pop-ups</p>
                 </section>
+                <div id="controls">
+                    <div id="info"></div>
+                </div>
             </section>
+            
             <footer class="js-footer"></footer>
         </div>
     </aside>
@@ -101,7 +105,7 @@ const style = new carto.style.CartoCSS(`
 
 const stationsLayer = new carto.layer.Layer(source, style, {
             featureOverColumns: ['place', 'province', 'roads'],
-            featureClickColumns: ['cartodb_id']
+            featureClickColumns: ['cartodb_id', 'place', 'province', 'roads']
 });
 
 client.addLayer(stationsLayer);
@@ -147,6 +151,10 @@ stationsLayer.on('featureClicked', featureEvent => {
                                             WHERE cartodb_id = '${featureEvent.data.cartodb_id}')
                                         ) as t2
                                   `);
+       let content = '';
+        content += `<h3>${featureEvent.data.place}, ${featureEvent.data.province}</h3>`;
+        content += `<p class="open-sans">${featureEvent.data.roads.replace(/\|/g , "\n")} <small>max inhabitants</small></p>`;
+        document.getElementById('info').innerHTML = content;     
       });        
 
 stationsLayer.on('featureOver', openPopup);
