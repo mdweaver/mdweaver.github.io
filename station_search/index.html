@@ -136,7 +136,7 @@ function closePopup(featureEvent) {
 
         
 stationsLayer.on('featureClicked', featureEvent => {
-        stationsLayer.setQuery(`
+        source.setQuery(`
                                     SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
                                     FROM
                                         (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
