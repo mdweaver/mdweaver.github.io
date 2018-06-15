@@ -31,7 +31,7 @@
       function main() {
         function createSelector(stations) {
                   stations.on('featureClick', function(e, pos, pixel, data) { 
-                    var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id = ") as t2";
+                    var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id + ") as t2";
                     stations.setSQL(newSql);
                   });      
                   }
@@ -48,7 +48,7 @@
           stations.setInteraction(true);
 
           stations.on('featureClick', function(e, pos, pixel, data) { 
-            var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id = " ) as t2";
+            var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id + " ) as t2";
               stations.setSQL(newSql);
             });
           createSelector(stations);
