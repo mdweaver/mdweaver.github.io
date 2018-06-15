@@ -55,7 +55,7 @@ const source = new carto.source.SQL(`
                                         (SELECT array(
                                             SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
                                             FROM stations_collapsed_full_geocoded
-                                            WHERE cartodb_id = '1000')
+                                            )
                                         ) as t2
                                   `);
 
