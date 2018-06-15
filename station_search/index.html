@@ -135,7 +135,7 @@ function closePopup(featureEvent) {
 }
 
         
-stationsLayerlayer.on('featureClicked', featureEvent => {
+stationsLayer.on('featureClicked', featureEvent => {
         stationsLayer.setQuery(`
                                     SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
                                     FROM
