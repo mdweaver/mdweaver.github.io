@@ -1,60 +1,161 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Michael Weaver | Station Search</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <link rel="shortcut icon" href="https://dl.dropboxusercontent.com/u/8139153/favicon.ico" />
-    <style>
-      html, body, #map {
-        height: 100%;
-        padding: 0;
-        margin: 0;
-      }
-    </style>
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-    <!--[if lte IE 8]>
-      <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
-    <![endif]-->
-  </head>
-  <body>
+<head>
+    <title>Pop-ups | CARTO</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Open+Sans:300,400,600" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <!-- Include Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <link href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" rel="stylesheet">
+    <!-- Include CARTO.js -->
+    <script src="https://libs.cartocdn.com/carto.js/v4.0.8/carto.min.js"></script>
+    <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet">
+</head>
+<body>
     <div id="map"></div>
-    
-    <!-- include cartodb.js library -->
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 500px; margin-left: 0px; margin-top: 0px; top: 0px; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(0, 0, 0); text-align: left; font-size: 25px;"><strong>Travel time between counties:<br>1880 and 1900</strong></div>    </div></div>
+    <aside class="toolbox">
+        <div class="box">
+            <header>
+                <h1>Pop-Ups</h1>
+                <button class="github-logo js-source-link"></button>
+            </header>
+            <section>
+                <p class="description open-sans">Create pop-up information windows and interact with your map.</p>
+                <div class="separator"></div>
+                <section class="usage">
+                    <header>USAGE</header>
+                    <p class="open-sans">Select your preferred kind of pop-ups</p>
+                </section>
+                <div id="controls">
+                    <ul class="actions">
+                        <li onclick="setPopupsClick()">
+                            <input type="radio" name="style" value="01" id="popup">
+                            <label for="popup">Pop-ups on click</label>
+                        </li>
+                        <li onclick="setPopupsHover()">
+                            <input type="radio" name="style" value="01" id="hover">
+                            <label for="hover">Pop-ups on hover</label>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <footer class="js-footer"></footer>
+        </div>
+    </aside>
+    <script>const map = L.map('map').setView([40, -98], 5);
+map.scrollWheelZoom.disable();
 
-    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 330px; margin-left: 0px; margin-top: 0px; top: 10%; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(100, 100, 100); text-align: left; font-size: 12px;">This map presents shortest travel times between counties by land or railroad in 1880 and 1900. <a href="http://www.banxico.org.mx/publicaciones-y-discursos/publicaciones/documentos-de-investigacion/banxico/%7B2F47889C-B853-8304-6300-AC74A75878A4%7D.pdf">Railroad data and method</a> for computing travel times come from <a href="https://sites.google.com/site/fdperezcervantes/">Fernando Pérez-Cervantes</a>. <br><strong>Click on any county to make it the departure point.</strong></div> </div></div>
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png', {
+            maxZoom: 12
+}).addTo(map);
 
-    <script>
+const client = new carto.Client({
+            apiKey: 'default_public',
+            username: 'mdweaver107'
+});
 
-      function main() {
-       
-        // Add your code here
-        var map = new L.Map('map', { zoomControl: false, center: [39.833333, -98.583333], zoom: 5 });
-        var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png').addTo(map);
-        //var attribution = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
-         //$('#map').append(legend.render().el);
-        cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/657fc58f-24c5-4352-b25b-344c20dd77c9/viz.json').on('done', function(layer) {
-          var stations = layer.getSubLayer(0); 
-          stations.setInteractivity('cartodb_id');
-          stations.setInteraction(true);
+const source = new carto.source.SQL(`
+                                                                                                                                        SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
+                                                                                                                                        FROM
+                                                                                                                                            (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
+                                                                                                                                            FROM stations_collapsed_full_geocoded) as t1,
+                                                                                                                                            (SELECT array(
+                                                                                                                                                SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
+                                                                                                                                                FROM stations_collapsed_full_geocoded
+                                                                                                                                                WHERE cartodb_id = '1000')
+                                                                                                                                            ) as t2
+                                                                                                                                      `);
 
-          stations.on('featureClick', function(e, pos, pixel, data) { 
-            var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id + " ) as t2";
-            stations.setSQL(newSql);
-            });
-          //createSelector(stations);
+const style = new carto.style.CartoCSS(`
+                                                                                                                #layer {
+                                                                                                                  [same_lines=false] {marker-fill: #ffffff;
+                                                                                                                    [zoom < 5] { marker-width: 1*[count_roads];
+                                                                                                                                 marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=5] { marker-width: 1.5*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=6] { marker-width: 2*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=7] { marker-width: 3*[count_roads];
+                                                                                                                        marker-fill-opacity: 0.4;}
+                                                                                                                    [zoom=8] { marker-width: 4*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=9] { marker-width: 5*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=10] { marker-width: 6*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom=11] { marker-width: 7*[count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    [zoom > 11] { marker-width: 10*     [count_roads];
+                                                                                                                                marker-fill-opacity: 0.3;}
+                                                                                                                    marker-comp-op: xor;
+                                                                                                                  }
 
-          
-          }).addTo(map);
-        //map.render();
-      }
+                                                                                                                  [same_lines=true] {marker-fill: #ffffff;
+                                                                                                                    marker-line-color: #ffffff;
+                                                                                                                    marker-fill-opacity: 0.9;
+                                                                                                                    marker-line-width: 1;
+                                                                                                                    marker-allow-overlap: true;
+                                                                                                                    [zoom < 6] { marker-width: 1*[count_roads]; marker-line-width: 0.5;}
+                                                                                                                    [zoom=6] { marker-width: 2*[count_roads]; }
+                                                                                                                    [zoom=7] { marker-width: 3*[count_roads]; }
+                                                                                                                    [zoom=8] { marker-width: 4*[count_roads]; }
+                                                                                                                    [zoom=9] { marker-width: 5*[count_roads]; }
+                                                                                                                    [zoom=10] { marker-width: 6*[count_roads]; }
+                                                                                                                    [zoom=11] { marker-width: 7*[count_roads]; }
+                                                                                                                    [zoom > 11] { marker-width: 10*[count_roads]; }
+                                                                                                                  }
+                                                                                                                  marker-allow-overlap: false;
+                                                                                                                  marker-line-width: 0;
+                                                                                                                  marker-line-opacity: 0.5;
+                                                                                                            }
+                                                                                                                                      `);
 
+const stationsLayer = new carto.layer.Layer(source, style, {
+            featureOverColumns: ['place', 'province', 'roads']
+});
 
-      // you could use $(window).load(main);
-      window.onload = main;
-    </script>
-  </body>
+client.addLayer(stationsLayer);
+client.getLeafletLayer().addTo(map);
+
+const popup = L.popup({ closeButton: false });
+
+function openPopup(featureEvent) {
+            let content = '';
+            content += `<div class="CDB-Tooltip CDB-Tooltip--isDark">
+                                                                                                    <ul class="CDB-Tooltip-list">
+                                                                                                        <li class="CDB-Tooltip-listItem">
+                                                                                                            <h3 class="CDB-Tooltip-listTitle">Place</h3>
+                                                                                                            <h4 class="CDB-Tooltip-listText">${featureEvent.data.place}, ${featureEvent.data.province}</h4>
+                                                                                                        </li>
+                                                                                                        <li class="CDB-Tooltip-listItem">
+                                                                                                            <h3 class="CDB-Tooltip-listTitle">Companies</h3>
+                                                                                                            <h4 class="CDB-Tooltip-listText">${featureEvent.data.roads}</h4>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </div>`;
+            popup.setContent(content);
+            popup.setLatLng(featureEvent.latLng);
+            if (!popup.isOpen()) {
+                popup.openOn(map);
+            }
+}
+
+function closePopup(featureEvent) {
+            popup.removeFrom(map);
+}
+
+function setPopupsClick() {
+            stationsLayer.off('featureOver');
+            stationsLayer.off('featureOut');
+            stationsLayer.on('featureClicked', openPopup);
+}
+
+function setPopupsHover() {
+            stationsLayer.off('featureClicked');
+            stationsLayer.on('featureOver', openPopup);
+            stationsLayer.on('featureOut', closePopup);
+}</script>
+</body>
 </html>
-
