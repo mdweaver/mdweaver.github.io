@@ -27,18 +27,6 @@
                     <header>USAGE</header>
                     <p class="open-sans">Select your preferred kind of pop-ups</p>
                 </section>
-                <div id="controls">
-                    <ul class="actions">
-                        <li onclick="setPopupsClick()">
-                            <input type="radio" name="style" value="01" id="popup">
-                            <label for="popup">Pop-ups on click</label>
-                        </li>
-                        <li onclick="setPopupsHover()">
-                            <input type="radio" name="style" value="01" id="hover">
-                            <label for="hover">Pop-ups on hover</label>
-                        </li>
-                    </ul>
-                </div>
             </section>
             <footer class="js-footer"></footer>
         </div>
@@ -162,7 +150,7 @@ function setStation() {
 
 stationsLayer.on('featureOver', openPopup);
 stationsLayer.on('featureOut', closePopup);
-stationsLayer.on('featureClick', setStation);
+stationsLayer.on('featureClicked', setStation);
 
 </script>
 </body>
