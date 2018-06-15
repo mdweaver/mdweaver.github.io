@@ -44,60 +44,60 @@ const client = new carto.Client({
 });
 
 const source = new carto.source.SQL(`
-                                                                                                                                                                SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
-                                                                                                                                                                FROM
-                                                                                                                                                                    (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
-                                                                                                                                                                    FROM stations_collapsed_full_geocoded) as t1,
-                                                                                                                                                                    (SELECT array(
-                                                                                                                                                                        SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
-                                                                                                                                                                        FROM stations_collapsed_full_geocoded
-                                                                                                                                                                        WHERE cartodb_id = '1000')
-                                                                                                                                                                    ) as t2
-                                                                                                                                                              `);
+                                    SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
+                                    FROM
+                                        (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
+                                        FROM stations_collapsed_full_geocoded) as t1,
+                                        (SELECT array(
+                                            SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
+                                            FROM stations_collapsed_full_geocoded
+                                            WHERE cartodb_id = '1000')
+                                        ) as t2
+                                  `);
 
 const style = new carto.style.CartoCSS(`
-                                                                                                                                        #layer {
-                                                                                                                                          [same_lines=false] {marker-fill: #ffffff;
-                                                                                                                                            [zoom < 5] { marker-width: 1*[count_roads];
-                                                                                                                                                         marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=5] { marker-width: 1.5*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=6] { marker-width: 2*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=7] { marker-width: 3*[count_roads];
-                                                                                                                                                marker-fill-opacity: 0.4;}
-                                                                                                                                            [zoom=8] { marker-width: 4*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=9] { marker-width: 5*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=10] { marker-width: 6*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom=11] { marker-width: 7*[count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            [zoom > 11] { marker-width: 10*     [count_roads];
-                                                                                                                                                        marker-fill-opacity: 0.3;}
-                                                                                                                                            marker-comp-op: xor;
-                                                                                                                                          }
+                                        #layer {
+                                          [same_lines=false] {marker-fill: #ffffff;
+                                            [zoom < 5] { marker-width: 1*[count_roads];
+                                                         marker-fill-opacity: 0.3;}
+                                            [zoom=5] { marker-width: 1.5*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom=6] { marker-width: 2*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom=7] { marker-width: 3*[count_roads];
+                                                marker-fill-opacity: 0.4;}
+                                            [zoom=8] { marker-width: 4*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom=9] { marker-width: 5*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom=10] { marker-width: 6*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom=11] { marker-width: 7*[count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            [zoom > 11] { marker-width: 10*     [count_roads];
+                                                        marker-fill-opacity: 0.3;}
+                                            marker-comp-op: xor;
+                                          }
 
-                                                                                                                                          [same_lines=true] {marker-fill: #ffffff;
-                                                                                                                                            marker-line-color: #ffffff;
-                                                                                                                                            marker-fill-opacity: 0.9;
-                                                                                                                                            marker-line-width: 1;
-                                                                                                                                            marker-allow-overlap: true;
-                                                                                                                                            [zoom < 6] { marker-width: 1*[count_roads]; marker-line-width: 0.5;}
-                                                                                                                                            [zoom=6] { marker-width: 2*[count_roads]; }
-                                                                                                                                            [zoom=7] { marker-width: 3*[count_roads]; }
-                                                                                                                                            [zoom=8] { marker-width: 4*[count_roads]; }
-                                                                                                                                            [zoom=9] { marker-width: 5*[count_roads]; }
-                                                                                                                                            [zoom=10] { marker-width: 6*[count_roads]; }
-                                                                                                                                            [zoom=11] { marker-width: 7*[count_roads]; }
-                                                                                                                                            [zoom > 11] { marker-width: 10*[count_roads]; }
-                                                                                                                                          }
-                                                                                                                                          marker-allow-overlap: false;
-                                                                                                                                          marker-line-width: 0;
-                                                                                                                                          marker-line-opacity: 0.5;
-                                                                                                                                    }
-                                                                                                                                                              `);
+                                          [same_lines=true] {marker-fill: #ffffff;
+                                            marker-line-color: #ffffff;
+                                            marker-fill-opacity: 0.9;
+                                            marker-line-width: 1;
+                                            marker-allow-overlap: true;
+                                            [zoom < 6] { marker-width: 1*[count_roads]; marker-line-width: 0.5;}
+                                            [zoom=6] { marker-width: 2*[count_roads]; }
+                                            [zoom=7] { marker-width: 3*[count_roads]; }
+                                            [zoom=8] { marker-width: 4*[count_roads]; }
+                                            [zoom=9] { marker-width: 5*[count_roads]; }
+                                            [zoom=10] { marker-width: 6*[count_roads]; }
+                                            [zoom=11] { marker-width: 7*[count_roads]; }
+                                            [zoom > 11] { marker-width: 10*[count_roads]; }
+                                          }
+                                          marker-allow-overlap: false;
+                                          marker-line-width: 0;
+                                          marker-line-opacity: 0.5;
+                                    }
+                                                              `);
 
 const stationsLayer = new carto.layer.Layer(source, style, {
             featureOverColumns: ['place', 'province', 'roads'],
@@ -112,17 +112,17 @@ const popup = L.popup({ closeButton: false });
 function openPopup(featureEvent) {
             let content = '';
             content += `<div class="CDB-Tooltip CDB-Tooltip--isDark">
-                                                                                                                            <ul class="CDB-Tooltip-list">
-                                                                                                                                <li class="CDB-Tooltip-listItem">
-                                                                                                                                    <h3 class="CDB-Tooltip-listTitle">Place</h3>
-                                                                                                                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.place}, ${featureEvent.data.province}</h4>
-                                                                                                                                </li>
-                                                                                                                                <li class="CDB-Tooltip-listItem">
-                                                                                                                                    <h3 class="CDB-Tooltip-listTitle">Companies</h3>
-                                                                                                                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.roads}</h4>
-                                                                                                                                </li>
-                                                                                                                            </ul>
-                                                                                                                        </div>`;
+                            <ul class="CDB-Tooltip-list">
+                                <li class="CDB-Tooltip-listItem">
+                                    <h3 class="CDB-Tooltip-listTitle">Place</h3>
+                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.place}, ${featureEvent.data.province}</h4>
+                                </li>
+                                <li class="CDB-Tooltip-listItem">
+                                    <h3 class="CDB-Tooltip-listTitle">Companies</h3>
+                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.roads}</h4>
+                                </li>
+                            </ul>
+                        </div>`;
             popup.setContent(content);
             popup.setLatLng(featureEvent.latLng);
             if (!popup.isOpen()) {
@@ -134,23 +134,23 @@ function closePopup(featureEvent) {
             popup.removeFrom(map);
 }
 
-function setStation() {
-            stationsLayer.setQuery(`
-                                                                                                                                                                SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
-                                                                                                                                                                FROM
-                                                                                                                                                                    (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
-                                                                                                                                                                    FROM stations_collapsed_full_geocoded) as t1,
-                                                                                                                                                                    (SELECT array(
-                                                                                                                                                                        SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
-                                                                                                                                                                        FROM stations_collapsed_full_geocoded
-                                                                                                                                                                        WHERE cartodb_id = '${featureEvent.data.cartodb_id}')
-                                                                                                                                                                    ) as t2
-                                                                                                                                                              `);
-}
+        
+stationsLayerlayer.on('featureClicked', featureEvent => {
+        stationsLayer.setQuery(`
+                                    SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines
+                                    FROM
+                                        (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
+                                        FROM stations_collapsed_full_geocoded) as t1,
+                                        (SELECT array(
+                                            SELECT DISTINCT UNNEST(string_to_array(roads, '|'))
+                                            FROM stations_collapsed_full_geocoded
+                                            WHERE cartodb_id = '${featureEvent.data.cartodb_id}')
+                                        ) as t2
+                                  `);
+      });        
 
 stationsLayer.on('featureOver', openPopup);
 stationsLayer.on('featureOut', closePopup);
-stationsLayer.on('featureClicked', setStation);
 
 </script>
 </body>
