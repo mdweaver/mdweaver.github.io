@@ -36,12 +36,12 @@
                   });      
                   }
                 
-              }
+              
         // Add your code here
         var map = new L.Map('map', { zoomControl: false, center: [39.833333, -98.583333], zoom: 4 });
         var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png').addTo(map);
         //var attribution = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
-         $('#map').append(legend.render().el);
+         //$('#map').append(legend.render().el);
         cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/657fc58f-24c5-4352-b25b-344c20dd77c9/viz.json').addTo(map).on('done', function(layer) {
           var stations = layer.getSubLayer(0); 
           stations.setInteractivity('cartodb_id, place, province, roads, count_roads, same_lines')
@@ -54,7 +54,7 @@
           createSelector(stations);
 
           
-          })
+          });
         //map.render();
       }
 
