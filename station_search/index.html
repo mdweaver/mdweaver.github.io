@@ -29,32 +29,25 @@
     <script>
 
       function main() {
-        function createSelector(stations) {
-                  stations.on('featureClick', function(e, pos, pixel, data) { 
-                    var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id + ") as t2";
-                    stations.setSQL(newSql);
-                  });      
-                  }
-                
-              
+       
         // Add your code here
-        var map = new L.Map('map', { zoomControl: false, center: [39.833333, -98.583333], zoom: 4 });
+        var map = new L.Map('map', { zoomControl: false, center: [39.833333, -98.583333], zoom: 5 });
         var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png').addTo(map);
         //var attribution = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
          //$('#map').append(legend.render().el);
-        cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/657fc58f-24c5-4352-b25b-344c20dd77c9/viz.json').addTo(map).on('done', function(layer) {
+        cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/657fc58f-24c5-4352-b25b-344c20dd77c9/viz.json').on('done', function(layer) {
           var stations = layer.getSubLayer(0); 
-          stations.setInteractivity('cartodb_id, place, province, roads, count_roads, same_lines')
+          stations.setInteractivity('cartodb_id');
           stations.setInteraction(true);
 
           stations.on('featureClick', function(e, pos, pixel, data) { 
             var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id + " ) as t2";
-              stations.setSQL(newSql);
+            stations.setSQL(newSql);
             });
           //createSelector(stations);
 
           
-          });
+          }).addTo(map);
         //map.render();
       }
 
