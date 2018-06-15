@@ -1,1 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Michael Weaver | Station Search</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="https://dl.dropboxusercontent.com/u/8139153/favicon.ico" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.ie.css" />
+    <![endif]-->
+  </head>
+  <body>
+    <div id="map"></div>
+    
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 500px; margin-left: 0px; margin-top: 0px; top: 0px; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(0, 0, 0); text-align: left; font-size: 25px;"><strong>Travel time between counties:<br>1880 and 1900</strong></div>    </div></div>
+
+    <div class="cartodb-overlay overlay-text desktop" style="z-index: 4; max-width: 330px; margin-left: 0px; margin-top: 0px; top: 10%; left: 1%; right: auto; bottom: auto; display: block; background-color: rgba(0, 0, 0, 0);">    <div class="content">    <div class="text widget_text" style="z-index: 4; color: rgb(100, 100, 100); text-align: left; font-size: 12px;">This map presents shortest travel times between counties by land or railroad in 1880 and 1900. <a href="http://www.banxico.org.mx/publicaciones-y-discursos/publicaciones/documentos-de-investigacion/banxico/%7B2F47889C-B853-8304-6300-AC74A75878A4%7D.pdf">Railroad data and method</a> for computing travel times come from <a href="https://sites.google.com/site/fdperezcervantes/">Fernando Pérez-Cervantes</a>. <br><strong>Click on any county to make it the departure point.</strong></div> </div></div>
+
+    <script>
+
+      function main() {
+        function createSelector(stations) {
+                  stations.on('featureClick', function(e, pos, pixel, data) { 
+                    var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id = ") as t2";
+                    stations.setSQL(newSql);
+                  });      
+                  }
+                
+              }
+        // Add your code here
+        var map = new L.Map('map', { zoomControl: false, center: [39.833333, -98.583333], zoom: 4 });
+        var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png').addTo(map);
+        //var attribution = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
+         $('#map').append(legend.render().el);
+        cartodb.createLayer(map, 'https://mdweaver107.carto.com/api/v2/viz/657fc58f-24c5-4352-b25b-344c20dd77c9/viz.json').addTo(map).on('done', function(layer) {
+          var stations = layer.getSubLayer(0); 
+          stations.setInteractivity('cartodb_id, place, province, roads, count_roads, same_lines')
+          stations.setInteraction(true);
+
+          stations.on('featureClick', function(e, pos, pixel, data) { 
+            var newSql = "SELECT t1.*, string_to_array(t1.roads, '|') && t2.array as same_lines FROM (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads FROM stations_collapsed_full_geocoded)as t1, (SELECT array(SELECT DISTINCT UNNEST(string_to_array(roads, '|')) FROM stations_collapsed_full_geocoded WHERE cartodb_id = " + data.cartodb_id = " ) as t2";
+              stations.setSQL(newSql);
+            });
+          createSelector(stations);
+
+          
+          })
+        //map.render();
+      }
+
+
+      // you could use $(window).load(main);
+      window.onload = main;
+    </script>
+  </body>
+</html>
 
