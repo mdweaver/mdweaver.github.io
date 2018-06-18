@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pop-ups | CARTO</title>
+    <title>Official Guide 1910</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Open+Sans:300,400,600" rel="stylesheet">
@@ -12,6 +12,14 @@
     <!-- Include CARTO.js -->
     <script src="https://libs.cartocdn.com/carto.js/v4.0.8/carto.min.js"></script>
     <link href="https://carto.com/developers/carto-js/examples/maps/public/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+
+
 </head>
 <body>
     <div id="map"></div>
@@ -23,20 +31,30 @@
             <section>
                 <p class="description open-sans">Say something.</p>
                 <div class="separator"></div>
-                <section class="usage">
-                    <header>USAGE</header>
-                    <p class="open-sans">Select your preferred kind of pop-ups</p>
-                </section>
                 <div id="controls">
-                    <div id="info"></div>
+                    <div id="wraper-city-selector">
+                      <select class="js-city-selector" onchange="selectRoad()">
+                        <option value="#" selected disabled>Select a Railroad</option>
+                      </select>
+                    </div>
                 </div>
+            <div class="separator"></div>    
+            </section>
+            <section class="usage">
+                    <div id="info"></div>
+                
             </section>
             
             <footer class="js-footer"></footer>
         </div>
     </aside>
-    <script>const map = L.map('map').setView([40, -98], 5);
+    <script>
+
+        const map = L.map('map').setView([40, -98], 5);
 //map.scrollWheelZoom.enable();
+
+var selector = $(".js-city-selector");
+
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png', {
             maxZoom: 12
@@ -86,9 +104,10 @@ const style = new carto.style.CartoCSS(`
                                           [same_lines=true] {marker-fill: #ffffff;
                                             marker-line-color: #ffffff;
                                             marker-fill-opacity: 0.9;
-                                            marker-line-width: 1;
+                                            marker-line-width: 2;
                                             marker-allow-overlap: true;
-                                            [zoom < 6] { marker-width: 1*[count_roads]; marker-line-width: 0.5;}
+                                            [zoom < 5] { marker-width: 1*[count_roads]; marker-line-width: 0.5;}
+                                            [zoom = 5] { marker-width: 1.5*[count_roads]; marker-line-width: 0.5;}
                                             [zoom=6] { marker-width: 2*[count_roads]; }
                                             [zoom=7] { marker-width: 3*[count_roads]; }
                                             [zoom=8] { marker-width: 4*[count_roads]; }
@@ -116,16 +135,7 @@ const popup = L.popup({ closeButton: false });
 function openPopup(featureEvent) {
             let content = '';
             content += `<div class="CDB-Tooltip CDB-Tooltip--isDark">
-                            <ul class="CDB-Tooltip-list">
-                                <li class="CDB-Tooltip-listItem">
-                                    <h3 class="CDB-Tooltip-listTitle">Place</h3>
-                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.place}, ${featureEvent.data.province}</h4>
-                                </li>
-                                <li class="CDB-Tooltip-listItem">
-                                    <h3 class="CDB-Tooltip-listTitle">Companies</h3>
-                                    <h4 class="CDB-Tooltip-listText">${featureEvent.data.roads}</h4>
-                                </li>
-                            </ul>
+                                <h2 class="CDB-Tooltip-listText">${featureEvent.data.place}, ${featureEvent.data.province}</h2>
                         </div>`;
             popup.setContent(content);
             popup.setLatLng(featureEvent.latLng);
@@ -137,6 +147,8 @@ function openPopup(featureEvent) {
 function closePopup(featureEvent) {
             popup.removeFrom(map);
 }
+
+
 
         
 stationsLayer.on('featureClicked', featureEvent => {
@@ -159,6 +171,35 @@ stationsLayer.on('featureClicked', featureEvent => {
 
 stationsLayer.on('featureOver', openPopup);
 stationsLayer.on('featureOut', closePopup);
+
+
+// populate selector with city names from sublayer data
+$.getJSON("https://mdweaver107.carto.com/api/v2/sql?q=SELECT roads FROM stations_collapsed_road_names ORDER BY roads", function(data) {
+  for (var i = 0; i < data.total_rows; i++) {
+
+    var name = data.rows[i].roads;
+
+    selector.append(`<option value="${name}">${name}</option>`);
+  }
+});
+
+selector.select2({ width: '100%' });
+
+selector.change(function(){
+
+            var input = $( ".js-city-selector option:selected" ).val(); 
+
+            console.log("You have selected " + input + ".");
+
+            source.setQuery(`
+                                    SELECT t1.*, string_to_array(t1.roads, '|') && ARRAY['${input}'] as same_lines 
+                                    FROM
+                                        (SELECT the_geom, the_geom_webmercator, cartodb_id,  place, province, roads, sqrt(count_roads) as count_roads
+                                        FROM stations_collapsed_full_geocoded) as t1
+                                  `);
+
+          });
+
 
 </script>
 </body>
