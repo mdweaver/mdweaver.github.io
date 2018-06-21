@@ -275,7 +275,7 @@ What do these mean?
 
 Tutorials/explanations
 
-https://www.zooniverse.org/projects/mdweaver/wires-and-rails
+[https://www.zooniverse.org/projects/mdweaver/wires-and-rails](https://www.zooniverse.org/projects/mdweaver/wires-and-rails)
 
 
 ## Limitations
