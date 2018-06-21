@@ -1,0 +1,115 @@
+#Presentation
+
+# Introduction
+
+## Telegraph shown
+
+## Railroads:
+
+### Already mapped lines
+    #where are stations? where do lines really intersect and where are transfers harder
+    #but who operates?
+    #where are these on a yearly basis? 
+    # consolidation of railroad ownership
+
+#One way to answer:
+
+#Official Guides to the Railway
+  # sometimes monthly, quarterly trade publication published by
+  # variety of information on railroads, steam ships, schedules, fares, maps.
+    # images
+  # index of railway stations: lists places, companies operating there, 
+    # images
+  # list of companies: old and new owner/operating companies
+    # images
+
+# What we can learn:
+  # for each year (and often multiple times per year)
+    # station location
+    # companies serving that station
+    # are stations in a place nearby or how far apart (if they do not intersect)
+    # what previous roads are now operated/owned by other companies
+
+# Digitization
+
+## Other methods:
+
+### Direct transcription by team of RAs
+  # somewhat costly, harder to ensure standardization, possibility of transcription errors, wrong lines, etc
+  # esp. given: images are large, lots of lines of text, hard to read, easy to lose track
+
+### OCR
+  # OCR works to some extent, but 
+  # small text, poor printing, 
+  #even with training on in-document characters training, performance requires massive cleaning
+  # can do this with RAs again, but hard to get high quality... not all errors automatically detected, hard to parse (esp. with commas, periods, etc)
+
+## Zooniverse
+
+  # problems similar across railroad and telegraph images
+  # how does zooniverse provide a solution?
+
+  # 1. more workers, volunteers rather than hired help. costs are less in the long run 
+  # 2. easy process for having multiple transcriptions of the same item, improving quality
+  # 3. flexible set of tools, possible to customize rules for allocating images to tasks for completion
+    # quite a different project than the others we'll see
+    # but makes use of entry forms for each image, much easier to produce this here than on your own with google forms, amazon turk
+  # 4. Discretized tasks: division of labor across individuals, or easier to divide labor across time (helpful even if we use RAs on this service)
+
+## Application
+
+# Key customization:
+  # needed some way to get subset of image
+  # possible to have volunteers mark columns, rows, then use image software to split
+  # too many rows
+
+  # need some automation
+    # automatic splitting into columns performed poorly: not always straight columns, sometimes splitting wrong places, not reliable
+    # but, within columns, splitting into rows automatically performs well
+
+  # users identify what kind of page we have/state in case of telegarph
+    # repeated classification of these splits, cluster these splits and use that to split images into columns
+    # then can use image analysis to split column into rows
+    # results in a list of all cells on a page, retaining column index and row index on the column.
+    # new cell images, retaining page and page position metadata are then passed to back zooniverse for classification/transcription
+
+  # this permits us to shows workers one small image, reduce complexity of the task given to them
+  # downside: need to write guides so people can understand the information even when it lacks full context
+  # downside: need to pull information back together, but this uses row index and questoins we ask
+
+# this was the biggest challenge:
+  # could not do it internally to zooniverse, and ensuring that this process works without problems required substantial coding help
+  # now that it is completed, any other documents with similar tabular structure can be divided up
+
+# Subsequent workflows
+  # Railroad row classification
+    # what is on this? can then prioritize information we transcribe
+  # Telegraph row classification
+    # 
+
+# Examples of current workflows
+
+# How to make people participate
+
+http://mdweaver.github.io/station_search/
+
+# Longterm:
+data completion:
+
+- railroad companies cleaning
+- location cleaning: fix mapped geocoding errors with help of crowds
+
+
+# Longer term:
+
+Advantage of crowdsourcing is you attract people to 
+
+
+# 
+
+## 
+
+
+### Long term
+
+  # 
