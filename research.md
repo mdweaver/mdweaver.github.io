@@ -42,7 +42,7 @@ How does violence become publicly unacceptable? I address this question in the c
 
 *With Nicholas Kuipers and Gareth Nellis*
 
-#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="./images/weaver_veterans_2018.pdf">here</a>)
+#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_2018.pdf">here</a>)
 
 
 #### *"A Two-Edged Sword: the risks and rewards of violence for ethnic parties"*
