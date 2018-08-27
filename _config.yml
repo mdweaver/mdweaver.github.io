@@ -9,7 +9,7 @@ name: Michael Weaver
 description: Politics. History. Data.
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
-avatar: https://dl.dropboxusercontent.com/u/8139153/flannel.jpg
+avatar: 
 
 #
 # Flags below are optional
@@ -18,7 +18,7 @@ avatar: https://dl.dropboxusercontent.com/u/8139153/flannel.jpg
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email: michael.weaver@yale.edu
+  email: 
   facebook:
   flickr:
   github: mdweaver
