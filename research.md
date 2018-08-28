@@ -18,7 +18,7 @@ This book places the legitimation and de-legitimation of violence squarely at th
 
 ## Publications <a name="publications"></a>
 
-#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Lead article, Volume 11, Issue 3, Quarterly Journal of Political Science)
+#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Volume 11, Issue 3, Quarterly Journal of Political Science)
 *with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
 
 <details>
@@ -27,6 +27,8 @@ Ethnic-group conflict is among the most serious threats facing young democracies
 </details>
 
 Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-nation/bjp-gains-in-polls-after-every-riot-says-yale-study/articleshow/45378840.cms">Economic Times</a>, <a href="http://www.livemint.com/Opinion/5zyfXWWbWZHDDmyCqpAuvO/The-alchemy-of-HinduMuslim-riots-in-India.html">Hindustani Times (Live Mint)</a>, <a href="http://scroll.in/article/690416/electing-congress-mlas-reduce-chances-of-riots-by-32-says-new-yale-study/">scroll.in</a>, <a href="http://qz.com/298281/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/">quartz</a>, <a href="http://navbharattimes.indiatimes.com/india/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/articleshow/45241370.cms">Navbharat Times (in Hindi)</a>, <a href="http://www.azhimukham.com/news/2604/congress-mlas-reduce-chances-of-hindu-muslim-riots-yale-study">Azhimukham (in Malayalam)</a>, and <a href="http://www.ideasforindia.in/topics/governance/do-political-parties-matter-for-ethnic-violence-the-congress-and-hindu-muslim-riots-in-india.html">Ideas for India</a>.
+
+<hr>
 
 #### *"'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching"* (R&R at APSR)
 
@@ -42,10 +44,17 @@ How does violence become publicly unacceptable? I address this question in the c
 
 *With Nicholas Kuipers and Gareth Nellis*
 
+<hr>
+
+
 #### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_2018.pdf">here</a>)
+
+<hr>
 
 
 #### *"A Two-Edged Sword: the risks and rewards of violence for ethnic parties"*
+
+<hr>
 
 
 #### *"Protesting and Policing Boundaries: The role of protest in changing ethnic boundaries during the Civil Rights Movement"*
