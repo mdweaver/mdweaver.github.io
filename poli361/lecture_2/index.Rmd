@@ -1,0 +1,132 @@
+---
+title: "POLI 361<br>Race, Ethnicity, Media, and Violence"
+author: "Michael Weaver"
+date: "September 7, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Course Introduction
+
+## Today's Agenda
+
+### 1. Personal Introduction
+
+### 2. Course Learning Objectives
+
+### 3. Course Expectations/Assignments
+
+### 4. Course Policies
+
+### 5. Registration/Questions
+
+# Personal Introduction
+
+## Who is this guy?
+
+### Political Scientist (obviously)
+
+### Research
+
+- Political parties and ethnic/sectarian violence (India, Indonesia, Northern Ireland)
+- Causes (and consequences) of changing public perception of lynching in the US
+- War and changing racial boundaries in the US
+
+### Approach
+
+- History
+- Rigorous statistical analysis
+- "Big data"
+
+# Course Learning Objectives
+
+## Learning Objectives: Academic
+
+- Understand key concepts/ideas of race/ethnic/violence/media
+- Apply these concepts to historical/contemporary cases of violence
+- Understand how perceptions of violence are mediated
+- Learn about important historical cases
+
+## Learning Objectives: Skills
+
+- Improve persuasive writing for large audiences
+- Tools to interrogate media representations of events
+
+# Course Expectations
+
+## Your grade
+
+| Item             | Number | Fraction of Grade |
+|------------------|--------|-------------------|
+| Midterm Exam     | 1      | 25%               |
+| Short Editorials | 3      | (3*15) 45%        |
+| Final Assignment | 1      | 30%               |
+
+
+## Grading
+
+### $\bullet$ **TAs**
+
+### $\bullet$ **Rubrics**
+
+### $\bullet$ **Validation**
+
+### $\bullet$ **No "Curve"**
+
+## What you need to do:
+
+### $\bullet$ **Attend lecture:**
+
+- slides not enough
+- papers due in class
+
+### $\bullet$ **Read**
+
+### $\bullet$ **Canvas**
+
+## What I will do:
+
+### $\bullet$ **List of concepts**
+
+### $\bullet$ **Slides**
+
+### $\bullet$ **Speed**
+
+# Course Policies
+
+## Missed Exam/ Late Assignments:
+
+### $\bullet$ **Scheduling Conflict**
+
+- Need to know ASAP to get a concession
+
+### $\bullet$ **Arts Advising**
+
+### $\bullet$ **Lateness**
+
+- non-catastrophic deduction
+
+## Grade Appeals:
+
+### **TA, written, 48 hours**
+
+### **Grades can change $\Updownarrow$**
+
+
+# Registration
+
+## Where we stand:
+
+As of this morning:
+
+### POLI 361 001: 11 openings, 7 claimed, 15 waiting
+
+### POLI 361 002: 11 openings, 6 claimed, 8 waiting
+
+
+# Questions?
+
+
