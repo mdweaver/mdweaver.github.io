@@ -53,6 +53,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### **essentialist definition of race/ethnicity**:
 
+an identity where membership is based on descent and is
+
 - inherited at birth
 - fixed (unchangable for individuals, and unchanging over time)
 - universal (all group members share traits, capacities, competences, behaviors)
@@ -117,8 +119,10 @@ Thus:
 
 ### **primordialist definition of race/ethnicity**:
 
+an identity where membership is based on descent and is
+
 - inherited at birth
-- even if not in fact, people think of it as:
+- even though not in fact, **people think** of it as:
 
     - fixed (unchangable for individuals, and unchanging over time)
     - universal (group members share traits, capacities, competences, behaviors)
