@@ -1,0 +1,199 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 12, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Socially constructed?
+
+### What is race/ethnicity?
+
+## Plan for the day
+
+### Recap
+
+### Trouble with primordialism
+
+### Constructivism
+
+# Recap
+
+## "Essentialist" vs "Primordialist"? 
+
+### What do they share?
+
+Ethnic/racial groups divided by **real** differences in:
+
+- culture
+- language
+- tradition
+- traits
+- ancestry
+
+Dynamics of **real** ethnic/racial groups drives politics
+
+## "Essentialist" vs "Primordialist"? {.columns-2}
+
+### **Essentialist** 
+
+- group differences are **innate**
+- within-group similarities are **natural**
+- ethnic/racial identities don't change
+
+<br>
+
+### **Primordialist**
+
+- people *think* "essentially", but
+- group differences are **historical**
+- within-group similarities are **made**
+- ethnic/racial identities **near impossible** to change
+
+
+## Limits of primordialism:
+
+### Groups sometimes change quickly
+
+- Creole in Louisiana
+- Irish in US
+- Muhajirs in Pakistan
+
+## Limits of primordialism:
+
+### Are ethnic/racial groups actually divided by their traits and culture?
+
+## Yoruba
+
+### A Puzzle for Primordialism:
+
+
+
+## Yoruba
+
+### A Puzzle for Primordialism:
+
+- Religious differences are "real" social, cultural, economic divides 
+- Ancestral cities share traditions, culture, language
+
+BUT
+
+- Ancestral cities are the relevant ethnic identity in Yorubaland
+
+## Yoruba
+
+### A Puzzle for Primordialism:
+
+Why do ethnic groups persist in absence of major cultural differences while other groupings with major cultural differences remain irrelevant?
+
+There are different ethnic identities available to the same people: which are relevant?
+
+--- 
+
+### **Constructivist definition of race/ethnicity**
+
+**constructivism** is **not** a unified theory
+
+a group of theories/definitions that agree:
+
+ethnicity/race is an identity that is based on descent
+
+1. people have **multiple** ethnic identities
+2. these identities can change (individuals, structure)
+3. and groups are not necessarily culturally homogeneous
+
+Thus,
+
+- not "natural", but produced through political, economic, cultural processes
+
+## Constructivism vs. Essentialism {.columns-2}
+
+### **Essentialist**
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+### **Constructivist**
+
+- Primordialist: ethnicity/race does not, in practice, change much; cultural differences are real and matter
+- ????????????ist: ?
+
+# Break
+
+## Sneetches
+
+<iframe width=100% src="https://www.youtube.com/embed/qPhOZzsi_6Q?start=45&end=600autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+# How does this deviate from the primordialist definition?
+
+### Discuss
+
+# Is this a realistic depiction of ethnicity?
+
+### Discuss
+
+---
+
+**instrumentalist theory of race/ethnicity**: 
+
+a **constructivist** theory that suggests:
+
+1. individuals are motivated by economic and political gains
+
+2. ethnic groups are an easy way to organize and coordinate to win elections, mobilize to improve benefits/business
+
+3. because ethnicity is changable and shared traditions invented
+
+4. ethnic groups change quickly as people (rationally) make them large enough to win elections/business, but small enough to maximize the benefit to each member (minimum winning coalition)
+
+Ethnic groups can change whenever political and economic incentives change
+
+
+## Instrumentalist: Example
+
+### Chewas and Tumbukas in Malawi and Zambia
+
+
+
+
+## Constructivism vs. Essentialism {.columns-2}
+
+### **Essentialist**
+
+- "supremacist"
+- "non-supremacist"
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+### **Constructivist**
+
+- Primordialist: ethnicity/race does not, in practice, change much; cultural differences are real and matter
+- Instrumentalist: ethnicity/race can change frequently; "real" cultural differences not as important as political/economic motives for making groups
+
+
+# More questions!
+
+## For next time:
+
+1. What do we mean that people have multiple identities?
+2. To what extent is ethnic identity really changable?
+    - Are they changing between their "multiple identities"?
+    - Are they switching to an entirely different identity?
+
+
