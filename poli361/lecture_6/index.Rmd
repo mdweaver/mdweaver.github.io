@@ -1,0 +1,139 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 17, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Ethnic/Racial Boundaries
+
+## Objectives
+
+### What are ethnic / racial boundaries?
+
+### How do they vary?
+
+### Race vs Ethnicity?
+
+# Definitions
+
+## Social Boundaries:
+
+### **social boundaries**:
+
+### 1. categories for people and category rules
+
+- "labels" and "definitions"
+
+### 2. real-world practices that use those categories
+
+- what we "do" with those labels
+
+## Social Boundaries:
+
+### Include *many* kinds of "identities"
+
+- gender, sexuality, class, citizen, mental illness, criminal
+
+and ...
+
+ethnicity, race
+
+## Social Boundaries: Categories
+
+### Varieties
+
+**internal categorization**: self-identification by person/group of people
+
+**external categorization**: identification of person/group of people by others
+
+### Types of criteria:
+
+- descent rules
+- physical traits: skin color, appearance
+- language, dress, behavior
+
+### Stability?
+
+## Social Boundaries: Practices
+
+
+### Varieties:
+
+- Several different aspects
+
+### Stability?
+
+## Social Boundaries: Institutions
+
+**institutional use**: the use of ethnic/racial categories by formal institutions to label people (not necessarily in a discriminatory manner)
+
+- examples: census forms, school forms, voting rules, government social service records
+
+**institutional separation**: the presence of distinct formal institutions for people labelled as members of different ethnic/racial categories (not necessarily *unequal*)
+
+- examples: churches/houses of worship, stores, schools, private associations, voting constituencies, governments, political parties
+
+## Social Boundaries: social closure
+
+**social closure**:  the use of ethnic/racial categories to separate or organize personal/informal interactions between people (not **necessarily unequal**)
+
+- examples of separation: neighborhoods, use of space (e.g. pools), marriage, reproduction (endogamy), friendship
+
+## Social Boundaries: power
+  
+**power disparity**: the use of ethnic/racial categories to discriminate in access to goods, services, rights, recognition (e.g. in institutional use, institutional separation, social closure) that enhances/restricts the life choices
+
+- legal examples: property rights, marriage/inheritance, education, government jobs, government services, elected representation, criminal law, affirmative action
+
+- other examples: housing discrimination, job discrimination, restricting spaces (e.g. private clubs, gated communities)
+
+- social closure: employer/employee relations; customer/client relations; formal/informal modes of address; non-reciprocity in forms of interaction
+
+  
+## Social Boundaries: cultural difference
+
+**cultural differentiation**: the use of ethnic/racial categories to differentiate cultural practices (food, clothing, traditions), language, and religious belief.
+
+
+*Note*: Sometimes cultural difference is used to *define* category membership. Sometimes cultural difference is a way to *use categories*:
+
+examples: choice of alphabet/spellings; changing vocabulary (Hindustani vs Urdu vs Hindi)
+
+## Social Boundaries: cognitive
+
+**marking**: using category labels for some groups as distinct from a "reference" or "unmarked" category that is the unspoken default (e.g. "white" as the unspoken default)
+
+**groupness**: using category labels to proclaim or invoke the existence and unity of a group (parades, mass performances, history/schooling)
+
+## Social Boundaries: cognitive
+
+**explain behavior**: using ethnic/racial category labels to explain 
+
+- you are group X, you must believe/do Y
+- you did Y BECAUSE you are group X
+
+**exemption**: use of ethnic/racial categories to claim or identify exemption:
+
+- you are group X, but you are "all right" (implicitly group X is not "all right")
+- I am an X, so I can criticize other people within X (implicitly outsiders cannot legitimately criticize)
+
+
+# In groups of 4-6
+
+
+## Two questions:
+
+Thinking about rules defining categories and practices using those categories...
+
+### How are "ethnic" boundaries different from "racial" boundaries?
+
+### How are "ethnic" boundaries different from "class" boundaries?
+
+
+
+
