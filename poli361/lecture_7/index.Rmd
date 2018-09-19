@@ -1,0 +1,155 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 19, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Ethnicity, Race, and Conflict
+
+## Plan
+
+### 1. Assignment
+### 2. Ethnicity/race prone to conflict?
+### 3. Social Identity Theory
+
+# Recap
+
+## Social Boundaries
+
+### Ethnicity or race involved in more **practices**
+
+- these categories are more meaningful; more "real"; harder to change
+
+### Helps us understand how race and ethnicity has changed over time:
+
+- Compare race in the US today versus 70 years ago
+
+### Race vs. Ethnicity
+
+- Debated: many social scientists see them as variations of the same thing
+
+# Conflict?
+
+### Are ethnic and racial differences more prone to ...
+
+## Sources of conflict?
+
+### Tradition?
+
+- conflict over ancient hatreds
+
+### Culture?
+
+- conflict over incompatible values
+
+## Sources of conflict?
+
+### Economy?
+
+- overlap between ethnicity/race and class produces conflict
+
+### Modernization? 
+
+- competition over "goodies" of modernization
+
+# Why do "followers" follow?
+
+### Elites often benefit... but
+
+## Sources of conflict: Status
+
+**ranked societies**: societies in which ethnic or racial categories **overlap** with **class** and imply a hierarchy of status, with some groups holding higher economic, political, and social status over others
+
+**unranked societies**: societies in which ethnic or racial categories **cross-cut** **class**, implying a parallel or approximately equal status of the groups
+
+## Sources of conflict: Status
+
+But even in **unranked** societies, groups make comparisons of which is "backward" or "advanced"
+
+### Groups with higher status fear loss of their position
+
+### Groups with lower status fear permanently being locked out
+
+- not "catching up"
+- or even worse "extinction"
+
+# Why does status matter?
+
+# Human psychology
+
+## Minimal Group Experiments:
+
+- Groups randomly assigned
+- Never meet in person
+- Anonymous games allocating money
+
+### What do people do?
+
+- discriminate against **out-group** 
+- maximize inter-group **difference**, not **in-group** profit
+
+#
+
+## Social Identity Theory
+
+### **Assumptions**
+
+1. people want positive self-esteem
+2. social groups/categories have positive/negative connotations that reflect on person's **social identity**
+3. group status based on favorable/unfavorable comparison with other groups
+
+## Social Identity Theory
+
+### **Implications**
+
+1. people want to increase or maintain positive social identity
+2. social identity based on positive comparison between **in-group** and relevant **out-group**
+3. Individuals will leave group or change their group to make identity more positive
+
+
+## Social Identity Theory
+
+### Strategies of improving status:
+
+1. Mobility (unavailable? in race/ethnicity)
+
+2. new dimension of comparison
+
+3. use of different evaluative rules
+
+4. change comparison-group
+
+5. direct competition
+
+### Which of these strategies lead to conflict?
+
+# Questions
+
+## Questions:
+
+### Is this need for status fundamental in all humans? Why/why not?
+
+### Are we doomed to racism/ethnocentrism? Why/why not?
+
+#
+
+## Some questions about SIT:
+
+As a theory, depends on **cultural context**:
+
+- Which are "relevant" groups for comparison?
+- What dimensions are groups compared on?
+- What value-rules do we use to assign status?
+- What kinds of comparisons are **legitimate**?
+
+## Reconsider:
+
+**ranked societies**: are the value systems used to justify hierarchy of groups still **legitimate**?
+
+
+
