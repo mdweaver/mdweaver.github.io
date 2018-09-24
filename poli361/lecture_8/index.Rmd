@@ -1,0 +1,107 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 24, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Violence
+
+### Introduction
+
+## Key questions
+
+### What counts as **violence**?
+
+### How does violence **vary**?
+
+### How/why does violence **happen**?
+
+### What makes violence **ethnic** or **racial**?
+
+
+# What is "violence"
+
+#
+
+## What counts as violence?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ds-wAxf4KEA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## What counts as violence? 
+
+
+
+<iframe src="https://serialpodcast.org/embed/252" width="375" height="100" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+## What counts as violence?
+
+<h1>Taxation?</h1>
+
+# How does violence *vary*?
+
+## Variations:
+
+- **Who** does it?
+- **What** do they do?
+- **How** do they do it?
+- **To whom** to do they do it?
+- **How often** do they do it?
+
+
+## Why do we care?
+
+### How violence happens can give us clues to:
+
+- why is it being done?
+- what are constraints/options available to perpetrators?
+
+## Why do we care?
+
+### Who is the (intended) *audience*?
+
+### What is the (intended) *message*?
+
+## Visibility
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KVfWPwdz1Tc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Visibility
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OPVQEFP2SY4?start=161" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# How does violence happen?
+
+## Who does violence?
+
+### Organization vs participation
+
+### Capacity for violence
+
+## Why do people do violence?
+
+### Is it simply an **unfortunate** **means** to an end?
+
+Do they know they are doing the "wrong" thing?
+
+## Why do people do violence?
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hn1VxaMEjRU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Why do people do violence?
+
+### Do they think they are doing the **right** thing?
+
+Why is *some* violence *"right"* and other violence *"wrong"*?
+
+# When is violence *ethnic* or *racial*?
+
+## What makes violence *ethnic* or *racial*?
+
+- Is it only about who does it to whom?
+- Is it about the motive?
+
