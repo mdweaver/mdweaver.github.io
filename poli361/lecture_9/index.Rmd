@@ -1,0 +1,173 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 26, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Aspects of Violence
+
+## Plan for today:
+
+1. Defining violence and coercion
+2. Patterns of violence
+3. Audiences
+
+
+# Definitions
+
+## Defining *violence*
+
+difficult and contested, but for our purposes:
+
+**violence**: action in which perpetrator regards inficting pain, suffering, fear, distress, injury, maiming, disfigurement, death as intrinsic, necessary or desirable means to the intended ends.
+
+### Exclusions:
+
+- actions where harm is undesirable but unavoidable (e.g. medical procedures)
+- actions that are "accidental" (assuming a reasonable standard of whether the harm was foreseeable) (does this foreclose kinds of structural violence?)
+
+## Defining *coercion*
+
+**coercion**: using violence or the threat of it to induce people to act or behave other than they would.
+
+- Connection to "off-the-path behavior"
+- Could overlap in some cases with violence, or not (e.g. taxation is coercive but might not be violence as such)
+
+# Patterns of Violence
+
+## Patterns of violence defined by:
+
+### **repertoire**: 
+
+forms of violence in which an organization/individual regularly engages
+
+#### Examples:
+
+killing, torture, displacement, rape, robbery, kidnapping/imprisonment, etc.
+
+
+## Patterns of violence defined by:
+
+### **targeting**:
+
+which people or social groups are made the targets of specific repertoires of violence
+
+### Examples:
+
+ethnic groups, genders, political groups, combatants, etc.
+
+## Kinds of Targeting
+
+### **selective** violence:
+
+violence against an *individual* because of specific allegations about their behavior or actions
+
+### Examples:
+
+assassinations, disappearance of political activists, etc.
+
+## Kinds of Targeting
+
+### **collective** or **identity-based** violence
+
+violence against individuals based on their membership in a social group.
+
+This kind of violence is connected to social boundaries: violence happens along the boundary because it targets people based on the categories they are labelled with
+
+### Examples
+
+ethnic cleansing; supporters of a political party; shelling cities with ethnic majorities
+
+## Kinds of Targeting
+
+### **indiscriminate** violence
+
+violence against individuals without regard to individual behavior or membership in social categories
+
+## Patterns of violence defined by:
+
+### **technique** 
+
+*how* a repertoire of violence is performed
+
+### Examples
+
+killing by firing squad, massacre using knives, bombing, torture to death
+
+## Patterns of violence defined by:
+
+### **frequency** 
+
+the count or rate of victimization among specific groups in the population
+
+#### Examples
+
+fraction of police shooting victims that are African American
+
+# What determines patterns?
+
+## What affects the pattern of violence?
+
+### Three related things (these may overlap)
+
+1. Strategic goals
+  
+    - Seizing territory, enforcing political agenda
+  
+2. Symbolic goals
+    
+    - Performing for an audience
+    
+3. Organizational structure/needs
+
+    - How are perpetrators organized?
+    - Who has capacity for violence?
+
+## Example: Strategic Goals
+
+**Selective** violence is often used to produce prevent cooperation with an enemy or to induce cooperation with the perpetrator.
+
+
+But there is no guarantee this message is correctly delivered
+
+## Example: Strategic Goals
+
+### What would you do in terms of targeting, repertoire, and technique to make violence "selective"?
+
+
+# 
+
+## Example: Organizations
+
+### Chicago Police and Torture
+
+
+# Who are the audiences for violence?
+
+#
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kerAy94eWLc?start=240" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+#
+
+## Audiences 
+
+No an exhaustive list:
+
+- victims
+  
+- potential victims
+  
+- other people/groups who commit violence (peers/rivals)
+  
+- co-perpetrators/self
+
+- constituency/community
+
+
+
+
