@@ -1,0 +1,161 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "September 28, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Violence
+
+### Morality and Violence
+
+## Plan for today
+
+1. Recap
+2. Violence has moral motivations
+
+  - what does this mean?
+  - kinds of moral motivations
+  - purpose of violence
+
+**Application**
+
+# Recap
+
+## Patterns of Violence
+
+1. Defined violence
+2. Patterns of violence
+3. Targeting and Technique
+
+Ended with failure to create selective violence
+
+- moral outrage... 
+
+Flip side: morality may have something to do with choice to engage in extreme techniques
+  - think about example from beginning of the course...
+
+# Moral Violence
+
+### Much violence is "moral"
+
+## Defining "moral"
+
+### **morally motivated**: 
+
+person doing the violence (**perpetrator**) subjectively evaluates their violence is right (that it *ought* to be done)
+
+### **moral**:
+
+evaluation of actions, motives, and intention as a **realization** of an ideal model of how people should relate 
+
+- (evaluation can be done from **many perspectives**, not just perpetrator)
+
+## Virtuous Violence  
+
+Relational Models Theory: psychological theory, from the perspective of **perpetrators**:
+
+### **people often judge that to constitute or regulate crucial relationships they are morally required to hurt or kill another person**
+
+## Relational Models Theory
+
+Four varieties of **moral** relationships; focus on **two**
+
+### 1. **Communal Sharing**/unity: 
+
+relationship with people in the same group as undifferentiated and equivalent
+
+- shared responsibility and fate
+- threat to one is a threat to all; crime of one is a crime by all
+- connection to **essentialism**, **social identity**
+
+## Relational Models Theory
+
+### 2. **Authority Ranking**/hierarchy
+
+rank individuals in a hierarchical relationship
+
+- subordinates are to respect/obey/defer to superiors
+- asymmetrical relationships are natural, good, legitimate, necessary
+- connection to **social identity theory**, **status**, **ranked systems**
+
+## Relational Models Theory
+
+### 3. **Equality matching**
+
+attend to differences in order to balance relationships
+
+- seek out equality between people, groups, etc.
+- reciprocity (eye for an eye; you paid last time)
+
+### 4. **Market pricing**
+
+rates and ratios to compare non-identical goods/actions
+
+- Proportionality... punishment in prison proportional to crime, not eye for an eye
+
+## Relational Models Theory
+
+### Violence is used to **regulate** at least one or more of these moral relationships with the victim *and others*
+
+## Relational Models Theory
+
+### Violence can...
+
+- **create** moral relationships
+- **enhance** or **transform** relationships
+- **protect** relationships 
+- **redress**/**rectify** relationships
+
+
+## Why use *violence*?
+
+- Violence gets people's attention
+- Shows that the stakes are high
+    - stronger/more important relationships
+    - entire relationship is at stake, not simply its practice
+
+
+## Key insights: Cultural Context
+
+### Why do we often see violence as **immoral**?
+
+### **Who** evaluates actions as moral?
+
+
+## Key insights: Audiences
+
+### Why does violence have many possible audiences?
+
+ Aimed at modulating many relationships
+
+
+# An Exercise
+
+## Apply to Charlottesville Riot
+
+1) Who are different perpetrators?
+2) For perpetrators: **which** moral relationships are they regulating
+3) and **with whom** are these relationships (who are the **audiences**)?
+
+
+#
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RIrcB1sAN8I?start=0&end=135" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+#
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RIrcB1sAN8I?start=300&end=370" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+#
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RIrcB1sAN8I?start=565&end=620" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+#
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FDIfPhx-Fm0?start=570&end=750" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+
