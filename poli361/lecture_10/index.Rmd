@@ -32,13 +32,6 @@ knitr::opts_chunk$set(echo = FALSE)
 2. Patterns of violence
 3. Targeting and Technique
 
-Ended with failure to create selective violence
-
-- moral outrage... 
-
-Flip side: morality may have something to do with choice to engage in extreme techniques
-  - think about example from beginning of the course...
-
 # Moral Violence
 
 ### Much violence is "moral"
