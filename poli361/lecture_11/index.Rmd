@@ -55,6 +55,8 @@ Comparing police-suspect interactions with similar suspect behavior, context, of
 
 # Are police shootings in US form of racial violence?<br><br>Why or Why not?
 
+### In pairs, discuss:
+
 #
 
 ## Statistical Discrimination
@@ -62,6 +64,12 @@ Comparing police-suspect interactions with similar suspect behavior, context, of
 ### **statistical discrimination**: 
 
 inequality that exists between demographic groups even though economic agents (consumers, workers, employers, etc.) are rational and non-prejudiced. Discrimination can be "rational" if individual attributes are hard to observe (e.g. propensity toward crime) while group membership is observable and different groups have different behaviors on average.
+
+## Fryer Study:
+
+### Finds evidence that racial disparity is due to *statistical discrimination*
+
+### Is this *relevant* to question of "racial violence"?
 
 #
 
