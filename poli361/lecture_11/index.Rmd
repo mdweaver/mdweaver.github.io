@@ -1,0 +1,85 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "October 1, 2018"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Ethnic Violence
+
+## Goals for Today:
+
+### 1. What is ethnic violence?
+
+- **Policing shootings in the US "racial"?**
+- **Your definition**
+- **Make a definition**
+
+
+## Recap
+
+### 1. Patterns of Violence
+### 2. Violence and Morality
+
+# When is violence ethnic or racial?
+
+#
+
+<iframe src="https://globalnews.ca/video/embed/2810801/" width="670" height="372" frameborder="0" allowfullscreen scrolling="no"></iframe>
+
+
+#
+
+<iframe src="http://player.theplatform.com/p/7wvmTC/MSNBCEmbeddedOffSite?guid=n_mj_bias_160712" height="500" width="635" scrolling="no" border="no"></iframe>
+
+## Fryer Study:
+
+### Data:
+
+- Incidents involving police where suspect is arrested or subject to lethal use of force from several cities
+- Details on race of suspect, suspect behavior, context, and officer attributes from police reports
+
+## Fryer Study:
+
+### **Results:**
+
+Comparing police-suspect interactions with similar suspect behavior, context, officer attributes:
+
+### Police **less likely** to use **lethal force** with **black suspects**.
+
+# Are police shootings in US form of racial violence?<br><br>Why or Why not?
+
+#
+
+## Statistical Discrimination
+
+### **statistical discrimination**: 
+
+inequality that exists between demographic groups even though economic agents (consumers, workers, employers, etc.) are rational and non-prejudiced. Discrimination can be "rational" if individual attributes are hard to observe (e.g. propensity toward crime) while group membership is observable and different groups have different behaviors on average.
+
+#
+
+# Defining ethnic violence
+
+# Define "ethnic violence"
+
+### **In groups of 4 (ish)**
+
+Refer to concepts making up **pattern of violence**
+
+# Share our definitions
+
+#
+
+## Definition
+
+### **ethnic violence**:
+
+violence perpetrated across or within ethnic lines, in which at least one party is not a state (or a representative of a state), and in which putative ethnic differences or similarities are coded—by perpetrators, targets, influential third parties, or analysts—as having been integral rather than incidental to the violence, that is, in which the violence is coded as having been meaningfully oriented in some way to the ethnicity of the target (due to membership in shared or different groups)
+
