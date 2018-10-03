@@ -1,0 +1,137 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "October 3, 2018"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Ethnic Violence
+
+## Today
+
+### 1. What is ethnic violence?
+
+- **Go over the definition**
+
+### 2. Optional: Fryer study
+
+### 3. Causes of ethnic violence
+
+# Recap
+
+## Statistical Discrimination
+
+### **statistical discrimination**: 
+
+inequality that exists between demographic groups even though economic agents (consumers, workers, employers, etc.) are rational and non-prejudiced. Discrimination can be "rational" if individual attributes are hard to observe (e.g. propensity toward crime) while group membership is observable and different groups have different behaviors on average.
+
+## Statistical Discrimination
+
+$$Racial Disparity = Racial Animus + StatisticalDiscrimination$$
+$$MoreDrugSearches = RacialProfiling + MoreDrugPossession$$
+
+
+## Fryer Study:
+
+### Finds evidence that racial disparity in shootings is due to *statistical discrimination*
+
+### Is this *relevant* to question of "racial violence"?
+
+# Ethnic Violence
+
+## Definition
+
+### **ethnic violence**:
+
+violence perpetrated across or within ethnic lines, in which at least one party is **not a state** (or a representative of a state), and in which putative ethnic differences or similarities are coded—by perpetrators, targets, influential third parties, or analysts—as having been integral rather than incidental to the violence, that is, in which the violence is coded as having been meaningfully oriented in some way to the ethnicity of the target (due to membership in shared or different groups)
+
+# What patterns of violence are ethnic?
+
+## Ethnic Violence: Targeting
+
+### Targeting *across* ethnic lines **not sufficient**
+
+### Targeting *across* ethnic lines **not necessary**
+
+- **intra-ethnic** violence still **ethnic**
+
+## Ethnic Violence: Targeting
+
+### Targeting **collective** or **selective**
+
+### Ethnic Motive not **necessary**
+
+- statistical discrimination still "ethnic"
+
+## Ethnic Violence: Frequency
+
+### Relative frequency of victimization **relevant**, but not sufficient
+
+## Ethnic Violence: Technique
+
+### Language/symbols of ethnicity used
+### Dates/locations are symbolic for ethnic groups
+
+
+## Ethnic Violence: Perception
+
+Not part of "pattern", but:
+
+### Intense ethnic/racial boundaries guide interpretation
+
+### Ethnic politics create incentive to interpret
+
+### Who has power to provide **interpretations**?
+
+
+## Questions:
+
+### How does violence with complex motives become "ethnic"?
+
+### What is consequence of violent incident becoming "ethnic"?
+
+#
+
+# Why does ethnic violence happen?
+
+# Example:<br> 1984 Delhi Riots
+
+## Background
+
+### Political Conflict in state of Punjab 
+
+### Rise of Sikh Nationalists
+
+### Amritsar and Operation Blue Star
+
+## Precipitating Event
+
+### Assassination of Indira Gandhi by Sikh Bodyguards
+
+### Widespread killing of Sikhs in Delhi
+
+# Obviously Ethnic?
+
+---
+
+ {.centered}
+
+<img src="./sultanpuri_map.png" width=70%>
+
+## What is this violence about?
+
+### In Sultanpuri
+
+- Intra-party factional dispute?
+- Free reign given to criminals?
+- Conflict between two caste groups?
+- Opportunistic violence (looting, settling scores)?
+- Ethnic violence against Sikhs?
+
+## What caused it?
