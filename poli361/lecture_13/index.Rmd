@@ -59,6 +59,25 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Push and Pull
 
+## Motives: Interests
+
+### Elections
+
+### Security
+
+### Territorial Control
+
+### Opportunism
+
+## Opportunity: Interests
+
+### Capacity for Violence
+
+### Risk of Violence (or lackthereof)
+
+### **master cleavage** vs. **local cleavage** (Kalyvas)
+
+
 ## Motives: Ideas
 
 ### Which Moral relationships 
@@ -82,22 +101,4 @@ Tambiah:
 - processions, rallies
 - standard intimidation
 - widely accepted "triggers"
-
-## Motives: Interests
-
-### Elections
-
-### Security
-
-### Territorial Control
-
-### Opportunism
-
-## Opportunity: Interests
-
-### Capacity for Violence
-
-### Risk of Violence (or lackthereof)
-
-### **master cleavage** vs. **local cleavage** (Kalyvas)
 
