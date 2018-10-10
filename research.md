@@ -30,7 +30,7 @@ Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-n
 
 <hr>
 
-#### *"'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching"* (R&R at APSR)
+#### *"'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching"* (Accepted at *APSR*)
 
 <details>
 <summary>Abstract</summary>
