@@ -298,6 +298,8 @@ Perpetrators/Victim/Audience
 
 Who has means to frame? 
 
+- diagnostic/ prognostic framing
+
 Who has means to deny framing to others? 
 
 What are the costs of framing?
@@ -509,12 +511,10 @@ template:inverse
 
 
 template:inverse
-<img src="./clippings/governor_prosecutes_lynchers.png" width="50%" </img>
-
-Maryland Governor uses National Guard to hunt down the lynch mob
 
 
 ---
+
 template:inverse
 
 ## Testing the Argument
@@ -850,10 +850,9 @@ class: center, middle
  
  ### Effects **not explained** by:
 
- * National trends in rail network *and* newspaper coverage
- * Some counties attract railroads *and* newspaper coverage
- * Local decisions to build railroads
-
+ * National trends in rail network *and* newspaper coverage (Year FE)
+ * Some counties attract railroads *and* newspaper coverage (County FE/Covariates) 
+ * Endogenous placement of railroads
 ]
 
 
@@ -930,9 +929,9 @@ class: center, middle
 
 ### Pattern **not expained by**:
 
-* Distant coverage using fewer overall words
-* Heinous lynchings being more newsworthy and worthy of criticism
-* Trends over time for more distant coverage *and* more criticism
+* Distant coverage using fewer overall words (Keyword FE)
+* Heinous lynchings being more newsworthy and worthy of criticism (Lynching Event FE)
+* Trends over time for more distant coverage *and* more criticism (Year FE)
 
 ]
 
@@ -1015,9 +1014,9 @@ name: access_table
 
 * Trends toward fewer lynchings; more newspaper circulation (Year FE)
 * County propensity to have lynching (County FE)
-* Economic/demographic changes in counties 
+* Economic/demographic changes in counties (County Covariates)
 * Local railroad construction
-* "Access" to population, rather than newspaper audiences
+* "Access" to something other than media audiences (e.g., population)
 
 
 ]
