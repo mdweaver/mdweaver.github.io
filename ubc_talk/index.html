@@ -316,11 +316,14 @@ What are the costs of framing?
 
 
 .right-column[
-### When perpetrators are powerful
+### Violence is publicly legitimated...
 
-#### 1. Violence is publicly legitimated
-#### 2. Difficult to challenge because of reputational costs, risk of coercion
-#### 3. May be self-reinforcing dynamic
+##### When perpetrators are powerful.
+
+#### 1. Able to frame violence
+#### 2. Critics coerced into silence
+#### 3. Challengers face reputational costs
+#### 4. May be self-reinforcing dynamic
   - Determine both "facts" and norms
 
 ### How can this dynamic be challenged?
@@ -1167,32 +1170,44 @@ template:inverse
 
 ---
 
-title: extras
+name:extras
+
+
+#### Argument
+- [conditions for effects](#effect_conditions)
+- [newspaper partisanship](#partisanship)
+- [discourse shifts over time](#discourse_shift_time)
+
+#### Data
+- [digitization rates by time](#digitization_time)
+- [coverage validation (window)](#coverage_window)
+- [coverage validation (accuracy)](#coverage_validation)
+- [discourse keywords](#keywords)
+- [keyword validation](#keyword_validation)
+- [discourse measure](#discourse_measure)
+- [media access measure](#access)
+
 
 #### Analysis
 
 - [model specification](#equations)
-- [coverage (not dyads)](#aggregate_result)
+- [coverage over distance](#coverage_over_distance)
+- [coverage results (aggregate)](#aggregate_result)
 - [effects over distance](#distance_result)
-- [access](#access)
+- [travel time table](#travel_time_table)
 - [limits](#limits)
-
-#### Data
-- [coverage validation (window)](#coverage_window)
-- [coverage validation (accuracy)](#coverage_accuracy)
-- [discourse measures](#keywords)
-- [discourse extensions](#text_extension)
-- 
-- [railroad extensions](#railroad_extension)
-
-
-#### Background
-
-- [lynching discourses](#lynching_discourse)
-- [newspaper partisanship](#partisanship)
+- [extensions](#railroad_extension)
 
 
 ---
+
+template:inverse
+
+## Extras: Argument and Evidence
+
+---
+
+name:effect_conditions
 
 .left-column[
 ##Argument
@@ -1271,154 +1286,6 @@ title: extras
 
 ---
 
-.left-column[
-##Argument
-### Violence
-### Publicity
-]
-
-
-.right-column[
-### How do changes in publicity occur?
-
-#### Social, economic, political transformations
-
-- Affect interest in distant events
-- Changes in kinds of information produced
-
-#### Technological change
-
-- **produce** conditions for greater reach or inclusivity 
-- shapes **exposure** to otherwise expanding publicity
-]
-
-
----
-name:limits
-
-.left-column[
-  ## Analysis
-  ### Limits
-  [extras](#extras)
-]
-
-.right-column[
-###Railroads Endogenous?
-* but network attributes not locally determined
-* conditioned on local railroad construction
-
-###Alternative interpretations
-* Importance, not information
-  * Condition on population, economic output
-  * Access to circulation, not to population
-* Reduced or hidden lynchings?
-* "Supply" or "demand"?
-
-###Text
-* Broad but limited depth
-* Keywords are drastic simplification
-  * Validation: manual coding, full text 
- 
- ]
-
-
-
-
----
-name:equations
-
-##Equations
-
-### Coverage Model
-
-`$$\begin{equation}\label{eq:coverage_dyads}
-\begin{split}
-Y_{ijt} =& \alpha_{year} + \alpha_{county-i} + \alpha_{j} + \boldsymbol{\delta}\mathbf{Centrality_{it}} + \\ &\boldsymbol{\beta}\mathbf{Distance_{ijt}} + 
-\boldsymbol{\gamma}\mathbf{X_{it}} + 
-\boldsymbol{\lambda}\mathbf{W_{jt}} + \\ 
-&\varepsilon_{county_i} + \varepsilon_{county_j}
-\end{split}
-\end{equation}$$`
-
-
-### Lynching model
-`$$\begin{equation}\label{eq:lynching}
-\begin{split}
-Lynchings_{it} = \alpha_i + \alpha_t + \beta_1 Access_{it} + \mathbf{X_{it}\beta} +  
- \varepsilon_{county_i}
-\end{split}
-\end{equation}$$`
-
- [extras](#extras)
-
-
----
-name:access
-
-### Media Access
-
-Media access in **county** `\(i\)` is the average of:
-
-* `\(NewspaperCirculation_j\)` (total circulation of daily newspapers in a county `\(j\)`)
-
-* for **all other counties** `\(j\)`; `\(i \neq j\)`;
-
-* Weighted by the inverse of `\(\tau_{ij}\)` (railroad travel time between `\(i\)` and `\(j\)`)
-
-
-`$$MediaAccess_i = \sum\limits_{i \neq j}^{j} NewspaperCirculation_j * \tau_{ij}^{-1}$$`
-
- [extras](#extras)
-
- [return](#access_table)
-
----
-
-
-name: aggregate_result
-
-Centrality Results (aggregated to the event, fraction of papers)
-
-
-<img src="./figures/betweenness_events.png" width="100%" height="75%"</img>
-
- [extras](#extras)
-
-
----
-class: center, middle
-name: coverage_over_distance
-
-
-Probability of lynching mention by distance
-
-<img src="./figures/rawDistance_Article.svg" width="75%" height="75%"</img>
-
-
-
----
-
-
-name: distance_result
-
-
-
-<img src="./figures/effects_across_distance.png" width="100%" height="75%"</img>
-
- [extras](#extras)
-
----
-class: center, middle
-
-name: digitization_time
-
-Digitized Newspaper Issues by Year
-
-<img src="./figures/digitized_by_year.png" width="80%" height="75%"</img>
-
-[back](#newspaper_data)
-
----
 class: center, middle
 
 name: partisanship
@@ -1445,26 +1312,59 @@ Fraction of all papers Republican (south)
 ---
 class: center, middle
 
+name: discourse_shift_time
+
+
+Average Criticism over Time
+
+<img src="./figures/content_over_time.png" width="70%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+template:inverse
+
+## Extras: Data
+
+---
+
+class: center, middle
+
+name: digitization_time
+
+Digitized Newspaper Issues by Year
+
+<img src="./figures/digitized_by_year.png" width="80%" height="75%"</img>
+
+[back](#newspaper_data)
+[extras](#extras)
+
+---
+
+class: center, middle
+
 name:coverage_window
 
 Fraction of event-related articles from time of event
 
-<img src="./figures/coverage_to_date.png" width="75%" height="75%"</img>
+<img src="./figures/coverage_to_date.png" width="80%" height="75%"</img>
 
 
  [extras](#extras)
 
 ---
 class: center, middle
+name:coverage_validation
 
 TPR/PPV of article-event matching over time from event
-
 
 <img src="./figures/coverage_matching_ppvtpr.png" width="75%" height="75%"</img>
 
  [extras](#extras)
 
 ---
+
 name:keywords
 
 <img src="./figures/pro_lynching.png" width="100%" height="75%"</img>
@@ -1478,13 +1378,20 @@ name:keywords
  [extras](#extras)
 
 ---
+name:keyword_validation
+
+<img src="./figures/keyword_validation.png" width="100%" height="75%"</img>
+
+[extras](#extras)
+
+---
 
 name:discourse_measure
 
 ### Discourse scaling
 
 `$$\begin{equation}\label{eq:discourse_scale}
-Discourse_j =  \left( \frac{1}{n_d} \sum_{i=1}^{n_d} discourseWord_i \right) - \left( \frac{1}{n} \sum_{i=1}^{n} Word_i \right)
+Criticism_k =  \left( \sum_{i=1}^{n_a} AntiLynchingWord_{ik} \right) - \left(\sum_{j=1}^{n_p} ProLynchingWord_{jk} \right)
 \end{equation}$$`
 
 [extras](#extras)
@@ -1492,11 +1399,135 @@ Discourse_j =  \left( \frac{1}{n_d} \sum_{i=1}^{n_d} discourseWord_i \right) - \
 
 ---
 
+name:access
+
+### Media Access
+
+Media access in **county** `\(i\)` is the average of:
+
+* `\(NewspaperCirculation_j\)` (total circulation of daily newspapers in a county `\(j\)`)
+
+* for **all other counties** `\(j\)`; `\(i \neq j\)`;
+
+* Weighted by the inverse of `\(\tau_{ij}\)` (railroad travel time between `\(i\)` and `\(j\)`)
+
+
+`$$MediaAccess_i = \sum\limits_{i \neq j}^{j} NewspaperCirculation_j * \tau_{ij}^{-1}$$`
+
+ [extras](#extras)
+
+ [return](#access_table)
+
+---
+
+template:inverse
+
+## Extras: Analysis
+
+---
+
+name:equations
+
+##Equations
+
+### Coverage Model
+
+`$$\begin{equation}\label{eq:coverage_dyads}
+\begin{split}
+Y_{ijt} =& \alpha_{year} + \alpha_{i} + \alpha_{j} + \boldsymbol{\delta}\mathbf{Centrality_{it}} + \\ &\boldsymbol{\beta}\mathbf{Distance_{ijt}} + 
+\boldsymbol{\gamma}\mathbf{X_{it}} + 
+\boldsymbol{\lambda}\mathbf{W_{jt}} + \\ 
+&\varepsilon_{i} + \varepsilon_{j}
+\end{split}
+\end{equation}$$`
+
+
+### Lynching model
+`$$\begin{equation}\label{eq:lynching}
+\begin{split}
+Lynchings_{it} = \alpha_i + \alpha_t + \beta_1 Access_{it} + \mathbf{X_{it}\beta} +  
+ \varepsilon_{county_i}
+\end{split}
+\end{equation}$$`
+
+ [extras](#extras)
+
+---
+class: center, middle
+name: coverage_over_distance
+
+
+Probability of lynching mention by distance
+
+<img src="./figures/rawDistance_Article.svg" width="75%" height="75%"</img>
+
+
+---
+
+name: aggregate_result
+
+Centrality Results (aggregated to the event, fraction of papers)
+
+<img src="./figures/betweenness_events.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+name: distance_result
+
+Effect across Distance
+
+<img src="./figures/effects_across_distance.png" width="100%" height="75%"</img>
+
+ [extras](#extras)
+
+---
+
+name:travel_time_table
+
+
+<img src="./figures/time_effects.png" width="100%" height="75%"</img>
+
+
+---
+
+name:limits
+
+.left-column[
+  ## Analysis
+  ### Limits
+  [extras](#extras)
+]
+
+.right-column[
+###Railroads Endogenous?
+* but network attributes not locally determined
+* conditioned on local railroad construction
+
+###Alternative interpretations
+* Importance, not information
+  * Condition on population, economic output
+  * Access to circulation, not to population
+* Reduced or hidden lynchings?
+* "Supply" or "demand"?
+
+###Text
+* Broad but limited depth
+* Keywords are drastic simplification
+  * [Validation](#keyword_validation): manual coding
+ 
+ ]
+
+
+---
+
 name:railroad_extension
 
 .left-column[
-  ##Data
+  ##Extension
   ###Railroads
+  ### Telegraph
    [extras](#extras)
 
 ]
@@ -1511,6 +1542,7 @@ name:railroad_extension
   * Digitizing text, geocoding
   * Proximity to rail stations
 
+### Telegraph Offices
 * Telegraph offices
   * Scanned lists
   * Digitizing text, geocoding
@@ -1530,108 +1562,6 @@ template:inverse
 <iframe width='100%' height='95%' frameborder='0' src='https://mdweaver.github.io/station_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
  [extras](#extras)
-
----
-name:text_extension
-
-.left-column[
-   ##Data
-  ###Newspapers
-   [extras](#extras)
-
-]
-
-.right-column[
-###Which argument against lynching were effective?
-
-- Messy full text from ~85 million pages of news
-- RAs classified discourses about ~2000 articles on lynching
-- Look for spread and use of anti-lynching discourses across time and space
-
-]
----
-
-name:lynching_discourse
-
-.left-column[
-  ## Background
-  ###Lynching discourse
-   [extras](#extras)
-
-]
-
-.right-column[
-
-###Arguments in favor
-* Inefficiency/corruption of justice system
-* Popular sovereignty
-* Law does not deter criminals
-* Threat of black criminality/sexuality
-* 'Natural' response to rape
-
-]
-
----
-.left-column[
-  ## Background
-
-  ###Lynching discourse
-   [extras](#extras)
-
-]
-
-.right-column[
-
-###Justificatory Narratives
-
-* Protagonists
-  * Sober, rational, all/leading citizens of town
-  * Passive voice: no individuals did the lynching
-  * Lynching was natural/unavoidable response
-* Antagonists
-  * Black men dehumanized: "savages", "brutes", "beasts"
-  * Assumed to be guilty
-  * By default shown as sexually aggressive, criminals
-* Lynched *because* guilty
-
-]
-
----
-
-.left-column[
-  ## Background
-
-  ###Lynching discourse
-  ###Antilynching discourse
-   [extras](#extras)
-
-]
-
-.right-column[
-
-###Arguments
-
-Refuted pro-lynching claims
-
-* e.g. rape alleged in minority of cases
-* Lynching a threat to law and order
-* Lynching part of a system of racial violence
-  * e.g. Du Bois: "The police is the mob. The courts are the lynchers."
-
-###Narratives
-  Black voices counter white narratives about lynching
-  * NAACP investigations
-  * Ida Wells publications
-  * Scottsboro Trials
-]
-
-
-
----
-
-
-
-
 
 
 
