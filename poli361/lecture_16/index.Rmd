@@ -1,0 +1,139 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "October 22, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Framing and Violence
+
+## Today
+
+### Recap
+
+### When do frames work/fail?
+
+### Frame success and violence
+
+## Recap
+
+Ways media might affect violence
+
+### Coordination
+
+### Persuasion
+
+
+# Why do frames work?
+
+# An Example
+
+### White supremacist frames 
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IOaPxj80JOg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# Why / why not?
+
+### Were these frames persuasive?
+
+## Resonance
+
+**resonance**: degree to which frames are effective in eliciting a reaction from an audience (whether persuasion or mobilization) 
+
+If frames are effective they will "resonate" with people
+
+## What determines resonance?
+
+### Credibility
+
+- **consistency**: lack of contradiction in frames or frames and action
+
+- **empirical credibility**: *apparent* correspondence between frames and "truth"/"facts" of the world
+
+##
+
+> "If the state is no longer to protect citizens then people take to the streets and protect themselves. It's as simple as that! … Today it's a citizen's duty to stop the lethal 'knife migration'! … It could have targeted your father, son or brother! When such an act of murder happens, it is normal for people to unleash themselves"
+
+- AfD MP
+
+## What determines resonance?
+
+### Credibility
+
+- **consistency**: lack of contradiction in frames or frames and action
+
+- **empirical credibility**: *apparent* correspondence between frames and "truth"/"facts" of the world
+
+- **credibility of messager**: high status, experts, people with shared ideology more believable
+
+
+## What determines resonance?
+
+  
+### Salience
+
+- **centrality of frames**: are values invoked by frames "core" or "peripheral". (e.g., self-preservation may be a "core" value)
+- **experiential commensurability**: does frame align with everyday experiences
+- **cultural resonance**: frames reflect broader cultural norms in society
+  
+  
+# Framing and Violence  
+
+## Koopmans and Olzak
+
+### **Do "discursive opportunities" enable violence?
+
+- Look at right-wing nationalist violence in Germany (1990s)
+
+*Do discursitve opportunity structures enable success of right-wing nationalists and increase in violence?*
+
+
+## Discursive Opportunities
+
+**discursive opportunity structures**: attributes of public discourse that make it possible for a frame to spread successfully
+
+
+## Discursive Opportunities
+
+### **Visibility**
+
+### **Resonance**: consonance/dissonance
+
+### **Legitimacy**
+
+## Analysis
+
+### Data on
+
+1. anti-immigrant violence
+2. visibility of  violence (in newspapers/front page)
+3. dissonance: anti-right wing and anti-xenophobic claims, 
+4. consonance: anti-migrant claims
+
+## Analysis
+
+### Results
+
+Greater visibility for right-wing violence, more consonance in media:
+
+- More anti-immigrant violence
+
+More dissonance in media:
+
+- Less anti-immigrant violence
+
+# Coordination or Persuasion?
+
+## Discursive Opportunity
+
+**Alert** groups of support => coordination
+
+**Create** new support => persuasion
