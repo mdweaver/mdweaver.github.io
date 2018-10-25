@@ -341,7 +341,7 @@ Wartime experiences likely as-if-random, conditional on enlistment timing, but..
 
 ## GRF
 
-Estimates local partial effect of $W_i$ in neighborhood weighted by similarity to $X_i$, where weights are obtained using random forests to find cases in same part of regression trees.
+Estimates local partial effect of $W_i$ for case $i$ in neighborhood $j \neq i$ weighted by similarity to $X_i$, where weights $\alpha_j$ reflect frequency of $i$ and $j$ appearing in same leaf in regression trees.
 
 $$\hat{\theta}(x_i) =  \frac{\sum_{j=1}^n \alpha_j(x_i) (W_j - (\sum \alpha_j(x_i)W_j)) (Y_j - (\sum \alpha_j(x_i) Y_j))}{\sum_{j=1}^n \alpha_j(x_i) (W_j - (\sum \alpha_j(x_i)W_j))^2}$$
 
