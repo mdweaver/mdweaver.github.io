@@ -1,0 +1,144 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "October 29, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Violence and Social Media
+
+## Today
+
+### Recap
+
+### Discussion
+
+### Evidence
+
+
+## Recap
+
+### When do frames work/fail?
+
+### Frame success and violence
+
+# Social Media and Violence
+
+## Does social media cause violence?
+
+Keep in mind:
+
+### 1. Coordination vs. Persuasion
+
+### 2. What makes frames work:
+
+- **credibility** (believable; credible messenger)
+
+- **salience**
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dH61dbsfqIM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+# Discuss
+
+#
+
+## Difficult to say...
+
+### 1) Do social media frames change enough?
+
+### 2) Delayed effects of social media?
+
+### 3) Selection into "Treatment"
+
+# Evidence from German Facebook
+
+## Mueller and Schwarz
+
+### Does social-media hate speech translate into real-world behavior?
+
+### Anti-Refugee **content** on Facebook and Anti-Refugee **violence** 
+
+- Alternative für Deutschland (AfD) Facebook Page
+
+## Mueller and Schwarz
+
+### Does AfD Facebook content drive anti-immigrant violence?
+
+> If anti-refugee sentiment **spreads through Facebook**, we would expect **hate crimes** to be **more likely** to occur in municipalities with **higher exposure to social media**
+
+## Mueller and Schwarz: Data
+
+### Anti-Refugee Violence
+
+- 3335 events from January 2015 to early 2017
+- Reported in media outlets
+- property damage, assault, arson, demonstrations
+
+## Mueller and Schwarz: Data
+
+### Facebook anti-Refugee rhetoric
+
+- ~200K posts on AfD page
+- use word "Refugee"
+
+# {.centered}
+
+<img src="./mueller_post_1.png" width = 110%>
+<img src="./mueller_post_2.png" width=110%>
+
+
+## Mueller and Schwarz: Data
+
+### Facebook Exposure
+
+- ~90K users on AfD Facebook page; locations for 40K
+- ~63K users on Nutella Germany Facebook page; locations for 20K
+
+Nutella captures Facebook exposure, without selection on far-right politics
+
+## Mueller and Schwarz: Design
+
+### (1) Compare municipalities to themselves over time
+
+- "Control" for national trends; unchanging attributes of cities
+
+### (2) "Treatment" of Facebook Rhetoric same for all
+
+### (3) Exposure to "Treatment" varies with Facebook users
+
+## Mueller and Schwarz: Design
+
+> Do cities with **more Facebook users** have **greater increases in violence** in  weeks **with anti-immigrant Facebook** activity compared to weeks **without anti-immigrant Facebook** activity than cities with **fewer facebook users**?
+
+## Mueller and Schwarz: Results
+
+### Compared to Frankfurt (6.5 AfD Facebook Users/10,000), Dresden (9.6 AfD Facebook Users/10,000) estimated to have 50% more attacks on refugees in a week with average anti-refugee Facebook posts.
+
+## Mueller and Schwarz: Results
+
+### **Results the same**
+
+- Looking at Nutella Facebook users
+- Comparing cities in same county in the same week
+
+## Mueller and Schwarz: Results
+
+
+- Effects go away when places have internet disruptions/Facebook issues
+- Effects only significant for anti-Refugee rhetoric (as opposed to other topics) on AfD page
+- Effects reduced when competing news (Brexit, Trump, UEFA)
+- Effects of social media persist even when accounting for "traditional" media coverage
+
+## Mueller and Schwarz: Interpretation
+
+### Likely that social media exposure drives anto-refugee violence
+
+### Is it **persuasion** or **coordination**?
+
