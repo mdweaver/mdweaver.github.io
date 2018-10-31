@@ -1,0 +1,212 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "October 31, 2018"
+output: ioslides_presentation
+---
+
+# Media and Violence
+
+### Persuasion and Coordination
+
+
+## Social Media and Violence
+
+### **Persuasion**
+
+"Echo chambers" alter empirical credibility, messenger credibility
+
+- what is "True"? what sources are "Fake news?
+- Algorithms direct people toward more resonant frames
+
+Changing salience: 
+
+- network makes certain values seem more relevant to reality
+
+More extreme frames
+
+## Social Media and Violence
+
+### **Coordination**
+
+Ability to organize violence
+
+- Easier to meet online than in person, build network rapidly
+
+Changing cost of action:
+
+- Social pressure (within social network) to do violence
+- Supportive voices offsets risk of condemnation
+
+
+## Social Media and Violence
+
+### Facebook exposure causes anti-Refugee violence in Germany
+
+- How big is this effect?
+- What kinds of violence does it affect?
+- How does it work?
+
+#
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OjPYmEZxACM?start=220&end=431" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OjPYmEZxACM?start=518&end=570" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Radio in Rwanda and Germany
+
+### Rwanda: 
+
+Radio and coordination
+
+### Germany:
+
+Radio and persuasion
+
+
+## Rwandan Genocide: Background
+
+- Colonial Origins of Hutu/Tutsi divide
+- Independence created political struggle
+- Civil War in 1980s, Tutsi armed group
+- Breakdown of peace process in 1993-4
+
+## Rwandan Genocide: Radio
+
+### RTLM
+
+- Government-run radio station
+
+### Framing
+
+**Diagnostic frames**:
+
+- Emphasized RPF (Tutsi armed group) atrocities
+- Alleged local Tutsis involved in conspiracy to dominate Hutus
+- Dehumanized Tutsis as "cockroaches"
+
+**Prognostic frames**:
+
+- Preemptive violence necessary for "self-defense"
+
+## Rwandan Genocide: Question
+
+### Did radio endorsement of violence cause violence?
+
+### Was it persuasion? Coordination?
+
+## Rwandan Genocide: Question
+
+**Some intuitions**:
+
+### Persuasion
+
+Violence perpetrated by **individuals** could be **coordination** or **persuasion**
+
+### Coordination
+
+Violence perpetrated **collectively** likely **coordination**
+
+exponential effects suggest **coordination** rather than **persuasion**
+
+"Spill-over"/"neighboorhood" effects of radio suggest **coordination**
+
+## Rwandan Genocide: Difficulty
+
+### Selection Effects
+
+Radio transmitters built by government... 
+
+built in places with disposition toward violence?
+
+## Solution:
+
+### Examine Exposure to Radio
+
+- after accounting for distance from transmitter
+- variation within local districts
+
+Exposure to radio **arbitrarily disrupted** by local hills/mountains
+
+## Elevation and Radio Signal
+
+<img src="./rwanda_1.png" width=100%>
+
+## Rwanda: Effects of Radio (RTLM)
+
+<img src="./rwanda_2.png" width=100%>
+
+## Rwanda: Effects of Radio (RTLM)
+
+Moderate increase in individual violence
+
+**could be coordination**
+
+* government endorsement of violence reduces costs for individuals
+  
+**could be persuasion:**
+
+* convinced by threat posed by Tutsi/dehumanization
+
+## Rwanda: Effects of Radio (RTLM)
+
+### **Coordination**:
+
+#### Increase in collective violence at high radio exposure
+
+* shift to violence that requires planning and cooperation
+* non-linear... more people join after first people participate
+  
+#### Spillovers:
+
+More violence in village if **neighboring villages** have radio exposure
+
+* coordination, not persuasion... because spillovers amplify local radio effects, not offset
+
+# Inter-war Germany
+
+## Nazi-Era Radio:
+
+### Did exposure to the radio increase violence against Jews?
+
+Examine two time periods: 
+
+- 1928-1932 (Moderate control over radio)
+- 1933-1938 (Nazi control over radio)
+
+## Effects
+
+### Changes in Radio Messages
+
+- Anti-Nazi radio reduced Nazi membership, anti-Semitic harassment
+- Pro-Nazi radio exposure increased Nazi Membership, anti-Semitic harassment
+
+## Effects
+
+### Persuasion or Coordination?
+
+(1) **No effects** on attacks on synagogues (more coordination required)
+
+(2) Exposure to radio **caused** more denunciations of Jews, open letters to Nazi newspapers (individual actions)
+
+## Effects
+
+### Persuasion or Coordination?
+
+(3) Opposite effects of Nazi radio in places with different histories of anti-Semitism
+  
+14th century pogroms against Jews predict Nazi-era violence, and
+  
+- Radio exposure **increased** anti-Semitism in places with medieval anti-Jewish pogroms
+- Radio exposure **decreased** anti-Semitism in places without medieval anti-Jewish pogroms
+
+## Effects
+
+### Must be Persuasion and *Dissuasion*
+
+- Resonance and lack of Resonance drive different responses
+- Most effects on individual-level behavior
