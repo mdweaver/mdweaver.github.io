@@ -50,7 +50,7 @@ How are the
 
 ### **Rationalization**
 
-<img src='./rationalizaion.png'>
+<img src='./rationalization.png'>
 
 
 ## Narrative Features: Actors
@@ -140,3 +140,15 @@ Rationalize, include, euphemism, authorize
 5) blameworth/praiseworthy
 
 #
+
+#
+
+<img src='lynching-headline.png'>
+
+#
+
+<img src='alt_1.png'>
+
+#
+
+<img src='alt_3.png'>
