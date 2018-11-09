@@ -1,0 +1,152 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "November 9, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Media and Violence
+
+## Today
+
+### **1) Narratives** (continued)
+### **2) Birth of a Nation**
+
+
+## Narrative Features
+
+### **Actions**
+
+How are the
+
+- events leading up to 
+- the violence itself 
+
+**described** or **narrated**
+
+
+## Narrative Features: Action
+
+### **Euphemism**/**Dysphemism**
+
+**euphemism**: description of action using language with positive valence instead of neutral or negative terms (describing a lynching as a "trial" and "execution")
+
+**dysphemism**: description of action with negative or pejorative adjective instead of neutral or positive terms (calling a protest "chaotic")
+
+
+## Narrative Features: Action
+
+### **Objectification**/**Subjectification**
+
+**Objectification**: characterize narrative action as irrefutable or true  ("no doubt" victim of lynching "guilty of a crime")
+
+**Subjectification**: characterize narrative as subjective and potentially incorrect ("alleged")
+
+## Narrative Features: Action
+
+### **Activation**/**Passivization**
+
+**Activation**: use of active voice to attribute responsibility of actions to specific actors  ("Hose outraged...")
+
+**Passivization**: use of passive voice to deny responsibility of actions to specific actors ("... was lynched", "... was burned")
+
+
+## Narrative Features: Action
+
+### **Naturalization**/**De-Naturalization**
+
+**Naturalization**: actions shown to be natural (just the way things are), inevitable, or expected  (crime so terrible, lynching response was due to "moral insanity")
+
+**De-Naturalization**: actions not natural or inevitable, but orchestrated or planned (Ida Wells on *Southern Horrors*)
+
+# "The Birth of a Nation"
+
+
+## "The Birth of a Nation"
+
+### What is it?
+
+1) First major feature film (1915)
+2) Valorizes KKK; White Supremacy in the South
+3) Provoked protest/censorship campaign by African Americans, NAACP
+4) Helped spawn rebirth of KKK
+
+## "The Birth of a Nation"
+
+Unambiguously racist film
+
+### Why watch it?
+
+1) What kinds of narratives used to bolster white supremacy?
+2) What kinds of narratives used to justify racial violence?
+3) What do these look like when embedded in entertainment/pop culture?
+
+
+## "The Birth of a Nation"
+
+### Protagonists
+
+**Ben Carson (the little Colonel)**: White southerner/love interest
+
+**Elsie Stoneman**: White Northern woman (attacked by Silas Lynch)
+
+### Antagonist
+
+**Silas Lynch**: African American ("mulatto") politician
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=5509&end=5565" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=5842&end=5892" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=6000&end=6050" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=6975&end=7040" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=7290&end=7320" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=7530&end=7550" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=9170&end=9210" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=10300&end=10410" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=10780&end=10830" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=11010&end=11112" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I3kmVgQHIEY?start=11360&end=11430" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
