@@ -1,0 +1,154 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "November 19, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Media and Resistance
+
+## Today
+
+### **1) Non Violent Resistance**
+
+# Non Violence
+
+## Non-Violent Resistance
+
+### Stephan and Chenoweth
+
+#### **Does non-violent resistance against violent governments work**?
+
+#### If so... **Why**?
+
+## Non-Violent Resistance
+ 
+### What is **non-violence**?
+
+> "Nonviolent resistance is a civilian-based method used to **wage conflict** through social, psychological, economic, and political means **without* the **threat** or **use of violence**"
+
+## Non-Violent Resistance
+
+### Patterns of Non-violence
+
+like violence... there are **repertoires**:
+
+protests, boycotts, labor strikes, non-cooperation, non-violent intervention
+
+**excludes** lobbying, election campaigning, legislating (traditional political channels)
+
+## Non-Violent Resistance
+
+### Strategic non-violence vs. Principled non-violence
+
+**principled non-violence**: religious/ethical/philosophical commitment to not use violence
+
+**strategic non-violence**: use of non-violent means to create disruptions that compel concessions from the opponent (no philosophical commitment needed!)
+
+## Non-Violent Resistance
+
+### Example from Anti-Lynching Movement:
+
+- NAACP used Protests
+- economic boycotts, leaving lynching communities
+
+## Non-Violent Resistance
+
+### Stephan and Chenoweth show...
+
+1) **Non-violent** resistance campaigns succeed more than **violent** campaigns
+2) Campaigns that **shift loyalties** of **security forces** and **bureaucrats** likey to win
+3) Costly to **repress** widespread nonviolent mobilization
+
+## Non-Violent Resistance
+
+### **Why** is nonviolence more effective?
+
+### **Two** key reasons
+
+- One is purely strategic
+- Another involves framing and media
+
+## Non-Violent Resistance
+
+### Non-violent Resistance is **less threatening**
+
+1. **General public** sees non-violent campaign as less threatening $\rightarrow$ more support from public
+
+2. **Government officials** and **security forces** not in physical danger $\rightarrow$ willing to switch support to protesters 
+
+## Non-Violent Resistance
+
+### Non-violent Resistance makes repression **backfire**
+
+When regimes use **violence** against **non-violent** movement:
+
+1. violence may **backfire**, producing greater **costs** for and **opposition** to the regime
+
+2. **three different ways**, with connection to media and framing
+
+## Non-Violent Resistance: Backfire
+
+### 1) Mobilize popular support against regime
+
+- Violence against non-violent protesters morally wrong (RMT)
+- **Broadens** the movement beyond original focus (broader diagnostic frames/master frames)
+
+$\rightarrow$
+
+More popular support puts pressure on regime (e.g. Indonesia and East Timor)
+
+## Non-Violent Resistance: Backfire
+
+### 2) Encourages Defections from Security Forces/Bureaucrats
+
+### Creates moral costs 
+
+may find violence against fellow "ordinary" citizens unacceptable (RMT)
+
+### Creates political/personal costs
+
+even if violence against citizens could be justified; jeopardizes other moral relationships
+
+- 'meta-relational' models: how can soldiers/police explain killing to their families, friends, neighbors?
+
+## Non-Violent Resistance: Backfire
+
+### 3) Elicits External Sanction
+
+### Creates moral costs 
+
+Other countries/businesses/etc. may find this disproportionate violence immoral:
+
+- sanction, withdrawal of support to regime;
+- new support for protest movement
+
+### Creates political costs
+
+Countries/businesses that support regime now open to criticism:
+
+- if shamed, will withdraw support; risk of **scandal**
+
+## Backfire and Media
+
+### Success of "**backfire**" depends on media campaigns:
+
+1) Audiences (domestic/international) must **know** about violent repression
+
+2) Audiences must **know** victims were **nonviolent**
+
+- If victims are "terrorists", "rebels", what happens?
+- Lynching and "Race Wars"
+
+## Backfire and Media
+
+### How to get desirable media coverage?
+
+- Public statements on nonviolent means; practice
+- Choice of targets that are high visibility
+- Presence of independent sources to document what happens
+- Means to disseminate what happens
