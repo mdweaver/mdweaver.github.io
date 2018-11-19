@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = FALSE)
  
 ### What is **non-violence**?
 
-> "Nonviolent resistance is a civilian-based method used to **wage conflict** through social, psychological, economic, and political means **without* the **threat** or **use of violence**"
+> "Nonviolent resistance is a civilian-based method used to **wage conflict** through social, psychological, economic, and political means **without** the **threat** or **use of violence**"
 
 ## Non-Violent Resistance
 
