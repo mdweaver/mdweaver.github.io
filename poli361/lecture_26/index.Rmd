@@ -1,0 +1,162 @@
+---
+title: "POLI 361"
+author: "Michael Weaver"
+date: "November 23, 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Media and Resistance
+
+## Today
+
+### **1) Recap: Non-violence**
+
+### **2) Transnational Advocacy Networks**
+
+### **3) Media-centric Strategies**
+
+# Recap: Non-Violence 
+
+## Nonviolence and Media
+
+Success of non-violence depends on violence **backfiring**
+
+### Success of "**backfire**" depends on media campaigns:
+
+1) Audiences (domestic/international) must **know** about violent repression
+
+2) Audiences must **know** victims were **nonviolent**
+
+- If victims are "terrorists", "rebels", what happens?
+- Lynching and "Race Wars"
+
+3) Audiences must also be willing to do something about it (may need to be prodded)
+
+## Nonviolence and Media
+
+### How to get desirable media coverage?
+
+- Public statements on nonviolent means; practice
+- Choice of targets that are high visibility
+- Presence of independent sources to document what happens
+- Means to disseminate what happens
+
+# Transnational<br>Advocacy Networks
+
+## Transnational Advocacy Networks
+
+### What are they?
+
+**Keck and Sikkink** define them as: 
+
+> those actors working internationally on an issue, who are bound together by shared values a common discourse with voluntary, reciprocal, and horizontal patterns of communication and exchange of information and services.
+
+
+## Transnational Advocacy Networks
+
+### What are they?
+
+They are **transnational** insofar as they cross national borders
+
+They are **advocacy** insofar as they are organized around causes based on principles and norms, rather than material "interests"
+
+They are **networks** insofar as they are not hierarchical, formal organizations
+
+## Transnational Advocacy Networks
+
+### What are they?
+
+May contain highly varied members:
+
+- international/national NGOs, social movement, advocacy organizations
+- local social movements
+- charitable foundations
+- the media
+- churches, unions, academics
+- intergovermental organizations (or parts thereof)
+- members of national governments
+
+## Transnational Advocacy Networks
+
+### What do they do?
+
+- generate/disseminate information/testimonies
+- share/coordinate framing
+- share strategic/tactical knowledge
+- networks for future mobilization
+
+## Transnational Advocacy Networks: Why?
+
+### **boomerang pattern** of mobilization:
+
+1. **local** movement claims rights/protections
+2. **local** efforts unrecognized/suppressed
+3. local movement seeks **external** network to express claims, win allies
+4. **external** network puts pressure on local government
+5. **local** claims are strengthened, perhaps successful
+
+## Transnational Advocacy Networks: Effective?
+
+Can work **if**:
+
+1. Put issues on the agenda, get public attention
+2. Influence norms/commitments taken by governments/powerful actors
+3. Hold governments/powerful actors to their promises
+
+# How do movements<br>achieve these goals?
+
+## Four Strategic Approaches:
+
+1. **information** politics
+2. **symbolic** politics
+3. **leverage** politics
+4. **accountability** politics
+
+## Information Politics
+
+In **boomerang** pattern and in non-violence, activists need to attract a "bystander audience":
+
+Networks:
+
+- link locals to external audience (tell their story)
+- give expertise in framing effectively
+  - strategically deploy narratives/testimony
+- connect to journalists; training in press relations
+
+## Information Politics
+
+Tactics used to gain media attention:
+
+1. **disruptive actions as newsworthy**: stage events that are compelling news stories, regardless of the issue area.
+2. **multiple appealing frames**: many resonant frames make for positive news coverage
+
+## Symbolic Politics
+
+Activists can take specific events, stories to **stand in** symbolically for the broader target of protest.
+
+- Exploit symbolically potent events
+- Engineer symbolically potent events
+
+## Leverage Politics
+
+Use material threats to compel action:
+
+- money, arms, votes
+
+Use moral threats to compel action:
+
+- Limit tools available to opponents
+
+## Accountability Politics
+
+Put pressure on actors who have made moral commitments to keep them
+
+- compels people/organizations to be consistent (powerful motivator)
+- e.g. respect human rights treaties, defend "democracy", etc.
+- are some not accountable, though?
+
+
