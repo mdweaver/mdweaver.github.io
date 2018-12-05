@@ -19,7 +19,7 @@ This book places the legitimation and de-legitimation of violence squarely at th
 ## Publications <a name="publications"></a>
 
 
-#### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (Forthcoming at *APSR*) 
+#### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (Forthcoming, *American Poliical Science Review*)) 
 
 <a href="../images/weaver_lynching_apsr_sa.pdf">Supplementary Appendix</a>
 <a href="">Replication File</a>
@@ -31,7 +31,7 @@ How does violence become publicly unacceptable? I address this question in the c
 
 <hr>
 
-#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Volume 11, Issue 3, Quarterly Journal of Political Science)
+#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Volume 11, Issue 3, *Quarterly Journal of Political Science*)
 *with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
 
 <a href="https://www.nowpublishers.com/article/details/supplementary-info/100.00015051_supp.zip">Replication File</a>
