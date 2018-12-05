@@ -18,8 +18,23 @@ This book places the legitimation and de-legitimation of violence squarely at th
 
 ## Publications <a name="publications"></a>
 
+
+#### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (Forthcoming at *APSR*) 
+
+<a href="../images/weaver_lynching_apsr_sa.pdf">Supplementary Appendix</a>
+<a href="">Replication File</a>
+
+<details>
+<summary>Abstract</summary>
+How does violence become publicly unacceptable? I address this question in the context of lynching in United States. Between 1880 and the 1930s, public discourse about lynching moved from open or tacit endorsement to widespread condemnation. I argue this occurred because of increasing publicity for lynchings. While locals justified nearby lynchings, publicity exposed lynching to distant, un-supportive audiences and allowed African Americans to safely articulate counter-narratives and condemnations. I test this argument using data on lynchings, rail networks, and newspaper coverage of lynchings in millions of issues across thousands of newspapers. I find that lynchings in counties with greater access to publicity (via rail networks) saw more and geographically dispersed coverage, that distant coverage was more critical, and that increased risk of media exposure may have reduced the incidence of lynching. I discuss how publicity could be a mechanism for strengthening or weakening justifications of violence in other contexts.
+</details>
+
+<hr>
+
 #### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Volume 11, Issue 3, Quarterly Journal of Political Science)
 *with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
+
+<a href="https://www.nowpublishers.com/article/details/supplementary-info/100.00015051_supp.zip">Replication File</a>
 
 <details>
 <summary>Abstract</summary>
@@ -28,19 +43,12 @@ Ethnic-group conflict is among the most serious threats facing young democracies
 
 Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-nation/bjp-gains-in-polls-after-every-riot-says-yale-study/articleshow/45378840.cms">Economic Times</a>, <a href="http://www.livemint.com/Opinion/5zyfXWWbWZHDDmyCqpAuvO/The-alchemy-of-HinduMuslim-riots-in-India.html">Hindustani Times (Live Mint)</a>, <a href="http://scroll.in/article/690416/electing-congress-mlas-reduce-chances-of-riots-by-32-says-new-yale-study/">scroll.in</a>, <a href="http://qz.com/298281/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/">quartz</a>, <a href="http://navbharattimes.indiatimes.com/india/there-are-fewer-hindu-muslim-riots-when-the-congress-is-in-power-new-study-shows/articleshow/45241370.cms">Navbharat Times (in Hindi)</a>, <a href="http://www.azhimukham.com/news/2604/congress-mlas-reduce-chances-of-hindu-muslim-riots-yale-study">Azhimukham (in Malayalam)</a>, and <a href="http://www.ideasforindia.in/topics/governance/do-political-parties-matter-for-ethnic-violence-the-congress-and-hindu-muslim-riots-in-india.html">Ideas for India</a>.
 
-<hr>
 
-#### *"'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching"* (Accepted at *APSR*)
-
-<details>
-<summary>Abstract</summary>
-How does violence become publicly unacceptable? I address this question in the context of lynching in United States. Between 1880 and the 1930s, public discourse about lynching moved from open or tacit endorsement to widespread condemnation. I argue this occurred because of increasing publicity for lynchings. While locals justified nearby lynchings, publicity exposed lynching to distant, un-supportive audiences and allowed African Americans to safely articulate counter-narratives and condemnations. I test this argument using data on lynchings, rail networks, and newspaper coverage of lynchings in millions of issues across thousands of newspapers. I find that lynchings in counties with greater access to publicity (via rail networks) saw more and geographically dispersed coverage, that distant coverage was more critical, and that increased risk of media exposure may have reduced the incidence of lynching. I discuss how publicity could be a mechanism for strengthening or weakening justifications of violence in other contexts.
-</details>
 
 
 ## Papers<a name="papers"></a>
 
-#### *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (under review)
+#### *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (R&R)
 
 *With Nicholas Kuipers and Gareth Nellis*
 
