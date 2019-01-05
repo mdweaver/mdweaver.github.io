@@ -178,10 +178,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### $\bullet$ Excused absences require official concession
 
-- Unexcused absences induce $(1/n * 100\%)$ deduction from total tutorial score
-- $n$ is number of **unexcused absences**
-
-# Course Expectations
+- Each unexcused absence induces $(1/n * 100\%)$ deduction from total tutorial score
+- $n$ is the number of **unexcused tutorial dates**
 
 # Registration
 
