@@ -1,0 +1,396 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "January 14, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What can Science do?
+
+## Plan for Today
+
+### 1) Recap
+
+### 2) Non-scientific bases for claims 
+
+
+# Recap
+
+## Claims and Bases
+
+### claims: statements about what is true or valid
+
+### bases: evidence (and assumptions about valid evidence) that support those claims
+
+## Scientific Bases for Evidence:
+
+### Transparent procedures
+
+### Systematic use of evidence
+
+### Test claim against alternatives
+
+### Acknowledge uncertainty
+
+## Example:
+
+### LaCour and Green (2014)
+
+Experiment on contact with gay canvasser and prejudice toward gay people.
+
+- Hit all the key criteria
+
+### But...
+
+## Surprise!
+
+<img src="./lacour_17.png" width = 80%>
+
+
+## Why?
+
+<iframe width=100% src="https://www.youtube.com/embed/zyLcNWFbwsc?start=890&end=1080&autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+## Isn't this a problem for science?
+
+### On one hand, yes. Fraud is bad.
+
+### BUT
+
+- Researchers saw important question
+- Uncertainty $\rightarrow$ more work needed 
+- Attempt to reproduce the study
+- Could not come up with same result 
+- Discovered Fraud
+
+## ... and get new (real) results
+
+<img src="./bk_1.png" width = 100%>
+
+## Credibility
+
+### Do we need to believe every study?
+
+### Individual studies may be wrong, but...
+
+### A *community* of researchers can:
+
+- Evaluate work of others (**transparency**)
+- Replicate prior work (**transparency**)
+- Identify/eliminate errors (**systematic evidence**, **acknowledge statistical uncertainty**)
+- Test claims against additional counter arguments (**consider alternatives**)
+
+# Scientific vs. Unscientific Bases for claims
+
+## Unscientific bases for claims
+
+- Many fallacies in giving evidence
+- We will consider a few
+- Aim to see where they **fail to meet** scientific criteria
+
+
+## A claim
+
+> Foreign aid is beneficial
+
+Basis for the claim:
+
+> "The war against terror is bound up in the war against poverty." 
+> Who said that? Not me. Not some beatnik peace group.
+> Secretary of State [and retired General] Colin Powell. 
+> And when a military man starts talking like that perhaps we should listen.
+
+- Bono
+
+## What kind of claim is that?
+
+### Appeal to authority (*argumentum ad verecundiam*)
+
+ Arguing that claim is true **because** a person **with authority** says it is true.
+
+# What is wrong with appeals to authority?
+
+## Several problems
+
+1. Experts may be wrong/expertise irrelevant
+2. Experts may have an agenda
+3. We can "cherry pick" supportive experts
+4. Experts can disagree
+
+## Expertise wrong/irrelevant
+
+### Claim: 
+
+> As far as the cyber, I agree to parts of what Secretary Clinton said. We should be better than anybody else, and perhaps we're not. I don't think anybody knows it was Russia that broke into the DNC. I mean, it could be Russia, but it could also be China. It could also be lots of other people. ... So we have to get very, very tough on cyber and cyber warfare. It is — it is a huge problem. ... The security aspect of cyber is very, very tough. And maybe it's hardly doable.
+
+- Donald Trump
+
+### Basis for the claim:
+
+> I have a son. He's 10 years old. He has computers. He is so good with these computers, it's unbelievable.
+
+## Expertise wrong/irrelevant
+
+### What's wrong with this?
+
+lack of transparency, unacknowledged uncertainty
+
+## Experts have motive other than the truth
+
+### Claim:
+
+> "Climate change is not caused by human activity"
+
+### Basis for the claim:
+
+> "These scientists say the evidence does not support the claim."
+
+>- These scientists also have had work paid for by Exxon Mobil
+
+## Experts have motive other than the truth
+
+### Claim:
+
+> "Given your condition, you should take this new drug, X."
+
+### Basis for the claim:
+
+> "I am a doctor."
+
+>- This doctor receives gifts, meals, money from manufacturer of drug X.
+
+## Experts have motive other than the truth
+
+### What's wrong with this?
+
+Best case to worst-case:
+
+-  unacknowledged uncertainty; lack of transparency; may not consider alternatives; unsystematic use of evidence
+
+## Cherry picking experts
+
+### Claim:
+
+> Millions of immigrants vote illegally in the United States
+
+### Basis for the claim:
+
+> Two political scientists wrote an article finding more than 10% of non-citizens vote
+
+>- This ignores the hundreds of political scientists who suggest the study has major flaws
+
+## Cherry picking experts
+
+### What's wrong with this?
+
+- no systematic use of evidence, lack of transparency, unacknowledged uncertainty
+
+## Proliferating authorities
+
+### Claim:
+
+> Millions of immigrants vote illegally in the United States
+
+> What do we do when some experts say one thing, and others say another?
+
+
+## Proliferating authorities
+
+### What's wrong with this?
+
+- no transparency, no systematic use of evidence
+
+## Basis for Claim: Authority
+
+### Beware: 
+
+- The basis of authority is often "science."
+
+- Turns science into something magic and should not make it persuasive
+
+
+## What foods promote health? {.build}
+
+<img src='./Medical_studies-05.0.png' width=80%>
+
+## Worst case scenario:
+
+### [Studies Show That You Should Come Into This Room Right Over Here, And That You Should Come Alone](https://the-toast.net/2015/06/24/studies-show-that-you-should-come-into-this-room-right-over-here-and-that-you-should-come-alone/)
+
+#
+
+## A claim
+
+> Foreign aid is beneficial
+
+Basis for the claim:
+
+> If developing countries are poor, then obviously the problem is a lack of money. So giving them more money has to help.
+
+## What kind of claim is that? {.build}
+
+### Appeal to common sense
+
+## Bases for claims: Common Sense
+
+Claims from common sense:
+
+- arguing that a claim is true **because** it is something "everyone knows" or "just makes sense"
+
+## Bases for claims: Common Sense
+
+### Problems with common sense
+
+- Often based on **superficial similarities**
+
+- Often based on **analogy** between **very different situations**
+
+- Often good reasons what the **opposite** claim also makes sense
+
+## Superficial similarities
+
+### Claim:
+
+> "Running a large deficit will lead a country to bankruptcy and instability through large interest rates"
+
+### Basis for the claim:
+
+> "When people or families spend more than they make, they receive higher interest rates and risk bankruptcy"
+
+>- Individuals/families have budgets, so do governments. But they are otherwise very dissimilar.
+
+## Superficial similarities
+
+### What's the problem here?
+
+- unsystematic use of evidence
+- failure to consider alternatives
+
+## False analogies
+
+### Claim: 
+
+In 2003:
+
+> "US military invasion in Iraq will bring peace, democracy, and economic growth to the country."
+
+### Basis for the claim:
+
+> "The occupation of Germany promoted demilitarization, denazification, democratization and capitalist development while garnering widespread support within Germany and outside"
+
+>- But the places, context of invasion, and the ways they were undertaken were totally different.
+
+## False analogies
+
+### What's the problem here?
+
+- unsystematic use of evidence
+- failure to consider alternatives
+
+
+## Opposite claims possible
+
+### Claim and basis:
+
+> "Guns kill people, so of course gun control will reduce murders."
+
+### Counterclaim and basis:
+
+> "People kill people, so gun control will not stop murderers, because other weapons are available."
+
+## Opposite claims possible
+
+- unacknowledged uncertainty
+- failure to consider alternatives
+
+## Bases for Claims: Personal experience
+
+A claim from **personal experience**:
+
+> A claim based on one's own personal (nonsystematic) observation or one's own reaction to an observation
+
+### Examples
+
+"No one I know is voting for ____, so they won't win."
+
+"I've had two identical watches from Timex that broke; they make poor quality products."
+
+## Bases for Claims: Personal experience
+
+### Personal experience can be misleading:
+
+- We **generalize too quickly** from a small number of cases and our experience
+
+- Our exposure to the world may be **skewed**
+
+- We **observe** the world **selectively**
+
+## Generalize too quickly:
+
+### Claim
+"I have a gluten intolerance". 
+
+### Basis
+
+"I had [some product] a few times and each time I felt sick to my stomach afterwards."
+
+## Generalize too quickly:
+
+### What's wrong with this?
+
+- failure to consider alternatives
+- unsystematic use of evidence
+- unacknowledged uncertainty
+
+## Skewed Exposure
+
+### Claim
+
+"X won't win the election"
+"X couldn't have legally won the election"
+
+### Basis
+
+"No one I know is voting/voted for her."
+
+## Skewed Exposure
+
+### What's wrong with this?
+
+- unsystematic use of evidence
+- unacknowledged uncertainty
+
+## Selective Perception
+
+### Claim
+
+"Large, public places like mass transit are more dangerous than driving."
+
+### Basis 
+
+"Remember all those terrorist attacks or mass shootings in public places and public transit?"
+
+
+## Selective Perception
+
+### What's wrong with this?
+
+- unsystematic use of evidence
+- lack of transparency
+- failure to consider alternatives
+
+# Summary:
+
+## Summary
+
+### Many kinds of errors
+
+- You need to recognize where they deviate from scientific bases for evidence.
+
+## Next class:
+
+#### 1) Types of claims
