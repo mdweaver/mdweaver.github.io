@@ -51,11 +51,11 @@ Different kinds of questions correspond to different kinds of claims (as answers
 
 ## An Example:
 
-#### **(3) Immigration has not produced economic problems in the US**
+#### **(3) Immigration has not produced too much supply in the US labor market**
 
 - Unemployment among immigrants is lower than native-born Americans
 
-#### **(4) Lack of immigration will weaken US economy**
+#### **(4) Lack of immigration will slow US economic growth**
  
 - Fertility rates among native-born Americans are dropping
 - Because of that, future workforce will be smaller, productivity will be less, growth will slow
@@ -72,9 +72,9 @@ Different kinds of questions correspond to different kinds of claims (as answers
 
 (2) High immigration rates do not lead to instability.
 
-(3) Immigration has not produced economic problems in the US
+(3) Immigration has not produced too much supply in the US labor market
 
-(4) Lack of immigration will weaken US economy
+(4) Lack of immigration will slow US economic growth
 
 (5) America *should* admit 1 million more immigrants per year
 
@@ -170,9 +170,9 @@ Different kinds of questions correspond to different kinds of claims (as answers
 
 (2) High immigration rates do not lead to instability. 
 
-(3) Immigration has not produced economic problems in the US
+(3) Immigration has not produced too much supply in the US labor market
 
-(4) Lack of immigration will weaken US economy 
+(4) Lack of immigration will slow US economic growth 
 
 (5) America *should* admit 1 million more immigrants per year 
 
@@ -183,13 +183,13 @@ Different kinds of questions correspond to different kinds of claims (as answers
 
 (2) High immigration rates do not lead to instability. (**empirical**)
 
-(3) Immigration has not produced economic problems in the US (**empirical**)
+(3) Immigration has not produced too much supply in the US labor market (**empirical**)
 
-(4) Lack of immigration will weaken US economy (**empirical**)
+(4) Lack of immigration will slow US economic growth (**empirical**)
 
 (5) America *should* admit 1 million more immigrants per year (**normative**)
 
-### Is (5) a **prescriptive claim** or **value judgment**? Why?
+### Is $(5)$ a **prescriptive claim** or **value judgment**? Why?
 
 ## Science evaluates *Empirical* claims
 
