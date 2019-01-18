@@ -1,0 +1,324 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "January 18, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What can Science do?
+
+## Plan for Today
+
+### 1) Recap: Normative vs. Empirical claims
+
+### 2) Empirical Claims: causal vs. descriptive
+
+### 3) Falsifiable/Unfalsifiable
+
+
+# Recap
+
+## Normative vs. Empirical Claims
+
+#### **empirical claim**:
+
+> is a claim about **what is exists** or **what relationships occur between things that exist** for which the **basis** consists of **observation** of the world and **no value judgment** about what is desirable.
+
+- in principle, we can fundamentally disagree on values but accept the same empirical claims
+
+#### **normative claim**:
+
+> is a claim about **what is desirable or undesirable** or a claim about what action should be taken for which the basis **assumes** a **value judgment** about what is desirable/undesirable.
+
+- even if we accept same evidence is true, we won't accept the same normative claims if our (relevant) values differ
+
+## Normative Claims
+
+### Two varieties:
+
+**value judgments**: a normative claim that directly states what goal or ideal is "right" or provides rules for judging which things are better or worse.
+
+**prescriptive claims**: a normative claim that asserts (*prescribes*) what actions should be taken on the basis of both observation of the world *and* some assumed **value judgment**.
+
+## Normative vs. Empirical Claims
+
+### **Empirical claims:** can be evaluated using science
+
+### **Normative claims:** cannot (fully) be evaluated using science
+
+## Illustration
+
+You and your friend win a sum of money in a lottery
+
+You and your friend agree: 
+
+**the most important ethical goal is minimizing human suffering.** (*value judgment*)
+
+### You disagree on what to do:
+
+(1) We should donate mosquito nets to stop malaria (**prescriptive claim**)
+
+(2) We should give money directly to impoverished people (**prescriptive claim**)
+
+### Can science resolve the problem?
+
+## Illustration {.build}
+
+### Scientific Evidence
+
+- Malaria kills ~500k per year
+- Half of global population possibly exposed
+- Mosquito nets reduce likelihood of exposure
+- For each 100 to 1000 nets, 1 death prevented
+- Cost of mosquito nets is low
+- Cash transfers are expensive, effects on mortality mixed
+- Sums must be very large to affect mortality
+
+### **What should you do?**
+
+### **Malaria nets!**
+
+## Illustration
+
+### BUT...
+
+What if **you value** minimizing suffering, but **your friend values** maximizing individual autonomy? (different *value judgments*)
+
+### Does the scientific evidence resolve your dispute?
+
+>- NO! For prescriptive claims, science can only address *how* we get to our desired outcome, not which value judgment is right.
+
+##  Illustration (Summary)
+
+### "Mosquito nets (A) prevent malaria (B)"
+
+- "A causes B" $\not\to$ "we should do A"
+
+- Depends on how we **value** B
+
+### Does scientific evidence ever help?
+
+# Varieties of Empirical Claims
+
+## Some empirical questions:
+
+- **How many firearms homicides (per capita) took place in the U.S. and Canada in 2016?**
+
+- **Why does the U.S. have more firearms homicides per capita than Canada?**
+
+- **How many refugees entered Germany during the migration wave of 2015?**
+
+- **Has the influx of refugees in Germany produced an increase in violent crime?**
+
+- **What percentage of Canadians use cannabis recreationally?**
+
+- **Has legalizing cannabis resulted in higher rates of impaired driving?**
+
+## Some empirical claims
+
+- **In 2017, Canada had 0.72 firearms homicides per 100K while the US had 3.37 per 100K.**
+
+- **The US has more firearms homicides per capita than Canada because the US has laxer gun laws.**
+
+- **Germany saw about 1.1 million refugees enter during 2015.**
+
+- The AfD says: **"Knife migration" has led to a dramatic increase in violent crime.**
+
+- **About 16% of Canadians over the age of 15 use cannabis.**
+
+- **There has been no increase in impaired driving after cannabis legalization**
+
+
+## Descriptive claims:
+
+### **descriptive claims:**
+
+claims about what exists (or has existed/will exist) in the world: 
+
+- **what phenomena exist** (what kinds of things exist?)
+- **what is the type of a specific phenomenon** (what is this thing?)
+- **amount/frequency of phenomena** (how much of something is there?)
+- **relative amount/frequency of phenomena across different places/times** (how much of something is there here vs. there/now vs. then?)
+- **what patterns are there in the shared appearance/non-appearance of different phenomena** (does this thing usually appear together with that other thing?)
+
+
+## Which of these are descriptive? why?
+
+- **In 2017, Canada had 0.72 firearms homicides per 100K while the US had 3.37 per 100K.**
+
+- **The US has more firearms homicides per capita than Canada because the US has laxer gun laws.**
+
+- **Germany saw about 1.1 million refugees enter during 2015.**
+
+- The AfD says: **"Knife migration" has led to a dramatic increase in violent crime.**
+
+- **About 16% of Canadians over the age of 15 use cannabis.**
+
+- **There has been no increase in impaired driving after cannabis legalization**
+
+
+## Which of these are descriptive? why?
+
+- **In 2017, Canada had 0.72 firearms homicides per 100K while the US had 3.37 per 100K.** (*descriptive*)
+
+- **The US has more firearms homicides per capita than Canada because the US has laxer gun laws.**
+
+- **Germany saw about 1.1 million refugees enter during 2015.** (*descriptive*)
+
+- The AfD says: **"Knife migration" has led to a dramatic increase in violent crime.**
+
+- **About 16% of Canadians over the age of 15 use cannabis.** (*descriptive*)
+
+- **There has been no increase in impaired driving after cannabis legalization** (*descriptive*)
+
+
+## Causal claims:
+
+### **causal claims**:
+
+are claims about the how one phenomena ($X$) affects or causes another phenomena ($Y$). Causal claims state that $X$ **acts on** $Y$ in some way, not merely that they appear together in some pattern:
+
+- the **effect** that one thing or event has on another thing (effects of causes)
+- the **cause** of some event or thing in the world (causes of effects)
+- the *conditions* under which some thing or event *happens* (causes of effects)
+- the *process* through which one thing affects another (causes of effects)
+
+
+## **How to recognize causal claims** 
+
+(compared to descriptive claims)
+
+### Causal claims include some kind of  **causal verb (or phrase)**. E.g.:
+
+-  (non-exhaustive list): "causes", "influences","makes happen", "increases", "decreases", "results in", "was necessary for", etc.
+- can always be restated as a phrase with a verb, subject, and some object, where subject is the cause and object (or one of the objects) is the affected thing.
+- can always be restated as a phrase like "$X$ causes $Y$ to change in some way" or "$Y$ changes in some way because of $X$"
+
+## Are these causal claims/questions?
+
+- **There has been no increase in impaired driving after cannabis legalization**
+
+- **The city of Chicago has relatively-strict gun laws and a relatively-high gun-related murder rate.**
+
+- **Has legalizing cannabis resulted in higher rates of impaired driving?**
+
+- **Countries with more women in the legislature have more protections for womens' reproductive and marital rights.**
+
+
+##  **How to recognize causal claims** 
+
+(compared to descriptive claims)
+
+### Causal claims always imply: *if* **we** could directly **manipulate** one thing $X$, then we would see $Y$ change
+
+## Are these causal claims/questions?
+
+- **There has been no increase in impaired driving after cannabis legalization**
+
+- **The city of Chicago has relatively-strict gun laws and a relatively-high gun-related murder rate.**
+
+- **Has legalizing cannabis resulted in higher rates of impaired driving?**
+
+- **Countries with more women in the legislature have more protections for womens' reproductive and marital rights.**
+
+
+## Turned into causal claims:
+
+- **Cannabis legalization did not increase impaired driving rates.**
+
+- **The city of Chicago's gun laws have not reduced the gun-related murder rate.**
+
+- **The entry of more women into a legislature results in more legal protections for womens' reproductive and marital rights.**
+
+## Causal claims and Prescriptive Claims
+
+You and your friend win a sum of money in a lottery
+
+You and your friend agree: 
+
+**the most important ethical goal is minimizing human suffering.** (*value judgment*)
+
+### You disagree on what to do:
+
+(1) We should donate mosquito nets to stop malaria (**prescriptive claim**)
+
+(2) We should give money directly to impoverished people (**prescriptive claim**)
+
+## Causal claims and Prescriptive Claims
+
+- Assuming less malaria is good, resources are finite
+- What if mosquite nets don't prevent malaria, or cause more harm (tangling deaths)?
+- Showing "Malaria nets does not reduce malaria" is informative!
+
+#### **Accepting a prescriptive claim requires both a *value judgment* and accepting a *causal claim***
+
+# Falsifiability
+
+## Which claims can science evaluate? {.build}
+
+### \#NotAllEmpiricalClaims open to science
+
+
+## Falsifiability
+
+### an empirical claim is  **falsifiable**...
+
+if that claim can be shown to be wrong by a specific empirical test. Even if we never **do** show the claim is wrong, it is **falsifiable** if, in principle it could be shown to be wrong.
+
+### an empirical claim is **unfalsifiable**...
+
+if there is no empirical test that can be done to show the claim is wrong
+
+
+## Falsifiability
+
+### Because science considers alternatives/is open to being wrong...
+
+we can only scientifically evaluate claims that can, **in principle** be shown to be wrong.
+
+The best claims/theories are those that stand up to many tests to show them wrong.
+
+
+## Falsifiability
+
+### Contrast with **verifiability**
+
+If we had an empirical claim, $H_1$ ($H$ for hypothesis)
+
+and, if $H_1$ were true or valid, then it implies we should make certain empirical observations $O_1$
+
+Verification says that
+
+1.  $H_1 \rightarrow O_1$
+
+2. If we see $O_1$
+
+3. Therefore, $H_1$ is valid
+
+## Falsifiability
+
+Many people reject **verifiability** because many different, incompatible claims are compatible with the same observed evidence
+
+1. $(H_1, H_2, \ldots, H_k) \rightarrow O_1$
+
+2. If we observe $O_1$
+
+3. $H_1$ is not proven
+
+## Falsifiability
+
+If a claim $H_1$ is falsfiable, there might be observable implication $O_1$ that, if it were untrue would invalidate $H_1$. So...
+
+1. $H_1 \rightarrow  O_1$
+2. $not\ O_1$
+3. Therefore, $not\ H_1$
+
+## Examples
+
+- **"Immigrants are coming across the border to kill you"** ~ Donald Trump
+- **Flying Spaghetti Monster**
+- **Humans are rational utility-maximizers**
