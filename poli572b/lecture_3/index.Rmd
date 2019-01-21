@@ -1,0 +1,677 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "January 21, 2019"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: black
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  }
+</style>
+
+# Potential Outcomes Model and Non-Compliance
+
+## Plan for Today
+
+### Non-compliance in experiments
+
+- a common problem, need to address it
+- what options are available to address it?
+
+### Application to non-experimental approaches
+
+- One approach is identical to Instrumental Variables
+- Understand assumptions of instrumental variables in simplest limit case
+
+
+
+# Non-compliance
+
+## What is non-compliance:
+
+#### **Non-compliance** in experiments occurs when units that are randomly assigned to treatment or control do not take their assigned treatment condition.
+
+- e.g. in a medical trial for a new drug, patients assigned to a control group seek out the treatment anyway
+- in an experiment on contacting voters, people do not answer the phone or answer the door.
+- wartime drafts assigned people to treatment by random numbers, but some people dodged the draft or were found exempt
+
+## What is non-compliance:
+
+#### more broadly:
+
+- circumstances in which there is random (as-if random) process of assigning exposure, but **not all units** follow this random process.
+  - experiments OR natural experiments
+  
+# An example
+
+## Felon Re-enfranchisement
+
+### In the US, felons vote at far lower rates, even when they may legally do so
+
+Might be attributable to:
+
+- **selection effects**: perpetrators of felonies less likely to vote *a priori*
+- **distrust of government** through criminal justice experiences
+- **loss of social capital** may lower knowledge of rights, voting rules
+- **stigmatization** may lead felons or others to assume they cannot vote
+
+## Felon Re-enfranchisement
+
+### Gerber et al. 2015 use experiment to evaluate:
+
+> Can informing ex-felons of their voting rights offset these reductions in voting?
+
+- This would indicate that effect is partly about information 
+- Would evaluate how to effectively incorporate felons into electorate
+
+## Felon Re-enfranchisement
+
+State of Connecticut during 2012 US elections:
+
+- Work with state to notify a randomly chosen subset of felons **by mail** informing them of their eligibility to register and vote.
+
+### But 40% of letters were returned, undeliverable
+
+- How can we find the effect of informing felons of their rights when large numbers of treatment group never were treated?
+
+## What is the effect of the letter?
+
+```{r, echo = F}
+gerber_et_al = data.frame(z = c("Control", "Treatment", "Treatment"),
+                          d = c('No', 'No', 'Yes'),
+                          N = c(3134, 1258, 1888),
+                          reg = c('5.9\\%', '5.6\\%', '9.1\\%'),
+                          vote = c('3.0\\%', '2.5\\%', '4.9\\%'),
+                          overall_reg = c('5.9\\%',
+                                          '7.7\\%', ''),
+                          overall_vote = c('3.0\\%', '3.9\\%', ''))
+
+kable(gerber_et_al, format = 'html',
+      col.names = c("Assignment", "Letter?", "$N$", "Registered?", "Voted?", "Registered (total)", "Voted (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+  
+```
+
+## Felon Re-enfranchisement
+
+#### 1. Compare all **treated** (received letter) to all **untreated** (did not receive letter)
+
+What could go wrong here?
+
+>- comparison groups no longer balanced on all attributes. **treated** group includes only those who received the letter. **untreated** group includes those who did not/would not have received the letter and those who *would* have received the letter.
+>- likely that receiving the letter is related to potential outcomes: whether a person will register or vote is  related to whether they have a stable address and can receive a letter. The "treatable" more likely to vote than "untreatable"
+
+## Felon Re-enfranchisement
+
+#### 1. Compare all **treated** (received letter) to all **untreated** (did not receive letter)
+
+What could go wrong here?
+
+>- This results in **bias**: $E(Vote^1 | Letter = 1) \neq E(Vote^1)$ and $E(Vote^0 | Letter = 0) \neq E(Vote^0)$
+>- Voting rate after the letter for **treated felons** not the same as voting rate with the letter for **all felons**.  Voting rate without the letter for **untreated felons** not the same as voting rate without the letter for **all felons**. 
+
+## Felon Re-enfranchisement
+
+#### 2. Compare all **treated** (received letter) in treatment group to all **control** group.
+
+What could go wrong here?
+
+>- comparison groups no longer balanced on all attributes. **treated** group includes only those who received the letter. **untreated** group includes those who would not have received the letter as well as those who *would* have received the letter had it been sent.
+
+>- Again, we have possibility of **bias**
+
+>- To see why, let's return to the potential outcomes model.
+
+## Felon Re-enfranchisement
+
+#### Imagine two types of people. People who...
+
+1. **receive** letters that are sent to them (**receivers**)
+2. **do not receive** letters that are sent to them (**returners**)
+
+#### Draw up a potential outcomes model
+
+- need an indicator for **random assignment**: $Z$
+- indicator for **receipt of letter**: $D$
+- what people would do, given assignment, treatment $Y$
+
+
+## Potential Outcomes {.center}
+
+<smaller>
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 2), 
+               d1 = rep(c(1,0,1,0), 1), d0 = rep(c(0,0,0,0),1),
+               y10 = rep(c(NA,0,NA,0), 1), y11 = rep(c(1,NA,1,NA), 1),
+                y00 = rep(c(0,0,0,0), 1), y01 = rep(c(NA,NA,NA,NA), 1),
+               type = rep(c("Receiver", "Returner"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i \\mid Z^1$", "$D_i \\mid Z^0$",
+                       "$Y_i \\mid Z^1,D^0$", "$Y_i \\mid Z^1,D^1$",
+                        "$Y_i \\mid Z^0,D^0$", "$Y_i \\mid Z^0,D^1$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+</smaller>
+
+## Option 1
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 2), 
+               d1 = rep(c(1,0,1,0), 1), d0 = rep(c(0,0,0,0),1),
+               y10 = rep(c(NA,0,NA,0), 1), y11 = rep(c(1,NA,1,NA), 1),
+                y00 = rep(c(0,0,0,0), 1), y01 = rep(c(NA,NA,NA,NA), 1),
+               type = rep(c("Receiver", "Returner"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i \\mid Z^1$", "$D_i \\mid Z^0$",
+                       "$Y_i \\mid Z^1,D^0$", "$Y_i \\mid Z^1,D^1$",
+                        "$Y_i \\mid Z^0,D^0$", "$Y_i \\mid Z^0,D^1$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover')) %>% 
+  row_spec(1, bold = T, color = "white", background = "#006400") %>%
+  row_spec(2:4, bold = T, color = "white", background = "#8B0000")
+
+
+```
+
+## Option 2
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 2), 
+               d1 = rep(c(1,0,1,0), 1), d0 = rep(c(0,0,0,0),1),
+               y10 = rep(c(NA,0,NA,0), 1), y11 = rep(c(1,NA,1,NA), 1),
+                y00 = rep(c(0,0,0,0), 1), y01 = rep(c(NA,NA,NA,NA), 1),
+               type = rep(c("Receiver", "Returner"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i \\mid Z^1$", "$D_i \\mid Z^0$",
+                       "$Y_i \\mid Z^1,D^0$", "$Y_i \\mid Z^1,D^1$",
+                        "$Y_i \\mid Z^0,D^0$", "$Y_i \\mid Z^0,D^1$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover')) %>% 
+  row_spec(1, bold = T, color = "white", background = "#006400") %>%
+  row_spec(3:4, bold = T, color = "white", background = "#8B0000")
+
+
+```
+
+## What *can* we do?
+
+When we make comparisons of treated and untreated that are **not** tied to the process of **random assignment** we run the risk of bias.
+
+### Ignoring non-compliance is always **unbiased**
+
+**Intent to treat** ($ITT$) is the comparison of assigned-to-treatment against assigned-to-control. Because this was done through random assignment, the comparison is unbiased (see Lectures 1 and 2) but the interpretation is limited.
+
+## ITT
+
+$$ ITT = \frac{1}{N} \sum\limits_{i=1}^{N} Y^{Z=1}_{i} - Y^{Z=0}_i $$
+
+$$ ITT \neq \frac{1}{N} \sum\limits_{i=1}^{N} Y^{D=1}_{i} - Y^{D=0}_i $$
+
+
+#### Why does it work?
+
+- It ensures that there is balance in the different types of units across the comparison (e.g. there are receivers and returners in both parts of the comparison.)
+- It ensures that, even if potential outcomes vary across the types of units, this does not bias the estimate.
+
+## ITT
+
+#### Why might it be desirable?
+
+- Policy makers might care about the overall effect of some policy when costs are fixed but some people might not receive it. (E.g. in our case, if we want to increase felon enfranchisement, knowing the $ITT$ is relevant for policy making.)
+
+## ITT
+
+#### But it may not be interesting
+
+- We often care about what is the effect on those who are actually exposed, not a diluted average due to random assignment.
+- Usually diluted because some people **never** get treated or because some people **always** get treated
+- Social scientists are interested in the effect of the exposure, not the effect of the random assignment.
+  
+#### Is there any way to do better than the $ITT$?
+
+# Getting the CACE
+
+## Generalizing the problem
+
+Let's abstract from the Gerber et al experiment.
+
+#### Imagine there are *four* possible types of people/units 
+
+```{r, echo = F}
+
+d = data.frame(type = c("compliers", "always takers", "never takers", "defiers"),
+               when_t = c("Take", "Take", "Not Take", "Not Take"),
+               when_c = c("Not Take", "Take", "Not Take", "Take")
+               )
+
+kable(d, col.names = c("Type", "Assigned to T", "Assigned to C"), format = 'html')
+```
+
+## Generalizing the problem
+
+like before, we imagine a box model, a random process.
+
+but now we have different kinds of tickets to reflect always takers, never takers, compliers, defiers
+
+$Z$ is assignment to treatment
+
+$D$ is receipt of treatment
+
+Our notation from before $Y^1$ and $Y^0$ refers to $Y^D$, but now $D$ is no longer fully random; some people always or never take it. So sometimes we will indicate $Y^{Z=1}$ or $Y^{Z=0}$.
+
+## Generalizing the problem
+
+Once we divide our study population into these four groups, it turns out that, with some **assumptions**, we can find the effect of **treatment** (not just random assignment) for **compliers**.
+
+This is called the **Complier Average Causal Effect** ($CACE$)
+
+$$CACE = Y^1_c- Y^0_c$$
+
+Where $Y^1_c$ is the mean potential outcome under exposure to treatment for compliers, and $Y^0_c$ is the mean potential outcome under no exposure for compliers.
+
+Why might this be a tricky thing to find?
+
+>- How do we figure out who the compliers are?
+
+## Who are compliers?
+
+It is easy easy to figure out who are the compliers the assigned to treatment group in the Gerber et al study. Why are they?
+
+>- The people whose letter was not returned to sender
+
+It is harder to figure out in other scenarios:
+
+>- If there are always takers, not easy to find compliers in treatment group; can never find compliers in control group
+
+## Who are compliers?
+
+**Key Intuition**: because of random assignment, **in expectation** treatment and control groups have same proportions of each type of unit/person.
+
+Building on this insight, we can estimate the fraction of the study group that are compliers.
+
+- We'll see how we can do this in a minute
+
+## How does this get us CACE?
+
+Recall how we can calculate the average as the sum of weighted values divided by the sum of weights:
+
+$$\bar{x} = \frac{1}{\sum w_i}\sum\limits_{i=1}^{N} x_i \cdot w_i$$
+
+## How does this get us CACE?
+
+### Some notation
+
+Within the **population** (study group):
+
+proportion of Always Takers is $\pi_{a}$
+proportion of Never Takers is $\pi_{n}$
+proportion of Compliers is $\pi_{c}$
+proportion of Defiers is $\pi_{d}$
+
+$\pi_{c} + \pi_{a} + \pi_{n} + \pi_{d} = 1$
+
+Based on **random assignment**, we say that $E(\pi_{?} | Z = 1) = E(\pi_{?} | Z = 0)$
+
+- same proportion of each type within assigned to treatment, assigned to control
+
+$\pi$ are all parameters...
+
+## How does this get us CACE?
+
+So, we can imagine that the $Y^T$ or $Y^C$ can be decomposed into a weighted average of the four types of units:
+($c$ompliers, $a$lways takers, $n$ever takers, $d$efiers), weighted by their fraction ($\pi$) of the study group (so that $\sum \pi_i = 1$).
+
+$$E(Y^{Z=1}) = \pi_{c} \cdot Y_c^1 + \pi_{a} \cdot Y_{a}^1 + \pi_{n} \cdot Y_n^0 + \pi_{d}\cdot Y_d^0$$
+
+$$E(Y^{Z=0}) = \pi_{c} \cdot Y_c^0 + \pi_{a} \cdot Y_{a}^1 + \pi_{n} \cdot Y_n^0 + \pi_{d}\cdot Y_d^1$$
+
+
+>- Why are some of these values $Y^0$ instead of $Y^1$?
+
+
+---
+
+```{r, echo = F}
+gerber_et_al = data.frame(z = c("Control", "Treatment", "Treatment"),
+                          d = c('No', 'No', 'Yes'),
+                          N = c(3134, 1258, 1888),
+                          reg = c('5.9\\%', '5.6\\%', '9.1\\%'),
+                          vote = c('3.0\\%', '2.5\\%', '4.9\\%'),
+                          overall_reg = c('5.9\\%',
+                                          '7.7\\%', ''),
+                          overall_vote = c('3.0\\%', '3.9\\%', ''))
+
+kable(gerber_et_al, format = 'html',
+      col.names = c("Assignment", "Letter?", "$N$", "Registered?", "Voted?", "Registered (total)", "Voted (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+  
+```
+
+In this case, there can be no **always takers** or **defiers** (why?). 
+
+We can decompose $Y_T$ into:
+
+$Y^T = 3.9 = \pi_c \cdot Y^1_c + \pi_n \cdot Y^0_n$
+
+And **estimate** $\pi_c$ and $\pi_n$ and $Y^1_c$ and $Y^0_n$ using the data
+
+$3.9 = \frac{1888}{1258+1888} \cdot 4.9 + \frac{1258}{1258+1888} \cdot 2.5$
+
+---
+
+```{r, echo = F}
+gerber_et_al = data.frame(z = c("Control", "Treatment", "Treatment"),
+                          d = c('No', 'No', 'Yes'),
+                          N = c(3134, 1258, 1888),
+                          reg = c('5.9\\%', '5.6\\%', '9.1\\%'),
+                          vote = c('3.0\\%', '2.5\\%', '4.9\\%'),
+                          overall_reg = c('5.9\\%',
+                                          '7.7\\%', ''),
+                          overall_vote = c('3.0\\%', '3.9\\%', ''))
+
+kable(gerber_et_al, format = 'html',
+      col.names = c("Assignment", "Letter?", "$N$", "Registered?", "Voted?", "Registered (total)", "Voted (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+  
+```
+
+We can decompose $Y^C$, and **estimate** the unknown parameters $\pi$ and $Y^1_n$.
+
+$Y^C = 3.0 = \pi_c \cdot Y^0_c + \pi_n \cdot Y^0_n$
+
+$3.0 = \frac{1888}{1258+1888} \cdot Y_c^0 + \frac{1258}{1258+1888} \cdot Y_n^0$
+
+$3.0 = 0.6 \cdot Y_c^0 + 0.4 \cdot 2.5$
+
+## Getting the CACE
+
+We can estimate the $\widehat{CACE}$ like this:
+
+$\widehat{CACE} = Y_c^1 - Y_c^0 = 4.9 - Y_c^0$
+
+And we can solve for $Y_c^0$: 
+
+$(1) 3.0 = 0.6 \cdot Y_c^0 + 0.4 \cdot 2.5$
+
+$(2) 3.0 - 1.0 = 0.6 \cdot Y_c^0$
+
+$(3) \frac{3.0 - 1.0}{0.6} = Y_c^0$
+
+$(4) 3.3 = Y_c^0$
+
+## Getting the CACE
+
+$$\widehat{CACE} = Y_c^1 - Y_c^0 = 4.9 - 3.33 = 1.57$$
+
+Effect is **larger** tha the $\widehat{ITT}$ of $0.9\%$. Unsurprising, since we are isolating the change for those actually received the letters. 
+
+## Estimating the $\widehat{CACE}$
+
+We estimated the CACE in a bit of an ad hoc way.
+
+To understand how this works in general, we need to make a statistical model.
+
+We need potential outcomes.
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 4), 
+               d1 = rep(c(1,1,0,0), 2), d0 = rep(c(1,0,0,1),2),
+               y10 = rep(c(NA,NA,0,1), 2), y11 = rep(c(1,1,NA,NA), 2),
+                y00 = rep(c(NA,0,0,NA), 2), y01 = rep(c(1,NA,NA,0), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker", "Defier"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i(Z^1)$", "$D_i(Z^0)$",
+                       "$Y_i(Z^1,D^0)$", "$Y_i(Z^1,D^1)$",
+                        "$Y_i(Z^0,D^0)$", "$Y_i(Z^0,D^1)$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+## Estimating the $\widehat{CACE}$
+
+This table is complicated.
+
+To make it manageable, we make several assumptions
+
+## Key Assumptions:
+
+### (1) Random Assignment:
+
+- ensures that $\widehat{ITT}$ is unbiased
+- ensures that proportion of types are the same in both groups: need this to find out fraction of compliers in control group.
+- ensures that potential outcomes of compliers and never (always) takers are the same in both groups: need this to know that never (always) takers in treatment have same $Y^0$ ($Y^1$) as never (always) takers in control.
+
+## Key Assumptions:
+
+### (2) Exclusion restriction:
+
+- must assume that random assignment to treatment **only affects outcome THROUGH treatment**. If finding out you are in treatment group has its own effect other than the treatment effect, can create trouble.  (Is this easy for Gerber et al?)
+
+## Key Assumptions: 
+
+### (3) No Defiers / Monotonicity
+
+- we can allow for never treats *and* always treats! (why?)
+- but we have to assume that no "defiers" exist. This seems unlikely, but does happen sometimes.
+- assignment to treatment $Z$ can have only positive (negative) effects on $D$
+
+$$ITT_D = \frac{1}{N} \sum\limits_{i=1}^{N} D^{Z=1}_{i} - D^{Z=0}_i$$
+
+
+
+## What these assumptions do
+
+First, "no defiers" removes rows from the potential outcomes table:
+
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 3), 
+               d1 = rep(c(1,1,0), 2), d0 = rep(c(1,0,0),2),
+               y10 = rep(c(NA,NA,0), 2), y11 = rep(c(1,1,NA), 2),
+                y00 = rep(c(NA,0,0), 2), y01 = rep(c(1,NA,NA), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i(Z^1)$", "$D_i(Z^0)$",
+                       "$Y_i(Z^1,D^0)$", "$Y_i(Z^1,D^1)$",
+                        "$Y_i(Z^0,D^0)$", "$Y_i(Z^0,D^1)$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+## What these assumptions do
+
+Second, **exclusion restriction**
+
+implies for **compliers**:  potential outcomes are same for those in assigned to treatment vs assigned to control (if they were not, something about assignment to treatment is affecting them beyond the treatment, leading to bias)
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 3), 
+               d1 = rep(c(1,1,0), 2), d0 = rep(c(1,0,0),2),
+               y10 = rep(c(NA,NA,0), 2), y11 = rep(c(1,1,NA), 2),
+                y00 = rep(c(NA,0,0), 2), y01 = rep(c(1,NA,NA), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i(Z^1)$", "$D_i(Z^0)$",
+                       "$Y_i(Z^1,D^0)$", "$Y_i(Z^1,D^1)$",
+                        "$Y_i(Z^0,D^0)$", "$Y_i(Z^0,D^1)$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover')) %>%
+  row_spec(c(2,5), bold = T, color = "white", background = "#006400")
+
+```
+
+
+## What these assumptions do
+
+Second, **exclusion restriction**
+
+implies for **compliers**:  potential outcomes are same for those in assigned to treatment vs assigned to control (if they were not, something about assignment to treatment is affecting them beyond the treatment, leading to bias)
+
+implies for **always takers**/**never takers** that potential outcomes under assignment to treatment and assignment to control are the SAME for each unit. i.e.,  $(Y_i^1 | Z_i = 1) = (Y_i^1 | Z_i = 0)$  because their TREATMENT STATUS is not changing with their treatment assignment and only treatment changes potential outcomes. 
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 3), 
+               d1 = rep(c(1,1,0), 2), d0 = rep(c(1,0,0),2),
+               y10 = rep(c(NA,NA,0), 2), y11 = rep(c(1,1,NA), 2),
+                y00 = rep(c(NA,0,0), 2), y01 = rep(c(1,NA,NA), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker"), 2))
+
+kable(d, col.names = c("$Z_i$", "$D_i(Z^1)$", "$D_i(Z^0)$",
+                       "$Y_i(Z^1,D^0)$", "$Y_i(Z^1,D^1)$",
+                        "$Y_i(Z^0,D^0)$", "$Y_i(Z^0,D^1)$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover')) %>%
+  row_spec(c(1,3,4,6), bold = T, color = "white", background = "#006400")
+
+```
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame( z = rep(1:0, each = 3), 
+               d1 = rep(c(1,1,0), 2), d0 = rep(c(1,0,0),2),
+               y1 = rep(c(1,1,0), 2), y0 = rep(c(1,0,0), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker"), 2))
+
+kable(d, col.names = c( "$Z_i$", "$D_i \\mid Z = 1$", "$D_i \\mid Z = 0$",
+                       "$Y_i^{Z=1}$", "$Y_i^{Z=0}$", "Type"), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+
+## What these assumptions do
+
+### Random assignment
+
+Ensures that proportions of each type of unit are, in expectation, the same across the two treatment conditions.
+
+
+## New Potential Outcomes
+
+```{r, echo = F}
+d = data.frame(z = rep(1:0, each = 3), 
+               d1 = rep(c(1,1,0), 2), d0 = rep(c(1,0,0),2),
+               y1 = rep(c(1,1,0), 2), y0 = rep(c(1,0,0), 2),
+               type = rep(c("Always Taker", "Complier", "Never Taker"), 2),
+               w = rep(paste0('$\\pi_', c('a','c','n'),"$"), 2))
+
+kable(d, col.names = c( "$Z_i$", "$D_i \\mid Z = 1$", "$D_i \\mid Z = 0$",
+                       "$Y_i^{Z=1}$", "$Y_i^{Z=0}$", "Type", "Prop."), format = 'html') %>% kable_styling(c( 'bordered', 'condensed', 'hover')) %>%  column_spec(7, bold = T, color = "white", background = "#006400")
+
+```
+
+
+## Getting the CACE
+
+$$E(Y^{Z=1}) = \pi_{a} Y^1_{a} + \pi_{n} Y^0_{n} + \pi_{c} Y^1_{c}$$
+
+
+$$E(Y^{Z=0}) = \pi_{a} Y^1_{a} + \pi_{n} Y^0_{n} + \pi_{c} Y^0_{c}$$
+
+
+What we want to get is:
+
+$$CACE = Y^1_{c} - Y^0_{c}$$
+
+## Getting the CACE
+
+$$Y^1_{c} = \frac{E(Y^{Z=1}) - \pi_{a} Y^1_{a} - \pi_{n} Y^0_{n}}{\pi_{c}} $$
+
+
+$$Y^0_{c} = \frac{E(Y^{Z=0}) - \pi_{a} Y^1_{a} - \pi_{n} Y^0_{n}}{\pi_{c}} $$
+
+
+so
+
+$$Y^1_{c} - Y^0_{c} = \frac{E(Y^{Z=1}) - E(Y^{Z=0})}{\pi_{c}}$$
+
+## Getting the CACE
+
+$$Y^1_{c} - Y^0_{c} = \frac{ITT}{\pi_{c}}$$
+
+and because $ITT_D = (\pi_a + \pi_c) - (\pi_a)$ :
+
+
+$$CACE = Y^1_{c} - Y^0_{c} = \frac{ITT}{ITT_D}$$
+
+Which we estimate:
+
+$$\widehat{CACE} = \frac{Y^T - Y^C}{D^T - D^C}$$
+
+## Estimating the CACE
+
+This estimator of the $CACE$ is called the **wald estimator**
+
+$$\widehat{CACE} = \frac{Y^T - Y^C}{D^T - D^C}$$
+
+And it is a kind of **instrumental variables** analysis.
+
+## Estimating the CACE
+
+It turns out, the our **estimator** $\widehat{CACE}$ is **biased**:
+
+$E \left( \frac{a}{b} \right) \neq \frac{E(a)}{E(b)}$
+
+$CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(ITT)}{E(ITT_D)} = \widehat{CACE}$
+
+but **consistent**:
+
+as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **small samples**
+
+## Interpreting the CACE
+
+What does this $CACE$ show us? It is the **effect of treatment** for the group of units that **changes its treatment status** due to **random assignment**; for the units that can be **randomly** induced to take treatment.
+
+- **external validity**?: are the cases that comply with treatment assignment systematically different from the population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.
+
+- sometimes it is called the **local average treatment effect** or $LATE$. This emphasizes the lack of external validity by emphasizing that the effect is "local" to units that are randomly induced to take treatment.
+
+## Interpreting the CACE
+
+### Remember the assumptions:
+
+1. Random Assignment
+
+2. Exclusion Restriction
+
+3. Monotonicity/No defiers
+
+## CACE beyond experiments
+
+#### In Natural Experiments:
+
+- we want to use some randomness in the world to find a causal effect
+- but not all units of interest have exposure to a putative cause given at random
+- if we know the exposure of units to a random assignment process and their exposure
+- we can use the Wald estimator (or Instrumental Variable Least Squares) to estimate the $CACE$ for the cases whose exposure is set at random.
+
+## CACE beyond experiments
+
+#### Beware:
+
+Often, use of instrumental variables in natural experiments is more complicated than what we have seen. (Examples)
+
+When evaluating an "instrumental variables" approach, imagine it as a simple experiment as we did today. If that thought experiment does not make sense, then be wary. 
+

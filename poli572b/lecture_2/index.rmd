@@ -140,7 +140,7 @@ randomizations %>% kable
 
 ```
 
-## For each randomization, calculate the ACE
+## For each randomization, calculate the $\widehat{ACE}$
 
 | $Village_i$ | $Y_i^1$ | $Y_i^0$ | $\tau_i$ |
 |---------|---------|---------|----------|
@@ -152,7 +152,7 @@ randomizations %>% kable
 
 ## Across the all randomizations...
 
-### What is the mean ACE?
+### What is the mean $\widehat{ACE}$?
 
 
 ## Let's check our work:
@@ -194,10 +194,10 @@ control_groups
 
 ```{r}
 
-#Average Causal Effects
+#Average Causal Effects (hat)
 treatment_groups - control_groups
 
-#Expected value of the ACE
+#Expected value of the ACE (hat)
 mean(treatment_groups - control_groups)
 ```
 
@@ -207,7 +207,7 @@ mean(treatment_groups - control_groups)
 
 hist(treatment_groups - control_groups,
      xlab = "ACE",
-     main = "Sampling Distribution of ACE",
+     main = "Sampling Distribution of ACE-hat",
      breaks = 20)
 
 ```
@@ -216,24 +216,24 @@ hist(treatment_groups - control_groups,
 
 #### Sample Difference in Means in **unbiased**
 
-- mean of the **sampling distribution** of **sample** ACE is same as **population** ACE
-- **but** none of the samples have exact population ACE. 
+- mean of the **sampling distribution** of **sample** $\widehat{ACE}$ is same as **population** $ACE$
+- **but** none of the samples have exact population $ACE$. 
 
-#### Histogram is the **exact sampling distribution** of the ACE in this experiment
+#### Histogram is the **exact sampling distribution** of the $\widehat{ACE}$ in this experiment
 
-- tells us how likely it is we observe sample ACE by chance (using this randomization scheme)
+- tells us how likely it is we observe sample $\widehat{ACE}$ by chance (using this randomization scheme)
 
 #### We never observe this histogram
 
->- we need a way to **estimate** the sampling distribution of ACE.
+>- we need a way to **estimate** the sampling distribution of $\widehat{ACE}$.
 
-# Estimating the variance of the sample ACE
+# Estimating the variance of the sample \widehat{ACE}
 
 ## Three approaches
 
 1) Analytic/Asymptotic approach
 
-2) Bootstrap apparoch
+2) Bootstrap approach
 
 3) Randomization inference
 
@@ -241,20 +241,20 @@ hist(treatment_groups - control_groups,
 
 ## Analytic Approach
 
-### First: we want to get variance of ACE
+### First: we want to get variance of $widehat{ACE}$
 
-- ACE is a **difference**
+- $widehat{ACE}$ is a **difference**
 - Need rules for calculating variance of **difference** between random variables
 
 $$Var(X - Y) = Var(X) + Var(Y) - 2 \cdot Cov(X,Y)$$
 
 ## Analytic Approach
 
-### Variance of ACE
+### Variance of $\widehat{ACE}$
 
 - $m$ units assigned to treatment; $N - m = n$ units assigned to control
-- $Y^T = \frac{1}{n}\sum\limits_{i=1}^{m}Y_i^1$
-- $Y^C = \frac{1}{m}\sum\limits_{i=m+1}^{n}Y_i^0$
+- $Y^T = \frac{1}{m}\sum\limits_{i=1}^{m}Y_i^1$
+- $Y^C = \frac{1}{n}\sum\limits_{i=m+1}^{N}Y_i^0$
 
 What is $Var(Y^T - Y^C)$?
 
@@ -288,7 +288,7 @@ Just like sample mean, sample variance is an unbiased estimator of population va
 
 - if we divide by $m - 1$, not $m$
 
-$$\widehat{\sigma^2} = \frac{1}{m-1}\sum\limits_{i=1}^{m}(Y_i^1 - Y^T)^2$$
+$$\widehat{Var(Y^1_i)} = \widehat{\sigma^2} = \frac{1}{m-1}\sum\limits_{i=1}^{m}(Y_i^1 - Y^T)^2$$
 
 
 ## Analytic Approach: Digression
@@ -322,7 +322,7 @@ plot(out$x_bar, out$diff_sd, xlab = "Sample Mean - Population Mean", ylab = "Sam
 
 ## Analytic Approach
 
-Using this approach we can estimate $Var(Y^T)$ and $Var(Y^C)$. We still need $Cov(Y^T,Y^C)$ to get variance of sampling distribution of sample ACE.
+Using this approach we can estimate $Var(Y^T)$ and $Var(Y^C)$. We still need $Cov(Y^T,Y^C)$ to get variance of sampling distribution of sample $\widehat{ACE}$
 
 $$Cov(Y^T,Y^C) = -\frac{1}{N(N-1)}\sum\limits_{i=1}^{N}(Y_i^1 - \overline{Y^1})(Y_i^0 - \overline{Y^0})$$
 
@@ -338,11 +338,11 @@ We can ignore the covariance safely, because
 
 1. We've ignored sampling without replacement from finite population
 2. This will either exactly offset or MORE THAN offset any reduction in the $Var(ACE)$ due to ignoring unestimable $Cov(Y^T,Y^C)$
-3. i.e., variances we obtain with $\widehat{Var(ACE)} = Var(Y^T) + Var(Y^C)$ are going to be exactly correct or TOO LARGE (conservative)
+3. i.e., variances we obtain with $\widehat{Var}(\widehat{ACE})} = \widehat{Var}(Y^T) + \widehat{Var}(Y^C)$ are going to be exactly correct or TOO LARGE (conservative)
 
 ## Analytic Approach
 
-So far we've been trying to estimate the **variance** of the ACE. But variance is not directly practical: units are squared. The **standard error** or the **standard deviation of the sampling distribution** of the **ACE** is more helpful. It is the square-root of the **variance**.
+So far we've been trying to estimate the **variance** of the $\widehat{ACE}$ But variance is not directly practical: units are squared. The **standard error** or the **standard deviation of the sampling distribution** of the $\widehat{ACE}$ is more helpful. It is the square-root of the **variance**.
 
 To turn variances into **hypothesis tests** we must also know what the **shape** of the sampling distribution is. We typically assume it is **asymptotically normal**
 
@@ -447,7 +447,7 @@ Does normality hold in our example?
 ```{r, echo = F}
 hist(treatment_groups - control_groups,
      xlab = "ACE",
-     main = "Sampling Distribution of ACE",
+     main = "Sampling Distribution of ACE hat",
      breaks = 20)
 
 ```
@@ -522,7 +522,7 @@ var_ace = var(wantchekon$vote_pct[wantchekon$clientelist == 1])/8 +
   var(wantchekon$vote_pct[wantchekon$clientelist == 0])/8
 
 se = sqrt(var_ace)
-y_t =  mean(wantchekon$vote_pct[wantchekon$clientelist == 1])
+y_t = mean(wantchekon$vote_pct[wantchekon$clientelist == 1])
 y_c = mean(wantchekon$vote_pct[wantchekon$clientelist == 0])
 
 t = (y_t - y_c) / se
@@ -556,7 +556,7 @@ for (i in 1:k) {
 
 ```{r, echo = F}
 
-hist(bs_ace, xlab = "Bootstrapped ACE", main = "Bootstrapped Sampling Distribution\nof ACE")
+hist(bs_ace, xlab = "Bootstrapped ACE hat", main = "Bootstrapped Sampling Distribution\nof ACE hat")
 
 ```
 
