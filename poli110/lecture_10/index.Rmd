@@ -1,0 +1,322 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "January 25, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Evaluating Descriptive Claims
+
+## Plan for Today:
+
+### (1) Recap: Concepts
+
+### (2) Concepts and Dimensions
+
+### (3) Concepts, Variables, Measures
+
+# Recap
+
+## Concepts
+
+We saw that **concepts** are:
+
+### &bull; Abstractions from complex reality
+
+### &bull; Have arbitrary labels
+
+- Recall: Democratic People's Republic of Korea
+
+### &bull; Still Necessary
+
+## Scientific Concepts
+
+To be **scientifically** useful, concepts must be transparent, systematic, predictive ...
+
+### &bull; must be *ontological*:
+
+- clear traits for what it is **to be** in this category. (transparent, systematic)
+
+### &bull; must be **observable**:
+
+- defining traits of a concept must be rooted in some objective, empirical standard. (transparent, systematic)
+
+### &bull; must be **causal**:
+
+- traits of concept related to behavior of cases of this type as causes of effects or effects of causes. (prediction)
+
+## Scientific Concepts: An Example
+
+### a (minimalist) definition of **democracy**:
+
+#### A democracy is a government in which political decisions are made by people who acquire power through  competitive elections, the results of which are respected (losers leave office).
+
+>- Do you agree with this definition of **democracy**? Would Kim Jong-un?
+
+## Scientific Concepts: An Example
+
+Whether we agree with the label or not, doesn't matter. Label could be arbitrary, but concept can still be scientific
+
+### a definition of **regime type 1.a**:
+
+#### A **regime type 1.a** is a government in which political decisions are made by people who acquire power through  competitive elections, the results of which are respected (losers leave office).
+
+## Scientific Concepts: An Example
+
+#### A democracy is a government in which political decisions are made by people who acquire power through competitive elections, the results of which are respected (losers leave office).
+
+### Scientific concept:
+
+- clear, **ontological** definition, not based on a single case
+
+- based on **observable** traits
+
+- is tied to **causal** theories about democracy: democracies reduce civil conflict and violent instability
+
+## Scientific Concepts: An Example
+
+### Kim Jong-un would have to **accept** that the **Democratic People's Republic of Korea** does not meet this definition empirically:
+
+> "a government in which political decisions are made by people who acquire power through competitive elections, the results of which are respected (losers leave office)."
+
+### even if he rejected that this is the definition of "democracy"
+
+# Dimensions of Concepts
+
+## Motivation: minimalist democracy
+
+#### A **democracy** is a government in which political decisions are made by people who acquire power through competitive elections, the results of which are respected (losers leave office).
+
+### <u>***There are "sub-concepts":***</u>
+
+### &bull; **competitive elections**: 
+
+- direct elections, multiple parties, party in power could lose, not a one time event
+
+### &bull; **political rule/power**: 
+
+- formal holding of government office and ability to make and enforce decisions
+
+## Motivation: "liberal democracy"/"polyarchy"
+
+### **polyarchy**
+
+is a country in which political power is:
+
+#### **contested**:
+
+- right to form parties
+- freedom of association
+- freedom of the press
+
+#### and **participation** is high:
+
+- right to vote
+- fairness of elections
+- extent of suffrage
+
+## Dimensions of a concept:
+
+These "sub-concepts" are **dimensions**
+
+### **dimensions of a concept**: phenomena that are
+
+1. **traits** that define the concept (**ontological**)
+
+2. but could exist, disappear, change **independently** of one another. They are **not redundant**
+
+### Why do dimensions matter?
+
+- Moving from concept to measurement
+- Linked to **causal** aspect of the concept
+
+## Dimensions matter (1):
+
+### Help move from concept to measurement
+
+Dimensions help us use measurement to identify which cases match the concept:
+
+### **minimalist democracy** is all or nothing:
+
+- Countries must have: competitive elections, winners exercise power, losers leave office, must happen more than one time.
+- If any dimension is missing, case does not fit
+
+### **polyarchy** could be a continuum:
+
+- Some places might have more contestation, less participation; some might have more participation, less contestation, but still "fit" the polyarchy concept.
+
+
+## Dimensions matter (2):
+
+### Link to **causal** stories
+
+### **minimalist democracy** says little about the *extent* of suffrage
+
+- You ask, "are there more democracies now than in the past?"
+- You ask, because you are interested in theory about how democracy reduces conflict (tied to minimalist definition)
+
+### Measuring democracy as *fraction of people who can vote*
+
+#### is an **irrelevant** dimension of democracy
+
+## Dimensions: practice
+
+If we wanted to define **democracy**...
+
+### Which of these could not be dimensions?
+
+1. Ruler chosen by election
+2. Voting rights for all adults
+3. Elections are fair, not fraudulent
+4. Elections are competitive
+5. No identity-based restrictions on voting
+6. Freedom of Speech
+7. Private sector investment in innovation
+
+## Dimensions: practice
+
+If we wanted to define **democracy**...
+
+### Which of these could not be dimensions?
+
+1. Ruler chosen by election
+2. **Voting rights for all adults** (*redundant*)
+3. Elections are fair, not fraudulent
+4. Elections are competitive
+5. **No identity-based restrictions on voting** (*redundant*)
+6. Freedom of Speech
+7. **Private sector investment in innovation** (*consequence*)
+
+# From Concepts to Measurement
+
+## Concepts to Measurement:
+
+### **Concept** (and dimensions)
+
+### $\xrightarrow{}$
+
+### **Variable**(s)
+
+- measurable properties of cases that map onto a concept
+
+### $\xrightarrow{}$
+
+### **Measure**(s)
+
+- procedure to find the values variables take for *specific* cases
+
+### $\xrightarrow{}$
+
+### "Answer"
+
+## Concepts to Measurement:
+
+### **variable**(s):
+
+A **measurable property** of a case (phenomena, group, or individual) that corresponds to a **concept** or one of the concept's **dimensions** and can *potentially* take on different **values** across cases and time (it *vari*es) across units.
+
+- Derived to capture a concept
+- Variables take on values for each case at a specific point in time
+- *Vari*ation across **cases** or over **time**.
+- General (e.g., "number of deaths in a civil war", not "number of deaths in the Syrian Civil War between 2011 and today")
+
+## Concepts to Measurement:
+
+### **Measure**(s)
+
+A **procedure** for determining the value of a variable for **specific cases** based on **observation**.
+
+- Measures are proposed to determine the **value** a variable takes for some cases
+- They are always for some specific cases want to know about
+
+
+## Concepts to Measurement:
+
+### **Concept** (and dimensions)
+
+### $\not\xrightarrow{}$ Concepts not scientific/irrelevant
+
+### **Variable**(s)
+
+### $\not\xrightarrow{}$ Variable does not map onto concept
+
+### **Measure**(s)
+
+### $\not\xrightarrow{}$ Procedure does not produce the true value
+
+### "Answer"
+
+
+## A Trivial Example:
+
+### A descriptive question:
+
+#### "Is West Lion taller than Seymour?"
+
+### We need to:
+
+- define a the concept of "height"
+- create a variable that captures "height" and is measurable
+- develop a measure to obtain values of that variable for West Lion and Seymour
+
+## Concept to Measurement: {.build}
+
+### Concept: Height (of a mountain)
+
+Prominence of peak from the earth's surface
+
+### $\xrightarrow{}$
+
+### Variable: Vertical distance from sea level to the top of the peak
+
+### $\xrightarrow{}$ 
+
+### Measure:
+
+Use difference in barometric pressure to calculate difference in elevation
+
+## Concept to Measurement: 
+
+### A descriptive question:
+
+#### "Is democracy backsliding in the "West"?"
+
+### We need to:
+
+- define a the concept of "backsliding"
+- create a variable that captures "backsliding" and is measurable
+- develop a measure to obtain values of that variable for democracies in Western Europe and North America **over time**
+
+## Concept to Measurement: Democratic Backsliding
+
+
+
+### Concept: Democratic Backsliding
+
+Political scientists have given **three dimensions**
+
+- Loss of **cultural** support for democracy
+- Loss of democratic **institutions**
+- Presence of **organized opponents** to democracy
+
+
+## Concept to Measurement:
+
+### Concept: Loss of **cultural** support for democracy
+
+
+### $\xrightarrow{}$
+
+### Variable: (for **cultural support**) 
+
+fraction of people in a country who believe democracy is the best form of government for their country
+
+### $\xrightarrow{}$ 
+
+### Measure:
+
+Survey people at random and ask:  **"Would	you	say	having	a democratic	political	system is...	a	very	bad	(1),	fairly	bad	(2),	fairly	good	(3),	or	very	good	(4)	way	of	governing	this	country?**
