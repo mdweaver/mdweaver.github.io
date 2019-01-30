@@ -315,9 +315,9 @@ This is a variable: what values does it take?
 
 #### **interval** levels of measurement assign cases numbers that both rank the cases and have consistent intervals
 
-- intervals between values are meaningful and consistent (something can be twice as much as something else, for instance)
+- intervals between values are meaningful and consistent(1 unit change is the same size each time)
 - difference in values indicates **how much** more or less of something one case is from another
-- no meaningful zero point
+- no meaningful zero point, ratios not meaningful
 
 ### Examples
 
@@ -332,6 +332,7 @@ This is a variable: what values does it take?
 - intervals between values are meaningful and consistent
 - difference in values indicates **how much** more or less of something one case is from another
 - **zero indicates absence**
+- ratios meaningful (something can be twice as much as something else, for instance)
 
 ### Examples
 
