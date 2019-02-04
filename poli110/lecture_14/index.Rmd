@@ -1,0 +1,355 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "February 4, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Evaluating Descriptive Claims
+
+## Plan for Today:
+
+### **(1) Clarifications**
+
+### **(2) Measurement Error**
+
+### **(3) Sampling Error**
+
+### **(4) Sampling Error vs. Measurement Error**
+
+
+# Clarifications
+
+## Variables vs Measures
+
+These are closely-related concepts, but remember:
+
+1. **Variables** are not *causes* of or *caused* by the concept. They observable indicators of **belonging** to the concept.
+
+- If we have the claim that "Immigrants are less likely to commit crimes than natural born citizens", we would not create a variable for "immigrant-status" that captures **causes** of migration (e.g., political persecution) or captures some other **consequences** of migration (e.g., starting career anew)
+
+2. **Variables** and **measures** are both about what is observable, but **variables** must be general (not refer to values they take for specific cases, nor the procedures for observing them) where as **measures** must be about procedures for observing specific values
+
+- For this class, we will accept as "measures" for a variable any thing that is observable about that variable and is both more specific and descriptive of procedure than the variable it is purported to measure.
+
+
+# Measurement Error
+
+
+# Measurement Error
+
+## Measurement Error
+
+#### **Validity** and **Reliability** are about link between variable/measure and **concept**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### **Measurement Error** refers to link between **measure** and **variable**.
+
+<hr style="height:8px; visibility:hidden;" />
+
+### **measurement error**
+
+is a **difference** between the **true** value of a variable for a case and the **observed value** from the measurement procedure.
+
+$$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$$
+
+
+## Measurement Error
+
+### Two varieties of **measurement error**
+
+- **bias**/**systematic measurement error**
+- **random measurement error**
+
+
+## Measurement Error
+
+### Bias
+
+**bias** or **systematic measurement error**: error produced when our measurement procedure obtains values that are, **on average**, too high or too low (or, incorrect). 
+
+- Key phrase is "on average", because the error is not a one-off fluke, but even if you repeat the measurement the error will occur **systematically**.
+- can have an *upward* or *downward* bias
+- **not** "politically" biased.
+- **Bias** means getting a measured value that is differnt from the truth **on average** 
+- bias might be the same for all cases or different across subgroups
+    - example: economic evaluations and partisanship in surveys
+
+## Measurement Error
+
+### Random Measurement Error
+
+**random measurement error**: errors that occur due to random features of measurement process or phenomenon and the values that we measure are, **on average**, correct
+
+- Due to chance, we get values that are too high or too low
+- There is no systematic tilt one way or another (no bias)
+- In aggregate, values that are "too high" are balanced out by values that are "too low" compared to the truth
+
+## Measurement Error
+
+### Is it a problem?
+
+- One type is mostly harmless
+- The other is a problem
+
+### Which do you think, and why?
+
+## Measurement Error
+
+### **Measurement Errors** lead to **Validity/Reliability** problems
+
+<hr style="height:8px; visibility:hidden;" />
+
+**Validity**/**Reliability** can fail on **variable** $\leftarrow$ **measure** link
+
+- if there is **bias**/**systematic measurement error** $\rightarrow$ we lack **validity**
+- if there is **random measurement error** $\rightarrow$ we lack **reliability**
+
+## Measurement Error
+
+### Random Error vs. Bias
+
+|  | **Bias** | **Random Error** |
+|-----------------------|-------------------------------------------|-------------------------------------------------------------|
+| **Conceptual Problem** | Validity | Reliability |
+| **Pattern** | Errors are systematic<br>(deviate from truth, on average) | Errors are random<br>(correspond to truth, on average) |
+| **When it's OK** | If it is UNIFORM across cases | If  false negative better<br>than false positive |
+| **When it's Not OK** | If it is different across cases/ <br> we want absolute quantities | If we need precision/<br> have few cases|
+| **Solved by more data?** | No, bias persists. | Yes, random errors "wash out" |
+
+## Measurement Error
+
+### Which is Random Error? Bias?
+
+```{r, echo = F, message=F}
+require(ggplot2)
+n = 10000
+x1 = rnorm(n, 0, 0.5) + 1
+x2 = rnorm(n, 0, 3)
+plot_data = data.frame(Measure = rep(paste0("X",1:2), each = n), value = c(x1, x2))
+xlims = range(c(x1,x2))
+ggplot(plot_data, aes(value, fill = Measure)) + 
+  geom_histogram(bins = 100, alpha = 0.5, position = 'identity') +
+  labs(title = 'Different measures of X (True Value = 0)') + xlab("Observed X") + ylab("Frequency") + 
+  theme_bw() +
+  geom_vline(xintercept = 0, colour = 'red')
+```
+
+## Measurement Error
+
+### $X1$ is *biased*
+
+It consistently deviating from the true value of $0$
+
+### $X2$ has *random error*
+
+There are many large errors, but, on the whole, $X2$ is centered on the true value of $0$
+
+### You could have both **bias** and **random error**...
+
+## Measurement Error
+```{r, echo = F, message=F}
+require(ggplot2)
+n = 10000
+x3 = rnorm(n, -7, 3)
+plot_data = data.frame(Measure = rep(paste0("X",1:3), each = n), value = c(x1, x2, x3))
+xlims = range(c(x1,x2, x3))
+ggplot(plot_data, aes(value, fill = Measure)) + 
+  geom_histogram(bins = 100, alpha = 0.5, position = 'identity') +
+  labs(title = 'Different measures of X (True Value = 0)') + xlab("Observed X") + ylab("Frequency") + 
+  theme_bw() +
+  geom_vline(xintercept = 0, colour = 'red')
+```
+
+## Systematic Measurement Error/Bias
+
+### Sources
+
+**($1$) Researcher subjectivity/interpretation**
+    - Researcher systematically over-weights, under-weights dimension of concept
+
+
+## Example
+
+### Political Knowledge
+
+Expert interviewers assess "political knowledge". Might overweight language skills in measure of political knowledge
+
+$\xrightarrow{Downward \ Bias}$ political knowledge of people who have less grasp of language of interview
+
+## Systematic Measurement Error/Bias
+
+### Sources
+
+**($2$) Obstacles to observation** 
+
+- **social norms** may discourage revelation of information; downward bias in "undesirable" phenomena
+    - e.g. survey measure of racism or drug use $\xrightarrow{}$ **social desirability bias**
+- **incentives to hide/misrepresent**: political actors have strategic reasons to conceal information from each other
+    - e.g. states may present their military capacity to be better than it is (upward bias)
+    - e.g. wealthy people may present themselves as less wealthy to avoid negative attention (downward bias)
+
+## Random Measurement Error
+
+### Sources
+
+- Imperfect memory (survey/interviews)
+- "Random" changes in mood/concerns (for surveys)
+    - e.g. rain might make you more angry and support government less
+- Sampling errors (e.g., national statistics from **random samples**)
+- Researcher interpretation 
+    - e.g. random differences in classifying cases (like flipping a coin when you can't tell how to classify case)
+    
+
+## Bias: Solutions?
+
+1. Researcher subjectivity:
+    
+    - More precise, clear rules for measurement procedure
+    
+2. Obstacles to observation:
+
+    - Social norms: Protect anonymity, subtler measurement
+    - Incentives to hide/misrepresent: use private records, behavior not statements, interview after incentives gone
+
+#### **Repeating measurement does not help**
+
+Instead:
+
+- Improve the measurement procedure
+- Use **multiple** measures with different (independent) problems:
+    - Upward bias in measure 1 may be balanced by downward bias in measure 2
+    - Ideally, measures from entirely different sources
+    
+    
+## Random Error: Solutions?
+
+If truly random: errors **cancel out** with many trials
+
+### Solutions
+
+- Repeat measure for lots of cases/individuals
+- Repeat measure for same case at multiple points in time
+- Have multiple researchers apply measure to same case
+
+# Sampling Error
+
+## Sampling
+
+### **Sometimes we cannot answer descriptive claims directly**
+
+We would have to observe **too many** cases.
+
+### Example:
+
+**"Most Americans prefer a ban on semi-automatic firearms."**
+
+We can't interview **all Americans**...
+
+## Sampling
+
+### Survey with $1500$ people
+
+<img src="./guncontrol2.png" width=100%>
+
+## Sampling
+
+Is $1500$ people enough?
+
+### Key terms:
+
+**population**: full set of cases (countries, individuals, etc.) we're interested in learning about
+
+**sample**: subset of the population that we observe and measure
+
+**inference**: description of the population we make *based on a sample*
+
+## Example:
+
+Measuring attitudes on gun control in the US:
+
+The **population**:
+
+- All adults in the US
+
+The **sample**: 
+
+- 1500 people chosen **at random**
+
+The **inference**:
+
+- 57% of Americans want ban on semi-automatic weapons, with some **uncertainty** due to sampling
+
+## Sampling
+
+For **sampling** to work, we need to 
+
+1. Ensure the sample is representative of the population
+2. Know the level of **uncertainty** associated with our inference
+
+To do get both we need:
+
+**random sampling**: sampling cases from the population in a manner that gives all cases an equal probability of being chosen
+
+## Random Sampling:
+
+### Random Sampling and large sample 
+
+### $\xrightarrow{N\rightarrow\infty}$
+
+### (1) Sample Mean $\approx$ Population Mean
+
+### (2) Uncertainty of Sample Mean $\rightarrow 0$
+
+
+## Random Sampling:
+
+If we wanted to know: what is the average commuting time for students in this course?
+
+**population**: all students in this class
+
+**sample**: students in this class who are present during the last 2 minutes of Friday's lecture
+
+### What could go wrong here?
+
+
+## Sampling Error:
+
+### **sampling error**:
+
+The difference between the value of the measure for the sample and the true value of the measure for the population
+
+### Two varieties
+
+1. **sampling bias**: respondents/cases control whether they join the sample, so not every member  of population has equal chance of being in sample
+2. **random sampling error**: the process of random sampling means that sometimes we get samples where the average is **too high** or **too low** by chance (e.g. because we, by chance, interview only people with long/short commutes)
+
+# Sampling Error vs. Measurement Error:
+
+## Sampling Error vs. Measurement Error
+
+**sampling error** can **sometimes** be measurement error, but it is not **always** measurement error.
+
+**sampling error** is **measurement error** if your variable is the value of some population (e.g. mean attitudes in a province) and you get a sample that does not correctly reflect the population.
+
+It is not **measurement error** if the value you are interested in the response to some variable on a survey.
+
+
+## Sampling Error vs. Measurement Error
+
+**Measurement Error**: 
+
+- Incorrectly describe the world because you **incorrectly** observe the cases you study
+- e.g.: measure "Racism" by asking people "are you racist?"
+
+**Sampling Error**:
+
+- Incorrectly describe the world because **cases you study** are different from the population you want to learn about
+- e.g.: you want to measure anti-immigration sentiment in Canada by interviewing Canadian university students
+- Sample deviates from population **in a manner related to what you study**
+
