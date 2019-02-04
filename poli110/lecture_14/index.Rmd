@@ -28,16 +28,19 @@ knitr::opts_chunk$set(echo = FALSE)
 
 These are closely-related concepts, but remember:
 
-1. **Variables** are not *causes* of or *caused* by the concept. They observable indicators of **belonging** to the concept.
+$1$. **Variables** are not *causes* of or *caused* by the concept. They observable indicators of **belonging** to the concept.
 
 - If we have the claim that "Immigrants are less likely to commit crimes than natural born citizens", we would not create a variable for "immigrant-status" that captures **causes** of migration (e.g., political persecution) or captures some other **consequences** of migration (e.g., starting career anew)
 
-2. **Variables** and **measures** are both about what is observable, but **variables** must be general (not refer to values they take for specific cases, nor the procedures for observing them) where as **measures** must be about procedures for observing specific values
+
+## Variables vs Measures
+
+These are closely-related concepts, but remember:
+
+$2$. **Variables** and **measures** are both about what is observable, but **variables** must be general (not refer to values they take for specific cases, nor the procedures for observing them) where as **measures** must be about procedures for observing specific values
 
 - For this class, we will accept as "measures" for a variable any thing that is observable about that variable and is both more specific and descriptive of procedure than the variable it is purported to measure.
 
-
-# Measurement Error
 
 
 # Measurement Error
@@ -65,7 +68,6 @@ $$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$
 
 - **bias**/**systematic measurement error**
 - **random measurement error**
-
 
 ## Measurement Error
 
@@ -99,6 +101,15 @@ $$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$
 
 ### Which do you think, and why?
 
+
+
+## Measurement Error
+
+### Is it a problem?
+
+- One type is mostly harmless (**random error**)
+- The other is a problem (**bias**, if we don't know its direction and size)
+
 ## Measurement Error
 
 ### **Measurement Errors** lead to **Validity/Reliability** problems
@@ -112,8 +123,6 @@ $$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$
 
 ## Measurement Error
 
-### Random Error vs. Bias
-
 |  | **Bias** | **Random Error** |
 |-----------------------|-------------------------------------------|-------------------------------------------------------------|
 | **Conceptual Problem** | Validity | Reliability |
@@ -121,6 +130,15 @@ $$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$
 | **When it's OK** | If it is UNIFORM across cases | If  false negative better<br>than false positive |
 | **When it's Not OK** | If it is different across cases/ <br> we want absolute quantities | If we need precision/<br> have few cases|
 | **Solved by more data?** | No, bias persists. | Yes, random errors "wash out" |
+
+## False negatives/False positives:
+
+Given the **claim**: "German communities with more Nutella-followers on Facebook have more anti-refugree violence.", a **false negative**, incorrectly concluding that the claim is wrong, can be preferable to a **false positive**, incorrectly concluding that the claim is right.
+
+Often, in social science, we prefer to wrongly conclude that there are no differences between groups than to wrongly conclude that there is a difference. 
+
+Random measurement error (e.g., getting the wrong value of Nutella Facebook followers due to randomness in who makes their location visible on Facebook) leads to **false negatives**, because differences between groups that we compare are harder to detect. 
+
 
 ## Measurement Error
 
@@ -216,6 +234,8 @@ $\xrightarrow{Downward \ Bias}$ political knowledge of people who have less gras
 
     - Social norms: Protect anonymity, subtler measurement
     - Incentives to hide/misrepresent: use private records, behavior not statements, interview after incentives gone
+
+## Bias: Solutions?
 
 #### **Repeating measurement does not help**
 
