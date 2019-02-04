@@ -69,9 +69,7 @@ $$Value_{true} - Value_{observed} \neq 0 \xrightarrow{then} measurement \ error$
 - **bias**/**systematic measurement error**
 - **random measurement error**
 
-## Measurement Error
-
-### Bias
+## Measurement Error: Bias
 
 **bias** or **systematic measurement error**: error produced when our measurement procedure obtains values that are, **on average**, too high or too low (or, incorrect). 
 
