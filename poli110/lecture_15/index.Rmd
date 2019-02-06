@@ -185,6 +185,12 @@ $$Value_{Population} - Value_{Sample} \neq 0 \xrightarrow{then} sampling \ error
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">In addition to winning the Electoral College in a landslide, I won the popular vote if you deduct the millions of people who voted illegally</p>&mdash; Donald J. Trump (@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/802972944532209664?ref_src=twsrc%5Etfw">November 27, 2016</a></blockquote>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     
+    
+<hr style="height:8px; visibility:hidden;" />
+    
+**Many people have argued there is no evidence for Trump's claims**  
+
+
 ## Sampling Error vs. Measurement Error
 
 <img src="./richman.png" width=100%>
@@ -231,5 +237,5 @@ The political scientists who oversee the survey point out:
 1. Richman et al/ Trump want to make claims about the **population**  of all non-citizens. They use a **sample**.
 2. The **sample** is generated based on individual survey responses to a questions that are **wrong** for $0.1\%$ of individuals (**measurement error**)
 3. This generates **sampling bias** as the sample systematically includes **citizens** who are treated as representative of "non-citizens"
-4. Because Richman et al/ Trump are using the sample to support claims about the **population** the **sampling bias** counts as **measurement bias**.
+4. Because Richman et al/ Trump are using the sample to support claims about the **population** the **sampling bias** counts as **measurement error**, particularly **bias**.
 
