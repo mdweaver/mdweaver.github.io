@@ -1,0 +1,224 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "February 8, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Causal Claims
+
+## Plan for Today:
+
+### **(1) Conclusion on Descriptive Claims**
+
+### **(2) Three approaches to causality**
+
+### **(3) Causality and Counterfactuals**
+
+# Descriptive Claims Review
+
+## Evaluating Descriptive Claims:
+
+1. **Claim $\rightarrow$**
+2. **Concept(s)** $\rightarrow$
+3. **Variable(s)** $\rightarrow$
+4. **Measure** $\rightarrow$
+5. **Sample (if needed)** $\rightarrow$
+6. **Draw a Conclusion** $\rightarrow$ **Claim**
+
+# Causal Claims
+
+## Why causation?
+
+**Recall** some of Weber's insights:
+
+### 1. **science is about prediction**
+
+### 2. **science cannot tell us what to do**, but it can provide **clarity**
+
+- For us, **clarity** means knowing what actions achieve our goals, which do not, and how certain actions might put our values into conflict.
+
+## Why causation?
+
+**In other terms**:
+
+### Science can only help answer **prescriptive questions** by evaluating **causal claims**
+
+<hr style="height:8px; visibility:hidden;" />
+
+### **Causality is key**
+
+## Two ways of asking causal questions
+
+<h3><ol>
+<li> What are the **causes** of **effects**?
+</ol></h3>
+
+Usually to explain something specific that has happened/we observe (**the effect**). This is about **attributing** a cause for some observed outcome/"explaining" the outcome.
+
+- Why did Donald Trump win the 2016 US election?
+- Why are housing prices very high in Vancouver?
+- Why did (a specific mass shooting) happen?
+
+## Two ways of asking causal questions
+
+<h3><ol start=2>
+<li> What are the **effects** of **causes**?
+</ol></h3>
+
+We want to know what happens if we do some action or some action (**the cause**) happens. (Could be a specific action or not) This is about the **contribution** of some cause to an effect.
+
+- Has Donald Trump's victory caused an increase in hate crimes? (specific cause)
+- Has BC's housing speculation tax reduced housing prices? (specific cause)
+- Does an increase in immigration cause an increase in violent crime? (general)
+- What are the effects of restricting gun ownership on gun violence? (general)
+
+## Two ways of asking causal questions
+
+### Looking at **effects of causes** versus **causes of effects**  leads to different approaches to scientific investigation
+
+
+## Three Approaches to Causation
+
+<h3><ol>
+<li> Regularity Approach
+</ol></h3>
+
+"$X$ is the cause of $Y$ if and only if $X$ is necessary or sufficient for $Y$": cause $X$ must always and invariably lead to the effect $Y$
+
+- Striking a match, for example, may be **necessary** for it to light, but it may not light unless there is enough oxygen in the atmosphere (**not sufficient**).
+- If the match does not light after striking it, someone might use a blowtorch to light it so that striking the match is not even necessary for the match to ignite (**not necessary**)
+- Focus on regularities/"laws" that govern relationship
+
+## Three Approaches to Causation
+
+<h3><ol start=2>
+<li> Manipulation Approach
+</ol></h3>
+ 
+$X$ is a cause of $Y$ for a specific case if the both of the following are true:
+
+- If we were to make $X$  occur, then $Y$ would occur
+- If were to make $X$ not occur, then $Y$ would not occur.
+
+Manipulation focus on **individual cases**. 
+
+## Three Approaches to Causation
+
+<h3><ol start=3>
+<li> Mechanisms Approach
+</ol></h3>
+ 
+$X$ is a cause of $Y$ if and only if  a **mechanism** connects $X$ to $Y$.
+
+- **mechanisms**: entities and activities organized to produce regular changes from start to  finish (e.g. flu vaccine $\rightarrow$ antibody production $\rightarrow$ memory cells $\rightarrow$ antibodies resist flu)
+
+>  "A man takes a trek across a desert. His enemy puts a hole in his water can. Another enemy, not knowing the action of the first, puts poison in his water. The man dies on the trip. The enemy who punctured the water can thinks that she caused the man to die, and the enemy who added the poison thinks that he caused the man to die. In fact, the water dripping out of the can means the poisoner is wrong."
+
+## Idea of Counterfactuals Central
+
+Three ideas of causality are philosophically different, but...
+
+### idea of **counterfactuals** is key to all three.
+
+# Counterfactuals
+
+## Counterfactuals and Causality:
+
+If we say that $X$ is a cause of $Y$ for a **particular case**, whether it is *necessary*/*sufficient*, or $X$ is manipulated by us, or $X$ is the start of a chain of mechanisms leading to $Y$, then the following statements must be **true**:
+
+- If $X$ were to occur, then $Y$ would occur
+- If $X$ were not occur, then $Y$ would not occur.
+
+## Counterfactuals and Causality:
+
+All causal claims we make, can be restated in terms of a counterfactual statement:
+
+- If $X$ were to occur, then $Y$ would occur
+- If $X$ were not occur, then $Y$ would not occur.
+
+or
+
+- If $X$ were to occur, then more $Y$ would occur (*implied*: than if $X$ were not to occur)
+
+**Counterfactual** approach to causality says that:
+
+$X$ is a cause of $Y$ for some **specific case(s)**, if when $X$ changes and **everything is the same except** $X$, $Y$ changes.
+
+## Idea of Counterfactuals Central
+
+**Causal Claim**: Donald Trump's election victory caused an increase in hate crimes.
+
+**counterfactual claim**: If Donald Trump had not won the election, there would be fewer hate crimes.
+
+<hr style="height:8px; visibility:hidden;" />
+
+**Causal Claim**: Restricting gun ownership does not reduce gun violence
+
+**counterfactual claim**: If there were more restrictions on gun ownership (in a country), the amount of gun violence would be the same (or more).
+
+## Counterfactuals and Causality:
+
+### Making **counterfactual claims**
+
+- They contain a **conditional clause**, starting with "If" (always in the **subjunctive mood**)
+- A "then" clause, stating what would happen if the **conditional**/**"If"** clause were true (always in the **conditional mood**)
+- May be in past, present, or future tense.
+
+## Counterfactuals and Causality:
+
+### Example: Past
+
+"Donald Trump's election victory caused an increase in hate crimes in 2017."
+
+$$\underbrace{If \ \  Trump \ \ had \ \ not \ \ won \ \ the \ \ 2016 \ \ election}_{\text{If-clause in Subjunctive Mood}}, \\
+\underbrace{there \ \ would \ \  have \ \ been \ \ fewer \ \ hate \ \ crimes \ \ in \ \ 2017.}_{\text{Then-clause in Conditional Mood}}$$
+
+## Counterfactuals and Causality:
+
+### Example: Present
+
+"The presence of fraternities on campus cause more sexual assault."
+
+$$\underbrace{If \ \  there \ \ were \ \ no \ \ fraternities \ \ on \ \ campus}_{\text{If-clause in Subjunctive Mood}}, \\ \underbrace{there \ \ would \ \  be \ \ fewer \ \ sexual \ \ assaults.}_{\text{Then-clause in Conditional Mood}}$$
+
+## Counterfactuals and Causality:
+
+### Example: Future
+
+"Building a wall between the US and Mexico will reduce illegal immigration to the United States."
+
+$$\underbrace{If \ \  Trump \ \ built \ \ a \ \ border \ \ wall}_{\text{If-clause in Subjunctive Mood}}, \\ \underbrace{there \ \ would \ \  be \ \ fewer \ \ illegal \ \ immigrants}_{\text{Then-clause in Conditional Mood}}$$
+
+## Counterfactuals and Potential Outcomes:
+
+### Why the name **counter**factual?
+
+- In our present/past tense examples, the counterfactual claim is about what would have happened if something else had happened (instead of what did happen). These "alternate universes" did not take occur, they are not "factual", but "counterfactual".
+
+- In our future-tense example: Trump will either build or not build a border wall. Only one possibility will become "fact" and happen, the other will not happen and be "counterfactual".
+
+## Counterfactuals and Potential Outcomes:
+
+One way to understand link between **counterfactuals** and **causality** is **potential outcomes**:
+
+**potential outcomes** are what the same case would do under different possible "worlds" where they are exposed to the supposed cause $X$ or not.
+
+
+## Counterfactuals and Potential Outcomes:
+
+### Example of Potential Outcomes
+
+$Immigration_{\ Wall}$ is the number of illegal immigrants that would come to the US if Trump built a wall.
+
+$Immigration_{\ No \ Wall}$ is the number of illegal immigrants that would come to the US if Trump did not build a wall.
+
+###  Potential Outcomes and Causality
+
+The **causal effect** of the wall on immigration would be:
+
+$$Immigration_{\ Wall} - Immigration_{\ No \ Wall}$$
