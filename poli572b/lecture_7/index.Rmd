@@ -135,7 +135,7 @@ If the true process generating the data is:
 
 $$Y_i = \beta_0 + \beta_1 X_i + \beta_2 Z_i + \epsilon_i$$
 
-with $(X_i,W_i) \mathrel{\unicode{x2AEB}} \epsilon_i$, $E(\epsilon_i) = 0$, $Var(\epsilon_i) = \sigma^2$
+with $(X_i,Z_i) \mathrel{\unicode{x2AEB}} \epsilon_i$, $E(\epsilon_i) = 0$, $Var(\epsilon_i) = \sigma^2$
 
 What happens when we regress $Y_i$ on a constant and $X_i$ and exclude $Z_i$?
 
@@ -381,7 +381,7 @@ $\nu_i^1 = Y_i^1 - \bar{Y^1}$ (the residual for $i$ from the mean $Y$ with treat
 
 Example (2): "conditioning" on $X$
 
-|  | $Y_i^1$ | $Y_i^0$ | $D_i$ | $X_i$ | $Y_i$ | $\tau_i$ |$\epsilon_i$|
+|  | $Y_i^1$ | $Y_i^0$ | $X_i$ | $Z_i$ | $Y_i$ | $\tau_i$ |$\epsilon_i$|
 |-----------|---------|---------|-------|-------|-------|----------|---|
 | treated | 20 | 10 | 1 | 1 | 20 | 10 |2.83|
 | treated | 20 | 10 | 1 | 1 | 20 | 10 |2.83|
@@ -482,7 +482,7 @@ ggplot(plot_data, aes(x = AGE, y = UHRSWORK)) + geom_point() + theme_bw() +
 
 ## After Conditioning...
 
-```{r}
+```{r, echo = F}
 plot_data = acs_data[, list(INCEARN_star = mean(INCEARN_star)), by = AGE]
 
 ggplot(plot_data, aes(x = AGE, y = INCEARN_star)) + geom_point() + theme_bw() + 
@@ -499,7 +499,7 @@ Age is still related to hours worked and income, just non-linearly
 
 Errors not independent of Hours Worked
 
-```{r}
+```{r, echo = F}
 ggplot(acs_data, aes(x = UHRSWORK_star, y = INCEARN_star)) + geom_smooth() + theme_bw() + 
   xlab("Residual Hours Worked") + ylab("Mean Residual Annual Income ($)") + geom_hline(yintercept = 0, color = 'red')
 ```
@@ -530,7 +530,7 @@ summary(lm_hours_age)$coefficients
 
 ## Interpolation Bias
 
-```{r}
+```{r, echo = F}
 ggplot(acs_data, aes(x = UHRSWORK_star2, y = INCEARN_star2)) + geom_smooth() + theme_bw() + 
   xlab("Residual Hours Worked") + ylab("Mean Residual Annual Income ($)") + geom_hline(yintercept = 0, color = 'red')
 ```
