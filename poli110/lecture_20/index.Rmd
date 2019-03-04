@@ -115,6 +115,28 @@ Which are structural causes? Which are triggers?
  
 4. Raining on election day (structural)
 
+---
+
+| Sufficient Causes | Effect |
+|---------------|--------|
+| **A & B & Z** |  E     |
+| **A & B & Y** | E      |
+| **A & B & X** | E      |
+| **B & C & W** | E      |
+| **C & D & V** | E      |
+| **A & C & U** | E      |
+| **A & D & T** | E      |
+
+## Preceding Table:
+
+In this table, causality of $E$ is **multiple** (7 different sufficient conditions) and **conjunctural** (each sufficient condition has **multiple necessary conditions**)
+
+$A, B, C, D$ are "**structural causes**" per our definition, because they are **necessary** for **multiple** sufficient conditions
+
+- of, $A$ is a cause under the MOST conditions (5), $D$ is a cause in the FEWEST conditions (2).
+
+$T,U,V,W,X,Y,Z$ are all triggers. They are causes under one specific set of conditions
+
 ## Which causes?
 
 Social science **generally** interested in **structural causes**.
