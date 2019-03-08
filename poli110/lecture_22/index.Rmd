@@ -187,6 +187,10 @@ If we were **omniscient deities**, maybe we could know all **potential outcomes*
 
 # How do we solve this problem?
 
+## Making assumptions:
+
+We make assumptions about how 
+
 ## One way: Experiments
 
 ### **Why do you think experiments allow us to infer causality?**
@@ -213,6 +217,20 @@ Why do experiments work?
 
 - In example with immigrant friendship and attitudes about immigrants, people with immigrant friends **already different** in their potential outcomes (people who hate immigrants don't befriend them)
 - Experiments, **through random assignment**, ensure that potential outcomes of treated/untreated cases are the same (except for **random sampling error**)
+
+## One way: Experiments {.build}
+
+### Social Media Shaming and Voting
+
+**Last year's PR referendum**
+
+- **How many of you voted?**
+
+- **Would have voted if tagged in a post like this?**
+
+> "Voting records are public! Records indicate that [name], [name], [name], [name], [name], [name], [name], [name], [name], and [name] have not yet voted in this year’s proportional representation referendum! Voting ends Friday. Click here for voting locations or how to vote from home. [Link]"
+
+
 
 ## One way: Experiments
 
