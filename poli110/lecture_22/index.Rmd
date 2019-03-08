@@ -120,7 +120,7 @@ We can never observe all of the potential outcomes of $Y$ for a case under diffe
 
 ## An Example:
 
-causal claim: **"Befriending an immigrant change causes people to have positive attitudes of immigrants"**
+causal claim: **"Befriending an immigrant causes people to have positive attitudes of immigrants"**
 
 <hr style="height:8px; visibility:hidden;" />
 
