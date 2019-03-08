@@ -189,7 +189,9 @@ If we were **omniscient deities**, maybe we could know all **potential outcomes*
 
 ## Making assumptions:
 
-We make assumptions about how 
+We **make assumptions** that let us treat $Y$ for cases that we observe with on value of $X$ as **counterfactuals** for cases with different values of $X$.
+
+How **reasonable**/**believable** are these assumptions?
 
 ## One way: Experiments
 
