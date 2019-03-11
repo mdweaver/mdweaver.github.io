@@ -1,0 +1,315 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "March 11, 2019"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: black
+    highlight: zenburn
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+require(lfe)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+```{r, include = F, echo = F, message = F}
+acs_data = fread("acs_lawmed.csv")
+acs_data[, FEMALE := SEX]
+acs_data[, MALE := abs(FEMALE - 1)]
+acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+acs_data[, MARST_f := as.factor(MARST)]
+acs_data[WKSWORK2 %in% 4, WeeksWorked := '40-47']
+acs_data[WKSWORK2 %in% 5, WeeksWorked := '48-49']
+acs_data[WKSWORK2 %in% 6, WeeksWorked := '50-52']
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  }
+</style>
+
+## Plan for Today
+
+### Checking Model Specification
+
+1. Influential Observations
+2. Sensitivity
+
+### Interaction Effects
+
+# Model Specification
+
+## Key Regression Assumption:
+
+We assume that the data generating process is the same for all cases
+
+- we might be wrong, and get estimates skewed by some observations
+- our conclusions might be driven by choices about data we use, regression model we estimate
+
+
+## McGrath
+
+---
+
+## Influential Observations:
+
+### What to do?
+
+1. Visual Inspection
+2. Tests for influence: `dfbetas`, `plot(my_lm)`
+3. See how results hold, dropping sets of cases.
+
+
+## Truex
+
+---
+
+## Fowler and Hall
+
+## Robustness?
+
+1. Data choices
+    - choices about coding (different ways of measuring the same thing)
+    - choices about data to include (which cases do you analyze?)
+    - choices about the units (do you collapse or cluster?)
+2. Model choices
+    - which variables do you include?
+    - what comparisons do you make?
+    - what are functional forms of the variables that you include?
+
+## Robustness?
+
+What to do:
+
+1. Show robustness to specific concerns (additional tables)
+2. Try all combinations of choices, show distribution of possible results
+    - can decide on plausible assumptions, but how can you defend one set of plausible assumptions against another?
+
+# Interaction Effects
+     
+## Interaction Effects
+
+We might think that the effect of one variables depends on the level of another.
+
+In these cases, we can investigate interaction effects.
+
+**Binary by Binary**
+
+The effect of gender on earnings might be different across professions. In our data, we can look at the effect of gender on earnings in across Law and Medicine.
+
+## Interaction Effects
+
+**How do we get them?**
+
+Just multiply the two variables together 
+
+**AND** include the two variables use to make the product
+
+$y_i = \beta_0 + \beta_1 x_i+ \beta_2 z_i+ \beta_3 x_iz_i + \epsilon_i$
+
+## Interaction Effects | Example
+
+Easy to do in `R`:
+
+```
+lm(INCEARN ~ FEMALE*LAW, acs_data)
+lm(INCEARN ~ FEMALE + LAW + FEMALE:LAW)
+```
+
+`*` expands out the 'main' effects and interaction effects
+
+`:` just multiplies two variables together, no 'main' effects
+   
+## Interaction Effects | Example
+
+Interpretation?
+
+```{r}
+summary(lm(INCEARN ~ FEMALE*LAW, acs_data))$coefficients
+```
+
+## Interaction Effects | Example
+
+Different intercepts (means) for each group:
+
+|        | Male | Female |
+|--------|------|--------|
+| Doctor | Intercept | Intercept + FEMALE |
+| Lawyer | Intercept + LAW | `Intercept + LAW +` <br/> `FEMALE + FEMALE:LAW` |
+
+## Interaction Effects | Example
+
+Interpretation:
+
+Effect of gender differs across profession
+
+- FEMALE:LAW tells us how much more women in law make (on average) relative to men in law, compared to women in medicine relative men in medicine
+
+Effect of profession differes across gender
+
+- FEMALE:LAW tells us how much more women in law make (on average) relative to women in medicine, compared to men in law relative men in medicine
+
+"Main Effects": Mean of LAW when FEMALE is 0, Mean of FEMALE when LAW is 0
+
+## Interaction Effects | Example
+
+```{r}
+summary(lm(INCEARN ~ FEMALE*LAW, acs_data))$coefficients
+```
+
+## Interaction Effects
+
+#### **Continuous by Binary variable**
+
+Rather than fitting different intercepts for groups:
+
+- Slope of $x_1$ depends on group membership ($x_2$)
+- Intercept for group ($x_2$) depends on level of continuous variable
+- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
+- $\hat{\beta_2}$ for $x_2$ will be mean of $x_2 = 1$ when $x_1 = 0$
+
+**Assumptions** 
+
+- We assume the change is linear 
+- Both levels of binary variable present across all levels of continuous variable (common support)
+      
+## Interaction Effects
+
+#### **Continuous by Continuous variable**
+
+- Slope of $x_1$ depends on value of $x_2$
+- Slope of $x_2$ depends on value of $x_1$
+- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
+- $\hat{\beta_2}$ for $x_2$ will be slope of $x_2$ when $x_1 = 0$
+ 
+**Assumptions** 
+
+- We assume the change is linear 
+- all levels of one variable present across all levels of other variable (common support)
+- This is much harder to achieve!
+     
+## Interaction Effects
+
+```{r, echo = F, include = F, message = F}
+iowa = fread('iowa_suffrage.csv')[enlist_pct < 1]
+
+```
+
+We can look at voting for black suffrage in Iowa. In your PS, you looked at the relationship between enlistment rates in the Civil War and the change in voting for suffrage between 1857 and 1868 (pre- and post- war). Does the effect of having veterans in a county depend on the content of their military service?
+
+## Example:
+
+```{r}
+lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
+summary(lm_iowa)$coefficients
+```
+
+## Example:
+
+We can center both variables at $0$ to make it easier to interpret:
+
+```{r}
+iowa$enlist_pct_c = iowa$enlist_pct - mean(iowa$enlist_pct, na.rm = T)
+iowa$mean_combat_days_c = iowa$mean_combat_days - mean(iowa$mean_combat_days, na.rm = T)
+
+lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
+```
+
+## Example:
+
+```{r}
+summary(lm_iowa_c)$coefficients
+```
+
+Now main effects are interpretable.    
+       
+## Effect sizes       
+
+For continuous interactions, we need to calculate the **marginal effect**
+
+**marginal effect**: unit effect of $x$ on $y$ at a given value of $z$.
+
+$y_i = \beta_0 + \beta_1 x_i+ \beta_2 z_i+ \beta_3 x_iz_i + \epsilon_i$
+
+Marginal effects have their own standard errors.
+
+- Must be computed using variance-covariance matrix
+- Why?: marginal effect is $\beta_1 + \beta_3 z_i$
+
+$Var(aX + bZ) = a^2 Var(X) + b^2 Var(Z) + 2ab Cov(X,Z)$
+
+$Var(\beta_1 + z_i \beta_3) = Var(\beta_1) + z_i^2 Var(\beta_3) + 2z_i Cov(\beta_1,\beta_3)$
+
+## Marginal Effects example:
+
+```{r}
+combat_seq = seq(min(iowa$mean_combat_days), 
+                 max(iowa$mean_combat_days),
+                 length.out = 100)
+mfx = lm_iowa$coefficients['enlist_pct'] + 
+      lm_iowa$coefficients['enlist_pct:mean_combat_days']*combat_seq
+```
+
+## Marginal Effects example:
+
+```{r, echo = F}
+plot(combat_seq, mfx, 
+     ylab = 'Marginal Effect of Enlistment %',
+     xlab = 'Mean Days of Combat',
+     main = 'Marginal Effect of Enlistment across\nCombat Experience',
+     type = 'l')
+rug(iowa$mean_combat_days)
+```
+
+## Marginal Effects example:
+
+Standard Errors:
+
+```{r}
+cov_mat = vcov(lm_iowa)
+
+m_var = diag(cov_mat)['enlist_pct'] +
+  combat_seq^2*diag(cov_mat)['enlist_pct:mean_combat_days'] +
+  combat_seq*2*cov_mat['enlist_pct','enlist_pct:mean_combat_days']
+mse = sqrt(m_var)
+
+l = mfx - 1.96*mse
+u = mfx + 1.96*mse
+```
+
+## Marginal Effects example:
+
+```{r, echo = F}
+plot(combat_seq, mfx, 
+     ylab = 'Marginal Effect of Enlistment %',
+     xlab = 'Mean Days of Combat',
+     main = 'Marginal Effect of Enlistment across\nCombat Experience',
+     type = 'l', ylim = range(c(l,u)))
+rug(iowa$mean_combat_days)
+lines(combat_seq, l, lty= 2)
+lines(combat_seq, u, lty = 2)
+abline(h = 0, col = 'red')
+```
