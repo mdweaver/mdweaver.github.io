@@ -1,0 +1,281 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "March 13, 2019"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+```
+
+<style>
+div.footnotes {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  width: 80%;
+  font-size: 0.6em;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('slide:not(.backdrop):not(.title-slide)').append('<div class=\"footnotes\">');
+
+    $('footnote').each(function(index) {
+      var text  = $(this).html();
+      var fnNum = (index+1).toString().sup();
+      $(this).html(text + fnNum);
+
+      var footnote   = fnNum + ': ' + $(this).attr('content') + '<br/>';
+      var oldContent = $(this).parents('slide').children('div.footnotes').html();
+      var newContent = oldContent + footnote;
+      $(this).parents('slide').children('div.footnotes').html(newContent);
+    });
+  });
+</script>
+
+# Testing Causal Theories
+
+## Plan for Today:
+
+### **(1) Alternatives to Experiments**
+
+- design-based
+- adjustment-based
+- confounding (again)
+- correlation
+
+# Solving FPCI
+
+##
+
+internal validity
+
+- experiments
+
+external validity
+
+- other approaches
+
+## Recall: 
+
+internal validity is about absence of confounding...
+
+we saw two ways of motivating this:
+
+no confounding if "balance in potential outcomes"
+$X$ (causal variable) unrelated to $W$ that affects $Y$
+
+implies two approaches:
+
+1) Assign $X$ in arbitrary way, so it is unrelated to $W$
+2) Compare cases where $W$ is the same (so potential outcomes are the same)
+
+## Adjustment vs Design
+
+design-based approaches: 
+
+- careful choice of comparison of cases based on arbitrary nature of $X$ or based on apriori similarity of cases (so we think that $W$ is the same)
+
+  - e.g. twin studies
+  - e.g. 
+
+adjustment-based approaches:
+
+- compare cases where $W$ is the same, 
+
+## Both approaches use correlation:
+
+Remember before: hypothesis / empirical prediction is that when $X$ changes, potential outcomes of $Y$ change...
+
+- all tests of causality examine whether OBSERVED $X$ and an OBSERVED $Y$ move together.
+
+- this is correlation 
+
+
+chocolate example
+
+
+- to turn that correlation into causation: we need to make assumptions 
+
+- we can express this as a literal correlation coefficient 
+
+- difference between correlation and size of effect
+
+- fit
+
+- obviously correlation does not imply causation
+
+
+correlation has two problems:
+
+just like measurement: bias, random error
+samplling: bias and random error:
+
+correlation can have biases and random error
+
+
+#First, Bias; Second, Random Error
+**FPCI:** We cannot know the causal effect of $X$ on $Y$ for a specific case.
+
+### **Experiments** (what you NEED to know)
+
+Let us **estimate** (draw **inferences**<footnote content="In an identical way as we draw inferences about a population from a sample."></footnote> about) the **average** causal effect of $X$ on $Y$ for a group of cases. 
+
+Three assumptions (you only need to know (**1**))
+
+1. **Random Assignment** to "Treatment" and "Control"
+2. **Exclusion Restriction** (only one thing is changing: $X$)
+3. **SUTVA** (If I receive the treatment, it doesn't affect you)
+
+## Experiments
+
+Why do experiments work?
+
+### Intuition (you don't NEED to know this)
+
+- In example with immigrant friendship and attitudes about immigrants, people with immigrant friends **already different** in their potential outcomes (people who hate immigrants don't befriend them)
+- Experiments, **through random assignment**, ensure that potential outcomes of treated/untreated cases are the same (except for **random sampling error**)
+
+## Experiments
+
+Why do different cases have **different potential outcomes**?
+
+- We approach causality as **deterministic**
+- For $Y$ or **dependent variable** to take different values across cases, cases must be exposed to other causal factors.
+- Cases with exactly the same potential outcomes must be pretty much the same in terms of other factors.
+
+Since we can't observe people in both factual and counterfactual state, we want to compare people who are identical except for the "treatment": they serve as "counterfactuals" for each other.
+
+
+## An Example:
+
+If we were **omniscient deities**, maybe we could know all **potential outcomes**
+
+| $Person_i$ | $Friend_i$ | $Attitude_i^{Yes}$ | $Attitude_i^{No}$  | **Value of Diversity** |
+|---|---------|--------|-------|-----|
+| 1 | **Yes** | **Positive (1)** | Positive (1) | **Medium** |
+| 2 | **Yes** | **Very Positive (2)** | Very Positive (2) | **High** | 
+| 3 | **No** |   Neutral (0)  | **Neutral (0)** | **Low** | 
+| 4 | **Yes** |  **Positive (1)** | Positive (1) | **Medium** |
+| 5 | **Yes** | **Very Positive (2)** |  Positive (1) | **High** | 
+| 6 | **No** |  Neutral (0)  |  **Neutral (0)** | **Low** | 
+
+## An Example:
+
+If we were **omniscient deities**, maybe we could know all **potential outcomes**
+
+| $Person_i$ | $Friend_i$ | $Attitude_i^{Yes}$ | $Attitude_i^{No}$  | **Value of Diversity** |
+|---|---------|--------|-------|-----|
+| 1 | **Yes** | **Positive (1)** | Positive (1) | **Medium** |
+| 2 | **Yes** | **Very Positive (2)** | Very Positive (2) | **High** | 
+| 3 | **Yes** |  **Neutral (0)**  |  Neutral (0) | **Low** | 
+| 4 | **No** | Positive (1) | **Positive (1)** | **Medium** |
+| 5 | **No** | Very Positive (2) | **Very Positive (2)** | **High** | 
+| 6 | **No** |  Neutral (0)  |  **Neutral (0)** | **Low** | 
+
+## Sources of Bias
+
+When the relationship between $X$ and $Y$ we discover empirically is systematically different from the **true causal relationship** between $X$ and $Y$, our analysis suffers from **bias**.
+
+This bias arises from **confounding**:
+
+**confounding** occurs when some other variable $W$ is causally linked to $X$ (independent variable) *and* $Y$ (dependent variable).
+
+- No bias/ no confounding of true causal link between $X$ and $Y$ if $W$ either unrelated to $X$ or unrelated to $Y$.
+
+## An Example:
+
+If we were **omniscient deities**, maybe we could know all **potential outcomes** 
+
+| $Person_i$ | $Friend_i$ | $Attitude_i^{Yes}$ | $Attitude_i^{No}$  |**Value of Diversity** |
+|---|---------|--------|-------|-----|
+| 1 | **Yes** | **Positive (1)** | Positive (1) | **Medium** |
+| 2 | **Yes** | **Positive (1)** |  Positive (1) | **High** | 
+| 3 | **No** |   Positive (1) | **Positive (1)** | **Low** | 
+| 4 | **Yes** |  **Positive (1)** | Positive (1) | **Medium** |
+| 5 | **Yes** | **Positive (1)** |  Positive (1) | **High** | 
+| 6 | **No** |  Positive (1)  |  **Positive (1)** | **Low** | 
+
+
+## Experiments
+
+###**How do we find observable "counterfactuals"**?
+
+Because of Fundamental Problem of Causal Inference:
+
+- We cannot know which cases have identical potential outcomes
+- Might not know which other factors $W$ are linked to $X$ and $Y$
+
+## **Experiments**
+
+### Randomization solves the problem
+
+- Randomization approximately balances cases with same potential outcomes in treatment and control
+- Randomization approximately balances cases with same values of $W$ in treatment and control
+
+Cases are **approximately the same** on average:
+  - cases in control are **observable** "counterfactuals" for cases in treatment
+  
+# Other Solutions:
+
+## Experiments
+
+Might appear to be the **only** valid solution:
+
+- if we don't know cases' potential outcomes
+- if we don't know other causal factors affecting $X$ and $Y$
+
+Only experiments let us find an **unbiased** causal relationship between $X$ and $Y$
+
+- Experiments have "**internal validity**"
+
+## Internal Validity
+
+### **Internal Validity**
+
+A research design has **internal validity** when the causal effect of X on Y it finds is not biased (systematically incorrect) or does not suffer from **confounding**.
+
+## Experiments: Limitations
+
+- **What can we manipulate?** (economic growth? democracy? violence?)
+- **Who/what can we study?** (who participates in psych labs?)
+
+
+## External Validity
+
+### **External Validity:**
+
+is the degree to which the causal relationship we find in a study matches the **cause** and the context (set of cases) identified in a causal theory
+
+- Study has **external validity** if the relationship found can generalize to all the cases to which our causal theory applies
+- If our study suffers from **sampling bias**, then our study may lack **external validity**
+- Study has **external validity** if the cause in the study is the same as the cause in our causal theory
+- If our independent variable/cause does not match the theory then our study may lack **external validity**
+
+## Always a Trade-off:
+
+More **internal validity** (unbiased calculation of causal effect) comes at the cost in **external validity** (relevance of study sample or cause to the theory)
+
+### **Why?**
+
+Many relevant contexts/important causes cannot or should not be manipulated at random:
+
+What causes democratization?
+What causes war or ethnic violence?
+Why were civil rights extended to oppressed minority groups?
+
+## Need other options
+
+Experiments may not meet all our needs
+
+### **We need other approaches to testing causality**
+
+- What types of other approaches?
+- What are their assumptions?
