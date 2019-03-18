@@ -371,20 +371,20 @@ Be wary of "$p$-hacking"
 
 ## Significant?
 
-<img src="./xkcd_1.png" width=100%>
+<img src="./xkcd_1.png" width=80%>
 
 ## Significant?
 
-<img src="./xkcd_2.png" width=100%>
+<img src="./xkcd_2.png" width=50%>
 
 
 ## Significant?
 
-<img src="./xkcd_3.png" width=100%>
+<img src="./xkcd_3.png" width=50%>
 
 ## What else do you want to know?
 
-<img src="./xkcd_4.png" width=100%>
+<img src="./xkcd_4.png" width=80%>
 
 
 ## We'd want to know this
