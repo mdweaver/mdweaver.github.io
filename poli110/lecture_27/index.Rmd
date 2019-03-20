@@ -150,8 +150,7 @@ Contaminated water causes cholera outbreaks
 
 - Dominant view was that "miasmas" or bad air caused diseases like cholera
 
-## Intuition: Adjustment
- {.centered}
+## Intuition: Adjustment {.centered}
 
 John Snow, MD
 
