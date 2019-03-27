@@ -144,7 +144,7 @@ What does this do? Comparisons like this:
 
 ## Design: Difference in Difference
 
-Consider 2 states $State_A$ and $State_B$ at two times $Before$ and $After$
+Consider 2 states $State_T$ and $State_C$ at two times $Before$ and $After$
 
 - $State_T$ sees an increased number of guns between $Before$ and $After$
 - $State_C$ sees no change in guns
@@ -155,7 +155,7 @@ We measure $Homicide$ ($Y$) in both states.
 
 So:
 
-- $FirstDiff = Homocide_{Before} - Homicide_{After}$ gives us change in murders in a $State$...
+- $FirstDiff = Homocide_{After} - Homicide_{Before}$ gives us change in murders in a $State$...
     - holding **unchanging attributes of state** constant (*same case over time*)
 - $SecondDiff = FirstDiff_{T} - FirstDiff_{C}$ gives us change in murders in $Treated$ over time, compared to $Control$
     - holding **shared trends of both states** constant (*similar cases at same points in time*)
