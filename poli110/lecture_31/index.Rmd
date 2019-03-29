@@ -79,31 +79,13 @@ div.footnotes {
 
 **How does it work?**
 
-- Removes confounding from **unchanging** attributes of cases
-- Removes confounding from variables that **change** similarly in treated and untreated cases
+- Hold constant **unchanging** attributes of cases (compare same case before and after "treatment")
+- Hold constant variables that **change together** over time in "treated" and "untreated" cases
 
 **Assumption**:
 
 - "Untreated" case has the trend the "Treated" case **would have had** except for the "treatment"
 - no variables that affect $Y$ and change over time differently in "treated" and "untreated" cases
-
-## Design: Difference in Difference
-
-**Assumption**:
-
-- we assume "untreated" is the "counterfactual trend" for the "treated"
-- we assume "treated" and "untreated" have the "parallel trends"
-
-## Design: Example
-
-**What is it?**
-
-- Compare "treated" cases to "untreated" cases before and after the "treatment"
-
-**How does it work?**
-
-- Hold constant **unchanging** attributes of cases (compare same case before and after "treatment")
-- Hold constant variables that **change together** over time in "treated" and "untreated" cases
 
 ## Difference in Difference: Example
 
@@ -184,7 +166,7 @@ Research options:
     - Could be that other events (terror attacks, political disputes over refugees) cause both hate speech AND violence (confounding variables over time)
     
 - "Similar cases at same time": compare anti-refugee violence over same period in communities with many **AfD** facebook followers versus few **AfD** followers 
-    - Could be that people who follow **AfD** on Facebook more likely to commit violence any way. ("similar")
+    - Could be that people who follow **AfD** on Facebook more likely to commit violence any way. ("similar" cases still fundamentally different)
 
 
 ## Difference in Difference: Example
