@@ -29,7 +29,7 @@ We estimate the effect of incumbency by Islamist parties on the incidence of rel
 </details>
 
 
-
+<hr>
 
 #### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (2019, Volume 113, Issue 2, *American Poliical Science Review*)
 
