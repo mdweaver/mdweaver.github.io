@@ -5,7 +5,7 @@ layout: page
 
 <div style="margin-right: 325px;">
 <p>
-I am a post-doctoral fellow in the Department of Political Science at the University of British Columbia. 
+I am an assistant professor in the Department of Political Science at the University of British Columbia. 
 I am interested in the politics of violence. 
 In particular, I study the legitimation of state and non-state violence as well as the causes and consequences of ethnic violence. 
 </p>

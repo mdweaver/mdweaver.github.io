@@ -19,10 +19,22 @@ This book places the legitimation and de-legitimation of violence squarely at th
 ## Publications <a name="publications"></a>
 
 
-#### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (Forthcoming, *American Poliical Science Review*)) 
+#### With Nicholas Kuipers and Gareth Nellis. *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (Accepted, *British Journal of Political Science*)
+
+<a href="https://doi.org/10.7910/DVN/WTDT8F">Replication File</a>
+
+<details>
+<summary>Abstract</summary>
+We estimate the effect of incumbency by Islamist parties on the incidence of religious violence and intolerance in Indonesia, exploiting discontinuities in the proportional representation system used to allocate seats in district legislative elections---the most local tier of parliamentary government. We find that the presence of additional Islamist (as opposed to secular nationalist) legislators exacerbates religious conflict according to certain measures. There is no evidence that Islamist rule affects average attitudes toward religious minorities among majority-group survey respondents, although it does increase expressions of extreme intolerance. Social emboldening may underlie these effects, as Islamist incumbency appears to boost the perceived acceptability of holding intolerant worldviews. The results shed light on the consequences of having extremist parties gain a share in local power.
+</details>
+
+
+
+
+#### *"<a href='../images/weaver_lynching_apsr.pdf'>'Judge Lynch' in the Court of Public Opinion: Publicity and De-legitimation of Lynching</a>,"* (2019, Volume 113, Issue 2, *American Poliical Science Review*)
 
 <a href="../images/weaver_lynching_apsr_sa.pdf">Supplementary Appendix</a>
-<a href="">Replication File</a>
+<a href="https://doi.org/10.7910/DVN/QTOIQF">Replication File</a>
 
 <details>
 <summary>Abstract</summary>
@@ -31,7 +43,7 @@ How does violence become publicly unacceptable? I address this question in the c
 
 <hr>
 
-#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (Volume 11, Issue 3, *Quarterly Journal of Political Science*)
+#### *"<a href='https://www.nowpublishers.com/article/Details/QJPS-15051'>Do parties matter for ethnic violence? Evidence from India</a>,"* (2016, Volume 11, Issue 3, *Quarterly Journal of Political Science*)
 *with <a href="http://www.garethnellis.com/">Gareth Nellis</a> and <a href="http://www.stevencrosenzweig.com/">Steven Rosenzweig</a>*
 
 <a href="https://www.nowpublishers.com/article/details/supplementary-info/100.00015051_supp.zip">Replication File</a>
@@ -47,13 +59,6 @@ Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-n
 
 
 ## Papers<a name="papers"></a>
-
-#### *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (R&R)
-
-*With Nicholas Kuipers and Gareth Nellis*
-
-<hr>
-
 
 #### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_2018.pdf">here</a>)
 
