@@ -1,0 +1,62 @@
+---
+title: "ISW<br>Trees"
+author: "Michael Weaver"
+date: "December 10, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+##  {data-background=images/bg.jpg data-background-size=cover .centered}
+
+<div class="red" >
+<font size="10">How to recognize trees</font>
+</div>
+
+
+## {.centered}
+
+<img src="./images/parks.png" width = 90%>
+
+## {.centered} 
+
+<img src="images/df_1.jpg" width=30%> <img src="images/wh_1.jpg" width=30%> <img src="images/wrc_1a.jpg" width=30%>
+
+## Objective for Today:
+
+### While walking in local forests, you will be able to correctly identify **douglas-fir**, **western hemlock**, and **western red cedar** trees using visual clues.
+
+## 
+
+|                   | Cones                                   | Leaves                         | Bark                                        |
+|-------------------|-----------------------------------------|--------------------------------|---------------------------------------------|
+| Douglas-fir       | Large w/ "tails"                        | Longer needles<br>in 3D arr'gt     | ![douglas-fir](./images/df_bark.jpg){width=40%}        |
+| Western Hemlock   | Small, round scales                     | Shorter needles<br>flat arr'gt | ![western hemlock](./images/wh_bark.jpg){width=40%}     |
+| Western Red Cedar | Small, pointed scales,<br> floret shape | Scaly leaves                   | ![western red cedar](./images/wrc_bark.jpg){width=40%}  |
+
+# How do we recognize these trees?
+
+
+# Let's practice
+
+## What is this tree? {.centered}
+
+<img src="images/df_2a.jpg" width=45%> <img src="images/df_3.jpg" width=45%>
+
+## What is this tree? {.centered}
+
+<img src="images/wrc_2a.jpg" width=45%> <img src="images/wrc_4a.jpg" width=45%>
+
+## What is this tree? {.centered}
+
+<img src="images/wh_6.jpg" width=45%> <img src="images/wh_2.jpg" width=45%>
+
+## Now you know the names, cones, and needles {.centered} 
+
+<img src="images/df_1.jpg" width=30%> <img src="images/wh_1.jpg" width=30%> <img src="images/wrc_1a.jpg" width=30%>
+
+
+
+
