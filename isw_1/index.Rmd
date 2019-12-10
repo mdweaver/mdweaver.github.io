@@ -32,9 +32,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 |                   | Cones                                   | Leaves                         | Bark                                        |
 |-------------------|-----------------------------------------|--------------------------------|---------------------------------------------|
-| Douglas-fir       | Large w/ "tails"                        | Longer needles<br>in 3D arr'gt     | ![douglas-fir](./images/df_bark.jpg){width=40%}        |
-| Western Hemlock   | Small, round scales                     | Shorter needles<br>flat arr'gt | ![western hemlock](./images/wh_bark.jpg){width=40%}     |
-| Western Red Cedar | Small, pointed scales,<br> floret shape | Scaly leaves                   | ![western red cedar](./images/wrc_bark.jpg){width=40%}  |
+| Douglas-fir       | Large w/ "tails"                        | Longer needles<br>in 3D arr'gt     | ![douglas-fir](./images/df_bark.jpg){width=50%}        |
+| Western Hemlock   | Small, round scales                     | Shorter needles<br>flat arr'gt | ![western hemlock](./images/wh_bark.jpg){width=50%}     |
+| Western Red Cedar | Small, pointed scales,<br> floret shape | Scaly leaves                   | ![western red cedar](./images/wrc_bark.jpg){width=50%}  |
 
 # How do we recognize these trees?
 
@@ -56,6 +56,8 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Now you know the names, cones, and needles {.centered} 
 
 <img src="images/df_1.jpg" width=30%> <img src="images/wh_1.jpg" width=30%> <img src="images/wrc_1a.jpg" width=30%>
+
+#
 
 
 
