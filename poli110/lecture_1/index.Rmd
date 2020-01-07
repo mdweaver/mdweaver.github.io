@@ -1,0 +1,181 @@
+---
+title: "POLI 110<br>Investigating Politics"
+author: "Michael Weaver"
+date: "January 7, 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Course Introduction
+
+## Today's Agenda
+
+### 1. Course Expectations/Assignments
+
+### 2. Course Policies
+
+### 3. Registration/Questions
+
+# Personal Introduction
+
+# Course Expectations
+
+## Your grade
+
+| Item             | Number | Points | Fraction of Grade |
+|------------------|--------|--------|-----------|
+| Course Survey | 1 | 1|  1% |
+| Short Assignments | 4      | 9 | 36%        |
+| Reflection Assignments | 2| 2 | 4% |
+| Midterm Exam     | 1      | 20 | 20%               |
+| Final Exam | 1      | 30 | 30%               |
+| Tutorial Participation | 1 | 9 | 9% |
+
+## Key Dates
+
+1. Reflection 1: January 13
+2. Assignment 1: February 3
+3. Assignment 2: February 17
+4. Midterm Exam: February 27
+5. Assignment 3: March 9
+6. Assignment 4: April 6
+7. Reflection 2: April 7
+
+## Survey
+
+### $\bullet$ Online invitation around Midterm
+
+### $\bullet$ 1 point for *completion*
+
+### $\bullet$ You write; you take it; you analyze
+
+## Short Assignments
+
+### $\bullet$ Apply key concepts to your (constrained) choice of current events
+
+### $\bullet$ Available on Canvas on Mondays at 9AM
+
+### $\bullet$ Exactly 1 week to complete/upload to Canvas
+
+### $\bullet$ Will be run through Turnitin
+
+## Reflection Assignments
+
+### $\bullet$ Practice evaluating real-world arguments 
+
+### $\bullet$ Graded for completion
+
+### $\bullet$ First/last assignments in the course
+
+## Midterm Exam
+
+### $\bullet$ **February 27** in class
+
+### $\bullet$ Covers materials from weeks 2 to 5
+
+### $\bullet$ Review session AND lists of key terms/questions 
+
+## Final Exam
+
+### $\bullet$ Date TBD
+
+### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 6 to 14.
+
+### $\bullet$ Review session and key terms/questions
+
+## Grading
+
+### $\bullet$ **TAs**
+
+### $\bullet$ **Rubrics**
+
+### $\bullet$ **Validation**
+
+### $\bullet$ **No "Curve"**
+
+## What you need to do:
+
+### $\bullet$ **Attend lecture:**
+
+- slides not enough
+
+### $\bullet$ **Attend Tutorial**
+
+- week 2
+- Canvas discussions
+
+### $\bullet$ **Read**
+
+### $\bullet$ **Canvas**
+
+## What I will do:
+
+### $\bullet$ **List of concepts**
+
+### $\bullet$ **Slides**
+
+### $\bullet$ **Speed**
+
+### $\bullet$ **Discussion/Questions**
+
+### $\bullet$ **Examples**
+
+
+# Course Policies
+
+## Missed Exam/ Late Assignments:
+
+### $\bullet$ **Scheduling Conflict**
+
+- Need to know ASAP to get a concession
+
+### $\bullet$ **Arts Advising**
+
+- Arts Advising concession form **to Arts Advising**
+- Both prospective/retroactive: don't stress about this
+
+### $\bullet$ **Lateness**
+
+- non-catastrophic deduction (0.5 points per 24 hours)
+
+## Grade Appeals:
+
+### $\bullet$ **To your TA**
+
+### $\bullet$ **formal written letter** 
+
+### $\bullet$ **48 hours waiting period**
+
+### $\bullet$ **Grades can change $\Updownarrow$**
+
+## Tutorial Attendance:
+
+### $\bullet$ No participation without attendance
+
+- includes Canvas discussions
+
+### $\bullet$ Make up absences/holidays by attending another Tutorial
+
+- **notify both TAs**
+
+### $\bullet$ Excused absences require official concession
+
+- Each unexcused absence induces $(1/n * 100\%)$ deduction from total tutorial score
+- $n$ is the number of **unexcused tutorial dates**
+
+# Registration
+
+## Where we stand:
+
+As of this morning:
+
+### 215/225
+
+### No need for waitlist at this point
+
+# Questions?
+
+
