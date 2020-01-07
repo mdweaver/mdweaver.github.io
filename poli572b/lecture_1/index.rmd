@@ -1,175 +1,184 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 7, 2019"
-output: ioslides_presentation
+date: "January 6, 2020"
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
 ---
 
 ```{r setup, include=FALSE}
+require(knitr)
+require(magrittr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Course Introduction
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+</style>
 
-### Get to know each other
+## Potential Outcomes and Causal Inference
 
-### Plan/Philosophy of the course
+# Introduction
 
-### Causality, Potential Outcomes, Review
-
-# Introductions
-
-# Who are you?<br>degree/year?<br>will use stats?<br>goals for the course?
-
-#
-
-# Course Policies
-
-# Questions
-
-# Causal Inference
-
-## One Example: Can Contact Reduce Prejudice?
-
-<img src="./bk_1.png" width = 100%>
-
-## One Example: Can Contact Reduce Prejudice?
+## Does Contact Reduce Prejudice?
 
 #### Allport and a large literature suggests that prejudice against groups can be reduced through contact
 
 - Contact could create empathy, contradict negative stereotypes. But people could also build empathy without contact.
-- Contact is often chosen... hard to test whether it is contact that actually shifts prejudice, rather than levels of prejudice driving contact
 
-#### Broockman and Kalla replicated a fraudulent experiment that tested prejudice reduction against gays using gay vs. straight canvassers for gay rights.
+## Does Contact Reduce Prejudice?
 
-## Broockman and Kalla 2016
+<img src="./bk_1.png" width = 100%>
 
-- Trans-rights organization canvassed to reduce transphobia in Miama, FL
-- Researchers worked with them to randomize which people received different "treatments"
+## Does Contact Reduce Prejudice?
 
-### Subjects
+#### In pairs: 
 
-- 1825 registered voters 
-- Drawn from responders to invitation to join online survey
+How do statistical tests help authors assess causality?
 
-## Broockman and Kalla 2016
+Do you find these statistical tests persuasive (above causality)?
 
-### Treatments
+## Compare and contrast
 
-Subjects either saw:
-
-- Canvasser on law againts transgender discrimination who was **cis-gender** or **transgender**
-- Canvasser **for** recycling program who was **cis-gender** or **transgender**
-- Canvasser in treatment: asked people to consider time when they were judged negatively for being different
-
-### Survey
-
-- Answered survey questions about discrimination law, transgender tolerance
-- From 3 days after canvass to 3 months
-
-## Estimated Treatment Effects
-
-<img src="./bk_2.png" width = 90%>
-
-
-## Key points:
-
-### Simple analysis, nothing fancy: difference in means
-
-### Design-based inference:
-
-- causality through research design, not statistical tool
-- analysis still depends on a statistical model (though simple, usually credible)
-
-### Contrast with model-based inference:
+> Broockman and Kalla use simple $t$ tests to compare differences in means
 
 > "The power of multiple regression analysis is that it allows us to do in non-experimental environments what natural scientists are able to do in a controlled laboratory setting: keep other factors fixed" (Wooldridge 2009: 77)
 
-## Strong Research Design: pros and cons
+## Design vs. Model-based inferences
 
-### Strengths:
+A matter of **degree**
 
-- Causal inference possible
-- Statistical model simple, transparent, plausible
+#### Statistical evidence for causality in the **real world** combines observed data with a **mathematical model** of the world
 
-### Limitations:
+>- mathematical model of how the data are generated
+>- always involve assumptions
+>- can almost always apply the model, even if it is wrong
 
-- analysis may not follow from the research design
-- lack of external validity
+## Design vs. Model-based inferences
 
-## Causality
+A matter of **degree**
 
-### (1) Counterfactuals
+#### **Model-based** inferences about causality depend on complex statistical models with many assumptions
+
+#### **Design-based** inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions
+
+## Design vs. Model-based inferences
+
+### Whatever our approach...
+
+**do the assumptions needed to use this mathematical tool reasonably fit reality?**
+
+## Objectives
+
+# Causality
+
+## What is causality?
+
+### What does it mean to say that contact **causes** a reduction in prejudice?
+
+## What is causality?
+
+Causality is...
+
+### (1) Counterfactual
+
+- A statement of what the state of the world would have been had prior events been different
+
+> "If legal cannabis policy had not been adopted, then Y..."
+
+- For some putative cause $C$, **causal effect** of $C$ is the difference between the two, otherwise identical, states of the world where $C$ is present versus absent.
+
+## What is causality?
+
+Causality is...
 
 ### (2) Manipulation
 
-## Counterfactuals
+Causality requires something acting on another (a mechanism)
 
-- A counterfactual statement with a false (untrue about the world) premise, and an assertion of what would have happened had the premise been true:
+- e.g. barometer and storms
 
-"If the legal marijuana policy has not been adopted, then Y..."
+## What is causality?
 
-- For cause C, **causal effect** of C is the difference between the two states of the world where C is present versus absent.
-
-### Not a sufficient criterion!
-
-- mercury in barometer and storms
-
-## Manipulation
-
-- Causation as forced action
-
-### Combination with counterfactuals gives us a strong criterion:
+### Counterfactual and manipulation together:
 
 - counterfactuals without manipulation do not give us the direction of causality
 - manipulation without counterfactuals may permit spurious results
 
 ## Potential Outcomes
 
-### Statistical approach to causality combines both:
-
-### Neyman (Rubin; Holland) model:
-
-An experiment with two treatment conditions (treatment and control)
-
-- **potential outcome** under treatment is $Y_i^1$: what unit $i$ would experience if assigned to treatment
-- **potential outcome** under control is $Y_i^0$: what unit $i$ would experience if assigned to control.
-- **unit causal effect** is the difference between these:
-
-$$\tau_i = Y_i^1 - Y_i^0$$
+### A way to formalize a mathematical model of causality
 
 ## Potential Outcomes
 
-### Neyman model is a **causal model**
+Imagine you were a participant in an experiment similar to the Broockman and Kalla paper...
 
-- Explicitly states how units behave under different counterfactual conditions
-- These sets of potential outcomes or **response schedules** are crucial for using statistics to achieve causal inference.
+Write down what you imagine your score would be on a series of questions about group stereotypes (high, medium low)
+
+>- If you were in the **no contact** group
+
+>- If you were in the **contact** group
 
 ## Potential Outcomes
 
-| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
-|---|---------|--------|-----------------|
-| 1 | 3 | 6 | 3 |
-| 2 | 2 | 5 | 3 |
-| 3 | 5 | 8 | 3 |
-| 4 | 4 | 7 | 3 |
-| 5 | 3 | 6 | 3 |
+In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take. 
+
+If $Y_i$ is the level of prejudice for person $i$; $Z$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
+
+1. Level of prejudice with **no contact** is $Y_i(0)$
+2. Level of prejudice **with contact** is $Y_i(1)$
+
+More generally: $Y_i(Z \in (0,1))$
+
+## Potential Outcomes
+
+
+## Potential Outcomes
+
+The **unit causal effect** of contact for person $i$ is the **difference** between the potential outcomes:
+
+$$\tau_i = Y_i(1) - Y_i(0)$$
+
+## Potential Outcomes
+
+Tables of potential outcomes for different units are **response schedules**
+
+- a general tool for thinking of how units behave under different possible counterfactual conditions
+
+## Potential Outcomes
+
+
+## Potential Outcomes
+
+### What happen when we've fallen from Mount Olympus, and we actually have to run our experiment?
 
 ## Potential Outcomes
 
 ### TROUBLE
 
-- Can never directly observe the *unit causal effect*: only ever see $Y_i^1$ or $Y_i^0$, not both.
-
+- Can never observe the *unit causal effect*
+- Only ever observe $Y_i(1)$ or $Y_i(0)$ for a unit $i$, not both.
+- One potential outcome is **factual**; other is **counterfactual**
 
 ### Fundamental Problem of Causal Inference
-
 
 ## Potential Outcomes
 
 **fundamental problem of causal inference**:
 
-| i | $Y_i^0$ | $Y_i^1$ | $Y_i^1 - Y_i^0$ |
+| i | $Y_i(0)$ | $Y_i(1)$ | $Y_i(1) - Y_i(0)$ |
 |---|---------|--------|-----------------|
 | 1 | ? | 6 | ? |
 | 2 | 2 | ? | ? |
@@ -177,25 +186,12 @@ $$\tau_i = Y_i^1 - Y_i^0$$
 | 4 | 4 | ? | ? |
 | 5 | ? | 6 | ? |
 
-## Average Causal Effects
+## Potential Outcomes
 
-Because **unit causal effects** are fundamentally unobservable, focus has been on **average causal effects** (or *average treatment effects*)
+The potential outcomes model (or Neyman Causal Model) points toward a statistical solution:
 
-- For units in $i = 1 \ldots N$
-
-$$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i^1 - Y_i^0]$$
-
-- This parameter takes the difference between two counterfactuals:
-    - average outcome of all units if assigned to treatment
-    - average outcome of all units if assigned to control
-
-## Solving the problem
-
-We have a **parameter** (average causal effect) that we would like to know. But half the data we need is always missing. 
-
-Analogical problem to estimating, e.g., population mean (a parameter) without observing the entire population.
-
-- Use **random sampling** and **statistics** to solve our problem
+- we have missing data about some potential outcomes for each case
+- similar to having data from a sample but not the entire population
 
 # A digression: Review
 
@@ -226,6 +222,7 @@ Analogical problem to estimating, e.g., population mean (a parameter) without ob
 #### (2) **Expected value** of a random variable is a number.
   
 - If $X$ is a random draw from a box of numbered tickets, then $E(X)$ is the mean of the tickets in the box
+    - $E(X)$ has **minimum distance** to all possible values of $X$
 - Any **realization** of the random variable may be above or below the **expected value**
 
 ## Independence and Dependence
@@ -237,6 +234,8 @@ $X$ and $Y$ are random variables.
 
 ## Independence and Dependence
 
+<big>
+
 | **X** | **Y** |
 |-------|-------|
 |1|1|
@@ -246,6 +245,7 @@ $X$ and $Y$ are random variables.
 |3|2|
 |3|3|
 
+</big>
 
 ## Independence and Dependence
 
@@ -263,20 +263,19 @@ $X$ and $Y$ are random variables.
 - We often have **data variables**: lists of numbers
 
 - **random variables** are chance processes for generating numbers
-    - permit us to use chance process to draw inferences
+    - permit us to use observed **realizations** to draw inferences about the random variable
     
-- to treat **data variables** as **random variables** need a **model** for data generating process
-
-- our models may be good descriptions of chance procedure, or not.
+- to treat **data variables** as **random variables** need to *assume* a **model** for data generating process
 
 ## Statistics and Parameters
 
-- Expected value of a random variable is a **parameter**
+- Expected value and other attributes of a random variable are **parameters** 
     - in our examples (e.g. fair die), we have known it
     - usually, we **want** to estimate it
+    - (often greek letters)
     
-- **statistics** (e.g., sample mean) let us draw inferences about **parameters** from the data.
-
+- **statistics** (e.g., sample mean) are data we observe; if model assumptions hold, let us draw inferences about **parameters**.
+    - (often latin letters or $\widehat{greek}$)
 
 ## Statistics and Parameters
 
@@ -294,25 +293,51 @@ $$E\left(\sum\limits_{i=1}^{n}S_i\right) = \sum\limits_{i=1}^{n}E\left(S_i\right
 
 $$\frac{1}{n}\sum\limits_{i=1}^{n}E\left(S_i\right) = n \cdot 3.5 \cdot \frac{1}{n}$$
 
-If we roll die $n$ times and take the mean of spots, it is a random variable. The mean of the draws is, in expectation, the mean of the random variable. AND as $n$ gets large, sample mean will approximate the box/population mean.
+If we roll die $n$ times and take the mean of spots, it is a random variable. The mean of the $n$ draws is, in expectation, the mean of the random variable $S$. AND as $n$ gets large, sample mean will approximate the mean of $S$.
 
 ## Key Takeaway:
 
 We can use repeated observations to estimate parameters of random variable (e.g. expected value).
 
-We did this using independent, identically distributed random draws: good for rolling dice
+We did this assuming independent and identically distributed random draws.
 
-#### but reality is complicated. 
+Good for rolling dice...
+
+### but reality is complicated. 
+
 
 # Return to Causal Effects
 
-## Average Causal Effect unobserved
+## Average Causal Effects
 
-$$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i^1 - Y_i^0]$$
+**unit causal effects** are fundamentally unobservable, so focus has been on **average causal effects** (or *average treatment effects*)
 
-How do we solve our "missing data" problem?
+- For units in $i = 1 \ldots N$
 
-### Random sampling!
+$$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
+
+- This parameter takes the difference between two counterfactuals:
+    - average outcome of all units if assigned to treatment
+    - average outcome of all units if assigned to control
+    
+## Solving the problem
+
+We have a **parameter** (average causal effect) that we would like to know. But data we need is always missing. 
+
+Analogical problem to estimating, e.g., population mean (a parameter) without observing the entire population.
+
+>- We want an **estimator**: mathematical model applied to data we **can** observe that, with assumptions, estimates our **parameter** *without bias*. 
+>- Use **random assignment** to solve our problem
+
+## Solving the problem
+
+Assuming **Random Assignment** does two things:
+
+1. $Z_i$ is independent of $Y_i(1)$ and $Y_i(0)$;
+  - treated $Y(1)$s comes from same "box" as control $Y(1)$s and vice versa.
+2. $E(Y_i(1))$ and $E(Y_i(0))$ are random variables
+  - we know that expected value of sample is equal to "box" expected value.
+  
 
 ## 
 
@@ -320,46 +345,60 @@ How do we solve our "missing data" problem?
 
 ## If we randomly sample
 
-Our parameter:
+**parameter**: $ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$
 
-$$\frac{1}{N}\sum\limits_{i=1}^N [Y_i^1 - Y_i^0]$$
+We use the **estimator** ($\widehat{ACE}$ or $\widehat{\bar{\tau}}$):
 
-Our estimator:
+$$\normalsize\underbrace{\frac{1}{m}\sum\limits_{i=1}^m}_{\text{Avg. over T}} \overbrace{[Y_i(1) | Z_i = 1]}^{\text{Y(treated) for T}} - \underbrace{\frac{1}{N-m}\sum\limits_{i=m + 1}^N}_{\text{Avg. over C}} \overbrace{[Y_i(0) | Z_i = 0]}^{\text{Y(control) for C}}$$
 
-$$\frac{1}{m}\sum\limits_{i=1}^m [Y_i^1 | Z_i = 1] - \frac{1}{N-m}\sum\limits_{i=m + 1}^N [Y_i^0 | Z_i = 0]$$
+<small>
+Where units $1 \to m$ (group $T$) are assigned to treatment $Z = 1$ and units $(N - m) \to N$ (group $C$) assigned to control $Z = 0$.
+</small>
 
-Where $m$ units are assigned to treatment $Z = 1$ and $N - m$ assigned to control $Z = 0$.
 
 ## Causal Inference Using Statistics
 
-#### **Because we randomly assign samples to treatment and control**
+This **estimator** ($\widehat{ACE}$) uses the
 
-1. Expected values of sample mean are equal to population mean
-2. Expected value of mean $Y_i^1$ for sample in treatment equals  population mean of $Y_i^1$
-3. Expected value of mean $Y_i^0$ for sample in treatment equals population mean of $Y_i^0$
-4. Because sample means are random variables, ACE in a sample may differ from the population ACE.
-5. But across all possible assignments of subjects to treatment and control, the average sample ACE is the same as the population ACE
-6. This estimate is **unbiased**
+- mean value of $Y(1)$ for the **treatment** group (observable) to stand in for mean $Y(1)$ for **all** units (unobservable)
+- mean value of $Y(0)$ for the **control** group (observable) to stand in for mean $Y(0)$ for **all** units (unobservable)
+
+## Causal Inference Using Statistics
+
+#### **Because we randomly assign**
+
+1. Expected value of mean for **sample** in treatment $E(Y_i(1) | Z = 1)$ equals population mean $E(Y_i(1))$
+2. Expected value of mean for **sample** in control $E(Y_i(0) | Z = 0)$ equals population mean $E(Y_i(0))$
+3. Because **sample** means are random variables, $\widehat{ACE}$ in a sample may differ from the parameter $ACE$.
+5. Across **all possible assignments**: $E(ACE) = E(\widehat{ACE})$, thus $\widehat{ACE}$ is unbiased.
+ 
 
 ## Algebraically:
 
-$$ACE =\frac{1}{N}\sum\limits_{i=1}^N [Y_i^1 - Y_i^0]$$
+$$ACE =\frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
 
-$$ACE =E[Y_i^1 - Y_i^0]$$
+$$ACE =E[Y_i(1) - Y_i(0)]$$
 
-$$ACE =E[Y_i^1] - E[Y_i^0]$$
+$$ACE =E[Y_i(1)] - E[Y_i(0)]$$
 
-And because $Z_i$ is randomly assigned:
+And if $Z_i$ is randomly assigned:
 
-$E[Y_i^1|Z_i = 1] = E[Y_i^1|Z_i = 0] = E[Y_i^1]$
-$E[Y_i^0|Z_i = 0] = E[Y_i^0|Z_i = 1] = E[Y_i^0]$
+$$ACE = E[Y_i(1)|Z_i = 1] - E[Y_i(0)|Z_i = 0]$$
+$$ACE = E(\widehat{ACE})$$
 
 ## Key Assumptions
 
-For us to get an **unbiased** estimate of the average causal effect, we **assume**:
+For us to get an **unbiased** estimator of the average causal effect, we use a statistical model that **assumes**:
 
-1. **Random assignment**: units are sample at random (or as if at random) from the study group and assigned to treatment or control
-2. Non-interference/SUTVA: each unit's outcome depends only on its treatment assignment (not on assignment of others)
-3. Exclusion restriction: treatment assignment only affects outcomes through receipt of treatment
+1. **Random assignment**: units are sample at random (or as if at random) from the study group and assigned to treatment or control ($Z$ is independent of $Y(1)$ and $Y(0)$)
+2. **Non-interference/SUTVA**: each unit's outcome depends only on its treatment assignment (not on assignment of others)
+3. **Exclusion restriction**: treatment assignment only affects outcomes through receipt of treatment
 
-### Can we test or evaluate the validity of these assumptions?
+## Key Assumptions
+
+Limitations:
+
+- Only reveals **average** effect
+- Trade-offs in terms of relevance:
+     - does experimental sample reflect population of interest?
+     - might there be "general equilibrium effects"?
