@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## {.centered}
 
 <figure>
-<img src="./weber.jpg" width=50%>
+<img src="./weber.jpg" width=51%>
 <figcaption>Max Weber. German. 1864-1920</figcaption>
 </figure>
 
