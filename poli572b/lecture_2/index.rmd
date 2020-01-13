@@ -727,7 +727,7 @@ Once we have this table of potential outcomes, we:
 
 ## Randomization Inference
 
-``` {r}
+``` {r, echo = F}
 ts = randomizations[sample(1:20, 1),]
 y = p_o_table[, ifelse(region_i %in% ts, y_i_1, y_i_0)]
 Z = p_o_table[, region_i %in% ts]
