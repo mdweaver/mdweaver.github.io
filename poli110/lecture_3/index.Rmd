@@ -1,0 +1,284 @@
+---
+title: "POLI 110"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What is Science?
+
+## Plan for Today
+
+### 1) Recap Weber's insights
+
+### 2) Attributes of scientific evidence
+
+### 3) Example
+
+### Open `menti.com`; wait for code
+
+# Recap
+
+# Scientific Evidence
+
+## Two Key definitions
+
+### **claim**: 
+
+(For our purposes) a statement about what is true or valid. *If you can add "is true" to the end or "it is true that" to the beginning of the statement without changing the meaning, it is a claim.
+
+### Don't overthink this definition. It is as simple as it seems.
+
+## Two Key definitions
+
+### **basis**: 
+
+(For our purposes) the basis for a claim is the **reason we should accept the truth** or validity of that claim. It is the **evidence** that is used to "prove" the claim is true **and** the **assumptions** required for the evidence to be valid "proof" (sometimes called the "warrant")
+
+## An example:
+
+### **claim**: "It rained last night"
+
+### **basis**: "The street is wet"
+
+<br>
+
+What is the evidence? What are the assumptions behind that evidence? 
+
+#
+
+## Using Science to Evaluate Claims
+
+**Science** is distinct in 
+
+#### (1) Only certain *claims* can be investigated
+
+#### (2) Having special rules for using evidence and making assumptions to accept claims
+
+#
+
+## Go to menti.com  Code 88 70 72
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e6bab70316b70b6bc7e3c34baf856c7f/4e6f3e3deed9' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+# Scientific Evidence:
+
+## Scientific Evidence:
+
+### **Systematic use of evidence**
+
+### **Transparent procedures**
+
+### **Acknowledge uncertainty**
+
+### **Test claim against alternatives**
+
+## Transparent procedures 
+
+### How did you arrive at your conclusion?
+
+- What data / observations did you use?
+- What comparisons did you make?
+- What choices as a researcher did you make, and why
+
+### Why?
+
+- Others can know the assumptions required to find result
+- Others can question your choices
+- Others can replicate your work (objectivity)
+
+
+## Consider alternatives 
+
+### Test your claim against other competing claims
+
+- Whichever claim "survives" many different tests is best
+
+### Why?
+
+- Openness to being wrong (no assumption above challenge)
+- One piece of evidence can be consistent with many claims
+- Best claim generates most useful predictions
+
+## Systematic Use of Evidence 
+
+### Observations we make:
+
+- Clear rules for **what** we observe
+- Clear rules for **how** we observe
+- Clear rules for **comparison**
+- Avoids "cherry-picking" 
+
+### Why?
+
+- Cherry picking assumes a truth, picks data
+- Cherry picking doesn't consider alternatives
+- Need to be able to consider challenge to our evidence
+
+## Acknowledge uncertainty
+
+### Limitations of finding:
+
+- What questions remain unanswered after your study (what didn't it tell us)
+- What assumptions did we make that might not be true?
+
+### How certain or precise are our answers?
+
+- Acknowledge possibility of chance relationships
+- How confident can we be about our results being real?
+
+
+## Go to menti.com  Code 56 56 47
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e6bab70316b70b6bc7e3c34baf856c7f/4e6f3e3deed9' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+# Example
+
+## Consider a claim:
+
+> **A person's prejudice against a group of people can be reduced through meaningful, interpersonal contact with a member of that group.**
+
+## An investigation
+
+### 2014 paper in *Science*: researchers conduct an experiment
+
+<img src="./lacour_title.png" width = 100%>
+
+## Prediction:
+
+### Are efforts to **change the minds** of opponents same-sex marriage through conversation **more successful** when they are done by homoesexuals (compared to heterosexuals)?
+
+<br>
+
+**One hand = NO; Two hands = YES**
+
+# Should we believe the results?
+
+## To believe the results
+
+What do you need to know...
+
+### about **Transparent Procedures**?
+
+#
+
+## Treatments:
+
+<img src="./lacour_3.png" height = 100%>
+
+## Who was treated?
+
+<img src="./lacour_2.png" height = 100%>
+
+## How did they get treated?
+
+<img src="./lacour_4.png" height = 100%>
+
+## What were the survey questions?
+
+<img src="./lacour_5.png" width = 100%>
+
+## To believe the results
+
+What do you need to know...
+
+### about **Systematic use of evidence**?
+
+#
+
+## Systematic use of evidence:
+
+### What was the sample?
+
+<img src="./lacour_8.png" width = 100%>
+
+## Systematic use of evidence:
+
+### What were the comparisons?
+
+<img src="./lacour_9.png" width = 100%>
+
+## To believe the results
+
+What do you need to know...
+
+### about **Considering Alternatives**?
+
+#
+
+## Consider alternatives:
+
+### Could it be that effect is from having someone come to the door?
+
+- Not the content or the contact, simply being canvassed
+
+## Consider alternatives:
+
+### What if gay canvassers are different that straight in other ways?
+
+- Might be better able to articulate issue
+- Might be more motivated, so more persuasive
+- Might be different in other ways that make them persuasive
+
+## To believe the results
+
+What do you need to know...
+
+### about **Acknowledging Uncertainty**?
+
+#
+
+## Uncertainty
+
+### Statistical uncertainty
+### Uncertainty in conclusions
+
+## Results have confidence intervals
+
+<img src="./lacour_11.png" width = 100%>
+
+## Results leave questions
+
+### **Why were indirect effects larger for gay canvassers?**
+
+<br>
+
+### **Would this work for other identity groups?**
+
+## Results:
+
+### **Canvassing for gay marriage (compared to recycling) reduced prejudice**
+
+<br> 
+
+### **Reductions in prejudice larger and last longer with homosexual canvassers**
+
+# Do you believe these results? 
+
+##
+
+<img src="./lacour_17.png" width = 100%>
+
+## How was he caught?
+
+<img src="./lacour_irreg.png" width = 100%>
+
+## What do you think now?
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e6bab70316b70b6bc7e3c34baf856c7f/4e6f3e3deed9' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+## Conclusion:
+
+### <u>**Transparent procedures**</u>
+
+### **Systematic use of evidence**
+
+### **Acknowledge uncertainty**
+
+### **Test claim against alternatives**
+
+## Appendix
+
+For the story of the fraud and replication, listen [here](https://www.thisamericanlife.org/584/for-your-reconsideration)
