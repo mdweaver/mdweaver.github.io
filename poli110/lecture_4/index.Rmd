@@ -261,33 +261,6 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 
 >- Consider debates about climate change: people cite competing surveys of experts
 
-## **claim** {.centered}
-
-### **You should drink less coffee.**
-
-# {.centered}
-
-<img src='./study_1.png' width = 100%>
-<img src='./study_2.png' width = 100%>
-<img src='./study_3.png' width = 100%>
-
-# Do you believe this?
-
-## Experts
-
-### Beware: 
-
-- The basis of authority is often "science"/"researchers"/"studies"
-- This changes science into a kind **magic**
-
-## Transparency
-
-<img src='./Medical_studies-05.0.jpg' width=80%>
-
-## Worst case scenario:
-
-### [Studies Show That You Should Come Into This Room Right Over Here, And That You Should Come Alone](https://the-toast.net/2015/06/24/studies-show-that-you-should-come-into-this-room-right-over-here-and-that-you-should-come-alone/)
-
 # Conclusion:
 
 ## Conclusion:
@@ -295,4 +268,4 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 1. **Many ways for claims to be unscientific**
 2. **Comes down to not meeting four attributes of scientific evidence**
 3. **You can recognize when this happens**
-4. **Even appeals "scientists" may be unscientific**
+
