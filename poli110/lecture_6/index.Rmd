@@ -1,0 +1,359 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "January 23, 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Varieties of Claims
+
+## Plan for Today
+
+### 1) Recap: Normative vs. Empirical claims
+
+### 2) Empirical Claims: causal vs. descriptive
+
+### 3) Falsifiable/Unfalsifiable
+
+<br>
+open `menti.com`
+
+# Recap
+
+
+## AfD Arguments
+
+(1) **About 1.1 million refugees entered Germany during 2015.**
+
+(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.**
+
+(3) **Alexander Gauland: "we don't like the values of Islam based on sharia [law] that are not compatible with our Basic Law."**
+
+(4) **"Illegal mass migration undermines the opportunities in life for socially worse off Germans."**
+
+(5) **This influx in refugees *increased* violent crime.**
+
+(6) **Germany should admit far fewer refugees/immigrants.**
+
+## menti: 56 32 59
+
+(1) **About 1.1 million refugees entered Germany during 2015.**
+
+(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.**
+
+(3) **Alexander Gauland: "we don’t like the values of Islam based on sharia [law] that are not compatible with our Basic Law." **
+
+(4) **"Illegal mass migration undermines the opportunities in life for socially worse off Germans."**
+
+(5) **This influx in refugees *increased* violent crime.**
+
+(6) **Germany should admit far fewer refugees/immigrants.**
+
+##
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/2aff5cc5274239517887531adaa925f0/2ca09de936d2' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+# Varieties of <br> Empirical Claims
+
+## Varieties of Claims
+
+### **Which varieties of claims/questions can be addressed with science?**
+
+### Three dimensions
+
+1. Empirical vs. Normative
+2. **Varieties of empirical** and normative claims/questions
+3. **Falsifiable vs. unfalsifiable**
+
+## Some empirical claims
+
+1. **In 2018, Canada had 0.67 firearms homicides per 100K while the US had 3.14 per 100K.**
+
+2. **The United States has more assault weapons per capita and more mass shooting victims than Canada**
+
+3. **Canada has fewer firearms deaths per capita than the US because Canada has stricter gun laws.**
+
+4. **Americans use guns in self-defense about 2.3 million times per year.**
+
+5. **People who openly carry a firearm are less likely to be victims of crimes**
+
+6. **Making it easier to legally carry a concealed firearms increases firearms deaths.**
+
+
+## Descriptive claims:
+
+### **descriptive claims:**
+
+claims about what exists (or has existed/will exist) in the world: 
+
+- **what phenomena exist** (what kinds of things exist?)
+- **what is the type of a specific phenomenon** (what is this thing?)
+- **amount/frequency of phenomena** (how much of something is there?)
+- **relative amount/frequency of phenomena across different places/times** (how much of something is there here vs. there/now vs. then?)
+- **what patterns are there in the shared appearance/non-appearance of different phenomena** (does this thing usually appear together with that other thing?)
+
+## Which of these are descriptive?
+
+(1) **About 1.1 million refugees entered Germany during 2015.** (descriptive)
+
+(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.** (descriptive)
+
+(4) **"Illegal mass migration undermines the opportunities in life for socially worse off Germans."**
+
+(5) **This influx in refugees *increased* violent crime.**
+
+## Causal claims:
+
+### **causal claims**:
+
+are claims about the how one phenomena ($X$) affects or causes another phenomena ($Y$). Causal claims state that $X$ **acts on** $Y$ in some way, not merely that they appear together in some pattern:
+
+- the **effect** that one thing or event has on another thing (effects of causes)
+- the **cause** of some event or thing in the world (causes of effects)
+- the *conditions* under which some thing or event *happens* (causes of effects)
+- the *process* through which one thing affects another (causes of effects)
+
+## Which of these are causal?
+
+(1) **About 1.1 million refugees entered Germany during 2015.** (descriptive)
+
+(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.** (descriptive)
+
+(4) **"Illegal mass migration *undermines* the opportunities in life for socially worse off Germans."** (causal)
+
+(5) **This influx in refugees *increased* violent crime.** (causal)
+
+
+## **How to recognize causal claims** 
+
+(compared to descriptive claims)
+
+### Causal claims include some kind of  **causal verb (or phrase)**. E.g.:
+
+-  (non-exhaustive list): "causes", "influences","makes happen", "increases", "decreases", "results in", "was necessary for", etc.
+- can always be restated as a phrase with a verb, subject, and some object, where subject is the cause and object (or one of the objects) is the affected thing.
+- can always be restated as a phrase like "$X$ causes $Y$ to change in some way" or "$Y$ changes in some way because of $X$"
+
+## Menti code 93 69 84
+
+1. **In 2018, Canada had 0.67 firearms homicides per 100K while the US had 3.14 per 100K.**
+
+2. **The United States has more assault weapons per capita and more mass shooting victims than Canada**
+
+3. **Canada has fewer firearms deaths per capita than the US because Canada has stricter gun laws.**
+
+4. **Americans use guns in self-defense about 2.3 million times per year.**
+
+5. **People who openly carry a firearm are less likely to be victims of crimes**
+
+6. **Making it easier to legally carry a concealed firearms increases firearms deaths.**
+
+##
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/221a2a467f8e19f17162f5a1170fff8e/82f4586c9380' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+##
+
+<div class="columns-2">
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height=100% src='https://www.mentimeter.com/embed/221a2a467f8e19f17162f5a1170fff8e/82f4586c9380' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width=45%></iframe></div>
+
+
+$1$. Canada had 0.67 firearms homicides/100k; the US had 3.14.
+
+$2$. US has more assault weapons and more mass shooting victims than Canada
+
+
+<div>
+$3$. Canada has fewer gun deaths than the US because of stricter gun laws.
+
+$4$. Guns are used in self-defense 2.3 mil times in US.
+
+$5$. People who open-carry a gun are less likely to be victims
+
+$6$. Easier concealed carry increases gun deaths
+</div>
+
+</div>
+
+##  **How to recognize causal claims** 
+
+(compared to descriptive claims)
+
+### Causal claims always imply: *if* **we** could directly **manipulate** one thing $X$, then we would see $Y$ change
+
+
+## Turn these into causal claims:
+
+1. **In 2018, Canada had 0.67 firearms homicides per 100K while the US had 3.14 per 100K.**
+
+2. **The United States has more assault weapons per capita and more mass shooting victims than Canada**
+
+4. **Americans use guns in self-defense about 2.3 million times per year.**
+
+5. **People who openly carry a firearm are less likely to be victims of crimes**
+
+# Digression
+
+## Causal and Prescriptive Claims
+
+You and your friend agree: **the most important ethical goal is minimizing human death** (**value judgment**)
+
+### You disagree on what to do:
+
+(1) We should donate mosquito nets to stop malaria (**prescriptive claim**)
+
+(2) We should give money directly to impoverished people (**prescriptive claim**)
+
+### Need to know:
+
+Which option **prevents** the most human deaths? (a **causal** question)?
+
+# Falsifiability
+
+## Which claims can science evaluate? 
+
+### **\#NotAllEmpiricalClaims testable with science**
+
+## Falsifiability
+
+### an empirical claim is  **falsifiable**...
+
+- if that claim **could be shown to be wrong** by some **empirical evidence**. 
+
+- Even if we **never** conclude that the claim is wrong, it would be possible to **observe** evidence to prove it wrong.
+
+- e.g. The Earth orbits the Sun.
+
+### an empirical claim is **unfalsifiable**...
+
+- if there is no **empirical evidence** that could show the claim is wrong.
+
+## Falsifiability
+
+### **Because science considers alternatives/is open to being wrong...**
+
+<br>
+
+we can only **scientifically** evaluate **claims** that can, **could** be shown to be wrong. 
+
+Only empirical claims that are **falsifiable** are open to scientific inquiry.
+
+## Falsifiability
+
+### Contrast with **verifiability**
+
+If we had an empirical claim, $H_1$ ($H$ for hypothesis)
+
+and, if $H_1$ were true or valid, then it implies we should make certain empirical observations $O_1$
+
+Verification says that
+
+1. $H_1 \rightarrow O_1$
+
+2. If we see $O_1$
+
+3. Therefore, $H_1$ is valid
+
+## Falsifiability
+
+Many people reject **verifiability** because many different, incompatible claims are compatible with the same observed evidence
+
+1. $(H_1, H_2, \ldots, H_k) \rightarrow O_1$
+
+2. If we observe $O_1$
+
+3. $H_1$ is not proven
+
+## Falsifiability
+
+If a claim $H_1$ is falsfiable, there might be observable implication $O_1$ that, if it were untrue would invalidate $H_1$. So...
+
+1. $H_1 \rightarrow  O_1$
+2. $not\ O_1$
+3. Therefore, $not\ H_1$
+
+
+## Examples
+
+$H_1:$ **"Immigrants are coming across the border to kill you"** ~ [Donald Trump](https://www.vox.com/2019/1/8/18174782/trump-speech-immigration-border)
+
+<u>**Verification**</u>
+
+1. $H_1 \rightarrow$ Murder committed by an "illegal immigrant"
+
+2. There has been a murder by an "illegal immigrant" [see here](https://globalnews.ca/video/4401017/trump-slams-illegal-immigration-cites-mollie-tibbetts-murder)
+
+3. Therefore, "Immigrants are coming across the border to kill you"
+
+## Examples
+
+$H_1:$ **"Immigrants are coming across the border to kill you"**   
+$H_2:$ **"One immigrant committed murder"**   
+$H_3:$ **"Two immigrants committed murder"**   
+$H_4:$ **"Immigrants are less prone to murder than native born citizens"**
+
+<u>**Verification?**</u>
+
+1. $(H_1, H_2, H_3, H_4 \dots H_k) \rightarrow$ Murder committed by an "illegal immigrant"
+
+2. There has been a murder by an "illegal immigrant" [see here](https://globalnews.ca/video/4401017/trump-slams-illegal-immigration-cites-mollie-tibbetts-murder)
+
+3. Therefore, $H_1, H_2, H_3, or\ H_4$ could be valid
+
+
+## Example: Lizard People
+
+<img src="https://i.ytimg.com/vi/wZ_4uh2eG7U/maxresdefault.jpg" width =90%>
+
+$H_1$: **World leaders are actually lizard people who seek to dominate humans**
+ 
+## Lizard People: Verification
+
+$O_1$: **World leaders exhibit lizard traits** 
+
+<img src='./lizard_p0.png' width = 75%>
+
+
+## Lizard People: Verification
+
+We observe $O_1$:
+
+<img src='./lizard_p1.png' width = 75%>
+
+## Lizard People: Verification
+
+$O_1 \to H_1$: **Bow down before your lizard overlords**
+
+<img src="https://punkee.com.au/wp-content/uploads/2018/07/rtetre-780x520.png" width=80%>
+
+## Lizard People: Unfalsifiable
+
+How would we **falsify**?
+
+1. $H_1$: **World leaders are actually lizard people who seek to dominate humans** $\to ?$
+
+2. $not \ ?$
+
+3. $not \ H_1 ?$
+
+What observable implication of this could be proven wrong?
+
+## Lizard People: Unfalsifiable
+ 
+<img src='./lizard_vox.png' width=100%>
+ 
+# Objectives
+
+## Lessons
+
+What kinds of claims can science evaluate?
+
+1. **Empirical** vs. Normative
+2. **Varieties of empirical** and normative claims/questions
+    - causal, descriptive
+3. **Falsifiable**/unfalsifiable
