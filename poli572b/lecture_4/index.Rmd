@@ -1,0 +1,867 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "January 27, 2020"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+require(ggdag)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  color: #FFFFFF;
+  }
+</style>
+
+# Conditioning
+
+--- 
+
+### Objectives
+
+1. $ACE$ without randomization
+2. Confounding
+
+- DAGs
+- Dependence in Potential Outcomes
+
+3. Conditioning
+
+- how it works
+- what not to do
+- methods
+
+
+# Example
+
+
+---
+
+### An Example
+
+**What happens when we don't have randomization**?
+
+- experiments are expensive, hard to do
+- randomization often impossible on certain questions (cost/ethically prohibitive)
+
+How do we get unbiased estimate of $ACE$ or other causal parameter?
+
+---
+
+### An Example
+
+**Contact Hypothesis**:
+
+> Teach For America (TFA) is a prominent national service program that integrates top university graduates into low-income communities (often of color) for two years as teachers. Does service in TFA induce participants to harbor lower racial "resentment"?
+
+---
+
+### An Example
+
+**Contact Hypothesis**:
+
+Imagine we survey and compare TFA participants and non-participants graduating from the same set of universities.
+
+Racial "resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today,limiting the chances of individuals from particular racial groups to get ahead?").
+
+Score $1$ to $5$, with $5$ being greatest resentment.
+
+---
+
+### An Example
+
+We can imagine **potential outcomes**:
+
+$i$ indexes individuals
+
+$TFA_i$ indicates TFA participation ($1$) or not ($0$)
+
+$Y_i(0)$ is racial "resentment" without TFA
+
+$Y_i(1)$ is racial "resentment" with TFA
+
+---
+
+### Potential Outcomes: TFA
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0)
+                      )
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+What is the true $ACE$?
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0)
+                      )
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+What is the estimate: $\widehat{ACE}$?
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0)
+                      )
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+
+---
+
+```{r}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0)
+                      )
+#ace
+ace = po.table[, y_i_1 - y_i_0] %>% mean
+
+#ace_hat
+ace_hat = po.table[, mean(y_i_1[(d_i)]) - mean(y_i_0[!(d_i)])]
+
+ace
+ace_hat
+```
+
+---
+
+#### Why is the $\widehat{ACE}$ biased?
+
+# Confounding
+
+---
+
+### Confounding
+
+**Confounding** occurs when, in the cases we observe, the values of treatment $D$ or $Z$ are **not independent** of potential outcomes of $Y$.
+
+If we ignore confounding, then our estimate of the $ACE$ will be **biased**.
+
+>- Why might value of treatment (TFA) be **not independent** of potential outcomes of $Y$?
+
+---
+
+Non-independence of potential outcomes
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0)
+                      )
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+### Confounding
+
+- **Occurs frequently when we don't have randomization**
+    - Note: $Z$ will be reserved for randomized variables; $D$ when randomization is unclear.
+- **Can occur, despite randomization**
+    - exclusion restriction violation
+    - attrition
+- **Easy to understand graphically**
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+**DAGS**:
+
+- **nodes**/**vertices** represent variables part of **causal chain**
+    - may be observed (filled) / unobserved (empty)
+- **directed arrows** represents flow of causality (not the magnitude/direction/functional form of effect)
+- **no cycles**: variables cannot cause themselves (even indirectly)
+
+---
+
+
+```{r, echo = F}
+dagify(mammogram ~ invite,
+       mammogram ~ class,
+       mammogram ~ educ,
+       educ ~ class,
+       death ~ mammogram,
+       death ~ class,
+       death ~ educ,
+       exposure = "invite", 
+       outcome = 'death',
+       labels = c('mammogram' = "Mammogram", 
+                  'death' = 'BC Death',
+                  'invite' = "HIP Invite",
+                  'class' = 'Class',
+                  'educ' = 'Education')) %>%
+  ggdag(use_labels = "label", text = F, layout = 'auto')
+
+```
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+Using a **DAG**:
+
+**Confounding** exists when there is a **backdoor path** between **causal variable** $D$ and the outcome $Y$.
+
+A **backdoor path** is a **non-causal** path from $D$ to $Y$: 
+
+- any path that remains after we remove arrows point out of $D$
+- "backdoor" because it flows backwards out of $D$
+- backdoor path can only change direction once (backwards from $D$, forwards to $Y$)
+
+---
+
+What are the backdoor paths for "Mammogram"?
+
+```{r, echo = F}
+dagify(mammogram ~ invite,
+       mammogram ~ class,
+       mammogram ~ educ,
+       educ ~ class,
+       death ~ mammogram,
+       death ~ class,
+       death ~ educ,
+       exposure = "invite", 
+       outcome = 'death',
+       labels = c('mammogram' = "Mammogram", 
+                  'death' = 'BC Death',
+                  'invite' = "HIP Invite",
+                  'class' = 'Class',
+                  'educ' = 'Education')) %>%
+  ggdag(use_labels = "label", text = F, layout = 'auto')
+
+```
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+The "backdoor" criterion for confounding points to solutions:
+
+1. Find a causal variable that has no backdoor paths:
+
+- randomization is only way to be sure
+
+---
+
+Using the $CACE$ in an Experiment
+
+```{r, echo = F}
+dagify(mammogram ~ invite,
+       mammogram ~ class,
+       mammogram ~ educ,
+       educ ~ class,
+       death ~ mammogram,
+       death ~ class,
+       death ~ educ,
+       exposure = "invite", 
+       outcome = 'death',
+       labels = c('mammogram' = "Mammogram", 
+                  'death' = 'BC Death',
+                  'invite' = "HIP Invite",
+                  'class' = 'Class',
+                  'educ' = 'Education')) %>%
+  ggdag(use_labels = "label", text = F, layout = 'auto')
+
+```
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+Exclusion Restriction Violation in $CACE$
+
+```{r, echo = F}
+dagify(discuss ~ talk_show,
+       anger ~ talk_show,
+       ethnic ~ discuss,
+       ethnic ~ anger,
+       ethnic ~ u,
+       exposure = "talk_show", 
+       outcome = 'ethnic',
+       labels = c('discuss' = "Discussion", 
+                  'ethnic' = 'Ethnic Trust',
+                  'talk_show' = "Talk Show",
+                  'u' = 'Other',
+                  'anger' = 'Anger')) %>%
+  ggdag_paths(layout = 'circle', text = F, use_labels = 'label') + 
+        theme(legend.position = 'none')
+```
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+The "backdoor" criterion for confounding points to solutions:
+
+1. Find a causal variable that has no backdoor paths:
+
+- randomization is only way to be sure
+
+2. "**Condition**" on variables to "block" backdoor paths
+
+- assuming we block **all** backdoor paths
+- assuming we don't **unblock** new paths
+- assuming we can **correctly measure** relevant variables
+
+
+---
+
+### Conditioning:
+
+**conditioning** is when we examine the effect of $D_i$ on $Y_i$ within subsets/strata of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
+
+- Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
+- We hold value of other variables on backdoor paths constant, examine relationship between $D$ and $Y$.
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+**In two groups**:
+
+Create a DAG for the TFA example on the white board.
+
+- what are variables that might **affect racial resentment**?
+- what are variables that might **affect joining TFA**?
+- what are causal links between them?
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+**Condition on** variables that
+
+- have causal paths toward $D$ and toward $Y$ 
+- have causal paths toward $Y$ and backward path toward $D$ 
+
+**Do NOT condition on** variables that
+
+- **are on causal path** from $D$ to $Y$ (mediators)
+- **are "colliders"** connected to backdoor paths
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+We may be tempted to condition on as many variables as possible, but this can lead to trouble!
+
+**colliders**: variable that is causally influenced by two or more variables (2+ arrows pointing into it). The causal variables influencing the collider are themselves not necessarily associated.
+
+- **conditioning** on the **collider** can INDUCE associations between variables that were not associated.
+- typically (not always) due to conditioning on post-treatment variable
+
+
+---
+
+### Consider University Admissions:
+
+Admission might be a function of 
+  - Motivation
+  - Academic Ability (as measured by exam scores)
+  - Assume motivation/academic ability are **independent** of each other
+
+**Within strata defined by admission status**, ability and motivation are **no longer independent**.  
+
+---
+
+```{r,echo = F}
+n = 250
+test = rnorm(n)
+motivation = rnorm(n)
+score = test + motivation
+admit = ifelse(score > quantile(score, probs = c(0.85)), "Yes", "No")
+
+plot_data = data.table(test, motivation, Admit =  admit)
+ggplot(plot_data, aes(x = test, y = motivation, color = Admit)) + 
+  geom_point() + 
+  xlab("Test Score") + 
+  ylab("Motivation") + theme_bw()
+
+```
+
+
+---
+
+Condition on what to find the effect of ability on earnings (if we only measure exam score)?
+
+```{r, echo = F}
+dagify(income ~ u,
+       income ~ score,
+       income ~ parent_income,
+       score ~ ability,
+       score ~ parent_income,
+       university ~ score,
+       university ~ motivation,
+       income ~ motivation,
+       exposure = "score", 
+       outcome = 'income',
+       labels = c('income' = "Earnings", 
+                  'score' = 'Exam Score',
+                  'ability' = "Ability",
+                  'u' = 'Other',
+                  'parent_income' = 'Parent Income',
+                  'university' = 'University',
+                  'motivation'= 'Motivation')) %>%
+  ggdag(layout = 'auto', text = F, use_labels = 'label') + 
+  theme(legend.position = 'none')
+```
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+To find effect of ability (through exam scores) on income, should condition on:
+
+- Parent Income (close back door path)
+- NOT University (a collider: opens backdoor path from motivation to earnings.)
+
+---
+
+### Colliders
+
+If both **motivation** and **test scores** cause admission (but are independent of each other), conditioning on admission (stratifying by admission) can lead us to see negative association between the two.
+
+When does this arise?
+
+- Can happen in a variety of circumstances, but is VERY COMMON for variables that are "post-treatment"
+- See Morgan and Winship, Chapter 4
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+1. **Condition on** variables that
+
+- **have causal paths toward $D$ and toward $Y$ **
+- have causal paths toward $Y$ and backward path toward $D$ 
+
+2. **Do NOT condition on** variables that
+
+- **are on causal path** from $D$ to $Y$ (mediators)
+- **are "colliders"**
+
+3. Best practice:
+
+**Condition on variables that have causal paths toward $D$ and $Y$**: "pre-treatment"
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+**In two groups**:
+
+Switch diagrams:
+
+**Identify variables we need to condition on to close backdoor paths** and find effect of TFA on racial resentment
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+#### Pros:
+
+- Can tell us when conditioning can/cannot block backdoor paths
+- Can tell us what to condition on/ not to condition on
+- Can help us be **explicit** about our assumptions (what backdoors or colliders can/cannot exist)
+- Software to figure out complex situations
+
+#### Cons:
+
+- DAGs are assumed, never really known
+- 
+
+# Conditioning
+
+---
+
+### Conditioning: Example
+
+Imagine we have our binary treatment $TFA_i$ and we want to know its average effect on $Y_i$, racial resentment.
+
+But we lack random assignment; potential outcomes of $Y_i$ are dependent on values of $TFA_i$. 
+
+We think that this dependence is induced by $X_i$, which affects $TFA_i$ and $Y_i$.
+
+We solve this problem with conditioning.
+
+---
+
+Example (1)
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0,0),
+                      x_i = c(0,0,1,0,1,1)
+                      )
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+In this case,  **conditioning** contrasts to calculating **naive** $\widehat{ACE}$:
+
+Rather than taking this difference:
+
+$ACE \neq E[\widehat{ACE}] = E[Y^T - Y^C] = E[Y(1) | TFA = 1] - E[Y(0)|TFA=0]$
+
+Instead, we find effect of $TFA$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
+
+$\widehat{ACE}[X = x] = \overline{Y(1)}[X = x] - \overline{Y(0)}[X = x]$ for each value of $z$ in the data. Where $\overline{Y}$ is the mean of observed values of $Y$ for 
+
+Then take a weighted average of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
+
+---
+
+Example (1): Let's "condition" on $X$
+
+```{r, echo = F}
+po.table[, y_i := ifelse(d_i == 1, y_i_1, y_i_0)]
+setkey(po.table, x_i, d_i)
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$", "$Y_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+---
+
+Example (1): Conditioning in `R`
+
+```{r}
+#ACE | X = 0
+ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#ACE | X = 1
+ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#Ace Hat
+mean(c(ace_x0, ace_x1))
+
+#Ace
+ace
+```
+
+>- Why does conditioning recover the true $ACE$ in this case?
+
+---
+
+Example (2) Let's "condition" on $X$
+
+```{r, echo = F}
+po.table = data.table(i = 1:6, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1, 3),
+                      d_i = c(1,1,1,0,0,0),
+                      x_i = c(0,0,1,0,1,1)
+                      )
+po.table[, y_i := ifelse(d_i == 1, y_i_1, y_i_0)]
+setkey(po.table, x_i, d_i)
+
+ace = po.table[, mean(y_i_1) - mean(y_i_0)]
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$", "$Y_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+Example (2): Conditioning in `R`
+
+```{r}
+ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#Ace HAT
+mean(c(ace_x0, ace_x1))
+
+#Ace
+ace
+```
+
+>- Why does $\widehat{ACE} \neq ACE$ in this case?
+
+--- 
+
+Example (3)
+
+```{r, echo = F}
+po.table = data.table(i = 1:5, 
+                      y_i_0 = c(2, 2, 3, 2, 3),
+                      y_i_1 = c(1, 1, 1, 1, 1),
+                      d_i = c(1,1,1,0,0),
+                      x_i = c(0,0,1,0,1)
+                      )
+po.table[, y_i := ifelse(d_i == 1, y_i_1, y_i_0)]
+setkey(po.table, x_i, d_i)
+
+ace = po.table[, mean(y_i_1) - mean(y_i_0)]
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$", "$Y_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+Example (3): Conditioning in `R`
+
+```{r}
+#ACE | X = 0
+ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#ACE | X = 1
+ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#Ace Hat
+mean(c(ace_x0, ace_x1))
+
+#Ace
+ace
+```
+
+>- Why does $\widehat{ACE} \neq ACE$ in this case?
+
+
+---
+
+Example (3): Conditioning in `R`
+
+```{r}
+#ACE | X = 0
+ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#ACE | X = 1
+ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
+
+#Ace Hat: weighting by size of each group in X
+weighted.mean(c(ace_x0, ace_x1), w = c(3,2))
+
+#Ace
+ace
+```
+
+>- Why does $\widehat{ACE} == ACE$ in this case?
+
+>- We correctly weight by $Pr(X = x)$
+
+---
+
+Example (4): Condition on $X$
+
+```{r, echo = F}
+po.table = data.table(i = 1:8, 
+                      y_i_0 = c(2, 2, 3, 2, 3, 3, 5,1),
+                      y_i_1 = c(1, 1, 1, 1, 1, 1, 4,1),
+                      d_i = c(1,1,1,0,0,0,0,1),
+                      x_i = c(0,0,1,0,1,1,2,-1)
+                      )
+
+po.table[, y_i := ifelse(d_i == 1, y_i_1, y_i_0)]
+setkey(po.table, x_i, d_i)
+
+ace = po.table[, mean(y_i_1) - mean(y_i_0)]
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$", "$Y_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+---
+
+### Example (4)
+
+Why can't conditioning recover the true $ACE$?
+
+
+# Conditioning (2)
+
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+1. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+    - example (2) violated this
+2. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+    - There must be variation in the levels of treatment **within every strata** of $X$
+    - example (4) violated this
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+
+---
+
+### Conditioning: Limitations
+
+1. **Ignorability**/**Conditional Independence**: 
+    - we can only argue for this using theoretical/empirical knowledge of the cases
+    - always an untestable assumption: we always condition on more observed variables, but there may be unobserved variables
+    
+2. **Positivity**/**Common Support**:
+    - The more variables we condition on, less likely positivity is to hold
+    - More and more unique combinations of $X$ with little variation in $D$.
+    
+3. **Measurement Error**:
+    - This exacerbates problems with assumption (1)
+
+
+---
+
+### Conditioning: Assumptions
+
+**Positivity**/**Common Support**: Even if we violate positivity, $ACE$ may not be estimable without bias, but other causal parameters might be:
+
+- $ATT$: Average Treatment effect on Treated:
+    - requires positivity **only for values of $x$ held by units in treatment**
+- $ATC$: Average Treatment effect on Control
+    - requires positivity **only for values of $x$ held by units in control**
+- Treatment effects for strata with **positivity**
+    - requires thinking about interpretation
+
+---
+
+### Conditioning: Approaches
+
+1. Matching
+
+2. Weighting
+
+3. Regression
+
+---
+
+### Conditioning: Matching
+
+**Match treated units to most-similar untreated units**
+
+Many varieties:
+
+- exact matching
+- coarsened exact matching
+- mahalanobis distance
+- genetic
+- propensity score
+
+---
+
+### Conditioning: Matching
+
+Many varieties:
+
+1. Identify set of conditioning variables
+2. Match treated (untreated) units to most similar untreated (treated) units using a criteria
+3. Check for balance on conditioning variables
+4. Take average difference between treated and untreated matched pairs/groups.
+
+---
+
+### Conditioning: Weighting
+
+Use conditioning variabels to weight observations such that:
+
+1. They are weighted inversely by probability of treatment (IPW)
+2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
+
+---
+
+### Conditioning: Weighting
+
+1. Identify set of conditioning variables
+2. Use conditioning variables in algorithm to:
+    - calculate probability of treatment
+    - or find weights for balance
+3. Calculate difference in means, using calculated weights
+
+---
+
+### Conditioning: Regression
+
+1. Identify set of conditioning variables
+2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
+3. Calculate relationship between $D$ and $Y$ after adjusting away relationship with  conditioning variables
+
+---
+
+### Conditioning:
+
+In absence of randomization, we condition. We always assume:
+
+1. **Ignorability**/**Conditional Independence**
+2. **Positivity**/**Common Support**
+
+Different methods of conditioning may make additional assumptions. We need to be aware and evaluate their plausibility. 
