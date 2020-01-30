@@ -448,14 +448,14 @@ Even if we develop a useful concept...
 
 ## **Threats to validity**
 
-1. Measure/Variable does not cover **enough** of the concept:
-    - Measure only captures some but not all relevant **dimensions** of the concept
+1. Variable does not cover **enough** of the concept:
+    - Variable only captures some but not all relevant **dimensions** of the concept
     - e.g. probability two people from different ethnic groups
-2. Measure/Variable covers things **outside** the concept:
+2. Variable covers things **outside** the concept:
     - Could cover somethings inside the concept, or **nothing** inside the concept
     - e.g. fraction of politicians convicted of corruption 
     - e.g. survey of reported self-defense gun uses
-3. Measure captures different things across units: **non-comparability**
+3. Variable captures different things across units: **non-comparability**
     - e.g. fraction of politicians convicted of corruption 
 
 ## Objectives
