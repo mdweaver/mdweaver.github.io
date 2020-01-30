@@ -1,0 +1,472 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "January 30, 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Objectives
+
+### (1) **Evaluating Descriptive Claims**
+
+### (2) **Variables**
+
+- **Levels of Measurement**
+- **Validity**
+
+### (3) **Measures**
+
+
+# Evaluating Descriptive Claims
+
+---
+
+### Question/Claim $\xrightarrow{}$
+
+### **Concept**
+
+- transparent **definition** of what relevant and observable traits makes something an "X" $\xrightarrow{}$
+
+
+
+### **Variable**(s)
+
+- **observable** properties of cases that correspond to the concept $\xrightarrow{}$
+
+### **Measure**(s)
+
+- **procedure** to find the values variables take for *specific* cases  $\xrightarrow{}$
+
+### "Answer"
+
+---
+
+### Question/Claim
+
+**$\not\xrightarrow{}$ Concepts not scientific/irrelevant**
+
+### **Concept** (and dimensions)
+
+**$\not\xrightarrow{}$ Variable does not map onto concept**
+
+### **Variables**
+
+**$\not\xrightarrow{}$ Procedure does not return the true value**
+
+### **Measure**(s)
+
+$\not\xrightarrow{}$
+
+### "Answer"
+
+# Variables <br> and Measures
+
+## Variables and Measures:
+
+### **variable**(s):
+
+A **measurable property** of a case (phenomena, group, or individual) that corresponds to a **concept** or part of a concept (**dimension**) and can *potentially* take on different **values** across cases and time (it *vari*es across cases).
+
+- Chosen to capture a concept
+- Variables take on values for each case at a specific point in time
+- *Vari*ation across **cases** or over **time**.
+- General (e.g., "number of deaths in a civil war", not "number of deaths in the Syrian Civil War between 2011 and today")
+
+## Variables and Measures:
+
+### **measure**(s)
+
+A **procedure** for determining the *value* a variable takes for **specific cases** based on **observation**.
+
+- Measures are proposed to determine the **value** a variable takes for some cases
+- They are always for some specific cases we want to know about (e.g., a procedure for estimating deaths in the Syrian Civil War)
+
+
+## A Trivial Example:
+
+### **A descriptive question:**
+
+What is the tallest mountain on the North Shore?
+
+### **We need to:**
+
+- define a the concept of "tall"/"height"
+- create a variable that matches that definition and is measurable
+- develop a procedure to obtain values of that variable for mountains on the North Shore
+
+---
+
+<img src=https://oceanservice.noaa.gov/facts/highestpoint.jpg width=100%>
+
+## Concept to Measurement: 
+
+### Concept: Height (of a mountain)
+
+Elevation of peak above sea level
+
+ 
+
+### $\xrightarrow{}$ Variable: 
+
+Vertical distance in meters from the Burrard Inlet to the top of the peak
+
+ 
+### $\xrightarrow{}$  Measure:
+
+Use difference in barometric pressure to calculate difference in elevation
+
+##  Concept to Measurement:
+
+<img src='./prominence.jpg'>
+
+Are you going to climb the mountain? Prominence might be a better concept of height.
+
+
+## Concept to Measurement:
+
+### Concept: Height (of a mountain)
+
+Prominence of peak compared to nearby mountains
+
+
+### $\xrightarrow{}$  Variable: 
+
+Vertical distance in meters from top of the peak to lowest contour line surrounding it and no other higher peaks.
+
+  
+
+### $\xrightarrow{}$ Measure:
+
+Satellites using radar interferometry create topographical maps; computer algorithm to find lowest contour
+
+
+## Concept to Measurement:
+
+Different concepts $\to$ different variables
+
+<br>
+
+Different variables $\to$ different measures
+
+<br>
+
+Different Answer:
+
+- Using elevation from sea level, West Lion is taller
+- Using prominence, Seymour is taller.
+
+# Variables
+
+## Variables
+
+**variables**:
+
+- take on **values** for each specific case at a specific point in time.
+    - values vary between cases at the same point in time
+    - values vary within cases at different points in time
+- take different **kinds of values**
+
+
+## Variables: Example
+
+**A question:** Did hate crimes increase in the United State following the election of Donald Trump?
+
+**Concept:** "criminal offense against a person or property motivated in whole or in part by an offender’s bias against a race, religion, disability, sexual orientation, ethnicity, gender, or gender identity." - FBI
+
+**Variable**: Number of hate crimes occurring in a calendar year.
+
+---
+
+What **values** can this variable take?
+
+<img src='./hate_crimes.jpg' width=90%>
+
+
+
+## Variables: Example
+
+**Number of hate crimes:**
+
+- Integer (no fractional hate crimes)
+- $0$ or more
+
+**Variations:**
+
+- Hate Crimes Per Capita?
+- Hate Crime Victimization Rate? (fraction of persons in group $g$ who experience a hate crime against group $g$)
+
+## Variables: Example
+
+<img src='./toronto_languages.jpg' width=100%>
+
+## Variables: Example
+
+"The first language learned by a person." (mother tongue)
+
+This is a variable: what values does it take?
+
+>- Categories
+>- No numeric range
+>- One language is not "higher"/"lower" than another.
+
+## Variables
+
+The kinds of **values** taken by a **variable** is called its **level of measurement**
+
+#### Four **levels of measurement**
+
+<br>
+
+- **Nominal**
+- **Ordinal**
+- **Interval**
+- **Ratio**
+
+#### Not to be confused with **measures**
+
+## Levels of measurement: <u>nominal</u>
+
+**nominal** levels of measurement: 
+
+- place cases into **unranked** categories
+- discrete groups based on presence/absence of attribute(s)
+- no category is "more" or "less" than another
+- categories are exhaustive (every case can fit in a category)
+    - sometimes we just have "other"
+
+### Examples:
+
+- Religion
+- Pastisan affiliation
+- Regime type (e.g. minimalist democracy vs non-democracy)
+- Type of crime (e.g.  hate vs. economic vs. personal etc.)
+
+## Levels of measurement: <u>ordinal</u>
+
+**ordinal** levels of measurement 
+
+- place cases into categories that are ranked
+- may have a number attached (or not)
+- Cases can be said to have **more** or **less** of something
+- Intervals between categories **not meaningful**
+- **relative** levels, **not absolute** levels
+
+### Examples:
+
+- University rankings
+- Test score percentiles
+- Ideology (very liberal, somewhat liberal, neither, somewhat conservative, very conservative)
+
+## Levels of measurement: <u>interval</u>
+
+**interval** levels of measurement 
+
+- assign cases **numbers** that **rank** the cases 
+- have intervals between values are meaningful and consistent (1 unit change is the same size each time)
+- difference in values indicates **how much** more or less of something case has from another
+- no meaningful zero point, ratios not meaningful
+
+### Examples
+
+- Years (but not years since some event)
+- Temperature (in Celsius, but not Kelvin)
+- Left/Right ideology scores
+
+## Levels of measurement: <u>ratio</u>
+
+**ratio** levels of measurement 
+
+- assign cases **numbers** that **rank** the cases
+- have **intervals** that are **meaningful** and consistent
+- difference in values indicates **how much** more or less
+- **zero indicates absence**
+- ratios meaningful (something can be twice as much as something else)
+
+### Examples
+
+- Years since some event
+- Counts of events
+- Rates (unemployment, language spoken, political party preference)
+
+
+## Example: Gun Violence
+
+What is the level of measurement?
+
+1. Cause of death?
+1. Number of gun deaths?
+3. Change over time in number of gun deaths
+5. Proportion of all murders that involve guns
+6. Strictness of gun ownership regulations
+7. Year in which a country bans assault weapons
+
+## Example: Gun Violence
+
+What is the level of measurement?
+
+1. Cause of death? (**nominal**)
+1. Number of gun deaths? (**ratio**)
+3. Change over time in number of gun deaths (**ratio**)
+5. Proportion of all murders that involve guns (**ratio**)
+6. Strictness of gun ownership regulations (**ordinal**)
+7. Year in which a country bans assault weapons (**interval**)
+
+
+## Types of Variables
+
+Variables also give values in **absolute** and **relative** units.
+
+#### **absolute** values are counts given in raw **units**
+
+Examples: dollar amounts, Number of events, Number of deaths
+
+#### **relative** values are given in fractions or rates or ranks 
+
+Examples:
+
+- Units are fractional (GDP per capita, deaths/population, events/time)
+- No units (percentile, rankings)
+
+## Types of Variables
+ 
+#### Suppose we want to compare the US states to see if those with lax gun laws had more gun deaths:
+
+<br>
+
+### **Which variable would be best?**
+
+1. Number of gun deaths in the preceding year
+2. Rank of the state on a list of states ordered by gun deaths in the preceding year
+3. Gun deaths per 100,000 people in the preceding year
+
+# Validity
+
+## Variables can fail:
+
+Even if we develop a useful concept...
+
+### **variables may not correspond to the concept**
+
+## Variable Trouble: Validity
+
+#### **validity**: 
+
+- Degree of fit between a variables the concept the variable is intended to capture.
+- When a variable  "captures" or "maps onto" the concept we are interested in, then we say they have "validity"
+- When a variable "captures" or "maps onto" other concepts we are not interested in, then we say they lack "validity"
+
+
+## Variable Trouble: Validity
+
+"Which country/province is most politically corrupt?"
+
+**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
+
+**Variable**: Fraction of politicians in a place prosecuted for corruption
+
+**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
+
+### Does this variable have **validity**?
+
+---
+
+"Which country/province is most politically corrupt?"
+
+**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
+
+**Variable**: Fraction of politicians in a place prosecuted for corruption
+
+**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
+
+### Problems
+
+- Places with lots of corruption do not prosecute corruption
+- Places with low corruption successfully prosecute corruption
+- Places have different corruption laws.
+- But the **measure** may give correct values for the **variable**
+
+
+## Variable Trouble: Validity
+
+"How often are guns used for self-defense?"
+
+**Concept**: <u>Self Defense Gun Use</u>: "resistance to a **crime** through display or use of a firearm"
+
+**Variable**: Number of times people displayed or used a firearm with the aim of protecting themselves or their property against another person? 
+
+**Measure**: Randomly survey people about their use of firearms, including questions about use of firearms to protect themselves or property.
+
+### Does this variable have **validity**?
+
+---
+
+"How often are guns used for self-defense?"
+
+**Concept**: <u>Self Defense Gun Use</u>: "resistance to a **crime** through display or use of a firearm"
+
+**Variable**: Number of times people displayed or used a firearm with the aim of protecting themselves or their property against another person? 
+
+**Measure**: Randomly survey people about their use of firearms, including questions about use of firearms to protect themselves or property.
+
+### Problems
+
+- People misperceive crimes that are not happening (different from mis-reporting) (validity problem)
+- Survey respondents mis-report threat or use of a weapon (different from mis-perception) (measurement error)
+
+
+## Variable Trouble: Validity
+
+"Societies that are ethnically diverse are less likely to be democracies"
+
+**Concept**: Ethnic Diversity: presence of multiple distinct and socially relevant ethnic groups
+
+**Variable**: Probability that any two random individuals belong to different ethnic groups 
+
+**Measure**: Measure number and size of ethnic groups using Soviet anthropological atlas from 1964, calculate probability using equation
+
+### Does this variable have **validity**?
+
+---
+
+"Societies that are ethnically diverse are less likely to be democracies"
+
+**Concept**: Ethnic Diversity: presence of multiple distinct and socially relevant ethnic groups
+
+**Variable**: Probability that any two random individuals belong to different ethnic groups 
+
+**Measure**: Measure number and size of ethnic groups using Soviet anthropological atlas from 1964, calculate probability using equation
+
+### Problems
+
+- Which kind of ethnicity (e.g. language, religion, race, caste, tribe)
+- Not all ethnic categories are socially relevant
+
+## **Threats to validity**
+
+1. Measure/Variable does not cover **enough** of the concept:
+    - Measure only captures some but not all relevant **dimensions** of the concept
+    - e.g. probability two people from different ethnic groups
+2. Measure/Variable covers things **outside** the concept:
+    - Could cover somethings inside the concept, or **nothing** inside the concept
+    - e.g. fraction of politicians convicted of corruption 
+    - e.g. survey of reported self-defense gun uses
+3. Measure captures different things across units: **non-comparability**
+    - e.g. fraction of politicians convicted of corruption 
+
+## Objectives
+
+1. Distinguish between Variables and Measures
+2. Variables:
+
+    - levels of measurement 
+    - absolute/relative
+    
+3. Validity
+  
+    - what is it? 
+    - why do variables not have it?
