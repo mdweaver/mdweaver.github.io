@@ -315,7 +315,7 @@ ggplot(plot_data, aes(value, fill = Measure)) +
 
 <br>
 
-**"Disparate treatment of a racial group in *otherwise identical situations*"** (i.e. "statistcal discrimination")
+**"Disparate treatment of a racial group in *otherwise identical situations*"** (i.e. "statistical discrimination")
 
 - if African Americans treated identically to white Americans by police in otherwise identical situations, no racial bias.
 - Key feature of "identical situations" is "objective threat to the police officer"
@@ -344,95 +344,11 @@ undergraduate research assistants code threatening behavior by suspects given in
 
 **Findings**:
 
-- In comparable interactions, Houston police department used lethal force against African Americans *less* or the *as often* as they did against Whites.
+- In comparable interactions, Houston police department used lethal force against African Americans *less* or *as often* as they did against Whites.
 
-In small groups:
+**In small groups:**
 
 Do you believe this result?
 
-- Do you believe the validity of the measure (of objective threat?) Why or why not?
+- Do you believe the validity of the variable? Why or why not?
 - Do you believe the measure? Why or why not?
-
-# Measurement Error
-
-## Systematic Measurement Error/Bias
-
-### Sources
-
-**($1$) Researcher subjectivity/interpretation**
-    - Researcher systematically over-weights, under-weights dimension of concept
-
-
-## Systematic Measurement Error/Bias
-
-### Political Knowledge
-
-Expert interviewers assess "political knowledge". Might overweight language skills in measure of political knowledge
-
-$\xrightarrow{Downward \ Bias}$ political knowledge of people who have less grasp of language of interview
-
-## Systematic Measurement Error/Bias
-
-### Sources
-
-**($2$) Obstacles to observation** 
-
-- **social norms** may discourage revelation of information; downward bias in "undesirable" phenomena
-    - e.g. survey measure of racism or drug use $\xrightarrow{}$ **social desirability bias**
-- **incentives to hide/misrepresent**: political actors have strategic reasons to conceal information from each other
-    - e.g. states may present their military capacity to be better than it is (upward bias)
-    - e.g. wealthy people may present themselves as less wealthy to avoid negative attention (downward bias)
-
-## Random Measurement Error
-
-### Sources
-
-- Imperfect memory (survey/interviews)
-- "Random" changes in mood/concerns (for surveys)
-    - e.g. rain might make you more angry and support government less
-- Sampling errors (e.g., national statistics from **random samples**)
-- Researcher interpretation 
-    - e.g. random differences in classifying cases (like flipping a coin when you can't tell how to classify case)
-    
-
-## Bias: Solutions?
-
-1. Researcher subjectivity:
-    
-    - More precise, clear rules for measurement procedure
-    
-2. Obstacles to observation:
-
-    - Social norms: Protect anonymity, subtler measurement
-    - Incentives to hide/misrepresent: use private records, behavior not statements, interview after incentives gone
-
-## Bias: Solutions?
-
-#### **Repeating measurement does not help**
-
-Instead:
-
-- Improve the measurement procedure
-- Use **multiple** measures with different (independent) problems:
-    - Upward bias in measure 1 may be balanced by downward bias in measure 2
-    - Ideally, measures from entirely different sources
-    
-    
-## Random Error: Solutions?
-
-If truly random: errors **cancel out** with many trials
-
-### Solutions
-
-- Repeat measure for lots of cases/individuals
-- Repeat measure for same case at multiple points in time
-- Have multiple researchers apply measure to same case
-
-## Conclusion:
-
-### **Measurement Error**
-
-- Distinct from validity problems
-- **Bias**
-- **Random**
-- **Sources** and **Solutions**
