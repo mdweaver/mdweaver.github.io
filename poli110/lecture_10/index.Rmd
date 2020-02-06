@@ -370,17 +370,19 @@ get_data = function(group) {
 }
 
 require(httr)
+
+#Get class mean
+resp = GET("https://api.mentimeter.com/questions/b4f00f1e7f44/result")
+json =content(resp, "parsed")
+c_values = json$results %>% lapply(function(i) get_data(i)) %>% unlist
+
 #Get group means
 resp = GET("https://api.mentimeter.com/questions/dca96accd7d7/result")
 json =content(resp, "parsed")
 g_means = json$results %>% lapply(function(i) get_data(i)) %>% lapply(function(x) mean(x[x>1]))
 points = data.table(g = 1:5, mean = unlist(g_means))
 
-#Get class mean
-
-resp = GET("https://api.mentimeter.com/questions/b4f00f1e7f44/result")
-json =content(resp, "parsed")
-c_values = json$results %>% lapply(function(i) get_data(i)) %>% unlist
+#json$results %>% lapply(function(i) get_data(i))
 
 #Sample:
 #sample
@@ -390,7 +392,7 @@ s = rep(NA, 10000)
 
 #loop samples
 for (i in seq_along(s)) {
-  s[i] = sample(c_values[c_values>1], size = n) %>% mean
+  s[i] = sample(c_values[c_values > 1], size = n) %>% mean
 }
 
 ggplot() + geom_histogram(aes(x = s), col = "white", bins = 50) + theme_bw() + geom_vline(xintercept = points$mean, col = 'red') + geom_vline(xintercept = mean(c_values[c_values > 1]), col = 'blue', linetype = 2) + xlab("Commute Times of Sample") + ylab("Count")
