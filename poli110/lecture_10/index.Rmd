@@ -358,6 +358,47 @@ go to `menti.com` and use code 67 33 97 to respond. **only respond to the item c
 
 <div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/cfe30601a9ffb36c76aba5cde4727a51/dca96accd7d7' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
+---
+
+```{r, include = T, echo = F, warning= F, message = F}
+
+get_data = function(group) {
+  vals = group$score %>% names %>% as.numeric
+  reps = group$score %>% unlist
+  data = rep(vals, times = reps)
+  return(data)
+}
+
+require(httr)
+#Get group means
+resp = GET("https://api.mentimeter.com/questions/dca96accd7d7/result")
+json =content(resp, "parsed")
+g_means = json$results %>% lapply(function(i) get_data(i)) %>% lapply(function(x) mean(x[x>1]))
+points = data.table(g = 1:5, mean = unlist(g_means))
+
+#Get class mean
+
+resp = GET("https://api.mentimeter.com/questions/b4f00f1e7f44/result")
+json =content(resp, "parsed")
+c_values = json$results %>% lapply(function(i) get_data(i)) %>% unlist
+
+#Sample:
+#sample
+n = floor(length(c_values[c_values > 1])/5)
+#sample vec
+s = rep(NA, 10000)
+
+#loop samples
+for (i in seq_along(s)) {
+  s[i] = sample(c_values[c_values>1], size = n) %>% mean
+}
+
+ggplot() + geom_histogram(aes(x = s), col = "white", bins = 50) + theme_bw() + geom_vline(xintercept = points$mean, col = 'red') + geom_vline(xintercept = mean(c_values[c_values > 1]), col = 'blue', linetype = 2) + xlab("Commute Times of Sample") + ylab("Count")
+
+```
+
+Avg. commute time for 10000 random samples from the survey on page 33 of the slides. Blue line is population avg. Red lines are the sample avgs. from the 5 phone number groups.
+
 ## Example: Commuting
 
 - What if our **population** were "**students enrolled in this course**"
