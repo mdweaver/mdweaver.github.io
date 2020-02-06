@@ -65,6 +65,8 @@ measurement **bias** or **systematic measurement error**: error produced when ou
 
 #### **Is social-media hate speech related to real-world violence?**
 
+<br>
+
 - Are there higher levels of **anti-refugee** violence in places with higher exposure to **anti-refugee** rhetoric via Facebook?
 - Address this question in the context of Germany (2015-2017)
 
@@ -103,7 +105,9 @@ Need three concepts/variables/measures:
 <br>
 
 **measure**:
+
 <br>
+
 <img src='./mueller_data_2.png'>
 
 ## Example: Facebook and Hate Crime
