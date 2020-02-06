@@ -366,13 +366,13 @@ go to `menti.com` and use code 67 33 97 to respond. **only respond to the item c
 
 ## Conclusion:
 
-1. Measurement Error
+1. **Measurement Error**
 
 - know how to recognize both types
 - what are the sources of these errors
 - when are they a problem/not
 
-2. Sampling
+2. **Sampling**
 
 - what is it? (population, sample, inference)
 - random sampling
