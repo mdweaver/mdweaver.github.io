@@ -1,0 +1,569 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "February 24, 2020"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+options("kableExtra.html.bsTable" = T)
+
+acs_data = fread("acs_lawmed.csv")
+acs_data[, FEMALE := SEX]
+acs_data[, MARST_f := as.factor(MARST)]
+set.seed(1234)
+acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
+acs_data[, MALE := abs(FEMALE - 1)]
+acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  color: #FFFFFF;
+  }
+</style>
+
+# Multivariate Least Squares
+
+--- 
+
+### Objectives
+
+**Recap**
+
+- Multivariate Least Squares mathematical properties
+
+
+**Interpretation**
+
+- Best Linear Approximation of CEF
+- Dummy Variables
+- Slopes and Intercepts
+- Multicollinearity
+
+---
+
+### Today
+
+- algorithm with mathematical properties
+    - what is the algorithm doing?
+    - what is mathematical truth of the algorithm?
+  
+--- 
+
+### Today
+
+- How does the algorithm relate back to the conditional expectation function?
+
+---
+
+### Today
+
+- Interpreting simple scenarios:
+
+    - dummy variables
+    - slopes and intercepts
+
+# Recap
+
+
+---
+
+### Least Squares
+
+$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$$
+
+This is the matrix formula for **least squares** regression. 
+
+If $X$ is a column vector of $1$s, $\beta$ is just the mean of $Y$. (We just did this)
+
+If $X$ is a column of $1$s and a column of $x$s, it is bivariate regression.
+
+We can now add $p > 2$: more variables
+
+
+---
+
+
+$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
+
+
+---
+
+### Multivariate Least Squares:
+
+Matrix equation fits mean of $Y$ as a linear function of many variables:
+
+$$Y_i = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
+
+
+---
+
+### Mathematical Requirements:
+
+1. Matrix $X$ has "full rank"
+  - This means that all of the columns of $X$ are **linearly independent**.
+    - cannot have two identical columns
+    - cannot have  set of columns that sum up to another column multiplied by a scalar
+  - If $X$ is not full rank, cannot be inverted, cannot do least squares.
+
+2. $n \geq p$: we need to have more data points than variables in our equation
+  - no longer trivial with multiple regression
+
+---
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+
+---
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
+
+--- 
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$3$. $\overline{Y} = \overline{X}'\beta$: the predicted value $\hat{Y}$ when all variables in $X$ are at their mean is the mean of $Y$.
+
+--- 
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$4$. Slope $b_k$ captures variation in $Y$ due to variation in  $X_k$ that is **orthogonal**/**uncorrelated** to all other columns of $X$. 
+
+---
+
+### Multivariate Least Squares:
+
+$$Y = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
+
+$b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$
+
+where $X_k^* = X_k - \hat{X_k}$ obtained from the regression:
+
+$X_{k} = c_0 + c_1 x_{1} + \ldots + c_{j} X_{j}$
+
+$X_k^*$ is the residual from regressing $X_k$ on all other $X_{j \neq k}$
+
+---
+
+### Multivariate Least Squares:
+
+How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?)
+
+- The slope $b_k$ is the change in $Y$ with a one-unit change in the part of $X_k$ that is **uncorrelated with**/**orthogonal to** the other variables in the regression.
+
+# The CEF
+
+--- 
+
+### Regression and CEF
+
+How does multivariate regression relate back to Conditional Expectation Function?
+
+- Angrist and Pischke give justification
+- least squares is the **best linear approximation** of the conditional expectation function $E(Y_i | X_i)$
+
+
+--- 
+
+```{r, echo=F}
+cef = acs_data[, list(INCEARN = mean(INCEARN), respondents = .N) , by = AGE]
+setkey(cef, AGE)
+ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors")
+
+```
+
+
+--- 
+
+```{r, echo=F}
+ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
+
+```
+
+---
+
+### Least Squares and CEF
+
+Least Squares predictions given by $\widehat{Y_i} = X_i'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (linear approximation with minimum distance to the truth).
+
+>- Least Squares also fits a line for the $E(Y_i|X_i)$. Not just a line for $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
+
+---
+
+Exercise: Download the data grouped by `AGE` in years
+
+```
+if (!require(httr)) install.packages('httr')
+
+r = GET("http://mdweaver.github.io/poli572b/lecture_7/example_7.csv")
+cef = as.data.frame(content(r))
+```
+
+---
+
+Exercise:
+
+Use matrix calculations in `R` to obtain linear approximation of $E(Y_i | X_i)$:
+
+- What is the intercept? What does it mean?
+- What is the slope? What does it mean?
+
+---
+
+```{r}
+#With individual data...
+X = cbind(1, acs_data$AGE)
+y = acs_data$INCEARN
+
+beta = solve(t(X) %*% X) %*% t(X) %*% y
+
+beta
+```
+
+Do your estimates agree? Why or why not?
+
+---
+
+We are not accounting for the **number of people in each value of $X_i$**
+
+```{r}
+#With aggregate data...
+X = cbind(1, cef$AGE)
+y = cef$INCEARN
+w = cef$respondents 
+w = w * diag(length(w))
+beta = solve(t(X) %*% w %*% X) %*% t(X) %*% w %*% y
+
+beta
+```
+
+---
+
+### Least Squares and CEF
+
+We can reproduce any individual-level least squares by:
+
+1. Collapsing data to all unique values $X_i$ to groups: $X_g$ across $g \in G$
+2. Take the group mean of $Y_i$: $Y_g$
+3. Regress $Y_g$ on $X_g$, weighting by group size $n_g$.
+
+We are directly modelling the conditional expectation of $E(Y_i | X_i)$ as a linear function.
+
+# Dummy Variables
+
+--- 
+
+### Dummy Variables
+
+What are they?
+
+- Binary variables taking $1$ if the observation has some attribute, $0$ otherwise.
+
+- Can be used for Yes/No categorical variables
+- Can be used for variables with **many** categories (e.g. race, marital status, etc.)
+
+How do we make them?
+
+- Easy to do in `R` with `as.factor()`: each unique value will get a dummy.
+
+```lm(y ~ as.factor(any_variable))```
+
+--- 
+
+### Dummy Variables
+
+```{r}
+m1 = lm(INCEARN ~ FEMALE, acs_data)
+```
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us?
+
+---
+
+### Dummy Variables
+
+```{r}
+m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
+```
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us?
+4. What does the $b_2$ tell us?
+
+---
+
+### Dummy Variables
+
+```{r}
+m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
+```
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us?
+
+--- 
+
+```{r}
+#Design matrix
+model.matrix(m1) %>% head
+
+#Interpret:
+coefficients(m1)
+```
+
+--- 
+
+```{r}
+#Design matrix
+model.matrix(m2) %>% head
+
+#Interpret:
+coefficients(m2)
+```
+
+--- 
+
+```{r}
+#Design matrix
+model.matrix(m3) %>% head
+
+#Interpret:
+coefficients(m3)
+```
+
+---
+
+### Dummy Variables
+
+**What do they do?**
+
+If there is an intercept
+
+- **one category must be excluded**; otherwise linear dependence. ("reference group") (`R` will do this by default)
+- slope is **difference** in means between the group indexed by the dummy and the intercept ("reference group" mean)
+
+If there is no intercept:
+
+- all categories must be **included**
+- fits separate **intercepts** for each group: coefficient is the mean of the group indexed by the dummy (when all other variables are $0$).
+
+---
+
+### Example:
+
+How did different regions in the UK vote on Brexit?
+
+Download the data:
+```{r}
+if (!require(httr)) install.packages('httr')
+
+r = GET("http://mdweaver.github.io/poli572b/lecture_7/analysisData.csv")
+brexit = as.data.table(content(r))
+```
+---
+
+### Example:
+
+```{r}
+
+table(brexit$Region)
+
+```
+
+---
+
+
+```{r}
+
+hist(brexit$Pct_Lev)
+
+```
+
+---
+
+### Do the following:
+
+Using the `lm` function:
+
+1. Regress `Pct_Lev` on `Region`
+2. Interpret the coefficients returned (`summary(your_model)`)
+3. Regression `Pct_Lev` on `-1 + Region`
+4. Interpret the coefficients.
+5. Without looking at `your_model$fitted.values`, what can you say about the $\widehat{Y}$ produced by these two regressions?
+
+---
+
+### Dummy Variables
+```{r, echo = F, include = T, message = F}
+levels = c('Scotland', 'London', 'North West', 'Yorkshire and The Humber', 'North East', 'West Midlands', 'East Midlands', 'South West', 'East', 'South East', 'Wales', 'Northern Ireland')
+brexit[, RegionU := factor(Region, levels = levels)]
+
+lm(Pct_Lev ~ RegionU, brexit) %>% summary
+```
+
+How is this different from what you produced?
+
+---
+
+### Dummy Variables
+
+During the Brexit vote, many areas thought to support "Remain" experienced heavy rainfall. `total_precip_prepolling` is the number of mm of rain that fell just before polls were open. 
+
+1. Regress `Pct_Lev` on `total_precip_prepolling + Region`.
+2. Thinking about the least squares estimator: how is the slope on `total_precip_prepolling` on calculated in this case? (think of $X_k^*$)
+3. In light of $2$, what does the slope on `total_precip_prepolling` mean?
+  
+---
+
+```{r, echo = F, include = T, message = F}
+lm(Pct_Lev ~ total_precip_prepolling + Region, brexit) %>% summary
+```
+  
+---
+
+### Dummy Variables
+
+You can change the "reference group" like this. This code shifts "Scotland" to the reference by making it the first "level" in the factor.
+
+```
+levels = c('Scotland', 'London', 'North West', 'Yorkshire and The Humber', 'North East', 'West Midlands', 'East Midlands', 'South West', 'East', 'South East', 'Wales', 'Northern Ireland')
+brexit[, RegionU := factor(Region, levels = levels)]
+```
+
+# Interpretation
+
+---
+
+### Example
+
+Let's say we want to get the **conditional expectation function** for yearly earnings of professionals as a function of hours worked, profession, gender, and age.
+
+Using data from the American Community Survey, we can look at how hours worked is related to earnings for doctors and lawyers. 
+
+- `UHRSWORK` (the usual hours worked per week)
+- `FEMALE` (an indicator for female)
+- `AGE` (in years)
+- `LAW` (an indicator for being a lawyer)
+- `INCEARN` (total annual income earned in dollars). 
+
+---
+
+### Example
+
+Let's now find the (approximate) linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
+
+```{r}
+ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)
+```
+
+---
+
+### Example
+
+```{r, echo = F}
+summary(ls)
+```
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ AGE + LAW + UHRSWORK, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+How do we make sense of, e.g., the slope on `FEMALE`?
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = AGE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Age")
+```
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = LAW, y= FEMALE)) + geom_point(alpha = 0.01)  + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
+```
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Gender Residual on Hours Worked")
+```
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+```
+
+---
+
+```{r, echo=F}
+ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
+
+```
+
+---
+
+### Example
+
+In your small groups: 
+
+1. could we do better at better approximating the conditional expectation function, e.g., of Earnings by Age?
+
+2. How would you do it?
+
+3. Try it out
+
+4. How would you apply this to the example above? `ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`?
