@@ -254,4 +254,6 @@ Cause $C_1$'s effect on $E$ **differs** depending on some other factor $C_2$
 
 - Our inability to master this complexity points toward **probabilistic causal claims**
 
+<br>
+
 **We focus on testing probabilistic causal claims (answering questions about effects of causes)**
