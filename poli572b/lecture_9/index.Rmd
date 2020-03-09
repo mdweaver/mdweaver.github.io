@@ -162,8 +162,6 @@ This bias is **omitted variable bias**
 
 ---
 
-### Omitted Variable Bias
-
 If the truth is:  $Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \epsilon_i$
 
 And $\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$
@@ -230,13 +228,11 @@ dagify(mammogram ~ invite,
 
 ### Exercise:
 
-In groups:
-
 1. Brainstorm an exhaustive list of variables that are causally linked to contracting COVID-19
 2. Add these other variables (and any possible backdoor paths) to a DAG that initially includes just this link $\mathrm{Using \ Purell} \xrightarrow{Decreases} \mathrm{COVID-19}$
 3. Imagine we want to estimate the causal effect of Purell usage on contracting COVID-19: 
-    - which of the variables in your DAG would produce omitted variable bias if excluded from the regression model?
-    - which of the variables in your DAG WOULD NOT produce omitted variable bias if excluded from the regression model?
+    - which of the variables in your DAG would produce OVB if excluded from the regression?
+    - which of the variables in your DAG WOULD NOT produce OVB?
     
 
 # Other Biases
@@ -313,7 +309,7 @@ plot_data = acs_data[, list(hours = mean(UHRSWORK), inc = mean(INCEARN),
                 n = .N), by = list(Gender, AGE)]
 ```
 
-```{r echo = F}
+```{r echo = F, message=F, warning=F}
 
 ggplot(plot_data, aes(x = AGE, y = hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Hours Worked") + ggtitle("Hours Worked by Age and Gender")
 
@@ -321,7 +317,7 @@ ggplot(plot_data, aes(x = AGE, y = hours, colour = Gender, group = Gender, weigh
 
 ---
 
-```{r echo = F}
+```{r echo = F, message=F, warning=F}
 
 ggplot(plot_data, aes(x = AGE, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Annual Income ($)") + ggtitle("Income by Age and Gender")
 
@@ -329,7 +325,7 @@ ggplot(plot_data, aes(x = AGE, y = inc, colour = Gender, group = Gender, weight 
 
 ---
 
-```{r echo = F}
+```{r echo = F, message=F, warning=F}
 
 ggplot(plot_data, aes(x = AGE, y = r_hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity and Additivity)")
 
@@ -343,7 +339,7 @@ lm(INCEARN ~ UHRSWORK + SEX + AGE, data = acs_data) %>% summary
 
 ---
 
-```{r echo = F}
+```{r echo = F, message=F, warning=F}
 
 ggplot(plot_data, aes(x = AGE, y = r_hours_2, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity but NOT Additivity)")
 
@@ -357,7 +353,7 @@ lm(INCEARN ~ UHRSWORK + SEX*AGE, data = acs_data) %>% summary
 
 ---
 
-```{r echo = F}
+```{r echo = F, message=F, warning=F}
 
 ggplot(plot_data, aes(x = AGE, y = r_hours_3, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
 
