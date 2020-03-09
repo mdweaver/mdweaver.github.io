@@ -405,10 +405,10 @@ $Public \  Goods_i = \beta_0 + \beta_1 Democracy_i + \beta_2 ln(Per \ Capita \ G
 
 Exercise: Download the simulated data
 
-```{r}
+```
 if (!require(httr)) install.packages('httr')
 
-r = GET("http://mdweaver.github.io/poli572b/lecture_9/example_9.csv")
+ r = GET("https://mdweaver.github.io/poli572b/lecture_9/example_9.csv")
 data_9 = as.data.frame(content(r))
 data_9$Democracy = as.factor(data_9$Democracy)
 ```
@@ -442,14 +442,6 @@ or
 
 - Using regression ($6$ on previous slide): we restricted our analysis to the region of the data with common support (range of GDP per capita values that contain both democracies and non-democracies). Linear interpolation, but the model is not extrapolating to regions without data.
 
----
-
-```{r, echo = F}
-ggplot(data_9, aes(x = l_GDP_per_capita, 
-                    y = public_goods, 
-                    group = Democracy, color = as.factor(Democracy))) + 
-  geom_point() + theme_bw() + theme(legend.position="bottom")
-```
 
 # Conditioning with Regression
 
