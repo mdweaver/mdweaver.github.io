@@ -319,7 +319,7 @@ import requests
 import json
 url = "https://maps.googleapis.com/maps/api/geocode/json"
 query = {'address':'Diez Vistas Trail',
-         'key':'AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw'}
+         'key':'YOUR_API_KEY'}
 response = requests.get(url, params = query)
 parsed = json.loads(response.text)
 print parsed
@@ -333,7 +333,7 @@ In R
 require(httr)
 url = "https://maps.googleapis.com/maps/api/geocode/json"
 query = list(address  = 'Diez Vistas Trail',
-         key = 'AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw')
+         key = 'YOUR_API_KEY')
 response = GET(url, query = query)
 parsed = content(response)
 ```
@@ -342,7 +342,7 @@ parsed = content(response)
 
 Either way, we are writing code to open this URL and read the response:
 
-[https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw](https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw){target="_blank"}
+[https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=YOUR_API_KEY](https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=YOUR_API_KEY){target="_blank"}
 
 ## Ways of Scraping: API
 
@@ -510,7 +510,7 @@ You select data from the JSON object by selecting specific values corresponding 
 
 ## Processing JSON
 
-[open this JSON object](https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw){target="_blank"}
+[open this JSON object](https://maps.googleapis.com/maps/api/geocode/json?address=Diez%20Vistas%20Trail&key=YOUR_API_KEY){target="_blank"}
 
 <br>
 
@@ -522,7 +522,7 @@ import requests
 import json
 url = "https://maps.googleapis.com/maps/api/geocode/json"
 query = {'address':'Diez Vistas Trail',
-         'key':'AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw'}
+         'key':'YOUR_API_KEY'}
 response = requests.get(url, params = query)
 parsed = json.loads(response.text)
 parsed['results'][0]['geometry']['location']
@@ -536,7 +536,7 @@ In R
 require(httr)
 url = "https://maps.googleapis.com/maps/api/geocode/json"
 query = list(address  = 'Diez Vistas Trail',
-         key = 'AIzaSyDvYjVoUrivt3Ho-s3_6sEKkI__3fN-cMw')
+         key = 'YOUR_API_KEY')
 response = GET(url, query = query)
 parsed = content(response)
 parsed$results[[1]]$geometry$location
