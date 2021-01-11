@@ -48,7 +48,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 How do statistical tests help authors assess causality?
 
-Do you find these statistical tests persuasive (above causality)?
+Do you find these statistical tests persuasive (about causality)?
 
 ## Compare and contrast
 
