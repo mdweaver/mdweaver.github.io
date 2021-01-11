@@ -130,7 +130,7 @@ Causality requires something acting on another (a mechanism)
 
 Imagine you were a participant in an experiment similar to the Broockman and Kalla paper...
 
-Write down what you imagine your score would be on a series of questions about group stereotypes (high, medium low)
+Write down what you imagine your score would be on a series of questions about group stereotypes (high (3), medium (2) low (1))
 
 >- If you were in the **no contact** group
 
