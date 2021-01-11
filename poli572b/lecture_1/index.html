@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Michael Weaver" />
-  <meta name="dcterms.date" content="2020-01-06" />
+  <meta name="dcterms.date" content="2021-01-11" />
   <title>POLI 572B</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1771,7 +1771,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section>
     <h1 class="title">POLI 572B</h1>
     <h2 class="author">Michael Weaver</h2>
-    <h3 class="date">January 6, 2020</h3>
+    <h3 class="date">January 11, 2021</h3>
 </section>
 
 <section class="slide level2">
@@ -1816,7 +1816,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <blockquote>
 <p>“The power of multiple regression analysis is that it allows us to do in non-experimental environments what natural scientists are able to do in a controlled laboratory setting: keep other factors fixed” (Wooldridge 2009: 77)</p>
 </blockquote>
-</section><section id="design-vs.model-based-inferences" class="slide level2">
+</section><section id="design-vs.-model-based-inferences" class="slide level2">
 <h2>Design vs. Model-based inferences</h2>
 <p>A matter of <strong>degree</strong></p>
 <h4 id="statistical-evidence-for-causality-in-the-real-world-combines-observed-data-with-a-mathematical-model-of-the-world">Statistical evidence for causality in the <strong>real world</strong> combines observed data with a <strong>mathematical model</strong> of the world</h4>
@@ -1825,17 +1825,21 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li class="fragment">always involve assumptions</li>
 <li class="fragment">can almost always apply the model, even if it is wrong</li>
 </ul>
-</section><section id="design-vs.model-based-inferences-1" class="slide level2">
+</section><section id="design-vs.-model-based-inferences-1" class="slide level2">
 <h2>Design vs. Model-based inferences</h2>
 <p>A matter of <strong>degree</strong></p>
 <h4 id="model-based-inferences-about-causality-depend-on-complex-statistical-models-with-many-assumptions"><strong>Model-based</strong> inferences about causality depend on complex statistical models with many assumptions</h4>
 <h4 id="design-based-inferences-about-causality-use-carefully-controlled-comparisons-with-simple-transparent-models-and-assumptions"><strong>Design-based</strong> inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions</h4>
-</section><section id="design-vs.model-based-inferences-2" class="slide level2">
+</section><section id="design-vs.-model-based-inferences-2" class="slide level2">
 <h2>Design vs. Model-based inferences</h2>
 <h3 id="whatever-our-approach">Whatever our approach…</h3>
 <p><strong>do the assumptions needed to use this mathematical tool reasonably fit reality?</strong></p>
 </section><section id="objectives" class="slide level2">
 <h2>Objectives</h2>
+<h3 id="counterfactual-causality">Counterfactual Causality</h3>
+<h3 id="potential-outcomes">Potential Outcomes</h3>
+<h3 id="causal-effects-unit-vs-average">Causal Effects (unit vs average)</h3>
+<h3 id="neyman-causal-model-for-inference">Neyman Causal Model for inference</h3>
 </section></section>
 <section><section id="causality" class="title-slide slide level1"><h1>Causality</h1></section><section id="what-is-causality" class="slide level2">
 <h2>What is causality?</h2>
@@ -1868,10 +1872,10 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>counterfactuals without manipulation do not give us the direction of causality</li>
 <li>manipulation without counterfactuals may permit spurious results</li>
 </ul>
-</section><section id="potential-outcomes" class="slide level2">
+</section><section id="potential-outcomes-1" class="slide level2">
 <h2>Potential Outcomes</h2>
 <h3 id="a-way-to-formalize-a-mathematical-model-of-causality">A way to formalize a mathematical model of causality</h3>
-</section><section id="potential-outcomes-1" class="slide level2">
+</section><section id="potential-outcomes-2" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p>Imagine you were a participant in an experiment similar to the Broockman and Kalla paper…</p>
 <p>Write down what you imagine your score would be on a series of questions about group stereotypes (high, medium low)</p>
@@ -1881,7 +1885,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <ul>
 <li class="fragment">If you were in the <strong>contact</strong> group</li>
 </ul>
-</section><section id="potential-outcomes-2" class="slide level2">
+</section><section id="potential-outcomes-3" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p>In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take.</p>
 <p>If <span class="math inline">\(Y_i\)</span> is the level of prejudice for person <span class="math inline">\(i\)</span>; <span class="math inline">\(Z\)</span> is the experimental condition: <span class="math inline">\(1\)</span> indicates contact, <span class="math inline">\(0\)</span> no contact, then we have two <strong>potential outcomes</strong></p>
@@ -1890,24 +1894,24 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Level of prejudice <strong>with contact</strong> is <span class="math inline">\(Y_i(1)\)</span></li>
 </ol>
 <p>More generally: <span class="math inline">\(Y_i(Z \in (0,1))\)</span></p>
-</section><section id="potential-outcomes-3" class="slide level2">
-<h2>Potential Outcomes</h2>
 </section><section id="potential-outcomes-4" class="slide level2">
+<h2>Potential Outcomes</h2>
+</section><section id="potential-outcomes-5" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p>The <strong>unit causal effect</strong> of contact for person <span class="math inline">\(i\)</span> is the <strong>difference</strong> between the potential outcomes:</p>
 <p><span class="math display">\[\tau_i = Y_i(1) - Y_i(0)\]</span></p>
-</section><section id="potential-outcomes-5" class="slide level2">
+</section><section id="potential-outcomes-6" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p>Tables of potential outcomes for different units are <strong>response schedules</strong></p>
 <ul>
 <li>a general tool for thinking of how units behave under different possible counterfactual conditions</li>
 </ul>
-</section><section id="potential-outcomes-6" class="slide level2">
-<h2>Potential Outcomes</h2>
 </section><section id="potential-outcomes-7" class="slide level2">
 <h2>Potential Outcomes</h2>
-<h3 id="what-happen-when-weve-fallen-from-mount-olympus-and-we-actually-have-to-run-our-experiment">What happen when we’ve fallen from Mount Olympus, and we actually have to run our experiment?</h3>
 </section><section id="potential-outcomes-8" class="slide level2">
+<h2>Potential Outcomes</h2>
+<h3 id="what-happen-when-weve-fallen-from-mount-olympus-and-we-actually-have-to-run-our-experiment">What happen when we’ve fallen from Mount Olympus, and we actually have to run our experiment?</h3>
+</section><section id="potential-outcomes-9" class="slide level2">
 <h2>Potential Outcomes</h2>
 <h3 id="trouble">TROUBLE</h3>
 <ul>
@@ -1916,7 +1920,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>One potential outcome is <strong>factual</strong>; other is <strong>counterfactual</strong></li>
 </ul>
 <h3 id="fundamental-problem-of-causal-inference">Fundamental Problem of Causal Inference</h3>
-</section><section id="potential-outcomes-9" class="slide level2">
+</section><section id="potential-outcomes-10" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p><strong>fundamental problem of causal inference</strong>:</p>
 <table>
@@ -1961,7 +1965,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </tr>
 </tbody>
 </table>
-</section><section id="potential-outcomes-10" class="slide level2">
+</section><section id="potential-outcomes-11" class="slide level2">
 <h2>Potential Outcomes</h2>
 <p>The potential outcomes model (or Neyman Causal Model) points toward a statistical solution:</p>
 <ul>

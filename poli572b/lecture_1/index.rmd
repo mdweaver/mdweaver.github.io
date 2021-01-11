@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 6, 2020"
+date: "January 11, 2021"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -81,6 +81,11 @@ A matter of **degree**
 **do the assumptions needed to use this mathematical tool reasonably fit reality?**
 
 ## Objectives
+
+### Counterfactual Causality
+### Potential Outcomes
+### Causal Effects (unit vs average)
+### Neyman Causal Model for inference
 
 # Causality
 
