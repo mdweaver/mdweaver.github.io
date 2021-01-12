@@ -1,7 +1,7 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "January 7, 2020"
+date: "January 12, 2021"
 output: ioslides_presentation
 ---
 
@@ -36,31 +36,35 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Key Dates
 
-1. Reflection 1: January 13
-2. Assignment 1: February 3
-3. Assignment 2: February 17
-4. Midterm Exam: February 27
-5. Assignment 3: March 9
-6. Assignment 4: April 6
-7. Reflection 2: April 7
+1. Reflection 1: January 18
+2. Assignment 1: February 8
+3. Assignment 2: February 22
+4. Midterm Exam: March 4
+5. Assignment 3: March 15
+6. Assignment 4: April 5
+7. Reflection 2: April 12
 
 ## Survey
 
-### $\bullet$ Online invitation around Midterm
+### $\bullet$ Online invitation after Midterm
 
 ### $\bullet$ 1 point for *completion*
 
-### $\bullet$ You write; you take it; you analyze
+### $\bullet$ You write the questions in small groups
 
 ## Short Assignments
 
-### $\bullet$ Apply key concepts to your (constrained) choice of current events
+### $\bullet$ Apply key concepts to your choice of current events
 
 ### $\bullet$ Available on Canvas on Mondays at 9AM
 
-### $\bullet$ Exactly 1 week to complete/upload to Canvas
+### $\bullet$ Exactly 1 week to complete/upload to Canvas$^*$
 
-### $\bullet$ Will be run through Turnitin
+$^*$ Assignment 2 will have two weeks
+
+
+### Average best of 3 out of 4 
+
 
 ## Reflection Assignments
 
@@ -72,7 +76,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Midterm Exam
 
-### $\bullet$ **February 27** in class
+### $\bullet$ **March 4** take home; 36 hours to complete
 
 ### $\bullet$ Covers materials from weeks 2 to 5
 
@@ -80,7 +84,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Final Exam
 
-### $\bullet$ Date TBD
+### $\bullet$ Take home, during exam period; date TBD
 
 ### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 6 to 14.
 
@@ -98,14 +102,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## What you need to do:
 
-### $\bullet$ **Attend lecture:**
+### $\bullet$ **"Attend" lecture:**
 
 - slides not enough
 
 ### $\bullet$ **Attend Tutorial**
 
-- week 2
-- Canvas discussions
+- Start in week 2
+- Participate in group activity (survey writing)
 
 ### $\bullet$ **Read**
 
@@ -115,7 +119,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### $\bullet$ **List of concepts**
 
-### $\bullet$ **Slides**
+### $\bullet$ **Slides**/**Lectures**
 
 ### $\bullet$ **Speed**
 
@@ -140,6 +144,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ### $\bullet$ **Lateness**
 
 - non-catastrophic deduction (0.5 points per 24 hours)
+- best 3 out of 4 on graded assignments
 
 ## Grade Appeals:
 
@@ -147,15 +152,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### $\bullet$ **formal written letter** 
 
-### $\bullet$ **48 hours waiting period**
+### $\bullet$ **after 48 hours waiting period**
 
 ### $\bullet$ **Grades can change $\Updownarrow$**
 
-## Tutorial Attendance:
+## Tutorials:
 
 ### $\bullet$ No participation without attendance
 
-- includes Canvas discussions
 
 ### $\bullet$ Make up absences/holidays by attending another Tutorial
 
@@ -165,16 +169,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Each unexcused absence induces $(1/n * 100\%)$ deduction from total tutorial score
 - $n$ is the number of **unexcused tutorial dates**
+- up to 3 missed tutorials
 
-# Registration
+## Lectures
 
-## Where we stand:
-
-As of this morning:
-
-### 215/225
-
-### No need for waitlist at this point
+- Zoom via Canvas
+- Chat window, monitored by TA for questions
+- Lecture timing
+- Office hours Thursdays following lecture
 
 # Questions?
 
