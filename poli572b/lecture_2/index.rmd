@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 13, 2020"
+date: "January 18, 2021"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -40,6 +40,8 @@ require(data.table)
 - Review $ACE$ (and unbiasedness of $\widehat{ACE}$)
 - Sampling variability of $\widehat{ACE}$
 - Two ways to estimate variance of $\widehat{ACE}$
+    - asymptotic
+    - randomization inference
 
 # Review
 
@@ -47,7 +49,7 @@ require(data.table)
 
 * Reviewed **random variables** and their expectations
 * Potential Outcomes Model (Neyman Causal Model)
-* Random assignment allows us to estimate unobserved potential outcomes
+* Random assignment allows us to estimate unobserved potential outcomes (given assumptions)
 
 ### BUT...
 
@@ -71,6 +73,21 @@ We want to know:
 >- What is it?
 
 >- We'll do an example
+
+## Bonus idea
+
+### Unbiasedness of $\widehat{ACE}$
+
+
+**parameter**: unknown attribute of random variable (e.g., the mean)
+
+**estimator**: rule/procedure for **estimating** an unknown parameter given observed data
+
+**bias**: estimator if **biased** if, on average, the estimator yields a value different from the parameter
+
+So $\widehat{ACE}$ is unbiased if:
+
+$$E(\widehat{ACE}) - ACE = 0$$
 
 # Example
 
@@ -132,7 +149,7 @@ Variation on Rwandan study, in Eastern DRC.
 require(ri) #combn is a function in this package
 require(magrittr) # %>% is from this package
 require(kableExtra) #scroll_box is from this package
-
+  
 randomizations = combn(6,3,simplify = T) %>% t
 randomizations %>% kable %>% scroll_box(height = "500px" )
 
@@ -188,6 +205,9 @@ ace
 Let's check our work:
 
 ```{r}
+require(ri) #combn is a function in this package
+require(magrittr) # %>% is from this package
+
 randomizations = combn(6,3,simplify = T) %>% t
 
 t_means = apply(randomizations, 1, 
@@ -220,14 +240,29 @@ Let's check our work:
 
 ```{r}
 #Average Causal Effects (hat)
-aces = t_means - c_means
+ace_hats = t_means - c_means
 
 #Expected value of the ACE (hat)
-e_ace_hat = mean(aces)
+e_ace_hat = mean(ace_hats)
 e_ace_hat
 
 #ACE
 ace
+```
+
+
+---
+
+Let's check our work:
+
+```{r, echo = F}
+
+hist(t_means,
+     xlab = "Y^T",
+     main = "Sampling Distribution of Y^T",
+     breaks = 20)
+abline(v = p_o_table$y_i_1 %>% mean, col = 'red')
+
 ```
 
 ---
@@ -236,10 +271,24 @@ Let's check our work:
 
 ```{r, echo = F}
 
-hist(aces,
+hist(t_means,
+     xlab = "Y^C",
+     main = "Sampling Distribution of Y^C",
+     breaks = 20)
+abline(v = p_o_table$y_i_0 %>% mean, col = 'red')
+
+```
+---
+
+Let's check our work:
+
+```{r, echo = F}
+
+hist(ace_hats,
      xlab = "ACE-hat",
      main = "Sampling Distribution of ACE-hat",
      breaks = 20)
+abline(v = ace, col = 'red')
 
 ```
 
@@ -254,12 +303,11 @@ hist(aces,
 
 2. Histogram is the **exact sampling distribution** of the $\widehat{ACE}$ in this experiment
 
-    - tells us how likely it is we observe sample $\widehat{ACE}$ by chance (using this randomization scheme)
+    - shows us how likely it is we observe sample $\widehat{ACE}$ by chance (using this randomization scheme)
 
 --- 
 
 ### Summary:
-
 
 But we never observe this histogram
 
@@ -290,8 +338,8 @@ $$Var[X - Y] = Var[X] + Var[Y] - 2 \cdot Cov[X,Y]$$
 
 - **study group** of size $N$ ($N$ units are assigned)
 - $m$ units assigned to T; $N - m = n$ units assigned to C
-- $Y^T = \frac{1}{m}\sum\limits_{i=1}^{m}Y_i(1)$
-- $Y^C = \frac{1}{n}\sum\limits_{i=m+1}^{N}Y_i(0)$
+- $Y^T = \frac{1}{m}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1]$
+- $Y^C = \frac{1}{n}\sum\limits_{i=m+1}^{N}[Y_i(0) | Z_i= 0]$
 - $\widehat{ACE} = Y^T - Y^C$
 
 What is $Var[Y^T - Y^C] = Var[\widehat{ACE}]$?
@@ -304,7 +352,7 @@ What is $Var[Y^T - Y^C] = Var[\widehat{ACE}]$?
 
 **Variances of Treatment/Control Group Means**
 
-if we assume **i.i.d.** draws from the **study group** (is this correct?)
+if we assume **independent and identically distributed** draws from the **study group** (is this correct?)
 
 $$Var[Y^T] = \frac{Var[Y_i(1)]}{m}$$
 
@@ -316,7 +364,7 @@ Variance of **sampling distribution** of the **treatment-group mean** is varianc
 
 Variance of potential outcomes under treatment:
 
-$$Var[Y_i(1)] = \frac{1}{N}\sum\limits_{i=1}^{N} \left( Y_i^1 - \frac{\sum\limits_{i=1}^{N} Y_i(1)}{N} \right) ^2$$
+$$Var[Y_i(1)] = \frac{1}{N}\sum\limits_{i=1}^{N} \left( Y_i(1) - \frac{\sum\limits_{i=1}^{N} Y_i(1)}{N} \right) ^2$$
 
 This is a *parameter*, often denoted $\sigma^2$
 
@@ -326,13 +374,13 @@ $$Var[Y^T] = \frac{\sigma^2}{m}$$
 
 ### Analytic Approach
 
-We don't know $\sigma^2$, we need to **estimate** it from our **sample**
+We don't know $\sigma^2$, we need to **estimate** it from our **sample**.
 
 Like sample mean, sample variance is an unbiased estimator of population variance:
 
 - **if we divide by $m - 1$, not $m$**
 
-$$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{m-1}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
+$$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{\color{red}{m-1}}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
 
 ---
 
@@ -377,7 +425,7 @@ Using this approach:
 
 $$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{m-1}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
 
-$$Var[Y^T] = \frac{\sigma^2}{m}$$
+$$\widehat{Var[Y^T]} = \frac{\widehat{\sigma^2}}{m}$$
 
  we can **estimate** $Var(Y^T)$ and $Var(Y^C)$.
  
@@ -413,12 +461,12 @@ Can't estimate the covariance because we don't see both potential outcomes for e
 
 We can ignore the covariance (**deflates variance**) safely, because
 
-1. We ignored sampling **without replacement** from **finite** population (**inflates variance**)
+1. Estimator $\widehat{Var[Y^T]}$ ignores sampling **without replacement** from **finite** population (**inflates variance**)
 2. Which either **exactly** or **more than** offsets reduction in the $\widehat{Var}(\widehat{ACE})$ due to ignoring $Cov(Y^T,Y^C)$
 
 Variances we obtain with $\widehat{Var}[\widehat{ACE}] = \widehat{Var}[Y^T] + \widehat{Var}[Y^C]$ are going to be:
 
-- **exactly correct** (if $\tau_i$ is the same for all $i$.)
+- **exactly correct** (if $\tau_i$ is the same for all $i$; effect is same for all cases)
 - **TOO LARGE**/conservative in all other cases.
 
 --- 
@@ -439,7 +487,7 @@ Variance is not usually what we want
 
 ### Normal approximation:
 
-Per the **CLT**: the **sampling distributions** of **sums of random variables** (and by extension, their means) **approach** the normal distribution as the $N \rightarrow\infty$.
+Per the **Central Limit Theorem**: the **sampling distributions** of **sums of random variables** (and by extension, their means) **approach** the normal distribution as the $N \rightarrow\infty$.
 
 Using this fact; estimated sample mean and variance of the sample mean:
 
@@ -504,8 +552,6 @@ hist(x)
 --- 
 
 ### Normal approximation:
-
-If the **population** looks like this:
 
 Predict the shape of sampling distribution  for $(n= 5$)
 
@@ -575,7 +621,7 @@ lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd 
 Does normality hold in our experiment?
 
 ```{r, echo = F}
-hist(aces,
+hist(ace_hats,
      xlab = "ACE",
      main = "Sampling Distribution of ACE hat",
      breaks = 20)
@@ -626,8 +672,8 @@ The hypothesis test investigates: what is probability of observing a value this 
 ### Hypothesis Tests
 
 - We need to estimate the standard error of ACE: $\widehat{SE}(\widehat{ACE})$
-- Divide $\widehat{ACE}$ by $\widehat{SE}$.
-- Compare test-statistic against $t$ distribution, and reject/fail to reject null
+- Divide $\widehat{ACE}$ by $\widehat{SE}$ (get $t$ statistic).
+- Compare test-statistic against $t$ distribution, and reject/fail to reject null (given choice of $\alpha$: the significance level)
 
 
 --- 
@@ -655,23 +701,22 @@ Alternatives:
 
 # Randomization Inference
 
-
 --- 
 
 ### Randomization Inference
 
 Unlike analytical approach:
 
-- randomization inference does not assume any asymptotic distribution
+- randomization inference **does not assume** any asymptotic distribution
 - can be applied to many different estimators (not just, e.g., the mean)
 
 --- 
 
 ### Randomization Inference
 
-Tests a different null
+Tests a **different null** hypothesis
 
-Usually null is that the **average** effect is $0$ (some units could have positive or negative effects).
+Usually null hypothesis is that the **average** effect is $0$ (some units could have positive or negative effects).
 
 $$\frac{1}{N}\sum\limits_{i=1}^{N} \tau_i = ACE = 0$$
 Randomization inference tests the **sharp null hypothesis**
@@ -686,7 +731,7 @@ that **every** unit treatment effect is $0$.
 Advantages:
 
 - No assumptions about distributions (no assumption of normality, no asymptotic convergence)
-- directly flows from potential outcomes model
+- as wel will see, directly flows from potential outcomes model
 - any test statistic (median, ranks, whatever)
 
 Disadvantages
@@ -710,25 +755,47 @@ In practice:
 
 ### Randomization Inference
 
-``` {r, echo = F}
-p_o_table %>% kable
-```
+We run Paluck's experiment and see this:
+
+| $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
+|---------|---------|---------|
+| 1       | 3       | ?       | 
+| 2       | 4       | ?       | 
+| 3       | ?       | 2       | 
+| 4       | 2       | ?       | 
+| 5       | ?       | 4       | 
+| 6       | ?       | 1       | 
 
 --- 
 
 ### Randomization Inference
 
-Once we have this table of potential outcomes, we:
+Under the **sharp null**, this would be true:
+
+| $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
+|---------|---------|---------|
+| 1       | 3       | \color{red}{3}       | 
+| 2       | 4       | \color{red}{4}        | 
+| 3       | \color{red}{2}         | 2       | 
+| 4       | 2       | \color{red}{2}       | 
+| 5       | \color{red}{4}         | 4       | 
+| 6       | \color{red}{1}         | 1       | 
+
+--- 
+
+### Randomization Inference
+
+Once we have this table of potential outcomes **under the sharp null**, we:
 
 1. Identify all possible permutations of randomizations (or sample from them, if this number is large)
-2. Calculate the difference in means (or other statistic of our choice) for these different randomizations that could have happened.
-3. Compare our observed statistic against this **null distribution** (distribution of possible outcomes that could have occurred by chance assuming the sharp null hypothesis is true)
+2. Calculate the difference in means (or other statistic) for these different randomizations.
+3. Compare our **observed statistic** against this **null distribution** (distribution of **possible outcomes** that could have occurred by chance assuming the sharp null hypothesis is true)
 4. Calculate $p$ value based on fraction of outcomes in null distribution more extreme than observed outcome.
 
 ## Randomization Inference
 
 ``` {r, echo = F}
-ts = randomizations[sample(1:20, 1),]
+ts = randomizations[2,]
 y = p_o_table[, ifelse(region_i %in% ts, y_i_1, y_i_0)]
 Z = p_o_table[, region_i %in% ts]
 ate = estate(y, Z)
