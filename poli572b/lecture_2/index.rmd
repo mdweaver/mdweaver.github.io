@@ -278,6 +278,7 @@ hist(c_means,
 abline(v = p_o_table$y_i_0 %>% mean, col = 'red')
 
 ```
+
 ---
 
 Let's check our work:
