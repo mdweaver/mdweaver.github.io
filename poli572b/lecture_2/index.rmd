@@ -271,7 +271,7 @@ Let's check our work:
 
 ```{r, echo = F}
 
-hist(t_means,
+hist(c_means,
      xlab = "Y^C",
      main = "Sampling Distribution of Y^C",
      breaks = 20)
@@ -464,7 +464,7 @@ We can ignore the covariance (**deflates variance**) safely, because
 1. Estimator $\widehat{Var[Y^T]}$ ignores sampling **without replacement** from **finite** population (**inflates variance**)
 2. Which either **exactly** or **more than** offsets reduction in the $\widehat{Var}(\widehat{ACE})$ due to ignoring $Cov(Y^T,Y^C)$
 
-Variances we obtain with $\widehat{Var}[\widehat{ACE}] = \widehat{Var}[Y^T] + \widehat{Var}[Y^C]$ are going to be:
+Variances we obtain with $\widehat{Var}[\widehat{ACE}]$ are going to be:
 
 - **exactly correct** (if $\tau_i$ is the same for all $i$; effect is same for all cases)
 - **TOO LARGE**/conservative in all other cases.
@@ -511,7 +511,7 @@ hist(x)
 
 ### Normal approximation:
 
-Predict the shape of sampling distribution  for $(n= 5$)
+Predict the shape of sampling distribution of sample mean for $(n= 5$)
 
 
 ```{r, echo = F}
@@ -522,7 +522,7 @@ hist(x)
 
 ### Normal approximation:
 
-The shape of sampling distribution for $(n= 5$)
+The shape of sampling distribution of sample mean for $(n= 5$)
 
 ```{r, echo = F}
 k = 10000
@@ -553,7 +553,7 @@ hist(x)
 
 ### Normal approximation:
 
-Predict the shape of sampling distribution  for $(n= 5$)
+Predict the shape of sampling distribution of sample mean for $(n= 5$)
 
 
 ```{r, echo = F}
@@ -565,7 +565,7 @@ hist(x)
 
 ### Normal approximation:
 
-The shape of sampling distribution  for $(n= 5$) is
+The shape of sampling distribution of sample mean for $(n= 5$)
 
 ```{r, echo = F}
 k = 10000
@@ -582,7 +582,7 @@ lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd 
 
 ### Normal approximation:
 
-The sampling distibution for $n = 25$ is:
+The sampling distibution of sample mean for $n = 25$ is:
 
 ```{r, echo = F}
 k = 10000
@@ -600,7 +600,7 @@ lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd 
 
 ### Normal approximation:
 
-The sampling distribution  for $(n= 100$) is
+The sampling distribution of sample mean for $(n= 100$) is
 
 ```{r, echo = F}
 k = 10000
@@ -781,7 +781,7 @@ Under the **sharp null**, this would be true:
 | 5       | \color{red}{4}         | 4       | 
 | 6       | \color{red}{1}         | 1       | 
 
---- 
+  --- 
 
 ### Randomization Inference
 
