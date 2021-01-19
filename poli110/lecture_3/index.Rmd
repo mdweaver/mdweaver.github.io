@@ -1,6 +1,7 @@
 ---
 title: "POLI 110"
 output: ioslides_presentation
+date: "January 19, 2021"
 ---
 
 ```{r setup, include=FALSE}
@@ -16,8 +17,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ### 2) Attributes of scientific evidence
 
 ### 3) Example
-
-### Open `menti.com`; wait for code
 
 # Recap
 
@@ -35,13 +34,22 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### **basis**: 
 
-(For our purposes) the basis for a claim is the **reason we should accept the truth** or validity of that claim. It is the **evidence** that is used to "prove" the claim is true **and** the **assumptions** required for the evidence to be valid "proof" (sometimes called the "warrant")
+(For our purposes) the basis for a claim is the **reason we should accept the truth** or validity of that claim. It includes 
+
+- the **evidence** that is used to "prove" the claim is true 
+
+**and** 
+
+- the **assumptions** required for the evidence to be valid "proof" (sometimes called the "warrant")
+
+
+colloquially: we often collapse these as just "evidence"
 
 ## An example:
 
 ### **claim**: "It rained last night"
 
-### **basis**: "The street is wet"
+### **basis**: "I can see the street is wet"
 
 <br>
 
@@ -57,13 +65,17 @@ What is the evidence? What are the assumptions behind that evidence?
 
 #### (2) Having special rules for using evidence and making assumptions to accept claims
 
-#
 
-## Go to menti.com  Code 88 70 72
+
+##
+
+Go to https://www.menti.com/fknajkidk8
+
+## Attributes of science?
 
 <div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e6bab70316b70b6bc7e3c34baf856c7f/4e6f3e3deed9' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
-# Scientific Evidence:
+# Scientific "Evidence":
 
 ## Scientific Evidence:
 
@@ -85,7 +97,7 @@ What is the evidence? What are the assumptions behind that evidence?
 
 ### Why?
 
-- Others can know the assumptions required to find result
+- Others can know the **assumptions** required to find result
 - Others can question your choices
 - Others can replicate your work (objectivity)
 
@@ -114,15 +126,16 @@ What is the evidence? What are the assumptions behind that evidence?
 ### Why?
 
 - Cherry picking assumes a truth, picks data
-- Cherry picking doesn't consider alternatives
-- Need to be able to consider challenge to our evidence
-
+- Cherry picking excludes data that does not support argument
+- Systematic rules allows others to investigate for themselves
+    - No "secret sauce"
+    
 ## Acknowledge uncertainty
 
 ### Limitations of finding:
 
 - What questions remain unanswered after your study (what didn't it tell us)
-- What assumptions did we make that might not be true?
+- What **assumptions** did we make that might not be true?
 
 ### How certain or precise are our answers?
 
@@ -130,9 +143,10 @@ What is the evidence? What are the assumptions behind that evidence?
 - How confident can we be about our results being real?
 
 
-## Go to menti.com  Code 56 56 47
+## Poll
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/70f9c33dca6f09e27e05c38db082b82a/3833f25c1c65' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+### **Which of these do you think is the most important part of scientific evidence?**
+
 
 
 # Example
@@ -153,9 +167,10 @@ What is the evidence? What are the assumptions behind that evidence?
 
 <br>
 
-**One hand = NO; Two hands = YES**
+Poll
 
 # Should we believe the results?
+
 
 ## To believe the results
 
@@ -211,9 +226,9 @@ What do you need to know...
 
 ## Consider alternatives:
 
-### Could it be that effect is from having someone come to the door?
+### Could it be that effect is simply from having someone come to the door?
 
-- Not the content or the contact, simply being canvassed
+- Control conditions address this concern
 
 ## Consider alternatives:
 
@@ -258,6 +273,8 @@ What do you need to know...
 
 # Do you believe these results? 
 
+Poll
+
 ##
 
 <img src="./lacour_17.png" width = 100%>
@@ -268,7 +285,7 @@ What do you need to know...
 
 ## What do you think now?
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/70f9c33dca6f09e27e05c38db082b82a/3833f25c1c65' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+### **Which of these do you think is the most important part of scientific evidence?**
 
 ## Conclusion:
 
