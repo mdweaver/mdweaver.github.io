@@ -155,11 +155,6 @@ Go to https://www.menti.com/fknajkidk8
 
 > **A person's prejudice against a group of people can be reduced through meaningful, interpersonal contact with a member of that group.**
 
-## An investigation
-
-### 2014 paper in *Science*: researchers conduct an experiment
-
-<img src="./lacour_title.png" width = 100%>
 
 ## Prediction:
 
@@ -169,7 +164,12 @@ Go to https://www.menti.com/fknajkidk8
 
 Poll
 
-# Should we believe the results?
+
+## An investigation
+
+### 2014 paper in *Science*: researchers conduct an experiment
+
+<img src="./lacour_title.png" width = 100%>
 
 
 ## To believe the results
