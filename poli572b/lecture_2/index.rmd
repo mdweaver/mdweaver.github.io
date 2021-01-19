@@ -795,7 +795,7 @@ Once we have this table of potential outcomes **under the sharp null**, we:
 
 ## Randomization Inference
 
-``` {r, echo = F}
+``` {r, echo = F, warning=F,message =F}
 ts = randomizations[2,]
 y = p_o_table[, ifelse(region_i %in% ts, y_i_1, y_i_0)]
 Z = p_o_table[, region_i %in% ts]
