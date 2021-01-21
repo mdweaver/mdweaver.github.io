@@ -36,40 +36,6 @@ open `menti.com`
 3. Consider **alternative explanations**
 4. **Acknowledge uncertainty**
 
-## **claim** {.centered}
-
-<h2> **You should drink less coffee.** </h2>
-
-# {.centered}
-
-<h2>**Evidence**</h2>
-<br>
-<img src='./study_1.png' width = 100%>
-<img src='./study_2.png' width = 100%>
-<img src='./study_3.png' width = 100%>
-
-# {.centered}
-
-<h2>Is this scientific evidence?</h2>
-
-## Appeal to Authority
-
-### Beware: 
-
-- Appeals to the **authority** of "science"/"researchers"/"studies"
-- This changes science into **magic**
-
-## Transparency/Alternatives
-
-<img src='./Medical_studies-05.0.jpg' width=80%>
-
-## Worst case scenario:
-
-### [Studies Show That You Should Come Into This Room Right Over Here, And That You Should Come Alone](https://the-toast.net/2015/06/24/studies-show-that-you-should-come-into-this-room-right-over-here-and-that-you-should-come-alone/)
-
-> Recent studies suggest that it's very important that you come into this room right over here just now. Studies also suggest that it's equally important you do not waste time asking questions ... but just step this way through the door very quickly and by yourself, immediately. 
-
-> The studies were conducted, and the evidence is conclusive: this room just over here is where you should go next, without anyone coming with you. Scientists did them, the studies. Which ones? Yes.
 
 
 # Varieties of Claims

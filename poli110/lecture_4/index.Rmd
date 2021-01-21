@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "January 16, 2020"
+date: "January 21, 2021"
 output: ioslides_presentation
 ---
 
@@ -26,14 +26,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Recap
 
-## Claims and Bases
-
-### **claims**: statements about what is true or valid
-
-<br>
-
-### **bases**: evidence (and assumptions about valid evidence) that support those claims
-
 ## Scientific Evidence:
 
 ### <u>**Transparent procedures**</u>
@@ -43,14 +35,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ### **Test claim against alternatives**
 
 ### **Acknowledge uncertainty**
-
-## **Transparent procedures**
-
-<img src="./lacour_17.png" width = 80%>
-
-## **Transparent procedures**
-
-<img src="./bk_1.png" width = 100%>
 
 # Unscientific Evidence
 
@@ -71,13 +55,14 @@ Despite an infinite number of topics for research:
 
 # {.centered}
 
-[click here](https://video.foxnews.com/v/6051098424001#sp=show-clips)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aWCJz-qOOaw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Stop and think:
+
+## In groups: discuss
 
 1) **What is the guest's argument (claim)?**
 
-2) **What is the primary evidence she offers to support it?**
+2) **What is the primary evidence he offers to support it?**
 
 3) **How does this evidence fail to meet the attributes (of scientific evidence)?**
 
@@ -85,13 +70,9 @@ Despite an infinite number of topics for research:
 
 ## Unscientific Evidence: Personal experience
 
-Evidence that appeals to **personal experience**:
+### **Appeals to personal experience**:
 
 > A claim based on one's own personal (nonsystematic) observation or one's own reaction to an observation
-
-### Examples
-
-"No one I knew voted for ____, so they must have cheated to win."
 
 ## Unscientific Evidence: Personal experience
 
@@ -106,37 +87,43 @@ Evidence that appeals to **personal experience**:
 ## Personal experience: Generalize too quickly
 
 ### Claim
-"I have a gluten intolerance". 
+
+"Masks don't help prevent COVID". 
 
 ### Evidence
 
-"I had [some product] a few times and each time I felt sick to my stomach afterwards."
+"I went into a crowded store without a mask and didn't get COVID"
 
 ## Personal experience: Skewed Exposure
 
 ### Claim
 
-"Illegal immigrants are criminals."
+"Biden fraudulently stole the election"
 
 ### Evidence
 
-"In news stories I see, most of the criminals are illegal immigrants."
+"Nobody I know voted for Biden."
 
 ## Selective Perception
 
 ### Claim
 
-"Large, public places like mass transit are more dangerous than driving."
+"Taking mass transit is more dangerous than driving."
 
 ### Evidence 
 
-"Remember all those terrorist attacks or mass shootings in public places and public transit?"
+"Terrorist attacks and mass shootings have targeted mass transit"
+
+## Selective Perception
+
+<img src="https://www.pewresearch.org/politics/wp-content/uploads/sites/4/2019/07/PP_2019.07.25_Trump-economy_0-01.png?resize=420,379" width =80%>
+
 
 # {.centered}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aASfk-ii0BM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Go5MB9UJoeM?start=115&end=154" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Stop and think:
+## In groups: discuss
 
 1) **What is his main argument (claim)?**
 
@@ -144,13 +131,13 @@ Evidence that appeals to **personal experience**:
 
 3) **How does this evidence fail to meet the four attributes (of science)?**
 
-#
+# 
 
-## What kind of claim is that?
 
-### Appeal to common sense
 
 ## Evidence from common sense:
+
+### **Appeal to common sense**
 
 - argue that a **claim is true** because it is something "**everyone knows**" or "**just makes sense**"
 
@@ -164,16 +151,11 @@ Evidence that appeals to **personal experience**:
 
 ## False analogies
 
-### Claim: 
+<img src="https://scontent.fyyc6-1.fna.fbcdn.net/v/t1.0-9/131278174_10219104940040326_3038738238826010851_o.jpg?_nc_cat=106&ccb=2&_nc_sid=730e14&_nc_ohc=e4eFBrKNn2oAX_2CYZ9&_nc_ht=scontent.fyyc6-1.fna&oh=f3550956706ee6bc56f5dee9437e8cec&oe=603108DB" width=50%>
 
-In 2003:
+## False analogies
 
-> "US military invasion in Iraq will bring peace, democracy, and economic growth to the country."
-
-### Evidence?:
-
-> "US invasion of Germany (1945) brough end to war, removal of Nazis, democracy, and a growing economy."
-
+<img src="https://i.imgur.com/k4ceCBs.jpeg" width=90%>
 
 ## Opposite claims possible
 
@@ -192,7 +174,7 @@ In 2003:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">White House senior advisor doubles down on voter fraud claims: “Voter fraud is a serious problem in this country” <a href="https://t.co/DC6lVPQznz">pic.twitter.com/DC6lVPQznz</a></p>&mdash; ABC News (@ABC) <a href="https://twitter.com/ABC/status/830787890309369856?ref_src=twsrc%5Etfw">February 12, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## Stop and think:
+## In groups: discuss
 
 1) **What is Miller's main argument (claim)?**
 
@@ -215,43 +197,57 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 1. Experts may be wrong/expertise irrelevant (<strike>Transparent Procedures</strike>)
 2. Experts may have an agenda (<strike>Transparent Procedures</strike>)
 3. We can "cherry pick" supportive experts (<strike>systematic use of evidence</strike>)
-4. Experts can disagree (<strike>acknowledge uncertainty</strike>)
+4. Experts can disagree (<strike>acknowledge uncertainty</strike>,<strike>consider alternatives</strike>)
 
 ## Expertise wrong/irrelevant
 
 ### Claim: 
 
-> As far as the cyber, I agree to parts of what Secretary Clinton said. We should be better than anybody else, and perhaps we're not. I don't think anybody knows it was Russia that broke into the DNC. I mean, it could be Russia, but it could also be China. It could also be lots of other people. ... So we have to get very, very tough on cyber and cyber warfare. It is — it is a huge problem. ... The security aspect of cyber is very, very tough. And maybe it's hardly doable.
-
-- Donald Trump
+> "As far as the cyber ... I don't think anybody knows it was Russia that broke into the DNC. I mean, it could be Russia, but it could also be China. It could also be lots of other people. ... So we have to get very, very tough on cyber and cyber warfare. It is — it is a huge problem. ... The security aspect of cyber is very, very tough. And maybe it's hardly doable." - Donald Trump
 
 ### Evidence:
 
 > I have a son. He's 10 years old. He has computers. He is so good with these computers, it's unbelievable.
 
+## Expertise wrong/irrelevant
+
+### Claim: 
+
+> There is a "hidden variable" that explains the apparent randomness in quantum mechanics.
+
+### Evidence:
+
+> "God does not play dice" - Albert Einstein
+
+
 ## Experts are motivated
 
 ### Claim:
 
-> "You should take this brand-name statin, X, to reduce your cholesterol." 
+> "You should take hydrocodone or oxycodone to manage your pain." 
 
 ### Evidence
 
 > "I am a doctor."
 
->- Undisclosed: I receive free meals from the manufacturer of drug X.
+>- Undisclosed: The maker of those drugs provides me free lunches; pays for my conference travel (see [here](https://onlinelibrary.wiley.com/doi/full/10.1111/add.14509))
+
+
+
 
 ## Cherry picking experts
 
 ### Claim:
 
-> Removing restrictions on gun ownership stops crime.
+> Fraud in 2020 Election
 
 ### Evidence
 
-> National Association of Chiefs of Police surveyed 20,000 sheriffs and chiefs of police, and found that vast majority agreed that "armed citizens help law enforcement reduce violent criminal activity".
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Hot off press, new Lott study estimates 11,350 absentee votes lost to <a href="https://twitter.com/POTUS?ref_src=twsrc%5Etfw">@potus</a> Trump in Georgia. Another 289,000 &quot;excess (fraudulent) votes&quot; across GA, AZ, MI, NV, PA, WI. As promised this a.m. on Bannon&#39;s War Room. Postpone GA Cesspool election!! <a href="https://t.co/geqEhnKqCR">https://t.co/geqEhnKqCR</a></p>&mdash; Peter Navarro (@RealPNavarro) <a href="https://twitter.com/RealPNavarro/status/1343979253659004928?ref_src=twsrc%5Etfw">December 29, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
->- This ignores police chiefs who publicly call for gun restrictions
+## Cherry picking experts
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">In a recent paper @JohnLottJr purports to show evidence of fraud in GA and PA in the 2020 election. In a new paper, we (<a href="https://twitter.com/aeggers?ref_src=twsrc%5Etfw">@aeggers</a>, Haritz Garro, and me) show that Lott’s claims are based on a fatal flaw. Once corrected, there is no evidence for fraud. <a href="https://t.co/yVtTIdBC0Q">https://t.co/yVtTIdBC0Q</a> <a href="https://t.co/dYwQazZICj">pic.twitter.com/dYwQazZICj</a></p>&mdash; justingrimmer (@justingrimmer) <a href="https://twitter.com/justingrimmer/status/1346144084902072320?ref_src=twsrc%5Etfw">January 4, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 ## Proliferating authorities
 
@@ -260,8 +256,46 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 - Without features of scientific evidence, we can choose any expert we want.
 
 >- Consider debates about climate change: people cite competing surveys of experts
+>- We'll compare the Lott and Eggers, Garro, and Grimmer papers on election fraud in this course.
 
-# Conclusion:
+## **claim** {.centered}
+
+<h2> **You should drink less coffee or tea.** </h2>
+
+# {.centered}
+
+<h2>**Evidence**</h2>
+<br>
+<img src='./study_1.png' width = 100%>
+<img src='./study_2.png' width = 100%>
+<img src='./study_3.png' width = 100%>
+
+# {.centered}
+
+<h2>POLL</h2>
+
+
+## 
+
+<img src='./Medical_studies-05.0.jpg' width=80%>
+
+---
+
+### [Studies Show That You Should Come Into This Room Right Over Here, And That You Should Come Alone](https://the-toast.net/2015/06/24/studies-show-that-you-should-come-into-this-room-right-over-here-and-that-you-should-come-alone/)
+
+> Recent studies suggest that it's very important that you come into this room right over here just now. Studies also suggest that it's equally important you do not waste time asking questions ... but just step this way through the door very quickly and by yourself, immediately. 
+>
+> The studies were conducted, and the evidence is conclusive: this room just over here is where you should go next, without anyone coming with you. Scientists did them, the studies. Which ones? Yes.
+>
+>The studies are all finished now, and you don’t need to see them. The studies suggested that it’s not important you see the studies at all, but it is important that you hurry along, quickly now, because time is of the essence. The studies say now is the best time for you to be alone in that room.
+
+## Appeal to Authority
+
+### Beware: 
+
+- Appeals to the **authority** of "science"/"researchers"/"studies"
+- This changes science into **magic**
+
 
 ## Conclusion:
 
