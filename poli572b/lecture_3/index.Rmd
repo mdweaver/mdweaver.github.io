@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 20, 2020"
+date: "January 25, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -114,7 +114,6 @@ None who were not invited were screened.
 
 ---
 
-## What is the effect of the letter?
 
 ```{r, echo = F}
 require(magrittr)
@@ -166,9 +165,9 @@ What is the effect of **mammography**?
 
 #### Option 1:
 
-Compare all **treated** (screened) to all **untreated** (were not screened in T and C)
+Compare all **treated** (screened) to all **untreated** (not screened in both T and C)
 
-This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt1_n + nt0_n)/50), 2)` per 1000!
+>- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt1_n + nt0_n)/50), 2)` per 1000!
 
 ---
 
@@ -180,13 +179,17 @@ What is the effect of **mammography**?
 
 Compare all **treated** (screened) to the assigned-to-**control** group.
 
-This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt0_n)/30), 2)` per 1000!
+>- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt0_n)/30), 2)` per 1000!
 
 ---
 
 ### What has gone wrong here?
 
 Do mammograms **increase** the risk of death from breast cancer?
+
+DISCUSS
+
+---
 
 ---
 
@@ -204,9 +207,12 @@ This comparison says: effect of mammography is to reduce breast cancer mortality
 
 Which option is the best?
 
+Why?
+
+
 ---
 
-### Imagine there are *four* possible types of people/units 
+### There are *four* possible types of people/units 
 
 ```{r, echo = F}
 
@@ -280,6 +286,8 @@ $$ ITT = \frac{1}{N} \sum\limits_{i=1}^{N} Y_{i}(Z=1) - Y_i(Z=0)$$
 
 $$ ITT \neq ACE = \frac{1}{N} \sum\limits_{i=1}^{N} Y_i(D=1) - Y_i(D=0)$$
 
+unless there is perfect compliance.
+
 --- 
 
 ### Solution 1: Intent to Treat
@@ -312,6 +320,7 @@ If...
 
 - We  care about the **effect** of actual **exposure**
 - $ITT$ usually diluted because some **never** get treated or because some people **always** get treated
+- e.g., military service
 
 --- 
 
@@ -378,7 +387,8 @@ Unless **everyone** is a complier, we cannot directly observe
 - $Y(D = 1)$ for compliers in treatment (unless no always-takers)
 - $Y(D = 0)$ for compliers in control
 
->- We don't need to directly observe compliers!
+
+>- But... We don't need to directly observe compliers!
 
 ---
 
@@ -428,7 +438,7 @@ More generally:
 Why do we need this assumption?
 
 - Without defiers, the only units changing their treatment status between **assigned to control** and **assigned to treat** are **compliers**.
-
+- With defiers, would not know the proportions of always taker/never taker/complier.
 
 ---
 
@@ -462,7 +472,6 @@ Why do we need this?
 
 - Allows us to assume that $Y(Z = 1) = Y(Z = 0)$ for **always takers** and **never takers**
 - Allows us to assume that unit causal effects for **compliers** are the same in assign-to-treat and assign-to-control:
-    - $Y_c(Z=0,D=1) - Y_c(Z=0,D=0) = Y_c(Z =1, D=1) - Y_c(Z=1, D=0)$
     - $Y_c(Z=0,D=0) = Y_c(Z=1, D=0)$ and $Y_c(Z=0,D=1) = Y_c(Z=1, D=1)$
     - To find effect of $D$ for compliers whose values of $D$ **and** $Z$ are different, $Z$ cannot change $Y$.
 
@@ -497,7 +506,7 @@ d = data.frame(
                 y00 = rep(c(NA,0,0), 1), y01 = rep(c(1,NA,NA), 1),
                type = rep(c("Always Taker", "Complier", "Never Taker"), 1))
 
-d[2, c('y10', 'y01')] = cell_spec(c(0,1), 'html', background = "green", color = 'white', bold = T)
+d[2, c('y10', 'y01')] = cell_spec(c(1,0), 'html', background = "green", color = 'white', bold = T)
 
 kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
                        "$Y_i(Z1,D0)$", "$Y_i(Z1,D1)$",
@@ -604,6 +613,7 @@ $$ITT = (Y_c(1)\pi_c - Y_c(0)\pi_c)$$
 
 $$ITT = [Y_c(1) - Y_c(0)]\pi_c = CACE \cdot \pi_c$$
 
+---
 
 ### Estimating the CACE:
 
@@ -671,7 +681,7 @@ It turns out, the our **estimator** $\widehat{CACE}$ is **biased**:
 
 $E \left( \frac{a}{b} \right) \neq \frac{E(a)}{E(b)}$
 
-$CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(ITT)}{E(ITT_D)} = \widehat{CACE}$
+$CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(\widehat{ITT})}{E(\widehat{ITT_D})} = \widehat{CACE}$
 
 but **consistent**:
 
@@ -701,12 +711,13 @@ kable(hip, format = 'html',
 ---
 
 ```{r}
-itt_hat = (1.77 - 1.83)
+itt_hat = (1.83 - 1.87)
 ittd_hat = (1/3) - 0
 
 cace_hat = itt_hat/ittd_hat
 cace_hat
 ```
+
 
 # Practice
 
