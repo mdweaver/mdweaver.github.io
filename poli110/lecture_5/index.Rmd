@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "January 21, 2020"
+date: "January 26, 2021"
 output: ioslides_presentation
 ---
 
@@ -13,36 +13,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Plan for Today
 
-### 1) **Recap**
-
-### 2) **Normative vs. Empirical Claims**
+### 1) **Normative vs. Empirical Claims**
 
 ### 3) **Two Varieties of Normative Claims**
 
 ### 4) **Claims and Science**
-
-<br>
-
-open `menti.com`
-
-# Recap
-
-## Unscientific Evidence:
-
-**Fails in some way to:**:
-
-1. Use **transparent procedures**
-2. Use **evidence systematically**
-3. Consider **alternative explanations**
-4. **Acknowledge uncertainty**
-
-
-
-# Varieties of Claims
-
-## An Example
-
-<img src='./nyt_editorial.png' width= 100%>
 
 ## An Example:
 
@@ -71,9 +46,7 @@ open `menti.com`
 
 - So growth rates can remain high
 
-## menti.com code 44 98 12
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/23149ae32d2bb8656aa7276cab9785dc/8f665fa55928' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+## POLL
 
 --- 
 
@@ -188,13 +161,17 @@ are normative claims that
 
 <img src="./curvature.jpg" width = 100%>
 
-## Royals in Canada?
+---
 
-> Bill Kostiuk, of Alliston, Ont., said **it would be "an honour and a privilege" to have Harry and Meghan living in Canada. "They do so much for charitable organizations and they seem to inspire the younger generation in a very positive way."**
+<smaller>
+"Vancouver is a city on the edge. It seems politicians and the police are unable, unwilling or incapable of stopping what has turned into a version of Dante's Hell on the Downtown Eastside — illicit drug sales, open drug use, the stolen property bazaar, garbage, weapons, assaults, rape.
 
-- [CBC News](https://www.cbc.ca/news/canada/prince-harry-meghan-canada-1.5425611)
+Vancouver no longer has a public health crisis that can be solved by needle exchanges, supervised injection sites, a naloxone-carting population, and pharmaceuticals substituted for illicit drugs. It is going to take more to solve the housing crisis by repurposing older hotels and simply putting roofs over people’s heads — a lot more.
 
-What value judgments does Bill make?
+Solving it requires bold leadership and a willingness to go beyond what has been done in the past, using evidence-based solutions that are in the best interests of all residents. Everyone deserves to feel safe, protected and respected, regardless of which neighbourhood they live in."</small>
+
+- Editorial in the [Vancouver Sun](https://vancouversun.com/news/daphne-bramham-vancouver-needs-compassionate-solutions-to-street-chaos)
+
 
 ## Prescriptive Claims
 
@@ -208,7 +185,7 @@ are normative claims that assert what kinds of actions **should** be taken
 
 The basis/evidence for a prescriptive claim includes 
 
-- an **empirical** claim about the consequences of some action
+- an (correct) **empirical** claim about the consequences of some action (causal claim)
 - an assumption that some **value judgment** is correct.
 
 ## Revisit our Example
@@ -225,9 +202,10 @@ This is a **prescriptive claim**:
 
 For it to be true...
 
-(1) What empirical claims must be true?
+(1) What value judgments must we assume to be true?
 
-(2) What value judgments must we assume to be true?
+(2) What empirical claims must be true?
+
 
 
 ## Revisit our Starting Example
@@ -254,70 +232,70 @@ e.g. people who oppose immigration to achieve cultural homogeneity value **cultu
 
 - **value judgments** cannot be evaluated with science
 - **prescriptive claims** can only partially be evaluated with science
-- Science cannot tell us **how to live**
 
 # Another Example
 
 ## Another example
 
-You and your friend win a sum of money in a lottery
+We run the BCCDC. We have finite resources to allocate COVID-19 vaccines.
 
-You and your friend **agree**: we should aim to **alleviate the most human suffering**.
+We all **agree**: we should aim to **minimize deaths**.
 
-### You disagree on whether:
+### You disagree on how to distribute vaccines
 
-(1) Should we donate mosquito nets to stop malaria?
+(1) Plan A (Lottery)
 
-(2) Should we give money directly to impoverished people?
+(2) Plan B (Targeting communities with more infections)
 
+(3) Plan C (Current BC CDC plan)
 
-## code 37 10 18
+## Discuss:
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/3b3ec5cd7f92c79506bca1a4c6cb2e5f/42e45f43c40a' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+Which plan is best?
 
+Can science tell us which plan we should adopt?
 
-# Can science solve <br> our problem?
+LINK
+
+## POLL
 
 ## Another example {.build}
+ 
+### If we had Empirical Evidence on...
 
-### Empirical Evidence
+- probabilities of death for different types of people (absent vaccine)
+- who would be more likely to get infected under different vaccine plans
 
-- Malaria kills ~500k per year
-- Half of global population possibly exposed
-- Mosquito nets reduce likelihood of exposure
-- For each 100 to 1000 nets, 1 death prevented
-- Cost of mosquito nets is low
-- Cash transfers are expensive, effects on mortality unclear
-- Sums must be very large to affect mortality
+Could assess which plan would yield the fewest deaths...
 
-### **What should you do?**
-
-### **Malaria nets!**
 
 ## Another example
 
-What if **you value** minimizing suffering, but **your friend values** maximizing individual autonomy?
+What if **you value** minimizing death, but **I value** maximizing equality?
 
-(1) Should we donate mosquito nets to stop malaria?
+Which plan should **I** support?
 
-(2) Should we give money directly to impoverished people?
+(1) Plan A (Lottery)
 
+(2) Plan B (Targeting communities with more infections)
 
-### **Does the scientific evidence resolve your dispute?**
+(3) Plan C (Current BC CDC plan)
+
+>- **Could the scientific evidence resolve our dispute?**
 
 ##  Another example (Summary)
 
-### "Mosquito nets (A) prevent malaria (B)"
+### "My Vaccine Plan (X) reduces deaths (Y)"
 
-- Scientific Evidence that "A causes B" does not imply "we should do A"
+- Scientific Evidence that "X causes Y" **does not imply** "we should do Y"
 
-- Depends on how we **value** B
+- Depends on how we **value** Y
 
 ### But...
 
-- We assume less malaria is good (B) (a value judgment)
-- What if science shows: mosquito nets don't prevent malaria. (empirical evidence)
-- "A does/does not cause B" is informative!
+- If we assume less death is good (*a value judgment*)
+- What if science showed: Vaccine Plan A (X) does not reduce deaths (Y). (*empirical evidence*)
+- "X does/does not cause Y" is informative!
 
 
 ## Conclusion:
