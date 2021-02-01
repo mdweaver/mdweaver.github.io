@@ -130,10 +130,10 @@ c0_n = rbinom(c_n, 1, c0 / 1000) %>% sum
 nt1_n = rbinom(nt_n, 1, nt/1000) %>% sum
 nt0_n = rbinom(nt_n, 1, nt/1000) %>% sum
 
-while ((c1_n <= c0_n) & 
-        (c1_n/10) <= ((nt1_n + nt0_n + c0_n)/50) & 
-        (c1_n/10) <= ((nt0_n + c0_n)/30) & 
-       (c1_n + nt1_n) >= (nt0_n + c0_n)
+while ((c1_n > c0_n) | 
+        (c1_n/10) < ((nt1_n + nt0_n + c0_n)/50) |
+        (c1_n/10) < ((nt0_n + c0_n)/30) | 
+       (c1_n + nt1_n) > (nt0_n + c0_n)
 ) {
   c1_n = rbinom(c_n, 1, c1 / 1000) %>% sum
   c0_n = rbinom(c_n, 1, c0 / 1000) %>% sum
