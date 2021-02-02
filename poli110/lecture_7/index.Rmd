@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "January 28, 2020"
+date: "February 2, 2021"
 output: ioslides_presentation
 ---
 
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### (1) Review **types** of descriptive claims
 
-### (2) How to Evaluate Descriptive Claims
+### (2) How to judge: is descriptive claims correct or not?
 
 ### (3) What are concepts? How do we make them?
 
@@ -39,35 +39,37 @@ claims about what exists (or has existed/will exist) in the world:
 
 (1) **"Democracy is a type of political regime."**
 
-(1) **"Russia is a democracy."**
+(2) **"Russia is a democracy."**
 
-(2) **"58% of countries worldwide are democracies."**
+(3) **"58% of countries worldwide are democracies."**
 
-(3) **"Countries in Western Europe are more democratic than those in Eastern Europe."**
+(4) **"Countries in Western Europe are more democratic than those in Eastern Europe."**
 
-(4) **"Democracies have been backsliding (becoming less democratic) since the election of Donald Trump"**
+(5) **"Democracies have been backsliding (becoming less democratic) since 2016."**
 
 
 ## Descriptive Claims: Evaluation
 
-In small groups: what do we need to do so we can evaluate this claim? (What steps must we take?)
+In small groups: what would you want to know before you could judge whether this claim was correct or incorrect?
 
-> **"Democracies have been backsliding (becoming less democratic) since the election of Donald Trump"**
+> **"Democracies have been backsliding (becoming less democratic) since 2016"**
+
+#
+
 
 ## Descriptive Claims: Evaluation
 
 ### **Concepts**: 
 
-define our terms in a way that is **transparent** and can be used **systematically**
+define our terms in a way that is **transparent** and can be used **systematically**. If concepts are opaque or idiosyncratic $\to$ STOP! 
 
 ### **Variables**:
 
-translate concepts into something that we can (in principle) **observe**
+translate concepts into something that we can (in principle) **observe**. If variables do not correspond to the concept or correspond to *other* concepts $\to$ STOP!
 
 ### **Measurement**:
 
-devise **transparent** and **systematic** procedures with known **uncertainty** to observe those attributes of specific cases.  
-
+devise **transparent** and **systematic** procedures with known **uncertainty** to observe those attributes of specific cases. If measurement procedure is opaque, likely to suffer from bias, or has high degree of uncertainty $\to$ STOP!  
 
 ## Evaluating Descriptive Claims: 
 
@@ -87,10 +89,9 @@ We are often interested in identifying what general categories this specific **c
 
 At a general level:
 
-**concepts**: abstract or general categories that we (humans) apply to particular cases/instances. They **abstract** away from the highly specific, complex, and often unique features of reality.
+**concepts**: abstract or general categories that we (humans) apply to particular cases/instances. They **abstract** away from the highly **particular**, complex, and often **unique** features of reality.
 
 Our thought and our language is rooted in concepts!
-
 
 ---
 
@@ -117,8 +118,12 @@ Without concepts/abstraction:
 For example:
 
 - "Chairs"
-- Proper names of people
+- Forests
 - Proper names of countries: e.g. "Syria"
+
+##
+
+<img src="https://philebersole.files.wordpress.com/2013/07/scottforestry.jpg">
 
 ## Conceptual Limits {.centered}
 
@@ -141,11 +146,11 @@ For example:
 
 Building on our insights about/criteria for science:
 
-#### (1) Concepts need to be transparent: 
+#### (1) Concepts need to be **transparent**: 
 
 clear and accessible definition. Even if we disagree over the label, we can all use the concept.
 
-#### (2) Concepts must be formulated to be used consistently
+#### (2) Concepts must be formulated to be used **systematically**
 
 Science is about systematic evidence. Cannot define concepts around one case, must be tied to attributes that are observable
 
@@ -157,11 +162,13 @@ science is fundamentally about prediction, finding regularities. concepts that d
 
 #### **concepts**:
 
-are **abstract** or **general** categories that we apply to **particular** cases using with a set of rules/criteria that determine membership in the category. The rules/criteria that determine membership are:
+are **abstract** or **general** categories that we apply to **particular** cases using with a set of rules/criteria that determine membership in the category.
 
-- ontological: the traits we use for a concept are **about what mean to be** in this category. "To be a democracy is to have $x,y,z$ traits."
-- observable: defining traits in a concept **must be something we can all observe** (empirical). (e.g., democracy cannot be defined by an ethereal 'Democratic Spirit')
-- relevant: traits are **relevant to predicting** how cases belonging to the concept affect other things, are affected by other events, or are part of a causal process.
+For concepts to be useful in scientific evidence... 
+
+- defining traits **must be something we can all observe** (empirical). (e.g., democracy cannot be defined by an ethereal 'Democratic Spirit')
+- the traits are **about what it means to be** in this category. "To be a democracy is to have $x,y,z$ traits."
+- traits are **relevant to predicting** how cases described by the concept affect other things or are affected by other things. **Relevant** to ordinary use of the word
 
 ## An example: Democracy?
 
@@ -179,7 +186,7 @@ are **abstract** or **general** categories that we apply to **particular** cases
 ## An example: Democracy?
 
 - *People's Democratic Republic of Algeria*
-- Democratic Republic of the Congo
+- *Democratic Republic of the Congo*
 - **Democratic Republic of Timor-Leste**
 - *Federal Democratic Republic of Ethiopia*
 - Democratic People's Republic of Korea
@@ -194,7 +201,13 @@ are **abstract** or **general** categories that we apply to **particular** cases
 
 #### A democracy is a government in which political decisions are made by people who acquire power through  competitive elections, the results of which are respected (losers leave office).
 
-## menti.com code 97 54 29
+## You decide...
+
+What are key traits capture **what it means** to be a **democracy**
+
+https://www.menti.com/4za6mdj52c
+
+## 
 
 <div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/78807a14e09486e6c1c5cd89d1deeef9/c3dd405145eb' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
@@ -210,6 +223,8 @@ Which definition of "democracy" is the right concept?
 
 3. **Our class definition**
 
+poll
+
 ## Scientific Concepts: An Example {.centered}
 
 <img src= "https://media.giphy.com/media/JfPy0LsUxRSCc/giphy.gif" width=75%>
@@ -218,18 +233,17 @@ Which definition of "democracy" is the right concept?
 
 Which definition of "democracy" is the right concept?
 
-1. **Kim Jung Un's: "a state with 'democratic' in its name."**
+For each definition:
 
-2. **Minimal: "government in which political decisions are made by people who acquire power through competitive elections, the results of which are respected."**
-
-3. **Our class definition**
-
+- defining traits are about "what it is to be a democracy"
+- traits are observable
+- relevant (maybe not the Kim Jung Un definition...)
 
 ## Concepts and Science:
 
 ### Insight:
 
-Depending on the kinds of questions we are interested in, we may have different concepts, different definitions for the same concepts. 
+Depending on the kinds of questions we are interested in, there are many **different definitions** for the same concepts. 
 
 **Even if we disagree with <u>definitions</u> for specific word**, good scientific concepts can be understood and used by others regardless of whether they agree with our definitions.
 
@@ -260,6 +274,6 @@ Kim Jong-un would have to **accept** that the **Democratic People's Republic of 
 
 1. **Concepts are *abstractions* from reality**
 2. **To answer descriptive claims, we need to define concepts**
-3. **Scientific concepts are about what relevant and observable traits makes something an X.**
+3. **Scientific concepts are about what relevant and observable traits makes something an "X".**
 4. **Scientific concepts are "objective" in the sense they can be used even if we disagree with them**
-  - "subjective" in sense that value judgements tell us one definition is better or worse.
+  - "subjective" in sense that value judgements may make us prefer one definition of a word over another.
