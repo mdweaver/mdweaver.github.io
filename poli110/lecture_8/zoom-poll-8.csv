@@ -1,0 +1,38 @@
+"Title","Questions Name","Questions Type","Answers"
+"Poll 1",,,
+,"“cause of death”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“number of gun deaths”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“change over time in # of gun deaths”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“proportion of all murders that involve guns”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“strictness of gun ownership laws”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“year in which a country banned assault weapons”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,,,
+"Poll 2",,,
+,"Suppose we want to compare US states to see if those with laxer gun laws had more gun deaths: Which variable would be best?","single",
+,,,"Number of gun deaths in the preceding year"
+,,,"Rank of the state on a list of states ordered by gun deaths in the preceding year"
+,,,"Gun deaths per 100,000 people in the preceding year"
