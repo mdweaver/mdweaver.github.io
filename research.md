@@ -60,7 +60,7 @@ Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-n
 
 ## Papers<a name="papers"></a>
 
-#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_2018.pdf">here</a>)
+#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_12_2020.pdf">here</a>)
 
 <hr>
 
