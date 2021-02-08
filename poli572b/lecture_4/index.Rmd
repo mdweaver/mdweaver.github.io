@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 27, 2020"
+date: "February 8, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -50,14 +50,14 @@ options("kableExtra.html.bsTable" = T)
 1. $ACE$ without randomization
 2. Confounding
 
-- DAGs
-- Dependence in Potential Outcomes
+    - DAGs
+    - Dependence in Potential Outcomes
 
 3. Conditioning
 
-- how it works
-- what not to do
-- methods
+    - how it works
+    - what not to do
+    - methods
 
 
 # Example
@@ -72,7 +72,7 @@ options("kableExtra.html.bsTable" = T)
 - experiments are expensive, hard to do
 - randomization often impossible on certain questions (cost/ethically prohibitive)
 
-How do we get unbiased estimate of $ACE$ or other causal parameter?
+How do we get unbiased estimate of $ACE$ or other causal parameters?
 
 ---
 
@@ -82,6 +82,8 @@ How do we get unbiased estimate of $ACE$ or other causal parameter?
 
 > Teach For America (TFA) is a prominent national service program that integrates top university graduates into low-income communities (often of color) for two years as teachers. Does service in TFA induce participants to harbor lower racial "resentment"?
 
+[see here](https://doi.org/10.1017/S0003055418000412)
+
 ---
 
 ### An Example
@@ -90,7 +92,7 @@ How do we get unbiased estimate of $ACE$ or other causal parameter?
 
 Imagine we survey and compare TFA participants and non-participants graduating from the same set of universities.
 
-Racial "resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today,limiting the chances of individuals from particular racial groups to get ahead?").
+"Racial resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today,limiting the chances of individuals from particular racial groups to get ahead?").
 
 Score $1$ to $5$, with $5$ being greatest resentment.
 
@@ -102,11 +104,11 @@ We can imagine **potential outcomes**:
 
 $i$ indexes individuals
 
-$TFA_i$ indicates TFA participation ($1$) or not ($0$)
+$TFA_i$ indicates TFA participation ($1$) or not ($0$) of person $i$
 
-$Y_i(0)$ is racial "resentment" without TFA
+$Y_i(0)$ is  "racial resentment" without TFA
 
-$Y_i(1)$ is racial "resentment" with TFA
+$Y_i(1)$ is  "racial resentment" with TFA
 
 ---
 
@@ -180,7 +182,7 @@ ace_hat
 
 ---
 
-#### Why is the $\widehat{ACE}$ biased?
+#### Why is the $\widehat{ACE}$  biased?
 
 # Confounding
 
@@ -188,11 +190,11 @@ ace_hat
 
 ### Confounding
 
-**Confounding** occurs when, in the cases we observe, the values of treatment $D$ or $Z$ are **not independent** of potential outcomes of $Y$.
+**Confounding** occurs when, in the cases we observe, the values of treatment $D$ are **not independent** of potential outcomes of $Y$.
 
 If we ignore confounding, then our estimate of the $ACE$ will be **biased**.
 
->- Why might value of treatment (TFA) be **not independent** of potential outcomes of $Y$?
+>- Why might value of treatment (TFA)  **not  be independent** of potential outcomes of $Y$?
 
 ---
 
@@ -266,8 +268,8 @@ Using a **DAG**:
 
 A **backdoor path** is a **non-causal** path from $D$ to $Y$: 
 
-- any path that remains after we remove arrows point out of $D$
-- "backdoor" because it flows backwards out of $D$
+- any path that remains after we remove arrows point out from $D$
+- "backdoor" because it follows arrows backwards out of $D$
 - backdoor path can only change direction once (backwards from $D$, forwards to $Y$)
 
 ---
@@ -301,7 +303,7 @@ The "backdoor" criterion for confounding points to solutions:
 
 1. Find a causal variable that has no backdoor paths:
 
-- randomization is only way to be sure
+    - randomization is only way to be sure: $Z$ as instrument
 
 ---
 
@@ -329,9 +331,7 @@ dagify(mammogram ~ invite,
 
 ---
 
-### Directed Acyclic Graphs (DAGs)
-
-Exclusion Restriction Violation in $CACE$
+Exclusion Restriction Violation in $CACE$ [Paluck 2010](https://doi.org/10.1177%2F0146167210379868)
 
 ```{r, echo = F}
 dagify(discuss ~ talk_show,
@@ -354,31 +354,7 @@ dagify(discuss ~ talk_show,
 
 ### Directed Acyclic Graphs (DAGs)
 
-The "backdoor" criterion for confounding points to solutions:
-
-1. Find a causal variable that has no backdoor paths:
-
-- randomization is only way to be sure
-
-2. "**Condition**" on variables to "block" backdoor paths
-
-- assuming we block **all** backdoor paths
-- assuming we don't **unblock** new paths
-- assuming we can **correctly measure** relevant variables
-
-
----
-
-### Conditioning:
-
-**conditioning** is when we examine the effect of $D_i$ on $Y_i$ within subsets/strata of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
-
-- Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
-- We hold value of other variables on backdoor paths constant, examine relationship between $D$ and $Y$.
-
----
-
-### Directed Acyclic Graphs (DAGs)
+What if we don't have randomization?
 
 **In two groups**:
 
@@ -388,14 +364,41 @@ Create a DAG for the TFA example on the white board.
 - what are variables that might **affect joining TFA**?
 - what are causal links between them?
 
+
 ---
 
 ### Directed Acyclic Graphs (DAGs)
 
-**Condition on** variables that
+The "backdoor" criterion for confounding points to solutions:
+
+1. Find a causal variable that has no backdoor paths:
+
+    - randomization is only way to be sure
+
+2. "**Condition**" on variables to "block" backdoor paths
+
+    - assuming we **block all backdoor** paths
+    - assuming we **don't unblock** new paths
+    - assuming we can **correctly measure** relevant variables
+
+---
+
+### Conditioning:
+
+**conditioning** is when we examine the effect of $D_i$ on $Y_i$ *within subsets/strata* of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
+
+- Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
+- We examine relationship between $D$ and $Y$, within groups of cases where values of $\mathbf{X_i}$ are the same (hold value of  backdoor paths constant)
+
+
+---
+
+### Directed Acyclic Graphs (DAGs)
+
+**Condition on** all variables that
 
 - have causal paths toward $D$ and toward $Y$ 
-- have causal paths toward $Y$ and backward path toward $D$ 
+- have causal paths toward $Y$ and backdoor path to $D$ 
 
 **Do NOT condition on** variables that
 
@@ -419,9 +422,10 @@ We may be tempted to condition on as many variables as possible, but this can le
 ### Consider University Admissions:
 
 Admission might be a function of 
-  - Motivation
-  - Academic Ability (as measured by exam scores)
-  - Assume motivation/academic ability are **independent** of each other
+
+    - Motivation
+    - Academic Ability (as measured by exam scores)
+    - Assume motivation/academic ability are **independent** of each other
 
 **Within strata defined by admission status**, ability and motivation are **no longer independent**.  
 
@@ -445,7 +449,7 @@ ggplot(plot_data, aes(x = test, y = motivation, color = Admit)) +
 
 ---
 
-Condition on what to find the effect of ability on earnings (if we only measure exam score)?
+Condition on what to find the effect of ability on earnings (if we can't directly observe ability)?
 
 ```{r, echo = F}
 dagify(income ~ u,
@@ -497,13 +501,13 @@ When does this arise?
 
 1. **Condition on** variables that
 
-- **have causal paths toward $D$ and toward $Y$ **
-- have causal paths toward $Y$ and backward path toward $D$ 
+    - **have causal paths toward $D$ and toward $Y$ **
+    - have causal paths toward $Y$ and backward path toward $D$ 
 
 2. **Do NOT condition on** variables that
 
-- **are on causal path** from $D$ to $Y$ (mediators)
-- **are "colliders"**
+    - **are on causal path** from $D$ to $Y$ (mediators)
+    - **are "colliders"**
 
 3. Best practice:
 
@@ -534,7 +538,7 @@ Switch diagrams:
 #### Cons:
 
 - DAGs are assumed, never really known
-- 
+- May suffer from motivated reasoning
 
 # Conditioning
 
@@ -574,11 +578,17 @@ In this case,  **conditioning** contrasts to calculating **naive** $\widehat{ACE
 
 Rather than taking this difference:
 
-$ACE \neq E[\widehat{ACE}] = E[Y^T - Y^C] = E[Y(1) | TFA = 1] - E[Y(0)|TFA=0]$
+$\widehat{ACE} = E[Y^T - Y^C]$
+
+$\widehat{ACE} = E[Y(1) | TFA = 1] - E[Y(0)|TFA=0]$
+
+which we found to be biased... $ACE \neq E[\widehat{ACE}]$
+
+---
 
 Instead, we find effect of $TFA$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
 
-$\widehat{ACE}[X = x] = \overline{Y(1)}[X = x] - \overline{Y(0)}[X = x]$ for each value of $z$ in the data. Where $\overline{Y}$ is the mean of observed values of $Y$ for 
+$\widehat{ACE}[X = x] = \overline{Y(1)}[X = x] - \overline{Y(0)}[X = x]$ for each value of $x$ in the data. Where $\overline{Y}$ is the mean of observed values of $Y$ for 
 
 Then take a weighted average of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
 
@@ -743,6 +753,8 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ```
 
+Can we use conditioning to recover the $ACE$?
+
 ---
 
 ### Example (4)
@@ -757,24 +769,39 @@ Why can't conditioning recover the true $ACE$?
 
 In order for conditioning to estimate the $ACE$ without bias, we must assume
 
-1. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+    - all 'backdoor' paths are blocked
     - example (2) violated this
-2. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+    - no conditioning on colliders to 'unblock' backdoor path
+
+    
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+    
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
     - There must be variation in the levels of treatment **within every strata** of $X$
     - example (4) violated this
+    
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+    
 3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+    - We'll revisit this 
 
 ---
 
 ### Conditioning: Limitations
 
 1. **Ignorability**/**Conditional Independence**: 
-    - we can only argue for this using theoretical/empirical knowledge of the cases
-    - always an untestable assumption: we always condition on more observed variables, but there may be unobserved variables
+    - an untestable assumption: there may be unobserved variables we should condition on
+    - can argue this is plausible using theory/knowledge of  cases
     
 2. **Positivity**/**Common Support**:
-    - The more variables we condition on, less likely positivity is to hold
-    - More and more unique combinations of $X$ with little variation in $D$.
+    - with more conditioning variables: less likely positivity is to hold
+    - many unique combinations of $X$ with little variation in $D$
     
 3. **Measurement Error**:
     - This exacerbates problems with assumption (1)
@@ -784,7 +811,7 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 ### Conditioning: Assumptions
 
-**Positivity**/**Common Support**: Even if we violate positivity, $ACE$ may not be estimable without bias, but other causal parameters might be:
+**Positivity**/**Common Support**: Without positivity, $\widehat{ACE}$ may  be biased, but can estimate other causal parameters:
 
 - $ATT$: Average Treatment effect on Treated:
     - requires positivity **only for values of $x$ held by units in treatment**
@@ -807,7 +834,7 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 ### Conditioning: Matching
 
-**Match treated units to most-similar untreated units**
+**Match treated units to untreated units most similar** in conditioning variables $\mathbf{X}$
 
 Many varieties:
 
@@ -832,7 +859,7 @@ Many varieties:
 
 ### Conditioning: Weighting
 
-Use conditioning variabels to weight observations such that:
+Use conditioning variables to weight observations such that:
 
 1. They are weighted inversely by probability of treatment (IPW)
 2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
@@ -843,8 +870,8 @@ Use conditioning variabels to weight observations such that:
 
 1. Identify set of conditioning variables
 2. Use conditioning variables in algorithm to:
-    - calculate probability of treatment
-    - or find weights for balance
+    - calculate probability of treatment, given value of $\mathbf{X}$
+    - or choose weights for balance
 3. Calculate difference in means, using calculated weights
 
 ---
@@ -853,7 +880,7 @@ Use conditioning variabels to weight observations such that:
 
 1. Identify set of conditioning variables
 2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
-3. Calculate relationship between $D$ and $Y$ after adjusting away relationship with  conditioning variables
+3. Calculate relationship between $D$ and $Y$ after adjusting for relationship with conditioning variables
 
 ---
 
