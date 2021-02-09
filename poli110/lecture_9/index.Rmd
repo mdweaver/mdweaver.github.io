@@ -1,13 +1,13 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 4, 2020"
+date: "February 9, 2021"
 output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-require(haven)
+require(stringr)
 require(data.table)
 require(ggplot2)
 require(magrittr)
@@ -33,26 +33,6 @@ require(magrittr)
 
 ---
 
-### Question/Claim $\xrightarrow{}$
-
-### **Concept**
-
-- transparent **definition** of what relevant and observable traits makes something an "X" $\xrightarrow{}$
-
-
-
-### **Variable**(s)
-
-- **observable** properties of cases that correspond to the concept $\xrightarrow{}$
-
-### **Measure**(s)
-
-- **procedure** to find the values variables take for *specific* cases  $\xrightarrow{}$
-
-### "Answer"
-
----
-
 ### Question/Claim
 
 **$\not\xrightarrow{}$ Concepts not scientific/irrelevant**
@@ -73,7 +53,7 @@ $\not\xrightarrow{}$
 
 ---
 
-Variables for "democracy":
+Variables for "democracy": What are their levels of measurement?
 
 **1**:  In each year, a country receives a "Polity Score" describing  the level of democracy ranging from -10 to +10, with -10 to -6 corresponding to autocracies, -5 to 5 corresponding to anocracies, and 6 to 10 to democracies.
 
@@ -83,23 +63,9 @@ Variables for "democracy":
 
  **4** <img src="./cheibub.png" width = 80%>
 
-
-## menti.com code 45 41 37
-
-**1.**:  In each year, a country receives a "Polity Score" describing  the level of democracy ranging from -10 to +10, with -10 to -6 corresponding to autocracies, -5 to 5 corresponding to anocracies, and 6 to 10 to democracies.
-
- **2.**. The year in which a country first became a democracy
-
- **3.** Fraction of adults who can are allowed to vote under suffrage rules
-
- **4.** <img src="./cheibub.png" width = 80%>
-
-
+POLL
 
 ---
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/90330b58745b7e5efc15d7136178350f/e6c7038b62d3' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
 
 ## Levels of measurement: Practice
 
@@ -115,90 +81,58 @@ Variables for "democracy":
 
 # Example
 
-## A question
+## Election Fraud
 
-> **Are countries with greater ethnic diversity more prone to experience civil war?**
+Question: "**Was there was extensive election fraud in the 2020 US Presidential Election?**" 
 
-## An answer
+An Answer: 
 
-<img src='./fearon_1.png' width=100%>
+<img src="./lott_1.png" width = 100%>
 
-## Example
+[see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988)
 
-### **A concept**
+## Election Fraud
 
-**Ethnic diversity**: "having an ethnic majority and a significant ethnic minority"
+**Concept**: election fraud: manipulations of votes or vote counting by changing the candidate or counting ineligible ballots
 
-## Example
+<img src="./lott_2.png" width = 100%>
 
-"Ethno-linguistic fractionalization" or "ELF"
 
-### $$ELF = 1 - \sum_{i=1}^{G} p_i^2$$ 
+## Election Fraud
 
-Where $p_i$ is fraction of population belonging to ethnic group $i$ out of $G$ total ethnic groups.
+**Variable**: Abnormally high voter turnout in constituencies with fraud allegations (would result from higher rates of filling out absentee ballots for people who hadn't voted, dead people voting, ineligible people voting, or even payments to legally registered people for their votes)
 
-<br>
+<img src="./lott_3.png" width = 100%>
 
-**Equivalent to the probability that any two randomly selected individuals belong to different ethnic groups**
+## Election Fraud
 
-## Example
+**Measure**: Statistically significant difference in turnout (Number of votes cast divided by registered voters according to official election results in US 2020 Presidential election) between counties with fraud accusations vs. others. [see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988)
 
-Number and size of ethnic groups by country comes from the *Atlas Narodov Mira*:
-  
-- Soviet anthropological reference from 1964 
-- Group categories and counts collected by Soviet anthropologists
-- lists ethnic/language groups in each country
-- lists the size of these groups
+<img src="./lott_4.png" width = 100%>
 
-## Example
-
-```{r echo = F, warning=F, message=F}
-fl = read_dta("./repdata.dta") %>% as.data.table
-fl = fl[, list(yrs_war = sum(war)), by = list(cname, ethfrac)]
-
-ggplot(fl, aes(x = ethfrac, y = yrs_war, label = cname)) + geom_point() + geom_smooth(method = 'lm', fullrange = T, se = F) +
-  geom_text(aes(label=ifelse(yrs_war>0,as.character(cname),'')),hjust=0,vjust=0) +
-  xlab("Ethno-linguistic Fractionalization") + ylab("Years of Civil War") + theme_bw() +
-  ggtitle("Years of Civil War by ELF Score")
-```
-
-## Example
-
-**Weakly positive pattern, indistinguishable from random noise**:
-
-<img src='./fearon_2.png' width=100%>
-
-## Example:
+## Election Fraud:
 
 **In small groups:**
 
-1. What is the variable (for ethnic diversity)?
-2. What is the measure (for ethnic diversity)?
-3. What problems, if any, are there with the variable?
-4. What problems, if any, are there with the measure?
+1. What problems, if any, are there with the variable?
+2. What problems, if any, are there with the measure?
 
-## Example: Problems
+## Variable Problems
 
-### Variable:
+<img src="./eggers_1.png" width = 100%>
 
-- Country A: Group 1 50%, Group 2 50%
-    - $ELF = 0.5$
-- Country B: Group 1 66.6%, Group 2 16.6%, Group 3 16.6%
-    - $ELF = 0.5$
-- Different dimensions of ethnicity (e.g. language, religion, race, caste, tribe)
+<img src="./eggers_2.png" width = 100%>
 
+[Eggers et al](https://www.dropbox.com/s/ps5oufevtka3nmf/Fraud.pdf?dl=0)
 
-## Example: Problems
+## Measure Problems
 
-### Measure:
+<img src="./eggers_3.png" width = 75%>
 
-Soviet anthropologists: 
+## Measure Problems
 
-- Are group sizes from 1964 correct?
-    - Syrian civil war and Iraqi refugees
-- Which dimension of ethnicity did they choose in each country?
-- Distinct ethnic groups treated as the same, unified ethnic groups treated as different
-    - e.g. in Rwanda Hutus and Tutsis coded as one ethnic group.
+<img src="./eggers_4.png" width = 75%>
+
 
 ## Example: Problems
 
@@ -207,6 +141,30 @@ Problems with variables $\to$ lack of **validity**
 Problems with measure $\to$ **measurement error**
 
 # Measurement Error
+
+## Digression: Histograms
+
+[video explanation here](https://www.khanacademy.org/math/pre-algebra/pre-algebra-math-reasoning/pre-algebra-picture-bar-graphs/v/histograms)
+
+```{r echo = F, warning=F, message=F}
+
+bc_data = fread('./BCCDC_COVID19_Dashboard_Case_Details.csv')
+bc_data[, age := str_extract(Age_Group, "\\d\\d$") %>% as.numeric %>% `-` (1)]
+
+ggplot(bc_data, aes(x = age)) + geom_histogram(breaks = seq(0,90,10), col = "white") + theme_bw(base_size = 18) + ggtitle("Histogram of BC COVID Cases by Age") + xlab("Age (Bins)") + ylab("Count (of COVID-19 Cases)")  +
+    scale_x_continuous(breaks=seq(0,90,10))
+```
+
+---
+
+About how many cases among people between 20 and 30?
+
+About how many cases among people between 40 and 60?
+
+```{r echo = F, warning=F, message=F}
+ggplot(bc_data, aes(x = age)) + geom_histogram(breaks = seq(0,90,10), col = "white") + theme_bw(base_size = 18) + ggtitle("Histogram of BC COVID Cases by Age") + xlab("Age (Bins)") + ylab("Count (of COVID-19 Cases)")  +
+    scale_x_continuous(breaks=seq(0,90,10))
+```
 
 ## Measurement Error
 
@@ -218,46 +176,45 @@ Problems with measure $\to$ **measurement error**
 
 <hr style="height:8px; visibility:hidden;" />
 
+
+## Measurement Error
+
+What is the severity of the pandemic in BC today?
+
+Let's say a **variable** for pandemic severity is active cases per 100k people.
+
+As of this morning BC CDC reports $3,976$ active cases. Those are the number of people who have tested positive, excluding those who died, [recovered](http://www.bccdc.ca/resource-gallery/Documents/Guidelines%20and%20Forms/Guidelines%20and%20Manuals/Epid/CD%20Manual/Chapter%201%20-%20CDC/2019-nCoV-Interim_Guidelines.pdf), or could not be found for followup. 
+
+That implies $78.4$ active cases per 100k.
+
+POLL
+
 ## Measurement Error
 
 ### **measurement error**
 
-is a **difference** between the **true** value of a variable for a case and the **observed value** of the variable for that case produced by the measurement procedure.
+is a **difference** between the **observed** value of a variable for a case (produced by the measurement procedure) and the **true** value of the variable for that case.
 
 $$\mathrm{Value}_{observed} - \mathrm{Value}_{true} \neq 0 \xrightarrow{then} \mathrm{measurement \ error}$$
 
-## Digression:
-
-```{r echo = F, warning=F, message=F}
-
-ggplot(fl, aes(x = ethfrac)) + geom_histogram(breaks = seq(-0.0125,1.0125,0.025), col = "white") + theme_bw(base_size = 18) + ggtitle("Histogram of Country ELF Scores") + xlab("Ethno-linguistic Fractionalization (Bins)") + ylab("Count (of countries)") +
-    scale_y_continuous(breaks=c(0,2,4,6,8,10,12))
-
-```
-
----
-
-How many countries have $ELF \approx 0.5$?
-
-How many countries have $ELF \approx 0.75$?
-
-```{r echo = F, warning=F, message=F}
-
-ggplot(fl, aes(x = ethfrac)) + geom_histogram(breaks = seq(-0.0125,1.0125,0.025), col = "white") + theme_bw() + ggtitle("Histogram of Country ELF Scores") + xlab("Ethno-linguistic Fractionalization (Bins)") + ylab("Count (of countries)") +
-    scale_y_continuous(breaks=c(0,2,4,6,8,10,12))
-
-```
-
----
+If what we observe is **different** from the true value (difference is not 0), then there is measurement **ERROR**
 
 ## Measurement Error
+
+$$\mathrm{Active \ Cases }_{observed} - \mathrm{Active \ Cases}_{true} \neq 0$$
+
+$$\xrightarrow{then} \mathrm{measurement \ error}$$
+
+---
 
 ### Two varieties of **measurement error**
 
 - **bias**/**systematic measurement error**
 - **random measurement error**
 
-Differ in the pattern of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ that we see.
+Differ in the patterns of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ that we see.
+
+Measures may suffer from **both**.
 
 ## Measurement Error: Bias
 
@@ -275,16 +232,16 @@ Differ in the pattern of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ tha
 
 ## Measurement Error: Random
 
-**random measurement error**: errors that occur due to *random* features of measurement process or phenomenon and the values that we measure are, **on average**, correct
+**random measurement error**: errors that occur due to *random* features of measurement process or phenomenon. So even if observed values are sometimes wrong, they are, **on average**, correct
 
 - Due to chance, we get values that are too high or too low
 - May be lots of errors
-- There is no systematic tilt one way or another (no bias)
+- There is no tilt one way or another (no bias)
 - In aggregate, values that are "too high" are balanced out by values that are "too low" compared to the truth
 
 
 
-## menti.com 17 17 28
+## Example
 
 ```{r, echo = F, message=F}
 require(ggplot2)
@@ -301,54 +258,19 @@ ggplot(plot_data, aes(value, fill = Measure)) +
   geom_vline(xintercept = 0, colour = 'red')
 ```
 
+POLL
+
 ---
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/69e188f2c79c30b9ccf182ae7859563a/e5831669bcd0' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+### Examples 
+We want to know how well people are complying with public health orders, so we ask people questions on a survey.
 
-# Example
+**$1.$ How many times have you washed your hands with soap today?**
 
-## Racial Bias in Police Shootings
+- As a measure of "average number of times a person washes their hands with soap every day" does this suffer from systematic or random measurement error (or both)?
 
-### **Is police violence in the US racially biased against African Americans?**
+**$2.$ How many times have you entered someone else's household in the past week?**
 
-### What is "racial bias"?
+- As a measure of the "number of times people have violated social distancing rules" does this suffer from systematic or random measurement error (or both)?
 
-<br>
 
-**"Disparate treatment of a racial group in *otherwise identical situations*"** (i.e. "statistical discrimination")
-
-- if African Americans treated identically to white Americans by police in otherwise identical situations, no racial bias.
-- Key feature of "identical situations" is "objective threat to the police officer"
-
-## Racial Bias in Police Shootings
-
-<img src='./fryer_1.png' width=100%>
-
-data comes from Houston police reports of events
-
-> "arrests codes in which lethal force is more likely to be justified: attempted capital murder of a public safety officer, aggravated assault on a public safety officer, resisting arrest, evading arrest, and interfering in arrest"
-
-## Racial Bias in Police Shootings
-
-**concept: "objective threat" to the officer**
-
-### **Variable:**
-
-"the level of physically-threatening behavior exhibited by a suspect"
-
-### **Measure:**
-
-undergraduate research assistants code threatening behavior by suspects given in **police reports**
-
-## Racial Bias in Police Shootings
-
-**Findings**:
-
-- In comparable interactions, Houston police department used lethal force against African Americans *less* or *as often* as they did against Whites.
-
-**In small groups:**
-
-Do you believe this result?
-
-- Do you believe the validity of the variable? Why or why not?
-- Do you believe the measure? Why or why not?

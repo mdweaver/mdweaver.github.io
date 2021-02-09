@@ -1,0 +1,38 @@
+"Title","Questions Name","Questions Type","Answers"
+"Poll Democracy",,,
+,"""Polity Score"": choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“The year in which a country first became a democracy”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“Fraction of adults who can are allowed to vote under suffrage rules”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“Meets four rules”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,,,
+"Poll Covid Cases","Is the BC CDC reported number of active COVID cases likely to be...","single",
+,,,"Too high"
+,,,"Correct"
+,,,"Too low"
+,,,
+"Poll Error",,,
+,"Which of the variables suffer from systematic measurement error/bias?","multiple",
+,,,"X1"
+,,,"X2"
+,,,"X3"
+,,,
+,"Which of the variables suffer from random measurement error?","multiple",
+,,,"X1"
+,,,"X2"
+,,,"X3"
