@@ -21,7 +21,8 @@
 ,,,"interval"
 ,,,"ratio"
 ,,,
-"Poll Covid Cases","Is the BC CDC reported number of active COVID cases likely to be...","single",
+"Poll Covid Cases",,,
+,"Is the BC CDC reported number of active COVID cases likely to be...","single",
 ,,,"Too high"
 ,,,"Correct"
 ,,,"Too low"

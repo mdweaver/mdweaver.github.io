@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 6, 2020"
+date: "February 11, 2021"
 output: ioslides_presentation
 ---
 
@@ -59,7 +59,7 @@ measurement **bias** or **systematic measurement error**: error produced when ou
 
 ## Example: Facebook and Hate Crime
 
-### **Mueller and Schwarz (2018)** ask:
+### [**Mueller and Schwarz (2018)**](https://dx.doi.org/10.2139/ssrn.3082972) ask:
 
 <br>
 
@@ -67,15 +67,15 @@ measurement **bias** or **systematic measurement error**: error produced when ou
 
 <br>
 
-- Are there higher levels of **anti-refugee** violence in places with higher exposure to **anti-refugee** rhetoric via Facebook?
+- Are there higher levels of **anti-refugee** violence in places with more social media access in weeks with more social media anti-refugee hate speech?
 - Address this question in the context of Germany (2015-2017)
 
 ## Example: Facebook and Hate Crime
 
 Need three concepts/variables/measures:
 
-1. Anti-refugee rhetoric on Facebook
 2. Anti-refugee violence
+1. Anti-refugee rhetoric on Facebook
 3. Exposure to Facebook
 
 ## Example: Facebook and Hate Crime
@@ -96,7 +96,7 @@ Need three concepts/variables/measures:
 
 ## Example: Facebook and Hate Crime
 
-**concept**: Anti-refugee rhetoric on Facebook
+**concept**: Anti-refugee rhetoric on social media
 
 <br>
 
@@ -125,29 +125,6 @@ Example Facebook posts:
 
 ## Example: Facebook and Hate Crime
 
-**concept**: "Exposure to Facebook": persons who have an active Facebook account
-
-<br>
-
-**variable**: Active facebook users in a municipality per 10k people.
-
-<br>
-
-**measure**: With your neighbors, propose a measure for this variable (it can be imperfect).
-
-<br>
-
-**One team member submits at `menti.com 65 80 01`**
-
----
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/c70c86d50d064abd92bc2d1c2bec1f75/6f295982d7d8' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-#
-
-
-## Example: Facebook and Hate Crime
-
 
 **concept**: "Exposure to Facebook": persons who have an active Facebook account
 
@@ -160,29 +137,39 @@ Example Facebook posts:
 **measure:** Followers of Nutella Germany on Facebook (who share their location information) per capita
 
 - out of ~$63,000$ Nutella followers, only ~$22,000$ shared their location
-- measurement bias? random measurement error?
+
+## Example: Facebook and Hate Crime
+
+In groups, discuss each of these measures:
+
+- Could they suffer from measurement bias? If yes, why?
+- Could they suffer from random measurement error? If yes, why?
+
+---
+
+<img src='./mueller_fig.png' width =80%>
 
 
 ## Systematic Measurement Error/Bias
 
-### Sources
+### Causes
 
-**($1$) Researcher subjectivity/interpretation**: Researcher systematically over-weights, under-weights dimension of concept
+**($1$) Researcher subjectivity/interpretation**: Researcher systematically biased in how she evaluates cases
 
-- e.g.: Expert interviews to assess "political knowledge" may inform assessment using visual/language cues 
 - e.g.: Resume experiments: HR professionals exhibit gender, racial bias.
+- explicit or implicit stereotyping
 
 ## Systematic Measurement Error/Bias
 
-### Sources
+### Causes
 
 **($2$) Obstacles to observation** 
 
 - **social norms** may discourage revelation of information; downward bias in "undesirable" phenomena
     - e.g. survey measure of racism or drug use $\xrightarrow{}$ **social desirability bias**
 - **incentives to hide/misrepresent**: political actors have strategic reasons to conceal information from each other
-    - e.g. states may present their military capacity to be better than it is (upward bias)
-    - e.g. wealthy people may present themselves as less wealthy to avoid negative attention (downward bias)
+    - e.g. police use-of-force encounter reports on "objective threat" of black suspects [(Fryer 2019)](https://scholar.harvard.edu/files/fryer/files/empirical_analysis_tables_figures.pdf) (upward bias)
+    - e.g. wealthy people may misrepresent assets to avoid taxation (downward bias)
     
 ## Example: Immigration
 
@@ -206,11 +193,14 @@ They can choose "oppose", "support", "neither support nor oppose"
 
 <img src="./immig_3.png"  width=100%>
 
+How many people are **opposed** to **stopping** immigration?
+
 ## Random Measurement Error
 
-### Sources
+### Causes
 
 - Imperfect memory (survey/interviews)
+- Mistakes
 - "Random" changes in mood/concerns (for surveys)
     - e.g. rain might make you more angry and support government less
 - Researcher interpretation 
@@ -238,19 +228,33 @@ They can choose "oppose", "support", "neither support nor oppose"
 | **When it's Not OK** | If it is different across cases/ <br>or we want absolute values | If we need precision/<br> observe few cases|
 | **Solved by more data?** | No, bias persists. | Yes, random errors "wash out" |
 
-## False negatives/False positives:
+# An Example
 
-**claim**: "German communities with more Facebook users have more anti-refugree violence."
+## Polling the US 2020 Election
 
-a **false negative** is incorrectly concluding that this claim is wrong. Might be preferable to make this mistake than to incorrectly conclude that the claim is right (**false positive**).
+Ahead of the election: 
 
-<br>
+Everyone wanted to know: what fraction of people will vote for Biden? What fraction will vote for Trump?
 
-In **social science**, we usually prefer false negatives (no difference when there is a difference) to false positives when making comparisons. Random measurement error makes differences in groups harder to detect.
 
-<br>
+## Polling the US 2020 Election
 
-When might **false negatives** be a **bad thing**?
+Multiple "poll aggregators":
+
+<img src="./538_1.png" width=80%>
+
+## Polling the US 2020 Election
+
+But polls underestimated votes for Trump
+
+<img src="https://content.fortune.com/wp-content/uploads/2020/11/UVbVF-how-fivethirtyeight-s-2020-forecast-fared-2-1.png?w=870" width = 60%>
+
+## Polling the US 2020 Election
+
+In groups:
+
+Why do you think that the polling in the US 2020 Presidential Election was so wrong?
+
 
 # Sampling Error
 
@@ -262,17 +266,19 @@ We would have to observe **too many** cases.
 
 ### Example:
 
-**"Most Americans prefer a ban on semi-automatic firearms."**
+**"How many Americans plan to vote for Donald Trump?"**
 
 <br>
 
-We can't interview **all Americans**...
+We can't interview **all eligible voters**...
 
 ## Sampling
 
-### Survey with $1500$ people
+### Survey of $1000$ registered voters
 
-<img src="./guncontrol2.png" width=100%>
+<img src="./poll_1.png" width=100%>
+
+<img src="./poll_2.png" width=100%>
 
 ## Sampling
 
@@ -284,21 +290,24 @@ We can't interview **all Americans**...
 
 **inference**: description of the (unmeasured) **population** we make *based on a (measured) **sample***
 
+and there is **uncertainty** about what is true about the population, because we **only measure a sample**
+
+
 ## Example:
 
-Measuring attitudes on gun control in the US:
+Measuring Presidential vote choice in the US:
 
 The **population**:
 
-- All adults in the US
+- All registered voters in the US
 
 The **sample**: 
 
-- 1500 people chosen **at random**
+- 1000 registered voters chosen **at random** (but how many people did they call who didn't answer?)
 
 The **inference**:
 
-- 57% of Americans want ban on semi-automatic weapons, with some **uncertainty** due to sampling
+- 52% of Americans want inteded to vote for Biden, 42% for Trump, with some **uncertainty** due to sampling
 
 
 ## Sampling
@@ -320,106 +329,46 @@ The difference between the value of the measure for the sample and the true valu
 
 $$\mathrm{Value}_{sample} - \mathrm{Value}_{population} \neq 0 \xrightarrow{then} \mathrm{sampling \ error}$$
 
-### Two varieties
+---
 
-1. **sampling bias**: cases in the sample are not representative of the population: not every member of population has equal chance of being in sample. Error is consistently in the same direction
-2. **random sampling error**: with random sampling, by chance, we get samples where the average is **too high** or **too low** compared to the population, but these errors would cancel out.
+### **sampling error**:
 
-## Example: Commuting
+$1$. **sampling bias**: cases in the sample are not representative of the population: not every member of population has equal chance of being in sample. Error is consistently in the same direction.
 
-### **How long does it take for you to get from home to UBC (in minutes)?**
+## Example
 
-<br>
+<img src="./poll_3.png" width=100%>
 
-go to `menti.com` and use code 12 31 09 to respond
+## Example
+
+<img src="./poll_4.png" width=100%>
+
+## Example
+
+<img src="./poll_5.png" width=100%>
+
 
 ---
 
-Take as the "population": students in class today
+### **sampling error**:
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/f944d685e9a8a2b1ed3a5897b970de4d/b4f00f1e7f44' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+$2$. **random sampling error**: with random sampling, by chance, we get samples where the average is **too high** or **too low** compared to the population, but these errors would cancel out. (captured by **margin of error**)
 
+## Example
 
-## Example: Commuting
+<img src="./538_2.png" width=100%>
 
-### **Random Sampling**
-
-We will take $5$ random samples of those in class today by using the last digit of your phone number.
-
-### **How long does it take for you to get from home to UBC (in minutes)?**
-
-<br>
-
-go to `menti.com` and use code 67 33 97 to respond. **only respond to the item corresponding to the last last digit of your phone number**
-
----
-
-**5 random samples**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/cfe30601a9ffb36c76aba5cde4727a51/dca96accd7d7' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
----
-
-```{r, include = T, echo = F, warning= F, message = F}
-
-get_data = function(group) {
-  vals = group$score %>% names %>% as.numeric
-  reps = group$score %>% unlist
-  data = rep(vals, times = reps)
-  return(data)
-}
-
-require(httr)
-
-#Get class mean
-resp = GET("https://api.mentimeter.com/questions/b4f00f1e7f44/result")
-json =content(resp, "parsed")
-c_values = json$results %>% lapply(function(i) get_data(i)) %>% unlist
-
-#Get group means
-resp = GET("https://api.mentimeter.com/questions/dca96accd7d7/result")
-json =content(resp, "parsed")
-g_means = json$results %>% lapply(function(i) get_data(i)) %>% lapply(function(x) mean(x[x>1]))
-points = data.table(g = 1:5, mean = unlist(g_means))
-
-#json$results %>% lapply(function(i) get_data(i))
-
-#Sample:
-#sample
-n = floor(length(c_values[c_values > 1])/5)
-#sample vec
-s = rep(NA, 10000)
-
-#loop samples
-for (i in seq_along(s)) {
-  s[i] = sample(c_values[c_values > 1], size = n) %>% mean
-}
-
-ggplot() + geom_histogram(aes(x = s), col = "white", bins = 50) + theme_bw() + geom_vline(xintercept = points$mean, col = 'red') + geom_vline(xintercept = mean(c_values[c_values > 1]), col = 'blue', linetype = 2) + xlab("Commute Times of Sample") + ylab("Count")
-
-```
-
-Avg. commute time for 10000 random samples from the survey on page 33 of the slides. Blue line is population avg. Red lines are the sample avgs. from the 5 phone number groups.
-
-## Example: Commuting
-
-- What if our **population** were "**students enrolled in this course**"
-
-- What if our **sample** were "**students in lecture on Tuesday (Feb 4, 2020)**" <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/33/cloud-with-snow_1f328.png" width=60px>
-
-<br>
-
-> **Would this sample <u>underestimate</u>, <u>overestimate</u>, or (approx.) <u>correctly estimate</u> commute times for all students in enrolled in the course**
+With **random** samples, sometimes we get a sample with too many Biden supporters, sometimes we get a sample with too many Trump supporters. This uncertainty knowable mathematically.
 
 ## Conclusion:
 
-1. **Measurement Error**
+**Measurement Error**
 
 - know how to recognize both types
 - what are the sources of these errors
 - when are they a problem/not
 
-2. **Sampling**
+**Sampling**
 
 - what is it? (population, sample, inference)
 - random sampling
