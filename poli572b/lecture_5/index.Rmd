@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 3, 2020"
+date: "February 18, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -49,7 +49,7 @@ options("kableExtra.html.bsTable" = T)
 
 - Relationship between variables
     - Covariance; Correlation
-- the mean (again)
+- the mean (revisited)
 - conditional expectation function
 - "Ordinary Least Squares"
     - algorithm
@@ -88,14 +88,16 @@ options("kableExtra.html.bsTable" = T)
 
 ## Today
 
-- Association between two variables
 
 - The Mean
+
+- Association between two variables
 
 - Regression/Least Squares extends the mean
 
 
-# Basic Concepts
+
+# Digression
 
 ---
 
@@ -289,10 +291,11 @@ $r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
 
 ### Practice:
 
-In groups of 2-3:
+On your own
 
 Without using `cor()` or `cov()` or `var()` functions in `R`
 
+1. Inspect `data_1`
 1. Calculate mean of $X$; mean of $Y$
 2. Calculate $Var(X)$ and $Var(Y)$
 3. Calculate correlation $(X,Y)$
@@ -317,6 +320,7 @@ ggplot(plot_data, aes(x, y)) + geom_point() + geom_smooth(method = 'lm', se = F,
 - Both measure linear association of two variables
 - Scale is either standardized (correlation) or in terms of products (covariance)
 - May be inappropriate in presence of non-linearity; outliers
+
 
 # The Mean: Revisited
 
@@ -386,7 +390,7 @@ What is the distance between two points?
 ```{r, echo = F}
   vectors = data.frame(x = c(3,0), y = c(0,4))
   ggplot(vectors, aes(x = x, y = y)) + geom_point() +
-  geom_segment(aes(x = c(3,0), y = c(0,0), xend = c(0,0), yend = c(0,4)), 
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
                arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
   geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
   coord_fixed()
@@ -413,25 +417,13 @@ $d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
 
 ## The Mean
 
-The mean **minimizes** the variance.
+One way of thinking about the mean is as a **prediction**. 
 
-- we saw this before (why we divide by $n-1$ when **estimating** the population variance)
-- this is the same as minimizing the **distance**, because variance is mathematically linked to the distance calculation
+We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction of all the values in $Y$.
 
----
+The mean gives us the $\hat{y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
 
-
-### The Mean
-
-The mean **minimizes** the variance.
-
-- we saw this before (why we divide by $n-1$ when **estimating** the population variance)
-
-If we observe values of $Y$, $y_i$; we choose a single number, $\hat{y}$, to be our estimate for each value of $y$: 
-
-<br>
-
-the **mean** is the estimate that minimizes the distance between $\hat{y}$ and each of the $y_i$s.
+- since distances are sums of squared differences, this is why mean minimizes the **variance**.
 
 ---
 
@@ -475,6 +467,8 @@ $$y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{y} \\ \hat
 
 Multiplying a (1,1) vector by a constant.
 
+- $\hat{y}$ will be on the line that runs through the origin and (1,1)
+
 ---
 
 Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $y$.
@@ -495,13 +489,11 @@ Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $
 
 ### Deriving the mean:
 
-$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$
-
-can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
+$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
 
 $\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
 
-and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations:
+and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or prediction error):
 
 $\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
 
@@ -556,15 +548,37 @@ ggplot() +
 
 ### Deriving the mean:
 
-Value of sample of size $n$ are represented by a vector in $n$ dimensional space
+Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{y}$ is a prediction of $y$.
 
-- We choose a value $\hat{y}$ in one dimensional sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
+- We choose a value $\hat{y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
 
-- Such that $\hat{y}$ is smallest distance to $y$.
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+
+
+---
+
+### Deriving the mean:
+
+What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
+
+We can then use this to improve our predictions, $\hat{y}$, of $y$.
+
+- We choose a value $\hat{y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
+
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
 
 
 # Conditional Expectation Function
+
+
+---
+
+### Generalizing the Mean:
+
+The **mean** is useful...
+
+... but often we want generate better predictions of $Y$, using additional information $X$. 
 
 ---
 
@@ -583,9 +597,9 @@ To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about ra
 
 ### Generalizing the Mean:
 
-We are interested in finding some **conditional expectation function** (Angrist and Pischke)
+We are interested in finding the **conditional expectation function** (Angrist and Pischke)
 
-**expectation**: because it is about the *mean* - $E(Y)$
+**expectation**: because it is about the *mean*: $E(Y)$
 
 **conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
 
@@ -597,12 +611,22 @@ $$E[Y | X = x]$$
 
 ### Generalizing the Mean:
 
-There are **many ways** to get the **conditional expectation function**
+Another way of thinking about what the **conditional expectation function** is:
+
+$$E[Y | X = x] = \hat{y} | X = x$$
+
+What is the predicted value $\hat{y}$, where $X = x$, such that $\hat{y}$ has the smallest distance to $y$?
+
+---
+
+### Generalizing the Mean:
+
+There are **many ways** to define the **conditional expectation function**
 
 - one easy way is to assume that the CEF is **linear**.
 - That is to say $E(Y)$ is **linear** in $X$. 
 - The **function** takes the form of an equation of a line.
-
+- Bivariate regression
 
 ---
 
@@ -637,7 +661,7 @@ text(4,3+2*4, pos = 3, "(x2,y2)")
 
 ### Equation of a line
 
-<div style="font-size: 200%;">$slope = \frac{rise}{run} = \frac{y2-y1}{x2-x1}$</div>
+<div style="font-size: 150%;">$slope = \frac{rise}{run} = \frac{y2-y1}{x2-x1}$</div>
 
 
 >- Change in $y$ with a 1 unit change in $x$.
@@ -664,7 +688,7 @@ text(0,3, "Intercept", col = 'blue', pos = 2)
 
 ### Equation of a line
 
-<div style="font-size: 200%;">$intercept = (y | x=0)$</div>
+<div style="font-size: 150%;">$intercept = (y | x=0)$</div>
 
 
 >- Value of $y$ when $x = 0$. Where the line crosses the $y$-axis.
@@ -684,6 +708,10 @@ or, by convention:
 ### How do we choose the line that best captures:
 
 $$E(Y) = a + b\cdot X$$
+
+or 
+
+$$\hat{y} = a + b\cdot X$$
 
 ---
 
@@ -740,7 +768,7 @@ ggplot(father.son, aes(x = fheight, y = sheight)) +
 --- 
 
 ### Which line?
-```{r, echo = F}
+```{r, echo = F, message=F, warning=F}
 ggplot(father.son, aes(x = fheight, y = sheight)) + 
   geom_point(alpha = 0.5) + 
     xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
@@ -758,7 +786,7 @@ means = father.son[,list(m = mean(sheight),
                      count = length(fheight)),by=bin]
 ```
 
-```{r, echo = F}
+```{r, echo = F, message=F, warning=F}
 ggplot(father.son, aes(x = fheight, y = sheight)) + 
   geom_point(alpha = 0.1) + 
     xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
@@ -786,21 +814,37 @@ We are going to choose an intercept $a$ and slope $b$ such that:
 
 $\hat{y}_i = a + b \cdot x_i$
 
-and that minimizes the distance between the fitted ($\hat{y}_i$) and true ($y_i$) values:
+and that minimizes the distance between the predicted ($\hat{y}_i$) and true ($y_i$) values:
 
 $\sqrt{\sum\limits_i^n (y_i - \hat{y_i})^2}$
+
+minimizes $\mathbf{e} = y_i - \hat{y_i}$
 
 ---
 
 ### Minimizing the Distance
 
-Another way of thinking of this is in terms of **residuals**, or the difference between true and fitted values using the equation of the line.
+Another way of thinking of this is in terms of **residuals**, or the difference between true and predicted values using the equation of the line. (Prediction errors)
 
 $e_i = y_i - \hat{y_i}$
 
-Minimizing the distance also means minimizing the  sum of squared **residuals** $e_i$
+Minimizing the distance also means minimizing the sum of squared **residuals** $e_i$
   
 - this is exactly what we did above with the mean
+
+---
+
+```{r, echo = F, message=F, warning=F}
+m = lm(sheight~ fheight, father.son)
+ols_residuals = data.frame(y= father.son$sheight, y_hat = m$fitted.values, x = father.son$fheight)
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) + 
+   geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height")   + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + geom_segment(aes(x=x, xend=x, y=y_hat, yend=y), data = ols_residuals, col = 'darkred', alpha = 0.2) + theme_bw() + ggtitle("Residuals") 
+  
+```
+
+
 
 ---
 
@@ -812,6 +856,8 @@ $$\min_{a,b} \sum\limits_i^n (y_i - a - b x_i)^2$$
 Choose $a$ and $b$ to minimize this value, **given $x_i$ and $y_i$**
 
 We can do this with calculus: solve for when first derivative is $0$
+
+ILLUSTRATE
 
 ---
 
@@ -901,8 +947,7 @@ Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line
 There are other ways to derive least squares.
 
 - Because we eventually want multiple variables, need to build from an intuition rooted in matrices and their relationship to distance.
-- Adding more variables puts into minimizing distance in a $n > 3$ dimensional space, so it gets weird.
-- Nevertheless, this exercise is helpful
+- Adding more variables means minimizing distance of $\hat{y}$ to $y$ in a $p > 3$ dimensional space, so it gets weird.
 
 ---
 
@@ -912,23 +957,23 @@ The math of regression ensures that:
 
 $1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
 
-$2$. $Cov(X,e) = 0$.  This is true by definition of how we derived least squares. We will see why this is next week. But we can also prove it in class. 
+$2$. $Cov(X,e) = 0$.  This is true by definition of how we derived least squares. We will see why this is next week.
 
 - Also means: Correlation of $X$ and residuals $e$ is exactly $0$. **Why is this?**
 
-$3$. $Var(X) > 0$ in order to compute $a$ and $b$. **Why is this?**
+$3$. Must be that $Var(X) > 0$ in order to compute $a$ and $b$. **Why is this?**
 
 ---
 
 ### In small groups:
 
-Using the `trees` data in `R`:
+Using the `data_2` from [here](https://pastebin.com/LeSpqKKk)
 
-Take $Y = Volume$ and $X = Girth$
+Take $Y = $ `gop_change` and $X = $ `enlistment`
 
 1. Calculate $a$ and $b$ using the equations give above
-2. Interpret $a$ in terms of CEF
-3. What is $\hat{y}$ when Girth is 10? What does this mean in terms of the CEF?
+2. Interpret $a$ in terms of CEF.
+3. What is $\hat{y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
 2. Calculate $e$
 3. Calculate the mean of $e$
 4. Calculate the correlation of $X$ and $e$
@@ -940,15 +985,15 @@ Take $Y = Volume$ and $X = Girth$
 
 ### Key ideas
 
-These facts are mathematical truths about least squares. Unrelated to assumptios needed for statistical/causal inference
+These facts are mathematical truths about least squares. Unrelated to assumptions needed for statistical/causal inference.
 
-- Can fit least squares to any scatterplot (regardless of how sensical it is), if $x$ has positive variance.
+- Can fit least squares (LS) to **any** scatterplot, if $X$ has positive variance.
 
-- Least squares line minimizes the sum of squared residuals (minimizes the distance between predicted values and actual values of $y$).
+- LS line minimizes the sum of squared residuals (minimizes the distance between predicted $\hat{y}$ and actual values $y$).
 
-- Least Squares line always goes through point of averages; can be computed exactly from "graph of averages"
+- LS line always goes through point of averages; can be computed exactly from "graph of averages"
 
-- Residuals $e$ are always uncorrelated with $x$ if there is an intercept because they are orthogonal $x$ with mean of $0$.
+- Residuals $e$ are always uncorrelated with $x$ if there is an intercept. Will see why next week.
 
 ---
 
