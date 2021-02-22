@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 10, 2020"
+date: "February 22, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -78,9 +78,9 @@ options("kableExtra.html.bsTable" = T)
 
 ### Bivariate Regression 
 
-To fit a line:
+To predict $y$ as a linear function of $x$:
 
-$Y_i = a + b x_i$
+$\hat{y}_i = a + b x_i $
 
 #### slope:
 
@@ -96,11 +96,11 @@ $$a = \overline{y} - \overline{x}\cdot b$$
 
 **Fitted/Predicted Values**
 
-$$\widehat{Y_i} = a + b \cdot x_i$$
+$$\widehat{y_i} = a + b \cdot x_i$$
 
-**Residuals**
+**Residuals** (prediction errors)
 
-$$Y_i - \widehat{Y}_i = e_i$$
+$$y_i - \widehat{y}_i = e_i$$
 
 ---
 
@@ -131,7 +131,7 @@ By choosing $a$ and $b$ to minimize distance between $Y$ and $\widehat{Y}$ the f
 
 ### What is a vector?
 
-- a **vector** is a one-dimensional array of numbers. It is $2  \times   1$.
+- a **vector** is a one-dimensional array of numbers. It is $n  \times   1$ or $1 \times n$.
 
 $$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
 
@@ -142,7 +142,7 @@ $$ X = \begin{pmatrix} 1 & -1 \\ 1 & 2 \\ 1 & 4 \end{pmatrix}$$
 
 --- 
 
-**Vectors have geometric interpretation**
+**Vectors have geometric interpretation** (matrices are groups of vectors)
 
 ```{r, echo = F}
   vectors = data.frame(x = c(3,0), y = c(0,5))
@@ -218,7 +218,7 @@ $$u = \begin{pmatrix} 1 \\ 5 \\  -2 \end{pmatrix}$$
 
 $$u^T = u' = \begin{pmatrix} 1 & 5 & -2 \end{pmatrix}$$
 
-**Matrix Example**
+**Matrix Example** (first row to first column, second row to second column, etc.)
 
 --- 
 
@@ -229,6 +229,18 @@ If $u$ and $v$ are $n \times 1$ vectors, the **inner product** or **dot product*
 $$u = \begin{pmatrix} 1 \\ -2 \end{pmatrix}; \ v =\begin{pmatrix} 4 \\ 2 \end{pmatrix} $$
 
 $$u \bullet v = \begin{pmatrix} 1 & -2 \end{pmatrix} \begin{pmatrix} 4 \\ 2 \end{pmatrix} = 0$$
+
+--- 
+
+### Inner Products
+
+First element in $u$ times first element in $v$, plus
+
+Second element in $u$ times second element in $v$, plus
+
+Third element in $u$ times third element in $v$, plus...
+
+etc.
 
 ---
 
@@ -251,9 +263,9 @@ When the inner product of two vectors ($u,v$) is $0$, then $u$ and $v$ are **ort
 
 If matrices must have dimensions that match, can be multiplied
 
-- $m \times n$ matrix $A$ can be multiplied by matrix $B$ if $B$ is $n \times p$. 
+- $m \times n$ matrix $A$ can be multiplied by matrix $B$ if $B$ is $n \times p$.
 - Matrix $AB$ is $m \times p$
-- Rows of $A$ multiplied with columns of $B$ and then summed:
+- Rows of $A$ multiplied with columns of $B$ and then summed: like inner product
 - Multiplication not commutative: cannot multiply $BA$
 - Multiplication not commutative: $B'A' = (AB)' \neq AB$
 
@@ -261,7 +273,6 @@ If matrices must have dimensions that match, can be multiplied
 --- 
 
 ### Matrices can be Multiplied
-
 
 $$\begin{pmatrix} 1 & 1 \\ -1 & 2 \end{pmatrix} \times \begin{pmatrix} 1 & -1 \\ 1 & 2 \end{pmatrix} =$$
 
@@ -279,7 +290,7 @@ This is known as **inverting** a matrix.
 
 $$A \times A^{-1} = A^{-1} \times A = I_{p \times p} = \begin{pmatrix} 1 & 0 & \ldots & 0 \\ 0 & \ddots &  \ldots & 0 \\ 0 & \ldots & \ddots & 0 \\ 0 & \ldots & 0 & 1 \end{pmatrix}$$
 
-This is an **identity** matrix with 1s on diagonal, 0s everywhere else.
+This is an **identity** matrix with 1s on diagonal, 0s everywhere else. $A_{p \times p} \times I_{p \times p} = A$ (identity matrix is matrix equivalent of 1)
 
 ---
 
@@ -492,7 +503,7 @@ Rather than project the $n \times 1$-dimensional vector $\mathbf{Y}$ into one di
 
 Given $\mathbf{Y}$, an $n \times 1$ dimensional vector of all values $Y$ for $n$ observations
 
-and $\mathbf{X}$, an $n \times p$ dimensional matrix ($p$ columns, $n$ observations)
+and $\mathbf{X}$, an $n \times p$ dimensional matrix ($p$ columns, $n$ observations). We call this the **design matrix**. Almost always includes
 
 $\mathbf{\hat{Y}}$ is an $n \times 1$ dimensional vector of predicted values (for the mean of Y conditional on X) computed by $\mathbf{X\beta}$. $\mathbf{\beta}$ is a vector  $p\times 1$ of (parameters) that we multiply by $\mathbf{X}$.
 
@@ -584,7 +595,7 @@ $$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatri
 
 Take $x = 0,2,4,6,8,10$, $y = 0, 12, 21, 31, 40, 50$
 
-Solve for $a$ and $b$ using $\frac{Cov(x,y)}{Var(x)}$
+Solve for $a$ and $b$ using $b = \frac{Cov(x,y)}{Var(x)}$ and $a = \bar{y} - b \bar{x}$
 Solve for $a$ and $b$ using the matrix calculation. 
 
 ---
@@ -616,7 +627,9 @@ But we also want to know more intuitively what these matrix operations are doing
 
 - We will walk through what exactly the matrix calculations do for us.
 
-## $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
+---
+
+### $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
 
 $$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$ 
 
@@ -624,8 +637,9 @@ $$\mathbf{X}'\mathbf{X} = \begin{pmatrix} 1 & \ldots & 1 \\ x_1 & \ldots & x_n \
 
 $$= \begin{pmatrix} n & \sum_i x_i \\ \sum_i x_i & \sum_i x_i^2 \end{pmatrix} = n \begin{pmatrix} 1 & \overline{x} \\ \overline{x} & \overline{x^2} \end{pmatrix}$$
 
+---
 
-## $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
+### $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
 
 $$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$ 
 
@@ -711,7 +725,6 @@ $$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
 The slope:
 
 - Expresses how much mean of $Y$ changes for a 1-unit change in $X$
-- When expressed as function of correlation coefficient $r$, we see this rise ($SD_y$) over the run ($SD_x$)
 
 
 ---
@@ -956,7 +969,7 @@ set.seed(1234)
 n = 1000
 u = rnorm(n)
 x = u + rnorm(n, sd = 0.5)
-z = log(u^2) + rnorm(n, sd = 0.5)
+z = sqrt(u^2) + rnorm(n, sd = 0.5)
 y = 0 + 1*x - z^2  +  rnorm(n)
 ```
 
@@ -968,7 +981,7 @@ Generate the data using code above.
 
 In `R`:
 
-1. Create the $X$ matrix to estimate $Y_i = b_0 + b_1 x_i + b_2 z_i$
+1. Create the design matrix $X$ to estimate $Y_i = b_0 + b_1 x_i + b_2 z_i$
 2. Use the matrix equation for least squares to obtain $\beta$ ($b_0, b_1, b_2$)
 3. Calculate $x^*$ as $x_i - \hat{x}_i$, where $\hat{x}_i$ comes from regressing $x$ on an intercept and $z$.
 4. What is the correlation of $x^*$ and $z$?
