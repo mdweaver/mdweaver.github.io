@@ -891,15 +891,15 @@ We calculate least squares using same matrix equation ($(X'X)^{-1}X'Y$) as in bi
 
 When fitting the equation:
 
-$Y = b_0 + b_1x + b_2z$
+$Y_i = b_0 + b_1x_i + b_2z_i + e_i$
 
 (1) $b_1 = \frac{Cov(x^*, Y)}{Var(x^*)}$
 
-Where $x^* = x - \hat{x}$ from the regression: $x = c_0 + c_1 z$.
+Where $x^* = x - \hat{x}$ from the regression: $\hat{x} = c_0 + c_1 z $.
 
 (2) $b_2 = \frac{Cov(z^*, Y)}{Var(z^*)}$
 
-Where $z^* = z - \hat{z}$ from the regression: $z = d_0 + d_1 x$
+Where $z^* = z - \hat{z}$ from the regression: $\hat{z} = d_0 + d_1 x$
 
 Does anything look familiar here?
 

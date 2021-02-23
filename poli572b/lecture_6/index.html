@@ -2511,15 +2511,15 @@ document.getElementsByTagName('head')[0].appendChild(style);
 
 <h3 id="multivariate-least-squares-8">Multivariate Least Squares:</h3>
 <p>When fitting the equation:</p>
-<p><span class="math inline">\(Y = b_0 + b_1x + b_2z\)</span></p>
+<p><span class="math inline">\(Y_i = b_0 + b_1x_i + b_2z_i + e_i\)</span></p>
 <ol type="1">
 <li><span class="math inline">\(b_1 = \frac{Cov(x^*, Y)}{Var(x^*)}\)</span></li>
 </ol>
-<p>Where <span class="math inline">\(x^* = x - \hat{x}\)</span> from the regression: <span class="math inline">\(x = c_0 + c_1 z\)</span>.</p>
+<p>Where <span class="math inline">\(x^* = x - \hat{x}\)</span> from the regression: $ = c_0 + c_1 z $.</p>
 <ol start="2" type="1">
 <li><span class="math inline">\(b_2 = \frac{Cov(z^*, Y)}{Var(z^*)}\)</span></li>
 </ol>
-<p>Where <span class="math inline">\(z^* = z - \hat{z}\)</span> from the regression: <span class="math inline">\(z = d_0 + d_1 x\)</span></p>
+<p>Where <span class="math inline">\(z^* = z - \hat{z}\)</span> from the regression: <span class="math inline">\(\hat{z} = d_0 + d_1 x\)</span></p>
 <p>Does anything look familiar here?</p>
 </section><section class="slide level2">
 
