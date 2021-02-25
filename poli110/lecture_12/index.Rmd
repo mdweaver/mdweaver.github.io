@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 13, 2020"
+date: "February 24, 2021"
 output: ioslides_presentation
 ---
 
@@ -142,28 +142,47 @@ The **descriptive claims** embedded in **causal claims** are of a specific type:
 
 constrasts to what is **factual**: the way the world is, given the events that have taken place.
 
+#
+
+[watch the trailer of *Sliding Doors*](https://www.youtube.com/watch?v=Da-Mizk86AE)
+
+
+# Spoiler Warning!
+
+## Counterfactuals:
+
+If Gwenyth Paltrow's character...
+
+(a) **catches the train** then she catches her boyfriend cheating, and **dumps him**
+
+(b) **does not catch the train** then she does not catch her boyfriend cheating, and **remains with him**
+
+In reality, only **one** of these possibilities can happen. If (a) happens, it is **factual**, (b) is **counterfactual**
+
 ## An exercise
 
-**Think about how you behave under two different circumstances:**
 
-How long would you study for the midterm in two weeks...
+[This happened](https://www.cbc.ca/news/canada/british-columbia/ubc-parties-fines-covid-19-public-health-orders-1.5918680)
 
-1. if a 100% on the midterm would mean you add 20 points to your final grade (out of 100) in the course. Less than 100% would add $x\% \times 20$ points
-2. if a 100% on the midterm would mean add **100** points to your final grade (out of 100) in the course. Less than 100% would add $x\% \times 20$ points. (100 on midterm means 100 in the course)
+**Think about how you would behave under two different Public Health Code regimes:**
 
->- `menti.com 26 04 37`
+If invited to **attend** a party, and the penalty, if caught, were $230, would you attend?
+
+If invited to **attend** a party, and the penalty, if caught, were $2300, would you attend?
+
+POLL
 
 ## An exercise
 
 **Which of these is factual? Which is counterfactual**?
 
-$1.$ if a 100% on the midterm would mean you add 20 points to your final grade (out of 100) in the course. Less than 100% would add $x\% \times 20$ points 
+$1.$ If invited to **attend** a party, and the penalty, if caught, were $230, would you attend?
 
->- (**factual**): this is the actual rule in this course
+>- (**factual**): this is the actual rule in the Province
 
-$2.$ if a 100% on the midterm would mean add **100** points to your final grade (out of 100) in the course. Less than 100% would add $x\% \times 20$ points 
+$2.$ If invited to **attend** a party, and the penalty, if caught, were $2300, would you attend?
 
->- (**counterfactual**): this is not the rule in this course, but we imagine an alternate universe in which it were.
+>- (**counterfactual**): this is not the rule in this province, but we can imagine an alternate universe in which it were.
 
 
 ## Counterfactuals and Potential Outcomes
@@ -184,11 +203,19 @@ $$Y_i(X = 1), Y_i(X = 0)$$
 
 For case $i$, $X$ can only ever be $1$ or $0$: one potential outcome will become **factual** (it will happen), while the other will be **counterfactual** (it won't happen)
 
+## Counterfactuals and Potential Outcomes
+
+$\mathrm{Love \ Life _{Gwenyth} (Catches \ the \ train )}$
+$= \mathrm{Stay \ with \ cheating \ BF}$
+
+$\mathrm{Love \ Life _{Gwenyth} (Doesn't \ catch \ the \ train )}$
+$= \mathrm{Dump \ cheating \ BF}$
+
+We only will observe **one** of these two possibilities. But both could **potentially** have happened.
+
 ---
 
-**These are potential outcomes**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e789a9ce6276b9aa8f508044b5f1bd11/42c6538fd659' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+**Draw potential outcomes on the board**
 
 ---
 
@@ -196,21 +223,21 @@ For case $i$, $X$ can only ever be $1$ or $0$: one potential outcome will become
 
 And we can say that $X$ **causes** $Y$ for case $i$ if $Y_i(X = 1) \neq Y_i(X = 0)$:
 
-- $X$ causes $Y$: if case $i$ would have behaved ($Y$) differently (than it did factually) in the (counterfactual) alternate universe where **everything was the same** except  for $X$.
+- $X$ causes $Y$: if case $i$ would have behaved ($Y$) differently (than it did factually) in the (**counterfactual**) alternate universe where **everything was the same** except  for $X$.
 
-- Same as saying: $X$ causes $Y$ if the potential outcomes of $Y$ are different for different values of $X$
+TO THE BOARD
 
-# 
 
 ## Potential Outcomes: Caveat
 
-In our example of **midterm studying**:
+In our example of **COVID social distancing enforcement**:
 
-- We will only ever observe your hours spent studying ($Y$) in the world where 100 on the midterm $\to +20\%$ of your final grade.
-- We are only **imagining**, as if omniscient, what you would do in the alternate universe. We don't actually know.
+- We are only **imagining**, as if omniscient, what you would do in the alternate universe where the penalty is $2300. We don't actually know. Potential outcomes are what **you actually would do** in that alternate universe.
+- We are only asking you **to imagine** whether you would go to the party when invited. Potential outcomes are what **you actually would do** if invited.
+
+Even if we **don't know** what you would do if invited under different penalties; there are still potential outcomes of what you would do...
 
 # Example:
-
 
 ## Counterfactuals Example
 
@@ -249,6 +276,11 @@ Implies:
 
 $$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
 
-Why might this be hard to prove?
+## Counterfactuals and Potential Outcomes
 
+If the claim is that "The wall caused El Paso to have fewer murders", or
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+### ...How would you try to prove this?
 
