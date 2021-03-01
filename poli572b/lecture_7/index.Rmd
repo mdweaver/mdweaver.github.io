@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 24, 2020"
+date: "March 1, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -26,6 +26,8 @@ set.seed(1234)
 acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
 acs_data[, MALE := abs(FEMALE - 1)]
 acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+
+brexit = fread("analysisData.csv")
 ```
 
 <style type="text/css">
@@ -63,7 +65,6 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 - Best Linear Approximation of CEF
 - Dummy Variables
 - Slopes and Intercepts
-- Multicollinearity
 
 ---
 
@@ -71,7 +72,7 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 
 - algorithm with mathematical properties
     - what is the algorithm doing?
-    - what is mathematical truth of the algorithm?
+    - what are mathematical facts about the algorithm?
   
 --- 
 
@@ -90,10 +91,21 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 
 # Recap
 
+---
+
+### Multivariate Least Squares:
+
+Matrix equation fits **mean** of $Y$ as a **linear** function of many variables:
+
+$$Y_i = b_0 + b_1 X_{1i} + b_2 X_{2i} + \ldots + b_k X_{ki}$$
+
+$\hat{Y_i}$ is the predicted **mean** of $Y$ given values of $\mathbf{X}_i$
 
 ---
 
 ### Least Squares
+
+We obtain coefficients $b_0, b_1, \dots, b_k = \beta$:
 
 $$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$$
 
@@ -101,25 +113,16 @@ This is the matrix formula for **least squares** regression.
 
 If $X$ is a column vector of $1$s, $\beta$ is just the mean of $Y$. (We just did this)
 
-If $X$ is a column of $1$s and a column of $x$s, it is bivariate regression.
-
-We can now add $p > 2$: more variables
+If $X$ is a column of $1$s and a column of $X_1$, it is an intercept and slope on $X$.
 
 
 ---
-
 
 $$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
 
-
 ---
 
-### Multivariate Least Squares:
-
-Matrix equation fits mean of $Y$ as a linear function of many variables:
-
-$$Y_i = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
-
+$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
 
 ---
 
@@ -140,7 +143,7 @@ $$Y_i = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
 
 The mathematical procedures we use in regression ensure that: 
 
-$1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+$1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$ or $b_0$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
 
 ---
 
@@ -164,7 +167,7 @@ $3$. $\overline{Y} = \overline{X}'\beta$: the predicted value $\hat{Y}$ when all
 
 The mathematical procedures we use in regression ensure that: 
 
-$4$. Slope $b_k$ captures variation in $Y$ due to variation in  $X_k$ that is **orthogonal**/**uncorrelated** to all other columns of $X$. 
+$4$. Slope $b_k$ captures change in $Y$ due to variation in  $X_k$ that is **orthogonal**/**uncorrelated** to all other columns of $X$.
 
 ---
 
@@ -191,6 +194,19 @@ How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as
 # The CEF
 
 --- 
+
+### The CEF
+
+$$E(Y_i | X_i) = f(X)$$
+
+**Conditional**: mean of $Y$ is different at different levels of $X$
+
+**Expectation**: expected value/mean of $Y$
+
+**Function**: mathematical function links values of $X$ to mean of $Y$. Could be, does not need to be, **linear**
+
+
+---
 
 ### Regression and CEF
 
@@ -221,26 +237,23 @@ ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents))
 
 ### Least Squares and CEF
 
-Least Squares predictions given by $\widehat{Y_i} = X_i'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (linear approximation with minimum distance to the truth).
+Least Squares predictions $\widehat{Y_i} = X_i'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
 
->- Least Squares also fits a line for the $E(Y_i|X_i)$. Not just a line for $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
+>- Least Squares could also fit a line for the mean of Y: $E(Y) | X$. Not just a prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
 
 ---
 
-Exercise: Download the data grouped by `AGE` in years
+Exercise: Download the data. Contains mean income for each group of people with the same `AGE` in years
 
-```
-if (!require(httr)) install.packages('httr')
-
-r = GET("http://mdweaver.github.io/poli572b/lecture_7/example_7.csv")
-cef = as.data.frame(content(r))
-```
+[https://www.dropbox.com/s/gyvv0mgvfic9jv7/acs_grouped.rda?dl=0](https://www.dropbox.com/s/gyvv0mgvfic9jv7/acs_grouped.rda?dl=0)
 
 ---
 
 Exercise:
 
-Use matrix calculations in `R` to obtain linear approximation of $E(Y_i | X_i)$:
+- Plot INCEARN by AGE
+
+Use matrix calculations in `R` to obtain the linear approximation of $E(Y_i | X_i)$:
 
 - What is the intercept? What does it mean?
 - What is the slope? What does it mean?
@@ -286,6 +299,16 @@ We can reproduce any individual-level least squares by:
 
 We are directly modelling the conditional expectation of $E(Y_i | X_i)$ as a linear function.
 
+
+---
+
+### Least Squares and CEF
+
+Least Squares estimates the **mean of $Y$** as a function of values of  $X$.
+
+- Conditional Expectation Function
+- or $E(Y | X = X_i)$ is best prediction $\hat{Y_i} | X_i$
+
 # Dummy Variables
 
 --- 
@@ -297,7 +320,7 @@ What are they?
 - Binary variables taking $1$ if the observation has some attribute, $0$ otherwise.
 
 - Can be used for Yes/No categorical variables
-- Can be used for variables with **many** categories (e.g. race, marital status, etc.)
+- Can be used for variables with **many** mutually exclusive categories (e.g. race, marital status, etc.)
 
 How do we make them?
 
@@ -380,28 +403,39 @@ coefficients(m3)
 
 If there is an intercept
 
-- **one category must be excluded**; otherwise linear dependence. ("reference group") (`R` will do this by default)
-- slope is **difference** in means between the group indexed by the dummy and the intercept ("reference group" mean)
+- **one category must be excluded** ("reference group"); otherwise linear dependence.  (`R` will do this by default)
+- coefficient is **difference in means** between the group indicated by the dummy and the intercept ("reference group" mean)
 
 If there is no intercept:
 
 - all categories must be **included**
-- fits separate **intercepts** for each group: coefficient is the mean of the group indexed by the dummy (when all other variables are $0$).
+- fits separate **intercepts** for each group: coefficient is the mean of the group indicated by the dummy (when all other variables are $0$).
 
 ---
 
-### Example:
+### Exercise:
 
 How did different regions in the UK vote on Brexit?
 
-Download the data:
-```{r}
-if (!require(httr)) install.packages('httr')
+- Download the `brexit` data: [https://www.dropbox.com/s/b5t5aao5frjpsw6/brexit.rda?dl=0](https://www.dropbox.com/s/b5t5aao5frjpsw6/brexit.rda?dl=0)
+- use the `table` function to find out how what the different `Region` names are
+- use the `hist` function to visually examine the distribution of the leave vote (`Pct_Lev`)
 
-r = GET("http://mdweaver.github.io/poli572b/lecture_7/analysisData.csv")
-brexit = as.data.table(content(r))
-```
 ---
+
+### Exercise:
+
+Using the `lm` function:
+
+1. Regress `Pct_Lev` on `Region`
+2. Interpret the coefficients returned (`summary(your_model)`)
+3. Regression `Pct_Lev` on `-1 + Region`
+4. Interpret the coefficients.
+5. Without looking at `your_model$fitted.values`, what can you say about the $\widehat{Y}$ produced by these two regressions?
+
+---
+
+
 
 ### Example:
 
@@ -419,18 +453,6 @@ table(brexit$Region)
 hist(brexit$Pct_Lev)
 
 ```
-
----
-
-### Do the following:
-
-Using the `lm` function:
-
-1. Regress `Pct_Lev` on `Region`
-2. Interpret the coefficients returned (`summary(your_model)`)
-3. Regression `Pct_Lev` on `-1 + Region`
-4. Interpret the coefficients.
-5. Without looking at `your_model$fitted.values`, what can you say about the $\widehat{Y}$ produced by these two regressions?
 
 ---
 
@@ -461,6 +483,14 @@ lm(Pct_Lev ~ total_precip_prepolling + Region, brexit) %>% summary
 ```
   
 ---
+
+### Exercise:
+
+$2$: We regress Percent Leave on the **residual** pre-election precipitation. 
+
+The other variable are **dummies for region.**  Thus, the $\widehat{precipitation_i}$ is the **mean** precipitation in each region.
+
+So, residual $precipitation_i^*$, is difference between precipitation in a consituency and the mean precipitation in the region.
 
 ### Dummy Variables
 
@@ -549,6 +579,8 @@ ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geo
 
 ---
 
+### Exercise:
+
 ```{r, echo=F}
 ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
 
@@ -558,12 +590,14 @@ ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents))
 
 ### Example
 
+Previous slide shows linear approximation of CEF of earnings by age.
+
 In your small groups: 
 
-1. could we do better at better approximating the conditional expectation function, e.g., of Earnings by Age?
+1. Can you think of a way to use least squares to **better** approximate the true conditional expectation function of earnings by Age?
 
 2. How would you do it?
 
 3. Try it out
 
-4. How would you apply this to the example above? `ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`?
+4. How would you incorporate this into the example above? `ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`?
