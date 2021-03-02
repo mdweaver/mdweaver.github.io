@@ -492,6 +492,8 @@ The other variable are **dummies for region.**  Thus, the $\widehat{precipitatio
 
 So, residual $precipitation_i^*$, is difference between precipitation in a consituency and the mean precipitation in the region.
 
+---
+
 ### Dummy Variables
 
 You can change the "reference group" like this. This code shifts "Scotland" to the reference by making it the first "level" in the factor.
