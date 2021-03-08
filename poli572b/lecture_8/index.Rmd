@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 2, 2020"
+date: "March 8, 2021"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -70,7 +70,7 @@ Least squares as
 
 - algorithm for prediction
     - for "machine learning" to predict $E(Y | X)$
-    - where we care about accuracy $E(\widehat{Y} | X)$, not about correctness of $\beta$
+    - where we care about accuracy $E(\widehat{Y} | X)$, not about correctness of slope estimates
     
     
 ---
@@ -99,18 +99,7 @@ So far, we...
 
 - .... define $\mathbf{\widehat{Y}} = \mathbf{X}\mathbf{\beta}$:
 
-    - where $\mathbf{X}$ is a matrix of predictors (for the mean, just a vector of $1$s) and $\mathbf{\beta}$ is a vector of linear coefficients that are multiplied by $\mathbf{X}$ such that $\widehat{Y}_i = \beta_0x_0 + \beta_1x_1 + \ldots + \beta_px_p$
-
----
-
-```{r, echo = F}
-m = lm(sheight~ fheight, father.son)
-ols_residuals = data.frame(y= father.son$sheight, y_hat = m$fitted.values, x = father.son$fheight)
-
-ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) + 
-   geom_point(alpha = 0.5) + 
-    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height")   + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + geom_segment(aes(x=x, xend=x, y=y_hat, yend=y), data = ols_residuals, col = 'darkred', alpha = 0.2) + theme_bw()
-```
+    - where $\mathbf{X}$ is a matrix of predictors (for the mean, just a vector of $1$s) and $\mathbf{\beta}$ is a vector of linear coefficients that are multiplied by $\mathbf{X}$ such that $\widehat{Y}_i = b_0x_0 + b_1x_1 + \ldots + b_px_p$
 
 ---
 
@@ -119,24 +108,13 @@ ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) +
 
 Then, we...
 
-- ... choose $\mathbf{\widehat{Y}}$ to have **minimum (euclidean) distance** to $\mathbf{Y}$:
+- ... choose $\beta$ such that $\mathbf{\widehat{Y}}$ have **minimum (euclidean) distance** to $\mathbf{Y}$:
 
     - minimize  $\mathbf{Y} - \mathbf{\widehat{Y}} = \mathbf{e}$; where $\mathbf{e}$ is a vector of **residuals** (prediction errors) $(Y_1 - \hat{Y_1}, \ldots , Y_i - \hat{Y_i}, \ldots, Y_n - \hat{Y}_n)$
   
-- ... find that $\mathbf{e}$ is minimized when $\mathbf{e}'\mathbf{X} = \mathbf{0}$: residuals are **orthogonal** to $\mathbf{X}$.
+-  $\mathbf{e}$ is minimized when $\mathbf{e}'\mathbf{X} = \mathbf{0}$: residuals are **orthogonal** to $\mathbf{X}$.
 
 This gave us $\mathbf{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}$
-
-
----
-
-```{r, echo = F}
-father.son$r = m$residuals
-ggplot(father.son, aes(x = fheight, y = r)) + geom_point(alpha = 0.5) + 
-    xlab("Father's Height (in)") + ylab("Residual Son's Height (in)") + labs(title = "Residual Son's height by Father's Height")   + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + theme_bw()
-```
-
-
 
 ---
 
@@ -167,11 +145,13 @@ Using data from the American Community Survey, we can look at how hours worked i
 
 ### Return to Multivariate
 
-Let's now find the (approximate) linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
+Let's now find the linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
 
 ```{r}
 ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)
 ```
+
+$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i$
 
 ---
 
@@ -189,7 +169,7 @@ plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data))
 plot_data[type == 'Residual', UHRSWORK := residual_hrswork]
 ```
 
-How do we make sense of, e.g., the slope on `AGE`?
+How do we make sense of, e.g., the slope on `UHRSWORK`?
 
 ---
 
@@ -197,7 +177,7 @@ How do we make sense of, e.g., the slope on `AGE`?
 
 ```{r, echo = F, warning=F, message=F}
 require(splines)
-ggplot(plot_data, aes(x = AGE, y= UHRSWORK)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'lm', formula = y ~ splines::ns(x, 30), colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Hours Worked on Age")
+ggplot(plot_data, aes(x = AGE, y= UHRSWORK)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'lm', formula = y ~ splines::ns(x, 30), colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Hours on Age")
 ```
 
 ---
@@ -216,43 +196,26 @@ ggplot(plot_data, aes(x = LAW, y= UHRSWORK)) + geom_point(alpha = 0.01)  + geom_
 ggplot(plot_data, aes(x = FEMALE, y= UHRSWORK)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Residual Hours on Gender")
 ```
 
----
-
-### Example
-
-```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = UHRSWORK, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Hours")
-```
 
 ---
 
-```{r, echo=F}
+```{r, echo=F, message = F}
 plot_data[, UHRSWORK := round(UHRSWORK)]
 cef = plot_data[, list(INCEARN = mean(INCEARN), respondents = .N), by = list(UHRSWORK, type)]
 ggplot(cef, aes(x = UHRSWORK, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Hours") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Hours")  + geom_smooth(method = 'lm', se = F, colour = 'red') +  geom_smooth(method = 'loess', se = F, colour = 'blue') + facet_wrap(~type) 
-
 ```
 
 ---
 
-### Example
+How could we change our regression equation to make the slope on hours worked **easier** to interpret?
 
-In your small groups: 
-
-1. could we do better at better approximating the conditional expectation function, e.g., of hours worked by Age?
-
-2. How would you do it?
-
-3. How would you this change interpretation of `UHRSWORK`? 
-
-`ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`
-
+Angrist and Pischke, *MHE*, pp. 77-80
 
 # Inference
 
 ---
 
-### Key Points:
+### Regression for Inference:
 
 1. We want to interpret the $\beta$ vector causally.
 
@@ -284,21 +247,24 @@ Need to clarify what work is being done by
 
 > Hooke's law is a law of physics that states that the force ($D$) needed to extend or compress a spring by some distance $y$ increases **linearly** with respect to the distance. 
 
-Thus, for a given weight $D_i$ on a spring, the length $Y_i$ is:
+Thus, for a given weight $D_i$ on a spring, the length $Y_i$ is determined by:
 
-$$Y_i = \alpha + \beta D_i + \epsilon_i$$ for $i$ in $1 \ldots n$
+$Y_i = \alpha + \beta D_i + \epsilon_i$ for $i$ in $1 \ldots n$
+
+
 
 ---
 
 ### An example: Hooke's Law
 
-$$Y_i = \alpha + \beta D_i + \epsilon_i$$ for $i$ in $1 \ldots n$
+$Y_i = \alpha + \beta D_i + \epsilon_i$ for $i$ in $1 \ldots n$
 
 This is a **statistical** model:
 
 - $\alpha$ and $\beta$ are unknown **parameters** (thus, greek letters, not $a$ and $b$). They are **fixed**.
+    - $\alpha$ is the length of spring in absence of force
+    - $\beta$ is the change in length of spring with unit of force
 - $\epsilon_i$ is a **random error** (a **random variable**). Each $\epsilon_i$ is...
-
     - **independent** of $D_i$  
     - drawn from the **same distribution** with mean $0$ and variance $\sigma^2$ (another parameter)
 
@@ -314,15 +280,14 @@ Using these facts and the statistical model described above: create a **response
 
 ---
 
-### The Regression Model:
+### The Regression Model: 
 
-The **statistical model** for the regression makes certain assumptions about the process generating the data.
 
 The statistical model assumes that this linear equation describes the process generating the data.
 
 $$Y_i = \alpha + \beta D_i + \epsilon_i$$
 
-**deterministic** (not random $*$)
+**deterministic** (not random)
 $\alpha + \beta D_i$
 
 **stochastic** (random error)
@@ -368,38 +333,7 @@ abline(a = 3, b = 0.5)
 
 ---
 
-```{r, echo = F}
-k = 1000
-out = data.frame(alpha_hat = rep(NA, k), beta_hat =  rep(NA,k))
-
-alpha = 3
-beta = 0.5
-
-for(i in 1:k){
-  y_star = alpha + beta*d + rnorm(100)
-  bs_m = lm(y_star ~ d)
-  out[i,] = bs_m$coefficients
-}
-
-u = data.frame(d, y)
-
-ggplot(u, aes(x = d, y=y)) + geom_point(alpha = 0) +
-   xlab('d') + ylab('y') +  
-  geom_abline(intercept = out$alpha_hat, slope = out$beta_hat, colour = 'red', linetype = 'dashed', alpha = 0.025) + geom_abline(intercept = alpha, slope = beta, colour = 'darkred') + theme_bw() + labs(title = 'Lines from 1000 draws of epsilons')
-
-```
-
----
-
-```{r, echo = F, warning=F, message=F}
-
-ggplot(out, aes(x = beta_hat)) + geom_histogram() + theme_bw() + ggtitle("Sampling Distribution of Beta Hat")
-
-```
-
----
-
-### The Regression Model:
+### The Regression Model: 
 
 The more general **regression model** (where $X_i$ is a matrix of variables)
 
@@ -409,7 +343,7 @@ can be **estimated** with least squares:
 
 $$Y_i =  X_i\hat{\beta} + e_i$$
 
-where $Var(e) = \widehat{\sigma^2}$
+where residuals used to estimate variance of errors: $Var(e) = \widehat{\sigma^2}$
 
 ---
 
@@ -422,7 +356,7 @@ where $Var(e) = \widehat{\sigma^2}$
 
 Least Squares is the **Best Linear Unbiased Estimator** of our model parameters under 3 key assumptions.
   
-- unbiased: $\beta - E(\widehat{\beta}) = 0$
+- by unbiased we mean $\beta - E(\widehat{\beta}) = 0$
 - "best" as in estimate has least variance (not so important in practice)
 
 ---
@@ -432,10 +366,12 @@ Least Squares is the **Best Linear Unbiased Estimator** of our model parameters 
 $(1)$. **Model** equation is correctly specified 
 
 - correct functional form (e.g., linear) for process by which variables in $X$ affect $Y$, and how variables in $X$ affect each other.
-- all relevant variables affecting $Y$ (will define later) are included in the model
+- all **relevant variables** affecting $Y$ (will define next week) are included in the model
 - $Y_i =  \mathbf{X_i}\mathbf{\beta} + \epsilon_i$ is the true data-generating function
 
-In groups: come up with 2 ways this assumption could be wrong in the context of this regression: `lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`
+In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
+
+$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
 
 ---
 
@@ -444,9 +380,10 @@ In groups: come up with 2 ways this assumption could be wrong in the context of 
 $(2.)$ $\epsilon_i$ are independent, identically distributed (i.i.d.)
 
 - $E(\epsilon_i) = 0$ and variance of $\sigma^2$. 
-- **homoskedastic** vs. **heteroskedastic**
-    
-
+- **homoskedastic**
+    - errors $\epsilon$ all come from same distribution with given variance
+- in contrast to **heteroskedastic**: 
+    - errors come from different distributions with different variances.
 
 In groups: come up with 2 ways this assumption could be wrong in the context of the Hooke's Law example.
 
@@ -459,13 +396,15 @@ $(3.)$ $\epsilon_i$ is **independent** of $X_i$: $X_i \perp \!\!\! \perp \epsilo
 - This means $X$ is **independent** of $\epsilon$ (recall dependence versus independence)
 - **independence** is not **orthogonality**
     
-In groups: come up with 2 ways this assumption could be wrong in the context of this regression: `lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`
+In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
+
+$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
     
 ---
 
 ### Model Assumptions:
 
-Under these assumptions we call the model "ordinary least squares"
+Under these three assumptions, we call the model "ordinary least squares".
 
 We cannot **empirically verify** these assumptions.
 
@@ -477,11 +416,23 @@ In particular, cannot verify assumption 3:
 
 ### Model Assumptions:
 
-If these assumptions are reasonable for the data we observe, then with large $n$, we can estimate our parameters $\beta, \sigma^2$ using least squares.
+If these assumptions are reasonable for the data we observe, then with large $n$, we can estimate our parameters $\beta, \sigma^2$ using least squares. 
+
+And $\beta$ could have a causal interpretation.
 
 
 # Estimating the Regression Model
 
+
+---
+
+### The Regression Model:
+
+What work is done by
+
+- the data?
+- the math of regression?
+- the assumptions?
 
 ---
 
@@ -510,6 +461,66 @@ $\beta$ estimated by $\widehat{\beta}$ using least squares:
 $$\widehat{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}$$
 
 - Note: $\widehat{\beta}$ is a random vector; each element is a **random variable**. **Why?**
+
+---
+
+$Y_i = X_i\beta + \epsilon_i$
+
+$\epsilon_i$ is random variable.
+
+If we were to repeat the drawing of $\epsilon$ again, we would get different estimates: $\widehat{\beta}$.
+
+---
+
+```{r, echo = T}
+d = rnorm(100); y = 3 + d * 0.5
+```
+
+```{r, echo = F}
+plot(d, y, main = bquote(Y[i] == alpha + beta * D[i])); abline(a = 3, b = 0.5)
+```
+
+---
+
+```{r, echo = T}
+epsilon_i = rnorm(100); y_star = 3 + d * 0.5 + epsilon_i
+```
+
+```{r, echo = F}
+plot(d, y_star, main = bquote(Y[i] == alpha + beta * d[i] + epsilon[i]))
+abline(a = 3, b = 0.5)
+```
+
+---
+
+```{r, echo = F}
+k = 1000
+out = data.frame(alpha_hat = rep(NA, k), beta_hat =  rep(NA,k))
+
+alpha = 3
+beta = 0.5
+
+for(i in 1:k){
+  y_star = alpha + beta*d + rnorm(100)
+  bs_m = lm(y_star ~ d)
+  out[i,] = bs_m$coefficients
+}
+
+u = data.frame(d, y)
+
+ggplot(u, aes(x = d, y=y)) + geom_point(alpha = 0) +
+  xlab('d') + ylab('y') +  
+  geom_abline(intercept = out$alpha_hat, slope = out$beta_hat, colour = 'red', linetype = 'dashed', alpha = 0.025) + geom_abline(intercept = alpha, slope = beta, colour = 'darkred') + theme_bw() + labs(title = 'Lines from 1000 draws of epsilons')
+
+```
+
+---
+  
+```{r, echo = F, warning=F, message=F}
+
+ggplot(out, aes(x = beta_hat)) + geom_histogram() + theme_bw() + ggtitle("Sampling Distribution of Beta Hat")
+
+```
 
 ---
 
@@ -555,14 +566,15 @@ $E(\widehat{\beta}|X) = \mathbf{\beta}$
 
 ---
 
-### Variance of LS Estimator:
+### Variance of LS Estimator?
 
-Thus, if our model assumptions are correct, $\widehat{\beta}$ is an unbiased estimate of parameter $\beta$
+Thus, if our model assumptions are correct, $\widehat{\beta}$ is an unbiased estimate of causal parameter $\beta$
 
 - $\widehat{\beta}$ is a random vector, as it depends on chance draws of $\epsilon$
 - As $n \to \infty$, $\widehat{\beta} \approx \beta$, but there is still uncertainty.
 
-We need to find a way of finding the uncertainty in our estimate $\widehat{\beta}$
+How do we discover the uncertainty in our estimate $\widehat{\beta}$?
+
 
 # Variance of our Estimate
 
@@ -570,16 +582,27 @@ We need to find a way of finding the uncertainty in our estimate $\widehat{\beta
 
 ### Variance of OLS Estimator:
 
-- Each element of $\widehat{\beta}_{p \times 1}$ is a random variable; it has a variance and a **covariance**
-- In the variance-covariance matrix of $\widehat{\beta}$ (all $\beta$s should be hatted)
+- Each element of $\widehat{\beta}_{p \times 1}$ is a random variable
+    - each $\widehat{\beta}_k$ has a variance 
+    - and a **covariance** with other $\widehat{\beta}_{j\neq k}$}
+- These variances and covariances are found in the variance-covariance matrix of $\widehat{\beta}$
+    - a $p \times p$ matrix
+    - Diagonal elements are the **variances** for $\widehat{\beta}_{1} \dots \widehat{\beta}_p$
+    - off-diagonal elements are **covariances**; 
+    - matrix is **symmetric**
 
-$$\scriptsize{\begin{pmatrix} Var(\beta_1) & Cov(\beta_2,\beta_1) & Cov(\beta_3,\beta_1) &\ldots & Cov(\beta_p,\beta_1) \\
- Cov(\beta_1,\beta_2) & Var(\beta_2) & Cov(\beta_3,\beta_2) & \ldots & Cov(\beta_p,\beta_2) \\ 
- Cov(\beta_1,\beta_3) & Cov(\beta_2,\beta_3) & Var(\beta_3) & \ldots & Cov(\beta_p,\beta_3) \\ 
+
+
+---
+
+(all $\beta$s should be hatted)
+
+$$\scriptsize{\begin{pmatrix} Var(\beta_1) & Cov(\beta_1,\beta_2) & Cov(\beta_1,\beta_3) &\ldots & Cov(\beta_1,\beta_p) \\
+ Cov(\beta_2,\beta_1) & Var(\beta_2) & Cov(\beta_2,\beta_3) & \ldots & Cov(\beta_2,\beta_p) \\ 
+ Cov(\beta_3,\beta_1) & Cov(\beta_3,\beta_2) & Var(\beta_3) & \ldots & Cov(\beta_3,\beta_p) \\ 
  \vdots & \vdots & \vdots & \ddots & \vdots \\
- Cov(\beta_1,\beta_p) & Cov(\beta_2,\beta_p) & Cov(\beta_3, \beta_p) & \ldots & Var(\beta_p)\end{pmatrix}}$$
+ Cov(\beta_p,\beta_1) & Cov(\beta_p,\beta_2) & Cov(\beta_p, \beta_3) & \ldots & Var(\beta_p)\end{pmatrix}}$$
 
-- Diagonal elements are the **variances**, off-diagonal elements are **covariances**; matrix is **symmetric**
 
 ---
 
@@ -589,7 +612,7 @@ $$\scriptsize{\begin{pmatrix} Var(\beta_1) & Cov(\beta_2,\beta_1) & Cov(\beta_3,
 
 - The square-root of diagonal elements (variances) gives **standard error** for each parameter estimate in $\widehat{\beta}$ (hypothesis testing)
 
-- The off-diagonal elements can help answer: $\beta_2 + \beta_3 \neq 0$. We need $Cov(\beta_2, \beta_3)$ to get $Var(\beta_2 + \beta_3)$. (interaction effects)
+- The off-diagonal elements can help answer: $\beta_2 + \beta_3 \neq 0$. We need $Cov(\beta_2, \beta_3)$ to get $Var(\beta_2 + \beta_3)$. (complex hypothesis testing, e.g. interaction effects )
 
 ---
 
@@ -617,7 +640,9 @@ All variance-covariance matrices are "sandwiches":
 
 $$ (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
 
-$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the bread; $E(\epsilon\epsilon'|X)$ is the meat. We can make different choices of "meat".
+$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the bread; $E(\epsilon\epsilon'|X)$ is the meat. 
+
+Later on, we can make different choices of "meat".
 
 ---
 
@@ -631,7 +656,7 @@ In groups: if $\epsilon$ is a vector that is $n \times 1$ with elements $(\epsil
 
 3. What is the **expected value** of the elements on the **off-diagonal** 
 
-Hints: We have assumed that $E(\epsilon) = 0$; $\epsilon_i$ are **independent** of each other.
+Hints: We have assumed that $E(\epsilon) = 0$; $\epsilon_i$ are **independent** of each other
 
 
 ---
@@ -651,8 +676,10 @@ $\epsilon\epsilon'$ is $n \times n$ matrix with $ij$th elements $\epsilon_i\epsi
 Taking the expectation:
 
 - If $i \neq j$, the elements of the matrix are $E(\epsilon_i\epsilon_j)$. Because, by assumption, $E(\epsilon) = 0$, and $\epsilon$s are **independent**,  $E(\epsilon_i\epsilon_j) = E(\epsilon_i)E(\epsilon_j) = 0 \times 0 = 0$
-- but, for $i = j$, $E(\epsilon_i^2) = E(\epsilon_i - E(\epsilon))^2$ (a **variance**)
+- but, for $i = j$, $E[\epsilon_i^2] = E[(\epsilon_i - E[\epsilon])^2]$ (a **variance**)
 - and because $\epsilon$ is **identically distributed**, then $Var(\epsilon_i) = Var(\epsilon) = \sigma^2$ for all $\epsilon$
+
+The result is a $n \times n$ matrix, with $\sigma^2$ on the diagonal, $0$ everywhere else.
 
 ---
 
@@ -689,11 +716,11 @@ $\widehat{cov}(\widehat{\beta}) = \widehat{\sigma^2}(\mathbf{X}'\mathbf{X})^{-1}
 
 ---
 
-### Standard Errors of $\widehat{\beta}$
+### Standard Errors of $\widehat{\beta_p}$
 
-The variance (first diagonal element of $\widehat{cov}(\widehat{\beta})$) is
+The variance ($p$th diagonal element of $\widehat{cov}(\widehat{\beta})$) is
 
-$Var(\hat{\beta_p}) = \frac{\hat{\sigma^2}}{\sum\limits_i^n (X^*_{i} - \overline{X^*})^2}$
+$Var(\hat{\beta_p}) = \frac{\hat{\sigma^2}}{\sum\limits_i^n (X^*_{ip} - \overline{X_p^*})^2}$
 
 So the standard error is:
 
