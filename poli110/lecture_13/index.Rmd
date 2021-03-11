@@ -28,7 +28,7 @@ require(magrittr)
 
 
 
-## An question for today:
+## A question for today:
 
 From the midterm, and still a relevant policy consideration:
 
@@ -88,7 +88,7 @@ And we can say that $X$ **causes** $Y$ for case $i$ if $Y_i(X = 1) \neq Y_i(X = 
 
 And we can say that $\mathrm{Face \ Mask \ Policy}$ **reduced** $\mathrm{COVID \ Deaths}$ for case $BC$ if
 
-$\mathrm{COVD \ Deaths}_{BC}(\mathrm{Mask = Yes}) <  \mathrm{COVD \ Deaths}_{BC}(\mathrm{Mask = No})$:
+$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask = Yes}) <$  $\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask = No})$:
 
 ## Counterfactuals and Causality:
 

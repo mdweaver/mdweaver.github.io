@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "March 5, 2020"
+date: "March 11, 2021"
 output: ioslides_presentation
 ---
 
@@ -16,7 +16,7 @@ require(magrittr)
 ## Objectives
 
 
-### **1. Types of causal claims**
+### **1. Review**
   
   - varieties of **deterministic** causal claims
   - **complex** causality
@@ -29,72 +29,8 @@ require(magrittr)
 
 # Recap
 
-## `menti.com 91 41 99`
+## Poll
 
-### **"A person must see immigrants where they live and be exposed to anti-immigrant media in order to vote for an anti-immigration party."**
-
----
-
-**"A person must see immigrants where they live and be exposed to anti-immigrant media in order to vote for an anti-immigration party."**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/bc1597f5eddf982927631e3cc6c7f3c8/07ca83474ebf' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-## `menti.com 93 82 44`
-
-### **"In India, Hindu-Muslim riots can only happen when the police stay on the sidelines."**
-
----
-
-**"In India, Hindu-Muslim riots can only happen when the police stay on the sidelines."**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/ac3a397793c03a7da0fd73d7a2350faa/d6a3959cc789' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-## `menti.com 83 16 22`
-
-### **"Mass shootings lead to public demands for governments to make stricter gun ownership laws."**
-
----
-
-**"Mass shootings lead to public demands for governments to make stricter gun ownership laws."**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/3467eefe70f2c678235c6aa075e76f2a/b94c7611e4c2' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-## `menti.com 45 07 39`
-
-### **"An electrical short circuit and wooden framing <u>OR</u> an open gas can next to a furnace can cause a house to catch fire."**
-
----
-
-**"An electrical short circuit and wooden framing <u>OR</u> an open gas can next to a furnace can cause a house to catch fire."**
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/bfa4ed0057bef4e0ac898f25d1d20a9e/d0950b376903' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-## What is going on here?
-
-Deterministic causal claims can get complicated:
-
-**Conjunctural Condition 1:  electrical short circuit AND wooden framing** <u>OR</u> an open gas can 
-
-**OR**
-
-**Conjunctural Condition 2: open gas can AND a furnace**
-
-<br>
-
-**(Multiple) Conditions are SUFFICIENT to cause a house to catch fire."**
-
-- Multiple sufficient causes of the same effect (house on fire)
-- Each sufficient cause may be **conjunctural**
-
-## Multiple and Conjunctural
-
-### **Why do civil wars happen?**
-
-- $C_1$: ethnic diversity **AND** $C_2$: political inequality between groups (e.g., Sri Lanka; Kurds in Turkey)
-
-**OR**
-
-- $C_3$: interference by foreign governments **AND** $C_4$: left-right ideological polarization (e.g., Nicaragua; Spain)
 
 ## Complex Causality
 
@@ -105,23 +41,19 @@ But in reality, it is almost always **complex**
 - multiple, conjunctural, multiple AND conjunctural
 - (INUS/SUIN conditions: [see here](https://doi.org/10.1111/1468-4446.12340))
 
-## Deterministic Causal Claims?
-
-We are often unable to **fully describe** deterministic rules for what causes produce an effect
-
-### Does it make sense to make **deterministic** claims?
-
-- "Wood framing causes buildings to burn down (every time)?"
-- "Short circuits cause buildings to burn down (every time)?"
-- "Presence of indoor gas furnaces cause buildings to burn down (every time)?"
-
 ## Voting Experiment
 
 ### **Why do people vote?**
 
+>- Lot's of causal forces determine whether you vote
+
+POLL
+
 # {.centered}
 
 <img src='voter_shaming.JPG' height = 80%>
+
+See, e.g. [Gerber et al 2008](https://doi.org/10.1017/S000305540808009X)
 
 ## Voting Experiment
 
@@ -135,17 +67,40 @@ ggplot(dd, aes(x = cond, y = h)) + geom_bar(stat = "identity") + ylab("% Who Vot
 
 ```
 
-## Deterministic Causal Claims?
+POLL
+
+## Complex Causality
 
 Does it make sense to say that "being shamed" is a **necessary condition** for voting?
 
+>- No. Clearly some people voted in absence of shaming
+
 Does it make sense to say that "being shamed" is a **sufficient condition** for voting?
 
->- It is simpler to state this probabilistically: being shamed increased likelihood of voting.
+>- No. Some people were shamed but did not vote.
+
+## Deterministic Causal Claims?
+
+We are often unable to **fully describe** deterministic rules for what causes produce an effect
+
+>- It is straightforward to state causal claims probabilistically: being shamed increases likelihood of voting.
+
+
+## Probabilistic Causal Claims
+
+### **probabilistic causal claims**
+
+are claims that the presence/absence of a cause $C$ makes an effect $E$ more or less likely to occur. Or cause $C$ increases/decreases effect $E$ **on average**
+
+- In contrast to **deterministic causal claims** this implies
+    - effect $E$ can happen when $C$ is absent
+    - effect $E$ may not happen when $C$ is present
+- **NOT** a claim that politics has some inherent randomness (e.g. quantum mechanics)
+- Usually make these claims when interested in **effects of causes**
 
 ## Interlude: Coin flips:
 
-<iframe src="https://www.youtube.com/embed/AYnJv68T3MM" width=100% frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/AYnJv68T3MM?start=10&end=171" width=100% frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Interlude: Coin flips:
 
@@ -153,23 +108,11 @@ Does it make sense to say that "being shamed" is a **sufficient condition** for 
 
 ## Probabilistic Causal Claims
 
-When we are interested in **effects of causes**, we usually make **probabilistic causal claims**
-
-### **probabilistic causal claims**
-
-are claims that the presence of a cause $C$ makes an effect $E$ more or less **likely to occur** or to increase/decrease $E$ **on average.**
-
-- In contrast to **deterministic causal claims** this implies
-    - effect $E$ can happen when $C$ is absent
-    - effect $E$ may not happen when $C$ is present
-- **NOT** a claim that politics has some inherent randomness (not quantum mechanics)
-    - recall, coin flips are **deterministic** but seem random.
-
-## Probabilistic Causal Claims
-
 ### Why do we need **probabilistic claims**?
 
-Causality is complex, but not fully known:
+Causality is deterministic. 
+
+But causality is also complex, and not fully known:
 
 Cause $C$ might produce an effect $E$...
 
@@ -179,15 +122,7 @@ Cause $C$ might produce an effect $E$...
 
 $C$ appears to only cause a change in the **probability** or **likelihood** of seeing the effect $E$.
 
-## Voting:
-
-**Center of the Hall**: Conjunctural cause (w/ 3 necessary conditions) that is also **sufficient** for a person to vote. None of the 3 can include being shamed (as in the experiment)
-
-**Sides of the Hall**: Conjunctural cause (w/ 3 necessary conditions) that is also **sufficient** for a person to vote. One of the 3 **must** be shaming (as in the experiment).
-
-#
-
-## `Menti.com 28 81 92`
+## Probabilistic Claims
 
 Which are probabilistic causal claims?
 
@@ -201,9 +136,7 @@ Which are probabilistic causal claims?
 
 #### **C) Tuition fees are reduced more frequently under leftwing governments than rightwing governments**
 
----
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/2638a643c6f2de7694f7ff9bfe7ba48d/2c268ec6cdae' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+POLL
 
 ## Examples
 
@@ -234,26 +167,71 @@ Not every probabilistic statement is **causal**
 - Not clearly **causal**; just a descriptive claim.
 
 
-## Probabilistic Claims:
+# Evidence for Causal Claims
 
-### **Conditional Effects**
+## Evidence for Causal Claims
 
-Cause $C_1$'s effect on $E$ **differs** depending on some other factor $C_2$
+We focus on how to provide evidence for **probabilistic causal claims**.
 
-- Exposure to Nazi Radio Propaganda ($C_1$) (in 1930s) 
-    - in communities with **no medieval pogroms** ($C_2$) caused **decrease** in anti-Semitic violence on average ($E$).
-    - in communities **with medieval pogroms** ($C_2$) caused **increase** in anti-Semitic violence on average ($E$).
+- easier to do than supporting **deterministic** causal claims
+- still **really hard**
+
+## Evidence for Causal Claims
+
+A claim for today:
+
+> BC's face-mask mandate reduced COVID transmission and mortality in the province over the course of the pandemic.
+
+In groups:
+
+- restate this as a **counterfactual claim**
+- what kind of **empirical** evidence would help you decide whether this claim is true?
+
+## Evidence for Causal Claims
+
+ **Causal claims** imply relationships between **potential outcomes**
+ 
+$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask \ Mandate}) <$  $\color{red}{\mathrm{COVID \ Deaths}_{BC}(\mathrm{No \ Mask \ Mandate})}$:
+
+$\mathrm{Black}$ indicates **factual** potential outcomes (we observe this state of the world)
+
+$\color{red}{\mathrm{Red}}$ indicates **counter**factual potential outcomes (we do not observe this state of the world)
+
+## Evidence for Causal Claims
+
+$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask \ Mandate}) = 1,394$
+
+>- I checked the [BC CDC Covid Dashboard](https://experience.arcgis.com/experience/a6f23959a8b14bfa989e3cda29297ded)
+
+$\color{red}{\mathrm{COVID \ Deaths}_{BC}(\mathrm{No \ Mask \ Mandate})} = \ ?$:
+
+>- How could we know what this is?
+>- We can **never know** what deaths in BC would be absent the mask mandate.
 
 
 
-## Testing Causal Claims
+## What is the problem here?
 
-- Causality is **deterministic**.
+### **Fundamental Problem of Causal Inference**
 
-- Causality is also **complex**.
+1. For BC, we can **only** observe the potential outcome of $\mathrm{COVID \ Deaths}_{BC}$ for where the value of $\mathrm{Mask \ Mandate} = Yes$: the **actual policy** in BC.
 
-- Our inability to master this complexity points toward **probabilistic causal claims**
+2. We can **never observe** the other, **counterfactual**, potential outcomes of $\mathrm{COVID \ Deaths}_{BC}$ where $\mathrm{Mask \ Mandate} = No$, because that is not the actual policy.
 
-<br>
+3. We can never **empirically** observe, for British Columbia, whether $\mathrm{Mask \ Mandate}$ causes $\mathrm{COVID \ Deaths}$.
 
-**We focus on testing probabilistic causal claims (answering questions about effects of causes)**
+## What is the problem here?
+
+### **Fundamental Problem of Causal Inference**
+
+1. By definition, $X$ causes $Y$ if $Y$ would be different if $X$ were different, for the exact same case.
+
+2. For a specific case, we can **only** observe the potential outcome of $Y$ for the value of $X$ that the case is actually exposed to. 
+
+3. We can **never observe** the other, **counterfactual**, potential outcomes of $Y$ for different possible values of $X$ that the case did not experience.
+
+4. We can never **empirically** observe, for a specific case, whether $X$ causes $Y$.
+
+## Is there a solution?
+
+We'll examine the options
