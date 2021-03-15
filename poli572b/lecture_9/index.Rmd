@@ -57,7 +57,7 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 - Ordinary Least Squares assumptions for inference
 
 
-**Causal Inference**
+**Causal Inference with Regression**
 
 - Omitted Variable Bias (link to conditioning)
 - Interpolation/Extrapolation Bias
@@ -74,22 +74,10 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 2. $\epsilon_i$ are independent, identically distributed, with variance $\sigma^2$ for *all* $i$
 3. $X_i \perp \!\!\! \perp \epsilon_i$: $X_i$ is **independent** of $\epsilon_i$
 
-With these assumptions:
+If these assumptions are true:
 
-- $\widehat{\beta}$ is **unbiased** estimator for $\beta$
+- OLS $\widehat{\beta}$ is **unbiased** estimator for $\beta$
 - known sampling distribution of $\widehat{\beta}$
-
----
-
-### Least Squares: Statistical Inference
-
-We can also, making assumptions, use regression to estimate, with uncertainty the true value of slope coefficient.
-
-- If the model $Y = \beta X + \epsilon$ where the slopes in $\beta$ are constant and additive for all cases is correct
-- If the $\epsilon_i$ are independent and indentically distributed, with mean 0
-- If $\epsilon_i$ is **independent** of $X_i$: $X \mathrel{\unicode{x2AEB}} \epsilon$
-
-Then, $\hat{\beta}$ is **unbiased** and has a known sampling distribution that we can estimate from the data.
 
 # A Causal Model for Least Squares
 
@@ -97,9 +85,9 @@ Then, $\hat{\beta}$ is **unbiased** and has a known sampling distribution that w
 
 ### Response Schedule
 
-In the context of **experiments**, we imagined that each observation has potential outcomes corresponding to their behavior under different treatments
+In the context of **experiments**, each observation has potential outcomes corresponding to their behavior under different treatments
 
-- To find the average causal effect of treatment without bias, we had to assume that only treatment status affects the outcome and that treatment is assigned in a manner unrelated to potential outcomes
+- To estimate $ACE$ of treatment without bias, assumed that  treatment status is **independent** of potential outcomes
 
 ---
 
@@ -109,26 +97,45 @@ In regression, where levels of treatment might be continuous, we generalize this
 
 - some equation that reflects potential outcomes across different values of the "treatment"
 
+
+---
+
+### Response Schedule
+
 $$Y(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
 Here $Y_i(D_i = d)$ is the potential outcome for $i$ for a value of $D = d$. 
 
-- this response schedule says that $Y_i$ changes same amount for all unit changes in $D$.
+- this response schedule says that $Y_i$ changes same amount for all unit changes in $D$ (or an average across non-linear effects of $D$)
 - We only ever observe one $Y_i(D_i = d)$ for the $d$ that occurs, others are counterfactual.
 
 ---
 
 ### Response Schedule
 
-If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta_1}$ that we can give a **causal** interpretation? (Unit change in $X$ **causes** $\widehat{\beta}$ change in $Y$)
+If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta}_1$ that we can give a **causal** interpretation? (On average, change in $D$ **causes** $\widehat{\beta}_1$ change in $Y$)
 
 **We must assume**
 
 - $Y_i$ actually produced according to the response schedule (equation is correctly specified; e.g., linear and additive)
-- $D_i$ is chosen at random, so independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$. Sometimes we say $D$ is **exogenous**
+- $D_i$ is independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$. Sometimes we say $D$ is **exogenous**
 
 ---
 
-### How does this go wrong?
+### Response Schedule
+
+Recall OLS assumptions: to have no bias...
+
+- $D$ independent of $\epsilon$
+- and $\epsilon$ are other variables that **affect** $Y$, per the model. 
+
+What is one way to be sure we can find effect of $D$ without bias?
+
+>- $D$ randomly assigned
+
+---
+
+### But assumptions are violated
 
 If the true process generating the data is:
 
@@ -136,11 +143,12 @@ $$Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \epsilon_i$$
 
 with $(D_i,X_i) \perp \!\!\! \perp \epsilon_i$, $E(\epsilon_i) = 0$, $Var(\epsilon_i) = \sigma^2$
 
-What happens when we regress $Y_i$ on a constant and $D_i$ and exclude $X_i$?
+What happens when we estimate this model with a constant and $D_i$ but exclude $X_i$?
+
+$$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
 
 ---
-
-Because this is a bivariate regression ($Y_i = \widehat{\beta_0} + \widehat{\beta_1} D_i + e_i$)
 
 $$\small\begin{eqnarray} 
 \widehat{\beta_1} &=& \frac{Cov(D_i, Y_i)}{Var(D_i)}    \\
@@ -160,13 +168,11 @@ When we exclude $X_i$ from the regression, we get:
 
 $$\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$$
 
-This bias is **omitted variable bias**
+This is **omitted variable bias**
 
 ---
 
-If the truth is:  $Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \epsilon_i$
-
-And $\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$
+Excluding $X$ from the model: $\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$
 
 What is the direction of the bias when:
 
@@ -184,13 +190,36 @@ What is the direction of the bias when:
 
 ### Omitted Variable Bias
 
-This is only source of bias if two things are true:
+This only yields bias if two conditions are true:
 
 1. $\beta_2 \neq 0$: omitted variable $X$ has (or is correlated with something that has) an effect on $Y$ 
 
 2. $\frac{Cov(D_i, X_i)}{Var(D_i)} \neq 0$: omitted variable $X$ is correlated with $D$.  
 
-This is why we don't need to include EVERYTHING that might affect $Y$ in our regression equation; **only those variables that affect <u>treatment</u> and <u>the outcome</u>.
+This is why we don't need to include EVERYTHING that might affect $Y$ in our regression equation; **only those variables that affect <u>treatment</u> and <u>the outcome</u>.**
+
+---
+
+
+---
+
+### Conditioning:
+
+**conditioning** is when we examine the effect of $D_i$ on $Y_i$ *within subsets/strata* of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
+
+- Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
+- We examine relationship between $D$ and $Y$, within groups of cases where values of $\mathbf{X_i}$ are the same (hold value of  backdoor paths constant)
+
+
+---
+
+### Conditioning Assumptions
+
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of  $D$ 
+    - all 'backdoor' paths are blocked; no colliders
+    
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+    - There must be variation in treatment **within every strata** of $X$
 
 ---
 
@@ -198,44 +227,24 @@ This is why we don't need to include EVERYTHING that might affect $Y$ in our reg
 
 Link to DAGs:
 
-- Omitted variable bias solved when we "block" backdoor paths from $D$ to $Y$.
+- OVB solved when we "block" backdoor paths from $D$ to $Y$.
 
 Link to conditioning:
 
-1. **Ignorability**/**Conditional Independence** Assumption: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random). This is **equivalent** to saying that, within strata of $X$, $\epsilon_i$ are independent of $D_i$, a regression assumption.
+- OVB is a result of conditional independence assumption being wrong
 
-
----
-
-```{r, echo = F}
-dagify(mammogram ~ invite,
-       mammogram ~ class,
-       mammogram ~ educ,
-       educ ~ class,
-       death ~ mammogram,
-       death ~ class,
-       death ~ educ,
-       exposure = "invite", 
-       outcome = 'death',
-       labels = c('mammogram' = "Mammogram", 
-                  'death' = 'BC Death',
-                  'invite' = "HIP Invite",
-                  'class' = 'Class',
-                  'educ' = 'Education')) %>%
-  ggdag(use_labels = "label", text = F, layout = 'auto')
-
-```
+Link to OLS assumptions...
 
 ---
 
 ### Exercise:
 
 1. Brainstorm an exhaustive list of variables that are causally linked to contracting COVID-19
-2. Add these other variables (and any possible backdoor paths) to a DAG that initially includes just this link $\mathrm{Using \ Purell} \xrightarrow{Decreases} \mathrm{COVID-19}$
-3. Imagine we want to estimate the causal effect of Purell usage on contracting COVID-19: 
+2. Add these other variables (and any possible backdoor paths) to a DAG that initially includes just this link $\mathrm{Using \ Hand \ Sanitizer} \xrightarrow{Decreases} \mathrm{Pr(COVID)}$
+3. Imagine we want to estimate the causal effect of sanitizer usage on contracting COVID-19: 
     - which of the variables in your DAG would produce OVB if excluded from the regression?
     - which of the variables in your DAG WOULD NOT produce OVB?
-    
+
 
 # Other Biases
 
@@ -244,9 +253,9 @@ dagify(mammogram ~ invite,
 ### (1) Omitted Variable Bias
 
 - Excluding some variable $X$ that should be in the model
-- Induces bias if $X$ is causally related to both $D$ and $Y$
-- How do we know whether there is some missing $X$ we need to include?
+- Induces bias if $X$ is causally related to both $D$ and $Y$ ($X$ is a confounder)
 - We need to make a big assumption that we've included all relevant confounding variables: **conditional independence assumption** or **ignorability**
+
 
 ---
 
@@ -257,6 +266,7 @@ Even if we included **all** variables on backdoor path between $D$ and $Y$, we c
 - we typically assume the model is linear and additive. 
 - but the world might be non-linear and interactive (effect of $D$ on $Y$ depends on $Z$)
 - our decisions about how to specify the math of regression equation can lead to bias
+
 
 ---
 
@@ -275,7 +285,7 @@ Let's return to the same example we used above: do hours increase earnings? We c
 
 Let's say the **model** we want to estimate is:
 
-$Y_i = \beta_0 + \beta_1 Hours_i + \beta_2 Female_i + \beta_3 Age_i + \epsilon_i$
+$Y_i = \beta_0 + \beta_1 Hours_i + \beta_2 Female_i +$ $\beta_3 Age_i + \beta_4 Law_i + \epsilon_i$
 
 And we want to find $\beta_1$ with $\widehat{\beta_1}$
 
@@ -283,8 +293,10 @@ And we want to find $\beta_1$ with $\widehat{\beta_1}$
 
 ### Example: Interpolation
 
+We can assume linearity and additivity:
+
 ```{r}
-lm(INCEARN ~ UHRSWORK + SEX + AGE, data = acs_data) %>% summary
+lm(INCEARN ~ UHRSWORK + SEX + AGE + LAW, data = acs_data) %>% summary
 ```
 
 ---
@@ -301,9 +313,9 @@ Questions to ask:
 ### Example: Interpolation
 
 ```{r echo = F, include = F, warning=F, message = F}
-acs_data[, r_hours := lm(UHRSWORK ~ SEX + AGE, .SD)$residuals]
-acs_data[, r_hours_2 := lm(UHRSWORK ~ SEX*AGE, .SD)$residuals]
-acs_data[, r_hours_3 := lm(UHRSWORK ~ as.factor(SEX)*as.factor(AGE), .SD)$residuals]
+acs_data[, r_hours := lm(UHRSWORK ~ SEX + AGE + LAW, .SD)$residuals]
+acs_data[, r_hours_2 := lm(UHRSWORK ~ SEX*AGE + LAW, .SD)$residuals]
+acs_data[, r_hours_3 := lm(UHRSWORK ~ as.factor(SEX)*as.factor(AGE) + LAW, .SD)$residuals]
 acs_data[, Gender := ifelse(SEX == 1, "Female", "Male")]
 plot_data = acs_data[, list(hours = mean(UHRSWORK), inc = mean(INCEARN), 
                 r_hours = mean(r_hours), r_hours_2 = mean(r_hours_2),
@@ -319,65 +331,136 @@ ggplot(plot_data, aes(x = AGE, y = hours, colour = Gender, group = Gender, weigh
 
 ---
 
-```{r echo = F, message=F, warning=F}
-
-ggplot(plot_data, aes(x = AGE, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Annual Income ($)") + ggtitle("Income by Age and Gender")
-
-```
-
----
-
-```{r echo = F, message=F, warning=F}
-
-ggplot(plot_data, aes(x = AGE, y = r_hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity and Additivity)")
-
-```
-
----
+Assuming additivity and linearity:
 
 ```{r}
-lm(INCEARN ~ UHRSWORK + SEX + AGE, data = acs_data) %>% summary
+lm(INCEARN ~ UHRSWORK + SEX + AGE + LAW, data = acs_data) %>% summary
+```
+
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity and Additivity)") + geom_hline(yintercept = 0)
+
+```
+
+
+---
+
+Assuming linearity, not additivity
+
+```{r}
+lm(INCEARN ~ UHRSWORK + SEX*AGE + LAW, data = acs_data) %>% summary
 ```
 
 ---
 
 ```{r echo = F, message=F, warning=F}
 
-ggplot(plot_data, aes(x = AGE, y = r_hours_2, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity but NOT Additivity)")
+ggplot(plot_data, aes(x = AGE, y = r_hours_2, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity but NOT Additivity)") + geom_hline(yintercept = 0)
 
 ```
 
 ---
 
+Assuming neither linearity or additivity
+
 ```{r}
-lm(INCEARN ~ UHRSWORK + SEX*AGE, data = acs_data) %>% summary
+lm(INCEARN ~ UHRSWORK + as.factor(SEX)*as.factor(AGE) + LAW, data = acs_data) %>% summary
 ```
 
 ---
 
 ```{r echo = F, message=F, warning=F}
 
-ggplot(plot_data, aes(x = AGE, y = r_hours_3, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
+ggplot(plot_data, aes(x = AGE, y = r_hours_3, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + geom_hline(yintercept = 0) + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
 
 ```
 
 ---
 
-```{r}
-lm(INCEARN ~ UHRSWORK + as.factor(SEX)*as.factor(AGE), data = acs_data) %>% summary
+What is wrong with interpolation bias?
+
+- In conditioning, we want to compare $Y_i(D_i = 1)|X_i$ to $Y_i(D_i = 0)|X_i$ for cases where values of confounding variables $X_i = x$ are the same
+- In regression, we compare $Y_i(D_i = 1)|X_i$ against **linear prediction** of $\widehat{Y}(D_i = 0)|X_i$.
+- This approximation may fail spectacularly...
+
+---
+
+```{r, echo = F, message=F}
+n = 100
+x = rnorm(n, sd = 2) %>% round
+d = ((4 + 0.75*x - 0.5*x^2 + rnorm(n, sd= 2))/3) %>% pnorm %>% rbinom(n = n, size = 1, prob = .)
+x[d == 0] = x[d==0] - 0.5
+y = 2 + d + -0.5*x+ x^2 + rnorm(n)
+
+m = lm(y ~ d + x)
+r_d = lm(d ~ x)$residuals
+
+y_alt = predict(m, newdata = data.frame(d = 1 - d, x = x))
+plot_data = data.table(x = x,
+           d = d %>% as.factor,
+           y = y,
+           y_alt = y_alt,
+           d_alt = (1 - d) %>% as.factor,
+           var_d = r_d^2
+           )
+
+dens_data = plot_data[, list(raw = .N/100, adj = (.N/100)*mean(var_d)) , by = x]
+dens_data[, adj := adj / sum(adj)]
+setkey(dens_data, x)
+ggplot(plot_data, aes(x = x, y = y, color = d)) + geom_point(size = 2) + geom_point(aes(x = x, y = y_alt, color = d_alt), alpha = 0.4, size = 3, stroke = 0, stat = 'unique') + theme_bw() + ggtitle("Interpolation Bias") 
 ```
+
+transparent dots indicate $\widehat{Y}$ interpolated by regression.
+
+
+---
+
+```{r, echo = F, message=F}
+n = 100
+x = rnorm(n, sd = 2) %>% round
+d = ((4 + 0.75*x - 0.5*x^2 + rnorm(n, sd= 2))/3) %>% pnorm %>% rbinom(n = n, size = 1, prob = .)
+x[d == 0] = x[d==0] - 0.5
+y = 2 + d + -0.5*x+ x^2 + rnorm(n)
+
+m = lm(y ~ d + x)
+r_d = lm(d ~ x)$residuals
+
+y_alt = predict(m, newdata = data.frame(d = 1 - d, x = x))
+plot_data = data.table(x = x,
+           d = d %>% as.factor,
+           y = y,
+           y_alt = y_alt,
+           d_alt = (1 - d) %>% as.factor,
+           var_d = r_d^2
+           )
+
+dens_data = plot_data[, list(raw = .N/100, adj = (.N/100)*mean(var_d)) , by = x]
+dens_data[, adj := adj / sum(adj)]
+setkey(dens_data, x)
+ggplot(plot_data, aes(x = x, y = y, color = d)) + geom_point(size = 2) + geom_point(aes(x = x, y = y_alt, color = d_alt), alpha = 0.4, size = 3, stroke = 0, stat = 'unique') + theme_bw() + ggtitle("Interpolation Bias") +
+geom_line(data = dens_data, aes(x = x, y = raw * 100), inherit.aes = F) + 
+  geom_line(data = dens_data, aes(x = x, y = adj * 100), inherit.aes = F, color = 'red') 
+```
+
+transparent dots indicate $\widehat{Y}$ interpolated by regression.
+
+lines indicate relative weights
 
 ---
 
 ### Interpolation Bias:
 
-When we allow for greater **approximation** of the relationship of confounding variables $X$ with $D$ and $Y$ through **linearity** (or any imposed functional form) and **additivity**, we generate **interpolation bias** even if there is no omitted variable bias.
+When we  **approximate** of the relationship of confounding variables $X$ with $D$ and $Y$ through **linearity** (or any imposed functional form) and **additivity**, we may generate **interpolation bias** even if there is no omitted variable bias.
 
 Interpolation bias is relatively easy to diagnose:
 
 - Scatterplot $D$ with $X$
 - Choose more flexible model (non-linear/interactive)
-- Linear/additive approximation does not often produce massive bias... because least squares is a good linear approximation of non-linear functions **within the region where we have data**.
+- Linear/additive approximation may be acceptible because least squares is a linear apprx. of non-linear functions **within the region where we have data**.
 
 ---
 
@@ -397,32 +480,20 @@ Does being a democracy cause a country to provide better public goods?
 
 We decide to estimate the following regression model. Let's assume that there is no omitted variable bias.
 
-$Public \  Goods_i = \beta_0 + \beta_1 Democracy_i + \beta_2 ln(Per \ Capita \ GDP_i) + \epsilon_i$
+$Public \  Goods_i = \beta_0 + \beta_1 Democracy_i +$ $\beta_2 ln(Per \ Capita \ GDP_i) + \epsilon_i$
 
 ---
 
-Exercise: Download the simulated data
-
-```
-if (!require(httr)) install.packages('httr')
-
- r = GET("https://mdweaver.github.io/poli572b/lecture_9/example_9.csv")
-data_9 = as.data.frame(content(r))
-data_9$Democracy = as.factor(data_9$Democracy)
-```
+Exercise: Download the simulated data from Canvas
 
 ---
 
 $1$. Estimate $Public \  Goods_i = \beta_0 + \beta_1 Democracy_i + \beta_2 ln(Per \ Capita \ GDP_i) + \epsilon_i$ using the `lm` function. What is the effect of democracy on public goods?
 $2$. What does this model assume about the relationship between per capita GDP and public goods for democracies? For non-democracies?
-$3$. Plot public goods on GDP per capita, grouping by democracy: 
+$3$. Plot public goods on GDP per capita, grouping by democracy: code on Google
 
-```
-ggplot(data_9, aes(x = l_GDP_per_capita, 
-                    y = public_goods, 
-                    group = Democracy, color = as.factor(Democracy))) + 
-  geom_point() + theme_bw() + theme(legend.position="bottom")
-```
+
+---
 
 $4$. What is the true functional form of the relationship between GDP per capita and public goods for Democracies? For non-democracies where GDP per capita is $> 0$?                      
 $5$. Create a new variable for per capita GDP $> 0$.
@@ -434,24 +505,126 @@ In this example:
 
 We observe no non-democracies with GDP per capita as high as some democracies, but must condition on GDP per capita.
 
+Options
+
 - Using regression ($1$ on previous slide): we linearly and additively **extrapolated** from the model what public goods for non-democracies with high per capita GDP would be (where we have no data, only the model)
+
+
+---
 
 or
 
 - Using regression ($6$ on previous slide): we restricted our analysis to the region of the data with common support (range of GDP per capita values that contain both democracies and non-democracies). Linear interpolation, but the model is not extrapolating to regions without data.
+
+---
+
+### Conditioning and Regression:
+
+Problems of extrapolation relate to assumption of **Positivity** or **Common Support** in conditioning:
+
+- For conditioning: we assume that we have variation in $D$ within every strata of $X$.
+- In regression, we may end up making model-based extrapolations...
+
+---
+
+```{r, echo = F, message = F}
+data_9 = fread('./example_9.csv')
+ggplot(data_9, aes(x = l_GDP_per_capita,
+                    y = public_goods,
+                    group = Democracy, color = as.factor(Democracy))) +
+  geom_point() + theme_bw() + theme(legend.position="bottom")
+```
 
 
 # Conditioning with Regression
 
 ---
 
-### How to Condition with Regression:
+### Inter/Extrapolation Bias
 
-Least Squares can condition while avoiding **interpolation** and **extrapolation** biases:
+### Solutions?
 
-- Specify model so that it is **inherently** linear: **saturated** regression.
+- Restrict analyses to cases where we have overlap in conditioning variables (extrapolation)
+- Fewer functional form assumptions (interpolation)
 
-**saturated regression**: dummy variables for each unique combination of values in $\mathbf{X}$, where $\mathbf{X}$ is  a matrix containing all variable needed to make **conditional independence assumption**.
+---
+
+### Saturated Regression
+
+One solution to both **extrapolation** and **interpolation** bias is **saturated regression**
+
+- a dummy variable for **every** unique combination of values for conditioning variables $X$.
+- we now compare difference in averages of treated/untreated **within** each strata of $X$
+- returns **an** average causal effect, but weighted by size and **variance** of $D$ within each strata of $X$. 
+
+
+---
+
+### Saturated Regression
+
+Pros:
+
+- no possibility of **interpolation**: model is linear and additive in $X$, but no need to make assumptions because we allow for all unique values of $X$ to have their own means. 
+- zero weight on strata of $X$ with all "treatment"/all "control" (no **extrapolation**)
+
+---
+
+### Saturated Regression
+
+Gender bias in earnings: linear conditioning
+
+```{r}
+controls_linear = lm(INCEARN ~ FEMALE + AGE + RACE_f + 
+             EDUC_f + UHRSWORK + WKSWORK2 + 
+             LAW + MARST_f, acs_data)
+
+summary(controls_linear)$coefficients
+```
+
+---
+
+### Saturated Regression
+
+dummy `saturated` = "AGE:RACE_f:EDUC_f:UHRSWORK:WKSWORK2:LAW:MARST_f"
+
+```{r, echo = F}
+acs_data[, saturated := paste(AGE, RACE_f, EDUC_f, UHRSWORK, WKSWORK2, LAW, MARST_f, sep = ":")]
+acs_data[, var := var(FEMALE), by = saturated]
+setkey(acs_data, saturated)
+
+acs_data[var > 0, list(INCEARN, FEMALE, saturated)] %>%
+  head(10) %>%
+  kable()
+
+```
+
+---
+
+### Saturated Regression
+
+Gender bias in earnings: saturated regression
+
+```{r, warning=F}
+require(lfe)
+#felm(y ~ x1 + x2 | fixed_effect | instrument | cluster, data = ___)
+controls_saturated = felm(INCEARN ~ FEMALE | saturated | 0 | 0, acs_data)
+
+#Saturated
+summary(controls_saturated)$coefficients
+
+#Linear
+summary(controls_linear)$coefficients
+```
+
+---
+
+### Saturated Regression
+
+We can use conditioning without **interpolation** bias, **extrapolation** bias, but
+
+- we are still make conditional independence assumption
+- saturated regression suffers from **curse of dimensionality** (a lot of $N$ needed, usually)
+- returns a variance-weighted effect, may not be what we want (this is fixable, though)
 
 
 
