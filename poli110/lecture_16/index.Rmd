@@ -1,7 +1,7 @@
 ---
-title: "POLI 110: Confounding"
+title: "POLI 110"
 author: "Michael Weaver"
-date: "March, 2020"
+date: "March 18, 2021"
 output: ioslides_presentation
 ---
 
@@ -11,908 +11,392 @@ require(haven)
 require(data.table)
 require(ggplot2)
 require(magrittr)
-require(ggdag)
 ```
 
-# Confounding
+## Testing Causal Claims
+
+### **1. Correlation: Review**
+
+- definition
+- attributes
+- problems
+
+### **2. Problems with Correlation**
+
+- Random correlation
+- Bias in correlation (**confounding**)
 
 
-## Introduction
+# Recap
 
-Last lecture, we addressed how we assess causal claims. In particular, we were interested in whether social distancing reduced the spread of disease.
+## Solving FPCI
 
-Since then, the BC CDC has said that they estimate that [social distancing has reduced the rate of spread of COVID-19](https://www.cbc.ca/news/canada/british-columbia/physical-distancing-bc-covid19-coronavirus-1.5512269).
+We solve the fundamental problem of causal inference by:
 
-## Introduction
+- comparing the values of the outcome ($Y$) across cases we can observe with different values of the cause ($X$)
+- assuming that cases with different values of $X$ can stand in for the **same case** in the counterfactual world where its value of $X$ is different.
 
-But as we noted, there is a **fundamental problem of causal inference**: we don't observe what the infection rate would look like in British Columbia in the absence of social distancing, because that is a **counterfactual**; BC did implement social distancing nearly 3 weeks ago, so we only observe infection rates in the presence of distancing.
+## **Correlation**
 
-We can only <u>estimate</u> the counterfactual:
+**Correlation** is the degree of association/relationship between the **observed** values of $X$ (the independent variable) and $Y$ (the dependent variable)
 
-- The BC CDC uses mathematical models of the disease (we won't be covering this approach) and data they have collected.
-- Or we can compare COVID-19 cases in BC with other countries that were slower to impose social distancing (e.g. Italy, United States). This is **correlation**.
+- There are formal mathematical definitions. 
+- We use the term loosely to describe observed relationship between $X$ and $Y$
 
-## Introduction
+## **Correlation**
 
-**Correlation** can suffer from two sources of error:
+**All empirical evidence for causal claims** relies on **correlation** between the independent and dependent variables.
 
-**random error**: we observe patterns in $X$ (independent variable) and $Y$ (dependent variable) by chance, when there is in fact no relationship.
+But, you've all heard this:
 
-**bias (confounding)**: the **observed pattern** between $X$ and $Y$ is not the **true causal relationship** between $X$ and $Y$.
+<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
+
+---
+
+```{r, echo = F, message=F}
+require(MASS)
+require(ggplot2)
+a1 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.9,0.9,1), byrow = T, ncol = 2))
+a2 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.30,.3,1), byrow = T, ncol = 2))
+a3 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.6,0.6,1), byrow = T, ncol = 2))
+a4 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.3,0.3,1), byrow = T, ncol = 2))
+a2[,2] = a2[,2] * -2
+a3[,2] = a3[,2] * 3
+a4[,2] = a4[,2] * -6
+
+plot_data = data.frame(rbind(a1,a2,a3,a4), X3 = rep(LETTERS[1:4], c(150,150,150,150)))
+
+ggplot(plot_data, aes(x = X1, y = X2)) + geom_point() + geom_smooth(method = 'lm', se = F) + facet_wrap(~ X3, nrow = 2, ncol = 2) + theme_bw()
+```
+
+POLL
+
+## **Correlation**
+
+Correlations have
+
+- **direction**:
+    - positive: implies that as $X$ increases, $Y$ increases
+    - negative: $X$ increases, $Y$ decreases
+- **strength** (has nothing to do **size of effect**):
+    - **strong**: $X$ and $Y$ almost **always** move together (near $1,-1$)
+    - **weak**: $X$ and $Y$ do not move together very much (near $0$)
+- **slope/effect size**: 
+    - this is the how much $Y$ changes with $X$. 
+    - The larger the effect of $X$ on $Y$, the steeper the slope
+
+## Correlation
+
+What do we need to assume to use correlation as evidence of causation?
+
+### **Two types of problems**
+
+- **random association**: correlations between $X$ and $Y$ occur **by chance** and do not reflect causal relationship.
+
+- **bias** (spurious correlation, **confounding**): $X$ and $Y$ are correlated but the correlation does not result from a **causal relationship** between those variables
+
+---
+
+
+```{r, echo = F, message = F}
+cage_data = data.frame(cage_films = c(2,2,2,3,1,1,2,3,4,1,4),
+                       pool_deaths = c(109, 102, 102, 98, 85, 95, 96, 98, 123, 94, 102))
+require(ggplot2)
+ggplot(cage_data, aes(x =cage_films, y = pool_deaths)) + 
+  geom_point(position = position_jitter(w = 0, h = 1)) + 
+  geom_smooth(method = 'lm', fullrange = T, se = F) +
+  theme_bw() +
+  ggtitle("Nick Cage films cause Pool Drownings") +
+  xlab("Nick Cage Films per Year") + 
+  ylab("Pool Drownings per Year (US)") + 
+  theme(plot.title = element_text(size = 24, face = "bold"),
+        axis.title=element_text(size=14,face="bold"))
+```
+
+# Random Association 
+
+## Correlation: Random association
+
+How do we know a correlation is **systematic**?
+
+- How do we know that it is not simply a pattern by random chance?
+- Apparent patterns can be produced by pure randomness
+
+## Correlation: Random association
+
+<iframe width=100% src="https://www.youtube.com/embed/no_elVGGgW8?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+## Correlation: Random association
+
+If you look at enough possible sets of variables, you might find a strong correlation
+
+- But it could have happened by chance!
+- So a correlation might not be meaningful (e.g. Nick Cage)
+
+(Arbitary Correlations)[http://www.tylervigen.com/spurious-correlations]
+
+
+## Random association: Statistics
+
+To see that random patterns can emerge, I use random number generators to 
+
+- **randomly** pick $5$ values of $X$
+- **randomly** pick $5$ values of $Y$
+
+We can imagine these are the observed $X$ and $Y$ for $5$ cases.
+
+How easy is it to find a strong correlation?
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(5)
+  y = rnorm(5)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "5 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+plot(x,y, main = "5 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
+```
+
+## Random association: Statistics
+
+Field of statistics investigates properties of **chance** events (stochastic processes):
+
+- Probability theory tells us how likely events are to happen, given chance
+- Can tell us how likely correlation of some value is to happen by chance
+
+## Random association: Statistics
+
+### How?
+
+1. Compute correlation of $X$ and $Y$
+2. How **strong** is the correlation>
+    - Patterns that are **stronger** are **less likely** to happen by chance
+2. How many **cases** do we have?
+    - Patterns with **many cases** are **less likely** to happen by chance
+3. Assign a probability that the correlation we see would have happened by chance
+
+### **Assuming**...
+
+we know the chance processes that might affect this correlation
+
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(10)
+  y = rnorm(10)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "10 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
+```
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.45) {
+  x = rnorm(15)
+  y = rnorm(15)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "15 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
+```
+
+
+## Random association: Statistics
+
+**statistical significance**: 
+
+> An indication of **how likely** correlation we observe could have happened purely by chance.
+
+> **higher** degree of statistical significance indicates correlation is **unlikely** to have happened by chance
+
+## Random association: Statistics
+
+$p$ **value**:
+
+- A numerical measure of **statistical significance**. Puts a number on how likely observed correlation would have occurred by chance, **assuming** a we know the chance procedure and the truth is a $0$ correlation.
+
+- It is a probability, so is between $0$ and $1$.
+
+- **Lower** $p$-values indicate **greater** statistical significance
+
+$p < 0.05$ often used as threshold for "significant" result. 
+
+- but it is not a magic number
+- Can observe $p < 0.05$ by chance ($\frac{1}{20}$)
+
+## Random association: Statistics
+
+$p$ **value**:
+
+Be wary of "$p$-hacking"
+
+- $p$ values become meaningless if we look at many associations, then only report the ones that are "significant".
+
+### Why?
+
+- low $p$-values occur by chance when we look at lots of associations
+
+## Significant?
+
+<img src="./xkcd_1.png" width=70%>
+
+## Significant?
+
+<img src="./xkcd_2.png" width=40%>
+
+
+## Significant?
+
+<img src="./xkcd_3.png" width=50%>
+
+## What else do you want to know?
+
+<img src="./xkcd_4.png" width=80%>
+
+
+## We'd want to know this
+
+<img src="./xkcd_5.png" width=100%>
+
+## We'd want to know this
+
+<img src="./xkcd_6.png" width=100%>
+
+## Random assocation
+
+1. Correlations can appear by chance
+2. We can assess **probability** of chance correlation if we know:
+    - **strength** of correlation (close to $1,-1$)
+    - **size** of the sample ($N$)
+    - we assume we know the **chance process** generating our observations
+3. $p$-values:
+    - Obtained using mathematical formulae
+    - Given same $N$, stronger correlation has lower $p$
+    - Given same strength, correlation with more $N$ has lower $p$
+    
+## Random assocation
+
+### Recap:
+
+| Statistical<br>Significance | $p$-value | By Chance? | Why? | "Real"? |
+|:----------------------------:|:-----------------:|:----------:|:-------------------------------:|:----------------:|
+| Low | High ($p > 0.05$) | Likely | small $N$<br>weak correlation | Probably **not** |
+| High | Low ($p < 0.05$) | Unlikely | large $N$<br>strong correlation | Probably |
+
+# Example
+
+## Trump's Twitter and Hate Crimes
+
+[Mueller and Schwarz (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3149103) investigate:
+
+Did Trump's tweeting of anti-Muslim messages **increase** anti-Muslim hate crimes?
+
+## Trump's Twitter and Hate Crimes
+
+We can't observe the US in the absence of Trump tweeting against Muslims, so authors use correlation...
+
+## Trump's Twitter and Hate Crimes
+
+Trump's Twitter gained attention as he ran for President.
+
+<img src='./mueller_2.png' width=80%>
+
+## Trump's Twitter and Hate Crimes
+
+Trump made nearly 300 negative tweets about Muslims.
+
+Other people made more new negative tweets about Muslims when he did.
+
+<img src='./mueller_4.png' width=60%>
+
+## Trump's Twitter and Hate Crimes
+
+When Trump gained prominence, anti-Muslim hate crimes increased
+
+<img src='./mueller_1.png' width=60%>
+
+## Trump's Twitter and Hate Crimes
+
+<img src='./mueller_3.png' width=80%>
+
+## Trump's Twitter and Hate Crimes
+
+In groups, discuss:
+
+Do these correlations mean that Trump's tweets **caused** anti-Muslim hate crimes?
+
+What are your reasons for your answer?
+
+#
+
 
 ## Confounding
 
-This lecture will discuss in more detail:
+**confounding** is when there is a **systematic** observed correlation between $X$ and $Y$ that is does **NOT reflect** the causal effect of $X$ on $Y$.
 
-- What is confounding?
-- Why does it happen?
-    - What circumstances make it happen? 
-- What is the **direction** of the bias it produces?
-
-# Confounding
-
-## Confounding
-
-In **correlation**, we solve the fundamental problem of causal inference by replacing an **unobservable** counterfactual with a **different, observable** case with a **different exposure to the "cause"** 
-
-So, when we investigated the effects of social distancing on flattening the curve during the Spanish Flu, we compared the two **factual**/**observed** potential outcomes: $\mathrm{Peak \ Mortality \ Rate}_{St. Louis}(\mathrm{More \ Social \ Distance})$ versus $\mathrm{Peak \ Mortality \ Rate}_{Philadelphia}(\mathrm{Less \ Social \ Distance})$.
-
-## Confounding
-
-But the potential outcomes of Philadelphia and St. Louis (marked in $\color{red}{\mathrm{red}}$ ) are **unknown** because they are **counterfactual**. We don't know whether more social distancing caused lower peak mortality rates, because we don't observe these two cities in the alternative universe where they adopted a different social distancing policy.
-
-
-| City | Less SD | More SD |
-|:-----|:----:|:---:|
-| Philadelphia | $\mathrm{Peak \ MR_{Phil.}(Less \ SD)}$ | $\color{red}{\mathrm{Peak \ MR_{Phil.}(More \ SD)}}$ |
-| | | |
-| St. Louis | $\color{red}{\mathrm{Peak \ MR_{St. L.}(Less \ SD)}}$ | $\mathrm{Peak \ MR_{St. L.}(More \ SD)}$ |
-
-
-## Confounding
-
-Using the correlation between social distancing and peak mortality in these two cities to provide evidence of causality **implicitly** assumes the **observed** Peak Mortality in Philadelphia (St. Louis) is identical with the **counterfactual** Peak Mortality in St. Louis (Philadelphia)
-
-| City | Less SD | More SD |
-|:-----|:----:|:---:|
-| Philadelphia | $\boxed{\mathrm{Peak \ MR_{Phil.}(Less \ SD)}}$ | $\boxed{\color{red}{\mathrm{Peak \ MR_{Phil.}(More \ SD)}}}$ |
-| | $\Downarrow$ | $\Uparrow$ |
-| St. Louis | $\boxed{\color{red}{\mathrm{Peak \ MR_{St. L.}(Less \ SD)}}}$ | $\boxed{\mathrm{Peak \ MR_{St. L.}(More \ SD)}}$ |
-
-## Confounding
-
-There are **two ways** of explaining confounding. These two explanations have **identical**, but I introduce both in case one makes more sense than the other.
+- This is not a chance correlation. 
+- Two ways to explain why this happens (different explanations, but two sides of the same coin)
 
 
 ## Confounding
 
 ### **Explanation 1**:
 
-Confounding happens when cases with **different levels of $X$** have different (factual and counterfactual) potential outcomes.
+Confounding happens when cases with **different levels of $X$** have different (factual and counterfactual) potential outcomes of $Y$.
 
 **In our example:**
 
-We had been assuming that in the counterfactual world where Philadelphia imposed more social distancing, the peak of the curve $(\color{red}{\mathrm{Peak \ MR_{Phil.}(More \ SD)}})$ would have been the same as it actually was in St. Louis $(\mathrm{Peak \ MR_{St. L.}(More \ SD)})$ which **did** impose social distancing.(press `p` for notes)
+Mueller and Schwarz had been assuming that in the counterfactual world where Trump didn't gain Twitter followers, anti-Muslim hate crimes in the US would have been the same as they were pre-2015:
 
-<div class='notes'>
-We also had been assuming that in the counterfactual world where St. Louis did not impose more social distancing, the peak of the curve $(\color{red}{\mathrm{Peak \ MR_{St. L.}(Less \ SD)}})$ would have been the same as it actually was in Philadelphia $(\mathrm{Peak \ MR_{Phil.}(Less \ SD)})$ which **did not** impose social distancing.(press `p` for notes)
-</div
+$\color{red}{\mathrm{Muslim \ Hate \ Crime_{USA \ 2015-17}(No \ Trump \ Twitter)}}$ $=$
 
-## Confounding
+$\mathrm{Muslim \ Hate \ Crime_{USA \ 2010-14}(No \ Trump \ Twitter)}$ 
 
-### **Explanation 1**:
-
-But, what if $\color{red}{\mathrm{Peak \ MR_{Phil.}(More \ SD)}} = \mathrm{Peak \ MR_{Phil.}(Less \ SD)}$: Philadelphia's peak mortality rate would have been the same regardless of whether it had imposed social distancing? And what if $\color{red}{\mathrm{Peak \ MR_{St. L.}(Less \ SD)}} = \mathrm{Peak \ MR_{St. L.}(More \ SD)}$: St. Louis's peak mortality rate would have been the same regardless of whether it had imposed social distancing?
-
-This would imply that social distancing had **no effect** in either city (think about why). But, 
-because cities with **more social distancing** (St. Louis) would have had lower peak mortality rates (with or without the social distancing), and cities with **less social distancing** (Philadelphia) would have had higher peak mortality rates with or without the social distancing, we would **observe** that having social distancing reduces peak mortality.
-
-The true causal relationship in this example is $0$; but we **observe** a negative correlation. This is **confounding** or **bias**.
-
-## Confounding
-
-### **Explanation 1**:
-
-This explanation can be a bit tricky to grasp; but the **key** is that the cases that we **observe** with different levels of the social distancing ($X$) have **different** potential outcomes of peak mortality ($Y$): it is **incorrect** to treat the observed outcome of one city as equal to the counterfactual outcome of the other.
-
-This raises a question: **why** do cases with different levels of $X$ have different potential outcomes of $Y$? Why might places that adopt different levels of social distancing have different peak mortality rates, regardless of the public health responses they adopt?
-
-## Confounding
-
-The obvious place to start answering that question is to note: there were **other things that are different** between Philadelhpia and St. Louis in addition to their social distancing policies.
-
-Or, were we to compare COVID-19 in BC to COVID-19 in the New York, we would have to note that **there are many differences** between New York and BC other than their public health responses.
+If this is wrong... comparison leads to confounding.
 
 ## Confounding
 
 ### **Explanation 2**:
 
-Confounding occurs when these differences between cases (captured as variables, e.g. $W$, $Z$, etc.) **affect $X$** and **affect $Y$**. 
-
+Confounding occurs when there are **other differences** between cases (call them variables, e.g. $W$, $Z$, etc.) that **affect $X$** and **affect $Y$**. 
 The easiest way to understand this is **visually**. 
 
 - We can produce **graphs** of the causal relationships between variables
 - We can figure out whether there is going to be **bias**/**confounding** in the correlation of $X$ and $Y$ by reading these graphs. 
 
-## Causal Graphs
+## Confounding
 
-These graphs represent a model of the **true causal relationships** between variables.
+Next week...
 
-the **nodes** or **dots** correspond to **variables**
-
-- can be labeled with generic names for independent/dependent variables ($X$, $Y$) or meaningful names (e.g. "Social Distancing", "Peak Mortality")
-
-the **arrows** convey the **direction** of **causality**
-
-- $X \rightarrow Y$ means that $X$ causes changes in $Y$
-- $X \leftarrow W$ means that $W$ causes changes in $X$
-
-the **labels** on arrows convey the **direction** of the true **effect**:
-
-- $X \xrightarrow{increase} M$ means that $X$ causes $M$ to **increase**
-- $X \xleftarrow{decrease} Z$ means that $Z$ causes $X$ to **decrease**
-
-## Causal Graphs
-
-### **For example**
-
-St. Louis may have been different from Philadelphia because it was exposed to the Spanish Flu later.
-
-Later exposure may have:
-
-- let cities learn from high death rates in other cities, and impose stronger social distancing (later exposure $\xrightarrow{increase}$ social distancing)
-- let doctors learn better treatment procedures to save more lives (later exposure $\xrightarrow{decrease}$ peak mortality)
-
-
----
-
-press `p` to see notes
-
-```{r, echo = F}
-dagify(distance ~ learning_p ,
-       deaths ~ learning_m + distance ,
-       learning_m  ~ timing,
-        learning_p ~ timing,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "deaths" = "Peak\nMortality")
-                  ) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', 'decreases', 'increases', 'increases', 'increases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class='notes'>
-
-This graph illustrates the causal relationships described on the preceding slide:
-
-Later Flu exposure $\xrightarrow{increases}$ policy learning $\xrightarrow{increases}$ social distancing
-
-Later Flu exposure $\xrightarrow{increases}$ medical learning $\xrightarrow{decreases}$ peak mortality
-
-This graph also says that: social distancing $\xrightarrow{decreases}$ peak mortality
-
-</div>
-
-## Causal Graphs
-
-We can see **confounding** or **bias** on causal graphs:
-
-If we want to assess whether $X$ causes $Y$ using correlation, that correlation will suffer from **confounding** if, on the causal graph, there is a **backdoor path** from $X$ to $Y$. 
-
-- A "frontdoor" or **causal path** from $X$ to $Y$: it is a chain of one or more arrows that **starts** at $X$ and **points** toward $Y$: $X \rightarrow W \rightarrow Z \rightarrow Y$. Because the direction of causality follows the direction of the arrows, this path means that $X$ causes some change in $Y$.
-- A **backdoor** path is a **non-causal** path from $X$ to $Y$: it is a chain of **two** or more arrows that **starts** at $X$ and follows arrows **backwards** out of $X$, then changes direction **once** and follows arrows **toward** $Y$: $X \leftarrow W \leftarrow Z \rightarrow Y$ 
-
-With frontdoor paths and backdoor paths, we expect to see a relationship between $X$ and $Y$, but only in a frontdoor path did $X$ **cause** $Y$. In a backdoor path, $X$ and $Y$ are both **caused** by some other factor, producing an observed correlation that is different from the true causal link between $X$ and $Y$.
-
-
----
-
-press `p` for notes
-
-```{r, echo = F}
-p = dagify(distance ~ learning_p ,
-       deaths ~ learning_m + distance ,
-       learning_m  ~ timing,
-        learning_p ~ timing,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "deaths" = "Peak\nMortality")
-                  )  %>%
-  ggdag_paths(layout = 'tree', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
-  geom_dag_text_repel(force = 0, aes(label = label)) +
-  theme(legend.position = 'none')
-
-p$data[13, c("direction", "to", "xend", "yend")] = rep(NA, 4)
-
-p
-```
-
-<div class='notes'>
-
-In panel 1 (on the left), we see a causal path: there is an arrow starting at Social distancing  $\xrightarrow{\mathrm{pointing \ toward}}$ Peak Mortality.
-
-</div>
-
-
----
-
-press `p` for notes
-
-```{r, echo = F}
-p = dagify(distance ~ learning_p ,
-       deaths ~ learning_m + distance ,
-       learning_m  ~ timing,
-        learning_p ~ timing,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "deaths" = "Peak\nMortality")
-                  )  %>%
-  ggdag_paths(layout = 'tree', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
-  geom_dag_text_repel(force = 0, aes(label = label)) +
-  theme(legend.position = 'none')
-
-p$data[13, c("direction", "to", "xend", "yend")] = rep(NA, 4)
-
-p
-```
-
-<div class='notes'>
-
-In panel 2 we see a **backdoor path**: there is an arrow coming **backward** out of Social distancing $\xleftarrow{{\textrm{pointing from}}}$ Policy learning $\xleftarrow{{\textrm{pointing from}}}$ Later Flu exposure. Then, the path changes directions (just once): an arrow comes from later flu exposure $\xrightarrow{\textrm{pointing toward}}$ medical learning $\xrightarrow{\textrm{pointing toward}}$ peak mortality.
-
-This means there is confounding (by explanation 2): something that can differ between cases (the timing of the flu epidemic) affects the $X$ (social distancing) **and** the $Y$ (peak mortality) 
-</div>
-
-## Causal Graphs: Confounding
-
-In reality, we don't really **know** the variables and paths on these causal graphs.
-
-Instead, these causal graphs help us think about **possible scenarios** that might produce **bias**/**confounding** of the correlation between $X$ and $Y$.
-
-## Causal Graphs: Confounding
-
-Now it is your turn to practice:
-
-> **Does wearing a surgical mask during everyday activities during cold and flu season reduce a person's risk of contracting a cold or flu?**
-
-We observe this correlation:  **people who wear masks have lower rates of cold and flu infection**
-
-Draw a causal graph where this correlation suffers from **confounding**/**bias**
-
-
-## Causal Graphs: Confounding
-
-Draw your graphs!
-
----
-
-Here is one **possible** graph: press `p` to see notes
-
-```{r, echo = F}
-dagify(mask ~ ocd + immuno,
-       flu ~ hands,
-       hands ~ ocd + immuno,
-       exposure = "mask", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', 'increases','increases',  'increases', 'increases', '', '')),  angle_calc = "along", label_dodge = unit(c(-1, -1,1,1, 1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class='notes'>
-
-In this causal graph: 
-
-Being **immuno-compromised** $\xrightarrow{increases}$ hand washing and $\xrightarrow{increases}$ mask wearing.
-
-Having **OCD** $\xrightarrow{increases}$ hand washing and $\xrightarrow{increases}$ mask wearing.
-
-Hand washing $\xrightarrow{decreases}$ likelihood of getting the flu.
-
-Mask wearing has **no effect** on getting the flu mask wearing. (no arrow)
-
-</div>
-
---- 
-
-press `p` for notes
-
-```{r, echo = F}
-dagify(mask ~ ocd + immuno,
-       flu ~ hands,
-       hands ~ ocd + immuno,
-       exposure = "mask", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu")
-                  )  %>%
-  ggdag_paths(layout = 'auto', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
-  geom_dag_text_repel(force = 0, aes(label = label)) +
-  theme(legend.position = 'none')
-
-```
-
-
-<div class='notes'>
-
-In this causal graph, we can see there are **no** causal paths from mask wearing to getting the flu. But there are two **backdoor paths**.
-
-Panel 1 (Left): We can see that there is a path coming backward out of mask wearing $\xleftarrow{\textrm{pointing from}}$ Immuno-compromised (presumably because people who have a compromised immune system want to be extra safe and avoid getting the flu). Then the path changes directions, with an arrow coming from immuno-compromised and $\xrightarrow{\textrm{pointing toward}}$ hand washing and $\xrightarrow{\textrm{pointing toward}}$ getting the flu. The immuno-compromised also wash their hands more (to avoid illness) and hand washing affects getting the flu.
-
-
-</div>
-
---- 
-
-press `p` for notes
-
-```{r, echo = F}
-dagify(mask ~ ocd + immuno,
-       flu ~ hands,
-       hands ~ ocd + immuno,
-       exposure = "mask", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu")
-                  )  %>%
-  ggdag_paths(layout = 'auto', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
-  geom_dag_text_repel(force = 0, aes(label = label)) +
-  theme(legend.position = 'none')
-
-```
-
-
-<div class='notes'>
-
-In this causal graph, we can see there are **no** causal paths from mask wearing to getting the flu. But there are two **backdoor paths**.
-
-Panel 2 (Right): We can see that there is a path coming backward out of mask wearing $\xleftarrow{\textrm{pointing from}}$ OCD (presumably because people who are OCD fear germs and wear masks to ease anxiety). Then the path changes directions, with an arrow coming from OCD and $\xrightarrow{\textrm{pointing toward}}$ hand washing and $\xrightarrow{\textrm{pointing toward}}$ getting the flu. Those with OCD wash their hands more (also to ease anxiety about germs) and hand washing affects getting the flu.
-
-In both cases, these backdoor paths mean that some other factor (OCD, Immuno-compromised) affects both **mask-wearing** and **getting the flu**. This is confounding by explanation 2.
-</div>
-
-
-## Confounding:
- 
-These examples illustrate the possibility that if causal graphs include variables **in addition** to the independent and dependent variables, there is a risk of confounding or bias.
-
-Do **all** additional variables produce **confounding**?
-
-**No...** We will discuss three different patterns of variables: some of which have confounding, some which do not.
-
-## Additional Variables: Patterns
-
-- **antecedent variables**
-    - sometimes confounding
-    - sometimes no confounding
-- **intervening variables**
-    - no confounding
-- **reverse causality**
-    - yes, confounding.
-      
-    
-## Antecedent Variables
-
-      
-**antecedent variable**: a variable that **affects** $X$
-
-- e.g. in this path, $Z \xrightarrow{} X \xrightarrow{} Y$, $W$ is an antecedent variable.
-
-- antecedent variables ($Z$) **do not** produce confounding if the **only causal path** from $Z$ to $Y$ passes through $X$.
-- antecedent variables **do** produce confounding if there is another **causal path** from $Z$ to $Y$ that does **NOT** include $X$.
-
-
-## Antecedent Variable: No Confounding
-
-press `p` for notes
-
-```{r, echo = F}
-
-dagify(
-       flu ~ hands,
-       hands ~ immuno ,
-       exposure = "hands", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes Hands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu")
-                  )  %>%
-  ggdag_classic(layout = 'auto', text_label = 'label', size = 5) + theme_dag() +
-  theme(legend.position = 'none')
-
-```
-
-<div class="notes">
-
-In this example, if we are interested in the effect of washing hands ($X$) on getting the flu ($Y$), immuno-compromised is an **antecedent variable**, because it causes hand washing.
-
-However, there is **no confounding** because there is no other **causal path** from being immuno-compromised to getting the flu $Y$. The only path passes through $X$.
-
-</div>
-
-## Antecedent Variable: No confounding
-
-press `p` for notes
-
-
-```{r, echo = F}
-dagify(mask ~ immuno,
-       flu ~ hands,
-       hands ~ immuno,
-       exposure = "mask", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link() +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-In this example, if we are interested in the effect of washing hands ($X$) on getting the flu ($Y$),  being Immuno-compromised is **antecedent variableis ans**, because it causes hand washing.
-
-However, there is **no confounding** because there is no other **causal path** from being immuno-compromised to getting the flu $Y$. Being Immuno-compromised  also causes mask-wearing; but the graph shows no effect of mask-wearing on getting the flu $Y$. So the only causal paths from being Immuno-Compromised to getting the flu ($Y$) passes through hand washing ($X$). 
-
-</div>
-
-## Antecedent Variable: Confounding
-
-press `p` for notes
-
-```{r, echo = F}
-dagify(mask ~ immuno,
-       flu ~ hands + distance,
-       hands ~ immuno,
-       distance ~ immuno,
-       exposure = "hands", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "ocd" = "OCD",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu",
-                  "distance" = "Social\nDistancing")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link() +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-In this example, if we are interested in the effect of washing hands ($X$) on getting the flu ($Y$),being Immuno-compromised is an **antecedent variable**, because it causes hand washing.
-
-In this case, there is **confounding!** There is a **causal path** from being Immuno-compromised $\xrightarrow{\textrm{pointing toward}}$ social distancing $\xrightarrow{\textrm{pointing toward}}$ getting the flu. Because there is now **causal path** from the antecedent variable (being immuno-compromised) to the dependent variable (getting the flu) that **excludes** the independent variable (hand washing), there is now a **backdoor path** between $X$ (hand washing) and $Y$ (getting the flu) that passes through the antecedent variable (being immuno compromised).
-
-</div>
-
-## Antecedent Variable: No Confounding
-
-press `p` for notes
-
-```{r, echo = F}
-dagify(mask ~ immuno + smog,
-       flu ~ hands + indoors,
-       hands ~ immuno,
-       indoors ~ smog,
-       exposure = "hands", 
-       outcome = 'flu',
-       labels = c("mask" = "Wears\nMask",
-                  "hands" = "Washes\nHands",
-                  "smog" = "Smoggy\nCity",
-                  "immuno" = "Immuno-\nCompromised",
-                  "flu" = "Get Flu",
-                  "indoors" = "Stays\nIndoors")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link() +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-In this example, if we are interested in the effect of washing hands ($X$) on getting the flu ($Y$), being Immuno-compromised is an **antecedent variable**, because it causes hand washing.
-
-In this causal graph, there is **no confounding**! You might think that there is. There **seems to be** a **causal path** from being Immuno-compromised $\xrightarrow{\textrm{pointing toward}}$ mask wearing $\xleftarrow{\textrm{pointing from}}$ smog $\xrightarrow{\textrm{pointing toward}}$ staying indoors $\xrightarrow{\textrm{pointing toward}}$ getting the flu. This **is** a path from being immuno-compromised (the antecedent variable) to the getting the flue ($Y$) that excludes the hand washing ($X$).
-
-But look more closely, it is not a **causal path**: being immuno-compromised $\xrightarrow{causes}$ mask wearing; living in a smoggy city also $\xrightarrow{causes}$ mask wearing. But mask wearing does not cause living in a smoggy city. Going backwards along the arrow $\textrm{wears mask} \xleftarrow{} \textrm{Smoggy city}$ is a **non-causal** step.
-
-Another way of seeing this is: there is no **backdoor path** from hand washing to getting the flu, because there arrows would have to change direction **twice**: hand washing $\xleftarrow{\textrm{backwards toward}}$ being immuno-compromised $\xrightarrow{\textrm{forwards toward}}$ mask wearing $\xleftarrow{\textrm{backwards toward}}$ smoggy city.
-
-
-Because there is now **causal path** from the antecedent variable (being immuno-compromised) to the dependent variable (getting the flu) that **excludes** the independent variable (hand washing), there is now a **backdoor path** between $X$ (hand washing) and $Y$ (getting the flu) that passes through the antecedent variable (being immuno compromised).
-
-</div>
-
-## Intervening Variables
-
-**intervening variable**: a variable that **affects** $Y$ and is **affected by** $X$. 
-
-- e.g. in this path, $X \xrightarrow{} W \xrightarrow{} Y$, $W$ is an intervening variable.
-
-- intervening variables ($W$) **do not** produce confounding because they are on the  **causal path** from $X$ to $Y$. They do not produce backdoor path.
-
-## Intervening Variable
-
-press `p` to see notes
-
-```{r, echo = F}
-dagify(
-       deaths ~ transmission ,
-       transmission  ~ distance,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "transmission" = "Disease\nTransmission",
-                  "deaths" = "Peak\nMortality")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', 'increases', '')),  angle_calc = "along", label_dodge = unit(c(-1,-1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-In this example, if we are interested in the effect of social distancing ($X$) on peak mortality ($Y$), the disease transmission is an intervening variable.
-
-Here we can see there is no **backdoor path** from social distancing to peak mortality: there is only a causal path and the intervening variable falls along this causal path. Thus, there is no confounding.
-
-</div>
-
-## Reverse Causality
-
-**reverse causality** describes the situation where the **dependent variable** $Y$ actually causes the **independent variable** $X$. 
-
-So while we use the correlation to describe the effect of $X$ on $Y$: $X \to Y$, the correlation in fact is the result of the effect of $Y$ on $X$: $Y \to X$. 
-
-This is a special case of **bias** or **confounding**.
-
----
-
-|  | Third Variable? | Key Attribute | Confounding? |
-|--------------------------|-----------------|---|----------------------------|
-| Antecedent Variables ($Z$) | Yes | $Z \to X$ | If only **causal path** from $Z$ to $Y$ contains $X$: No <br> If a **causal path** from $Z$ to $Y$ excludes $X$: Yes |
-| Intervening Variables ($W$) | Yes | $X \to W \to Y$ | No |
-| Reverse Causality | No  | $Y \to X$ | Yes |
-
-
-# Direction of Bias
-
-## Direction of Bias
-
-**Confounding** or **bias** in correlations means that the correlations we observe are systematically different from the **true causal relationship** between $X$ and $Y$.
-
-If there is confounding, we need to be able to reason: 
-
-- is the correlation that we observe **more positive** than the **true effect** (**upward bias**)?
-- is the correlation that we observe **more negative** than the **true effect** (**downward bias**)?
-
-## Direction of Effects
-
-Before we can read these graphs to find whether bias is **upward** or **downward**, we need to be able to read causal graphs to find the direction of the effect for a causal path.
-
-To do this, we first convert the words along the arrows on a causal path into numbers: "increases" into $+1$ and "decreases" into $-1$. Then, we take the **product**  of these $+1$s and $-1$s (multiply all of them together). 
-
-- If the **product** is $+1$, then the overall effect is positive
-- If the **product** is $-1$, then the overall effect is negative
-
-## Direction of Effect
-
-
-press `p` to see notes
-
-```{r, echo = F}
-dagify(
-       deaths ~ distance,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "transmission" = "Disease\nTransmission",
-                  "deaths" = "Peak\nMortality")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', '')),  angle_calc = "along", label_dodge = unit(c(-1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-This is the simplest case: there is only Social Distancing ($X$) and Peak Mortality ($Y$). Here we see that Social Distancing **decreases** Peak Mortality. We convert "decreases" to $-1$. There is nothing to multiply it by, so the total effect along this path ($\textrm{Social Distancing} \to \textrm{Peak Mortality}$) is negative (more social distancing reduces peak mortality).
-
-
-</div>
-
-## Direction of Effect
-
-press `p` to see notes
-
-```{r, echo = F}
-dagify(
-       deaths ~ transmission ,
-       transmission  ~ distance,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "transmission" = "Disease\nTransmission",
-                  "deaths" = "Peak\nMortality")
-                  ) %>%
-  tidy_dagitty(layout='auto') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', 'increases', '')),  angle_calc = "along", label_dodge = unit(c(-1,-1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class="notes">
-
-This is more complicated: we see that disease tranmission is on the path between Social Distancing ($X$) and Peak Mortality ($Y$). Here we see that Social Distancing **decreases** Disease Transmission (because there are fewer opportunities for people to spread it to others). We convert "decreases" to $-1$. Disease Transmission **increases** Peak Mortality (because as more people get the disease more rapidly, more people will potentially die). We convert "increases" into $+1$. 
-
-Then we take the product of these two numbers: $1 \times -1 = -1$. Because the overall product is $-1$ the total effect of $X$ on $Y$ along this path ($\textrm{Social Distancing} \to \textrm{Disease Transmission} \to \textrm{Peak Mortality}$) is negative (more social distancing reduces peak mortality). This makes sense: greater disease transmission **increases** mortality, and social distancing **reduces** disease transmission. So it must **reduce** mortality. 
-
-Even for much longer paths, taking the product will give us the right answer.
-
-</div>
-
-## Confounding: Direction of Bias
-
-In order for there to be **confounding** there must be an (antecedent) variable $Z$ that has a **causal path** to $X$  that also has  **another causal path**  toward $Y$.
-
-To find the **direction of the bias**, we simply use the rules above to get the direction of the effect for both of these paths:
-
-- $Z \to \dots \to X$
-- $Z \to \dots \to Y$
-
-Then take the **product** of those two paths.
-
-## Confounding: Direction of Bias
-
-Product of **signs** on relationships between $W \to X$, $W \to Y$ gives us <u>**direction**</u> of **bias** created by **confounding**
-
-|  | $W \xrightarrow{+} X$ | $W \xrightarrow{-} X$ |
-|-----------------------|-------------------------------------|--------------------------------|
-| $W \xrightarrow{+} Y$ | $Correlation(X,Y)$<br>Upward Bias (+) | $Correlation(X,Y)$<br>Downward Bias (-) |
-| $W \xrightarrow{-} Y$ | $Correlation(X,Y)$<br>Downward Bias (-) | $Correlation(X,Y)$<br>Upward Bias (+) |
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(Downward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(Upward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(Upward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
----
-
-What is the direction of bias for correlation between $X$ and $Y$ here? press `p` to see notes
-
-```{r, echo = F}
-dagify(distance ~ learning_p ,
-       deaths ~ learning_m + distance ,
-       learning_m  ~ timing,
-        learning_p ~ timing,
-       exposure = "distance", 
-       outcome = 'deaths',
-       labels = c("distance" = "(X) Social\nDistancing",
-                  "learning_p" = "Policy\nLearning",
-                  "learning_m" = "Medical\nLearning",
-                  "timing" = "Later Flu",
-                  "deaths" = "(Y) Peak\nMortality")
-                  ) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_edges_link(mapping = aes(label = c('decreases', 'decreases', 'increases', 'increases', 'increases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-
-```
-
-<div class='notes'>
-
-If we want to evaluate the effect of **social distancing** ($X$) on peak mortality ($Y$) using correlation, there will be confounding, because there is a backdoor path from social distancing to peak mortality.
-
-To get the direction of the this bias:
-
-1. First, get the direction of the effect of Later Flu on social distancing: $\textrm{Later Flu} \xrightarrow{increases} \textrm{Policy Learning} \xrightarrow{increases} \textrm{Social Distancing}$ implies $+1 \times +1 = 1$
-2. Second, get the direction of the effect of later flu on peak mortality: $\textrm{Later Flu} \xrightarrow{increases} \textrm{Medical Learning} \xrightarrow{decreases} \textrm{Peak Mortality}$ implies $+1 \times -1 = -1$
-3. Then take the product of the directions for both paths; $+1 \times -1 = -1$
-
-This means that the confounding generates a **downward bias**: even though this causal graph shows that social distancing decreases peak mortality, the correlation we would observe would be even **more** negative relationship than in truth.
-</div>
+Everything you didn't want to know **Confounding**
