@@ -210,6 +210,23 @@ while (c < 0.9) {
 
 plot(x,y, main = "10 cases\nX and Y chosen randomly")
 text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+text(mean(x) + sd(x),mean(y) + 0.5*sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(15)
+  y = rnorm(15)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "15 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
 text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
 ```
 
