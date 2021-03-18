@@ -169,8 +169,9 @@ text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
 ```{r, echo = F}
 plot(x,y, main = "5 cases\nX and Y chosen randomly")
 text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
 ```
+
+Tries to get correlation $> 0.9$: `r counter`
 
 ## Random association: Statistics
 
@@ -189,6 +190,10 @@ Field of statistics investigates properties of **chance** events (stochastic pro
 2. How many **cases** do we have?
     - Patterns with **many cases** are **less likely** to happen by chance
 3. Assign a probability that the correlation we see would have happened by chance
+
+## Random association: Statistics
+
+This procedure works...
 
 ### **Assuming**...
 
@@ -210,8 +215,10 @@ while (c < 0.9) {
 
 plot(x,y, main = "10 cases\nX and Y chosen randomly")
 text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-text(mean(x) + sd(x),mean(y) + 0.5*sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
 ```
+
+Tries to get correlation $> 0.9$: `r counter `
+
 
 ## Random association: Statistics
 
@@ -227,8 +234,9 @@ while (c < 0.9) {
 
 plot(x,y, main = "15 cases\nX and Y chosen randomly")
 text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
 ```
+
+Tries to get correlation $> 0.9$: `r sprintf("%.f",counter)`
 
 
 ## Random association: Statistics
@@ -245,9 +253,9 @@ while (c < 0.45) {
 
 plot(x,y, main = "15 cases\nX and Y chosen randomly")
 text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-text(mean(x) + sd(x),mean(y) + sd(y), labels = paste0("Tries: ", counter), adj = 0.5)
 ```
 
+Tries to get correlation $> 0.45$: `r counter`
 
 ## Random association: Statistics
 
@@ -286,7 +294,7 @@ Be wary of "$p$-hacking"
 
 ## Significant?
 
-<img src="./xkcd_1.png" width=70%>
+<img src="./xkcd_1.png" width=60%>
 
 ## Significant?
 
@@ -295,20 +303,19 @@ Be wary of "$p$-hacking"
 
 ## Significant?
 
-<img src="./xkcd_3.png" width=50%>
+<img src="./xkcd_3.png" width=30%>
 
 ## What else do you want to know?
 
-<img src="./xkcd_4.png" width=80%>
-
-
-## We'd want to know this
-
-<img src="./xkcd_5.png" width=100%>
+<img src="./xkcd_4.png" width=50%>
 
 ## We'd want to know this
 
-<img src="./xkcd_6.png" width=100%>
+<img src="./xkcd_5.png" width=90%>
+
+## We'd want to know this
+
+<img src="./xkcd_6.png" width=90%>
 
 ## Random assocation
 
@@ -347,7 +354,7 @@ We can't observe the US in the absence of Trump tweeting against Muslims, so aut
 
 Trump's Twitter gained attention as he ran for President.
 
-<img src='./mueller_2.png' width=80%>
+<img src='./mueller_2.png' width=70%>
 
 ## Trump's Twitter and Hate Crimes
 
@@ -355,7 +362,7 @@ Trump made nearly 300 negative tweets about Muslims.
 
 Other people made more new negative tweets about Muslims when he did.
 
-<img src='./mueller_4.png' width=60%>
+<img src='./mueller_4.png' width=55%>
 
 ## Trump's Twitter and Hate Crimes
 
