@@ -1,0 +1,697 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "March 22, 2021"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+require(lfe)
+
+options("kableExtra.html.bsTable" = T)
+
+acs_data = fread("acs_lawmed.csv")
+acs_data[, FEMALE := SEX]
+acs_data[, MARST_f := as.factor(MARST)]
+#acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
+acs_data[, MALE := abs(FEMALE - 1)]
+acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  }
+</style>
+
+## Plan for Today
+
+### Review
+
+1. Conditioning
+
+- Key assumptions
+- Regression and Conditioning
+- Alternatives
+
+---
+
+### Least Squares: Practical Issues
+
+1. Measurement Error
+
+- What are it's consequences?
+- When can it safely be ignored?
+
+2. Standard Errors
+
+- Robust Standard Errors
+- Clustered Standard Errors
+
+
+# Review: Conditioning
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+1. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+2. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+    
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+
+---
+
+### Conditioning: Approaches
+
+1. Matching
+
+2. Weighting
+
+3. Regression
+
+---
+
+### Conditioning: Matching
+
+**Match treated units to untreated units most similar** in conditioning variables $\mathbf{X}$
+
+Many varieties:
+
+- exact matching
+- coarsened exact matching
+- mahalanobis distance
+- genetic
+- propensity score
+
+---
+
+### Conditioning: Matching
+
+Many varieties:
+
+1. Identify set of conditioning variables
+2. Match treated (untreated) units to most similar untreated (treated) units using the specified criteria
+3. Check for balance on conditioning variables (differences in means, distributions)
+4. Take average difference between treated and untreated matched pairs/groups.
+
+---
+
+### Conditioning: Weighting
+
+Use conditioning variables to weight observations such that:
+
+1. They are weighted inversely by probability of treatment (IPW)
+2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
+
+Treatment and control groups weighted to be similar in covariates.
+
+---
+
+### Conditioning: Weighting
+
+1. Identify set of conditioning variables
+2. Use conditioning variables in algorithm to:
+    - calculate probability of treatment, given value of $\mathbf{X}$
+    - or choose weights for balance
+3. Calculate difference in means, using calculated weights
+
+---
+
+### Conditioning: Regression
+
+1. Identify set of conditioning variables
+2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
+3. Calculate relationship between $D$ and $Y$ after adjusting for relationship with conditioning variables
+
+---
+
+### Conditioning:
+
+In absence of randomization, we condition. We always assume:
+
+1. **Ignorability**/**Conditional Independence** 
+    - always a problem for conditioning
+2. **Positivity**/**Common Support**
+    - worse for some methods more than others
+    - regression/propensity scores may suffer from interpolation/extrapolation bias
+
+
+---
+
+### Saturated Regression
+
+- A potential solution to both **extrapolation** and **interpolation** bias
+
+What is it?
+
+- a dummy variable for **every** unique combination of values for conditioning variables.
+- we **condition** in exactly the way did last week: stratify the data to compare otherwise **observable** identical cases.
+- returns **an** average causal effect, but **variance** weighted (more weight on strata with more variance in "treatment")
+- no possibility of **interpolation**
+- zero-weight on strata with all "treatment"/all "control" (no **extrapolation**)
+
+---
+
+## Saturated Regression
+
+We can use conditioning without **interpolation** bias, **extrapolation** bias, but
+
+- we are still assuming no **omitted variable bias**
+- saturated regression suffers from **curse of dimensionality** (a lot of $N$ needed, usually)
+- returns a variance-weighted effect, may not be what we want (this is fixable, though)
+
+
+# Standard Errors
+
+---
+
+### Statistical Inference with Least Squares
+
+1. **Model** equation is correctly specified (correct functional forms, all relevant variables are included). $Y_i = \alpha + \beta X_i + \epsilon_i$ is the true data-generating function
+
+2. $\epsilon_i$ are independently, identically distributed (i.i.d.), $E(\epsilon_i) = 0$ and variance of $\sigma^2$.
+
+3. $\epsilon_i$ is **independent** of $X_i$: $X \mathrel{\unicode{x2AEB}} \epsilon$
+
+---
+
+### We want reliable uncertainty
+
+When estimating effects, we want to know how much uncertainty there is:
+
+- Assumptions 1, 2, and 3 needed to derive OLS standard errors. 
+- SEs not useful if estaimtes are biased.
+- If assumptions 1 and 3  wrong $\Rightarrow$ bias
+- So, are there violations of assumption 2?
+
+---
+
+### Non-standard Errors
+
+How do we deal when 
+
+- errors are non-identically distributed? (heteroskedasticity)
+- errors are non-independent? (correlated errors)
+
+---
+
+### Example (1)
+
+Imagine we run an experiment with $D_i = 1$ indicating receipt of treatment, $D_i = 0$ indicating not receiving treatment.
+
+We use regression to estimate this model:
+
+$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$
+
+Let's write out the implied response schedule...
+
+---
+
+### Example (1)
+
+Effects are rarely constant... heterogeneous effects are captured by the $\epsilon_i$...
+
+$Y_i = Y_i(0) + \{Y_i(1) - Y_i(0)\}D_i$
+$Y_i = E[Y(0)] + \{Y_i(1) - Y_i(0)\}D_i + \{Y_i(0) - E[Y(0)]\}$
+$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
+
+---
+
+### Example (1)
+
+$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
+$Y_i = \mu_0 + \{E[Y(1)] - E[Y(0)]\}D_i + \nu_0 + \{(Y_i(1) - E[Y(1)]) - (Y_i(0) - E[Y(0)])\}D_i$
+$Y_i = \mu_0 + \{\mu_1 - \mu_0\}D_i + \nu_0 + \{\nu_1 - \nu_0\}D_i$
+
+---
+
+### Example (1)
+
+$Y_i = \underbrace{\mu_0}_{\beta_0} + \overbrace{\{\mu_1 - \mu_0\}}^{\beta_1}D_i + \underbrace{\nu_0 + \{\nu_1 - \nu_0\}D_i}_{\epsilon_i}$
+
+1. Model is still plausibly correct
+2. Are $\epsilon_i$ **identically distributed**?
+3. By randomization, $\epsilon_i$ independent of $D_i$
+
+
+---
+
+### Example (2)
+
+Generate the following data:
+
+```{r, eval = F}
+set.seed(1234)
+n = 100
+x = rnorm(100)
+e = rnorm(100)
+y_star = 0 + 0.5*x + e
+y = pnorm(y_star)
+```
+
+---
+
+### Example (2)
+
+>- This is a linear probability model ($Y$ in 0 and 1)
+>- Variances of $\epsilon$ must be smaller for cases where average Y is close to 0 or 1; larger for cases where average Y close to 0.5.
+
+
+---
+
+### Heteroskedasticity
+
+OLS assumptions are violated because errors $\epsilon_i$ are not **identically distributed**
+
+- **heteroskedasticity** occurs when $\epsilon_i$ has variance $Var(\epsilon_i) \neq Var(\epsilon_j)$
+- as opposed to **homoskedasticity**: $Var(\epsilon_i) = Var(\epsilon_j)$ for all $i$ and $j$.
+
+In this situation, OLS standard errors *may* be **too small**. (See MHE, CH 8)
+
+
+---
+
+### Robust Standard Errors:
+
+There are standard errors (estimates of variance of $\widehat{\beta}$) that are "robust" to **heteroskedasticity**. Typically called "Huber-White Standard Errors" or "Robust Standard Errors."
+
+
+---
+
+### Robust Standard Errors:
+
+OLS: estimate SEs by estimating the variance covariance matrix of the regression coefficients: $\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}$. We estimate $\sigma^2$ as $\frac{1}{n-p}\sum e_i^2$.
+
+- but derivation **assumed** identically distributed errors to get the "meat" in this sandwich
+
+$$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
+
+---
+
+### Robust Standard Errors:
+
+Robust SEs: allow for **arbitrary hetereoskedasticity** (variances different for every $i$). 
+
+So we estimate (in its simplest form):
+
+$Var(\epsilon_i) \approx \widehat{e_i}^2$
+
+$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'diag(e_1^2 \dots e_n^2)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$
+
+(Draw Matrix Algebra on Board)
+
+---
+
+### Robust Standard Errors:
+
+One major caveat here:
+
+- These are **estimates**, not miracles.
+- Trading OLS standard errors for robust SEs is a tradeoff in assumptions.
+- Angrist and Pischke show:  Robust SEs can be biased, SOMETIMES SMALLER than OLS SEs.
+- Robust SEs are **consistent** as $n \to \infty$. How close to $\infty$ do we need to be? ($N >> 30$)
+   
+---
+
+### Robust Standard Errors:
+
+Practically:
+
+- there are many varieties (HC0 through HC5)
+- generally don't affect standard errors in a large way
+
+In `R`:
+
+- `sandwich` package
+- `lmtest` package
+
+---
+
+### Robust Standard Errors:
+
+Obtaining them in `R`:
+
+1. Estimate your model
+2. Plug model into robust variance-covariance estimator (usually `vcovHC` from `sandwich` package)
+3. Get diagonal (manually, in "pretty" format using `coeftest` from `lmtest` package)
+
+---
+
+### Robust Standard Errors:
+
+```{r, echo = F}
+veterans = fread('./referenda_vote.csv')
+veterans[, Enlist_Percent := veterans/mil_age]
+```
+
+```{r}
+#1: Estimate OLS / conventional Standard Errors
+lm_suff = lm(suff65_yes ~ Enlist_Percent + suff57_yes + state, data = veterans)
+summary(lm_suff)
+```
+
+---
+
+### Robust Standard Errors:
+
+```{r, message=F}
+require(sandwich)
+require(lmtest)
+#2: Estimate robust variance covariance matrix:
+vcov_robust = vcovHC(lm_suff, type = "HC3")
+
+#3: get pretty report:
+coeftest(lm_suff, vcov. = vcov_robust)
+```
+
+---
+
+### Robust Standard Errors:
+
+When do you need them?
+
+- Basically always a good idea to check both conventional and robust standard errors, report the largest
+- Visual inspection of residuals shows pattern in variance
+    - may require changing your model (less linear)
+
+---
+
+### Example (3)
+
+[Karaivanov, et al (2020)](https://www.medrxiv.org/content/10.1101/2020.09.24.20201178v2) estimate the effect of indoor mask mandates on COVID-19 case growth across public health districts in Ontario.
+
+They exploit the difference in the timing of imposing mask mandates across health districts
+
+
+
+---
+
+### Example (3)
+
+Estimate a (simplified) model
+
+$$Y_{it} = \alpha_{i} + \alpha_{t} + \beta_1 \mathrm{Mask \ Mandate}_{it} + \epsilon_{it}$$
+
+$i$ indexes 34 public health units; $t$ indexes 91 days. `r 91*34` observations total.
+
+Are each $\epsilon_{it}$ plausibly **independent** of each other?
+
+---
+
+### Clustered Standard Errors:
+
+There are estimators for standard errors for situations in which errors are not independent of each other across observations:
+
+- Recall PS4: we had you generate data in which errors were drawn for a group G, rather than for each individual
+- In reality: recall the experiment by Paluck: villages were assigned to treatment, but villagers were her unit of analysis. Villagers are likely similar to each other by virtue of things happening in that village, so share common "shocks". 
+
+---
+
+### Clustered Standard Errors:
+
+Ignoring dependence of errors **underestimates** sampling variability of an estimate
+
+---
+
+### Clustered Standard Errors:
+
+Extends robust standard errors:
+
+- allow for arbitrary heteroskedasticity
+- allow for arbitrary correlation of errors within groups.
+    - same unit OVER time;
+    - different units AT THE SAME time;
+    - both!?!?!
+- **consistent** as **number of groups** gets larger. Usually needs tens of groups (~40 +)
+
+---
+
+### Clustered Standard Errors:
+
+Unlike robust standard errors:
+
+- Clustered standard errors tend to change the variance estimate substantially.
+- The "meat" in the covariance matrix estimator changes (see the board)
+
+---
+
+### Clustered Standard Errors:
+
+In `R`: many options:
+
+1. `felm`: extends `lm` for panel models and includes clustering options
+2. `sandwich`: (finally!) has clustered errors options
+
+---
+
+### Clustered Standard Errors:
+
+```{r, message=F}
+require(lfe)
+
+felm(suff65_yes ~ Enlist_Percent + suff57_yes  | state | 0 | state, 
+     data = veterans) %>%
+  summary
+
+```
+
+Standard Errors are way smaller (but, with 2 clusters, not reliable!)
+
+### Clustered Standard Errors:
+
+The big questions:
+
+What level do we cluster at?
+    - level at which "treatment" assigned?
+    - level at which plausible spatial or temporal autocorrelation of errors?
+
+Alternatively:
+
+- aggregate data within clusters: Paluck analysis as difference in village means, not a comparison of individuals within treated and untreated villages.
+- Simplifies the analysis, easy to compute conventional standard errors, randomization inference.
+
+---
+
+### Standard Errors Summary:
+
+How much uncertainty about effect sizes?
+
+1. All standard errors require some assumption about the chance process underlying our analysis
+2. All assumptions are likely flawed
+3. Best to show results are robust to different choices about standard errors
+    - particularly important to make sure you don't report the smaller standard errors when other estimates give very different results
+    
+    
+# Measurement Error
+
+---
+
+### Measurement Error
+
+We have previously assumed we measured variables without error. Not a reasonable assumption. How does this affect estimated effects of $D$?
+
+- if errors in measurements correlated with causal variable $D$, estimates will be **biased**
+- if measurements have **random error**, it **depends**...
+
+---
+
+### Measurement Error
+
+First, the good news:
+
+> If we have **random** measurement error in $Y$ or $X$, problems are manageable.
+
+---
+
+### Measurement Error
+
+
+This is our statistical model; we take all OLS assumptions to be true.
+
+$$Y^* = \alpha + \beta D^* + \epsilon$$
+
+$Y^*$ is the true value of the variable that we observe as $Y$. $E(\nu)=0$, $\nu$ independent of $Y^*, D^*$, i.i.d. with variance $\sigma^2_\nu$
+
+$$Y = Y^* + \nu$$
+
+---
+
+$D^*$ is the true value of the variable that we observe as $D$. $E(\eta)=0$, $\eta$ independent of $D^*, Y^*$, i.i.d. with variance $\sigma^2_\eta$
+
+$$D = D^* + \eta$$
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $Y$? 
+$$Y = \alpha + \beta D^* + \epsilon + \nu$$
+
+But recall: $E(\nu) = 0; Cov(D^*,\nu) = 0$. So, estimate $\widehat{\beta}$ for $\beta$ is **unbiased**.
+
+Standard errors **are affected**:
+
+- Variance Covariance matrix is now:  
+- $Var(\epsilon + \delta)(D^{*\prime} D^{*})^{-1}$, not $Var(\epsilon)(D^{*\prime} D^{*})^{-1}$
+- Thus, variances, SEs will be **larger** due to random measurement error.
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $D$? 
+
+$$Y^* = \alpha + \beta (D - \eta) + \epsilon$$
+$$Y^* = \alpha + \beta D + \rho$$
+Here $\rho = (\epsilon - \beta\eta)$. This produces **bias** in $\widehat{\beta}$, because:
+
+$$cov(D, \rho) = cov(D^* + \eta, \epsilon - \beta\eta) = -\beta \sigma^2_\eta \neq 0$$
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $D$? 
+
+We get **bias**... but what does this bias look like?
+
+$$\small\begin{eqnarray} 
+\widehat{\beta} &=& \frac{Cov(D, Y^*)}{Var(D)}    \\
+&=& \frac{Cov(D^* + \eta, \alpha + \beta D^* + \epsilon)}{Var(D^* + \eta)} \\
+&=& \frac{\beta Cov(D^*, D^*)}{Var(D^*) + Var(\eta)}   \\
+&=& \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}  \\
+\end{eqnarray}$$
+
+---
+
+### Measurement Error
+
+Attenuation bias!
+
+$$\widehat{\beta} = \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}$$
+
+This is $\beta$ times a ratio of variance of true value over that of the observed. (Signal to noise). As the errors $\eta$ increase, this ratio goes toward $0$. So $\widehat{\beta}$ suffers from **attenuation** bias.
+
+Our estimates of $\beta$ will be biased toward **zero**, which may be "conservative".
+
+---
+
+### Measurement Error
+
+#### The good news:
+
+- Measurement error in $Y$ produces wider standard errors; no bias
+- Measurement error in $D$ produces bias toward zero (*for* $D$); (known direction and bounds)
+
+#### But...
+
+What if we to estimate the causal effect of $D$ on $Y$, conditioning on $X$?
+
+---
+
+### Measurement Error:
+
+Imagine we evaluate the effect of COVID vaccination for people who **self select** into the vaccine.
+
+What is the effect of the vaccine? We can naively compare people who select into vaccination... 
+
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(100, 400, 400, 100),
+           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
+           ) %>%
+kable()
+```
+
+---
+
+### Measurement Error:
+
+Or we can condition on, e.g., belief in conspiracies about COVID/vaccines that might relate to vaccine uptake and other COVID propensities...
+
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(100, 400, 400, 100),
+           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
+           ) %>%
+kable()
+```
+
+---
+
+
+### Measurement Error:
+
+In this example:
+
+Failing to condition on conspiracy beliefs leads us to overstate the effect of vaccines, because...
+
+- Conspiracists less likely to take vaccine, have higher propensity to be exposed to/infected by COVID in absence of treatment.
+
+---
+
+### Measurement Error:
+
+What if we measure conspiracy beliefs **with error**: 40 percent chance of incorrect classification. We observe this data:
+
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(220, 280, 280, 220),
+           `COVID Rate` = c(0.0064, 0.0057, 0.093, 0.086)
+           ) %>%
+kable()
+```
+
+What is the naive (no conditioning) estimate of the effect of the vaccine?
+
+What is the estimated  effect of the vaccine conditioning on conspiracy-belief?
+
+
+---
+
+### Measurement Error:
+
+- Measurement error in $X$ can lead to bias in estimated slope on $D$ ($\widehat{\beta_{D}} \neq \beta_{D}$)
+- A problem if $X$ is really needed for conditioning.
+
+---
+
+### Measurement Error
+
+#### The good news:
+
+- Measurement error in $Y$ produces wider standard errors; no bias
+- Measurement error in $X$ produces bias toward zero; (known direction and bounds)
+    - true in bivariate, multivariate cases
+    
+#### The bad news:
+
+- Conditioning will fail to remove bias if **conditioning variables** measured with error.
