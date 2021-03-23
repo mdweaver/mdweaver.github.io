@@ -271,6 +271,7 @@ n = 100
 x = rnorm(100)
 e = rnorm(100)
 y_star = 0 + 0.5*x + e
+y = 1*(y > 0.5)
 y = pnorm(y_star)
 ```
 
