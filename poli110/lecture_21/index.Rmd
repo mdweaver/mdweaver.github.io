@@ -1,0 +1,359 @@
+---
+title: "POLI 110: Confounding"
+author: "Michael Weaver"
+date: "April 6, 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+require(ggdag)
+require(stringr)
+```
+
+# Correlation to Causation
+
+## Solutions to Confounding
+
+1. Recap
+2. Before/After Comparisons
+
+
+# Recap
+
+
+## Solutions to Confounding
+
+**Every way** of using correlation as evidence for causality **makes assumptions**
+
+- FPCI cannot be solved without assumptions
+- With assumptions, can say confounding/bias is not a problem
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | Only variables <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error | Low | High |
+
+## Conditioning vs. Design
+
+**Conditioning** removes confounding by:
+
+- identifying possible confounding variables
+- measuring confounding variables
+- relationship b/t $X$ and $Y$ for cases with similar value of confounding variables.
+
+
+## Conditioning vs. Design
+
+**Design-based** solutions remove confounding by:
+
+- selecting cases for comparison in order to eliminate **many** known/unknown measurable/unmeasurable confounding variables.
+- the nature of the comparison holds constant **types of confounding variables**, not just specific confounding variables.
+
+## Conditioning vs. Design
+
+### **Did Trump rallies *increase* hate crimes?**
+
+[Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf) compare hate crimes in counties with and without Trump rallies, **condition** on (hold constant):
+
+- percent Jewish, number of hate groups, crime rate, 2012 Republican vote share, percent university educated, region
+>- But they left out population, which confounded Trump rallies and Hate Crimes.
+>- Difficult to find counties without rallies similar in many traits to counties **with** rallies
+
+---
+
+After conditioning on population (a confounder): no correlation.
+
+<img src="rallies_1.png" width = 80%>
+
+## Solutions to Confounding
+
+### **Did Trump rallies *increase* hate crimes?**
+
+A **design-based** solution to confounding could be to compare:
+
+- counties that had a Trump rally **to themselves**, **before and after** the rally.
+
+# Before and After
+
+## Example: Before and After
+
+Taking the same data from [Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf)...
+
+- focus **only** on counties that **ever had** a Trump rally
+- compare the month **after** the rally to the month **before** the rally
+
+---
+
+```{r, echo = F, warning=F, message=F}
+rally_data = fread('./trump_rally_data.csv')
+
+#trump rallies
+trump_rally = rally_data[trumpeverrally %in% 1]
+trump_rally[, month_num := str_extract(monthyear, "\\d+$") %>% as.numeric]
+trump_rally[, t_window := month_num - min(month_num[trumprallyoccured > 0]), by = fips]
+trump_rally[, hc_per_capita := incidentcount/exp(log_pop)*100000]
+
+#clinton rallies
+clinton_rally = rally_data[clintoneverrally %in% 1]
+clinton_rally[, month_num := str_extract(monthyear, "\\d+$") %>% as.numeric]
+clinton_rally[, t_window := month_num - min(month_num[clintonrallyoccured > 0]), by = fips]
+clinton_rally[, hc_per_capita := incidentcount/exp(log_pop)*100000]
+
+#Plot
+ggplot(trump_rally[t_window %in% c(0,1)], aes(x = factor(t_window, labels = c("Before", "After")), y = hc_per_capita)) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per 100k") +
+  ggtitle("Hate Crimes in 196 Counties:\nBefore and After Trump Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+---
+
+```{r, echo = F, warning=F, message=F}
+#Plot
+ggplot(clinton_rally[t_window %in% c(0,1)], aes(x = factor(t_window, labels = c("Before", "After")), y = hc_per_capita)) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per 100k") +
+  ggtitle("Hate Crimes in 40 Counties:\nBefore and After Clinton Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+POLL
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+ggplot(trump_rally[t_window %in% c(0,1)], aes(x = factor(t_window, labels = c("Before", "After")), y = hc_per_capita)) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per 100k") +
+  ggtitle("Hate Crimes in 196 Counties:\nBefore and After Trump Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+>- What kinds of confounding variables are held constant in this before/after comparison?
+
+>- What kinds of confounding might still bias this result?
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + jewish + hate_group + crime + gop + univ + region,
+      rally ~ jewish + hate_group + crime + gop + univ + region,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'jewish' = '% Jewish',
+                  'hate_group' = '# Hate\nGroups',
+                  "crime" = "Crime Rate",
+                  'gop' = 'Republican\nVoters',
+                  'univ'= 'Univ.\nEducated',
+                  'region' = "Region"
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c(rep('',8), "?" ,rep('', 5))),
+                      angle_calc = "along", label_dodge = unit(rep(1,15),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + unchanging + changing,
+      rally ~ unchanging + changing,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + unchanging + changing,
+      rally ~ unchanging + changing,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c("","","","held constant\n(link broken)", "held constant\n(link broken)", "")),  
+                                    angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,-1),'lines'),
+                                    edge_linetype = rep(c(1,1,1,2,2), each = 100),
+                                    arrow = grid::arrow(length=grid::unit(c(10,10,10,0,0,0), 'pt'), type = 'closed')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Before and After
+
+### **Confounding Solved**...
+
+All confounding variables (affect whether a rally occurs; affect hate crimes) that are **unchanging over time** are held constant.
+
+- because held constant, cannot produce confounding
+- e.g., demographic features, political leaning, location/geography, long-term economic trends, 8chan white nationalists
+- any variable that does not change **in the time period of the comparison** (in this case, one month) held constant
+- does not matter if we can measure confounders
+
+## Example: Before and After
+
+### **Confounding UNSolved**...
+
+- Did Trump rallies take place in places that are already **trending** toward having more hate crimes?
+- Is it possible that Trump wanted to avoid controversy and pick places that had lower than usual hate crimes? (board)
+
+>- We can address these concerns by looking at longer-term trends...
+
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+ggplot(trump_rally[t_window %in% c(-4:4)], aes(x = as.factor(t_window), y = hc_per_capita)) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per 100k") +
+  ggtitle("Hate Crimes in 196 Counties:\nBefore and After Trump Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+No unusual trends before the rally.
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+ggplot(clinton_rally[t_window %in% c(-4:4)], aes(x = as.factor(t_window), y = hc_per_capita)) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per 100k") +
+  ggtitle("Hate Crimes in 40 Counties:\nBefore and After Clinton Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+## Example: Before and After
+
+### **Confounding UNSolved**...
+
+Because of **over-time comparison**, we can have confounding from variables that do not **cause** $X$ to change, if they also **change with** $X$ over time...
+
+- Does rally change **measurement**, but not **actual number** of hate crimes? (Measurement bias)
+
+    - we can examine this concern by measuring hate crimes in other ways.
+    
+- Are there are other changes over the same time-frame (change at the same time as $X$, rallies)?
+
+    - This is harder to solve
+
+## Design: Before and After
+
+### What is it?
+
+Compare the same case to itself **before and after** change in $X$
+
+### How does it work?
+
+Holds constant all **unchanging attributes** of the case.
+
+- any confounding variables that do not change over time cannot produce change in $Y$ with change in $X$
+
+
+## Before and After: Assumptions
+
+In order to infer $X$ causes $Y$ if $X,Y$ correlated in before/after comparison
+
+### **Must Assume**
+
+1. There are **no other confounding variables** that affect $Y$ and change with $X$
+   
+
+##  Before and After: Limitations
+
+This assumption can be violated if...
+
+- Value of $Y$ in cases has a long-term trend in one direction
+- $X$ changes **because** of extreme changes in $Y$ (e.g. gun laws respond to uptick in gun crimes)
+- $X$ changes **measurement** of $Y$
+- other variables that affect $Y$ change with $X$ over time.
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | Highest | Lowest | 
+| Conditioning | Hold confounders<br>constant | Only variables <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error | Lowest | Highest |
+| Before and After | Hold confounders <br> constant | variables <br> unchanging <br> over time | No confounders <br> change w/ $X$ | Lower | Higher | 
+
+# Alternatives
+
+## Trump's Twitter and Hate Crimes
+
+[Mueller and Schwarz (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3149103) investigate:
+
+Did Trump's tweeting of anti-Muslim messages **increase** anti-Muslim hate crimes?
+
+---
+
+<img src="./mueller_3.png" width= 90%>
+
+Does this Before/After comparison convince you? 
+
+## Alternatives
+
+Can you think of a better comparison we can make to find out if Trump Tweets caused hate crimes?
+
