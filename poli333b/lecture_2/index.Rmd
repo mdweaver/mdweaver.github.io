@@ -44,15 +44,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### My Approach
 
-- Histor#### Methods
+#### Methods
 
-ical cases
+- Historical cases
 - Rigorous statistical analysis
 - "Big data"
 
-- How is#### Questions
+#### Questions
 
- violence used to produce ethnicity/race?
+- How is violence used to produce ethnicity/race?
 - How is media/discourse used to enable/stop violence?
 - What are the political consequences of violence?
 
@@ -102,17 +102,18 @@ Due Wednesdays (poll)
 
 ### $\bullet$ **Attend lecture:**
 
-- plan for discussion/activities
+- in-class discussion/activities
 - slides not enough
 
 ### $\bullet$ **Read**
 
 - on "Modules" tab
+- reading responses
 
-### $\b- reading responses
-ullet$ **Canvas**
+### $\bullet$ **Canvas**
 
-## What I will do:
+
+## What I will do
 
 ### $\bullet$ **Slides**
 
