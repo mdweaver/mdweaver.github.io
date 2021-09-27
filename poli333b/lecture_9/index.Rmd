@@ -1,0 +1,189 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "September 27, 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+```
+
+
+# Ethnicity and Structure
+
+## Outline
+
+- Why look at structures?
+- Exercise
+- Ethnic boundaries
+
+# Why structures?
+
+## How does ethnicity "work"?
+
+- not essential: identification
+
+- rational/strategic
+
+- psychological
+    - ethnicity as cognitive
+    - social identity theory
+
+## How does ethnicity "work"?
+
+All of these perspectives presume:
+
+- relevant membership attributes
+- relevant ethnic categories
+- the "usefulness" of ethnic categories for understanding the world
+- the relative social status of ethnic groups
+
+How do these attributes that shape the use of ethnicity constrained/changed? 
+
+## Boundaries
+
+Identification is only **one part** of how ethnicity. Helpful to think of ethnicity as a  **social boundary**
+
+- helps us understand the set of ethnic choices available
+- helps us understand how hierarchical status is formed/sustained
+- helps us understand the paradox of ethnicity as identification, ethnicity as hard to change
+
+## Boundaries
+
+### **social boundaries** (Tilly, Wimmer)
+
+### 1. categories for people and category rules
+
+- "labels" and "definitions" (Chandra)
+
+### 2. real-world practices that use those categories
+
+- what we "do" with those labels
+    - in thought and speech; 
+    - in action/in shaping our material world
+
+# Exercise
+
+## A fictional ethnic boundary
+
+As you watch the following, think about the following:
+
+- what are the "ethnic identity categories"?
+- in what ways are those ethnic categories **used** in thought/speech/action? (be as specific as possible)
+
+In small groups: share the ways ethnic categories are **used**
+
+- for each way ethnic categories are **used** in the story, think of a real world example that is similar
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PdLPe7XjdKc?start=46" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Exercise:
+
+- what are the "ethnic identity categories"?
+- in what ways are those ethnic categories **used** in thought/speech/action? (be as specific as possible)
+
+In small groups: share the ways ethnic categories are **used**
+
+- for each way ethnic categories are **used** in the story, think of a real world example that is similar
+
+# Ethnic Boundary Practices
+
+## Ethnic Boundaries: Institutions
+
+**institutional use**: the use of ethnic/racial categories by formal institutions to label people (not necessarily in a discriminatory manner)
+
+- examples: census forms, school forms, voting rules, government social service records
+
+**institutional separation**: the presence of distinct formal institutions for people labelled as members of different ethnic/racial categories (not necessarily *unequal*)
+
+- examples: churches/houses of worship, stores, schools, private associations, voting constituencies, governments, political parties
+
+## Ethnic Boundaries: social closure
+
+**social closure**:  the use of ethnic/racial categories to separate or organize personal/informal interactions between people (not **necessarily unequal**)
+
+- examples of separation: neighborhoods, use of space (e.g. pools), marriage, reproduction (endogamy), friendship, the **types** of interaction (e.g. equal/unequal status)
+
+## Ethnic Boundaries: power
+  
+**power disparity**: the use of ethnic/racial categories to discriminate in access to goods, services, rights, recognition (e.g. in institutional use, institutional separation, social closure) that enhances/restricts the life choices
+
+- legal examples: property rights, marriage/inheritance, education, government jobs, government services, elected representation, criminal law, affirmative action
+
+- market: housing discrimination, job discrimination, restricting spaces (e.g. private clubs, gated communities)
+
+- interpersonal: employer/employee relations; customer/client relations; formal/informal modes of address; non-reciprocity in forms of interaction; status hierarchy
+
+## Ethnic Boundaries: cultural difference
+
+**cultural differentiation**: the use of ethnic/racial categories to differentiate cultural practices (food, clothing, traditions), language, and religious belief.
+
+*Note*: Sometimes cultural difference is used to *define* category membership. Sometimes cultural difference is a way to *use categories*:
+
+examples: choice of alphabet/spellings; changing vocabulary (Hindustani vs Urdu vs Hindi)
+
+## Ethnic Boundaries: cognitive
+
+**marking**: using category labels for some groups as distinct from a "reference" or "unmarked" category that is the unspoken default (e.g. in Canada, "white" is often an unspoken default)
+
+**groupness**: using category labels to proclaim or invoke the existence and unity of a group (parades, mass performances, history/schooling)
+
+## Ethnic Boundaries: cognitive
+
+**explain behavior**: using ethnic/racial category labels to explain behavior or **outcomes** (basically, stereotyping)
+
+- you are group X, you must believe/do Y
+- you did Y BECAUSE you are group X
+- you are in status Y because you are in group X
+
+**exemption**: use of ethnic/racial categories to claim or identify exemption:
+
+- you are group X, but you are "all right" (implicitly group X is not "all right")
+- I am an X, so I can criticize other people within X (implicitly outsiders cannot legitimately criticize)
+
+## Ethnic Boundaries: cognitive
+
+**behavioral scripts**: use of racial/ethnic categories to differentiate the "proper" or "default" way of interacting with a person
+
+
+# Structure vs Individuals
+
+## Ethnic Boundaries
+
+**ethnic boundaries** are **structures** in that they
+
+- order and constrain individual choices/actions
+- are durable/reproduced over time
+
+They are often durable because:
+
+- categories/ways of thinking about ethnicity shape material world
+- material reality can reinforce categories/ways of thinking
+- e.g. race and crime; colonial regimes
+
+But: there is a tension between ethnic **boundaries** and ethnic **identification** (Wimmer)
+
+## Ethnic Boundaries
+
+social boundaries are **intersubjective**
+
+- $S_2O$: two subjects (people), one object (material world)
+- mutual intelligibility and shared understanding of material world
+- people understand the categories, rules for membership, and how they are used, even if they DO NOT CONSENT/AGREE WITH these practices.
+
+- boundaries **made up of** and **reproduced by** individual interactions
+
+
+## Ethnic Boundaries
+
+Because boundaries are made of individual actions, they are changeable
+
+But because they involve understanding and coordination between many people, hard to change (not the same as **slow to change**)
+
+
