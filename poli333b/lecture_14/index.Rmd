@@ -1,0 +1,223 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "October 8, 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+```
+
+
+# Origins of Ethnic Boundaries
+
+## Outline
+
+- India and the Census
+- Linking strategic, psychological, and structural
+- Census enumeration and conflict: evidence
+
+
+# An Example
+
+## South Asia: Communal Violence {.centered}
+
+<img src = "./partition.jpg" width = 80%>
+
+Partition: 1947
+
+## South Asia: Communal Violence {.centered}
+
+<img src = "./bombay_riot.jpg" width = 80%>
+
+Mumbai 1992
+
+## South Asia: Communal Violence {.centered}
+
+<img src = "./gujarat_riot.jpg" width = 80%>
+
+Gujarat 2002
+
+## South Asia: Communal Violence
+
+Hindu-Muslim divide a continuing source of conflict, violence
+
+- Major political parties divided on the issue
+- Major riots in Delhi, 2020.
+- Conflict over Citizenship Amendment Act, National Register of Citizens
+
+<img src = "./delhi_riot.jpeg" width = 50%>
+
+## South Asia: Before Colonization
+
+**Hindus**
+
+- no unifying label was in widespread use
+- texts, rituals, traditions highly varied
+- disputes within "Hindus"
+
+**Muslims**
+
+- often labeled by their geographic origin, not by religion
+
+**Syncretism**
+
+- Hindus and Muslims shared saints, holy men, shrines, gods, festivals
+- religious practices/taboos spread across the divide
+- cross-cultural hybrid identities
+
+## South Asia: Before Colonization
+
+In this period...
+
+- Muslim rulers broadly tolerant of different religious practices
+- Hindu-Muslim violence rare; often not understood as about religion at the time
+
+### **How did the Hindu-Muslim cleavage emerge?**
+
+## South Asia: Colonization
+
+One part of the story is the British Colonial Census of India
+
+- First taken in 1871
+- Recognized only the religious categories of: "Hindu", "Muslim", "Sikh", and "Christian" (later more added).
+- Defined rules for applying these labels to colonial subjects
+- Created basis for institutions to recognize and differentiate between people using these categories
+
+## South Asia: Colonization
+
+### Census and Structure:
+
+British colonial imagination imposed on diverse population:
+
+> "'Hindu' means a non-Musalman native of India."
+
+> "a quarter of the persons classed as Hindus denied the supremacy of the brahmans and the authority of the Vedas; more than half did not receive the mantras from a recognised Hindu guru, a quarter did not worship the great Hindu gods, and were not served by good Brahmans priests; a third were denied access to temple; a quarter caused pollution by touch, a seventh always buried their dead, while a half did not regard cremation as obligatory and two-fifths ate beef."
+
+Lieberman and Singh (2017), p. 41
+
+## South Asia: Colonization
+
+### Census and Structure:
+
+Census categories...
+
+- were **institutional use**
+- became basis of **institutional separation**
+- produced reports on size, geography, economic/political status of "groups" (**groupness**)
+- created new knowledge about **power disparity**
+
+## South Asia: Colonization
+
+**Census and Psychology:**
+
+- Social Identity Theory: people seek to maintain or promote their group status
+- fear of reduced majority/permanent minority status $\to$ ethnic mobilization
+
+When census showed smaller Hindu majority$^*$
+
+- Hindu elites used census data to argue Hindus "a dying race" in their homeland
+
+- Hindu political organizations:  reassert Hindu "traditions", purge hybrid religion, enforce "purity"
+
+- Muslim elites feared status compared to new "Hindu" majority: lobbied to split up Hindu census category
+
+
+## South Asia: Colonization
+
+### Strategic Response
+
+Ethnic "entrepreneurs" exploit the census to make political gains
+
+- Muslim elites use Census data to lobby for special protections, institutions (separate electorates)
+- BJP (Hindu political party) used 2011 census data to attack rival secular parties for ignoring growth rate of Muslims vs. Hindus
+
+# Census and Conflict
+
+## Lieberman and Singh (2017)
+
+Building on these insights:
+
+Does including more ethnic dimensions on the census induce greater ethnic conflict?
+
+- **structurally**: possible to *imagine* groups, *see* economic/political disparities, be recognized by the state
+- **psychologically**: invites inter-group comparison, efforts to maintain/change relative group status
+- **strategically**: creates opportunities for ethnic entrepreneuers
+
+## Lieberman and Singh (2017)
+
+### Data:
+
+**Census**
+
+- tracked down 1333 census questionnaires for 156 countries between 1800 and 2005, nearly all of modern censuses
+
+## Lieberman and Singh (2017)
+
+### Data
+
+- "Politically Relevant Ethnic Groups": expert coding of ethnic groups that are politically "activated"
+- Ethnic Violence: ranging from riots to armed conflict
+- Ethnic Civil War: armed conflicts coded as "Ethnic"
+
+## Lieberman and Singh (2017)
+
+Countries with more ethnic cleavages enumerated in the census, compated to those with fewer, have...
+
+- **more** politically relevant ethnic groups
+- **more** ethnic violence
+- **more** ethnic armed conflicts
+
+## Lieberman and Singh (2017) {.centered}
+
+<img src='./ls_1.png' width = 40%>
+
+>- Are you convinced that census enumeration of ethnicity **causes** ethnic conflict? Why or why not?
+
+## Lieberman and Singh (2017)
+
+Other differences, related to census, may actually cause conflict:
+
+- heterogeneity of descent based attributes
+- colonial legacy
+- democratic vs autocratic institutions
+
+>- **confounding**
+
+## Lieberman and Singh (2017)
+
+**Conditioning**:
+
+Comparing countries that **differ in ethnic census** but **similar**$^*$ in:
+
+- GDP per capita, population, colonial ruler, regime type, political exclusion of ethnic groups, oil production, terrain, year, time since independence
+
+...nevertheless, find **census use of ethnic categories** $\xrightarrow{increases}$ conflict
+
+$^*$ using mathematical approximation
+
+## Lieberman and Singh (2017)
+
+**Placebo**:
+
+If prior ethnic conflict $\to$ enumerating more ethnic groups, then cannot conclude census $\xrightarrow{causes}$ conflict.
+
+Does census enumeration of ethnic groups **predict earlier ethnic conflict**?
+
+>- It does not! This is reassuring, but not definitive.
+
+## Conclusion:
+
+Takeaways:
+
+- understanding how Hindu/Muslim divide emerged
+- understanding importance of censuses
+
+Make use of all three perspectives on ethnicity:
+
+- **structural**, **psychological**, **strategic**
+- complementary, **not** either/ot
