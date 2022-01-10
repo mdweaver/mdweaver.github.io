@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 11, 2021"
+date: "January 10, 2022"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Does Contact Reduce Prejudice?
 
-#### Allport and a large literature suggests that prejudice against groups can be reduced through contact
+#### Allport (1954) and a large literature suggests that prejudice against groups can sometimes be reduced through interpersonal contact
 
 - Contact could create empathy, contradict negative stereotypes. But people could also build empathy without contact.
 
@@ -60,38 +60,40 @@ Do you find these statistical tests persuasive (about causality)?
 
 A matter of **degree**
 
-#### Statistical evidence for causality in the **real world** combines observed data with a **mathematical model** of the world
+Statistical evidence for causality combines **observed data** with a **mathematical model** of the world
 
->- mathematical model of how the data are generated
->- always involve assumptions
+>- mathematical model describes how observed data are generated
+>- model always involves assumptions
 >- can almost always apply the model, even if it is wrong
 
 ## Design vs. Model-based inferences
 
-A matter of **degree**
+Causal evidence varies in terms of complexity of math/assumptions: a matter of **degree**
 
-#### **Model-based** inferences about causality depend on complex statistical models with many assumptions
+- **Model-based** inferences about causality depend on complex statistical models with many assumptions
 
-#### **Design-based** inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions
+- **Design-based** inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions
 
 ## Design vs. Model-based inferences
 
-### Whatever our approach...
+Whatever our approach...
+
+<br>
 
 **do the assumptions needed to use this mathematical tool reasonably fit reality?**
 
 ## Objectives
 
-### Counterfactual Causality
-### Potential Outcomes
-### Causal Effects (unit vs average)
-### Neyman Causal Model for inference
+- Counterfactual Causality
+- Potential Outcomes
+- Causal Effects (unit vs average)
+- Neyman Causal Model for inference
 
 # Causality
 
 ## What is causality?
 
-### What does it mean to say that contact **causes** a reduction in prejudice?
+**What does it mean to say that interpersonal contact with an out-group members *causes* a reduction in prejudice (toward that group)?**
 
 ## What is causality?
 
@@ -124,26 +126,26 @@ Causality requires something acting on another (a mechanism)
 
 ## Potential Outcomes
 
-### A way to formalize a mathematical model of causality
+A powerful way to formalize the mathematical model of causality
 
 ## Potential Outcomes
 
 Imagine you were a participant in an experiment similar to the Broockman and Kalla paper...
 
-Write down what you imagine your score would be on a series of questions about group stereotypes (high (3), medium (2) low (1))
+Imagine that, today, you were asked to contribute money to a trans-rights advocacy organization. Imagine: would you contribute (1) or not contribute (0)...
 
->- If you were in the **no contact** group
+>- ... if, yesterday, you were in the **no contact** group
 
->- If you were in the **contact** group
+>- ... if, yesterday, you were in the **contact** group
 
 ## Potential Outcomes
 
 In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take. 
 
-If $Y_i$ is the level of prejudice for person $i$; $Z$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
+If $Y_i$ is the donation status of person $i$; $Z$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
 
-1. Level of prejudice with **no contact** is $Y_i(0)$
-2. Level of prejudice **with contact** is $Y_i(1)$
+1. donation status with **no contact** is $Y_i(0)$
+2. donation status **with contact** is $Y_i(1)$
 
 More generally: $Y_i(Z \in (0,1))$
 
@@ -167,7 +169,7 @@ Tables of potential outcomes for different units are **response schedules**
 
 ## Potential Outcomes
 
-### What happen when we've fallen from Mount Olympus, and we actually have to run our experiment?
+What happen when we've fallen from Mount Olympus, and we actually have to examine the data?
 
 ## Potential Outcomes
 
@@ -177,7 +179,7 @@ Tables of potential outcomes for different units are **response schedules**
 - Only ever observe $Y_i(1)$ or $Y_i(0)$ for a unit $i$, not both.
 - One potential outcome is **factual**; other is **counterfactual**
 
-### Fundamental Problem of Causal Inference
+>- Thit is the Fundamental Problem of Causal Inference
 
 ## Potential Outcomes
 
@@ -185,18 +187,24 @@ Tables of potential outcomes for different units are **response schedules**
 
 | i | $Y_i(0)$ | $Y_i(1)$ | $Y_i(1) - Y_i(0)$ |
 |---|---------|--------|-----------------|
-| 1 | ? | 6 | ? |
-| 2 | 2 | ? | ? |
-| 3 | ?| 8 | ? |
-| 4 | 4 | ? | ? |
-| 5 | ? | 6 | ? |
+| 1 | ? | 0 | ? |
+| 2 | 1 | ? | ? |
+| 3 | ?| 1 | ? |
+| 4 | 0 | ? | ? |
+| 5 | ? | 1 | ? |
 
 ## Potential Outcomes
 
-The potential outcomes model (or Neyman Causal Model) points toward a statistical solution:
+The potential outcomes model points toward a statistical solution:
 
 - we have missing data about some potential outcomes for each case
 - similar to having data from a sample but not the entire population
+- different approaches we can take to solve this problem
+    - one approach makes "no assumptions", but only gives us *bounds*
+    - another approach makes assumptions, but gives us a *point estimate*
+
+
+# Partial Identification
 
 # A digression: Review
 
