@@ -179,7 +179,7 @@ What happen when we've fallen from Mount Olympus, and we actually have to examin
 - Only ever observe $Y_i(1)$ or $Y_i(0)$ for a unit $i$, not both.
 - One potential outcome is **factual**; other is **counterfactual**
 
->- Thit is the Fundamental Problem of Causal Inference
+>- This is the Fundamental Problem of Causal Inference
 
 ## Potential Outcomes
 

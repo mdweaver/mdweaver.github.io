@@ -1,7 +1,7 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "January 12, 2021"
+date: "January 11, 2022"
 output: ioslides_presentation
 ---
 
@@ -13,11 +13,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Today's Agenda
 
-### 1. Course Expectations/Assignments
+### 1. Introductions
 
-### 2. Course Policies
+### 2. Course Expectations/Assignments
 
-### 3. Registration/Questions
+### 3. Course Policies
+
+### 4. Questions
+
+# Course Introduction
 
 # Personal Introduction
 
@@ -36,13 +40,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Key Dates
 
-1. Reflection 1: January 18
-2. Assignment 1: February 8
-3. Assignment 2: February 22
-4. Midterm Exam: March 4
-5. Assignment 3: March 15
-6. Assignment 4: April 5
-7. Reflection 2: April 12
+1. Reflection 1: January 21
+2. Assignment 1: February 7
+3. Assignment 2: February 18
+4. Midterm Exam: March 3
+5. Assignment 3: March 28
+6. Reflection 2: April 4
+7. Assignment 4: April 8
 
 ## Survey
 
@@ -50,21 +54,21 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### $\bullet$ 1 point for *completion*
 
-### $\bullet$ You write the questions in small groups
+### $\bullet$ You write develop, write questions in small groups
+
+### $\bullet$ 1/3 of Tutorial Grade (3 points)
 
 ## Short Assignments
 
 ### $\bullet$ Apply key concepts to your choice of current events
 
-### $\bullet$ Available on Canvas on Mondays at 9AM
+### $\bullet$ Available on Canvas 1 week prior to due date @ 9AM
 
-### $\bullet$ Exactly 1 week to complete/upload to Canvas$^*$
+### $\bullet$ 1 week to complete/upload to Canvas$^*$
 
-$^*$ Assignment 2 will have two weeks
-
+$^*$ Assignment 2 will have a 3 day grace period, no late penalty
 
 ### Average best of 3 out of 4 
-
 
 ## Reflection Assignments
 
@@ -76,17 +80,17 @@ $^*$ Assignment 2 will have two weeks
 
 ## Midterm Exam
 
-### $\bullet$ **March 4** take home; 36 hours to complete
+### $\bullet$ **March 3**; format TBD
 
-### $\bullet$ Covers materials from weeks 2 to 5
+### $\bullet$ Covers materials from weeks 1 to 6
 
 ### $\bullet$ Review session AND lists of key terms/questions 
 
 ## Final Exam
 
-### $\bullet$ Take home, during exam period; date TBD
+### $\bullet$ Format and date TBD
 
-### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 6 to 14.
+### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 9 to 13.
 
 ### $\bullet$ Review session and key terms/questions
 
@@ -104,11 +108,11 @@ $^*$ Assignment 2 will have two weeks
 
 ### $\bullet$ **"Attend" lecture:**
 
-- slides not enough
+- slides are not enough; reading is not enough
 
 ### $\bullet$ **Attend Tutorial**
 
-- Start in week 2
+- Starts in week 2
 - Participate in group activity (survey writing)
 
 ### $\bullet$ **Read**
@@ -127,6 +131,7 @@ $^*$ Assignment 2 will have two weeks
 
 ### $\bullet$ **Examples**
 
+# Questions?
 
 # Course Policies
 
@@ -160,7 +165,6 @@ $^*$ Assignment 2 will have two weeks
 
 ### $\bullet$ No participation without attendance
 
-
 ### $\bullet$ Make up absences/holidays by attending another Tutorial
 
 - **notify both TAs**
@@ -169,12 +173,12 @@ $^*$ Assignment 2 will have two weeks
 
 - Each unexcused absence induces $(1/n * 100\%)$ deduction from total tutorial score
 - $n$ is the number of **unexcused tutorial dates**
-- up to 3 missed tutorials
+- up to 3 missed tutorials (best 8 out of 11)
 
 ## Lectures
 
-- Zoom via Canvas
-- Chat window, monitored by TA for questions
+- Zoom via Canvas/ In person
+- Hand-raising, monitored by TA for questions
 - Lecture timing
 - Office hours Thursdays following lecture
 
