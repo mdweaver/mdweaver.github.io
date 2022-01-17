@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 18, 2021"
+date: "January 17, 2022"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -93,7 +93,7 @@ $$E(\widehat{ACE}) - ACE = 0$$
 
 ## Paluck (2010)
 
-Following evidence of effects of soap opera in Rwanda:
+Following evidence of effects of soap opera in Rwanda (2009):
 
 <img src="./paluck_1.png">
 
@@ -126,7 +126,25 @@ Variation on Rwandan study, in Eastern DRC.
 
 ## What are the unit treatment effects? ($\tau_i$)
 
+| $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
+|---------|---------|---------|
+| 1       | 3       | 2       | 
+| 2       | 4       | 4       | 
+| 3       | 4       | 2       | 
+| 4       | 2       | 3       | 
+| 5       | 2       | 4       | 
+| 6       | 4       | 1       | 
+
 ## What is the Average Causal Effect ($ACE$)?
+
+| $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
+|---------|---------|---------|
+| 1       | 3       | 2       | 
+| 2       | 4       | 4       | 
+| 3       | 4       | 2       | 
+| 4       | 2       | 3       | 
+| 5       | 2       | 4       | 
+| 6       | 4       | 1       | 
 
 ## Imagine we run this experiment 
 
@@ -258,8 +276,8 @@ Let's check our work:
 ```{r, echo = F}
 
 hist(t_means,
-     xlab = "Y^T",
-     main = "Sampling Distribution of Y^T",
+     xlab = "Y(1) | Z = 1",
+     main = "Sampling Distribution of Treated Group Mean",
      breaks = 20)
 abline(v = p_o_table$y_i_1 %>% mean, col = 'red')
 
@@ -272,8 +290,8 @@ Let's check our work:
 ```{r, echo = F}
 
 hist(c_means,
-     xlab = "Y^C",
-     main = "Sampling Distribution of Y^C",
+     xlab = "Y(0) | Z = 0",
+     main = "Sampling Distribution of Control Group Mean",
      breaks = 20)
 abline(v = p_o_table$y_i_0 %>% mean, col = 'red')
 
@@ -300,7 +318,7 @@ abline(v = ace, col = 'red')
 1. Sample Difference in Means in **unbiased**
 
     - mean of the **sampling distribution** of **sample** $\widehat{ACE}$ is same as **population** $ACE$
-    - **none** of the samples estimate population $ACE$ exactly.
+    - yet **none** of the samples estimate population $ACE$ exactly.
 
 2. Histogram is the **exact sampling distribution** of the $\widehat{ACE}$ in this experiment
 
@@ -310,9 +328,16 @@ abline(v = ace, col = 'red')
 
 ### Summary:
 
+This sampling distribution could tell us 
+
+- how likely we are to observe $\widehat{ACE}$ by chance
+- variability in estimate $\widehat{ACE}$ 
+- also the true $ACE$
+
 But we never observe this histogram
 
 - we need a way to **estimate** the sampling distribution of $\widehat{ACE}$.
+
 
 # Variance of $\widehat{ACE}$
 
@@ -357,7 +382,7 @@ if we assume **independent and identically distributed** draws from the **study 
 
 $$Var[Y^T] = \frac{Var[Y_i(1)]}{m}$$
 
-Variance of **sampling distribution** of the **treatment-group mean** is variance of all potential outcomes under treatment divided by the treatment group size
+Variance of **sampling distribution** of the **treatment-group mean** is variance of  potential outcomes under treatment for **all cases** divided by the treatment group size
 
 --- 
 
@@ -379,7 +404,7 @@ We don't know $\sigma^2$, we need to **estimate** it from our **sample**.
 
 Like sample mean, sample variance is an unbiased estimator of population variance:
 
-- **if we divide by $m - 1$, not $m$**
+- **if we divide by $m - 1$ not $m$**
 
 $$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{\color{red}{m-1}}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
 
@@ -732,7 +757,7 @@ that **every** unit treatment effect is $0$.
 Advantages:
 
 - No assumptions about distributions (no assumption of normality, no asymptotic convergence)
-- as wel will see, directly flows from potential outcomes model
+- as we will see, directly flows from potential outcomes model
 - any test statistic (median, ranks, whatever)
 
 Disadvantages
@@ -777,7 +802,7 @@ Under the **sharp null**, this would be true:
 |---------|---------|---------|
 | 1       | 3       | $\color{red}{3}$      | 
 | 2       | 4       | $\color{red}{4}$        | 
-| 3       | $\color{red}{2} $        | 2       | 
+| 3       | $\color{red}{2}$        | 2       | 
 | 4       | 2       | $\color{red}{2}$       | 
 | 5       | $\color{red}{4}$         | 4       | 
 | 6       | $\color{red}{1}$        | 1       | 
@@ -807,6 +832,8 @@ out = dispdist(distout, ate)
 ```
 
 ## Randomziation Inference
+
+If $\widehat{ACE}=$ `r ate`, then $p(ACE != 0)$ is `r out$two.tailed.p.value`.
 
 In `R`:
 
