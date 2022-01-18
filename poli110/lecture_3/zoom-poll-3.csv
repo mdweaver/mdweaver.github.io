@@ -1,13 +1,19 @@
-Title,Questions Name,Questions Type,Answers
-Poll Science,,,
-,Which of these do you think is the most important part of scientific evidence?,single,
-,,,Systematic use of evidence
-,,,Transparent Procedures
-,,,Acknowledge uncertainty
-,,,Consider alternatives
+"Title","Questions Name","Questions Type","Answers"
+"Poll Science",,,
+,"Which of these do you think is the most important part of scientific evidence?","single",
+,,,"Systematic use of evidence"
+,,,"Transparent Procedures"
+,,,"Acknowledge uncertainty"
+,,,"Consider alternatives"
 ,,,
-Poll Lacour,,,
-,Do you believe that efforts to change the minds of opponents same-sex marriage through conversation more successful when they are done by homosexuals (compared to heterosexuals)?,single,
-,,,Yes
-,,,No
-,,,I don’t know
+"Poll Lacour Pre",,,
+,"Do you believe that efforts to change the minds of opponents same-sex marriage through conversation more successful when they are done by homosexuals (compared to heterosexuals)?","single",
+,,,"Yes"
+,,,"No"
+,,,"I don’t know"
+,,,
+"Poll Lacour Post",,,
+,"Do you believe that efforts to change the minds of opponents same-sex marriage through conversation more successful when they are done by homosexuals (compared to heterosexuals)?","single",
+,,,"Yes"
+,,,"No"
+,,,"I don’t know"
