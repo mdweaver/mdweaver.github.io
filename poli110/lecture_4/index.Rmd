@@ -58,7 +58,7 @@ Despite an infinite number of topics for research:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aWCJz-qOOaw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-## In groups: discuss
+## Let's discuss (in order)
 
 1) **What is the guest's argument (claim)?**
 
@@ -66,7 +66,6 @@ Despite an infinite number of topics for research:
 
 3) **How does this evidence fail to meet the attributes (of scientific evidence)?**
 
-#
 
 ## Unscientific Evidence: Personal experience
 
@@ -92,7 +91,7 @@ Despite an infinite number of topics for research:
 
 ### Evidence
 
-"I went into a crowded store without a mask and didn't get COVID"
+"I went into a crowded store with an N95 mask and got COVID"
 
 ## Personal experience: Skewed Exposure
 
@@ -118,21 +117,24 @@ Despite an infinite number of topics for research:
 
 <img src="https://www.pewresearch.org/politics/wp-content/uploads/sites/4/2019/07/PP_2019.07.25_Trump-economy_0-01.png?resize=420,379" width =80%>
 
+## *Side note*
+
+This does not mean:
+
+- evidence from personal/lived experience is always wrong
+- evidence from personal/lived experience cannot be important/informative
 
 # {.centered}
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Go5MB9UJoeM?start=115&end=154" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cJiil3IRo10?start=163" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## In groups: discuss
+## Let's discuss (in order)
 
 1) **What is his main argument (claim)?**
 
 2) **What is the primary evidence he offers to support it?**
 
 3) **How does this evidence fail to meet the four attributes (of science)?**
-
-# 
-
 
 
 ## Evidence from common sense:
@@ -151,7 +153,12 @@ Despite an infinite number of topics for research:
 
 ## False analogies
 
-<img src="https://scontent.fyyc6-1.fna.fbcdn.net/v/t1.0-9/131278174_10219104940040326_3038738238826010851_o.jpg?_nc_cat=106&ccb=2&_nc_sid=730e14&_nc_ohc=e4eFBrKNn2oAX_2CYZ9&_nc_ht=scontent.fyyc6-1.fna&oh=f3550956706ee6bc56f5dee9437e8cec&oe=603108DB" width=50%>
+<img src="./covid_meme_1.jpg" width=70%>
+
+## False analogies
+
+<img src="./covid_meme_3.jpg" width=70%>
+
 
 ## False analogies
 
@@ -169,20 +176,17 @@ Despite an infinite number of topics for research:
 
 <img src="https://i.imgur.com/iwUVWp4.jpg">
 
-
 # {.centered}
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">White House senior advisor doubles down on voter fraud claims: “Voter fraud is a serious problem in this country” <a href="https://t.co/DC6lVPQznz">pic.twitter.com/DC6lVPQznz</a></p>&mdash; ABC News (@ABC) <a href="https://twitter.com/ABC/status/830787890309369856?ref_src=twsrc%5Etfw">February 12, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-## In groups: discuss
+## Let's discuss (in order)
 
 1) **What is Miller's main argument (claim)?**
 
 2) **What is the primary evidence he offers to support it?**
 
 3) **How does this evidence fail to meet the four attributes (of science)?**
-
-#
 
 ## What kind of claim is that?
 
@@ -233,8 +237,6 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 >- Undisclosed: The maker of those drugs provides me free lunches; pays for my conference travel (see [here](https://onlinelibrary.wiley.com/doi/full/10.1111/add.14509))
 
 
-
-
 ## Cherry picking experts
 
 ### Claim:
@@ -249,14 +251,17 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">In a recent paper @JohnLottJr purports to show evidence of fraud in GA and PA in the 2020 election. In a new paper, we (<a href="https://twitter.com/aeggers?ref_src=twsrc%5Etfw">@aeggers</a>, Haritz Garro, and me) show that Lott’s claims are based on a fatal flaw. Once corrected, there is no evidence for fraud. <a href="https://t.co/yVtTIdBC0Q">https://t.co/yVtTIdBC0Q</a> <a href="https://t.co/dYwQazZICj">pic.twitter.com/dYwQazZICj</a></p>&mdash; justingrimmer (@justingrimmer) <a href="https://twitter.com/justingrimmer/status/1346144084902072320?ref_src=twsrc%5Etfw">January 4, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
-## Proliferating authorities
+## Proliferating Authorities
+
+<img src="./covid_meme_2.jpg" width=60%>
+
+
+## Proliferating Authorities
 
 **What do we do when some experts say one thing, and others say another?**
 
-- Without features of scientific evidence, we can choose any expert we want.
-
->- Consider debates about climate change: people cite competing surveys of experts
->- We'll compare the Lott and Eggers, Garro, and Grimmer papers on election fraud in this course.
+- Without features of scientific evidence, no basis for distinguishing between experts.
+- We can choose whatever expert/study we want (becomes theology)
 
 ## **claim** {.centered}
 
@@ -296,10 +301,24 @@ Arguing that claim is true **because** a person **with authority** says it is tr
 - Appeals to the **authority** of "science"/"researchers"/"studies"
 - This changes science into **magic**
 
+Does not mean **distrust** scientists/experts, but instead...
+
+- credentials may be useful, but cannot be the only basis of trust
+- does their work have transparency, systematic evidence, consideration of alternatives, acknowledgement of uncertainty?
+- what are the assumptions they make>
+
+## Appeal to Authority
+
+It is **reasonable** and **scientific** to interrogate the evidence and assumptions the are used to support a claim:
+
+- ordinary people *should* ask questions, but need the skills to do so
+- scientists *should* answer those questions, but need the skills to do so
 
 ## Conclusion:
 
 1. **Many ways for claims to be unscientific**
 2. **Comes down to not meeting four attributes of scientific evidence**
 3. **You can recognize when this happens**
+
+>- In this course, introduce you to common problems that arise when we present evidence for claims, possible solutions
 
