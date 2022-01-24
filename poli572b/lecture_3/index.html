@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Michael Weaver" />
-  <meta name="dcterms.date" content="2021-01-25" />
+  <meta name="dcterms.date" content="2022-01-24" />
   <title>POLI 572B</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1084,69 +1084,6 @@ visibility: hidden; }
 </style>
 
 
-<style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <style type="text/css">
 @font-face {
@@ -1836,8 +1773,1025 @@ document.getElementsByTagName('head')[0].appendChild(style);
 });
 </script>
     <style type="text/css">
+.lightable-minimal {
+border-collapse: separate;
+border-spacing: 16px 1px;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-minimal td {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal th {
+margin-left: 5px;
+margin-right: 5px;
+}
+.lightable-minimal thead tr:last-child th {
+border-bottom: 2px solid #00000050;
+empty-cells: hide;
+}
+.lightable-minimal tbody tr:first-child td {
+padding-top: 0.5em;
+}
+.lightable-minimal.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-minimal.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic {
+border-top: 0.16em solid #111111;
+border-bottom: 0.16em solid #111111;
+width: 100%;
+margin-bottom: 10px;
+margin: 10px 5px;
+}
+.lightable-classic tfoot tr td {
+border: 0;
+}
+.lightable-classic tfoot tr:first-child td {
+border-top: 0.14em solid #111111;
+}
+.lightable-classic caption {
+color: #222222;
+}
+.lightable-classic td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic thead tr:last-child th {
+border-bottom: 0.10em solid #111111;
+}
+.lightable-classic.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-classic-2 {
+border-top: 3px double #111111;
+border-bottom: 3px double #111111;
+width: 100%;
+margin-bottom: 10px;
+}
+.lightable-classic-2 tfoot tr td {
+border: 0;
+}
+.lightable-classic-2 tfoot tr:first-child td {
+border-top: 3px double #111111;
+}
+.lightable-classic-2 caption {
+color: #222222;
+}
+.lightable-classic-2 td {
+padding-left: 5px;
+padding-right: 5px;
+color: #222222;
+}
+.lightable-classic-2 th {
+padding-left: 5px;
+padding-right: 5px;
+font-weight: normal;
+color: #222222;
+}
+.lightable-classic-2 tbody tr:last-child td {
+border-bottom: 3px double #111111;
+}
+.lightable-classic-2 thead tr:last-child th {
+border-bottom: 1px solid #111111;
+}
+.lightable-classic-2.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-classic-2.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #EEE;
+border-collapse: collapse;
+margin-bottom: 10px;
+}
+.lightable-material tfoot tr td {
+border: 0;
+}
+.lightable-material tfoot tr:first-child td {
+border-top: 1px solid #EEE;
+}
+.lightable-material th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+}
+.lightable-material td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+border-top: 1px solid #eeeeee;
+}
+.lightable-material.lightable-hover tbody tr:hover {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody tr:nth-child(even) {
+background-color: #f5f5f5;
+}
+.lightable-material.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #ddd;
+}
+.lightable-material-dark {
+min-width: 100%;
+white-space: nowrap;
+table-layout: fixed;
+font-family: Roboto, sans-serif;
+border: 1px solid #FFFFFF12;
+border-collapse: collapse;
+margin-bottom: 10px;
+background-color: #363640;
+}
+.lightable-material-dark tfoot tr td {
+border: 0;
+}
+.lightable-material-dark tfoot tr:first-child td {
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark th {
+height: 56px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF60;
+}
+.lightable-material-dark td {
+height: 52px;
+padding-left: 16px;
+padding-right: 16px;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF12;
+}
+.lightable-material-dark.lightable-hover tbody tr:hover {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody tr:nth-child(even) {
+background-color: #FFFFFF12;
+}
+.lightable-material-dark.lightable-striped tbody td {
+border: 0;
+}
+.lightable-material-dark.lightable-striped thead tr:last-child th {
+border-bottom: 1px solid #FFFFFF12;
+}
+.lightable-paper {
+width: 100%;
+margin-bottom: 10px;
+color: #444;
+}
+.lightable-paper tfoot tr td {
+border: 0;
+}
+.lightable-paper tfoot tr:first-child td {
+border-top: 1px solid #00000020;
+}
+.lightable-paper thead tr:last-child th {
+color: #666;
+vertical-align: bottom;
+border-bottom: 1px solid #00000020;
+line-height: 1.15em;
+padding: 10px 5px;
+}
+.lightable-paper td {
+vertical-align: middle;
+border-bottom: 1px solid #00000010;
+line-height: 1.15em;
+padding: 7px 5px;
+}
+.lightable-paper.lightable-hover tbody tr:hover {
+background-color: #F9EEC1;
+}
+.lightable-paper.lightable-striped tbody tr:nth-child(even) {
+background-color: #00000008;
+}
+.lightable-paper.lightable-striped tbody td {
+border: 0;
+}
+</style>
+    <style type="text/css">
 table{border-collapse:collapse;border-spacing:0}td,th{padding:0}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}table{background-color:transparent}caption{padding-top:8px;padding-bottom:8px;color:#777;text-align:left}th{text-align:left}.table{width:100%;max-width:100%;margin-bottom:20px}.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tfoot>tr>td{padding:8px;line-height:1.42857143;vertical-align:top;border-top:1px solid #ddd}.table>thead>tr>th{vertical-align:bottom;border-bottom:2px solid #ddd}.table>caption+thead>tr:first-child>th,.table>colgroup+thead>tr:first-child>th,.table>thead:first-child>tr:first-child>th,.table>caption+thead>tr:first-child>td,.table>colgroup+thead>tr:first-child>td,.table>thead:first-child>tr:first-child>td{border-top:0}.table>tbody+tbody{border-top:2px solid #ddd}.table .table{background-color:#fff}.table-condensed>thead>tr>th,.table-condensed>tbody>tr>th,.table-condensed>tfoot>tr>th,.table-condensed>thead>tr>td,.table-condensed>tbody>tr>td,.table-condensed>tfoot>tr>td{padding:5px}.table-bordered{border:1px solid #ddd}.table-bordered>thead>tr>th,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th,.table-bordered>thead>tr>td,.table-bordered>tbody>tr>td,.table-bordered>tfoot>tr>td{border:1px solid #ddd}.table-bordered>thead>tr>th,.table-bordered>thead>tr>td{border-bottom-width:2px}.table-striped>tbody>tr:nth-of-type(odd){background-color:#f9f9f9}.table-hover>tbody>tr:hover{background-color:#f5f5f5}table col[class*="col-"]{position:static;float:none;display:table-column}table td[class*="col-"],table th[class*="col-"]{position:static;float:none;display:table-cell}.table>thead>tr>td.active,.table>tbody>tr>td.active,.table>tfoot>tr>td.active,.table>thead>tr>th.active,.table>tbody>tr>th.active,.table>tfoot>tr>th.active,.table>thead>tr.active>td,.table>tbody>tr.active>td,.table>tfoot>tr.active>td,.table>thead>tr.active>th,.table>tbody>tr.active>th,.table>tfoot>tr.active>th{background-color:#f5f5f5}.table-hover>tbody>tr>td.active:hover,.table-hover>tbody>tr>th.active:hover,.table-hover>tbody>tr.active:hover>td,.table-hover>tbody>tr:hover>.active,.table-hover>tbody>tr.active:hover>th{background-color:#e8e8e8}.table>thead>tr>td.success,.table>tbody>tr>td.success,.table>tfoot>tr>td.success,.table>thead>tr>th.success,.table>tbody>tr>th.success,.table>tfoot>tr>th.success,.table>thead>tr.success>td,.table>tbody>tr.success>td,.table>tfoot>tr.success>td,.table>thead>tr.success>th,.table>tbody>tr.success>th,.table>tfoot>tr.success>th{background-color:#dff0d8}.table-hover>tbody>tr>td.success:hover,.table-hover>tbody>tr>th.success:hover,.table-hover>tbody>tr.success:hover>td,.table-hover>tbody>tr:hover>.success,.table-hover>tbody>tr.success:hover>th{background-color:#d0e9c6}.table>thead>tr>td.info,.table>tbody>tr>td.info,.table>tfoot>tr>td.info,.table>thead>tr>th.info,.table>tbody>tr>th.info,.table>tfoot>tr>th.info,.table>thead>tr.info>td,.table>tbody>tr.info>td,.table>tfoot>tr.info>td,.table>thead>tr.info>th,.table>tbody>tr.info>th,.table>tfoot>tr.info>th{background-color:#d9edf7}.table-hover>tbody>tr>td.info:hover,.table-hover>tbody>tr>th.info:hover,.table-hover>tbody>tr.info:hover>td,.table-hover>tbody>tr:hover>.info,.table-hover>tbody>tr.info:hover>th{background-color:#c4e3f3}.table>thead>tr>td.warning,.table>tbody>tr>td.warning,.table>tfoot>tr>td.warning,.table>thead>tr>th.warning,.table>tbody>tr>th.warning,.table>tfoot>tr>th.warning,.table>thead>tr.warning>td,.table>tbody>tr.warning>td,.table>tfoot>tr.warning>td,.table>thead>tr.warning>th,.table>tbody>tr.warning>th,.table>tfoot>tr.warning>th{background-color:#fcf8e3}.table-hover>tbody>tr>td.warning:hover,.table-hover>tbody>tr>th.warning:hover,.table-hover>tbody>tr.warning:hover>td,.table-hover>tbody>tr:hover>.warning,.table-hover>tbody>tr.warning:hover>th{background-color:#faf2cc}.table>thead>tr>td.danger,.table>tbody>tr>td.danger,.table>tfoot>tr>td.danger,.table>thead>tr>th.danger,.table>tbody>tr>th.danger,.table>tfoot>tr>th.danger,.table>thead>tr.danger>td,.table>tbody>tr.danger>td,.table>tfoot>tr.danger>td,.table>thead>tr.danger>th,.table>tbody>tr.danger>th,.table>tfoot>tr.danger>th{background-color:#f2dede}.table-hover>tbody>tr>td.danger:hover,.table-hover>tbody>tr>th.danger:hover,.table-hover>tbody>tr.danger:hover>td,.table-hover>tbody>tr:hover>.danger,.table-hover>tbody>tr.danger:hover>th{background-color:#ebcccc}.table-responsive{overflow-x:auto;min-height:0.01%}@media screen and (max-width:767px){.table-responsive{width:100%;margin-bottom:15px;overflow-y:hidden;-ms-overflow-style:-ms-autohiding-scrollbar;border:1px solid #ddd}.table-responsive>.table{margin-bottom:0}.table-responsive>.table>thead>tr>th,.table-responsive>.table>tbody>tr>th,.table-responsive>.table>tfoot>tr>th,.table-responsive>.table>thead>tr>td,.table-responsive>.table>tbody>tr>td,.table-responsive>.table>tfoot>tr>td{white-space:nowrap}.table-responsive>.table-bordered{border:0}.table-responsive>.table-bordered>thead>tr>th:first-child,.table-responsive>.table-bordered>tbody>tr>th:first-child,.table-responsive>.table-bordered>tfoot>tr>th:first-child,.table-responsive>.table-bordered>thead>tr>td:first-child,.table-responsive>.table-bordered>tbody>tr>td:first-child,.table-responsive>.table-bordered>tfoot>tr>td:first-child{border-left:0}.table-responsive>.table-bordered>thead>tr>th:last-child,.table-responsive>.table-bordered>tbody>tr>th:last-child,.table-responsive>.table-bordered>tfoot>tr>th:last-child,.table-responsive>.table-bordered>thead>tr>td:last-child,.table-responsive>.table-bordered>tbody>tr>td:last-child,.table-responsive>.table-bordered>tfoot>tr>td:last-child{border-right:0}.table-responsive>.table-bordered>tbody>tr:last-child>th,.table-responsive>.table-bordered>tfoot>tr:last-child>th,.table-responsive>.table-bordered>tbody>tr:last-child>td,.table-responsive>.table-bordered>tfoot>tr:last-child>td{border-bottom:0}}.tooltip{position:absolute;z-index:1070;display:block;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-style:normal;font-weight:normal;letter-spacing:normal;line-break:auto;line-height:1.42857143;text-align:left;text-align:start;text-decoration:none;text-shadow:none;text-transform:none;white-space:normal;word-break:normal;word-spacing:normal;word-wrap:normal;font-size:12px;opacity:0;filter:alpha(opacity=0)}.tooltip.in{opacity:.9;filter:alpha(opacity=90)}.tooltip.top{margin-top:-3px;padding:5px 0}.tooltip.right{margin-left:3px;padding:0 5px}.tooltip.bottom{margin-top:3px;padding:5px 0}.tooltip.left{margin-left:-3px;padding:0 5px}.tooltip-inner{max-width:200px;padding:3px 8px;color:#fff;text-align:center;background-color:#000;border-radius:4px}.tooltip-arrow{position:absolute;width:0;height:0;border-color:transparent;border-style:solid}.tooltip.top .tooltip-arrow{bottom:0;left:50%;margin-left:-5px;border-width:5px 5px 0;border-top-color:#000}.tooltip.top-left .tooltip-arrow{bottom:0;right:5px;margin-bottom:-5px;border-width:5px 5px 0;border-top-color:#000}.tooltip.top-right .tooltip-arrow{bottom:0;left:5px;margin-bottom:-5px;border-width:5px 5px 0;border-top-color:#000}.tooltip.right .tooltip-arrow{top:50%;left:0;margin-top:-5px;border-width:5px 5px 5px 0;border-right-color:#000}.tooltip.left .tooltip-arrow{top:50%;right:0;margin-top:-5px;border-width:5px 0 5px 5px;border-left-color:#000}.tooltip.bottom .tooltip-arrow{top:0;left:50%;margin-left:-5px;border-width:0 5px 5px;border-bottom-color:#000}.tooltip.bottom-left .tooltip-arrow{top:0;right:5px;margin-top:-5px;border-width:0 5px 5px;border-bottom-color:#000}.tooltip.bottom-right .tooltip-arrow{top:0;left:5px;margin-top:-5px;border-width:0 5px 5px;border-bottom-color:#000}.popover{position:absolute;top:0;left:0;z-index:1060;display:none;max-width:276px;padding:1px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-style:normal;font-weight:normal;letter-spacing:normal;line-break:auto;line-height:1.42857143;text-align:left;text-align:start;text-decoration:none;text-shadow:none;text-transform:none;white-space:normal;word-break:normal;word-spacing:normal;word-wrap:normal;font-size:14px;background-color:#fff;-webkit-background-clip:padding-box;background-clip:padding-box;border:1px solid #ccc;border:1px solid rgba(0,0,0,0.2);border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0,0,0,0.2);box-shadow:0 5px 10px rgba(0,0,0,0.2)}.popover.top{margin-top:-10px}.popover.right{margin-left:10px}.popover.bottom{margin-top:10px}.popover.left{margin-left:-10px}.popover-title{margin:0;padding:8px 14px;font-size:14px;background-color:#f7f7f7;border-bottom:1px solid #ebebeb;border-radius:5px 5px 0 0}.popover-content{padding:9px 14px}.popover>.arrow,.popover>.arrow:after{position:absolute;display:block;width:0;height:0;border-color:transparent;border-style:solid}.popover>.arrow{border-width:11px}.popover>.arrow:after{border-width:10px;content:""}.popover.top>.arrow{left:50%;margin-left:-11px;border-bottom-width:0;border-top-color:#999;border-top-color:rgba(0,0,0,0.25);bottom:-11px}.popover.top>.arrow:after{content:" ";bottom:1px;margin-left:-10px;border-bottom-width:0;border-top-color:#fff}.popover.right>.arrow{top:50%;left:-11px;margin-top:-11px;border-left-width:0;border-right-color:#999;border-right-color:rgba(0,0,0,0.25)}.popover.right>.arrow:after{content:" ";left:1px;bottom:-10px;border-left-width:0;border-right-color:#fff}.popover.bottom>.arrow{left:50%;margin-left:-11px;border-top-width:0;border-bottom-color:#999;border-bottom-color:rgba(0,0,0,0.25);top:-11px}.popover.bottom>.arrow:after{content:" ";top:1px;margin-left:-10px;border-top-width:0;border-bottom-color:#fff}.popover.left>.arrow{top:50%;right:-11px;margin-top:-11px;border-right-width:0;border-left-color:#999;border-left-color:rgba(0,0,0,0.25)}.popover.left>.arrow:after{content:" ";right:1px;border-right-width:0;border-left-color:#fff;bottom:-10px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.center-block{display:block;margin-left:auto;margin-right:auto}.pull-right{float:right !important}.pull-left{float:left !important}.hide{display:none !important}.show{display:block !important}.invisible{visibility:hidden}.text-hide{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.hidden{display:none !important}.affix{position:fixed}
 </style>
+    <script>/* ========================================================================
+ * Bootstrap: tooltip.js v3.4.1
+ * https://getbootstrap.com/docs/3.4/javascript/#tooltip
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ========================================================================
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
++function ($) {
+  'use strict';
+
+  var DISALLOWED_ATTRIBUTES = ['sanitize', 'whiteList', 'sanitizeFn']
+
+  var uriAttrs = [
+    'background',
+    'cite',
+    'href',
+    'itemtype',
+    'longdesc',
+    'poster',
+    'src',
+    'xlink:href'
+  ]
+
+  var ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i
+
+  var DefaultWhitelist = {
+    // Global attributes allowed on any supplied element below.
+    '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
+    a: ['target', 'href', 'title', 'rel'],
+    area: [],
+    b: [],
+    br: [],
+    col: [],
+    code: [],
+    div: [],
+    em: [],
+    hr: [],
+    h1: [],
+    h2: [],
+    h3: [],
+    h4: [],
+    h5: [],
+    h6: [],
+    i: [],
+    img: ['src', 'alt', 'title', 'width', 'height'],
+    li: [],
+    ol: [],
+    p: [],
+    pre: [],
+    s: [],
+    small: [],
+    span: [],
+    sub: [],
+    sup: [],
+    strong: [],
+    u: [],
+    ul: []
+  }
+
+  /**
+   * A pattern that recognizes a commonly useful subset of URLs that are safe.
+   *
+   * Shoutout to Angular 7 https://github.com/angular/angular/blob/7.2.4/packages/core/src/sanitization/url_sanitizer.ts
+   */
+  var SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi
+
+  /**
+   * A pattern that matches safe data URLs. Only matches image, video and audio types.
+   *
+   * Shoutout to Angular 7 https://github.com/angular/angular/blob/7.2.4/packages/core/src/sanitization/url_sanitizer.ts
+   */
+  var DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i
+
+  function allowedAttribute(attr, allowedAttributeList) {
+    var attrName = attr.nodeName.toLowerCase()
+
+    if ($.inArray(attrName, allowedAttributeList) !== -1) {
+      if ($.inArray(attrName, uriAttrs) !== -1) {
+        return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN))
+      }
+
+      return true
+    }
+
+    var regExp = $(allowedAttributeList).filter(function (index, value) {
+      return value instanceof RegExp
+    })
+
+    // Check if a regular expression validates the attribute.
+    for (var i = 0, l = regExp.length; i < l; i++) {
+      if (attrName.match(regExp[i])) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  function sanitizeHtml(unsafeHtml, whiteList, sanitizeFn) {
+    if (unsafeHtml.length === 0) {
+      return unsafeHtml
+    }
+
+    if (sanitizeFn && typeof sanitizeFn === 'function') {
+      return sanitizeFn(unsafeHtml)
+    }
+
+    // IE 8 and below don't support createHTMLDocument
+    if (!document.implementation || !document.implementation.createHTMLDocument) {
+      return unsafeHtml
+    }
+
+    var createdDocument = document.implementation.createHTMLDocument('sanitization')
+    createdDocument.body.innerHTML = unsafeHtml
+
+    var whitelistKeys = $.map(whiteList, function (el, i) { return i })
+    var elements = $(createdDocument.body).find('*')
+
+    for (var i = 0, len = elements.length; i < len; i++) {
+      var el = elements[i]
+      var elName = el.nodeName.toLowerCase()
+
+      if ($.inArray(elName, whitelistKeys) === -1) {
+        el.parentNode.removeChild(el)
+
+        continue
+      }
+
+      var attributeList = $.map(el.attributes, function (el) { return el })
+      var whitelistedAttributes = [].concat(whiteList['*'] || [], whiteList[elName] || [])
+
+      for (var j = 0, len2 = attributeList.length; j < len2; j++) {
+        if (!allowedAttribute(attributeList[j], whitelistedAttributes)) {
+          el.removeAttribute(attributeList[j].nodeName)
+        }
+      }
+    }
+
+    return createdDocument.body.innerHTML
+  }
+
+  // TOOLTIP PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Tooltip = function (element, options) {
+    this.type       = null
+    this.options    = null
+    this.enabled    = null
+    this.timeout    = null
+    this.hoverState = null
+    this.$element   = null
+    this.inState    = null
+
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.VERSION  = '3.4.1'
+
+  Tooltip.TRANSITION_DURATION = 150
+
+  Tooltip.DEFAULTS = {
+    animation: true,
+    placement: 'top',
+    selector: false,
+    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+    trigger: 'hover focus',
+    title: '',
+    delay: 0,
+    html: false,
+    container: false,
+    viewport: {
+      selector: 'body',
+      padding: 0
+    },
+    sanitize : true,
+    sanitizeFn : null,
+    whiteList : DefaultWhitelist
+  }
+
+  Tooltip.prototype.init = function (type, element, options) {
+    this.enabled   = true
+    this.type      = type
+    this.$element  = $(element)
+    this.options   = this.getOptions(options)
+    this.$viewport = this.options.viewport && $(document).find($.isFunction(this.options.viewport) ? this.options.viewport.call(this, this.$element) : (this.options.viewport.selector || this.options.viewport))
+    this.inState   = { click: false, hover: false, focus: false }
+
+    if (this.$element[0] instanceof document.constructor && !this.options.selector) {
+      throw new Error('`selector` option must be specified when initializing ' + this.type + ' on the window.document object!')
+    }
+
+    var triggers = this.options.trigger.split(' ')
+
+    for (var i = triggers.length; i--;) {
+      var trigger = triggers[i]
+
+      if (trigger == 'click') {
+        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+      } else if (trigger != 'manual') {
+        var eventIn  = trigger == 'hover' ? 'mouseenter' : 'focusin'
+        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout'
+
+        this.$element.on(eventIn  + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      }
+    }
+
+    this.options.selector ?
+      (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+      this.fixTitle()
+  }
+
+  Tooltip.prototype.getDefaults = function () {
+    return Tooltip.DEFAULTS
+  }
+
+  Tooltip.prototype.getOptions = function (options) {
+    var dataAttributes = this.$element.data()
+
+    for (var dataAttr in dataAttributes) {
+      if (dataAttributes.hasOwnProperty(dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== -1) {
+        delete dataAttributes[dataAttr]
+      }
+    }
+
+    options = $.extend({}, this.getDefaults(), dataAttributes, options)
+
+    if (options.delay && typeof options.delay == 'number') {
+      options.delay = {
+        show: options.delay,
+        hide: options.delay
+      }
+    }
+
+    if (options.sanitize) {
+      options.template = sanitizeHtml(options.template, options.whiteList, options.sanitizeFn)
+    }
+
+    return options
+  }
+
+  Tooltip.prototype.getDelegateOptions = function () {
+    var options  = {}
+    var defaults = this.getDefaults()
+
+    this._options && $.each(this._options, function (key, value) {
+      if (defaults[key] != value) options[key] = value
+    })
+
+    return options
+  }
+
+  Tooltip.prototype.enter = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    if (obj instanceof $.Event) {
+      self.inState[obj.type == 'focusin' ? 'focus' : 'hover'] = true
+    }
+
+    if (self.tip().hasClass('in') || self.hoverState == 'in') {
+      self.hoverState = 'in'
+      return
+    }
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'in'
+
+    if (!self.options.delay || !self.options.delay.show) return self.show()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'in') self.show()
+    }, self.options.delay.show)
+  }
+
+  Tooltip.prototype.isInStateTrue = function () {
+    for (var key in this.inState) {
+      if (this.inState[key]) return true
+    }
+
+    return false
+  }
+
+  Tooltip.prototype.leave = function (obj) {
+    var self = obj instanceof this.constructor ?
+      obj : $(obj.currentTarget).data('bs.' + this.type)
+
+    if (!self) {
+      self = new this.constructor(obj.currentTarget, this.getDelegateOptions())
+      $(obj.currentTarget).data('bs.' + this.type, self)
+    }
+
+    if (obj instanceof $.Event) {
+      self.inState[obj.type == 'focusout' ? 'focus' : 'hover'] = false
+    }
+
+    if (self.isInStateTrue()) return
+
+    clearTimeout(self.timeout)
+
+    self.hoverState = 'out'
+
+    if (!self.options.delay || !self.options.delay.hide) return self.hide()
+
+    self.timeout = setTimeout(function () {
+      if (self.hoverState == 'out') self.hide()
+    }, self.options.delay.hide)
+  }
+
+  Tooltip.prototype.show = function () {
+    var e = $.Event('show.bs.' + this.type)
+
+    if (this.hasContent() && this.enabled) {
+      this.$element.trigger(e)
+
+      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0])
+      if (e.isDefaultPrevented() || !inDom) return
+      var that = this
+
+      var $tip = this.tip()
+
+      var tipId = this.getUID(this.type)
+
+      this.setContent()
+      $tip.attr('id', tipId)
+      this.$element.attr('aria-describedby', tipId)
+
+      if (this.options.animation) $tip.addClass('fade')
+
+      var placement = typeof this.options.placement == 'function' ?
+        this.options.placement.call(this, $tip[0], this.$element[0]) :
+        this.options.placement
+
+      var autoToken = /\s?auto?\s?/i
+      var autoPlace = autoToken.test(placement)
+      if (autoPlace) placement = placement.replace(autoToken, '') || 'top'
+
+      $tip
+        .detach()
+        .css({ top: 0, left: 0, display: 'block' })
+        .addClass(placement)
+        .data('bs.' + this.type, this)
+
+      this.options.container ? $tip.appendTo($(document).find(this.options.container)) : $tip.insertAfter(this.$element)
+      this.$element.trigger('inserted.bs.' + this.type)
+
+      var pos          = this.getPosition()
+      var actualWidth  = $tip[0].offsetWidth
+      var actualHeight = $tip[0].offsetHeight
+
+      if (autoPlace) {
+        var orgPlacement = placement
+        var viewportDim = this.getPosition(this.$viewport)
+
+        placement = placement == 'bottom' && pos.bottom + actualHeight > viewportDim.bottom ? 'top'    :
+                    placement == 'top'    && pos.top    - actualHeight < viewportDim.top    ? 'bottom' :
+                    placement == 'right'  && pos.right  + actualWidth  > viewportDim.width  ? 'left'   :
+                    placement == 'left'   && pos.left   - actualWidth  < viewportDim.left   ? 'right'  :
+                    placement
+
+        $tip
+          .removeClass(orgPlacement)
+          .addClass(placement)
+      }
+
+      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight)
+
+      this.applyPlacement(calculatedOffset, placement)
+
+      var complete = function () {
+        var prevHoverState = that.hoverState
+        that.$element.trigger('shown.bs.' + that.type)
+        that.hoverState = null
+
+        if (prevHoverState == 'out') that.leave(that)
+      }
+
+      $.support.transition && this.$tip.hasClass('fade') ?
+        $tip
+          .one('bsTransitionEnd', complete)
+          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+        complete()
+    }
+  }
+
+  Tooltip.prototype.applyPlacement = function (offset, placement) {
+    var $tip   = this.tip()
+    var width  = $tip[0].offsetWidth
+    var height = $tip[0].offsetHeight
+
+    // manually read margins because getBoundingClientRect includes difference
+    var marginTop = parseInt($tip.css('margin-top'), 10)
+    var marginLeft = parseInt($tip.css('margin-left'), 10)
+
+    // we must check for NaN for ie 8/9
+    if (isNaN(marginTop))  marginTop  = 0
+    if (isNaN(marginLeft)) marginLeft = 0
+
+    offset.top  += marginTop
+    offset.left += marginLeft
+
+    // $.fn.offset doesn't round pixel values
+    // so we use setOffset directly with our own function B-0
+    $.offset.setOffset($tip[0], $.extend({
+      using: function (props) {
+        $tip.css({
+          top: Math.round(props.top),
+          left: Math.round(props.left)
+        })
+      }
+    }, offset), 0)
+
+    $tip.addClass('in')
+
+    // check to see if placing tip in new offset caused the tip to resize itself
+    var actualWidth  = $tip[0].offsetWidth
+    var actualHeight = $tip[0].offsetHeight
+
+    if (placement == 'top' && actualHeight != height) {
+      offset.top = offset.top + height - actualHeight
+    }
+
+    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight)
+
+    if (delta.left) offset.left += delta.left
+    else offset.top += delta.top
+
+    var isVertical          = /top|bottom/.test(placement)
+    var arrowDelta          = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight
+    var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight'
+
+    $tip.offset(offset)
+    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
+  }
+
+  Tooltip.prototype.replaceArrow = function (delta, dimension, isVertical) {
+    this.arrow()
+      .css(isVertical ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
+      .css(isVertical ? 'top' : 'left', '')
+  }
+
+  Tooltip.prototype.setContent = function () {
+    var $tip  = this.tip()
+    var title = this.getTitle()
+
+    if (this.options.html) {
+      if (this.options.sanitize) {
+        title = sanitizeHtml(title, this.options.whiteList, this.options.sanitizeFn)
+      }
+
+      $tip.find('.tooltip-inner').html(title)
+    } else {
+      $tip.find('.tooltip-inner').text(title)
+    }
+
+    $tip.removeClass('fade in top bottom left right')
+  }
+
+  Tooltip.prototype.hide = function (callback) {
+    var that = this
+    var $tip = $(this.$tip)
+    var e    = $.Event('hide.bs.' + this.type)
+
+    function complete() {
+      if (that.hoverState != 'in') $tip.detach()
+      if (that.$element) { // TODO: Check whether guarding this code with this `if` is really necessary.
+        that.$element
+          .removeAttr('aria-describedby')
+          .trigger('hidden.bs.' + that.type)
+      }
+      callback && callback()
+    }
+
+    this.$element.trigger(e)
+
+    if (e.isDefaultPrevented()) return
+
+    $tip.removeClass('in')
+
+    $.support.transition && $tip.hasClass('fade') ?
+      $tip
+        .one('bsTransitionEnd', complete)
+        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
+      complete()
+
+    this.hoverState = null
+
+    return this
+  }
+
+  Tooltip.prototype.fixTitle = function () {
+    var $e = this.$element
+    if ($e.attr('title') || typeof $e.attr('data-original-title') != 'string') {
+      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
+    }
+  }
+
+  Tooltip.prototype.hasContent = function () {
+    return this.getTitle()
+  }
+
+  Tooltip.prototype.getPosition = function ($element) {
+    $element   = $element || this.$element
+
+    var el     = $element[0]
+    var isBody = el.tagName == 'BODY'
+
+    var elRect    = el.getBoundingClientRect()
+    if (elRect.width == null) {
+      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
+    }
+    var isSvg = window.SVGElement && el instanceof window.SVGElement
+    // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
+    // See https://github.com/twbs/bootstrap/issues/20280
+    var elOffset  = isBody ? { top: 0, left: 0 } : (isSvg ? null : $element.offset())
+    var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
+    var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null
+
+    return $.extend({}, elRect, scroll, outerDims, elOffset)
+  }
+
+  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2 } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } :
+           placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width }
+
+  }
+
+  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+    var delta = { top: 0, left: 0 }
+    if (!this.$viewport) return delta
+
+    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0
+    var viewportDimensions = this.getPosition(this.$viewport)
+
+    if (/right|left/.test(placement)) {
+      var topEdgeOffset    = pos.top - viewportPadding - viewportDimensions.scroll
+      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight
+      if (topEdgeOffset < viewportDimensions.top) { // top overflow
+        delta.top = viewportDimensions.top - topEdgeOffset
+      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) { // bottom overflow
+        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset
+      }
+    } else {
+      var leftEdgeOffset  = pos.left - viewportPadding
+      var rightEdgeOffset = pos.left + viewportPadding + actualWidth
+      if (leftEdgeOffset < viewportDimensions.left) { // left overflow
+        delta.left = viewportDimensions.left - leftEdgeOffset
+      } else if (rightEdgeOffset > viewportDimensions.right) { // right overflow
+        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset
+      }
+    }
+
+    return delta
+  }
+
+  Tooltip.prototype.getTitle = function () {
+    var title
+    var $e = this.$element
+    var o  = this.options
+
+    title = $e.attr('data-original-title')
+      || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+    return title
+  }
+
+  Tooltip.prototype.getUID = function (prefix) {
+    do prefix += ~~(Math.random() * 1000000)
+    while (document.getElementById(prefix))
+    return prefix
+  }
+
+  Tooltip.prototype.tip = function () {
+    if (!this.$tip) {
+      this.$tip = $(this.options.template)
+      if (this.$tip.length != 1) {
+        throw new Error(this.type + ' `template` option must consist of exactly 1 top-level element!')
+      }
+    }
+    return this.$tip
+  }
+
+  Tooltip.prototype.arrow = function () {
+    return (this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow'))
+  }
+
+  Tooltip.prototype.enable = function () {
+    this.enabled = true
+  }
+
+  Tooltip.prototype.disable = function () {
+    this.enabled = false
+  }
+
+  Tooltip.prototype.toggleEnabled = function () {
+    this.enabled = !this.enabled
+  }
+
+  Tooltip.prototype.toggle = function (e) {
+    var self = this
+    if (e) {
+      self = $(e.currentTarget).data('bs.' + this.type)
+      if (!self) {
+        self = new this.constructor(e.currentTarget, this.getDelegateOptions())
+        $(e.currentTarget).data('bs.' + this.type, self)
+      }
+    }
+
+    if (e) {
+      self.inState.click = !self.inState.click
+      if (self.isInStateTrue()) self.enter(self)
+      else self.leave(self)
+    } else {
+      self.tip().hasClass('in') ? self.leave(self) : self.enter(self)
+    }
+  }
+
+  Tooltip.prototype.destroy = function () {
+    var that = this
+    clearTimeout(this.timeout)
+    this.hide(function () {
+      that.$element.off('.' + that.type).removeData('bs.' + that.type)
+      if (that.$tip) {
+        that.$tip.detach()
+      }
+      that.$tip = null
+      that.$arrow = null
+      that.$viewport = null
+      that.$element = null
+    })
+  }
+
+  Tooltip.prototype.sanitizeHtml = function (unsafeHtml) {
+    return sanitizeHtml(unsafeHtml, this.options.whiteList, this.options.sanitizeFn)
+  }
+
+  // TOOLTIP PLUGIN DEFINITION
+  // =========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
+
+      if (!data && /destroy|hide/.test(option)) return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.tooltip
+
+  $.fn.tooltip             = Plugin
+  $.fn.tooltip.Constructor = Tooltip
+
+
+  // TOOLTIP NO CONFLICT
+  // ===================
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
+  }
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: popover.js v3.4.1
+ * https://getbootstrap.com/docs/3.4/javascript/#popovers
+ * ========================================================================
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // POPOVER PUBLIC CLASS DEFINITION
+  // ===============================
+
+  var Popover = function (element, options) {
+    this.init('popover', element, options)
+  }
+
+  if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js')
+
+  Popover.VERSION  = '3.4.1'
+
+  Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
+    placement: 'right',
+    trigger: 'click',
+    content: '',
+    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+  })
+
+
+  // NOTE: POPOVER EXTENDS tooltip.js
+  // ================================
+
+  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype)
+
+  Popover.prototype.constructor = Popover
+
+  Popover.prototype.getDefaults = function () {
+    return Popover.DEFAULTS
+  }
+
+  Popover.prototype.setContent = function () {
+    var $tip    = this.tip()
+    var title   = this.getTitle()
+    var content = this.getContent()
+
+    if (this.options.html) {
+      var typeContent = typeof content
+
+      if (this.options.sanitize) {
+        title = this.sanitizeHtml(title)
+
+        if (typeContent === 'string') {
+          content = this.sanitizeHtml(content)
+        }
+      }
+
+      $tip.find('.popover-title').html(title)
+      $tip.find('.popover-content').children().detach().end()[
+        typeContent === 'string' ? 'html' : 'append'
+      ](content)
+    } else {
+      $tip.find('.popover-title').text(title)
+      $tip.find('.popover-content').children().detach().end().text(content)
+    }
+
+    $tip.removeClass('fade top bottom left right in')
+
+    // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
+    // this manually by checking the contents.
+    if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide()
+  }
+
+  Popover.prototype.hasContent = function () {
+    return this.getTitle() || this.getContent()
+  }
+
+  Popover.prototype.getContent = function () {
+    var $e = this.$element
+    var o  = this.options
+
+    return $e.attr('data-content')
+      || (typeof o.content == 'function' ?
+        o.content.call($e[0]) :
+        o.content)
+  }
+
+  Popover.prototype.arrow = function () {
+    return (this.$arrow = this.$arrow || this.tip().find('.arrow'))
+  }
+
+
+  // POPOVER PLUGIN DEFINITION
+  // =========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.popover')
+      var options = typeof option == 'object' && option
+
+      if (!data && /destroy|hide/.test(option)) return
+      if (!data) $this.data('bs.popover', (data = new Popover(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.popover
+
+  $.fn.popover             = Plugin
+  $.fn.popover.Constructor = Popover
+
+
+  // POPOVER NO CONFLICT
+  // ===================
+
+  $.fn.popover.noConflict = function () {
+    $.fn.popover = old
+    return this
+  }
+
+}(jQuery);
+</script>
 </head>
 <body>
   <div class="reveal">
@@ -1846,7 +2800,7 @@ table{border-collapse:collapse;border-spacing:0}td,th{padding:0}*{-webkit-box-si
 <section>
     <h1 class="title">POLI 572B</h1>
     <h2 class="author">Michael Weaver</h2>
-    <h3 class="date">January 25, 2021</h3>
+    <h3 class="date">January 24, 2022</h3>
 </section>
 
 <section class="slide level2">
@@ -1966,7 +2920,7 @@ BCD per 1k (total)
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Control
 </td>
 <td style="text-align:left;">
@@ -1976,16 +2930,16 @@ No
 30000
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.10
+1.70
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.1
+1.70
 </td>
 </tr>
 <tr grouplength="2">
@@ -1994,7 +2948,7 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2004,20 +2958,20 @@ No
 20000
 </td>
 <td style="text-align:right;">
-37
+27
 </td>
 <td style="text-align:right;">
-1.85
+1.35
 </td>
 <td style="text-align:right;">
-60
+47
 </td>
 <td style="text-align:right;">
-2.0
+1.57
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2027,10 +2981,10 @@ Yes
 10000
 </td>
 <td style="text-align:right;">
-23
+20
 </td>
 <td style="text-align:right;">
-2.30
+2.00
 </td>
 <td style="text-align:right;">
 NA
@@ -2047,8 +3001,119 @@ NA
 <p>What is the effect of <strong>mammography</strong>?</p>
 <h4 id="option-1">Option 1:</h4>
 <p>Compare all <strong>treated</strong> (screened) to all <strong>untreated</strong> (not screened in both T and C)</p>
+</section><section class="slide level2">
+
+<p>Compare all <strong>treated</strong> (screened) to all <strong>untreated</strong> (not screened in both T and C)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Screened
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(N\)</span>
+</th>
+<th style="text-align:right;">
+BC Deaths
+</th>
+<th style="text-align:right;">
+BCD per 1k
+</th>
+<th style="text-align:right;">
+BC Deaths (total)
+</th>
+<th style="text-align:right;">
+BCD per 1k (total)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="1">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Control Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Control
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+30000
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Treatment Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20000
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+10000
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li class="fragment">This comparison says: effect of mammography is to increase breast cancer mortality rate by 0.3 per 1000!</li>
+<li class="fragment">This comparison says: effect of mammography is to increase breast cancer mortality rate by 0.44 per 1000!</li>
 </ul>
 </section><section class="slide level2">
 
@@ -2056,8 +3121,119 @@ NA
 <p>What is the effect of <strong>mammography</strong>?</p>
 <h4 id="option-2">Option 2:</h4>
 <p>Compare all <strong>treated</strong> (screened) to the assigned-to-<strong>control</strong> group.</p>
+</section><section class="slide level2">
+
+<p>Compare all <strong>treated</strong> (screened) to the assigned-to-<strong>control</strong> group.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Screened
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(N\)</span>
+</th>
+<th style="text-align:right;">
+BC Deaths
+</th>
+<th style="text-align:right;">
+BCD per 1k
+</th>
+<th style="text-align:right;">
+BC Deaths (total)
+</th>
+<th style="text-align:right;">
+BCD per 1k (total)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="1">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Control Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Control
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+30000
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Treatment Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20000
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+10000
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li class="fragment">This comparison says: effect of mammography is to increase breast cancer mortality rate by 0.2 per 1000!</li>
+<li class="fragment">This comparison says: effect of mammography is to increase breast cancer mortality rate by 0.3 per 1000!</li>
 </ul>
 </section><section class="slide level2">
 
@@ -2066,17 +3242,130 @@ NA
 <p>DISCUSS</p>
 </section><section class="slide level2">
 
-</section><section class="slide level2">
-
 <h3 id="mammography-3">Mammography</h3>
 <h4 id="option-3">Option 3:</h4>
 <p>Compare <strong>assigned-to-treatment</strong> group to the <strong>assigned-to-control</strong> group.</p>
-<p>This comparison says: effect of mammography is to reduce breast cancer mortality rate by -0.1 per 1000!</p>
+</section><section class="slide level2">
+
+<p>Compare <strong>assigned-to-treatment</strong> group to the <strong>assigned-to-control</strong> group.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Screened
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(N\)</span>
+</th>
+<th style="text-align:right;">
+BC Deaths
+</th>
+<th style="text-align:right;">
+BCD per 1k
+</th>
+<th style="text-align:right;">
+BC Deaths (total)
+</th>
+<th style="text-align:right;">
+BCD per 1k (total)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="1">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Control Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Control
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+30000
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Treatment Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20000
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+10000
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+<p>This comparison says: effect of mammography is to reduce breast cancer mortality rate by -0.13 per 1000!</p>
 </section><section class="slide level2">
 
 <h3 id="mammography-4">Mammography</h3>
 <p>Which option is the best?</p>
 <p>Why?</p>
+</section><section class="slide level2">
+
+<p>Why do we compare assigned-to-treat to assigned-to-control:</p>
+<h3 id="some-intuition">Some intuition</h3>
 </section><section class="slide level2">
 
 <h3 id="there-are-four-possible-types-of-peopleunits">There are <em>four</em> possible types of people/units</h3>
@@ -2219,7 +3508,7 @@ defiers
 <li>compliers assigned to treatment</li>
 <li>compliers, never-takers assigned to control</li>
 </ul>
-<p>Compliers and never-takers have <strong>different potential outcomes</strong> <span class="math inline">\(\to\)</span> bias.</p>
+<p>If compliers and never-takers have <strong>different potential outcomes</strong> <span class="math inline">\(\to\)</span> bias.</p>
 </section><section class="slide level2">
 
 <h3 id="mammography-6">Mammography:</h3>
@@ -2232,6 +3521,10 @@ defiers
 </section><section class="slide level2">
 
 <p>When we compare and treated and untreated in a way that ignores the process of <strong>random assignment</strong> we run the risk of bias.</p>
+<h3 id="a-digression">A Digression</h3>
+<h3 id="what-to-do-about-non-compliance">What to do about Non-compliance?</h3>
+</section><section class="slide level2">
+
 <h3 id="solution-1-intent-to-treat">Solution 1: Intent to Treat</h3>
 <p>One solution to non-compliance is to estimate the <strong>intent to treat</strong> (<span class="math inline">\(ITT\)</span>) effect, as opposed to the <span class="math inline">\(ACE\)</span>.</p>
 <p><strong>Intent to treat</strong> (<span class="math inline">\(ITT\)</span>) compares <strong>assigned-to-treatment</strong> against <strong>assigned-to-control</strong>. Because this is randomly assigned, we know this comparison is unbiased (see Lectures 1 and 2).</p>
@@ -2324,7 +3617,7 @@ BCD per 1k (total)
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Control
 </td>
 <td style="text-align:left;">
@@ -2334,16 +3627,16 @@ No
 30000
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.10
+1.70
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.1
+1.70
 </td>
 </tr>
 <tr grouplength="2">
@@ -2352,7 +3645,7 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2362,20 +3655,20 @@ No
 20000
 </td>
 <td style="text-align:right;">
-37
+27
 </td>
 <td style="text-align:right;">
-1.85
+1.35
 </td>
 <td style="text-align:right;">
-60
+47
 </td>
 <td style="text-align:right;">
-2.0
+1.57
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2385,10 +3678,10 @@ Yes
 10000
 </td>
 <td style="text-align:right;">
-23
+20
 </td>
 <td style="text-align:right;">
-2.30
+2.00
 </td>
 <td style="text-align:right;">
 NA
@@ -2402,6 +3695,118 @@ NA
 </section><section class="slide level2">
 
 <h3 id="cace-3"><span class="math inline">\(CACE\)</span></h3>
+<p>How do we find compliers… in the treatment group?</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Assignment
+</th>
+<th style="text-align:left;">
+Screened
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(N\)</span>
+</th>
+<th style="text-align:right;">
+BC Deaths
+</th>
+<th style="text-align:right;">
+BCD per 1k
+</th>
+<th style="text-align:right;">
+BC Deaths (total)
+</th>
+<th style="text-align:right;">
+BCD per 1k (total)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="1">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Control Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Control
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+30000
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>Treatment Group</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+20000
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+1.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;color: white !important;background-color: green !important;" indentlevel="1">
+Treatment
+</td>
+<td style="text-align:left;color: white !important;background-color: green !important;">
+Yes
+</td>
+<td style="text-align:right;color: white !important;background-color: green !important;">
+10000
+</td>
+<td style="text-align:right;color: white !important;background-color: green !important;">
+20
+</td>
+<td style="text-align:right;color: white !important;background-color: green !important;">
+2.00
+</td>
+<td style="text-align:right;color: white !important;background-color: green !important;">
+NA
+</td>
+<td style="text-align:right;color: white !important;background-color: green !important;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</section><section class="slide level2">
+
+<h3 id="cace-4"><span class="math inline">\(CACE\)</span></h3>
 <p>How do we find compliers… in the control group?</p>
 <table>
 <thead>
@@ -2436,7 +3841,7 @@ BCD per 1k (total)
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Control
 </td>
 <td style="text-align:left;">
@@ -2446,16 +3851,16 @@ No
 30000
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.10
+1.70
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.1
+1.70
 </td>
 </tr>
 <tr grouplength="2">
@@ -2464,7 +3869,7 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2474,20 +3879,20 @@ No
 20000
 </td>
 <td style="text-align:right;">
-37
+27
 </td>
 <td style="text-align:right;">
-1.85
+1.35
 </td>
 <td style="text-align:right;">
-60
+47
 </td>
 <td style="text-align:right;">
-2.0
+1.57
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -2497,10 +3902,10 @@ Yes
 10000
 </td>
 <td style="text-align:right;">
-23
+20
 </td>
 <td style="text-align:right;">
-2.30
+2.00
 </td>
 <td style="text-align:right;">
 NA
@@ -2513,18 +3918,19 @@ NA
 </table>
 </section><section class="slide level2">
 
-<h3 id="cace-4"><span class="math inline">\(CACE\)</span></h3>
-<p>Unless <strong>everyone</strong> is a complier, we cannot directly observe</p>
+<h3 id="cace-5"><span class="math inline">\(CACE\)</span></h3>
+<p>In general, we cannot directly observe…</p>
 <ul>
-<li><span class="math inline">\(Y(D = 1)\)</span> for compliers in treatment (unless no always-takers)</li>
-<li><span class="math inline">\(Y(D = 0)\)</span> for compliers in control</li>
+<li><span class="math inline">\(Y(D = 1)\)</span> for compliers in treatment (unless, as in this case, no always-takers)</li>
+<li><span class="math inline">\(Y(D = 0)\)</span> for compliers in control (unless everyone is a complier)</li>
 </ul>
+<p><br></p>
 <ul>
 <li class="fragment">But… We don’t need to directly observe compliers!</li>
 </ul>
 </section><section class="slide level2">
 
-<h3 id="cace-5"><span class="math inline">\(CACE\)</span></h3>
+<h3 id="cace-6"><span class="math inline">\(CACE\)</span></h3>
 <p>With <strong>three key assumptions</strong>, can find the effect for compliers without knowing which persons are compliers!</p>
 <p>To understand, we first need potential outcomes model.</p>
 <ul>
@@ -2661,8 +4067,14 @@ Defier
 <h3 id="assumption-1-no-defiers-monotonicity">Assumption 1: No Defiers / Monotonicity</h3>
 <ul>
 <li>Assume that “defiers” do not exist.</li>
-<li>We can allow for never treats <em>and</em> always treats! (why?)</li>
 <li>Seems plausible, but sometimes defiers may exist.</li>
+</ul>
+<p><br></p>
+<ul>
+<li>Why?
+<ul>
+<li>If no defiers, can have never treats and always treats! (why?)</li>
+</ul></li>
 </ul>
 <p>More generally:</p>
 <ul>
@@ -3024,49 +4436,57 @@ Never Taker
 </section><section class="slide level2">
 
 <h3 id="estimating-the-cace-1">Estimating the CACE:</h3>
+<p>Could we estimate the <span class="math inline">\(CACE\)</span> like this?</p>
+<p><span class="math display">\[\widehat{CACE} = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D = 1|Z=1) - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D = 0|Z = 0)\]</span></p>
+<ul>
+<li class="fragment">If there are always takers and/or never takers?</li>
+</ul>
+</section><section class="slide level2">
+
+<h3 id="estimating-the-cace-2">Estimating the CACE:</h3>
 <p>A path:</p>
 <p>Can decompose the mean, <span class="math inline">\(\bar{x}\)</span>, into the sum of <span class="math inline">\(G\)</span> sub-group means of <span class="math inline">\(x\)</span>, weighted by <span class="math inline">\(w\)</span>, where <span class="math inline">\(w\)</span> is the fraction of the total <span class="math inline">\(N\)</span> in subgroup <span class="math inline">\(G\)</span>: <span class="math inline">\(w_g = \frac{N_g}{N}\)</span>. All <span class="math inline">\(w\)</span> then sum to <span class="math inline">\(1\)</span>.</p>
 <p><span class="math display">\[\bar{x} = \sum\limits_{g=1}^{G} x_g \cdot w_g\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-2">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-3">Estimating the CACE:</h3>
 <p>Within the <strong>population</strong> (study group):</p>
 <p>proportion of (a)lways Takers is <span class="math inline">\(\pi_{a}\)</span> proportion of (n)ever Takers is <span class="math inline">\(\pi_{n}\)</span> proportion of (c)ompliers is <span class="math inline">\(\pi_{c}\)</span> proportion of (d)efiers is <span class="math inline">\(\pi_{d}\)</span></p>
 <p><span class="math inline">\(\pi_{c} + \pi_{a} + \pi_{n} + \pi_{d} = 1\)</span></p>
 <p>Where <span class="math inline">\(Y_?(1)\)</span> indicates the mean of <span class="math inline">\(Y_?(Z = 1)\)</span> for each group. Where <span class="math inline">\(Y_?(0)\)</span> indicates the mean of <span class="math inline">\(Y_?(Z = 0)\)</span> for each group.</p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-3">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-4">Estimating the CACE:</h3>
 <p>By this logic:</p>
 <p><span class="math display">\[ITT = Y(Z = 1) - Y(Z = 0)\]</span></p>
 <p>Can be rewritten as</p>
 <p><span class="math display">\[ITT = (Y_c(1)\pi_c + Y_a(1)\pi_a + Y_n(1)\pi_n + Y_d(1)\pi_d) - \\ (Y_c(0)\pi_c + Y_a(0)\pi_a + Y_n(0)\pi_n + Y_d(0)\pi_d)\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-4">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-5">Estimating the CACE:</h3>
 <p>Assuming <strong>no defiers</strong>, we get:</p>
 <p><span class="math display">\[ITT = (Y_c(1)\pi_c + Y_a(1)\pi_a + Y_n(1)\pi_n) - \\ (Y_c(0)\pi_c + Y_a(0)\pi_a + Y_n(0)\pi_n )\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-5">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-6">Estimating the CACE:</h3>
 <p>Assuming the <strong>exclusion restriction</strong>, <span class="math inline">\(Y(1) = Y(0) = Y\)</span> for always takers and never takers.</p>
 <p><span class="math display">\[ITT = (Y_c(1)\pi_c + Y_a\pi_a + Y_n\pi_n) - \\ (Y_c(0)\pi_c + Y_a\pi_a + Y_n\pi_n )\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-6">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-7">Estimating the CACE:</h3>
 <p>Doing some subtraction, we find that only differences due to effects on compliers are left:</p>
 <p><span class="math display">\[ITT = (Y_c(1)\pi_c - Y_c(0)\pi_c) + \\ (Y_a\pi_a - Y_a\pi_a)  + (Y_n\pi_n - Y_n\pi_n) \]</span></p>
 <p><span class="math display">\[ITT = (Y_c(1)\pi_c - Y_c(0)\pi_c)\]</span></p>
 <p><span class="math display">\[ITT = [Y_c(1) - Y_c(0)]\pi_c = CACE \cdot \pi_c\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-7">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-8">Estimating the CACE:</h3>
 <p>Doing some rearranging, we just need to estimate two parameters to get the <span class="math inline">\(CACE\)</span>:</p>
 <p><span class="math display">\[\frac{ITT}{\pi_c} =  CACE \]</span></p>
 <p>We need to estimate parameters <span class="math inline">\(ITT\)</span> and <span class="math inline">\(\pi_c\)</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-8">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-9">Estimating the CACE:</h3>
 <p>We can esimate <span class="math inline">\(ITT\)</span> by assuming random assignment:</p>
 <ul>
 <li><span class="math inline">\(E(\widehat{ITT}) = ITT\)</span></li>
@@ -3074,30 +4494,30 @@ Never Taker
 <p>We know this from before.</p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-9">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-10">Estimating the CACE:</h3>
 <p>We can estimate <span class="math inline">\(\pi_c\)</span>, also by random assignment.</p>
 <p><span class="math display">\[ITT_D = \frac{1}{N} \sum\limits_{i=1}^{N} D_i(Z = 1) - D_i(Z = 0)\]</span></p>
 <p><span class="math display">\[ITT_D = (1\cdot\pi_c + 1\cdot\pi_a + 0\cdot\pi_n) - \\ (0\cdot\pi_c + 1\cdot\pi_a + 0\cdot\pi_n)\]</span></p>
 <p><span class="math display">\[ITT_D = (1\cdot\pi_c  - 0\cdot\pi_c) = \pi_c\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-10">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-11">Estimating the CACE:</h3>
 <p>And because <span class="math inline">\(ITT_D\)</span> is also an <span class="math inline">\(ITT\)</span>:</p>
 <p><span class="math display">\[E(\widehat{ITT_D}) = ITT_D = \pi_c\]</span></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-11">Estimating the CACE:</h3>
+<h3 id="estimating-the-cace-12">Estimating the CACE:</h3>
 <p><span class="math display">\[\widehat{CACE} = \frac{\widehat{ITT}}{\widehat{ITT_D}}\]</span></p>
 <p>By dividing the estimate <span class="math inline">\(\widehat{ITT}\)</span> by the estimate of <span class="math inline">\(\pi_c\)</span>, <span class="math inline">\(\widehat{ITT_D}\)</span>, we can estimate the effect of treatment on <strong>compliers</strong></p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-12">Estimating the CACE</h3>
+<h3 id="estimating-the-cace-13">Estimating the CACE</h3>
 <p>This estimator of the <span class="math inline">\(CACE\)</span> is called the <strong>wald estimator</strong></p>
 <p><span class="math display">\[\widehat{CACE} = \frac{Y^T - Y^C}{D^T - D^C}\]</span></p>
 <p>And it is a kind of <strong>instrumental variables</strong> analysis.</p>
 </section><section class="slide level2">
 
-<h3 id="estimating-the-cace-13">Estimating the CACE</h3>
+<h3 id="estimating-the-cace-14">Estimating the CACE</h3>
 <p>It turns out, the our <strong>estimator</strong> <span class="math inline">\(\widehat{CACE}\)</span> is <strong>biased</strong>:</p>
 <p><span class="math inline">\(E \left( \frac{a}{b} \right) \neq \frac{E(a)}{E(b)}\)</span></p>
 <p><span class="math inline">\(CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(\widehat{ITT})}{E(\widehat{ITT_D})} = \widehat{CACE}\)</span></p>
@@ -3106,9 +4526,9 @@ Never Taker
 </section><section class="slide level2">
 
 <h3 id="interpreting-the-cace">Interpreting the CACE</h3>
-<p>What does this <span class="math inline">\(CACE\)</span> show us? It is the <strong>effect of treatment</strong> for the group of units that <strong>changes its treatment status</strong> due to <strong>random assignment</strong>; for the units that can be <strong>randomly</strong> induced to take treatment.</p>
+<p>What does this <span class="math inline">\(CACE\)</span> show us? It is the <strong>effect of treatment</strong> for the units <strong>change treatment status</strong> due to <strong>random assignment</strong></p>
 <ul>
-<li><p><strong>external validity</strong>?: are the cases that comply with treatment assignment systematically different from the population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.</p></li>
+<li><p><strong>external validity</strong>?: are the cases that comply with treatment assignment different from population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.</p></li>
 <li><p>sometimes it is called the <strong>local average treatment effect</strong> or <span class="math inline">\(LATE\)</span>. This emphasizes the lack of external validity by emphasizing that the effect is “local” to units that are randomly induced to take treatment.</p></li>
 </ul>
 </section><section class="slide level2">
@@ -3147,7 +4567,7 @@ BCD per 1k (total)
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Control
 </td>
 <td style="text-align:left;">
@@ -3157,16 +4577,16 @@ No
 30000
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.10
+1.70
 </td>
 <td style="text-align:right;">
-63
+51
 </td>
 <td style="text-align:right;">
-2.1
+1.70
 </td>
 </tr>
 <tr grouplength="2">
@@ -3175,7 +4595,7 @@ No
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -3185,20 +4605,20 @@ No
 20000
 </td>
 <td style="text-align:right;">
-37
+27
 </td>
 <td style="text-align:right;">
-1.85
+1.35
 </td>
 <td style="text-align:right;">
-60
+47
 </td>
 <td style="text-align:right;">
-2.0
+1.57
 </td>
 </tr>
 <tr>
-<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 Treatment
 </td>
 <td style="text-align:left;">
@@ -3208,10 +4628,10 @@ Yes
 10000
 </td>
 <td style="text-align:right;">
-23
+20
 </td>
 <td style="text-align:right;">
-2.30
+2.00
 </td>
 <td style="text-align:right;">
 NA
@@ -3222,14 +4642,6 @@ NA
 </tr>
 </tbody>
 </table>
-</section><section class="slide level2">
-
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">itt_hat =<span class="st"> </span>(<span class="fl">1.83</span> <span class="op">-</span><span class="st"> </span><span class="fl">1.87</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">ittd_hat =<span class="st"> </span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>) <span class="op">-</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4">cace_hat =<span class="st"> </span>itt_hat<span class="op">/</span>ittd_hat</a>
-<a class="sourceLine" id="cb1-5" title="5">cace_hat</a></code></pre></div>
-<pre><code>## [1] -0.12</code></pre>
 </section></section>
 <section><section id="practice" class="title-slide slide level1"><h1>Practice</h1></section><section class="slide level2">
 

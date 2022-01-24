@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 25, 2021"
+date: "January 24, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -167,6 +167,18 @@ What is the effect of **mammography**?
 
 Compare all **treated** (screened) to all **untreated** (not screened in both T and C)
 
+
+---
+
+Compare all **treated** (screened) to all **untreated** (not screened in both T and C)
+
+```{r, echo = F, message=F, warning=F}
+kable(hip, format = 'html',
+      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+```
+
 >- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt1_n + nt0_n)/50), 2)` per 1000!
 
 ---
@@ -179,6 +191,18 @@ What is the effect of **mammography**?
 
 Compare all **treated** (screened) to the assigned-to-**control** group.
 
+---
+
+Compare all **treated** (screened) to the assigned-to-**control** group.
+
+
+```{r, echo = F, message=F, warning=F}
+kable(hip, format = 'html',
+      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+```
+
 >- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt0_n)/30), 2)` per 1000!
 
 ---
@@ -189,7 +213,7 @@ Do mammograms **increase** the risk of death from breast cancer?
 
 DISCUSS
 
----
+
 
 ---
 
@@ -198,6 +222,18 @@ DISCUSS
 #### Option 3:
 
 Compare **assigned-to-treatment** group to the **assigned-to-control** group.
+
+
+---
+
+Compare **assigned-to-treatment** group to the **assigned-to-control** group.
+
+```{r, echo = F, message=F, warning=F}
+kable(hip, format = 'html',
+      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3)
+```
 
 This comparison says: effect of mammography is to reduce breast cancer mortality rate by `r round(((c1_n + nt1_n)/30) - ((c0_n + nt0_n)/30), 2)` per 1000!
 
@@ -209,6 +245,11 @@ Which option is the best?
 
 Why?
 
+---
+
+Why do we compare assigned-to-treat to assigned-to-control:
+
+### Some intuition
 
 ---
 
@@ -254,7 +295,7 @@ kable(d, col.names = c("Type", "$D(Z = 1)$", "$D(Z = 0)$"), format = 'html')
 - compliers assigned to treatment
 - compliers, never-takers assigned to control
 
-Compliers and never-takers have **different potential outcomes** $\to$ bias.
+If compliers and never-takers have **different potential outcomes** $\to$ bias.
 
 ---
 
@@ -270,6 +311,12 @@ Comparison is based on **random assignment** gives us unbiased estimate.
 ---
 
 When we compare and treated and untreated in a way that ignores the process of **random assignment** we run the risk of bias.
+
+### A Digression
+
+### What to do about Non-compliance?
+
+---
 
 ### Solution 1: Intent to Treat
 
@@ -369,6 +416,20 @@ kable(hip, format = 'html',
 
 ### $CACE$
 
+How do we find compliers... in the treatment group?
+
+```{r echo = F}
+kable(hip, format = 'html',
+      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
+  group_rows("Control Group", 1,1) %>% 
+  group_rows("Treatment Group", 2,3) %>%
+  row_spec(3, background = 'green', color = 'white')
+```
+
+---
+
+### $CACE$
+
 How do we find compliers... in the control group?
 
 ```{r echo = F}
@@ -382,11 +443,12 @@ kable(hip, format = 'html',
 
 ### $CACE$
 
-Unless **everyone** is a complier, we cannot directly observe
+In general, we cannot directly observe...
 
-- $Y(D = 1)$ for compliers in treatment (unless no always-takers)
-- $Y(D = 0)$ for compliers in control
+- $Y(D = 1)$ for compliers in treatment (unless, as in this case, no always-takers)
+- $Y(D = 0)$ for compliers in control (unless everyone is a complier)
 
+<br>
 
 >- But... We don't need to directly observe compliers!
 
@@ -424,8 +486,13 @@ kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
 ### Assumption 1: No Defiers / Monotonicity
 
 - Assume that "defiers" do not exist.
-- We can allow for never treats *and* always treats! (why?)
 - Seems plausible, but sometimes defiers may exist.
+
+<br> 
+
+- Why?
+    - If no defiers, can have never treats and always treats! (why?)
+
 
 More generally:
 
@@ -546,6 +613,17 @@ $$CACE = Y_c(D = 1) - Y_c(D = 0)$$
 Where $Y_c(D = 1)$ is the mean $Y(D = 1)$ for compliers
 
 Where $Y_c(D = 0)$ is the mean $Y(D = 0)$ for compliers
+
+---
+
+### Estimating the CACE:
+
+Could we estimate the $CACE$ like this?
+
+$$\widehat{CACE} = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D = 1|Z=1) - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D = 0|Z = 0)$$
+
+
+>- If there are always takers and/or never takers?
 
 ---
 
@@ -691,9 +769,9 @@ as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **smal
 
 ### Interpreting the CACE
 
-What does this $CACE$ show us? It is the **effect of treatment** for the group of units that **changes its treatment status** due to **random assignment**; for the units that can be **randomly** induced to take treatment.
+What does this $CACE$ show us? It is the **effect of treatment** for the units **change treatment status** due to **random assignment**
 
-- **external validity**?: are the cases that comply with treatment assignment systematically different from the population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.
+- **external validity**?: are the cases that comply with treatment assignment different from population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.
 
 - sometimes it is called the **local average treatment effect** or $LATE$. This emphasizes the lack of external validity by emphasizing that the effect is "local" to units that are randomly induced to take treatment.
 
@@ -707,17 +785,6 @@ kable(hip, format = 'html',
   group_rows("Control Group", 1,1) %>% 
   group_rows("Treatment Group", 2,3)
 ```
-
----
-
-```{r}
-itt_hat = (1.83 - 1.87)
-ittd_hat = (1/3) - 0
-
-cace_hat = itt_hat/ittd_hat
-cace_hat
-```
-
 
 # Practice
 
