@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "January 26, 2021"
+date: "January 25, 2022"
 output: ioslides_presentation
 ---
 
@@ -15,9 +15,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### 1) **Normative vs. Empirical Claims**
 
-### 3) **Two Varieties of Normative Claims**
+### 2) **Two Varieties of Normative Claims**
 
-### 4) **Claims and Science**
+### 3) **Normative Claims and Science**
+
+# An Example
+
+---
+
+<img src="./nyt_editorial.png" width = 90%>
 
 ## An Example:
 
@@ -33,7 +39,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## An Example:
 
-#### **(3) US labor market can absorb immigrants**
+#### **(3) US labor market can provide jobs to immigrants**
 
 - Unemployment among immigrants is lower than native-born Americans
 
@@ -48,6 +54,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## POLL
 
+Indicate which of these five claims can be supported or rejected using scientific evidence?
+
 --- 
 
 ### **"Actually, the Numbers [Don't] Show That"**
@@ -58,7 +66,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 (2) High immigration rates do not lead to instability $\checkmark$
 
-(3) US labor market can absorb immigrants $\checkmark$
+(3) US labor market can provide jobs to immigrants $\checkmark$
 
 (4) Lack of immigration will slow US economic growth $\checkmark$
 
@@ -76,7 +84,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Even if 1-4 are true: we need to assume that **economic growth** is **desirable** to conclude that (5) is true.
 
->- And **more desirable** than ethnic homogeneity.
 
 ## Varieties of Claims
 
@@ -127,7 +134,7 @@ The basis/evidence for a normative claim:
 
 (2) **High immigration rates do not lead to instability**
 
-(3) **US labor market can absorb immigrants** 
+(3) **US labor market can provide jobs to immigrants** 
 
 (4) **Lack of immigration will slow US economic growth**
 
@@ -137,7 +144,7 @@ The basis/evidence for a normative claim:
 
 ## Normative Claims:
 
-#### **value judgments**: 
+#### **value judgments**:
 
 <br>
 
@@ -168,7 +175,7 @@ are normative claims that
 
 Vancouver no longer has a public health crisis that can be solved by needle exchanges, supervised injection sites, a naloxone-carting population, and pharmaceuticals substituted for illicit drugs. It is going to take more to solve the housing crisis by repurposing older hotels and simply putting roofs over people’s heads — a lot more.
 
-Solving it requires bold leadership and a willingness to go beyond what has been done in the past, using evidence-based solutions that are in the best interests of all residents. Everyone deserves to feel safe, protected and respected, regardless of which neighbourhood they live in."</small>
+Solving it requires bold leadership and a willingness to go beyond what has been done in the past, using evidence-based solutions that are in the best interests of all residents. Everyone deserves to feel safe, protected and respected, regardless of which neighbourhood they live in."</smaller>
 
 - Editorial in the [Vancouver Sun](https://vancouversun.com/news/daphne-bramham-vancouver-needs-compassionate-solutions-to-street-chaos)
 
@@ -185,7 +192,7 @@ are normative claims that assert what kinds of actions **should** be taken
 
 The basis/evidence for a prescriptive claim includes 
 
-- an (correct) **empirical** claim about the consequences of some action (causal claim)
+- evidence supporting an **empirical** claim about the consequences of some action (causal claim)
 - an assumption that some **value judgment** is correct.
 
 ## Revisit our Example
@@ -237,66 +244,65 @@ e.g. people who oppose immigration to achieve cultural homogeneity value **cultu
 
 ## Another example
 
-We run the BCCDC. We have finite resources to allocate COVID-19 vaccines.
+Imagine you work on the staff of a Cabinet Minister. The current government has finite resources to address the spike in pandemic.
 
 We all **agree**: we should aim to **minimize deaths**.
 
-### You disagree on how to distribute vaccines
+### You and your colleagues disagree on which policies do this
 
-(1) Plan A (Lottery)
+(1) Plan A: [vaccine mandate for cross-border truckers](https://www.cbc.ca/news/politics/vaccine-mandate-double-down-convoy-1.6326821)
 
-(2) Plan B (Targeting communities with more infections)
+(2) Plan B: [purchase and distribute large numbers of rapid antigen tests](https://www.cbc.ca/news/politics/canada-rapid-test-crunch-1.6323448)
 
-(3) Plan C (Current BC CDC plan)
+(3) Plan C: deploy Canadian Armed Forces to create field hospitals for non-ICU COVID patients
+
+
+## POLL
+
 
 ## Discuss:
 
 Which plan is best?
 
-Can science tell us which plan we should adopt?
-
-LINK
-
-## POLL
+(Assuming our only goal is to minimize deaths)... Can science tell us which plan we should adopt?
 
 ## Another example {.build}
  
 ### If we had Empirical Evidence on...
 
-- probabilities of death for different types of people (absent vaccine)
-- who would be more likely to get infected under different vaccine plans
+1. cross-border truckers as disease vectors, vulnerability of direct/indirect contacts
+2. efficacy of access to rapid tests on reducing transmission, exposure to vulnerable
+3. probability of mortality in COVID field wards, preventable deaths due to insufficient staff/resources in civilian hospitals
 
 Could assess which plan would yield the fewest deaths...
 
-
 ## Another example
 
-What if **you value** minimizing death, but **I value** maximizing equality?
+What if **you value** minimizing death, **I value** maximizing individual freedom, and **your friend values** minimizing price of consumer goods
 
-Which plan should **I** support?
+Which plan should we decide to support?
 
-(1) Plan A (Lottery)
+(1) Plan A: [vaccine mandate for cross-border truckers](https://www.cbc.ca/news/politics/vaccine-mandate-double-down-convoy-1.6326821)
 
-(2) Plan B (Targeting communities with more infections)
+(2) Plan B: [purchase and distribute large numbers of rapid antigen tests](https://www.cbc.ca/news/politics/canada-rapid-test-crunch-1.6323448)
 
-(3) Plan C (Current BC CDC plan)
+(3) Plan C: deploy Canadian Armed Forces to create field hospitals for non-ICU COVID patients
 
 >- **Could the scientific evidence resolve our dispute?**
 
 ##  Another example (Summary)
 
-### "My Vaccine Plan (X) reduces deaths (Y)"
+### "My Omicron policy response (X) minimizes deaths (Y)"
 
 - Scientific Evidence that "X causes Y" **does not imply** "we should do Y"
 
-- Depends on how we **value** Y
+- Depends on how we **value** Y; conflicting values cannot be resolved by science
 
 ### But...
 
 - If we assume less death is good (*a value judgment*)
-- What if science showed: Vaccine Plan A (X) does not reduce deaths (Y). (*empirical evidence*)
-- "X does/does not cause Y" is informative!
-
+- What if science showed: Plan A (X) does **not** reduce deaths (Y). (*empirical evidence*)
+- "X does/does not cause Y" is informative! Science is helpful!
 
 ## Conclusion:
 
