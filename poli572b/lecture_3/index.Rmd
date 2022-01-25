@@ -573,7 +573,7 @@ d = data.frame(
                 y00 = rep(c(NA,0,0), 1), y01 = rep(c(1,NA,NA), 1),
                type = rep(c("Always Taker", "Complier", "Never Taker"), 1))
 
-d[2, c('y10', 'y01')] = cell_spec(c(1,0), 'html', background = "green", color = 'white', bold = T)
+d[2, c('y10', 'y01')] = cell_spec(c(0,1), 'html', background = "green", color = 'white', bold = T)
 
 kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
                        "$Y_i(Z1,D0)$", "$Y_i(Z1,D1)$",
@@ -620,8 +620,10 @@ Where $Y_c(D = 0)$ is the mean $Y(D = 0)$ for compliers
 
 Could we estimate the $CACE$ like this?
 
-$$\widehat{CACE} = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D = 1|Z=1) - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D = 0|Z = 0)$$
-
+$$\begin{aligned}
+\widehat{CACE} & = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D = 1|Z=1) \\
+& - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D = 0|Z = 0)
+\end{aligned}$$
 
 >- If there are always takers and/or never takers?
 
