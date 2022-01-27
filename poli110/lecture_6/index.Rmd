@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "January 23, 2021"
+date: "January 27, 2022"
 output: ioslides_presentation
 ---
 
@@ -198,13 +198,13 @@ are claims about the how one phenomena ($X$) affects or causes another phenomena
 
 ## Turn these into causal claims:
 
-1. **In 2018, Canada had 0.67 firearms homicides per 100K while the US had 3.14 per 100K.**
+$1$. **In 2018, Canada had 0.67 firearms homicides per 100K while the US had 3.14 per 100K.**
 
-2. **The United States has more assault weapons per capita and more mass shooting victims than Canada**
+$2$. **The United States has more assault weapons per capita and more mass shooting victims than Canada**
 
-4. **Americans use guns in self-defense about 2.3 million times per year.**
+$4$. **Americans use guns in self-defense about 2.3 million times per year.**
 
-5. **People who openly carry a firearm are less likely to be victims of crimes**
+$5$. **People who openly carry a firearm are less likely to be victims of crimes**
 
 # Digression
 
@@ -214,9 +214,9 @@ You and your friend agree: **the most important ethical goal is minimizing human
 
 ### You disagree on what public health measure to take:
 
-(1) We should close in-person schooling (**prescriptive claim**)
+(1) We should mandate vaccine boosters (**prescriptive claim**)
 
-(2) We should close bars and restaurants (**prescriptive claim**)
+(2) We should impose lockdown and masking orders (**prescriptive claim**)
 
 ### Need to know:
 
@@ -244,9 +244,9 @@ Which option **prevents** the most human deaths? (a **causal** question)?
 
 ## Falsifiability
 
-### **Because science considers alternatives/is open to being wrong...**
+**Because science considers alternatives/is open to being wrong...**
 
-### **Because science is concerned with objective reality**
+**Because science is concerned with objective reality**
 
 <br>
 
@@ -264,32 +264,38 @@ and, if $H_1$ (**claim**) were true or valid, then it implies we should make cer
 
 Verification says that
 
-1. $H_1 \rightarrow O_1$
+1. $H_1 \xrightarrow{implies} O_1$
 
 2. If we see $O_1$
 
-3. Therefore, $H_1$ is valid
+3. Then, $H_1$ is valid
 
 ## Falsifiability
 
 Many people reject **verifiability** because **many different**, incompatible **claims** are **consistent with the same observed evidence**
 
-1. $(H_1, H_2, \ldots, H_k) \rightarrow O_1$
+1. $(H_1, H_2, \ldots, H_k) \xrightarrow{imply} O_1$
 
-2. If we observe $O_1$
+2. If we see $O_1$
 
-3. $H_1$ is not proven
+3. Then, $H_1$ is *not proven*
+
+<br>
+
+>- Because we would observe $O_1$ if, e.g. $H_2$ were true and $H_1$ false.
 
 ## Falsifiability
 
-If a **claim** $H_1$ is falsfiable, there might be observable implication $O_1$ that, if it were untrue would invalidate $H_1$. So...
+If a **claim** $H_1$ is falsfiable, there must be observable implication $O_1$ that, if observed, would invalidate $H_1$. So...
 
-1. $H_1 \rightarrow  O_1$
-2. $not\ O_1$
-3. Therefore, $not\ H_1$
+1. $H_1 \xrightarrow{implies}  not \ O_1$
+2. If we see $O_1$
+3. Then, $not\ H_1$
 
 
 ## Falsification vs Verification
+
+Two different **approaches to evidence**. May apply **verification** to a **falsifiable** claim.
 
 ### **The difference**
 
@@ -297,14 +303,13 @@ If a **claim** $H_1$ is falsfiable, there might be observable implication $O_1$ 
 
 **Falsification** looks to see: is there evidence that the claim is **wrong**
 
-
 ## Examples
 
 $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump**. Allegedly: "counting of [absentee] ballots [in Fulton county] took place in secret after Republican Party observers were dismissed because they were advised that the tabulation center was shutting down for the night."
 
 <u>**Verification**</u>
 
-1. $H_1 \rightarrow$ If there was fraud, would expect that absentee ballots from precincts on Fulton side of county line broke for Biden more than absentee ballots in precincts in non-Fulton side of county line
+1. $H_1 \xrightarrow{implies}$ absentee ballots from precincts on Fulton side of county line more pro-Biden more than absentee ballots in precincts on non-Fulton side of county line.
 
 ## Example
 
@@ -312,7 +317,7 @@ $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Tr
 
 <u>**Verification?**</u>
 
-1. $H_1 \rightarrow$ If there was fraud, would expect that absentee ballots from precincts on Fulton  side of county line broke for Biden more than absentee ballots in precincts in non-Fulton side of county line.
+1. $H_1 \xrightarrow{implies}$ absentee ballots from precincts on Fulton side of county line more pro-Biden more than absentee ballots in precincts on non-Fulton side of county line.
 
 2. Researcher finds absentee ballots in Fulton county broke more for Biden than neighboring counties: [see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988) (WARNING)
 
@@ -320,14 +325,22 @@ $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Tr
 
 ## Verification?
 
-$H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump**; $H_2:$ **People select residence based on partisanship**; $H_3:$ **People select residence based on racial composition of schools**   
+- $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump**
+- $H_2:$ **People select residence based on partisanship**
+- $H_3:$ **People select residence based on racial composition of schools**   
 
-1. $(H_1, H_2, H_3, \dots H_k) \rightarrow$: Absentee ballots in Fulton side of county line more Pro-Biden than on other side of county line
+1. $(H_1, H_2, H_3) \xrightarrow{imply}$: Absentee ballots in Fulton side of county line more Pro-Biden than on other side of county line
 
 2. Researcher finds absentee ballots in Fulton county broke more for Biden than neighboring counties [see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988) (WARNING)
 
 3. Therefore, $H_1, H_2, or H_3$ could be valid
 
+## Unfalsifiable Claims
+
+Claims become unfalsifiable for a few reasons:
+
+- claim/theory includes an untestable reason for why observable evidence rejects the theory (e.g., conspiracy, flying spaghetti monster)
+- claim/theory "changes goalposts": evidence that rejects the theory rationalized away, b/c theory can make other, as yet, untested predictions (e.g., economic rationality, dialectical materialism)
 
 ## Example: Lizard People
 
@@ -337,7 +350,7 @@ $H_1$: **World leaders are actually lizard people who seek to dominate humans**
  
 ## Lizard People: Verification
 
-$O_1$: **World leaders exhibit lizard traits** 
+$H_1 \xrightarrow{implies} O_1$: **World leaders exhibit lizard traits** 
 
 <img src='./lizard_p0.png' width = 75%>
 
@@ -356,27 +369,26 @@ $O_1 \to H_1$: **Bow down before your lizard overlords**
 
 ## Lizard People: Unfalsifiable
 
-How would we **falsify**?
+How would we **falsify** this?
 
-1. $H_1$: **World leaders are actually lizard people who seek to dominate humans** $\to ????$
+1. $H_1$: **World leaders are actually lizard people who seek to dominate humans** $\to \ not \ O_?$
 
-2. $not \ ????$ 
+2. If we see $O_?$ 
 
 3. $not \ H_1$
 
 What, if we observed it, would prove "lizard people" wrong?
-
-What, if we DIDN'T observe it, would prove "lizard people" wrong?
 
 
 ## Lizard People: Unfalsifiable
  
 <img src='./lizard_vox.png' width=100%>
 
+# 
 
-# Objectives
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7vrP8EplfP0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Lessons
+## Conclusion
 
 What kinds of claims can science evaluate?
 
