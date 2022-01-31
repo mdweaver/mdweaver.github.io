@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 8, 2021"
+date: "January 31, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -92,7 +92,7 @@ How do we get unbiased estimate of $ACE$ or other causal parameters?
 
 Imagine we survey and compare TFA participants and non-participants graduating from the same set of universities.
 
-"Racial resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today,limiting the chances of individuals from particular racial groups to get ahead?").
+"Racial resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today, limiting the chances of individuals from particular racial groups to get ahead?").
 
 Score $1$ to $5$, with $5$ being greatest resentment.
 
@@ -146,7 +146,7 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ---
 
-What is the estimate: $\widehat{ACE}$?
+What is the estimate, $\widehat{ACE}$?, comparing treated to untreated?
 
 ```{r, echo = F}
 po.table = data.table(i = 1:6, 
@@ -182,7 +182,11 @@ ace_hat
 
 ---
 
+Because we simply observe those treated and those untreated, with no randomization, there are no other alternate allocations of treatment.
+
 #### Why is the $\widehat{ACE}$  biased?
+
+
 
 # Confounding
 
@@ -194,7 +198,7 @@ ace_hat
 
 If we ignore confounding, then our estimate of the $ACE$ will be **biased**.
 
->- Why might value of treatment (TFA)  **not  be independent** of potential outcomes of $Y$?
+>- Why might the potential outcomes of $Y$ (racial resentment) be **dependent** on the value of treatment (TFA)?
 
 ---
 
@@ -219,9 +223,11 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 - **Occurs frequently when we don't have randomization**
     - Note: $Z$ will be reserved for randomized variables; $D$ when randomization is unclear.
+    - **size of bias** may vary, depending on extent of confounding
 - **Can occur, despite randomization**
     - exclusion restriction violation
     - attrition
+    - mis-use of experiment
 - **Easy to understand graphically**
 
 
@@ -229,9 +235,9 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ### Directed Acyclic Graphs (DAGs)
 
-**DAGS**:
+**DAGs**:
 
-- **nodes**/**vertices** represent variables part of **causal chain**
+- **nodes**/**vertices** represent variables in **causal chain**
     - may be observed (filled) / unobserved (empty)
 - **directed arrows** represents flow of causality (not the magnitude/direction/functional form of effect)
 - **no cycles**: variables cannot cause themselves (even indirectly)
@@ -268,9 +274,9 @@ Using a **DAG**:
 
 A **backdoor path** is a **non-causal** path from $D$ to $Y$: 
 
-- any path that remains after we remove arrows point out from $D$
+- a path that remains after we remove arrows point outward from $D$
+- that only changes direction once (backwards from $D$, forwards to $Y$)
 - "backdoor" because it follows arrows backwards out of $D$
-- backdoor path can only change direction once (backwards from $D$, forwards to $Y$)
 
 ---
 
@@ -331,6 +337,27 @@ dagify(mammogram ~ invite,
 
 ---
 
+[Paluck 2010](https://doi.org/10.1177%2F0146167210379868)
+
+```{r, echo = F}
+dagify(discuss ~ talk_show,
+       anger ~ talk_show,
+       ethnic ~ discuss,
+       ethnic ~ anger,
+       ethnic ~ u,
+       exposure = "talk_show", 
+       outcome = 'ethnic',
+       labels = c('discuss' = "Discussion", 
+                  'ethnic' = 'Ethnic Trust',
+                  'talk_show' = "Talk Show",
+                  'u' = 'Other',
+                  'anger' = 'Anger')) %>%
+  ggdag(use_labels = "label", text = F, layout = 'auto')
+```
+
+
+---
+
 Exclusion Restriction Violation in $CACE$ [Paluck 2010](https://doi.org/10.1177%2F0146167210379868)
 
 ```{r, echo = F}
@@ -356,14 +383,13 @@ dagify(discuss ~ talk_show,
 
 What if we don't have randomization?
 
-**In two groups**:
+**As a class, on the board**:
 
 Create a DAG for the TFA example on the white board.
 
 - what are variables that might **affect racial resentment**?
 - what are variables that might **affect joining TFA**?
 - what are causal links between them?
-
 
 ---
 
@@ -397,7 +423,7 @@ The "backdoor" criterion for confounding points to solutions:
 
 **Condition on** all variables that
 
-- have causal paths toward $D$ and toward $Y$ 
+- have causal paths toward $D$ and toward $Y$  **or**
 - have causal paths toward $Y$ and backdoor path to $D$ 
 
 **Do NOT condition on** variables that
@@ -491,7 +517,7 @@ If both **motivation** and **test scores** cause admission (but are independent 
 
 When does this arise?
 
-- Can happen in a variety of circumstances, but is VERY COMMON for variables that are "post-treatment"
+- Can happen in a variety of circumstances, but is VERY COMMON for variables that are "post-treatment" (to the board)
 - See Morgan and Winship, Chapter 4
 
 
@@ -518,9 +544,9 @@ When does this arise?
 
 ### Directed Acyclic Graphs (DAGs)
 
-**In two groups**:
+**As a class**:
 
-Switch diagrams:
+Revisit our diagram:
 
 **Identify variables we need to condition on to close backdoor paths** and find effect of TFA on racial resentment
 
@@ -588,9 +614,12 @@ which we found to be biased... $ACE \neq E[\widehat{ACE}]$
 
 Instead, we find effect of $TFA$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
 
-$\widehat{ACE}[X = x] = \overline{Y(1)}[X = x] - \overline{Y(0)}[X = x]$ for each value of $x$ in the data. Where $\overline{Y}$ is the mean of observed values of $Y$ for 
+$\widehat{ACE}[X = x] = E[Y(D = 1)][X = x]) - E[Y(D = 0)][X = x]$ 
 
-Then take a weighted average of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
+for each value of $x$ in the data. 
+
+
+Then take a **weighted average** of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
 
 ---
 
@@ -612,18 +641,15 @@ Example (1): Conditioning in `R`
 ```{r}
 #ACE | X = 0
 ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #ACE | X = 1
 ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #Ace Hat
 mean(c(ace_x0, ace_x1))
-
 #Ace
 ace
 ```
 
->- Why does conditioning recover the true $ACE$ in this case?
+>- Why does conditioning recover the true $ACE$?
 
 ---
 
@@ -694,13 +720,10 @@ Example (3): Conditioning in `R`
 ```{r}
 #ACE | X = 0
 ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #ACE | X = 1
 ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #Ace Hat
 mean(c(ace_x0, ace_x1))
-
 #Ace
 ace
 ```
@@ -715,13 +738,10 @@ Example (3): Conditioning in `R`
 ```{r}
 #ACE | X = 0
 ace_x0 = po.table[x_i %in% 0, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #ACE | X = 1
 ace_x1 = po.table[x_i %in% 1, mean(y_i[d_i == 1]) - mean(y_i[d_i == 0])]
-
 #Ace Hat: weighting by size of each group in X
 weighted.mean(c(ace_x0, ace_x1), w = c(3,2))
-
 #Ace
 ace
 ```
@@ -770,6 +790,7 @@ Why can't conditioning recover the true $ACE$?
 In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 $1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
     - all 'backdoor' paths are blocked
     - example (2) violated this
     - no conditioning on colliders to 'unblock' backdoor path
@@ -780,6 +801,7 @@ $1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potent
 In order for conditioning to estimate the $ACE$ without bias, we must assume
     
 $2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+
     - There must be variation in the levels of treatment **within every strata** of $X$
     - example (4) violated this
     
@@ -789,7 +811,8 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
     
 3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
-    - We'll revisit this 
+
+    - We'll revisit this in the context of regression
 
 ---
 
@@ -797,7 +820,7 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 1. **Ignorability**/**Conditional Independence**: 
     - an untestable assumption: there may be unobserved variables we should condition on
-    - can argue this is plausible using theory/knowledge of  cases
+    - can argue this is plausible using theory/knowledge of cases; or argue for partial identification
     
 2. **Positivity**/**Common Support**:
     - with more conditioning variables: less likely positivity is to hold
@@ -818,7 +841,7 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 - $ATC$: Average Treatment effect on Control
     - requires positivity **only for values of $x$ held by units in control**
 - Treatment effects for strata with **positivity**
-    - requires thinking about interpretation
+    - requires thinking about interpretation (like $CACE$, for whom does effect hold?)
 
 ---
 
