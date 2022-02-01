@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 2, 2021"
+date: "February 1, 2022"
 output: ioslides_presentation
 ---
 
@@ -10,6 +10,38 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Evaluating Descriptive Claims
+
+## Return to in-person
+
+1. Lecture
+
+  - in person, in Buchanan A101. Recordings, but no live streaming.
+  - recordings to capture mic, slides (maybe more??)
+
+2. Tutorials
+
+  - each tutorial will decide: in person, on Zoom, or hybrid 
+  - if choice is not unanimous: hybrid. In person but Zoom on.
+
+3. Exams
+
+  - Only fair option is to make Midterm on Canvas at the same time.
+  - Can take it at home or in lecture hall. Everyone can use open notes.
+  - Final also online, but likely asynchronous on Canvas.
+
+
+## Assignments:
+
+- Homework 1: 
+
+    - Recognize/come up with different types of claims; be able to explain how they are related to each other
+    - Don't quote a claim directly; paraphrase it to make the claim more clear.
+    
+- Survey Activity:
+
+    - What is this project?
+    - Should not take more than 30 minutes to 1 hour in total
+    - Groups assigned
 
 ## Objectives
 
@@ -50,7 +82,7 @@ claims about what exists (or has existed/will exist) in the world:
 
 ## Descriptive Claims: Evaluation
 
-In small groups: what would you want to know before you could judge whether this claim was correct or incorrect?
+What would you want to know before you could judge whether this claim was correct or incorrect?
 
 > **"Democracies have been backsliding (becoming less democratic) since 2016"**
 
@@ -83,6 +115,19 @@ In social science we discuss "cases", not in the legal sense, but in this sense:
 
 We are often interested in identifying what general categories this specific **case** belongs to, what is its "type". Or measuring **attributes** of that case. (How much of something it has, e.g.)
 
+## Cases
+
+(1) **"Democracy is a type of political regime."**
+
+(2) **"Russia is a democracy."**
+
+(3) **"58% of countries worldwide are democracies."**
+
+(4) **"Countries in Western Europe are more democratic than those in Eastern Europe."**
+
+(5) **"Democracies have been backsliding (becoming less democratic) since 2016."**
+
+
 # Concepts
 
 ## Concepts
@@ -97,7 +142,9 @@ Our thought and our language is rooted in concepts!
 
 ### *On Exactitude in Science*
 
->  "... In that Empire, the Art of Cartography attained such Perfection that the map of a single Province occupied the entirety of a City, and the map of the Empire, the entirety of a Province. In time, those Unconscionable Maps no longer satisfied, and the Cartographers Guilds struck a Map of the Empire whose size was that of the Empire, and which coincided point for point with it. The following Generations, who were not so fond of the Study of Cartography as their Forebears had been, **saw that that vast Map was Useless**, and not without some Pitilessness was it, that they delivered it up to the Inclemencies of Sun and Winters. In the Deserts of the West, still today, there are Tattered Ruins of that Map, inhabited by Animals and Beggars; in all the Land there is no other Relic of the Disciplines of Geography." - Jorge Luis Borges
+>  "... In that Empire, the Art of Cartography attained such Perfection that the map of a single Province occupied the entirety of a City, and the map of the Empire, the entirety of a Province. In time, those Unconscionable Maps no longer satisfied, and the Cartographers Guilds struck a Map of the Empire whose size was that of the Empire, and which coincided point for point with it. The following Generations, who were not so fond of the Study of Cartography as their Forebears had been, **saw that that vast Map was Useless**, and not without some Pitilessness was it, that they delivered it up to the Inclemencies of Sun and Winters. In the Deserts of the West, still today, there are Tattered Ruins of that Map, inhabited by Animals and Beggars; in all the Land there is no other Relic of the Disciplines of Geography." 
+
+- Jorge Luis Borges
 
 ## Concepts
 
@@ -117,11 +164,11 @@ Without concepts/abstraction:
 
 For example:
 
-- "Chairs"
+- What is a "chair"?
 - Forests
 - Proper names of countries: e.g. "Syria"
 
-##
+## {.centering}
 
 <img src="https://philebersole.files.wordpress.com/2013/07/scottforestry.jpg">
 
@@ -148,27 +195,47 @@ Building on our insights about/criteria for science:
 
 #### (1) Concepts need to be **transparent**: 
 
-clear and accessible definition. Even if we disagree over the label, we can all use the concept.
+clear and accessible definition. Even if we disagree over the label, we can all assess whether a case meets the definition.
 
 #### (2) Concepts must be formulated to be used **systematically**
 
-Science is about systematic evidence. Cannot define concepts around one case, must be tied to attributes that are observable
+Science is about systematic evidence. Cannot define concepts that include loopholes for one case. Definitions must be tied to attributes that are observable
 
-#### (3) Concepts must be tied to prediction
+#### (3) Concepts must be tied to prediction (note)
 
-science is fundamentally about prediction, finding regularities. concepts that do not bring together cases that have some shared behavior/action do not help us understand. 
+science is fundamentally about prediction, finding regularities. Concepts that do not bring together cases that have some shared behavior/action do not help us understand. 
 
 ---
 
 #### **concepts**:
 
-are **abstract** or **general** categories that we apply to **particular** cases using with a set of rules/criteria that determine membership in the category.
+are **abstract** or **general** categories that we apply to **particular** cases using  a set of rules/criteria that determine membership in the category.
 
-For concepts to be useful in scientific evidence... 
+For concepts to be useful in testing claims scientifically... 
 
 - defining traits **must be something we can all observe** (empirical). (e.g., democracy cannot be defined by an ethereal 'Democratic Spirit')
 - the traits are **about what it means to be** in this category. "To be a democracy is to have $x,y,z$ traits."
+
+For concepts to be useful in building theories (not our focus):
+
 - traits are **relevant to predicting** how cases described by the concept affect other things or are affected by other things. **Relevant** to ordinary use of the word
+
+## An example:
+
+**erythrocracy**: 
+
+>- definition: a state in which the flag for the ruling government is red
+>- defining trait is **observable**
+>- traits tell us what it **"means to be"** erythrocracy
+>- but, fairly useless concept when it comes to **prediction**...
+
+>- Nevertheless, could test claims about whether erythrocracies are different in some way
+
+---
+
+Countries with flags that are $50\%$ red:
+
+<img src='./red_flags.png' width=90%>
 
 ## An example: Democracy?
 
@@ -227,25 +294,29 @@ poll
 
 ## Scientific Concepts: An Example {.centered}
 
+In two senses:
+
 <img src= "https://media.giphy.com/media/JfPy0LsUxRSCc/giphy.gif" width=75%>
 
 ## Scientific Concepts: An Example
 
 Which definition of "democracy" is the right concept?
 
-For each definition:
+Each definition could be used in scientific evidence
 
 - defining traits are about "what it is to be a democracy"
 - traits are observable
-- relevant (maybe not the Kim Jung Un definition...)
+- though, not all definitions relevant to prediction (elaborate)
+
+Choice of which definition ought to be labeled "democracy" reflects value judgment and common usage
 
 ## Concepts and Science:
 
 ### Insight:
 
-Depending on the kinds of questions we are interested in, there are many **different definitions** for the same concepts. 
+Depending on the questions we ask, values we espouse, etc., there are many **different definitions** for the same words. 
 
-**Even if we disagree with <u>definitions</u> for specific word**, good scientific concepts can be understood and used by others regardless of whether they agree with our definitions.
+**Even if we disagree with <u>definition</u> for a specific word**, good scientific concepts can be understood and used by others regardless of whether they agree with our definitions.
 
 ## Concepts and Science:
 
@@ -276,4 +347,5 @@ Kim Jong-un would have to **accept** that the **Democratic People's Republic of 
 2. **To answer descriptive claims, we need to define concepts**
 3. **Scientific concepts are about what relevant and observable traits makes something an "X".**
 4. **Scientific concepts are "objective" in the sense they can be used even if we disagree with them**
-  - "subjective" in sense that value judgements may make us prefer one definition of a word over another.
+
+    - "subjective" in that value judgements may make us prefer one definition of a word over another.
