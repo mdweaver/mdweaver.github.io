@@ -32,7 +32,7 @@
 ,,,"ratio"
 ,,,
 "Poll 2",,,
-,"Suppose we want to compare US states to see if those with laxer gun laws had more gun deaths: Which variable would be best?","single",
-,,,"Number of gun deaths in the preceding year"
-,,,"Rank of the state on a list of states ordered by gun deaths in the preceding year"
-,,,"Gun deaths per 100,000 people in the preceding year"
+,"Suppose we want to know whether Omicron transmission is lower among vaccinated than unvaccinated: Which variable would be best?","single",
+,,,"Number of COVID cases"
+,,,"Hospitalizations per 100,000"
+,,,"COVID cases per 100,000"
