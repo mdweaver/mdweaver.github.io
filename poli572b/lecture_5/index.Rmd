@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 18, 2021"
+date: "February 7, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -175,7 +175,7 @@ mean(x2*y2) - (mean(x2)*mean(y2))
 
 ---
 
-Why is the $Cov(Girth,Volume)$ larger?
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
 
 ```{r, echo = F, warning= F, message=F}
 t_dt = trees %>% as.data.table %>% melt.data.table(measure.vars = names(trees))
@@ -186,7 +186,7 @@ ggplot(t_dt, aes(x = value)) + geom_histogram() + facet_wrap(. ~ variable, nrow 
 
 ---
 
-Why is the $Cov(Girth,Volume)$ larger?
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
 
 - Scale of covariance reflects scale of the variables. 
 
@@ -291,7 +291,7 @@ $r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
 
 ### Practice:
 
-On your own
+Get `data_1` here:  [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
 
 Without using `cor()` or `cov()` or `var()` functions in `R`
 
@@ -516,7 +516,7 @@ ggplot() +
 
 ### Deriving the mean:
 
-This means our goal is to minimize $\mathbf{e}$.
+This means our goal is to minimize $\mathbf{e}$, residuals.
 
 How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
 
@@ -568,9 +568,7 @@ We can then use this to improve our predictions, $\hat{y}$, of $y$.
 - Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
 
-
 # Conditional Expectation Function
-
 
 ---
 
@@ -897,8 +895,6 @@ $-2 \left[ \sum\limits_i^n (y_i - a - b x_i) x_i\right] = 0$
 
 $\sum\limits_i^n (y_i - (\bar{y} - b\bar{x}) - b x_i) x_i = 0$
 
-$\sum\limits_i^n (y_i - (\bar{y} - b\bar{x}) - b x_i) x_i = 0$
-
 $\sum\limits_i^n y_ix_i - \bar{y}x_i + b\bar{x}x_i - b x_ix_i= 0$
 
 
@@ -967,9 +963,9 @@ $3$. Must be that $Var(X) > 0$ in order to compute $a$ and $b$. **Why is this?**
 
 ### In small groups:
 
-Using the `data_2` from [here](https://pastebin.com/LeSpqKKk)
+Using the `data_2` from [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
 
-Take $Y = $ `gop_change` and $X = $ `enlistment`
+Take $Y =$ `gop_change` and $X =$ `enlistment` (board)
 
 1. Calculate $a$ and $b$ using the equations give above
 2. Interpret $a$ in terms of CEF.
