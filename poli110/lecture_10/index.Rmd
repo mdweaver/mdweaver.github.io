@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 11, 2021"
+date: "February 10, 2022"
 output: ioslides_presentation
 ---
 
@@ -23,6 +23,7 @@ require(magrittr)
 
 ### (2) **Sampling Error**
 
+- **Population, Sample, Inference**
 - **Sampling Bias**
 - **Random Sampling Error**
 
@@ -54,12 +55,12 @@ measurement **bias** or **systematic measurement error**: error produced when ou
 
 - Due to chance, we get values that are too high or too low
 - May be lots of errors
-- There is no systematic tilt one way or another (no bias)
-- In aggregate, values that are "too high" are balanced out by values that are "too low" compared to the truth
+- But, if no systematic tilt one way or another (no bias)
+- In aggregate, values that are "too high" are balanced out by values that are "too low"
 
 ## Example: Facebook and Hate Crime
 
-### [**Mueller and Schwarz (2018)**](https://dx.doi.org/10.2139/ssrn.3082972) ask:
+### [**Mueller and Schwarz (2021)**](https://doi.org/10.1093/jeea/jvaa045) ask:
 
 <br>
 
@@ -77,6 +78,10 @@ Need three concepts/variables/measures:
 2. Anti-refugee violence
 1. Anti-refugee rhetoric on Facebook
 3. Exposure to Facebook
+
+<br>
+
+For each one, what are possible kinds of measurement error?
 
 ## Example: Facebook and Hate Crime
 
@@ -138,17 +143,20 @@ Example Facebook posts:
 
 - out of ~$63,000$ Nutella followers, only ~$22,000$ shared their location
 
-## Example: Facebook and Hate Crime
-
-In groups, discuss each of these measures:
-
-- Could they suffer from measurement bias? If yes, why?
-- Could they suffer from random measurement error? If yes, why?
 
 ---
 
 <img src='./mueller_fig.png' width =80%>
 
+---
+
+## Example: Facebook and Hate Crime
+
+If we are not concerned about the measures, then we can say:
+
+**descriptively**, anti-refugee hate-crimes are more common when there is more anti-refugee hate speech on Facebook.
+
+>- We cannot yet say anything about causality
 
 ## Systematic Measurement Error/Bias
 
@@ -156,8 +164,9 @@ In groups, discuss each of these measures:
 
 **($1$) Researcher subjectivity/interpretation**: Researcher systematically biased in how she evaluates cases
 
-- e.g.: Resume experiments: HR professionals exhibit gender, racial bias.
+- e.g.: Resume experiments show HR professionals exhibit gender, racial bias.
 - explicit or implicit stereotyping
+- e.g. perceptions of "objective threat" to police
 
 ## Systematic Measurement Error/Bias
 
@@ -181,11 +190,15 @@ They can choose "oppose", "support", "neither support nor oppose"
 
 > **Do you think this survey response would suffer from measurement bias?**
 
+>- What kind of measurement bias?
+
 ## Example: Immigration
 
 **List experiments**
 
 <img src="./immig_2.png" width=100%>
+
+(board)
 
 ## Example: Immigration
 
@@ -228,14 +241,9 @@ How many people are **opposed** to **stopping** immigration?
 | **When it's Not OK** | If it is different across cases/ <br>or we want absolute values | If we need precision/<br> observe few cases|
 | **Solved by more data?** | No, bias persists. | Yes, random errors "wash out" |
 
+(Board)
+
 # An Example
-
-## Polling the US 2020 Election
-
-Ahead of the election: 
-
-Everyone wanted to know: what fraction of people will vote for Biden? What fraction will vote for Trump?
-
 
 ## Polling the US 2020 Election
 
@@ -251,9 +259,8 @@ But polls underestimated votes for Trump
 
 ## Polling the US 2020 Election
 
-In groups:
 
-Why do you think that the polling in the US 2020 Presidential Election was so wrong?
+What are some reasons that polling in the US 2020 Presidential Election (and in general) was so wrong?
 
 
 # Sampling Error
@@ -266,19 +273,17 @@ We would have to observe **too many** cases.
 
 ### Example:
 
-**"How many Americans plan to vote for Donald Trump?"**
+**"How many Canadians support the "Freedom Convoy" protests?"**
 
 <br>
 
-We can't interview **all eligible voters**...
+We can't interview **all Canadians**...
 
 ## Sampling
 
-### Survey of $1000$ registered voters
+### Survey $1546$ Canadian adults (2/4-2/6)
 
-<img src="./poll_1.png" width=100%>
-
-<img src="./poll_2.png" width=100%>
+<img src="./convoy_1.png" width=100%>
 
 ## Sampling
 
@@ -288,38 +293,26 @@ We can't interview **all eligible voters**...
 
 **sample**: a *subset* of the population that we observe and measure
 
-**inference**: description of the (unmeasured) **population** we make *based on a (measured) **sample***
+**inference**: description of the (unmeasured) **population** we make *based on the (measured) **sample***
 
 and there is **uncertainty** about what is true about the population, because we **only measure a sample**
 
-
 ## Example:
 
-Measuring Presidential vote choice in the US:
+[Measuring support for the "Freedom Convoy"](https://2g2ckk18vixp3neolz4b6605-wpengine.netdna-ssl.com/wp-content/uploads/2022/02/Legers-North-American-Tracker-February-7th-2022.pdf)
 
 The **population**:
 
-- All registered voters in the US
+- All Canadian adults
 
 The **sample**: 
 
-- 1000 registered voters chosen **at random** (but how many people did they call who didn't answer?)
+- $1546$ Canadians chosen **at random** from pool of 400k possible survey respondents recruited at random using cell and landline calls
 
 The **inference**:
 
-- 52% of Americans want inteded to vote for Biden, 42% for Trump, with some **uncertainty** due to sampling
+- 62% of Canadians oppose, 32% support the convoy ($\pm$ 2.5%: uncertainty due to sampling)
 
-
-## Sampling
-
-For **sampling** to work, we need to 
-
-1. Ensure the sample is **representative** of the population (does not differ from the population)
-2. Know the level of **uncertainty** associated with our inference
-
-To do get both we need:
-
-**random sampling**: sampling cases from the population in a manner that gives **all cases an equal probability** of being chosen
 
 ---
 
@@ -329,11 +322,15 @@ The difference between the value of the measure for the sample and the true valu
 
 $$\mathrm{Value}_{sample} - \mathrm{Value}_{population} \neq 0 \xrightarrow{then} \mathrm{sampling \ error}$$
 
+>- Just like **measurement error**, there are two types: one that is **bias** and one that is **random**
+
 ---
 
 ### **sampling error**:
 
 $1$. **sampling bias**: cases in the sample are not representative of the population: not every member of population has equal chance of being in sample. Error is consistently in the same direction.
+
+>- What might be examples of sampling bias in the survey on the "Freedom Convoy"?
 
 ## Example
 
@@ -347,18 +344,30 @@ $1$. **sampling bias**: cases in the sample are not representative of the popula
 
 <img src="./poll_5.png" width=100%>
 
-
 ---
 
 ### **sampling error**:
 
-$2$. **random sampling error**: with random sampling, by chance, we get samples where the average is **too high** or **too low** compared to the population, but these errors would cancel out. (captured by **margin of error**)
+$2$. **random sampling error**: when choosing samples, by chance, we will get samples where the average is **too high** or **too low** compared to the population, but these errors would cancel out. (captured by **margin of error**)
 
 ## Example
 
 <img src="./538_2.png" width=100%>
 
-With **random** samples, sometimes we get a sample with too many Biden supporters, sometimes we get a sample with too many Trump supporters. This uncertainty knowable mathematically.
+With **random** samples, sometimes we get a sample with too many Biden supporters, sometimes we get a sample with too many Trump supporters. This uncertainty is mathematically known.
+
+
+
+## Sampling
+
+For **sampling** to be work, we want to
+
+1. Ensure the sample is **representative** of the population (does not differ systematically from the population): *eliminate **sampling bias***
+2. Know the level of **uncertainty** associated with our inference: *quantify **random sampling error***
+
+To do get both we need:
+
+**random sampling**: sampling cases from the population in a manner that gives **all cases an equal probability** of being chosen.
 
 ## Conclusion:
 
