@@ -18,8 +18,14 @@ This book places the legitimation and de-legitimation of violence squarely at th
 
 ## Publications <a name="publications"></a>
 
+#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and the Making of Radical Reconstruction"* (paper <a href="../images/weaver_veterans_02_2022.pdf">here</a>, forthcoming at *American Political Science Review*)
 
-#### With Nicholas Kuipers and Gareth Nellis. *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (Accepted, *British Journal of Political Science*)
+<details>
+<summary>Abstract</summary>
+After the Civil War, Congressional Republicans used sweeping powers to expand and enforce civil rights for African Americans. Though the electoral benefits of African American suffrage were clear, Republicans had to overcome party divisions and racist voters. This paper argues that the war imbued Northern  veterans with the belief that true victory required renewing the Union by abolishing slavery and establishing (imperfect) legal equality. This made veterans more receptive to Radical Reconstruction and ignited activism for it from below. Using difference-in-differences, I show that greater enlistment increased Republican vote-share, particularly in pivotal post-war elections. Moreover, "as-if"" random exposure to combat deaths increased Republican partisanship among soldiers after the war. Finally, I show that veterans became more likely to vote for African American suffrage. The paper concludes that Union veterans, through their votes and their activism, were a decisive part of the white coalition that backed America's "Second Revolution."
+</details>
+
+#### With Nicholas Kuipers and Gareth Nellis. *"Does Electing Islamists Increase Religious Violence and Intolerance?"* (*British Journal of Political Science*)
 
 <a href="https://doi.org/10.7910/DVN/WTDT8F">Replication File</a>
 
@@ -59,10 +65,6 @@ Reported in the <a href="http://economictimes.indiatimes.com/news/politics-and-n
 
 
 ## Papers<a name="papers"></a>
-
-#### *"'Let our Ballots secure what our bullets have won:' Union Veterans and Voting for Radical Reconstruction and Black Suffrage"* (<a href="../images/weaver_veterans_12_2020.pdf">here</a>)
-
-<hr>
 
 
 #### *"A Two-Edged Sword: the risks and rewards of violence for ethnic parties"*

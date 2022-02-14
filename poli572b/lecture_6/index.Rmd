@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 22, 2021"
+date: "February 14, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -80,7 +80,7 @@ options("kableExtra.html.bsTable" = T)
 
 To predict $y$ as a linear function of $x$:
 
-$\hat{y}_i = a + b x_i $
+$\widehat{y}_i = a + b x_i$
 
 #### slope:
 
@@ -154,6 +154,45 @@ $$ X = \begin{pmatrix} 1 & -1 \\ 1 & 2 \\ 1 & 4 \end{pmatrix}$$
                arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlab("") + ylab('') + 
   coord_fixed()
 ```
+
+
+
+### Examples/ Practice
+
+$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
+
+Find 
+
+$$A'A = ?$$
+
+$$AA' = ?$$
+
+---
+
+### Examples/ Practice
+
+$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
+
+$$B = \begin{pmatrix} 6 \\ 5 \\ 3 \\ -1 \end{pmatrix}$$
+
+Find 
+
+$$A'B = ?$$
+
+$$AB = ?$$
+
+--- 
+
+### Examples/ Practice
+
+$$u = \begin{pmatrix} 1 \\ -2 \\ 6 \end{pmatrix}; \ v =\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} $$
+
+And 
+
+$$(u - a) \cdot v = 0$$
+
+Solve for $a$
+
 
 ---
 
@@ -269,7 +308,6 @@ If matrices must have dimensions that match, can be multiplied
 - Multiplication not commutative: cannot multiply $BA$
 - Multiplication not commutative: $B'A' = (AB)' \neq AB$
 
-
 --- 
 
 ### Matrices can be Multiplied
@@ -293,39 +331,6 @@ $$A \times A^{-1} = A^{-1} \times A = I_{p \times p} = \begin{pmatrix} 1 & 0 & \
 This is an **identity** matrix with 1s on diagonal, 0s everywhere else. $A_{p \times p} \times I_{p \times p} = A$ (identity matrix is matrix equivalent of 1)
 
 ---
-
-### Examples/ Practice
-
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
-
-Find 
-
-$$A'A = ?$$
-
----
-
-### Examples/ Practice
-
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
-
-$$B = \begin{pmatrix} 6 \\ 5 \\ 3 \\ -1 \end{pmatrix}$$
-
-Find 
-
-$$A'B = ?$$
-
-
---- 
-
-### Examples/ Practice
-
-$$u = \begin{pmatrix} 1 \\ -2 \\ 6 \end{pmatrix}; \ v =\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} $$
-
-And 
-
-$$(u - a) \cdot v = 0$$
-
-Solve for $a$
 
 # Mean Again:
 
