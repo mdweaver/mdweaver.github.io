@@ -1,0 +1,286 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "February 24, 2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+```
+
+## Objectives
+
+### **1. Descriptive Conclusion**
+
+### **2. Intro to Causality**
+
+- **What is causality?**
+- **Counterfactuals**
+- **Potential Outcomes**
+
+
+# Descriptive Claims
+
+## Evaluating Descriptive Claims:
+
+1. **Claim $\rightarrow$**
+2. **Concept(s)** $\rightarrow$
+3. **Variable(s)** $\rightarrow$
+4. **Measure** $\rightarrow$
+5. **Draw a Conclusion** $\rightarrow$ **Claim**
+
+# Causality
+
+## Why causality?
+
+**Recall** some of Weber's insights:
+
+### 1. **science is about prediction**
+
+### 2. **science cannot tell us what to do**, but it can provide **clarity**
+
+- For us, **clarity** means knowing what actions achieve our goals, which do not, and how certain actions might put our values into conflict.
+
+## Why causality?
+
+**In other terms**:
+
+### Science can only help answer **prescriptive questions** by evaluating **causal claims**
+
+<hr style="height:8px; visibility:hidden;" />
+
+### Without evidence for **causal claims**, we can't make rational decisions about **prescriptive claims**
+
+## Two ways of asking causal questions
+
+<h3><ol>
+<li> What are the **causes** of **effects**?
+</ol></h3>
+
+Want to explain something specific that has happened/we observe (**the effect**). Seek to **attribute** a cause for something we observe. 
+
+- Why did millions of refugees head to Europe in 2015-2016?
+- Why are housing prices very high in Vancouver?
+
+## Two ways of asking causal questions
+
+<h3><ol start=2>
+<li> What are the **effects** of **causes**?
+</ol></h3>
+
+We want to know what happens if we do some action or some action (**the cause**) happens. (Could be a specific action or not) This is about the **contribution** of some cause to an effect.
+
+- Has BC's housing speculation tax reduced housing prices? 
+- What are the effects of restricting gun ownership on gun violence?
+
+## Two ways of asking causal questions
+
+### Looking at **effects of causes** versus **causes of effects**  leads to different approaches to scientific investigation
+
+**causes of effects**
+$$\textrm{?} \xrightarrow{} \textrm{effect}$$
+
+
+**effects of causes**
+$$\textrm{cause} \xrightarrow{} \textrm{?}$$
+
+
+
+# What is causality?
+
+## What is causality?
+
+### all **causal claims** are a specific combination of two descriptive claims
+
+<br>
+
+- sometimes these descriptive claims are **explicit**, often they are **implied**.
+
+## What is causality?
+
+Why does the US have the highest rate of gun deaths among developed countries?
+
+> **The US has the highest rate of gun deaths among developed countries because of its lax gun laws.**
+
+- "causes of effects" or "effects of causes"?
+- What are the two descriptive claims in this causal claim?
+
+## What is causality?
+
+- Does building a wall to keep immigrants out reduce violence crime?
+
+> **The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country.** - Donald Trump
+
+- "causes of effects" or "effects of causes"?
+- What are the two descriptive claims in this causal claim?
+
+## What is causality?
+
+The **descriptive claims** embedded in **causal claims** are of a specific type:
+
+1. One is (or will be) **factual**
+2. One is **counterfactual**
+
+### **counterfactuals** are the key to causality
+
+# Counterfactuals
+
+## Causality is Counterfactual
+
+### **What does that mean?**
+
+## Counterfactuals and Causality:
+
+**counterfactuals**: are the way world **would be** if events had transpired differently (other than what actually took place).
+
+- imagine an "alternate universe"
+
+constrasts to what is **factual**: the way the world is, given the events that have taken place.
+
+#
+
+[watch the trailer of *Sliding Doors*](https://www.youtube.com/watch?v=Da-Mizk86AE)
+
+
+# Spoiler Warning!
+
+## Counterfactuals:
+
+If Gwenyth Paltrow's character...
+
+(a) **catches the train** then she catches her boyfriend cheating, and **dumps him**
+
+(b) **does not catch the train** then she does not catch her boyfriend cheating, and **remains with him**
+
+In reality, only **one** of these possibilities can happen. If (a) happens, it is **factual**, (b) is **counterfactual**
+
+## An exercise
+
+
+[This happened](https://www.cbc.ca/news/canada/british-columbia/ubc-parties-fines-covid-19-public-health-orders-1.5918680)
+
+**Think about how you would behave under two different Public Health Code regimes:**
+
+If invited to **attend** a party, and the penalty, if caught, were $230, would you attend?
+
+If invited to **attend** a party, and the penalty, if caught, were $2300, would you attend?
+
+POLL
+
+## An exercise
+
+**Which of these is factual? Which is counterfactual**?
+
+$1.$ If invited to **attend** a party, and the penalty, if caught, were $230, would you attend?
+
+>- (**factual**): this is the actual rule in the Province
+
+$2.$ If invited to **attend** a party, and the penalty, if caught, were $2300, would you attend?
+
+>- (**counterfactual**): this is not the rule in this province, but we can imagine an alternate universe in which it were.
+
+
+## Counterfactuals and Potential Outcomes
+
+Counterfactuals imply **potential outcomes**:
+
+If $X$ is a **variable** for a possible cause and $Y$ is a **variable** for what is possibly affected... 
+
+then **potential outcomes** are the values of $Y$ a **specific case** would take for the different possible values of $X$ (both factual and counterfactual)
+
+## Counterfactuals and Potential Outcomes
+
+**potential outcomes notation:**
+
+Where $i$ corresponds to a specific case, and $X$ is the causal variable (and can take two values: $1,0$), then the potential outcomes of $Y_i$ are:
+
+$$Y_i(X = 1), Y_i(X = 0)$$
+
+For case $i$, $X$ can only ever be $1$ or $0$: one potential outcome will become **factual** (it will happen), while the other will be **counterfactual** (it won't happen)
+
+## Counterfactuals and Potential Outcomes
+
+$\mathrm{Love \ Life _{Gwenyth} (Catches \ the \ train )}$
+$= \mathrm{Stay \ with \ cheating \ BF}$
+
+$\mathrm{Love \ Life _{Gwenyth} (Doesn't \ catch \ the \ train )}$
+$= \mathrm{Dump \ cheating \ BF}$
+
+We only will observe **one** of these two possibilities. But both could **potentially** have happened.
+
+---
+
+**Draw potential outcomes on the board**
+
+---
+
+## Counterfactuals and Causality:
+
+And we can say that $X$ **causes** $Y$ for case $i$ if $Y_i(X = 1) \neq Y_i(X = 0)$:
+
+- $X$ causes $Y$: if case $i$ would have behaved ($Y$) differently (than it did factually) in the (**counterfactual**) alternate universe where **everything was the same** except  for $X$.
+
+TO THE BOARD
+
+
+## Potential Outcomes: Caveat
+
+In our example of **COVID social distancing enforcement**:
+
+- We are only **imagining**, as if omniscient, what you would do in the alternate universe where the penalty is $2300. We don't actually know. Potential outcomes are what **you actually would do** in that alternate universe.
+- We are only asking you **to imagine** whether you would go to the party when invited. Potential outcomes are what **you actually would do** if invited.
+
+Even if we **don't know** what you would do if invited under different penalties; there are still potential outcomes of what you would do...
+
+# Example:
+
+## Counterfactuals Example
+
+> **"The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country."** - Donald Trump
+
+If this claim is true, what are the implied **potential outcomes** (of violent crime)?
+
+Which of these potential outcomes are **factual**? **counterfactual**?
+
+## Counterfactuals and Potential Outcomes
+
+Trump's causal claim (implicitly): "The wall caused El Paso to have fewer murders".
+
+Trump's counterfactual claim: "If there had been no wall, El Paso would have had more murders."
+
+### Counterfactual claim implies two **potential outcomes**:
+
+1. Number of murders in El Paso last year in the **presence** of the wall: $\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})$
+2. Number of murders in El Paso last year in the **absence** of the wall $\textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$
+
+## Counterfactuals and Potential Outcomes
+
+If Trump's causal claim is **true** ("The wall caused El Paso to have fewer murders"), which should be true?
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall}) > \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall}) = \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+## Counterfactuals and Potential Outcomes
+
+> **"The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country."**
+
+Implies:
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+## Counterfactuals and Potential Outcomes
+
+If the claim is that "The wall caused El Paso to have fewer murders", or
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+### ...How would you try to prove this?
+
