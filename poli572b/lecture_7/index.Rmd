@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 1, 2021"
+date: "February 28, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -17,6 +17,7 @@ require(ggplot2)
 require(grid)
 require(data.table)
 require(UsingR)
+require(modelsummary)
 options("kableExtra.html.bsTable" = T)
 
 acs_data = fread("acs_lawmed.csv")
@@ -88,6 +89,9 @@ brexit = fread("analysisData.csv")
 
     - dummy variables
     - slopes and intercepts
+    
+[https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
+    
 
 # Recap
 
@@ -113,7 +117,7 @@ This is the matrix formula for **least squares** regression.
 
 If $X$ is a column vector of $1$s, $\beta$ is just the mean of $Y$. (We just did this)
 
-If $X$ is a column of $1$s and a column of $X_1$, it is an intercept and slope on $X$.
+If $X$ is a column of $1$s and a column of $X_1$, it is an intercept and slope on $X_1$.
 
 
 ---
@@ -228,7 +232,7 @@ ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents)) + geom_point(alpha = 
 
 --- 
 
-```{r, echo=F}
+```{r, echo=F, message=F}
 ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
 
 ```
@@ -237,15 +241,15 @@ ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents))
 
 ### Least Squares and CEF
 
-Least Squares predictions $\widehat{Y_i} = X_i'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
+Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
 
->- Least Squares could also fit a line for the mean of Y: $E(Y) | X$. Not just a prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
+>- Least Squares could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
 
 ---
 
 Exercise: Download the data. Contains mean income for each group of people with the same `AGE` in years
 
-[https://www.dropbox.com/s/gyvv0mgvfic9jv7/acs_grouped.rda?dl=0](https://www.dropbox.com/s/gyvv0mgvfic9jv7/acs_grouped.rda?dl=0)
+[https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
 
 ---
 
@@ -307,7 +311,8 @@ We are directly modelling the conditional expectation of $E(Y_i | X_i)$ as a lin
 Least Squares estimates the **mean of $Y$** as a function of values of  $X$.
 
 - Conditional Expectation Function
-- or $E(Y | X = X_i)$ is best prediction $\hat{Y_i} | X_i$
+- $\hat{Y_i} | X_i$ is **best linear approximation** of $E(Y | X = X_i)$
+  - best according to "minimum euclidean distance"
 
 # Dummy Variables
 
@@ -332,42 +337,56 @@ How do we make them?
 
 ### Dummy Variables
 
-```{r}
-m1 = lm(INCEARN ~ FEMALE, acs_data)
-```
+$Earnings_i = b_0 + b_1 \ Female_i$
+
+assuming, as the survey does, the gender binary
 
 1. What does the design matrix $X$ in this regression look like?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 
+
+```{r}
+m1 = lm(INCEARN ~ FEMALE, acs_data)
+```
+
+
 ---
 
 ### Dummy Variables
 
-```{r}
-m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
-```
+$Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
 
 1. What does the design matrix $X$ in this regression look like?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 4. What does the $b_2$ tell us?
 
+
+```{r}
+m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
+```
+
+
 ---
 
 ### Dummy Variables
 
-```{r}
-m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
-```
+$Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
+
 
 1. What does the design matrix $X$ in this regression look like?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 
---- 
 
 ```{r}
+m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
+```
+
+--- 
+
+```{r, }
 #Design matrix
 model.matrix(m1) %>% head
 
@@ -399,8 +418,6 @@ coefficients(m3)
 
 ### Dummy Variables
 
-**What do they do?**
-
 If there is an intercept
 
 - **one category must be excluded** ("reference group"); otherwise linear dependence.  (`R` will do this by default)
@@ -408,8 +425,8 @@ If there is an intercept
 
 If there is no intercept:
 
-- all categories must be **included**
-- fits separate **intercepts** for each group: coefficient is the mean of the group indicated by the dummy (when all other variables are $0$).
+- all categories **must be included**
+- separate **intercepts** for each group: coefficient is the mean of the group indicated by the dummy (when all other variables are $0$).
 
 ---
 
@@ -417,7 +434,7 @@ If there is no intercept:
 
 How did different regions in the UK vote on Brexit?
 
-- Download the `brexit` data: [https://www.dropbox.com/s/b5t5aao5frjpsw6/brexit.rda?dl=0](https://www.dropbox.com/s/b5t5aao5frjpsw6/brexit.rda?dl=0)
+- Download the `brexit` data: [https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
 - use the `table` function to find out how what the different `Region` names are
 - use the `hist` function to visually examine the distribution of the leave vote (`Pct_Lev`)
 
@@ -425,13 +442,16 @@ How did different regions in the UK vote on Brexit?
 
 ### Exercise:
 
-Using the `lm` function:
+Using the `lm` function: (`lm(y ~ x, data = data)`)
 
 1. Regress `Pct_Lev` on `Region`
-2. Interpret the coefficients returned (`summary(your_model)`)
-3. Regression `Pct_Lev` on `-1 + Region`
-4. Interpret the coefficients.
-5. Without looking at `your_model$fitted.values`, what can you say about the $\widehat{Y}$ produced by these two regressions?
+2. Interpret the coefficients. (`summary(your_model)`)
+3. (Without looking at them) What would the predicted values $\widehat{Y}$ from this regression tell us?
+4. How should we interpret the residuals $e$ (or $Y^*$)?
+4. Regress `Pct_Lev` on `-1 + Region`
+5. Interpret the coefficients.
+6. (Without looking at them) Are the predicted values $\widehat{Y}$ from this regression similar to those from (1)?
+
 
 ---
 
@@ -439,7 +459,7 @@ Using the `lm` function:
 
 ### Example:
 
-```{r}
+```{r, echo = F}
 
 table(brexit$Region)
 
@@ -448,7 +468,7 @@ table(brexit$Region)
 ---
 
 
-```{r}
+```{r, echo = F}
 
 hist(brexit$Pct_Lev)
 
@@ -457,12 +477,18 @@ hist(brexit$Pct_Lev)
 ---
 
 ### Dummy Variables
+
+<small>
 ```{r, echo = F, include = T, message = F}
-levels = c('Scotland', 'London', 'North West', 'Yorkshire and The Humber', 'North East', 'West Midlands', 'East Midlands', 'South West', 'East', 'South East', 'Wales', 'Northern Ireland')
+levels = c('Scotland', 'London', 'North West', 
+           'Yorkshire and The Humber', 'North East', 
+           'West Midlands', 'East Midlands', 'South West', 
+           'East', 'South East', 'Wales', 'Northern Ireland')
 brexit[, RegionU := factor(Region, levels = levels)]
 
-lm(Pct_Lev ~ RegionU, brexit) %>% summary
+lm(Pct_Lev ~ RegionU, brexit) %>% modelsummary(estimate  = "{estimate} ({std.error}){stars}", statistic = NULL)
 ```
+</small>
 
 How is this different from what you produced?
 
@@ -473,14 +499,16 @@ How is this different from what you produced?
 During the Brexit vote, many areas thought to support "Remain" experienced heavy rainfall. `total_precip_prepolling` is the number of mm of rain that fell just before polls were open. 
 
 1. Regress `Pct_Lev` on `total_precip_prepolling + Region`.
-2. Thinking about the least squares estimator: how is the slope on `total_precip_prepolling` on calculated in this case? (think of $X_k^*$)
-3. In light of $2$, what does the slope on `total_precip_prepolling` mean?
+2. Thinking about the least squares estimator: how is the slope on `total_precip_prepolling` on calculated in this case? (hint: what is  $total \ precip \ prepolling^*$)
+3. In light of $2$, interpret the slope on `total_precip_prepolling` as precisely as possible?
   
 ---
 
+<small>
 ```{r, echo = F, include = T, message = F}
-lm(Pct_Lev ~ total_precip_prepolling + Region, brexit) %>% summary
+lm(Pct_Lev ~ total_precip_prepolling + Region, brexit) %>% modelsummary(estimate  = "{estimate} ({std.error}){stars}", statistic = NULL)
 ```
+</small>
   
 ---
 
@@ -490,7 +518,9 @@ $2$: We regress Percent Leave on the **residual** pre-election precipitation.
 
 The other variable are **dummies for region.**  Thus, the $\widehat{precipitation_i}$ is the **mean** precipitation in each region.
 
-So, residual $precipitation_i^*$, is difference between precipitation in a consituency and the mean precipitation in the region.
+So, residual $precipitation_i^*$, is difference between precipitation in a consituency and the mean precipitation in the region. 
+
+Slope is relationship between within-region precipitation and leave voteshare.
 
 ---
 
@@ -498,9 +528,15 @@ So, residual $precipitation_i^*$, is difference between precipitation in a consi
 
 You can change the "reference group" like this. This code shifts "Scotland" to the reference by making it the first "level" in the factor.
 
-```
-levels = c('Scotland', 'London', 'North West', 'Yorkshire and The Humber', 'North East', 'West Midlands', 'East Midlands', 'South West', 'East', 'South East', 'Wales', 'Northern Ireland')
+```{r, eval=F}
+levels = c('Scotland', 'London', 'North West', 
+          'Yorkshire and The Humber', 'North East', 
+          'West Midlands', 'East Midlands', 'South West',
+          'East', 'South East', 'Wales', 'Northern Ireland')
+brexit$RegionU = factor(brexit$Region, levels = levels)
+brexit  = brexit %>% mutate(RegionU = factor(Region, levels = levels))
 brexit[, RegionU := factor(Region, levels = levels)]
+
 ```
 
 # Interpretation
@@ -583,7 +619,7 @@ ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geo
 
 ### Exercise:
 
-```{r, echo=F}
+```{r, echo=F, message = F}
 ggplot(cef, aes(x = AGE, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
 
 ```
@@ -600,6 +636,10 @@ In your small groups:
 
 2. How would you do it?
 
-3. Try it out
+3. Try it out:
 
-4. How would you incorporate this into the example above? `ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`?
+4. How would you incorporate this into the model below? 
+
+<small>
+`ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)`
+</small>
