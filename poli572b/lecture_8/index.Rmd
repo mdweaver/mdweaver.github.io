@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 8, 2021"
+date: "March 7, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -66,17 +66,6 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 
 ### Today
 
-Least squares as
-
-- algorithm for prediction
-    - for "machine learning" to predict $E(Y | X)$
-    - where we care about accuracy $E(\widehat{Y} | X)$, not about correctness of slope estimates
-    
-    
----
-
-### Today
-
 Least Squares 
 
 - statistical model for inference
@@ -97,7 +86,7 @@ So far, we...
 
 - ... want to produce a vector of **predicted values** $\mathbf{\widehat{Y}} = (\widehat{Y_1} \ldots \widehat{Y_i} \ldots \widehat{Y_n})$
 
-- .... define $\mathbf{\widehat{Y}} = \mathbf{X}\mathbf{\beta}$:
+- .... defined as $\mathbf{\widehat{Y}} = \mathbf{X}\mathbf{\beta}$:
 
     - where $\mathbf{X}$ is a matrix of predictors (for the mean, just a vector of $1$s) and $\mathbf{\beta}$ is a vector of linear coefficients that are multiplied by $\mathbf{X}$ such that $\widehat{Y}_i = b_0x_0 + b_1x_1 + \ldots + b_px_p$
 
@@ -129,7 +118,7 @@ This definition of least squares means that:
 
 --- 
 
-### Return to Multivariate
+### Example
 
 Let's say we want to get the **conditional expectation function** for yearly earnings of professionals as a function of hours worked, profession, gender, and age.
 
@@ -143,15 +132,13 @@ Using data from the American Community Survey, we can look at how hours worked i
 
 ---
 
-### Return to Multivariate
+### Example
 
-Let's now find the linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
+Let's now find the (approximate) linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
 
 ```{r}
 ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)
 ```
-
-$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i$
 
 ---
 
@@ -162,30 +149,21 @@ summary(ls)
 ```
 
 ```{r, echo = F, include = F, message = F, warning=F}
-residual_hrswork = lm(UHRSWORK ~ AGE + LAW + FEMALE, acs_data)$residuals
+residual_hrswork = lm(FEMALE ~ AGE + LAW + UHRSWORK, acs_data)$residuals
 plot_data = rbind(acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)])
 plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
-#plot_data[, AGE := as.numeric(AGE)]
-plot_data[type == 'Residual', UHRSWORK := residual_hrswork]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
 ```
 
-How do we make sense of, e.g., the slope on `UHRSWORK`?
+How do we make sense of, e.g., the slope on `FEMALE`?
 
 ---
 
 ### Example
 
 ```{r, echo = F, warning=F, message=F}
-require(splines)
-ggplot(plot_data, aes(x = AGE, y= UHRSWORK)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'lm', formula = y ~ splines::ns(x, 30), colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Hours on Age")
-```
-
----
-
-### Example
-
-```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = LAW, y= UHRSWORK)) + geom_point(alpha = 0.01)  + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Hours on Profession")
+ggplot(plot_data, aes(x = AGE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Age")
 ```
 
 ---
@@ -193,23 +171,33 @@ ggplot(plot_data, aes(x = LAW, y= UHRSWORK)) + geom_point(alpha = 0.01)  + geom_
 ### Example
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = FEMALE, y= UHRSWORK)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Residual Hours on Gender")
-```
-
-
----
-
-```{r, echo=F, message = F}
-plot_data[, UHRSWORK := round(UHRSWORK)]
-cef = plot_data[, list(INCEARN = mean(INCEARN), respondents = .N), by = list(UHRSWORK, type)]
-ggplot(cef, aes(x = UHRSWORK, y = INCEARN, size = respondents, weight = respondents)) + geom_point(alpha = 0.75) + theme_bw() + xlab("Hours") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Hours")  + geom_smooth(method = 'lm', se = F, colour = 'red') +  geom_smooth(method = 'loess', se = F, colour = 'blue') + facet_wrap(~type) 
+ggplot(plot_data, aes(x = LAW, y= FEMALE)) + geom_point(alpha = 0.01)  + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
 ```
 
 ---
 
-How could we change our regression equation to make the slope on hours worked **easier** to interpret?
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Gender Residual on Hours Worked")
+```
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+```
+
+---
+
+Looking at residuals, gender and hours worked have *non-linear* relationship. How can we turn this *non-linear* relationship into a *linear* relationship?
 
 Angrist and Pischke, *MHE*, pp. 77-80
+
+>- transform continuous variables into dummies: dummies can **only** have a linear relationship
+>- ensures that least squares correctly captures relationship between variables
 
 # Inference
 
@@ -219,7 +207,11 @@ Angrist and Pischke, *MHE*, pp. 77-80
 
 1. We want to interpret the $\beta$ vector causally.
 
+- typically just one coefficient of causal interest: why? (think about DAGs)
+
 2. There is a true $\beta_D$ ($\delta$) that is the effect of some $D$ on $Y$.
+
+- either a true linear effect, or weighted average of non-linear effects
 
 3. $\beta_D$ is an unknown parameter. 
 
@@ -264,9 +256,9 @@ This is a **statistical** model:
 - $\alpha$ and $\beta$ are unknown **parameters** (thus, greek letters, not $a$ and $b$). They are **fixed**.
     - $\alpha$ is the length of spring in absence of force
     - $\beta$ is the change in length of spring with unit of force
-- $\epsilon_i$ is a **random error** (a **random variable**). Each $\epsilon_i$ is...
+- $\epsilon_i$ is an unknown **random error** (a **random variable**). Each $\epsilon_i$ is...
     - **independent** of $D_i$  
-    - drawn from the **same distribution** with mean $0$ and variance $\sigma^2$ (another parameter)
+    - each drawn from the **same distribution** with mean $0$ and variance $\sigma^2$ (another parameter)
 
 We use observed data to **estimate** the **parameters** $\alpha, \beta, \sigma^2$
 
@@ -274,14 +266,15 @@ We use observed data to **estimate** the **parameters** $\alpha, \beta, \sigma^2
 
 ### In groups:
 
-Imagine we have a spring whose length is 30 cm. With each Newton of force applied, the spring increases by 0.5 cm.
+Imagine we have a spring whose length is 3 cm. With each Newton of force applied, the spring increases by 0.5 cm.
 
 Using these facts and the statistical model described above: create a **response schedule**/**potential outcomes** table corresponding to the spring under loads of $0,1,2,3,5,8$ Newtons.
+
+$Y_i(D_i = 0), Y_i(D_i = 1), Y_i(D_i = 2), \ldots$
 
 ---
 
 ### The Regression Model: 
-
 
 The statistical model assumes that this linear equation describes the process generating the data.
 
@@ -292,6 +285,7 @@ $\alpha + \beta D_i$
 
 **stochastic** (random error)
 $\epsilon_i$
+
 
 ---
 
@@ -333,6 +327,29 @@ abline(a = 3, b = 0.5)
 
 ---
 
+In the context of Hooke's law and other physical laws may make sense to expect the effect $\beta_D$ to be linear and fixed for all observations.
+
+Think back to experiments: in context of political science, does this make sense?
+
+- e.g., is the effect of income on preferences for redistribution the same for all people? Linear?
+
+---
+
+### The Regression Model:
+
+It is possible to think of regression estimates like this:
+
+- $\beta_D$: is weighted average of non-linear effect of $D$ on $Y$ across different values of $D$
+- $\beta_D$: can represent the average effect, even if there are heterogeneous unit causal effects
+
+$Y_i = \alpha_i + \beta_{D_i} D_i + \nu_i$
+$Y_i = \alpha_i + (\beta_{D} + (\beta_{D_i} - \beta_{D})) D_i + \nu_i$
+$Y_i = \alpha_i + \beta_{D} D_i + (\nu_i + (\beta_{D_i} - \beta_{D})D_i)$
+
+... if heterogeneous effects are **independent** of $D$
+
+---
+
 ### The Regression Model: 
 
 The more general **regression model** (where $X_i$ is a matrix of variables)
@@ -365,13 +382,13 @@ Least Squares is the **Best Linear Unbiased Estimator** of our model parameters 
 
 $(1)$. **Model** equation is correctly specified 
 
-- correct functional form (e.g., linear) for process by which variables in $X$ affect $Y$, and how variables in $X$ affect each other.
+- correct functional form (e.g., linear, additive) for process by which variables in $X$ affect $Y$, and how variables in $X$ **affect each other**.
 - all **relevant variables** affecting $Y$ (will define next week) are included in the model
 - $Y_i =  \mathbf{X_i}\mathbf{\beta} + \epsilon_i$ is the true data-generating function
 
 In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
 
-$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
+$Earn_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
 
 ---
 
@@ -398,7 +415,7 @@ $(3.)$ $\epsilon_i$ is **independent** of $X_i$: $X_i \perp \!\!\! \perp \epsilo
     
 In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
 
-$Earnings_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
+$Earn_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
     
 ---
 
@@ -470,6 +487,7 @@ $\epsilon_i$ is random variable.
 
 If we were to repeat the drawing of $\epsilon$ again, we would get different estimates: $\widehat{\beta}$.
 
+
 ---
 
 ```{r, echo = T}
@@ -524,11 +542,22 @@ ggplot(out, aes(x = beta_hat)) + geom_histogram() + theme_bw() + ggtitle("Sampli
 
 ---
 
+### Regression and Random Variables
+
+Compare this against the logic of experiments:
+
+- in experiments, random assignment makes mean observed potential outcomes of $Y$ into random variables.
+- in regression, what is the "chance process" generating $\epsilon$?
+>- Doesn't really make a lot of sense; even recent textbooks hand-wave and say it isn't important to interpret this; the math just works
+>- A big open question, because $\epsilon$ drives our variance estimates for $\widehat{\beta}$
+
+---
+
 ### Estimation:
 
-Under the statistical assumption we made, $\widehat{\beta}$ is an unbiased estimator of $\beta$, conditional on $X$: $E(\widehat{\beta}|X) = \beta$
+Under the statistical assumptions we made, $\widehat{\beta}$ is an unbiased estimator of $\beta$, conditional on $X$: $E(\widehat{\beta}|X) = \beta$
   
-- "conditional on $X$" means taking the values of $X$ as fixed
+- "conditional on $X$" means taking the values of $X$ as fixed; not a sample from a population
 
 --- 
 
@@ -584,24 +613,22 @@ How do we discover the uncertainty in our estimate $\widehat{\beta}$?
 
 - Each element of $\widehat{\beta}_{p \times 1}$ is a random variable
     - each $\widehat{\beta}_k$ has a variance 
-    - and a **covariance** with other $\widehat{\beta}_{j\neq k}$}
+    - and a **covariance** with other $\widehat{\beta}_{j\neq k}$
 - These variances and covariances are found in the variance-covariance matrix of $\widehat{\beta}$
     - a $p \times p$ matrix
     - Diagonal elements are the **variances** for $\widehat{\beta}_{1} \dots \widehat{\beta}_p$
     - off-diagonal elements are **covariances**; 
     - matrix is **symmetric**
 
-
-
 ---
 
-(all $\beta$s should be hatted)
+Variance-Covariance Matrix
 
-$$\scriptsize{\begin{pmatrix} Var(\beta_1) & Cov(\beta_1,\beta_2) & Cov(\beta_1,\beta_3) &\ldots & Cov(\beta_1,\beta_p) \\
- Cov(\beta_2,\beta_1) & Var(\beta_2) & Cov(\beta_2,\beta_3) & \ldots & Cov(\beta_2,\beta_p) \\ 
- Cov(\beta_3,\beta_1) & Cov(\beta_3,\beta_2) & Var(\beta_3) & \ldots & Cov(\beta_3,\beta_p) \\ 
- \vdots & \vdots & \vdots & \ddots & \vdots \\
- Cov(\beta_p,\beta_1) & Cov(\beta_p,\beta_2) & Cov(\beta_p, \beta_3) & \ldots & Var(\beta_p)\end{pmatrix}}$$
+$$\scriptsize{\begin{pmatrix} Var(\widehat{\beta}_1) & Cov(\widehat{\beta}_1,\widehat{\beta}_2) & Cov(\widehat{\beta}_1,\widehat{\beta}_3) &\ldots & Cov(\widehat{\beta}_1,\widehat{\beta}_p) \\
+  Cov(\widehat{\beta}_2,\widehat{\beta}_1) & Var(\widehat{\beta}_2) & Cov(\widehat{\beta}_2,\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_2,\widehat{\beta}_p) \\ 
+  Cov(\widehat{\beta}_3,\widehat{\beta}_1) & Cov(\widehat{\beta}_3,\widehat{\beta}_2) & Var(\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_3,\widehat{\beta}_p) \\ 
+  \vdots & \vdots & \vdots & \ddots & \vdots \\
+  Cov(\widehat{\beta}_p,\widehat{\beta}_1) & Cov(\widehat{\beta}_p,\widehat{\beta}_2) & Cov(\widehat{\beta}_p, \widehat{\beta}_3) & \ldots & Var(\widehat{\beta}_p)\end{pmatrix}}$$
 
 
 ---
@@ -618,11 +645,9 @@ $$\scriptsize{\begin{pmatrix} Var(\beta_1) & Cov(\beta_1,\beta_2) & Cov(\beta_1,
 
 ### Variance-Covariance Matrix
 
-
 $\widehat{\beta} = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$, So:
 
 $$cov(\widehat{\beta}|X) = E((\widehat{\beta} - \beta)(\widehat{\beta} - \beta)' | X)$$
-
 
 $$ = E(  ((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)' | X)$$
 
@@ -657,7 +682,6 @@ In groups: if $\epsilon$ is a vector that is $n \times 1$ with elements $(\epsil
 3. What is the **expected value** of the elements on the **off-diagonal** 
 
 Hints: We have assumed that $E(\epsilon) = 0$; $\epsilon_i$ are **independent** of each other
-
 
 ---
 
@@ -766,13 +790,16 @@ If assumption 1 and 3 are wrong: unbiasedness of $\widehat{\beta}$ does not hold
 
 In groups:
 
-1. $Y$ is generated by $\mathbf{X\beta} + \epsilon$
-2. $\epsilon_i$ are independent, identically distributed, with variance $\sigma^2$ for *all* $i$
-3. $X_i \perp \!\!\! \perp \epsilon_i$
+Download https://pastebin.com/LeSpqKKk
 
-What is an example of the assumption being wrong?
+1. Regress `gop_change` on `enlistment` and an intercept using matrix calacualtions
+2. Create the residuals `e`
+3. Create the variance-covariance matrix
+4. Get the coefficient and standard error for `enlistment`
+5. For each of the three least squares assumptions:
 
-Why would it lead our standard errors to be wrong?
+- what is an example of the assumption being wrong in this case?
+- why would it lead standard errors to be wrong?
 
 ---
 

@@ -559,10 +559,10 @@ Using data from the American Community Survey, we can look at how hours worked i
 
 ### Example
 
-Let's now find the (approximate) linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
+Let's now find the (approximate) linear conditional expectation function of earnings, across gender, hours worked, age, and profession:
 
 ```{r}
-ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)
+ls = lm(INCEARN ~ FEMALE + UHRSWORK + AGE + LAW , acs_data)
 ```
 
 ---
