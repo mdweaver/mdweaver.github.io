@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "February 24, 2021"
+date: "March 8, 2022"
 output: ioslides_presentation
 ---
 
@@ -15,24 +15,12 @@ require(magrittr)
 
 ## Objectives
 
-### **1. Descriptive Conclusion**
-
-### **2. Intro to Causality**
+### **1. Introduction to Causality**
 
 - **What is causality?**
 - **Counterfactuals**
 - **Potential Outcomes**
 
-
-# Descriptive Claims
-
-## Evaluating Descriptive Claims:
-
-1. **Claim $\rightarrow$**
-2. **Concept(s)** $\rightarrow$
-3. **Variable(s)** $\rightarrow$
-4. **Measure** $\rightarrow$
-5. **Draw a Conclusion** $\rightarrow$ **Claim**
 
 # Causality
 
@@ -64,7 +52,7 @@ require(magrittr)
 
 Want to explain something specific that has happened/we observe (**the effect**). Seek to **attribute** a cause for something we observe. 
 
-- Why did millions of refugees head to Europe in 2015-2016?
+- Why Russia invade Ukraine?
 - Why are housing prices very high in Vancouver?
 
 ## Two ways of asking causal questions
@@ -99,7 +87,7 @@ $$\textrm{cause} \xrightarrow{} \textrm{?}$$
 
 <br>
 
-- sometimes these descriptive claims are **explicit**, often they are **implied**.
+- sometimes these descriptive claims are made **explicit**, often they are **implied**.
 
 ## What is causality?
 
@@ -155,12 +143,11 @@ If Gwenyth Paltrow's character...
 
 (a) **catches the train** then she catches her boyfriend cheating, and **dumps him**
 
-(b) **does not catch the train** then she does not catch her boyfriend cheating, and **remains with him**
+(b) **does not catch the train** then she does not catch her boyfriend cheating, and **stays with him**
 
 In reality, only **one** of these possibilities can happen. If (a) happens, it is **factual**, (b) is **counterfactual**
 
 ## An exercise
-
 
 [This happened](https://www.cbc.ca/news/canada/british-columbia/ubc-parties-fines-covid-19-public-health-orders-1.5918680)
 
@@ -183,7 +170,6 @@ $1.$ If invited to **attend** a party, and the penalty, if caught, were $230, wo
 $2.$ If invited to **attend** a party, and the penalty, if caught, were $2300, would you attend?
 
 >- (**counterfactual**): this is not the rule in this province, but we can imagine an alternate universe in which it were.
-
 
 ## Counterfactuals and Potential Outcomes
 

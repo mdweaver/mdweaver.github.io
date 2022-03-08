@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "March 9, 2021"
+date: "March 8, 2022"
 output: ioslides_presentation
 ---
 
@@ -15,112 +15,34 @@ require(magrittr)
 
 ## Objectives
 
+### **1. Introduction to Causality**
 
-### **1. What is Causality**
-
+- **What is causality?**
 - **Counterfactuals**
 - **Potential Outcomes**
 
-### **2. Types of causal claims**
-  
-- **deterministic** vs **probabilistic**
-- varieties of **deterministic** causal claims
 
+# Causality
 
+## Why causality?
 
-## A question for today:
+**Recall** some of Weber's insights:
 
-From the midterm, and still a relevant policy consideration:
+### 1. **science is about prediction**
 
-> Do public health polices that **require** individuals to wear face-masks in public indoor spaces **reduce** COVID transmission and mortality?
+### 2. **science cannot tell us what to do**, but it can provide **clarity**
 
->- This is a **causal** question.
+- For us, **clarity** means knowing what actions achieve our goals, which do not, and how certain actions might put our values into conflict.
 
-# What is causality?
+## Why causality?
 
-## What is causality?
+**In other terms**:
 
-All **causal claims** are **counterfactual claims**:
+### Science can only help answer **prescriptive questions** by evaluating **causal claims**
 
-That is: they imply two **descriptive claims** of a specific type
+<hr style="height:8px; visibility:hidden;" />
 
-1. One descriptive claim about how the world <u>is</u> **factually**;
-    - what is the factual exposure to the alleged "cause"
-    - what is the factual outcome (the thing allegedly affected)
-2. One descriptive claim about how the world <u>would be</u> **counterfactually**
-    - what would the outcome be **if exposure to the alleged cause were different**
-    
-## Counterfactuals and Causality:
-
-**counterfactuals**: are the way world **would be** if events had transpired differently (other than what actually took place).
-
-- imagine an "alternate universe"
-
-constrasts to what is **factual**: the way the world is, given the events that have taken place.
-
-## Counterfactuals and Potential Outcomes
-
-Counterfactuals imply **potential outcomes**:
-
-If $X$ is a **variable** that corresponds to a possible cause and $Y$ is a **variable** for what is possibly affected, and $i$ indicates a specific case... 
-
-then **potential outcomes** are the values of $Y_i$ a **specific case** would take for the different possible values of $X$ (both factual and counterfactual)
-
--  **potential** outcomes because they **could happen** but only one becomes factual, the others remain **counterfactual**.
-
-## Counterfactuals and Potential Outcomes
-
-$Y_i$ = COVID Deaths in a Canadian Province
-
-$X$ = Mandatory Face-mask Policy (yes or no)
-
-Only one policy will be implemented; COVID deaths in the alternate world remain counterfactual (what would have happened **absent** face-mask policy).
-
-## Counterfactuals and Causality:
-
-And we can say that $X$ **causes** $Y$ for case $i$ if $Y_i(X = 1) \neq Y_i(X = 0)$:
-
-- $X$ causes $Y$: if case $i$ would have behaved ($Y$) differently (than it did factually) in the (counterfactual) alternate universe where **everything was the same** except  for $X$.
-
-- Same as saying: $X$ causes $Y$ if the potential outcomes of $Y$ are different for different values of $X$
-
-## Counterfactuals and Causality:
-
-And we can say that $\mathrm{Face \ Mask \ Policy}$ **reduced** $\mathrm{COVID \ Deaths}$ for case $BC$ if
-
-$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask = Yes}) <$  $\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask = No})$:
-
-## Counterfactuals and Causality:
-
-All causal claims can be re-stated as **counterfactual claims**
-
-- They contain a **conditional clause**, starting with "If" (always in the **subjunctive mood**)
-- A "then" clause, stating what would happen if the **conditional**/**"If"** clause were true (always in the **conditional mood**)
-- May be in past, present, or future tense.
-
-## Counterfactuals and Causality:
-
-### Example: Past
-
-"BC's mask mandate reduced COVID fatalities."
-
-$$\underbrace{If \ \  BC \ \ had \ \ not \ \ imposed \ \ a \ \ mask \ \ mandate}_{\text{If-clause in Subjunctive Mood}}, \\
-\underbrace{there \ \ would \ \  have \ \ been \ \ more \ \ COVID \ \ deaths.}_{\text{Then-clause in Conditional Mood}}$$
-
-
-## Counterfactuals and Causality:
-
-### Example: Present
-
-"The presence of greek organizations on campus increases rates of sexual assault."
-
-$$\underbrace{If \ \  there \ \ were \ \ no \ \ greek \ \ organizations \ \ on \ \ campus}_{\text{If-clause in Subjunctive Mood}}, \\ \underbrace{there \ \ would \ \  be \ \ fewer \ \ sexual \ \ assaults.}_{\text{Then-clause in Conditional Mood}}$$
-
-## Counterfactuals and Causality:
-
-Note: **Counterfactual claims get increasingly complicated, the more complicated your causal claim is**
-
-- On assignments, exam do not come up with overly complex causal claims.
+### Without evidence for **causal claims**, we can't make rational decisions about **prescriptive claims**
 
 ## Two ways of asking causal questions
 
@@ -130,7 +52,8 @@ Note: **Counterfactual claims get increasingly complicated, the more complicated
 
 Want to explain something specific that has happened/we observe (**the effect**). Seek to **attribute** a cause for something we observe. 
 
-- **"Why has Quebec had the highest rate of COVID mortality among all provinces in Canada?"** 
+- Why did Russia invade Ukraine?
+- Why are housing prices very high in Vancouver?
 
 ## Two ways of asking causal questions
 
@@ -140,244 +63,225 @@ Want to explain something specific that has happened/we observe (**the effect**)
 
 We want to know what happens if we do some action or some action (**the cause**) happens. (Could be a specific action or not) This is about the **contribution** of some cause to an effect.
 
-- **What is the effect of the Canada Emergency Response Benefit (CERB) on consumer spending?**
-
----
-
-### In groups
-
-**1. Come up with two causal claims; one corresponding each of the preceding two questions**
-
-**2. Restate each causal claim as a counterfactual claim.**
-
-# Varieties of Causal Claims
+- Has BC's housing speculation tax reduced housing prices? 
+- What are the effects of restricting gun ownership on gun violence?
 
 ## Two ways of asking causal questions
 
-Usually... different kinds of causal questions are answered with **different kinds of causal claims**
+### Looking at **effects of causes** versus **causes of effects**  leads to different approaches to scientific investigation
 
-1. **causes of effects** $\to$ **deterministic** causal claims
-2. **effects of causes** $\to$ **probabilistic** causal claims
+**causes of effects**
+$$\textrm{?} \xrightarrow{} \textrm{effect}$$
 
-## Deterministic Causal Claims
+**effects of causes**
+$$\textrm{cause} \xrightarrow{} \textrm{?}$$
 
-**deterministic causal claims**
+# What is causality?
 
-- claims about what happenens with **certainty** under specific causal conditions
-- whenever some **cause** (or set of causes) is present, the **effect** <u>**always**</u> happens
-  - if the cause is present the effect is **determined** (unavoidable)
-- usually make these claims when we are interested in **causes of effects**
+## What is causality?
 
-## Deterministic Causal Claims
+### all **causal claims** are a combination of two specific descriptive claims
 
-There are several varieties **and** combinations
+<br>
 
-- **necessary** conditions
-- **sufficient** conditions
-- conjunctural/multiple causation
+- sometimes these descriptive claims are made **explicit**, often they are **implied**.
 
-## Necessary Conditions
+## What is causality?
 
-### **necessary conditions**
+Why does the US have the highest rate of gun deaths among developed countries?
 
-A causal claim that there is some cause $C$ **without which** the effect **cannot occur**
+> **The US has the highest rate of gun deaths among developed countries because of its lax gun laws.**
 
-- A cause $C$ **must happen** in order for effect $E$ to happen.
-- **Does not mean** if the cause $C$ is present, effect $E$ must happen, only **without** $C$, no $E$.
+- is this a question about "causes of effects" or "effects of causes"?
+- What are the two descriptive claims in this causal claim?
 
-## Necessary Conditions: Example
+## What is causality?
 
-A claim: "Without global air travel, a new infectious disease will not become a global pandemic."
+- Does building a wall to keep immigrants out reduce violent crime?
 
-Also can be stated: "Global air travel is a necessary condition for a new disease to become a pandemic."
+> **The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country.** - Donald Trump
 
-## Map of Air Travel in 2015 {.centered}
+- is this a question about "causes of effects" or "effects of causes"?
+- What are the two descriptive claims in this causal claim?
 
-<img src = "http://www.martingrandjean.ch/wp-content/uploads/2016/05/airports-map.png" width=100%>
+## What is causality?
 
-POLL
+The **descriptive claims** embedded in **causal claims** are of a specific type:
 
-## Necessary Conditions: Example
+1. One is a claim about how the world actually is (**factual**)
+2. One is a claim about how the world would look, if something were changed (**counterfactual**)
 
-If this claim is true: "Global air travel is a necessary condition for a new disease to become a pandemic."...
+### **counterfactuals** are the key to causality
 
-Does the graph on preceding page imply that a new infectious disease will become a pandemic?
+# Counterfactuals
 
->- No. Presence of necessary condition $\not\to$ effect must happen. Instead, *absence* of necessary condition $\to$ effect does not happen
+## Causality is Counterfactual
 
-## Sufficient Conditions
+### **What does that mean?**
 
-(In contrast to **necessary conditions**)
+## Counterfactuals and Causality:
 
-### **sufficient conditions**
+**counterfactuals**: are the way world **would be** if events had transpired differently (other than what actually took place).
 
-- cause $C$ **always** produces an effect $E$ when it is present
-- do not depend on other factors being present; cause $C$ can produce $E$ **by itself**
-- Sufficient conditions imply: every time $C$ is present, then $E$ will happen 
+- imagine an "alternate universe" or "alternate timeline"
 
-## Sufficient Conditions: Example
+constrasts to what is **factual**: the way the world is, given the events that have taken place.
 
-**"A military coup that overthrows a democratically elected government is a sufficient condition for large public protests."**
+#
 
-- This *might* be the case every time
-- Does not appear to depend on other factors
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Da-Mizk86AE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Generally, single causes that are sufficient conditions are **rare** in social sciences
+# Spoiler Warning!
 
-# Things are usually more complicated
+## Counterfactuals:
+
+If Gwenyth Paltrow's character...
+
+(a) **catches the train** then she catches her boyfriend cheating, and **dumps him**
+
+(b) **does not catch the train** then she does not catch her boyfriend cheating, and **stays with him**
+
+In reality, only **one** of these possibilities can happen. If (a) happens, it is **factual**, (b) is **counterfactual**
+
+## An exercise {.build}
+
+**Do public health restrictions on going to bars affect the patronage of bars?**
+
+### Think and write...
+
+If bars required **both** proof of vaccination **and** masking when not seated, would you go to a bar if your friends invited you?
+
+If bars required **neither** proof of vaccination **nor** masking when not seated, would you go to a bar if your friends invited you?
+
+Go to [menti.com](menti.com) and enter 6481 6421 or go to [https://www.menti.com/1avasbn4n1](https://www.menti.com/1avasbn4n1)
+
+## An exercise
+
+**Which of these is factual? Which is counterfactual**?
+
+$1.$ If bars required **both** proof of vaccination **and** masking when not seated, would you go to a bar if your friends invited you?
+
+>- (**factual**): this is the actual rule in the Province
+
+$2.$ If bars required **neither** proof of vaccination **nor** masking when not seated, would you go to a bar if your friends invited you?
+
+>- (**counterfactual**): this is not the rule in this province, but we can imagine an alternate universe in which it were.
+
+## Counterfactuals and Potential Outcomes
+
+Counterfactuals can be described with **potential outcomes**:
+
+If $X$ is a **variable** for a possible cause and $Y$ is a **variable** for what is possibly affected... 
+
+then **potential outcomes** are the values of $Y$ a **specific case** would take for the different possible values of $X$ (both factual and counterfactual):
+
+- would **you** go to a bar **today** if invited and vaccine and mask requirements were in place?
+- would **you** go to a bar **today** if invited and vaccine and mask requirements were **NOT** in place?
+
+What is the variable...
+
+- for the possible cause?
+- for what is affected?
+
+## Counterfactuals and Potential Outcomes
+
+**potential outcomes notation:**
+
+Where $i$ corresponds to a specific case (e.g., you or Gwenyth Paltrow)
+
+$\mathrm{Public \ Health \ Order}$ ($X$) is the causal variable (and can take different values, e.g. $yes, no$), then the potential outcomes of $\mathrm{Go \ to \ Bar}$ ($Y_i$) are:
+
+$$\mathrm{Go \ to \ Bar}_{i}(PHO = yes), \mathrm{Go \ to \ Bar}_i(PHO = no)$$
+
+For case $i$, $\mathrm{Public \ Health \ Order}$ can only ever be $yes$ or $no$: one potential outcome will become **factual** (it will happen), while the other will remain **counterfactual** (it won't happen)
+
+## Counterfactuals and Potential Outcomes
+
+$\mathrm{Love \ Life _{Gwenyth} (Catches \ the \ train )}$
+$= \mathrm{Stay \ with \ cheating \ BF}$
+
+$\mathrm{Love \ Life _{Gwenyth} (Doesn't \ catch \ the \ train )}$
+$= \mathrm{Dump \ cheating \ BF}$
+
+We only will observe **one** of these two possibilities. But both could **potentially** have happened.
 
 ---
 
-### BC vs. Washington State
-
-Since the pandemic has begun, BC has had a 27.4 COVID deaths per 100000 people. Washington State, directly across the US border to the south, has had 67.5 COVID deaths per 100000 people.
-
-In your group, propose an answer: What caused BC to have a lower COVID death rate than Washington State?
-
-
-## Complex Causality
-
-Causality may be **deterministic**... there are exact conditions for when effect always/never happens.
-
-But in reality, it is almost always **complex** 
-
-- **multiple** factors might be necessary (conjunctural)
-- different causes produce same effect (multiple)
-- different groups of factors might, together be sufficient (multiple and conjunctural)
-- (INUS/SUIN conditions: [see here](https://doi.org/10.1111/1468-4446.12340))
-
-## Voting Experiment
-
-### **Why do people vote?**
-
-# {.centered}
-
-<img src='voter_shaming.JPG' height = 80%>
-
-## Voting Experiment
-
-```{r,echo = F, message=F, warning=F}
-
-dd = data.frame(h = c(29.7, 31.5, 34.5, 37.8),
-                cond = factor(c("Control", "Civic Duty", "Self\nVote Record", "Share\nVote Record"), levels = c("Control", "Civic Duty", "Self\nVote Record", "Share\nVote Record"))
-)
-                
-ggplot(dd, aes(x = cond, y = h)) + geom_bar(stat = "identity") + ylab("% Who Voted") + xlab("Mailing Treatments") + ggtitle("Voter Turnout by Experimental Group") + theme_bw() 
-
-```
-
-POLL
-
-## Complex Causality
-
-Does it make sense to say that "being shamed" is a **necessary condition** for voting?
-
->- No. Clearly some people voted in absence of shaming
-
-Does it make sense to say that "being shamed" is a **sufficient condition** for voting?
-
->- No. Some people were shamed but did not vote.
-
->- It is simpler to state this probabilistically: being shamed increases likelihood of voting.
-
-
-## Probabilistic Causal Claims
-
-### **probabilistic causal claims**
-
-are claims that the presence/absence of a cause $C$ makes an effect $E$ more or less likely to occur. Or cause $C$ increases/decreases effect $E$ **on average**
-
-- In contrast to **deterministic causal claims** this implies
-    - effect $E$ can happen when $C$ is absent
-    - effect $E$ may not happen when $C$ is present
-- **NOT** a claim that politics has some inherent randomness (e.g. quantum mechanics)
-- Usually make these claims when interested in **effects of causes**
-
-## Interlude: Coin flips:
-
-<iframe src="https://www.youtube.com/embed/AYnJv68T3MM?start=10&end=171" width=100% frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-## Interlude: Coin flips:
-
-<img src="./coin_flip.png" width=60%>
-
-## Probabilistic Causal Claims
-
-### Why do we need **probabilistic claims**?
-
-Causality is deterministic. 
-
-But causality is also complex, and not fully known:
-
-Cause $C$ might produce an effect $E$...
-
-- only when multiple other necessary conditions are met (**conjunctural**)
-- as only one of  **multiple** sufficient causes of the effect (**multiple**)
-- in multiple conjunctural conditions.
-
-$C$ appears to only cause a change in the **probability** or **likelihood** of seeing the effect $E$.
-
-
-
-## Probabilistic Claims
-
-Which are probabilistic causal claims?
-
-#### **A) It's probably true that leftwing government reduce student tuition fees**
-
-<hr style="height:8px; visibility:hidden;" />
-
-#### **B) Electing a leftwing, rather than rightwing, government increases the likelihood that tuition fees wil be reduced**
-
-<hr style="height:8px; visibility:hidden;" />
-
-#### **C) Tuition fees are reduced more frequently under leftwing governments than rightwing governments**
-
-POLL
-
-## Examples
-
-Which is a probabilistic causal claim?
-
-#### ~~**A) It's probably true that leftwing government reduce student tuition fees**~~
-
-<hr style="height:8px; visibility:hidden;" />
-
-#### **B) Electing a leftwing, rather than rightwing, government increases the likelihood that tuition fees wil be reduced**
-
-<hr style="height:8px; visibility:hidden;" />
-
-#### ~~**C)  Tuition fees are reduced more frequently under leftwing governments than rightwing governments**~~
-    
-## Recognizing probabilistic causal claims
-
-Not every probabilistic statement is **causal**
-
-#### 1. ~~"Oppression is likely to cause a rebellion"~~
-
-- Says oppression is probably a cause out rebellion
-- Should say: cause $C$ **changes likelihood** of outcome $E$
-
-#### 2. ~~"A rebellion is more likely to occur when the population is oppressed"~~
-
-- Says we are more likely to **see** rebellion where population is oppressed
-- Not clearly **causal**; just a descriptive claim.
-
-# Conclusion
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e789a9ce6276b9aa8f508044b5f1bd11/42c6538fd659' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
 ---
 
-### **1. What is Causality**
+**Draw potential outcomes on the board**
 
-- causality is **counterfactual**
-- **Counterfactuals**
-- **Potential Outcomes**
+## Potential Outcomes: Caveat
 
-### **2. Types of causal claims**
-  
-- **deterministic** vs **probabilistic**
-- varieties of **deterministic** causal claims
+In our example of **COVID Public Health Orders**:
 
-## Next time
+- We are only **imagining**, as if omniscient, what you would do in the alternate universe where there are no rules for who can go to bars. We don't actually know. 
+- Potential outcomes are what **you actually would do** in that alternate universe.
 
-How do we prove causality?
+Even if we **don't know** what you would do if invited to a bar and the public health orders were not in place, can imagine that there is potential outcome of what you would do...
+
+---
+
+### **What do counterfactuals have to do with causality????**
+
+## Counterfactuals and Causality:
+
+**counterfactual causality**
+
+We can say that $X$ **causes** $Y$ for case $i$ if $Y_i(X = 1) \neq Y_i(X = 0)$:
+
+- $X$ causes $Y$ if case $i$ would have behaved ($Y$) differently (than it did factually) in the (**counterfactual**) alternate universe where **everything was the same** except $X$ was changed.
+
+REVISIT THE BOARD
+
+# Example:
+
+## Counterfactuals Example
+
+> **"The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country."** - Donald Trump
+
+If this claim were true, what are the implied **potential outcomes**? 
+
+- ask yourself: what variable corresponds to the "cause"? to the "effect"?
+
+Which of these potential outcomes are **factual**? **counterfactual**?
+
+## Counterfactuals and Potential Outcomes
+
+Trump's causal claim (implicitly): "The wall caused El Paso to have fewer murders".
+
+Trump's counterfactual claim: "If there had been no wall, El Paso would have had more murders."
+
+### Counterfactual claim implies two **potential outcomes**:
+
+1. Number of murders in El Paso last year in the **presence** of the wall: $\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})$
+2. Number of murders in El Paso last year in the **absence** of the wall $\textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$
+
+## Counterfactuals and Potential Outcomes
+
+If Trump's causal claim is **true** ("The wall caused El Paso to have fewer murders"), which should be true?
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall}) > \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall}) = \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+## Counterfactuals and Potential Outcomes
+
+> **"The border city of El Paso, Tex., used to have extremely high rates of violent crime — one of the highest in the entire country, and considered one of our nation’s most dangerous cities. Now, immediately upon its building, with a powerful barrier in place, El Paso is one of the safest cities in our country."**
+
+Implies:
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+## Counterfactuals and Potential Outcomes
+
+If the claim is that "The wall caused El Paso to have fewer murders", or
+
+$$\textrm{Murders}_{\textrm{El Paso}}(\textrm{Wall})  < \textrm{Murders}_{\textrm{El Paso}}(\textrm{No Wall})$$
+
+### ... What kind of evidence could you present assess whether the claim is true?
+
