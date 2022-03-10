@@ -178,11 +178,6 @@ then **potential outcomes** are the values of $Y$ a **specific case** would take
 - would **you** go to a bar **today** if invited and vaccine and mask requirements were in place?
 - would **you** go to a bar **today** if invited and vaccine and mask requirements were **NOT** in place?
 
-What is the variable...
-
-- for the possible cause?
-- for what is affected?
-
 ## Counterfactuals and Potential Outcomes
 
 **potential outcomes notation:**

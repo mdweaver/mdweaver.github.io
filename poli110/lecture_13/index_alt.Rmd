@@ -174,7 +174,7 @@ There are several varieties **and** combinations
 
 - **necessary** conditions
 - **sufficient** conditions
-- conjunctural/multiple causation
+- conjunctural/multiple causation (combinations of necessary/sufficiency conditions)
 
 ## Necessary Conditions
 
