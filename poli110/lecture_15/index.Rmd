@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "March 16, 2021"
+date: "March 15, 2022"
 output: ioslides_presentation
 ---
 
@@ -48,14 +48,12 @@ A causal claim:
 
 > "Trump's rally in El Paso increased the likelihood of hate crimes against immigrants."
 
-In Groups...
 
-- what is the implied counterfactual claim?
-- If the causal claim were **true**, what would be the potential outcomes of hate crimes in El Paso in 2019?
-
-#
+- **Does the fact that a hate crime took place in El Paso after the rally prove this is true? Why or why not?**
 
 ## Trump Rallies and Hate Crimes
+
+Causal claim implies...
 
 **Counterfactual claim:**
 
@@ -68,22 +66,18 @@ $\color{red}{\mathrm{Hate \ Crimes}_{El \ Paso}(\mathrm{No \ Rally})}$
 
 $\mathrm{Black}$ is factual; $\color{red}{\mathrm{Red}}$ is counterfactual
 
-## Causal Hypotheses
+## Testing Causal Claims
 
-We make causal claims testable by generating…
+We make causal claims testable by translating them into statements about **potential outcomes** / the relationship between **independent** (cause) and **dependent** (outcome) variables.
 
-**causal hypotheses** (or empirical predictions):
+- these are statements about what we should **observe** if the causal claim is true.
 
-statements about what we should **observe** if the causal claim is true.
-
-Hypotheses state the **potential outcomes** implied by the causal claim. Put another way, what is implied relationship between **independent** (cause) and **dependent** (outcome) variables.
+For instance:
 
 - If $X$ were present(absent), then $Y$ would be more(less) likely
 - If $X$ were to increase(decrease), then $Y$ would increase(decrease)
 
 ## Independent/Dependent Variables
-
-Because causal hypotheses are **observable**, stated in terms of **variables**.
 
 **Independent variable:**
 
@@ -97,7 +91,7 @@ The variable capturing the alleged outcome (what is affected) in a causal claim.
 
 - often denoted as “DV” or “Y” or “left-hand variable”
 
-**Potential Outcomes** are the values of **dependent variable** a case would take different values of the **independent variable**
+**Potential Outcomes** are the values of **dependent variable** a case would take if exposed to different values of the **independent variable**
 
 ## Independent/Dependent Variables
 
@@ -115,19 +109,11 @@ What could be a **dependent variable** used to test this causal claim?
 
 How would we find the "$?$"?
 
-## FPCI
-
-### **Fundamental Problem of Causal Inference**
-
-For any case, we can **only** observe the potential outcome of $Y$ for the value of $X$ that the case is actually exposed to. 
-
-We can **never observe** the other, **counterfactual** potential outcomes of $Y$ for different possible values of $X$ that the case did not experience.
-
-Causality is counterfactual, so for any specific case, we can never empirically observe whether $X$ causes $Y$.
+>- We can't know, because of the **Fundamental Problem of Causal Inference**
 
 ## FPCI
 
-If Trump's rally cause an increase hate crimes in El Paso, we need to see this:
+If Trump's rally caused  hate crimes to increase in El Paso, we would expect to see this:
 
 $\mathrm{Hate \ Crimes}_{El \ Paso}(\mathrm{Rally}) >$
 $\color{red}{\mathrm{Hate \ Crimes}_{El \ Paso}(\mathrm{No \ Rally})}$
@@ -135,6 +121,21 @@ $\color{red}{\mathrm{Hate \ Crimes}_{El \ Paso}(\mathrm{No \ Rally})}$
 While the value in $\mathrm{Black}$ is factual; The value in $\color{red}{\mathrm{Red}}$ is counterfactual and can **never** be known.
 
 # Solving the FPCI
+
+---
+
+What behaviors cause a person to become wealthy?
+
+<iframe width=560 height=349 src=https://player.cnbc.com/p/gZWlPC/cnbc_global?playertype=synd&byGuid=3000587544 frameborder=0 scrolling=no allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen ></iframe>
+
+Can we learn anything from this evidence?
+
+## Solving the FPCI
+
+We **cannot** say anything about causality if:
+
+- we try to explain the cause of some effect by only looking at cases that experience that effect (**selection on dependent variable**)
+- we try to explain the effect of some cause by only looking at cases that experience that cause (**causality is counterfactual**)
 
 ## Solving the FPCI
 
@@ -172,15 +173,17 @@ Every solution to the FPCI involves:
 
 1. Comparing the **observed** values of outcome $Y$ in cases that **actually** have different values of cause $X$
       
-2. Making assumptions that let us treat **factual** (observed) potential outcomes from some cases as  **counterfactual** (unobserved) potential outcomes of other cases.
+2. Making assumptions that let us treat **factual** (observed) potential outcomes from some cases as equivalent to **counterfactual** (unobserved) potential outcomes of other cases.
+
+>- The observed patterns of the association between the independent variable $X$ and dependent variable $Y$ are called **correlations**
 
 
 ## **Correlation**
 
-**Correlation** is the degree of association/relationship between the observed values of $X$ (the independent variable) and $Y$ (the dependent variable)
+**Correlation** is the degree of association/relationship between the **observed** values of $X$ (the independent variable) and $Y$ (the dependent variable)
 
 - There are formal mathematical definitions. 
-- We use the term loosely to describe observed relationship between $X$ and $Y$
+- We use the term loosely to describe the **observed relationship** between $X$ and $Y$
 
 ## **Correlation**
 
@@ -190,15 +193,59 @@ But, you've all heard this:
 
 <img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
 
+
 ## **Correlation**
 
-- Many different ways of doing this (compare group means, regression) are all fundamentally about correlation.
+How do we turn **correlation** into evidence of **causation**?
+
+>- First, we need to know a bit more about **correlation**
+
+## **Correlation**
+
+Many different ways of assessing correlation.
+
 - correlations have a **direction**:
-    - positive: implies that as $X$ increases, $Y$ increases
-    - negative: $X$ increases, $Y$ decreases
-- correlations have **strength** (has nothing to do **size of effect**):
+    - positive: $X\uparrow$ , $Y\uparrow$ 
+    - negative: $X\uparrow$, $Y\downarrow$ 
+- correlations have **strength**:
     - **strong**: $X$ and $Y$ almost **always** move together 
     - **weak**: $X$ and $Y$ do not move together very much
+- correlations have **effect size**: 
+    - *how much* $Y$ changes with $X$ on average. 
+
+---
+
+```{r echo = F, message = F, warning = F}
+data = fread('./trump_rally_data.csv') %>% 
+        .[, list(trump_count = sum(trumprallycount), hate_crimes = sum(incidentcount), l_pop = log_pop[1]), by = fips]
+data_g = data[, list(hate_crimes = mean(hate_crimes)), by = trump_count]
+
+ggplot(data, aes(x = trump_count, y = hate_crimes)) + 
+  geom_point(alpha = 0.2) + 
+  xlab("Trump Rallies (Count): X") +
+  ylab("Hate Crimes (Count): Y") +
+  ggtitle("Trump Rallies and Hate Crimes by County (2016)") + 
+  theme_bw()
+```
+
+---
+
+```{r echo = F, message = F, warning = F}
+data = fread('./trump_rally_data.csv') %>% 
+        .[, list(trump_count = sum(trumprallycount), hate_crimes = sum(incidentcount), l_pop = log_pop[1]), by = fips]
+data_g = data[, list(hate_crimes = mean(hate_crimes)), by = trump_count]
+
+ggplot(data, aes(x = trump_count, y = hate_crimes)) + 
+  geom_smooth(method = 'lm', se = F) +
+  geom_jitter(alpha = 0.2, width = 0.5) + 
+  xlab("Trump Rallies (Count): X") +
+  ylab("Hate Crimes (Count): Y") +
+  ggtitle("Trump Rallies and Hate Crimes by County (2016)") + 
+  theme_bw()
+```
+
+data from [this paper](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf)
+
 
 ## Correlation
 
@@ -207,20 +254,20 @@ But, you've all heard this:
 **mathematically**: correlation is the degree of **linear** association between $X$ and $Y$
 
 - Takes values between $-1$ and $1$
-- Values close to $1$ or $-1$ suggest **high** degree of *linear* association
-- Values close to $0$ suggest **low** degree of *linear* association
+- Values close to $1$ or $-1$ suggest **strong** degree of *linear* association
+- Values close to $0$ suggest **weak** degree of *linear* association
 - Value of correlation does **not** tell us **how much** $Y$ changes with $X$
 
 ## Correlation
 
 ### What is it?
 
-**negative correlation**: (correlation $< 0$) values of $X$ and $Y$ move in opposite direction:
+**negative correlation**:  ($< 0$) values of $X$ and $Y$ move in opposite direction:
 
 - higher values of $X$ appear with lower values of $Y$
 - lower values of $X$ appear with higher values of $Y$
 
-**positive correlation**: (correlation $> 0$) values of $X$ and $Y$ move in same direction:
+**positive correlation**: ($> 0$) values of $X$ and $Y$ move in same direction:
 
 - higher values of $X$ appear with higher values of $Y$
 - lower values of $X$ appear with lower values of $Y$
@@ -233,7 +280,7 @@ But, you've all heard this:
 
 - It is possible to see **perfect correlation** but small change in $Y$ across $X$
 
-- It is possible to see **low correlation** but large change in $Y$ across $X$
+- It is possible to see **weak correlation** but large change in $Y$ across $X$
 
 - It is possible to see **perfect nonlinear relationship** between $X$ and $Y$ with $0$ correlation
 
@@ -243,49 +290,278 @@ But, you've all heard this:
 
 **strong correlation**: values for $X$ and $Y$ cluster strongly along a line
 
-**strength of correlation** does not fully determine the **slope** of line describing $X,Y$ relationship
+**strength of correlation** does not determine the **slope** of line describing $X,Y$ relationship
 
 **effect size**: this is the **slope** of the line describing the $X,Y$ relationship. The larger the effect, the steeper the slope
 
 ---
 
-
 ```{r echo = F, message = F, warning = F}
-data = fread('./trump_rally_data.csv') %>% 
-        .[, list(trump_count = sum(trumprallycount), hate_crimes = sum(incidentcount), l_pop = log_pop[1]), by = fips]
-
-ggplot(data, aes(x = trump_count, y = hate_crimes)) + geom_point() +  geom_smooth(method = lm, formula = y ~ splines::bs(x, 3), se = FALSE) + 
-  xlab("Trump Rallies (Count)") +
-  ylab("Hate Crimes (Count)") +
+data[, any_trump := ifelse(trump_count >0, 1, 0)]
+g_data = data[, list(hate_crimes = mean(hate_crimes)), by = any_trump]
+ggplot(data, aes(x = any_trump, y = hate_crimes)) + 
+  geom_smooth(method = 'lm', se = F) +
+  geom_point(alpha = 0.1) + 
+  xlab("Trump Rallies (Any): X") +
+  ylab("Hate Crimes (Count): Y") +
   ggtitle("Trump Rallies and Hate Crimes by County (2016)") + 
   theme_bw()
 ```
 
-data from [this paper](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf)
+Does this correlation prove that Trump rallies **caused** hate crimes? Why or why not?
 
 ---
 
-```{r echo = F, message = F, warning = F}
-ggplot(data, aes(x = as.numeric(trump_count >0), y = hate_crimes)) + geom_point() +  geom_smooth(method = lm, se = FALSE) + 
-  xlab("Trump Rallies (Any)") +
-  ylab("Hate Crimes (Count)") +
-  ggtitle("Trump Rallies and Hate Crimes by County (2016)") + 
-  theme_bw()
+
+```{r, echo = F, message = F}
+cage_data = data.frame(cage_films = c(2,2,2,3,1,1,2,3,4,1,4),
+                       pool_deaths = c(109, 102, 102, 98, 85, 95, 96, 98, 123, 94, 102))
+require(ggplot2)
+ggplot(cage_data, aes(x =cage_films, y = pool_deaths)) + 
+  geom_point(position = position_jitter(w = 0, h = 1)) + 
+  geom_smooth(method = 'lm', fullrange = T, se = F) +
+  theme_bw() +
+  ggtitle("Nick Cage films cause Pool Drownings") +
+  xlab("Nick Cage Films per Year") + 
+  ylab("Pool Drownings per Year (US)") + 
+  theme(plot.title = element_text(size = 24, face = "bold"),
+        axis.title=element_text(size=14,face="bold"))
 ```
 
-data from [this paper](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf)
-
-## In groups:
-
-Does this correlation mean that Trump rallies **caused**  hate crimes?
+Does this correlation prove that Nick Cage **caused** drownings? Why or why not?
 
 ## Correlation
-
-What do we need to assume to use correlation as evidence of causation?
 
 ### **Two types of problems**
 
 - **random association**: correlations between $X$ and $Y$ occur **by chance** and do not reflect 
 
 - **bias** (spurious correlation, **confounding**): $X$ and $Y$ are correlated but the correlation does not result from **causal relationship** between those variables
+
+Solving these problems involves making **assumptions**: what are those assumptions? how plausible are they?
+
+# Random Association 
+
+## Correlation: Random association
+
+<iframe width=100% src="https://www.youtube.com/embed/no_elVGGgW8?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+## Correlation: Random association
+
+Arbitrary processes can make seemingly-strong patterns.
+
+If you look long enough at pure chaos, you might find a strong correlation
+
+- But it could have happened by chance!
+- So a correlation might not mean causality (e.g. Nick Cage)
+
+[Arbitary Correlations](http://www.tylervigen.com/spurious-correlations)
+
+## Random association: Statistics
+
+To see that random patterns can emerge, I use random number generators to 
+
+- **randomly** pick $5$ values of $X$
+- **randomly** pick $5$ values of $Y$
+
+We can imagine these are the observed $X$ and $Y$ for $5$ cases.
+
+How **easy** is it to find a strong correlation?
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(5)
+  y = rnorm(5)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "5 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+
+```
+
+## Random association: Statistics
+
+```{r, echo = F}
+plot(x,y, main = "5 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+```
+
+$\#$ Tries to get correlation $> 0.9$: `r counter`
+
+## Random association
+
+What do we do about this problem?
+
+- We cannot **rule out** a chance correlation, but we can figure out **how likely** it is that the correlation occurred by chance.
+- If chance correlation is very unlikely, then we set aside this concern
+
+## Random association: Statistics
+
+Field of statistics investigates properties of **chance** events:
+
+- Probability theory tells us how likely events are to happen, given chance
+- Tells us **how likely** correlation of a given strength is to happen by chance
+
+## Random association: Statistics
+
+### How?
+
+1. Compute correlation of $X$ and $Y$
+2. How **strong** is the correlation?
+    - Patterns that are **stronger** are **less likely** to happen by chance
+2. How many **cases** do we have?
+    - Patterns with **many cases** are **less likely** to happen by chance
+3. Assign a probability that the correlation we see would have happened by chance
+
+## Random association: Statistics
+
+This procedure works...
+
+### **Assuming**...
+
+we know the chance processes that could generate this correlation
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(10)
+  y = rnorm(10)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "10 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+```
+
+Tries to get correlation $> 0.9$: `r counter `
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.9) {
+  x = rnorm(15)
+  y = rnorm(15)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "15 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+```
+
+Tries to get correlation $> 0.9$: `r sprintf("%.f",counter)`
+
+
+## Random association: Statistics
+
+```{r, echo = F}
+c= 0
+counter = 0
+while (c < 0.45) {
+  x = rnorm(15)
+  y = rnorm(15)
+  c = cor(x,y)
+  counter = counter + 1
+}
+
+plot(x,y, main = "15 cases\nX and Y chosen randomly")
+text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
+```
+
+Tries to get correlation $> 0.45$: `r counter`
+
+## Random association: Statistics
+
+**statistical significance**: 
+
+> An indication of **how likely** it is that correlation we observe could have happened purely by chance.
+
+> **higher** degree of statistical significance indicates correlation is **unlikely** to have happened by chance
+
+## Random association: Statistics
+
+$p$ **value**:
+
+- A numerical measure of **statistical significance**. Puts a number on how likely observed correlation would have occurred by chance, **assuming** a we know the chance procedure and the truth is a $0$ correlation.
+
+- It is a probability, so is between $0$ and $1$.
+
+- **Lower** $p$-values indicate **greater** statistical significance
+
+$p < 0.05$ often used as threshold for "significant" result. 
+
+- but it is not a magic number
+- Can observe $p < 0.05$ by chance ($\frac{1}{20}$)
+
+## Random association: Statistics
+
+$p$ **value**:
+
+Be wary of "$p$-hacking"
+
+- $p$ values become meaningless if we look at many associations, then only report the ones that are "significant".
+
+### Why?
+
+- low $p$-values occur by chance when we look at lots of associations
+
+## Significant?
+
+<img src="./xkcd_1.png" width=60%>
+
+## Significant?
+
+<img src="./xkcd_2.png" width=30%>
+
+
+## Significant?
+
+<img src="./xkcd_3.png" width=30%>
+
+## What else do you want to know?
+
+<img src="./xkcd_4.png" width=50%>
+
+## We'd want to know this
+
+<img src="./xkcd_5.png" width=90%>
+
+## We'd want to know this
+
+<img src="./xkcd_6.png" width=90%>
+
+## Random assocation
+
+1. Correlations can appear by chance
+2. We can assess **probability** of chance correlation if we know:
+    - **strength** of correlation (close to $1,-1$)
+    - **size** of the sample ($N$)
+    - we assume we know the **chance process** generating our observations
+3. $p$-values:
+    - Obtained using mathematical formulae
+    - Given same $N$, stronger correlation has lower $p$
+    - Given same strength, correlation with more $N$ has lower $p$
+    
+## Random assocation
+
+### Recap:
+
+| Statistical<br>Significance | $p$-value | By Chance? | Why? | "Real"? |
+|:----------------------------:|:-----------------:|:----------:|:-------------------------------:|:----------------:|
+| Low | High ($p > 0.05$) | Likely | small $N$<br>weak correlation | Probably **not** |
+| High | Low ($p < 0.05$) | Unlikely | large $N$<br>strong correlation | Probably |
 
