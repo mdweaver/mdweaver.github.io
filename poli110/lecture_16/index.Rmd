@@ -1,7 +1,7 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "March 18, 2021"
+date: "March 17, 2022"
 output: ioslides_presentation
 ---
 
@@ -11,11 +11,13 @@ require(haven)
 require(data.table)
 require(ggplot2)
 require(magrittr)
+require(ggdag)
+
 ```
 
 ## Testing Causal Claims
 
-### **1. Correlation: Review**
+### **1. Correlation: Recap**
 
 - definition
 - attributes
@@ -31,45 +33,24 @@ require(magrittr)
 
 ## Solving FPCI
 
-We solve the fundamental problem of causal inference by:
+The fundamental problem of causal inference is that:
 
-- comparing the values of the outcome ($Y$) across cases we can observe with different values of the cause ($X$)
-- assuming that cases with different values of $X$ can stand in for the **same case** in the counterfactual world where its value of $X$ is different.
+for any one case, we cannot know whether some "cause" actually led to some "effect".
+
+>- We can never know for sure what caused Putin to invade Ukraine: we can't replay history to see  counterfactual events if, e.g. NATO had acted differently after the Cold War.
+
+## Solving FPCI
+
+We solve the FPCI by comparing **factual** outcomes in **different cases** that have **different exposures** to the "cause"
+
+- $\mathrm{Case \ A}$ is exposed to a "cause"
+- $\mathrm{Case \ B}$ is **not** exposed to a "cause"
+- We assume that $\mathrm{Case \ B}$ is the same as the counterfactual $\color{red}{\mathrm{Case \ A}}$ 
+
 
 ## **Correlation**
 
 **Correlation** is the degree of association/relationship between the **observed** values of $X$ (the independent variable) and $Y$ (the dependent variable)
-
-- There are formal mathematical definitions. 
-- We use the term loosely to describe observed relationship between $X$ and $Y$
-
-## **Correlation**
-
-**All empirical evidence for causal claims** relies on **correlation** between the independent and dependent variables.
-
-But, you've all heard this:
-
-<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
-
----
-
-```{r, echo = F, message=F}
-require(MASS)
-require(ggplot2)
-a1 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.9,0.9,1), byrow = T, ncol = 2))
-a2 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.30,.3,1), byrow = T, ncol = 2))
-a3 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.6,0.6,1), byrow = T, ncol = 2))
-a4 = mvrnorm(150, mu = c(0,0), Sigma = matrix(c(1,0.3,0.3,1), byrow = T, ncol = 2))
-a2[,2] = a2[,2] * -2
-a3[,2] = a3[,2] * 3
-a4[,2] = a4[,2] * -6
-
-plot_data = data.frame(rbind(a1,a2,a3,a4), X3 = rep(LETTERS[1:4], c(150,150,150,150)))
-
-ggplot(plot_data, aes(x = X1, y = X2)) + geom_point() + geom_smooth(method = 'lm', se = F) + facet_wrap(~ X3, nrow = 2, ncol = 2) + theme_bw()
-```
-
-POLL
 
 ## **Correlation**
 
@@ -85,9 +66,13 @@ Correlations have
     - this is the how much $Y$ changes with $X$. 
     - The larger the effect of $X$ on $Y$, the steeper the slope
 
+---
+
+<img src='./scatter_2.svg' width = 75% class = 'center'>
+
+
 ## Correlation
 
-What do we need to assume to use correlation as evidence of causation?
 
 ### **Two types of problems**
 
@@ -113,184 +98,30 @@ ggplot(cage_data, aes(x =cage_films, y = pool_deaths)) +
         axis.title=element_text(size=14,face="bold"))
 ```
 
-# Random Association 
+## Random assocation
 
-## Correlation: Random association
-
-How do we know a correlation is **systematic**?
-
-- How do we know that it is not simply a pattern by random chance?
-- Apparent patterns can be produced by pure randomness
-
-## Correlation: Random association
-
-<iframe width=100% src="https://www.youtube.com/embed/no_elVGGgW8?autoplay=0" frameborder="0" allowfullscreen></iframe>
-
-## Correlation: Random association
-
-If you look at enough possible sets of variables, you might find a strong correlation
-
-- But it could have happened by chance!
-- So a correlation might not be meaningful (e.g. Nick Cage)
-
-(Arbitary Correlations)[http://www.tylervigen.com/spurious-correlations]
-
+1. Correlations can appear by chance
+2. We can assess **probability** of chance correlation if we know:
+    - **strength** of correlation
+    - **size** of the sample ($N$)
+    - we assume we know the **chance process** generating our observations
+3. $p$-values: probability of this correlation by chance
+    - Obtained using mathematical formulae
+    - Given same $N$, stronger correlation has lower $p$
+    - Given same strength, correlation with more $N$ has lower $p$
+    
 
 ## Random association: Statistics
 
-To see that random patterns can emerge, I use random number generators to 
-
-- **randomly** pick $5$ values of $X$
-- **randomly** pick $5$ values of $Y$
-
-We can imagine these are the observed $X$ and $Y$ for $5$ cases.
-
-How easy is it to find a strong correlation?
-
-## Random association: Statistics
-
-```{r, echo = F}
-c= 0
-counter = 0
-while (c < 0.9) {
-  x = rnorm(5)
-  y = rnorm(5)
-  c = cor(x,y)
-  counter = counter + 1
-}
-
-plot(x,y, main = "5 cases\nX and Y chosen randomly")
-text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-
-```
-
-## Random association: Statistics
-
-```{r, echo = F}
-plot(x,y, main = "5 cases\nX and Y chosen randomly")
-text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-```
-
-Tries to get correlation $> 0.9$: `r counter`
-
-## Random association: Statistics
-
-Field of statistics investigates properties of **chance** events (stochastic processes):
-
-- Probability theory tells us how likely events are to happen, given chance
-- Can tell us how likely correlation of some value is to happen by chance
-
-## Random association: Statistics
-
-### How?
-
-1. Compute correlation of $X$ and $Y$
-2. How **strong** is the correlation>
-    - Patterns that are **stronger** are **less likely** to happen by chance
-2. How many **cases** do we have?
-    - Patterns with **many cases** are **less likely** to happen by chance
-3. Assign a probability that the correlation we see would have happened by chance
-
-## Random association: Statistics
-
-This procedure works...
-
-### **Assuming**...
-
-we know the chance processes that might affect this correlation
-
-
-
-## Random association: Statistics
-
-```{r, echo = F}
-c= 0
-counter = 0
-while (c < 0.9) {
-  x = rnorm(10)
-  y = rnorm(10)
-  c = cor(x,y)
-  counter = counter + 1
-}
-
-plot(x,y, main = "10 cases\nX and Y chosen randomly")
-text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-```
-
-Tries to get correlation $> 0.9$: `r counter `
-
-
-## Random association: Statistics
-
-```{r, echo = F}
-c= 0
-counter = 0
-while (c < 0.9) {
-  x = rnorm(15)
-  y = rnorm(15)
-  c = cor(x,y)
-  counter = counter + 1
-}
-
-plot(x,y, main = "15 cases\nX and Y chosen randomly")
-text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-```
-
-Tries to get correlation $> 0.9$: `r sprintf("%.f",counter)`
-
-
-## Random association: Statistics
-
-```{r, echo = F}
-c= 0
-counter = 0
-while (c < 0.45) {
-  x = rnorm(15)
-  y = rnorm(15)
-  c = cor(x,y)
-  counter = counter + 1
-}
-
-plot(x,y, main = "15 cases\nX and Y chosen randomly")
-text(mean(x), mean(y), labels = paste0("Correlation: ", round(c, 2)), adj = 0.5)
-```
-
-Tries to get correlation $> 0.45$: `r counter`
-
-## Random association: Statistics
-
-**statistical significance**: 
-
-> An indication of **how likely** correlation we observe could have happened purely by chance.
-
-> **higher** degree of statistical significance indicates correlation is **unlikely** to have happened by chance
-
-## Random association: Statistics
-
-$p$ **value**:
-
-- A numerical measure of **statistical significance**. Puts a number on how likely observed correlation would have occurred by chance, **assuming** a we know the chance procedure and the truth is a $0$ correlation.
-
-- It is a probability, so is between $0$ and $1$.
-
-- **Lower** $p$-values indicate **greater** statistical significance
-
-$p < 0.05$ often used as threshold for "significant" result. 
-
-- but it is not a magic number
-- Can observe $p < 0.05$ by chance ($\frac{1}{20}$)
-
-## Random association: Statistics
-
-$p$ **value**:
+### $p$ **values can be misleading**
 
 Be wary of "$p$-hacking"
 
-- $p$ values become meaningless if we look at many associations, then only report the ones that are "significant".
+- $p$ values become meaningless if we look at many correlations, then only report the ones that are "significant".
 
 ### Why?
 
-- low $p$-values occur by chance when we look at lots of associations
+- even correlations with low $p$-values occur by chance: esp. when we look at many of correlations
 
 ## Significant?
 
@@ -298,8 +129,7 @@ Be wary of "$p$-hacking"
 
 ## Significant?
 
-<img src="./xkcd_2.png" width=40%>
-
+<img src="./xkcd_2.png" width=30%>
 
 ## Significant?
 
@@ -317,34 +147,18 @@ Be wary of "$p$-hacking"
 
 <img src="./xkcd_6.png" width=90%>
 
-## Random assocation
-
-1. Correlations can appear by chance
-2. We can assess **probability** of chance correlation if we know:
-    - **strength** of correlation (close to $1,-1$)
-    - **size** of the sample ($N$)
-    - we assume we know the **chance process** generating our observations
-3. $p$-values:
-    - Obtained using mathematical formulae
-    - Given same $N$, stronger correlation has lower $p$
-    - Given same strength, correlation with more $N$ has lower $p$
-    
-## Random assocation
-
-### Recap:
-
-| Statistical<br>Significance | $p$-value | By Chance? | Why? | "Real"? |
-|:----------------------------:|:-----------------:|:----------:|:-------------------------------:|:----------------:|
-| Low | High ($p > 0.05$) | Likely | small $N$<br>weak correlation | Probably **not** |
-| High | Low ($p < 0.05$) | Unlikely | large $N$<br>strong correlation | Probably |
-
 # Example
 
 ## Trump's Twitter and Hate Crimes
 
 [Mueller and Schwarz (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3149103) investigate:
 
+
+During the period from 2015 to the end of 2017, Trump posted more than 300 messages that can be classified as "Anti-Muslim".
+
+
 Did Trump's tweeting of anti-Muslim messages **increase** anti-Muslim hate crimes?
+
 
 ## Trump's Twitter and Hate Crimes
 
@@ -352,17 +166,10 @@ We can't observe the US in the absence of Trump tweeting against Muslims, so aut
 
 ## Trump's Twitter and Hate Crimes
 
-Trump's Twitter gained attention as he ran for President.
+Trump's Twitter gained attention after he announced run for President (2015-2017)
 
 <img src='./mueller_2.png' width=70%>
 
-## Trump's Twitter and Hate Crimes
-
-Trump made nearly 300 negative tweets about Muslims.
-
-Other people made more new negative tweets about Muslims when he did.
-
-<img src='./mueller_4.png' width=55%>
 
 ## Trump's Twitter and Hate Crimes
 
@@ -372,18 +179,22 @@ When Trump gained prominence, anti-Muslim hate crimes increased
 
 ## Trump's Twitter and Hate Crimes
 
-<img src='./mueller_3.png' width=80%>
-
-## Trump's Twitter and Hate Crimes
+As Trump's Tweeting against Muslims reached more people (change in observed $X$), anti-Muslim hate crimes increased (change in $Y$)
 
 In groups, discuss:
 
-Do these correlations mean that Trump's tweets **caused** anti-Muslim hate crimes?
+Does this correlation convince you that Trump's tweets **caused** anti-Muslim hate crimes?
 
-What are your reasons for your answer?
+Why or why not?
+
 
 #
 
+## Example:
+
+<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
+
+**Why** doesn't correlation imply causation?
 
 ## Confounding
 
@@ -391,7 +202,6 @@ What are your reasons for your answer?
 
 - This is not a chance correlation. 
 - Two ways to explain why this happens (different explanations, but two sides of the same coin)
-
 
 ## Confounding
 
@@ -401,26 +211,157 @@ Confounding happens when cases with **different levels of $X$** have different (
 
 **In our example:**
 
-Mueller and Schwarz had been assuming that in the counterfactual world where Trump didn't gain Twitter followers, anti-Muslim hate crimes in the US would have been the same as they were pre-2015:
+In order for Mueller and Schwarz's correlation to imply causation, need to assume that:
 
-$\color{red}{\mathrm{Muslim \ Hate \ Crime_{USA \ 2015-17}(No \ Trump \ Twitter)}}$ $=$
-
-$\mathrm{Muslim \ Hate \ Crime_{USA \ 2010-14}(No \ Trump \ Twitter)}$ 
+$\color{red}{\mathrm{AntiMuslim \ Hate \ Crime_{USA \ 2015-17}(No \ Trump \ Tweets)}}$
+$=$
+$\mathrm{AntiMuslim \ Hate \ Crime_{USA \ 2010-14}(No \ Trump \ Tweets)}$
 
 If this is wrong... comparison leads to confounding.
 
 ## Confounding
 
-### **Explanation 2**:
+In correlation, Mueller and Schwarz assume that US (2015-17) without Trump tweets (counterfactual) is the same as US (2010-14) without Trump tweets (factual)
 
-Confounding occurs when there are **other differences** between cases (call them variables, e.g. $W$, $Z$, etc.) that **affect $X$** and **affect $Y$**. 
-The easiest way to understand this is **visually**. 
 
-- We can produce **graphs** of the causal relationships between variables
-- We can figure out whether there is going to be **bias**/**confounding** in the correlation of $X$ and $Y$ by reading these graphs. 
+| Case | Tweets | No Tweets |
+|:-----|:----:|:---:|
+| USA 2015-17 | $\mathrm{Hate \ Crime_{USA \ 2015-17}(Trump \ Tweets)}$ | $\color{red}{\mathrm{Hate \ Crime_{USA \ 2015-17}(No \ Tweets)}}$ |
+| | $\Downarrow{=}$ | $\Uparrow{=}$ |
+| USA 2010-14 | $\color{red}{\mathrm{Hate \ Crime_{USA \ 2010-14}(Trump \ Tweets)}}$ | $\mathrm{Hate \ Crime_{USA \ 2010-14}(No \ Tweets)}$ |
 
 ## Confounding
 
-Next week...
+If this substitution is **wrong**: USA in 2010-14 vs USA 2015-17 have **different** potential outcomes of hate crime, correlation is **biased**.
 
-Everything you didn't want to know **Confounding**
+| Case | Tweets | No Tweets |
+|:-----|:----:|:---:|
+| USA 2015-17 | $\mathrm{Hate \ Crime_{USA \ 2015-17}(Trump \ Tweets)}$ | $\color{red}{\mathrm{Hate \ Crime_{USA \ 2015-17}(No \ Tweets)}}$ |
+| | $\Downarrow{\neq}$ | $\Uparrow{\neq}$ |
+| USA 2010-14 | $\color{red}{\mathrm{Hate \ Crime_{USA \ 2010-14}(Trump \ Tweets)}}$ | $\mathrm{Hate \ Crime_{USA \ 2010-14}(No \ Tweets)}$ |
+
+## Confounding
+
+**Why might the potential outcomes of hate crime (for Trump tweets) differ for the United States in two eras?**?
+
+>- There **other differences** besides Trump tweeting...
+
+## Confounding
+
+### **Explanation 2**:
+
+Confounding occurs when there are **other differences** between cases (call them variables, e.g. $W$, etc.) that **causally affect $X$ and **$Y$. 
+
+The easiest way to understand this is **visually**. 
+
+
+## Causal Graphs
+
+Causal graphs represent a model of the **true causal relationships** between variables.
+
+the **nodes** or **dots** correspond to **variables**
+
+- can be labeled with generic names for independent/dependent variables ($X$, $Y$) or meaningful names (e.g. "Trump Tweets", "Hate Crimes")
+
+the **arrows** convey the **direction** of **causality**
+
+- $X \rightarrow Y$ means that $X$ causes changes in $Y$
+- $X \leftarrow W$ means that $W$ causes changes in $X$
+
+## Causal Graphs
+
+### **For example**
+
+Did Trump anti-Muslim tweets cause hate crimes?
+
+Even if there is a correlation:
+
+- Islamist terrorist attacks $\xrightarrow$ Trump anti-Muslim tweets
+- Islamist terrorist attacks $\xrightarrow$
+- News coverage $\xrightarrow$ anti-Muslim attitudes $\xrightarrow$ Hate crimes
+
+
+---
+
+```{r, echo = F}
+dagify(
+       tweet ~ terror,
+       news ~ terror,
+       hatecrime ~ tweet + news ,
+       #mask ~ mandate,
+       exposure = "tweet", 
+       outcome = 'hatecrime',
+       labels = c(
+                  "terror" = "Islamist\nTerrorism",
+                  "news" = "News\nCoverage",
+                  "tweet" = "Trump\nTweets",
+                  "hatecrime" = "Hate\nCrimes"
+                  )
+                  ) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+
+```
+
+## Causal Graphs
+
+In a causal graph, there is **confounding** of correlation of $X$ and $Y$ if...
+
+1. some variable $W$ has causal paths toward $X$ and $Y$
+2. (equivalently) there is **backdoor** path or **non-causal** path from $X$ to $Y$
+    - a chain of **two** or more arrows that follows arrows **backwards** out of $X$, changes direction **once** and follows arrows **toward** $Y$: $X \leftarrow W \leftarrow Z \rightarrow Y$ 
+
+---
+
+```{r, echo = F}
+p = dagify(
+       tweet ~ terror,
+       news ~ terror,
+       hatecrime ~ tweet + news ,
+       #mask ~ mandate,
+       exposure = "tweet", 
+       outcome = 'hatecrime',
+       labels = c(
+                  "terror" = "Islamist\nTerrorism",
+                  "news" = "News\nCoverage",
+                  "tweet" = "Trump\nTweets",
+                  "hatecrime" = "Hate\nCrimes"
+                  )
+                  ) %>%
+ggdag_paths(layout = 'tree', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
+  geom_dag_text_repel(force = 0, aes(label = label)) +
+  theme(legend.position = 'none')
+
+p$data[11, c("direction", "to", "xend", "yend")] = as.list(rep(NA, 4))
+
+p
+```
+
+## Causal Graphs: Confounding
+
+In reality, we don't really **know** the variables and paths on these causal graphs.
+
+Instead, these causal graphs help us think about **possible scenarios** that might produce **bias**/**confounding** of the correlation between $X$ and $Y$.
+
+
+## Activity
+
+In groups...
+
+Imagine you want to know if mask mandates reduced COVID cases. To answer this question, you look at the correlation between mask mandates and COVID Cases across different Provincial Health Units...
+
+Propose a causal graph that would imply that the correlation betwee mask mandates and COVID cases is biased by confounding.
+
+# Share
+
+## Confounding:
+ 
+These examples illustrate the possibility that if causal graphs include variables **in addition** to the independent and dependent variables, there is a risk of confounding or bias.
+
+Do **all** additional variables produce **confounding**?
+
+**No...** We will discuss three different patterns of variables: some of which have confounding, some which do not.
