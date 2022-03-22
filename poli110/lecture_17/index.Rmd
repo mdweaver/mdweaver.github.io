@@ -1,7 +1,7 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "March 23, 2021"
+date: "March 22, 2022"
 output: ioslides_presentation
 ---
 
@@ -18,12 +18,12 @@ require(ggdag)
 
 ## Outline
 
-1. Example
-2. Confounding
+1. Confounding
     - definition
     - sources of bias
     - graphs
     - when do we get confounding?
+    - directiono of bias
     
 ## Example:
 
@@ -41,76 +41,46 @@ They compare COVID cases in Ontario Public Health Units (PHU) with and without m
 
 <img src="./karaivanov_1.png" width=100%>
 
-poll
-
-## Example:
-
-<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
-
-**Why** doesn't correlation imply causation?
-
 # Confounding
 
 ## Confounding
 
-**Correlation** suffer from two sources of error:
+**Correlation** suffers from two sources of error:
 
 **random error**: we observe patterns in $X$ (independent variable) and $Y$ (dependent variable) by chance, when there is in fact no relationship.
 
-**bias (confounding)**: the **observed pattern** between $X$ and $Y$ is not the **true causal relationship** between $X$ and $Y$.
+**confounding (bias)**: the **observed pattern** between $X$ and $Y$ is not the **true causal relationship** between $X$ and $Y$.
 
 ## Confounding
 
-- What is confounding?
-- Why does it happen?
-    - What circumstances make it happen? 
-- What is the **direction** of the bias it produces?
-
-## Confounding
-
-**confounding** is when there is a **systematic** observed correlation between $X$ and $Y$ that is does **NOT reflect** the causal effect of $X$ on $Y$.
+**confounding** is when there is a **systematic** observed correlation between $X$ and $Y$ that  does **NOT reflect** the true causal effect of $X$ on $Y$.
 
 - This is not a chance correlation. 
 - Two ways to explain why this happens (different explanations, but two sides of the same coin)
 
-## Confounding
+---
 
-### **Explanation 1**:
-
-Confounding happens when the cases we observe with **different levels of $X$** have different (factual and counterfactual) potential outcomes of $Y$.
-
-**Example**: Imagine we want to know whether mask mandate causes PHU to have lower COVID cases. Because of FPCI, we use correlation:
-
-- compare PHU 1 (with mask mandate) to PHU 2 (without)
-
-## Confounding
-
-In correlation, assume that PHU 1 without mask mandate (counterfactual) is the same as PHU 2 without mask mandate (factual)
+It's summer of 2020:
 
 
-| PHU | Mask Mandate | No Mandate |
-|:-----|:----:|:---:|
-| 1 | $\mathrm{COVID \ Cases_{PHU \ 1}(Mandate)}$ | $\color{red}{\mathrm{COVID \ Cases_{PHU \ 1}(No \ Mandate)}}$ |
-| | $\Downarrow{=}$ | $\Uparrow{=}$ |
-| 2 | $\color{red}{\mathrm{COVID \ Cases_{PHU \ 2}(Mandate)}}$ | $\mathrm{COVID \ Cases_{PHU \ 2}(No \ Mandate)}$ |
+<p><a href="https://commons.wikimedia.org/wiki/File:Toronto_Skyline_Summer_2020.jpg#/media/File:Toronto_Skyline_Summer_2020.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Toronto_Skyline_Summer_2020.jpg" alt="Toronto Skyline Summer 2020.jpg" width=80%></a><br></p>
 
-## Confounding
+Toronto's caseload in the counter-factual world where it didn't have a mask mandate...
 
-If this substitution is **wrong**: PHU 1 and 2 have **different** factual/counterfactual COVID caseloads, correlation is **biased**.
+---
 
-| PHU | Mask Mandate | No Mandate |
-|:-----|:----:|:---:|
-| 1 | $\boxed{\mathrm{COVID \ Cases_{PHU \ 1}(Mandate)}}$ | $\color{red}{\mathrm{COVID \ Cases_{PHU \ 1}(No \ Mandate)}}$ |
-| | $\Downarrow{\neq}$ | $\Uparrow{\neq}$ |
-| 2 | $\color{red}{\mathrm{COVID \ Cases_{PHU \ 2}(Mandate)}}$ | $\boxed{\mathrm{COVID \ Cases_{PHU \ 2}(No \ Mandate)}}$ |
+Not the same as the **factual** caseload in North Bay, without a mask mandate
 
-## Confounding
+<img src="https://www.vmcdn.ca/f/files/baytoday/images/city-of-north-bay/20181207-north-bay-population-sign-winter-turl.JPG;w=960" width = 80%>
 
-**Why do these two PHUs have different potential outcomes**?
 
-- There **other differences** besides mask mandate...
+---
 
-### **Explanation 2**:
+<img src="https://www.aceshowbiz.com/images/still/christmas-inheritance-poster01.jpg" width = 50%>
+
+---
+
+### **Another Explanation**:
 
 Confounding occurs when these other differences between cases (third variables, e.g. $W$) **causally affect $X$ and $Y$**. 
 
@@ -133,10 +103,10 @@ the **arrows** convey the **direction** of **causality**
 
 ### **For example**
 
-PHU 1 (that had a mask mandate) may have a larger population of university educated adults than PHU 2 (no mask mandate).
+PHU in Toronto (that had a mask mandate) may have a larger population of university educated adults than PHU in North Bay (no mask mandate).
 
-- More educated residents might be more likely to work from home $\xrightarrow{}$ mask mandate affects fewer people $\xrightarrow{}$ more likely to implement.
-- More educated residents $\xrightarrow{}$ work from home $\xrightarrow{}$ fewer contacts $\xrightarrow{}$ lower COVID cases
+- Unversity educated residents might be more likely to work from home $\xrightarrow{}$ mask mandate affects fewer people $\xrightarrow{}$ more likely to implement.
+- Unversity educated residents $\xrightarrow{}$ work from home $\xrightarrow{}$ fewer contacts $\xrightarrow{}$ lower COVID cases
 
 ---
 
@@ -168,60 +138,14 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 In a causal graph, there is **confounding** of correlation of $X$ and $Y$ if...
 
-1. some variable $W$ has causal paths toward $X$ and $Y$
+1. some other variable $W$ has causal paths toward $X$ and $Y$
 2. (equivalently) there is **backdoor** path or **non-causal** path from $X$ to $Y$
     - a chain of **two** or more arrows that follows arrows **backwards** out of $X$, changes direction **once** and follows arrows **toward** $Y$: $X \leftarrow W \leftarrow Z \rightarrow Y$ 
 
----
+# 
 
-```{r, echo = F}
-p = dagify(work_home ~ education,
-       mandate ~ work_home,
-       contact ~ work_home,
-       covid ~ mask + contact ,
-       mask ~ mandate,
-       exposure = "mandate", 
-       outcome = 'covid',
-       labels = c("contact" = "Social\nContact",
-                  "education" = "Univ. Educ.",
-                  "mandate" = "Mask\n Mandate",
-                  "work_home" = "Work from\nHome",
-                  "covid" = "COVID\nCases",
-                  'mask' = 'Wear\nMask')
-                  ) %>%
-ggdag_paths(layout = 'tree', text = F, text_col = 'black', shadow = T, node = F) + theme_dag() +
-  geom_dag_text_repel(force = 0, aes(label = label)) +
-  theme(legend.position = 'none')
-
-p$data[15, c("direction", "to", "xend", "yend")] = as.list(rep(NA, 4))
-
-p
-```
-
-## Causal Graphs: Confounding
-
-In reality, we don't really **know** the variables and paths on these causal graphs.
-
-Instead, these causal graphs help us think about **possible scenarios** that might produce **bias**/**confounding** of the correlation between $X$ and $Y$.
-
-
-## Activity
-
-In groups...
-
-Imagine you look at the correlation between mask mandates and COVID Cases...
-
-given the correlation you observe, propose a causal graph that would imply that the correlation is the result of confounding.
-
-# Share
-
-## Confounding:
+<h1 style="color:white;">#NotAllVariables produce confounding</h1>
  
-These examples illustrate the possibility that if causal graphs include variables **in addition** to the independent and dependent variables, there is a risk of confounding or bias.
-
-Do **all** additional variables produce **confounding**?
-
-**No...** We will discuss three different patterns of variables: some of which have confounding, some which do not.
 
 ## Additional Variables: Patterns
 
@@ -384,6 +308,34 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 - No backdoor path. Mask mandate affects COVID **through** mask wearing.
 
+
+## Intervening Variable
+
+```{r, echo = F}
+dagify(
+       covid ~ positives,
+       positives ~  mandate + other_positives,
+       other_positives ~  mandate,
+       covid ~ other_positives,
+       exposure = "mandate", 
+       outcome = 'covid',
+       labels = c("mandate" = "Mask\nMandate",
+                  "covid" = "COVID\nCases",
+                  "positives" = "Mask\nWearing",
+                  "other_positives" = "Avoid\nIndoors"
+                  )
+                  )  %>%
+  tidy_dagitty(layout='auto') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+
+```
+
+- No backdoor path. Mask mandate affects COVID **through** mask wearing, avoiding indoor spaces.
+
 ## Reverse Causality
 
 **reverse causality** describes the situation where the **dependent variable** $Y$ actually causes the **independent variable** $X$. 
@@ -400,14 +352,327 @@ This is a special case of **bias** or **confounding**.
 | Intervening Variables ($M$) | Yes | $X \to M \to Y$ | No |
 | Reverse Causality | No  | $Y \to X$ | Yes |
 
+# Direction of Bias
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3jRJxpZ-FnA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## Example:
+
+Gun violence in Miami Beach has led to state of emergency and curfew during Spring Break.
+
+> “We haven’t been able to figure out how to stop spring break from coming,” Mr. Gelber said. “We don’t want spring break here, but they keep coming.”
+
+### **Does reducing the number of guns reduce firearms violence (deaths)?**
+
+## Correlation: Guns and Gun Deaths
+
+```{r, echo = F, message=F}
+crime = fread('./crime.csv')
+crime[, gun_ownership := as.numeric(gsub('%', '', gun_ownership))]
+crime = crime[gun_murder_percapita<10,]
+c = cor.test(crime$gun_ownership, crime$gun_murder_percapita)
+
+ggplot(crime, aes(x = gun_ownership, y = gun_murder_percapita , label = State)) +
+  geom_text() +
+  xlab("Gun Owners (%)") +  ylab("Firearms Homicides Per Capita") + 
+  ggtitle('No/Negative effect of gun ownership\n on Gun Homicide?') + 
+  geom_smooth(method = 'lm', se = F) + 
+  theme_bw()
+```
+
+Does gun ownership slightly **reduce** firearms deaths?
+
+## Confounding?
+
+```{r, echo = F, message = F}
+dagify(guns ~ hunting,
+       popden ~ rural,
+       crime ~ popden,
+       hunting ~ rural,
+       crime ~ guns, 
+       exposure = "guns", 
+       outcome = 'crime',
+       labels = c('guns' = "(X) Gun\nOwnership", 
+                  'rural' = 'Rural\nPopulation',
+                  'crime' = "(Y) Murder\nRate",
+                  'hunting' = 'Hunting',
+                  'popden' = 'Population\nDensity')) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+#mapping = aes(label = c('downward bias', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')
+```
+
+## Confounding?
+
+Let's say Miami Beach is considering imposing gun control policies to reduce gun deaths during Spring Break.
+
+How would the confounding of this correlation affect policy making... ?
+
+- if the confounding induced an **upward** bias (correlation between gun ownership and firearms deaths **more positive** than true causal relationship)?
+- if the confounding induced a **downward** bias (correlation between gun ownership and firearms deaths **more negative** than true causal relationship)?
+
+
+## Upward or Downward bias?
+
+```{r, echo = F, message = F}
+dagify(guns ~ hunting,
+       popden ~ rural,
+       crime ~ popden,
+       hunting ~ rural,
+       crime ~~ guns, 
+       exposure = "guns", 
+       outcome = 'crime',
+       labels = c('guns' = "(X) Gun\nOwnership", 
+                  'rural' = 'Rural\nPopulation',
+                  'crime' = "(Y) Murder\nRate",
+                  'hunting' = 'Hunting',
+                  'popden' = 'Population\nDensity')) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('bias direction?', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+**Product** of **signs** on causal path from $W \to X$ and $W \to Y$ gives us <u>**direction**</u> of **bias** created by **confounding**
+
+|  | $W \xrightarrow{+} X$ | $W \xrightarrow{-} X$ |
+|-----------------------|-------------------------------------|--------------------------------|
+| $W \xrightarrow{+} Y$ | $Correlation(X,Y)$<br>Biased (+) | $Correlation(X,Y)$<br>Biased (-) |
+| $W \xrightarrow{-} Y$ | $Correlation(X,Y)$<br>Biased (-) | $Correlation(X,Y)$<br>Biased (+) |
+
+
+## Downward bias
+
+```{r, echo = F, message = F}
+dagify(guns ~ hunting,
+       popden ~ rural,
+       crime ~ popden,
+       hunting ~ rural,
+       crime ~ guns, 
+       exposure = "guns", 
+       outcome = 'crime',
+       labels = c('guns' = "(X) Gun\nOwnership", 
+                  'rural' = 'Rural\nPopulation',
+                  'crime' = "(Y) Murder\nRate",
+                  'hunting' = 'Hunting',
+                  'popden' = 'Population\nDensity')) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('downward bias', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(?)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(Downward)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(?)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(Upward)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(?)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F}
+dagify(x ~ w,
+       y ~ w,
+       y ~~ x,
+       exposure = "x", 
+       outcome = 'y'
+       ) %>%
+tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(Upward)', '')), 
+                      angle_calc = "along", 
+                      label_dodge = unit(c(-1,1,-1),'lines'), 
+                      edge_linetype = rep(c(1,1,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
+  geom_dag_text(colour = 'white') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F, message = F}
+dagify(guns ~ hunting,
+       popden ~ rural,
+       crime ~ popden,
+       hunting ~ rural,
+       crime ~ guns, 
+       exposure = "guns", 
+       outcome = 'crime',
+       labels = c('guns' = "(X) Gun\nOwnership", 
+                  'rural' = 'Illicit\nDrug Trade',
+                  'crime' = "(Y) Murder\nRate",
+                  'hunting' = 'Property\nCrime',
+                  'popden' = 'Effective\nPolice')) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('? bias', 'increases', 'decreases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Confounding: Direction of Bias
+
+```{r, echo = F, message = F}
+dagify(guns ~ hunting,
+       popden ~ rural,
+       crime ~ popden,
+       hunting ~ rural,
+       crime ~ guns, 
+       exposure = "guns", 
+       outcome = 'crime',
+       labels = c('guns' = "(X) Gun\nOwnership", 
+                  'rural' = 'Illicit\nDrug Trade',
+                  'crime' = "(Y) Murder\nRate",
+                  'hunting' = 'Property\nCrime',
+                  'popden' = 'Effective\nPolice')) %>%
+  tidy_dagitty(layout='tree') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c('upward bias', 'increases', 'decreases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+# Conclusion
+
 ## Conclusion
 
-Confounding
+**Confounding**
 
 1. **bias**: observed correlation $\neq$ true casual relationship
 2. Why?
     - cases with different values of $X$, different in **other** ways
     - if "third" variable affects $X$, affects $Y$ $\to$ confounding.
 3. Causal graphs help us diagnose possible sources of confounding.
+4. Direction of bias
 
-Next: Direction/Size of bias; turning correlation into causation.
+
+## Bullet-proof Solutions?
+
+- Any way to **guarantee** no other variables affect both $X$ (cause) and $Y$ (outcome)?
+- Any way to **guarantee** we can treat outcomes in cases with different exposure to the cause as counterfactuals for each other?
