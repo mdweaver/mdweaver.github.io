@@ -1,7 +1,7 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "March 25, 2021"
+date: "March 24, 2022"
 output: ioslides_presentation
 ---
 
@@ -14,329 +14,24 @@ require(magrittr)
 require(ggdag)
 ```
 
-# Confounding
+# Solutions to Confounding
 
 ## Outline
 
 1. Confounding
-    - sources of bias
-    - direction of bias
 2. Solutions to Confounding
+  - Experiments
+  - Assumptions
+  - Limitations
+3. Internal vs External Validity
     
 
-## Example:
-
-Recent mass shooting in Boulder, CO has renewed calls in the United States to impose gun control legislation. 
-
-
-### **Does reducing the number of guns reduce firearms deaths?**
-
-## Correlation: Guns and Gun Deaths
-
-```{r, echo = F, message=F}
-crime = fread('./crime.csv')
-crime[, gun_ownership := as.numeric(gsub('%', '', gun_ownership))]
-crime = crime[gun_murder_percapita<10,]
-c = cor.test(crime$gun_ownership, crime$gun_murder_percapita)
-
-ggplot(crime, aes(x = gun_ownership, y = gun_murder_percapita , label = State)) +
-  geom_text() +
-  xlab("Gun Owners (%)") +  ylab("Firearms Homicides Per Capita") + 
-  ggtitle('No/Negative effect of gun ownership\n on Gun Homicide?') + 
-  geom_smooth(method = 'lm', se = F) + 
-  theme_bw()
-```
-
-POLL
-
-## Confounding?
-
-```{r, echo = F, message = F}
-dagify(guns ~ hunting,
-       popden ~ rural,
-       crime ~ popden,
-       hunting ~ rural,
-       crime ~ guns, 
-       exposure = "guns", 
-       outcome = 'crime',
-       labels = c('guns' = "(X) Gun\nOwnership", 
-                  'rural' = 'Rural\nPopulation',
-                  'crime' = "(Y) Murder\nRate",
-                  'hunting' = 'Hunting',
-                  'popden' = 'Population\nDensity')) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  #geom_dag_node() +
-  geom_dag_edges_link() +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-#mapping = aes(label = c('downward bias', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')
-```
-
-## Confounding:
-
-Confounding occurs when these other differences between cases (third variables, e.g. $W$) **causally affect $X$ and $Y$**. 
-
-In a causal graph, there is **confounding** of correlation of $X$ and $Y$ if...
-
-1. some variable $W$ has causal paths toward $X$ and $Y$
-2. (equivalently) there is **backdoor** path or **non-causal** path from $X$ to $Y$
-
-## Confounding:
-
-|  | Third Variable? | Key Attribute | Confounding? |
-|--------------------------|-----------------|---|----------------------------|
-| Antecedent Variables <br> ($W$) | Yes | $W \to X$ | If only **causal path** from $W$ to $Y$ contains $X$: No <br> If a **causal path** from $W$ to $Y$ excludes $X$: Yes |
-| Intervening Variables<br>($M$) | Yes | $X \to M \to Y$ | No |
-| Reverse Causality | No  | $Y \to X$ | Yes |
-
-## Upward or Downward bias?
-
-```{r, echo = F, message = F}
-dagify(guns ~ hunting,
-       popden ~ rural,
-       crime ~ popden,
-       hunting ~ rural,
-       crime ~~ guns, 
-       exposure = "guns", 
-       outcome = 'crime',
-       labels = c('guns' = "(X) Gun\nOwnership", 
-                  'rural' = 'Rural\nPopulation',
-                  'crime' = "(Y) Murder\nRate",
-                  'hunting' = 'Hunting',
-                  'popden' = 'Population\nDensity')) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  #geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('bias direction?', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-Product of **signs** on causal path from $W \to X$ and $W \to Y$ gives us <u>**direction**</u> of **bias** created by **confounding**
-
-|  | $W \xrightarrow{+} X$ | $W \xrightarrow{-} X$ |
-|-----------------------|-------------------------------------|--------------------------------|
-| $W \xrightarrow{+} Y$ | $Correlation(X,Y)$<br>Biased (+) | $Correlation(X,Y)$<br>Biased (-) |
-| $W \xrightarrow{-} Y$ | $Correlation(X,Y)$<br>Biased (-) | $Correlation(X,Y)$<br>Biased (+) |
-
-
-## Downward bias
-
-```{r, echo = F, message = F}
-dagify(guns ~ hunting,
-       popden ~ rural,
-       crime ~ popden,
-       hunting ~ rural,
-       crime ~ guns, 
-       exposure = "guns", 
-       outcome = 'crime',
-       labels = c('guns' = "(X) Gun\nOwnership", 
-                  'rural' = 'Rural\nPopulation',
-                  'crime' = "(Y) Murder\nRate",
-                  'hunting' = 'Hunting',
-                  'popden' = 'Population\nDensity')) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  #geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('downward bias', 'increases', 'increases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Increases', 'Bias \n(Downward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Decreases', 'Decreases', 'Bias \n(Upward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(?)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F}
-dagify(x ~ w,
-       y ~ w,
-       y ~~ x,
-       exposure = "x", 
-       outcome = 'y'
-       ) %>%
-tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('Increases', 'Increases', 'Bias \n(Upward)', '')), 
-                      angle_calc = "along", 
-                      label_dodge = unit(c(-1,1,-1),'lines'), 
-                      edge_linetype = rep(c(1,1,3), each = 100),
-                      arrow = grid::arrow(length=grid::unit(c(10,10,0), 'pt'), type = 'closed')) +
-  geom_dag_text(colour = 'white') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F, message = F}
-dagify(guns ~ hunting,
-       popden ~ rural,
-       crime ~ popden,
-       hunting ~ rural,
-       crime ~ guns, 
-       exposure = "guns", 
-       outcome = 'crime',
-       labels = c('guns' = "(X) Gun\nOwnership", 
-                  'rural' = 'Illicit\nDrug Trade',
-                  'crime' = "(Y) Murder\nRate",
-                  'hunting' = 'Property\nCrime',
-                  'popden' = 'Effective\nPolice')) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  #geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('? bias', 'increases', 'decreases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-## Confounding: Direction of Bias
-
-```{r, echo = F, message = F}
-dagify(guns ~ hunting,
-       popden ~ rural,
-       crime ~ popden,
-       hunting ~ rural,
-       crime ~ guns, 
-       exposure = "guns", 
-       outcome = 'crime',
-       labels = c('guns' = "(X) Gun\nOwnership", 
-                  'rural' = 'Illicit\nDrug Trade',
-                  'crime' = "(Y) Murder\nRate",
-                  'hunting' = 'Property\nCrime',
-                  'popden' = 'Effective\nPolice')) %>%
-  tidy_dagitty(layout='tree') %>%
-ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
-  #geom_dag_node() +
-  geom_dag_edges_link(mapping = aes(label = c('upward bias', 'increases', 'decreases', 'increases', 'decreases', '')),  angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,1),'lines')) +
-  geom_dag_text(mapping = aes(label = label), colour = 'black') +
-  theme_dag() +
-  scale_adjusted()
-```
-
-# Fixing Confounding
+# Example
 
 ---
 
 
 <img src="./fakenews.png" width=100%>
-
 
 POLL
 
@@ -357,30 +52,30 @@ Misleading information [can affect behavior](https://www.nber.org/system/files/w
 
 ## Pandemic Misinformation
 
-What can be done to limit the negative effects of pandemic misinformation?
+What are the effects of pandemic misinformation?
 
-- Does **thinking about the accuracy of information** make people less likely to share misinformation?
-
-## Pandemic Misinformation
-
-What if we survey Facebook users:
-
-- look at previous Facebook history to see if they shared vaccine misinformation
-- ask them if they assess the accuracy of information before sharing links
-
-Does a negative correlation imply causation?
-
->- What could we do to avoid confounding?
+- Does receiving misinformation make people less likely to be vaccinated?
 
 ## Pandemic Misinformation
 
-[Pennycook, et al (2020)](https://journals.sagepub.com/doi/full/10.1177/0956797620939054) run this experiment:
+What if we look at Facebook users:
 
-- Show people pandemic-related stories that have been independently evaluated as false or true
-- "If you were to see the above on social media, how likely would you be to share it?"
-- Randomly assign some to assess the accuracy of non-pandemic news before they look at pandemic news.
+- use Facebook history to see if they were exposed to vaccine misinformation on their feed
+- survey them and ask whether they have they been vaccinated
 
->- People "nudged" to think about accuracy 3.9 ppt more likely to share **true rather than false** stories
+Negative correlation does not guarantee causation
+
+>- Why might there be confounding here?
+
+
+## Pandemic Misinformation
+
+What if Facebook conducted a test of a new algorithm that classified pandemic misinformation in Facebook posts and shared links?
+
+- for a **random** subset of users, this algorithm was used to **remove** misinformation from their Feed
+- for a **random** subset of users, the algorithm was not used (so misinformation remained on their Feed)
+
+
 
 ## Experiments
 
@@ -390,51 +85,257 @@ Does a negative correlation imply causation?
 
 ### **Experiments**  are a solution
 
-Allow us to treat correlation as an **estimate** (an **inference** about) the **average** causal effect of $X$ on $Y$. 
+Under certain assumptions, we can treat correlation as an **estimate** (an **inference** about) the **average** causal effect of $X$ on $Y$. 
 
-- We can't know the causal effect for individual cases, but can get the average causal effect across all cases
+- We can't know the causal effect for individual cases, but can get the **average effect** across all cases
 
 ## **Experiments**
 
-Experiments give us **unbiased** (no confounding) relationship between $X$ and $Y$, with **assumptions**:
+Experiments give us **unbiased** (no confounding) relationship between $X$ and $Y$, with two key **assumptions**:
 
 1. **Random Assignment** to "Treatment" and "Control"
 2. **Exclusion Restriction** (only one thing is changing: $X$)
 
 <br>
-<small>Technically, there are more assumptions, but not important for this class</small>
+<small>Technically, there are other assumptions, but not important for this class</small>
 
-## Experiments
+---
 
-### Randomization solves Confounding
+### **Randomization** solves Confounding
 
-- Randomization balances cases with same potential outcomes in treatment and control
+- Randomization ensures that cases in treatment and control have similar potential outcomes
 - Randomization balances cases with similar values of confounding variable $W$ in treatment and control (breaks the link $W \to X$)
 
 Cases are **about the same** on average:
-  - cases in control are **observable** "counterfactuals" for cases in treatment
+  - average in control group is **observable** "counterfactual" for average in treatment group
   - EXACTLY like with random sampling (to the board)
   
-## Experiments
+---
 
-### **Exclusion Restriction** means we don't *add* confounding
+### **Exclusion Restriction**  
 
-If in the COVID misinformation experiment, "Treatment" group ...
+means we aren't *adding* confounding in the design of the experiment
 
-- Asked to assess the accuracy of information ($X$)
-- Told that their social media shares were tracked by the government ($Z$)
+If in the COVID misinformation experiment, "Treatment" group
 
-Two things are different between treatment and control group; 
+- had COVID misinformation blocked from their Facebook Feed ($X$)
+- the blocked posts were obscured with a warning that the content was misinformation ($W$)
+- flagging content revealed that Facebook is censoring ($V$)
 
-- we don't know which one does the work
+Multiple differences between "treatment" and "control"
+
+-  Does vaccination change because of (a) removal of misinformation or (b) the warning that content was flagged or (c) revealing that Facebook censors?
+
+## Exclusion Restriction
+
+```{r, echo = F}
+dagify(
+       flag ~ assign,
+       block ~  assign,
+       filter ~ assign,
+       vaccine ~ block + flag + filter + other,
+       exposure = "assign", 
+       outcome = 'vaccine',
+       labels = c("assign" = "Random\nAssignment",
+                  "block" = "Block\nFake News",
+                  "flag" = "Flag News\nas 'Fake'",
+                  'filter' = "Reveal\nCensoring",
+                  "vaccine" = "COVID\nVaccination",
+                  "other" = "Other\nStuff"
+                  )
+                  )  %>%
+  tidy_dagitty(layout='auto') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
   
   
 ## Experiments
 
-Experiments are a solution to confounding/FPCI
+Experiments are the best solution to confounding/FPCI
 
->- We can't always use them
->- We make trade-offs by using experiments
->- What other options are there?
+- If we can manipulate $X$ **at random**, we can find the true **average** causal effect of $X$ on $Y$ (no confounding)
 
-  
+But experiments have their limits:
+
+- We can't always use them
+- We make a trade-off by using experiments
+
+
+# Experiments
+
+## Example
+
+### My 6-y/o son just received his second dose of his COVID vaccination
+
+### But, we know about the fundamental problem of causal inference and about confounding...
+
+>- How do we know that this vaccine actually **reduces** risk of infection?
+>- How do we know that the vaccine **does not cause** adverse reactions?
+
+## Vaccine Efficacy
+
+BC CDC reports, e.g. hospitalization rates between those who are vaccinated vs. unvaccinated
+
+- correlation between vaccination and COVID hospitalization
+
+What could confound this correlation?
+
+## Vaccine Clinical Trials
+
+<img src="./vaccine_1.png" width=80%>
+
+## Vaccine Clinical Trials
+
+Clinical trials are **experiments**. Correlation between treatment and health outcomes are **causal** (do not have confounding) **assuming** that...
+
+- assignment to treatment is **random**
+- the **only difference** between treatment and control is the actual content of the vaccine.
+
+## Random Assignment
+
+
+- Blocks confounding
+- Balances potential outcomes
+
+TO THE BOARD
+
+
+## Exclusion Restriction
+
+```{r, echo = F}
+dagify(
+       shot ~ assign,
+       vaccine ~  assign,
+       careworker ~ assign,
+       covid ~ shot + vaccine + careworker + other,
+       exposure = "vaccine", 
+       outcome = 'covid',
+       labels = c("assign" = "Random\nAssignment",
+                  "vaccine" = "Receive\nVaccine",
+                  "shot" = "Receive\nShot",
+                  'careworker' = "Careworker\nBehavior",
+                  "covid" = "Get COVID",
+                  "other" = "Other\nStuff"
+                  )
+                  )  %>%
+  tidy_dagitty(layout='auto') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Exclusion Restriction
+
+Vaccine clinical trials...
+
+- use placebos (control group receives a shot with no vaccine)
+- "blind" treatment recipients to whether they receive vaccine or placebo
+- "blind" care providers to whether they are injecting real vaccine or not
+
+These **design** features of the experiment ensure that **only difference** between "assigned to treament" and "assigned to control" is the vaccine.
+
+## Vaccine Clinical Trials
+
+<img src="./vaccine_2.png" width=100%>
+
+## Vaccine Clinical Trials
+
+We can know whether vaccination caused reduction in:
+
+- COVID cases
+- COVID hospitalization
+
+or caused increase in:
+
+- other health problems/adverse side effects
+
+## Experiments
+
+Might appear to be the only valid solution:
+
+- if we don't know how cases would behave counterfactually (always the case)
+- if we don't know what other causal factors affect X and Y
+
+Experiments, under easy-to-check assumptions, let us find an unbiased causal relationship between $X$ and $Y$ using correlation
+
+- Experiments likely have "internal validity"
+
+## Internal Validity
+
+**Internal Validity**
+
+A **research design** (choice of which cases to compare using correlation) has internal validity when the correlation of $X$ and $Y$ it finds is the true causal effect of $X$ on $Y$ / does not suffer from confounding.
+
+- studies with strong internal validity imply that we have very good reason to believe that the correlation of $X$ and $Y$ we observe actually implies the causal effect of $X$ on $Y$.
+- **because** we can easily believe/check the assumptions (e.g. randomization)
+
+
+## Vaccines in the "real world"
+
+<img src="./vaccine_4.jpg" width=40%>
+
+**Does the efficacy of vaccines in clinical trials translate to real world use??**
+
+[https://www.menti.com/bz4gsu58z2](https://www.menti.com/bz4gsu58z2) or [menti.com](menti.com) $3291 \ 8704$
+
+>- How might people who enroll in clinical trials **be different**.
+>- How might people **behave differently** in vaccine trials?
+
+---
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/81f7c4eecbaf6d3621a103240df0dab1/1ba7d6577397' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+
+## Experiments: Limitations
+
+**What can we manipulate?**
+
+- economic growth? democracy? violence? hate speech?
+
+**Who/what cases can we study?**
+
+- who participates in psych labs? 
+- is it ethical to experiment on people in developing countries?
+
+>- Experiments have limited **external validity**
+
+---
+
+**External Validity**
+
+is the degree to which the *causal relationship* we find *in a study* is relevant to the causal relationship in our causal question/claim
+
+- Study has external validity if the relationship found is true for **the cases we are interested in**
+
+    - is study has sampling bias (sample in study different from population of interest), may lack external validity
+    - E.g. Transgender canvassing
+
+- Study has external validity if the causal variable in the study **maps onto the concept/definition of the cause** in the causal claim.
+
+    - E.g. Fox News media effects vs. Lab studies of media effects
+    - example: hate speech
+
+## Always a Trade-off:
+
+More internal validity (unbiased estimate of causal effect) comes at the cost of external validity (relevance of study sample or cause to the theory)
+
+- easier to experimentally manipulate **minor** causal forces for **small groups** of people/cases 
+- hard/unethical to experimentally manipulate **important causal factors** in society **more broadly**
+
+
+## Conclusion
+
+- Experiments solve confounding:
+  - assuming: Random Assignment
+  - assuming: Exclusion Restriction
+- Solutions to confounding:
+  - require making assumptions
+  - trade off between internal validity and external validity 
+- Next week:
+  - conditioning as a solution to confounding
