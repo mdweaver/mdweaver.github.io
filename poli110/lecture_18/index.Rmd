@@ -107,6 +107,7 @@ Experiments give us **unbiased** (no confounding) relationship between $X$ and $
 - Randomization balances cases with similar values of confounding variable $W$ in treatment and control (breaks the link $W \to X$)
 
 Cases are **about the same** on average:
+
   - average in control group is **observable** "counterfactual" for average in treatment group
   - EXACTLY like with random sampling (to the board)
   
