@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 29, 2021"
+date: "March 28, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -20,6 +20,7 @@ require(UsingR)
 require(lfe)
 require(sandwich)
 require(stargazer)
+require(interflex)
 
 options("kableExtra.html.bsTable" = T)
 ```
@@ -59,12 +60,21 @@ riots[, high_enp := ENP > median(ENP,na.rm = T)]
 
 1. Discussion of Papers
 2. Review
-    - choices about cases to include
-    - choices about measurement
-    - choices about model specification
-    - different assumptions
+    - McGrath
+    - Truex
+    - Kocher and Monteiro
+    - Fowler and Hall
 
 
+# Robustness
+
+# McGrath
+
+# Truex
+
+# Kocher and Monteiro
+
+# Fowler and Hall
 
 # Interaction Effects
    
@@ -81,7 +91,7 @@ Is the effect of some cause different for different sets of cases?
 
 ### Interaction: **Example**
 
-Did the success of an explicitly secular political party, Indian National Congress (INC), reduce the likelihood of religious riots between Hindus and Muslims in India?
+Did the local success of an explicitly secular political party, Indian National Congress (INC), reduce the likelihood of religious riots between Hindus and Muslims in India?
 
 ---
 
@@ -91,7 +101,7 @@ Did the success of an explicitly secular political party, Indian National Congre
 
 They estimate the model:
 
-$$\mathrm{Any \ Riot_it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \epsilon_{it}$$
+$$\mathrm{Any \ Riot}_{it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \epsilon_{it}$$
 
 ---
 
@@ -112,10 +122,10 @@ stargazer(m1,
 
 ### Example
 
-Wilkinson (2004) argues that political parties work to stop religious riots in India when muslims are electorally pivotal.
+Wilkinson (2004) argues that political parties work to stop religious riots in India when Muslims are electorally pivotal.
 
 - Muslims are typically victims in riots; will vote against parties to punish them
-- Muslims more pivotal when the effective number of parties contesting a seat is higher
+- Muslims more pivotal when the effective number of parties is higher
 
 ---
 
@@ -126,7 +136,7 @@ If the INC was responsive to this electoral logic, we should expect causal effec
 This is a **Binary by Binary** interaction:
 
 - INC win/lose is **binary**
-- High ENP is **binary**
+- High/Low ENP is **binary**
 
 ---
 
@@ -136,7 +146,7 @@ This is a **Binary by Binary** interaction:
 
 Include both causal variable and interacting variable, **AND** their product.
 
-$y_i = \beta_0 + \beta_1 D_i+ \beta_2 X_i+ \beta_3 D_iX_i + \epsilon_i$
+$y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i+ \beta_3 D_iX_i + \epsilon_i$
 
 ---
 
@@ -202,8 +212,8 @@ Interaction Effects: Effect of INC victory differs across ENP?
 
 Rather than fitting different intercepts for groups:
 
-- Slope of $x_1$ depends on group membership ($x_2$)
-- Intercept for group ($x_2$) depends on level of continuous variable
+- Slope of $x_1$ depends on binary indicator ($x_2$)
+- effect of binary treatment ($x_2$) depends on level of continuous variable
 - $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
 - $\hat{\beta_2}$ for $x_2$ will be mean of $x_2 = 1$ when $x_1 = 0$
 
@@ -236,7 +246,7 @@ iowa = fread('iowa_suffrage.csv')[enlist_pct < 1]
 
 ```
 
-We can look at voting for black suffrage in Iowa. 
+We can look at voting for Black Suffrage in Iowa. 
 
 Recall: investigation of effect of enlistment rates in the Civil War and on change in voting for suffrage between 1857 and 1868 (pre- and post- war). 
 
@@ -248,9 +258,15 @@ Does the effect of having veterans in a county depend on what happened during th
 
 ### Example:
 
-```{r}
+```{r, echo = F, results='asis'}
 lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
-summary(lm_iowa)$coefficients
+
+stargazer(lm_iowa,
+          type = 'html',
+          keep.stat = 'n',
+          covariate.labels = c("Enlist Rate", "Combat Days", "Enlist X Combat"),
+          dep.var.labels = 'Suffrage Difference')
+
 ```
 
 ---
@@ -260,18 +276,22 @@ summary(lm_iowa)$coefficients
 We can center both variables at $0$ to make it easier to interpret:
 
 ```{r}
-iowa$enlist_pct_c = iowa$enlist_pct - mean(iowa$enlist_pct, na.rm = T)
-iowa$mean_combat_days_c = iowa$mean_combat_days - mean(iowa$mean_combat_days, na.rm = T)
-
+iowa$enlist_pct_c = iowa$enlist_pct %>% scale(scale = F)
+iowa$mean_combat_days_c = iowa$mean_combat_days %>% scale(scale = F)
 lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
+
 ```
 
 ---
 
 ### Example:
 
-```{r}
-summary(lm_iowa_c)$coefficients
+```{r echo = F, results='asis'}
+stargazer(lm_iowa_c,
+          type = 'html',
+          keep.stat = 'n',
+          covariate.labels = c("Enlist Rate (0)", "Combat Days (0)", "Enlist X  Combat"),
+          dep.var.labels = 'Suffrage Difference')
 ```
 
 Now main effects are interpretable.    
@@ -371,8 +391,29 @@ Hainmueller et al show this can go wrong:
 - plotting linear and non-linear marginal effects
 - no need to calculate marginal effects w/ SEs
 
-# Robustness
+---
 
-## Papers
+```{r, echo = F, messages=F, warnings=F}
 
-## Discussion
+inter_f = inter.binning(iowa, 
+                        Y = "Suffrage_Diff",
+                        D = 'enlist_pct',
+                        X = 'mean_combat_days',
+                        na.rm = T,
+                        Ylabel = 'Suffrage Difference',
+                        Dlabel = "Enlistment (%)",
+                        Xlabel = "Mean Combat Days",
+                        theme.bw = T)
+
+inter_f$graph
+
+```
+
+---
+
+### Interactions:
+
+- For **binary**-**binary** interactions, interpretation and estimation is straightforward.
+- For any **continuous** interactions, estimation is tricky and we must calculate marginal effects. 
+    - Use `interflex` package to handle this
+    - Get tests of linearity, SEs, plots
