@@ -1,7 +1,7 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "April 6, 2021"
+date: "April 5, 2022"
 output: ioslides_presentation
 ---
 
@@ -19,12 +19,23 @@ require(stringr)
 
 ## Solutions to Confounding
 
+1. Update
 1. Recap
 2. Before/After Comparisons
 
+# Updates:
 
+1. Course Survey: 
+  - Submit name/Qualtrics ID ASAP
+  - Survey will be posted by the weekend (1 pt)
+  - Extra credit assignment using survey results (2 pts)
+2. Final Exam:
+  - On Canvas: April 20-22 (1.5 hours)
+  - Randomized questions
+  - Example questions/exams available
+  - Review session next week
+  
 # Recap
-
 
 ## Solutions to Confounding
 
@@ -38,7 +49,7 @@ require(stringr)
 | Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
 |--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
 | Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | High | Low | 
-| Conditioning | Hold confounders<br>constant | Only variables <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error | Low | High |
+| Conditioning | Hold confounders<br>constant | Only confounders <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error | Low | High |
 
 ## Conditioning vs. Design
 
@@ -46,7 +57,7 @@ require(stringr)
 
 - identifying possible confounding variables
 - measuring confounding variables
-- relationship b/t $X$ and $Y$ for cases with similar value of confounding variables.
+- relationship b/t $X$ and $Y$ for cases with **similar value** of confounding variables.
 
 
 ## Conditioning vs. Design
@@ -54,7 +65,7 @@ require(stringr)
 **Design-based** solutions remove confounding by:
 
 - selecting cases for comparison in order to eliminate **many** known/unknown measurable/unmeasurable confounding variables.
-- the nature of the comparison holds constant **types of confounding variables**, not just specific confounding variables.
+- the nature of the comparison holds constant **types of confounding variables**, not merely specific confounding variables.
 
 ## Conditioning vs. Design
 
@@ -63,6 +74,7 @@ require(stringr)
 [Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf) compare hate crimes in counties with and without Trump rallies, **condition** on (hold constant):
 
 - percent Jewish, number of hate groups, crime rate, 2012 Republican vote share, percent university educated, region
+
 >- But they left out population, which confounded Trump rallies and Hate Crimes.
 >- Difficult to find counties without rallies similar in many traits to counties **with** rallies
 
@@ -79,6 +91,8 @@ After conditioning on population (a confounder): no correlation.
 A **design-based** solution to confounding could be to compare:
 
 - counties that had a Trump rally **to themselves**, **before and after** the rally.
+
+- counties that had a Clinton rally **to themselves**, **before and after** the rally.
 
 # Before and After
 
@@ -99,6 +113,7 @@ trump_rally = rally_data[trumpeverrally %in% 1]
 trump_rally[, month_num := str_extract(monthyear, "\\d+$") %>% as.numeric]
 trump_rally[, t_window := month_num - min(month_num[trumprallyoccured > 0]), by = fips]
 trump_rally[, hc_per_capita := incidentcount/exp(log_pop)*100000]
+trump_rally[, t_window_f := factor(t_window, levels = c(0, -4:-1, 1:4))]
 
 #clinton rallies
 clinton_rally = rally_data[clintoneverrally %in% 1]
@@ -113,7 +128,7 @@ ggplot(trump_rally[t_window %in% c(0,1)], aes(x = factor(t_window, labels = c("B
   stat_summary(fun=mean, geom="point", color="black") +
   geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
   theme_bw() + 
-  xlab("Time Since Rally") +
+  xlab("Time Since Rally (Month)") +
   ylab("Hate Crimes per 100k") +
   ggtitle("Hate Crimes in 196 Counties:\nBefore and After Trump Rallies")+
   coord_cartesian(ylim = c(0,0.1))
@@ -129,7 +144,7 @@ ggplot(clinton_rally[t_window %in% c(0,1)], aes(x = factor(t_window, labels = c(
   stat_summary(fun=mean, geom="point", color="black") +
   geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
   theme_bw() + 
-  xlab("Time Since Rally") +
+  xlab("Time Since Rally (Month)") +
   ylab("Hate Crimes per 100k") +
   ggtitle("Hate Crimes in 40 Counties:\nBefore and After Clinton Rallies")+
   coord_cartesian(ylim = c(0,0.1))
@@ -184,6 +199,8 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   scale_adjusted()
 ```
 
+Which of these possible confounders are held constant in before-and-after comparison?
+
 ## Example: Before and After
 
 ```{r, echo = F, warning = F, message = F}
@@ -231,21 +248,21 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ## Example: Before and After
 
-### **Confounding Solved**...
+### **Confounding Solved?**...
 
-All confounding variables (affect whether a rally occurs; affect hate crimes) that are **unchanging over time** are held constant.
+**All** confounding variables (affect whether a rally occurs; affect hate crimes) that are **unchanging over time** are held constant.
 
 - because held constant, cannot produce confounding
 - e.g., demographic features, political leaning, location/geography, long-term economic trends, 8chan white nationalists
-- any variable that does not change **in the time period of the comparison** (in this case, one month) held constant
-- does not matter if we can measure confounders
+- any variable that does not change **in the time period of the comparison** (in this case, two months) held constant
+- does not matter if we can think of/measure confounders
 
 ## Example: Before and After
 
 ### **Confounding UNSolved**...
 
 - Did Trump rallies take place in places that are already **trending** toward having more hate crimes?
-- Is it possible that Trump wanted to avoid controversy and pick places that had lower than usual hate crimes? (board)
+- Is it possible that Trump wanted to avoid controversy and held rallies in places that had a month with lower than usual hate crimes? (board)
 
 >- We can address these concerns by looking at longer-term trends...
 
@@ -286,6 +303,8 @@ ggplot(clinton_rally[t_window %in% c(-4:4)], aes(x = as.factor(t_window), y = hc
   coord_cartesian(ylim = c(0,0.1))
 ```
 
+Constant upward trend; no change when rallies occur
+
 ## Example: Before and After
 
 ### **Confounding UNSolved**...
@@ -321,7 +340,6 @@ In order to infer $X$ causes $Y$ if $X,Y$ correlated in before/after comparison
 
 1. There are **no other confounding variables** that affect $Y$ and change with $X$
    
-
 ##  Before and After: Limitations
 
 This assumption can be violated if...
@@ -351,9 +369,11 @@ Did Trump's tweeting of anti-Muslim messages **increase** anti-Muslim hate crime
 
 <img src="./mueller_3.png" width= 90%>
 
-Does this Before/After comparison convince you? 
+Trump tweets and anti-Muslim hate crimes **change together over time**: a before-and-after comparison
 
-## Alternatives
+## Trump's Twitter and Hate Crimes
 
-Can you think of a better comparison we can make to find out if Trump Tweets caused hate crimes?
+Does this evidence convince you that that Trump tweets **caused** a change in hate crimes? Why or why not?
+
+>- Is there a better comparison we can make to find out if Trump Tweets caused hate crimes?
 
