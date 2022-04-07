@@ -1,7 +1,7 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "April 8, 2021"
+date: "April 7, 2022"
 output: ioslides_presentation
 ---
 
@@ -22,6 +22,9 @@ require(ggpubr)
 
 1. Recap
 2. Differences in Differences
+
+    - definition
+    - two examples
 
 # Recap
 
@@ -53,7 +56,8 @@ require(ggpubr)
 
 [Webster et al (2014)](https://link.springer.com/article/10.1007/s11524-014-9865-8) investigate:
 
-- Did the removal of the PTP law **incease** firearms homicides in Missouri?
+- Did the removal of the PTP law **increase** firearms homicides in Missouri?
+
 >- Conditioning?: Lots of unique features of Missori; no "otherwise similar" state.
 >- Easy comparison is Before and After
 
@@ -121,7 +125,7 @@ Could be that **other things were changing between 2007-2008** that confound rel
 
 What can we do to remove confounding from other variables that **change over time**, like...
 
-- weather patterns (hot weather $\xrightarrow{?}$ murders)
+- weather patterns (hot weather $\to$ murders)
 - global financial crises/economic shocks
 - political events
 
@@ -193,6 +197,7 @@ Missouri would have (counterfactually) had the same trend as Arkansas, if it had
 
 - Hold constant **unchanging** attributes of cases (compare same case before and after "treatment")
 - Hold constant variables that **change together** over time in both "treated" and "untreated" cases
+- Trend in "untreated" case assumed to be **counterfactual trend** in "treated" case
 
 ## Design: Difference in Difference
 
@@ -220,15 +225,19 @@ So:
 | $\mathrm{Arkansas}$         |   $5.6$  |   $5.4$  |       $-0.2$      |
 | **Second Difference** |          |          |      $1.8$      |
 
+<br> 
+
+We assume Missouri **would have had** same trend as Arkansas, absent PTP repeal ($-0.2$), can conclude that firearms homicides **increased** in Missouri by $1.8$ per 100k.
+
 ## Example: Difference in Difference
 
 ### **Confounding Solved**...
 
-All confounding variables (affect whether a rally occurs; affect hate crimes) that are **unchanging over time** are held constant 
+All confounding variables (affect whether a PTP repealed; affect firearms homicides) that are **unchanging over time** are held constant 
 
-- change over time in the same case
+- comparing change over time with-in the same case
 
-All confounding variables that **change the same** in "treated" and "untreated" case are held constant.
+All confounding variables that **change the similarly** in "treated" and "untreated" case are held constant.
 
 - By comparing change over time in "treated" to change over time in "control"
 
@@ -240,7 +249,7 @@ In order to infer $X$ causes $Y$ if $X,Y$ correlated in difference-in-difference
 
 - we assume trend in $Y$ for "untreated" case is the "counterfactual trend" in $Y$ for what the "treated" case **would have done** absent "treatment"
 - Equivalently: we assume "treated" and "untreated" have the "parallel trends" in $Y$.
-- Equivalently: no variables that affect $Y$ and **change over time differently** in "treated" and "untreated" cases
+- Equivalently: **no variables** that affect $Y$ and **change over time differently** in "treated" and "untreated" cases
 
 ---
 
@@ -279,6 +288,10 @@ Do you believe assumption of parallel trends?
 - But large change in AR in 2001/2002 not in MO
 - But in 2007, before law took effect, murders dipped
 
+<br>
+
+Perhaps there is some things that affect murder rates that change differently in these two states.
+
 ---
 
 | Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
@@ -290,101 +303,97 @@ Do you believe assumption of parallel trends?
 
 # Application
 
-## Example: Facebook and Hate Crime
+## Trump's Twitter and Hate Crimes
 
-### [**Mueller and Schwarz (2018)**](https://dx.doi.org/10.2139/ssrn.3082972) ask:
+[Mueller and Schwarz (2020)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3149103) investigate:
+
+Did Trump's tweeting of anti-Muslim messages **increase** anti-Muslim hate crimes?
+
+## Trump's Twitter and Hate Crimes
+
+We can't observe the US in the absence of Trump tweeting against Muslims, so authors use correlation...
+
+## Trump's Twitter and Hate Crimes
+
+Trump's Twitter gained attention as he ran for President.
+
+<img src='./mueller_2.png' width=70%>
+
+## Trump's Twitter: **Before and After** 
+
+When Trump gained prominence, anti-Muslim hate crimes increased
+
+<img src='./mueller_1.png' width=60%>
+
+
+## Trump's Twitter: **Before and After** 
+
+<img src='./mueller_3.png' width=80%>
+
+## Trump's Twitter and Hate Crimes
+
+Even comparing US to itself over time...
+
+could be that...
+
+- something **other than Trump's Twitter changed** between 2014 and 2015
+- days with more Trump Tweets could be different in other ways (different news events)
 
 <br>
 
-#### **Is social-media hate speech related to real-world violence?**
+>- Before-and-after comparisons could easily suffer from confounding
 
-<br>
+## Trump's Twitter and Hate Crimes
 
-- Are there higher levels of **anti-refugee** violence in places with more social media access in weeks with more social media anti-refugee hate speech?
-- Address this question in the context of Germany (2015-2017)
+We can solve this problem using a **difference-in-difference**:
 
-## Example: Facebook and Hate Crime
+- were the changes in anti-Muslim hate crimes **greater** in places with **greater exposure to Twitter** ("treated") than in places with **less exposure to Twitter** ("untreated")
 
-**variable**: Attacks against refugee persons and property
+How do we know it is about Twitter?
 
-<br>
+- maybe places with more Twitter users different in other ways that leads to different patterns after 2014
+- places w/ more initial joiners to Twitter at SXSW in 2007 (have more Twitter users later on)
 
-**measure**: (for each week in each municipality)
+## Trump's Twitter and Hate Crimes
 
-<br>
+<img src='./mueller_4.png' width=70%>
 
-<img src='./mueller_data_1.png'>
+Counties with more SXSW Twitter Joiners (treated) see larger increase in hate crimes following rise of Trump's Twitter
 
+## Trump's Twitter and Hate Crimes
 
-## Example: Facebook and Hate Crime
+<img src='./mueller_6.png' width=70%>
 
-**variable**: Number of anti-refugee posts on Facebook per week
+Counties with more (vs fewer) SXSW Twitter Joiners see larger increases in hate crimes in the days following Trump's anti-Muslim tweets
 
-<br>
+## Trump's Twitter and Hate Crimes
 
-**measure**:
+<img src='./mueller_5.png' width=50%>
 
-<br>
+Days with Trump **golfing** have more anti-Muslim tweets! (Tweets unrelated to news cycle, but due to golf)
 
-<img src='./mueller_data_2.png'>
-
-## Example: Before and After
-
-<img src='./mueller_fig.png' width =80%>
-
----
-
-```{r, echo = F, warning=F, message=F}
-mueller = fread('./mueller_data.csv')
-
-plot_data = mueller[, list(attack = mean(refugee_attacks_d), n = .N), by = list(ref_post)]
-
-ggplot(plot_data, aes(x = ref_post, y = attack, size = n, weights = n)) + 
-  geom_point() +
-  geom_smooth() + 
-  theme_bw() +
-  theme(legend.position = 'none') +
-  xlab("Anti Refugee FB Posts") +
-  ylab("Anti-Refugee Attacks (Probability)") + 
-  ggtitle("Facebook Hate Speech and Refugee Attacks\nAcross Germany by Week")
-```
-
-Is it plausible that nothing other than anti-refugee FB posts is changing over time?
-
-## Example: Difference in Difference
-
-Could be events that drive anti-refugee posts and hate crimes...
-
-Mueller and Schwarz come up with "treated" and "untreated" municipalities.
-
->- Internet outages reduce exposure to Facebook.
->- Communities with internet outages in the same week are "untreated" by Facebook hate, but share other trends (e.g. events) in the same week.
-
----
-
-```{r, echo = F, warning=F, message=F}
-
-plot_data = mueller[, list(attack = mean(refugee_attacks_d), n = .N), by = list(ref_post, internet_outage_p75)]
-plot_data[, `Internet Outage` := ifelse(internet_outage_p75, "Yes", "No")]
+Counties with more Twitter users see greater increases in hate crimes in days after Trump golfs 
 
 
-ggplot(plot_data[!is.na(`Internet Outage`)], aes(x = ref_post, y = attack, color = `Internet Outage`)) + 
-  geom_point() +
-  geom_smooth(method = 'lm', se = F) + 
-  theme_bw() +
-  theme(legend.position = 'bottom') +
-  xlab("Anti Refugee FB Posts") +
-  ylab("Anti-Refugee Attacks (Probability)") + 
-  ggtitle("Facebook Hate Speech and Refugee Attacks\nAcross Germany by Week")
-```
+## Trump's Twitter and Hate Crimes
 
-## Example: Difference in Difference
+- Can't be confounding due to unchanging differences b/t places with more/fewer Twitter users (same counties over time)
+- Can't be confounding due to changing events (compare high/low twitter use counties on the same dates)
+- Can't be confounding due to changing events (examine only tweets induced by Trump golfing)
+- Can't be confounding due to different trends in high/low Twitter counties (use SXSW Twitter joiners)
 
-This is a difference in difference:
+With reasonable assumptions (no different trends in places with more SXSW 2007 attendees on days when Trump golfs), social media rhetoric causes hate crimes.
 
-- Compare anti-refugee violence in the same places in weeks with **more or less**  FB hate speech (*first difference*)
-- Compare this difference in places which have/do not have an internet outage that week (*second difference*)
 
-Assumes: 
+# Fin
 
-- nothing else is changing in places with internet disruption to places without in a given week other than exposure to FB hate speech
+## Key Lessons
+
+Know what kinds of questions to ask about
+
+- Defining concepts/variables, measuring/sampling error
+- What causality is, why it is hard to prove
+- What kinds of assumptions we must make to prove causality
+- Demanding transparent, systematic evidence that considers alternatives
+
+### Can better answer "**what should we do?**"
