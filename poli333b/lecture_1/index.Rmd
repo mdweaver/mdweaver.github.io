@@ -1,0 +1,137 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "September 7, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Course Introduction
+
+## Today's Agenda
+
+### 1. Course Learning Objectives
+
+### 2. Course Expectations/Assignments
+
+### 3. Course Policies
+
+# Course Learning Objectives
+
+## Learning Objectives:
+
+Be able to provide answers to these questions:
+
+- What is ethnicity/race? 
+- Where do ethnic/racial groups come from?
+- Why does ethnic conflict occur?
+- Why does ethnic violence occur?
+
+## Learning Objectives:
+
+Be able to use three kinds of explanations for these questions:
+
+- strategic/instrumental
+- psychological
+- structural
+
+# Course Expectations
+
+## Your grade
+
+| Item             | Number | Fraction of Grade |
+|------------------|--------|-------------------|
+| Reading Responses | 10      | (10*2.5) 25%        |
+| Short Papers | 3      | (3*15) 45%        |
+| Final Assignment | 1      | 30%               |
+
+## Reading Responses:
+
+- Do 10 out of 13 weeks, by Monday evening
+- On Canvas discussion board
+- Ask question about the reading and/or draw an insight/connection from the reading; respond to another student
+- Graded for effort: 100 you tried;, 71 if it shows minimal effort, 0 if nothing.
+- Average best 9 out of 10
+
+## Grading: Papers
+
+### $\bullet$ **TA**: Viktoria
+
+### $\bullet$ **Rubrics**
+
+### $\bullet$ **Validation**
+
+Assigned/Due Wednesdays
+
+## Grading: Capstone Assignment
+
+- Independent research on a case
+- "Guided" research paper: specific questions you need to answer
+
+## What you need to do:
+
+### $\bullet$ **Attend lecture:**
+
+- in-class discussion/activities
+- slides are not enough
+- no recordings (except for 2 Zoom lectures)
+
+### $\bullet$ **Read**
+
+- links to Week's readings on "Modules" tab
+- links to reading response discussion forum
+
+### $\bullet$ **Canvas**
+
+
+## What I will do
+
+### $\bullet$ **Slides**
+
+- AFTER class.
+
+### $\bullet$ **Office Hours**
+
+- Wednesdays or by appointment on Zoom
+
+### $\bullet$ **Speed**
+
+# Course Policies
+
+## Late Assignments:
+
+### $\bullet$ **Scheduling Conflict**
+
+- Need to know ASAP to get a concession
+
+### $\bullet$ **Arts Advising**
+
+- may give retroactive concessions
+
+### $\bullet$ **Lateness**
+
+- non-catastrophic deduction (0.5 points per day)
+
+## Grade Appeals:
+
+### **letter to TA, 48 hours after, written argument**
+
+### **Grades can change $\Updownarrow$**
+
+
+## Public Health
+
+- Masks not required, but not a terrible idea
+- Please don't come if you feel ill; I will follow same protocol
+
+## Sensitive Material
+
+- A sort of "trigger" warning
+
+# Questions?
+
+
