@@ -1,0 +1,163 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "September 16, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Today
+
+## Goals
+
+### Identification 
+
+### Defining Ethnicity 
+
+- "constructivist" definition
+- building up from identification
+
+### 
+
+
+# Identification
+
+## Identification
+
+**identification**: the active process of categorizing a person as a member of a group or category
+
+- may be done as self-identification
+- may identify others
+
+## Identification
+
+A focus on **identification** changes how we define ethnicity...
+
+- We start thinking about **who** is doing the identifying and **how** it is done
+- Do not take **as essential** the claims of those doing the identifying
+
+
+## A multitude of identities
+
+From the **identification** perspective ("constructivist")...
+"**identities**" are composed of...
+
+1. **categories** or **labels** used in identifying people
+2. rules (possibly **contested**) for determining *eligibility for membership* in those categories
+    - we always need to think "*whose* rules?"
+
+*later we'll say "ethnicity" is more than just an "ethnic identity"*
+
+### What kinds of things count as "identities" from this perspective?
+
+## What makes ethnicity different?
+
+Chandra (2006) asks "What is Ethnic Identity and does it Matter?"
+
+- What distinguishes ethnicity from other types of identities are the "rules for membership"
+
+
+## Defining Ethnicity
+
+a **constructivist** definition (Chandra 2006): ethnic identity categories are those in which membership is determined by:
+
+- descent based attributes (either actually or *believed* to be associated with descent)
+    - restricted to those deriving from "genetic... features or pertaining to language, religion, place of origin, tribe, region, caste, clan, nationality, or race of one's parents and ancestors" 
+- which is an "imagined community"/impersonal (i.e. members don't all know each other) 
+
+## Arbitrary definition?
+
+Chandra openly admits that this definition is "arbitrary". Raises some questions:
+
+1. Are there other descent-based identity categories that are impersonal, all siblings equally eligible for membership, but not included?
+
+2. Can religion be ethnic identity? People convert/change their religion
+
+3. Is race an ethnic identity or is it different?
+
+## What about...?
+
+Chandra examines several other attributes often associated with ethnicity:
+
+- common ancestry (or myth thereof)
+- common region of origin (or myth thereof)
+- "descent" rule
+- common culture
+- common history
+
+but finds these either don't apply to lots of groups we think of as ethnic; or follow from a definition of a group
+
+## Common Ancestry:
+
+- In the case of race, (e.g. in the US), groups share actual ancestry but are nevertheless distinct
+  
+- More fundamentally: how far back do we have to go?
+    - sometimes recent common ancestry is used...
+    - sometimes distant ancestry used...
+- Not all groups invoke a shared common ancestor    
+    
+- While ethnicity is about attributes you acquire via descent or allegedly via descent, this does not necessarily mean that ancestry must be **common**
+  
+## Common Place of Origin:
+
+- Myth of common origin presupposes a group
+- We can't start with regions and predict groups...
+    - what level of regions count?
+    - What is the time frame? How long ago?
+- Example: Race
+
+## Common Culture:
+
+Doesn't usually apply:
+
+- can be huge cultural differences between people of same race
+- people may, e.g., share language, but differ in religion
+- people may belong to multiple cross-cutting ethnic groups (board)
+
+## Common History:
+
+- requires presupposing a group to find a shared history
+
+> "Sharing a common group history cannot be a criterion for being members of the same group, for we would have to be able to identify the group in order to identify its history. Someone in the fourteenth century could share a common history with me in a historically extended race only if something accounts for their membership in the race in the fourteenth century and mine in the twentieth. That something cannot, on pain of circularity, be the history of the race? (Appiah 1992).
+
+## What makes ethnicity different?
+
+Chandra points to two features: **on average**...
+
+$1.$ ethnic identities are "stickier" (change is constrained) because the descent based attributes cannot be or are not easily changed.
+
+- genetic traits hard to change or hide; attributes of parents/ancestors may be easier to change, if not well documented.
+
+$2.$ ethnic identities tend to be defined using attributes that are more "visible" (appearance, language, etc.)
+
+- certain features are more "legible"/"knowable"
+- may **become** more "legible"
+
+## What makes ethnicity different?
+
+This still suggests that defining "ethnicity" may be an arbitrary distinction
+
+- other non-descent based categories may take on similar levels of "stickiness"/"visibility"
+
+#
+
+## Exercise: 
+
+Let's come up with three groups:
+
+1. non-racial ethnic group
+2. racial group
+3. non-ethnic social group
+
+Then:
+
+1. What are the attributes for membership?
+2. Where are those attributes on visible/less visible? Changeable/less changeable?
+
+
+
+
