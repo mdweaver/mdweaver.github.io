@@ -36,6 +36,9 @@ require(magrittr)
 ## Assignment 1:
 
 - Thesis 
+- Evidence to support Thesis
+- Evidence to refute counter-arguments
+- Use of sources
 
 # Why structures?
 
