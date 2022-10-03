@@ -17,7 +17,9 @@ require(magrittr)
 
 ## Outline
 
+- Recap
 - Ethnic boundaries
+- An example
 
 # Why structures?
 
@@ -138,7 +140,7 @@ Wimmer argues that altering ethnic boundary practices (structures) depends on:
 
 - **power** of individuals/groups/organizations
 - ability to create/shape **institutions** (rules/laws)
-- existence of political/social networks 
+- existence of political/social **networks** 
 
 # A Puzzle
 
@@ -174,7 +176,7 @@ at end of 19th century...
 
 ## Yoruba in Nigeria
 
-Even though, at turn of the 20th century
+At turn of the 20th century...
 
 - Oyo political power had disappeared
 - War refugees settled outside ancestral cities
