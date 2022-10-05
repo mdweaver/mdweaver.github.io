@@ -1,0 +1,219 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "October 5, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+```
+
+
+# Ethnicity and Conflict
+
+## Outline
+
+- Does ethnic diversity lead to conflict?
+- If so, why?
+- Instrumental Explanations
+    - Bates
+    - Habyarimana et al
+
+
+# Ethnicity and Conflict
+
+---
+
+### **Many conflicts appear ethnic**
+
+---
+
+### **Is ethnicity inherently linked to conflict?**
+
+Is it ethnic diversity *more prone* to generate conflict?
+
+## Rejected Options:
+
+we rejected **essentialist** views of ethnicity:
+
+- "ancient hatreds", intrinsic differences can't explain conflict
+- ethnicity is one among many forms of social identity
+
+we rejected **primordialist** views of ethnicity:
+
+- ethnic conflict not likely to be result of inherent psychological weight put on descent-based ties
+- salient ethnic identities might be result of conflict
+
+## Something special about ethnicity?
+
+Might there be something about ethnicity (as opposed to other forms of identification) that makes conflict more likely...
+
+- for instrumental/strategic reasons?
+- for psychological reasons?
+- for structural reasons?
+
+# Instrumental Reasons for Conflict
+
+
+## Instrumental Ethnic Conflict
+
+**modernization** of economy and government creates *goodies*:
+
+- education, jobs, goods and services
+- goodies are limited (finite) and exclusive
+- people mobilize politically to gain access to these *goodies*:
+
+Competition between groups over resources $\to$ conflict (not necessarily violent)
+
+## Instrumental Ethnic Conflict
+
+Individuals seek to maximize access to **goodies**:
+
+- in democratizing states, access requires winning elections (need to win $\to$ larger coalitions)
+- goodies are finite/exclusive (prefer to have **minimum** winning coalition )
+    - leaders w/in groups need many supporters to keep access
+    - supporters need leaders in power to gain access
+
+## Instrumental Ethnic Conflict
+
+But why would this lead to mobilization around ethnicity (rather than, e.g. class)?
+
+- Ethnic groups are well suited to mobilize over goodies, because they have organizational advantages (Bates 1983; Horowitz 1985, pp 99-105)
+
+- Because ethnic groups more likely to succeed in capturing resources, mobilize around ethnicity for **instrumental** reasons
+
+## Instrumental Ethnic Conflict
+
+Bates: ethnic groups well suited for political competition, because...
+
+- Ethnic groups **share preferences** over resource allocation:
+    - ethnic groups are spatially distributed, as are goodies like development projects
+    - ethnic groups more likely to agree on policies around language/religion/culture
+    
+- Ethnic groups are better at **solving collective action problems**:
+    - ethnic institutions/networks facilitate coordination
+    - shared language reduces organization/transaction costs
+
+## Collective Action Problems:
+
+**On the board**
+
+- Why shared preferences help coordination
+- Why coordination problems persist, even with shared preferences
+- How do we solve collective action problems?
+    - selective incentives
+    - lower transaction costs
+    - norms and repeated play
+
+## Instrumental Ethnic Conflict
+
+In sum, Bates argues that mobilizing ethnic groups is strategically more effective, because they can better overcome collective action problems.
+
+# Is this true?
+
+## Diversity and Public Goods Provision
+
+Robust finding that places with greater ethnic diversity provide fewer public goods (caveats to come)
+
+- public goods are **non-excludable**, possible free-riders
+- this is the "flip-side" of argument that ethnic groups are good at solving collective action problems
+
+
+## Diversity and Public Goods Provision
+
+Is poor public goods provision in diverse areas the result strategic advantages of shared ethnicity?
+
+>- Habyarimana try to answer this question.
+
+## Habyarimana et al (2007)
+
+Several explanations for diversity-public goods connection:
+
+$1.$ Preferences
+
+- **commonality of tastes** (Bates's argument)
+- other-regarding preferences (taste-based discrimination)
+    
+$2.$ Technology
+
+- **efficacy**: language, common experience $\to$ collaboration 
+- **findability**: easier to locate and identify in-group members (reward/punish)
+
+$3.$ Strategy
+
+- social sanctioning: norm of tit-for-tat w/ co-ethnics 
+
+## Habyarimana et al (2007)
+
+### Test Design:
+
+- random sample of people residing in high diversity/low public goods areas of Kampala, Uganda
+- people played cooperative games with co-ethnics, out-groups
+- random assignment to play with co-ethnics/out-groups, knowledge of ethnicity
+- different games get at different mechanisms.
+
+## Habyarimana et al (2007)
+
+### Preference: commonality of taste
+
+Surveyed people over most important public goods (security, garbage, drainage) and method of delivery (public vs private contractor)
+
+No evidence that preferences for type or delivery of public good varies across ethnic group.
+
+**commonality of taste** not relevant in this case.
+
+## Habyarimana et al (2007)
+
+### Preference: taste-based discrimination
+
+**dictator game**: player is anonymous and must allocate money (ten coins, two coins) between themselves and two other players.
+
+- because player is anonymous, preference for co-ethnic reflects taste-based discrimination
+- No evidence of discrimination by ethnicity
+
+## Habyarimana et al (2007)
+
+### Technology: Efficacy
+
+**puzzle game**: two people play face to face; rewarded for completing a small jig-saw puzzle
+
+- each person has two pieces, cannot see the others' pieces.
+- modest, not significant advantages to co-ethnic teams (48% success vs 38%)
+
+Co-ethnics not particularly better at working together
+
+## Habyarimana et al (2007)
+
+### Technology: Findability/Sanctioning
+
+**network game**: randomly selected 148  people in neighborhood. Subjects randomly assigned to find a person, report their birthday.
+
+- Rewarded for finding the person quickly.
+- Co-ethnics found their person 43% (vs 28%) of the time 
+
+Co-ethnics **can** more easily locate each other $\to$ easier to punish defectors/reward cooperators
+
+## Habyarimana et al (2007)
+
+### Strategy: Social Sanctioning
+
+**dictator game**: player is NOT anonymous and must allocate money (ten coins, two coins) between themselves and two other players.
+
+- If players show a greater bias towards members of their own ethnic group when others can recognize their ethnicity, reflects norm that co-ethnics cooperate and sanction defection.
+- "Egoists" (selfish players) show strong discrimination toward co-ethnics **only** when ethnicity is visible.
+
+
+## Conclusion:
+
+Habyarimana et al:
+
+- limited support for ethnic groups better at solving collective action problems
+- one place, one time; compare this to class?
+
+Caveats about ethnic diversity and public goods.
+
+
