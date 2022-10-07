@@ -1,0 +1,229 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "October 7, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+```
+
+
+# Ethnicity and Conflict
+
+## Outline
+
+- Does ethnic diversity lead to conflict?
+- Psychological Explanations
+    - Social Identity Theory
+    - Sambanis and Shayo
+- Structural Explanations
+    - Horowitz
+
+## Why Ethnic Conflict?
+
+One reason ethnic conflict may be particularly common is:
+
+ethnic identities are particularly well suited to solving collective action problems
+
+- **Ethnic conflict results from (instrumental) use of ethnicity of organize in competition for scarce resources**
+
+## Why Ethnic Conflict?
+
+But the instrumental explanation for ethnic conflict implies ...
+
+- ethnic conflict more likely when modernization occurs 
+    - democratization $\to$ voting coalitions
+    - growing states $\to$ more goodies to win
+    - economic growth $\to$ more goodies
+
+Yet, Horowitz notes that ethnic conflict even occurs in places with least development. How much modernization 'is enough'? 
+
+# Psychological Reasons for Conflict
+
+## Exercise
+
+On the essay assignment due tonight, limited bonus points are available.
+
+>- But there is a catch
+>- I choose **you** have to decide how these points are allocated
+
+## Exercise
+
+Two groups in the class:
+
+- Group 1: people writing about essay option 1 (cultural appropriation)
+- Group 2: writing about essay option 2 (ethnic identification change)
+
+You need to decide how to allocate bonus points to a two people: (other than yourself)
+
+- one person randomly chosen from those writing on SAME topic
+- one person randomly chosen from those writing on OTHER topic
+
+## Exercise
+
+Head down/eyes closed:
+
+| Same Topic | Other Topic | Hands        |
+|------------|-------------|--------------|
+| 3     points     | 1     points      | one hand up  |
+| 4     points     | 4      points     | no hands up  |
+| 5     points     | 4      points     | two hands up |
+
+## Exercise
+
+Head down/eyes closed:
+
+| Same Topic | Other Topic | Maximize what?        |
+|------------|-------------|--------------|
+| 3     points     | 1     points      | b/t group difference |
+| 4     points     | 4      points     | equality |
+| 5     points     | 4      points     | in group profit |
+
+# Social Identity Theory
+
+## Minimal Group Experiments:
+
+- Groups randomly assigned
+- Never meet in person
+- Anonymous games allocating money
+
+### How do people behave?
+
+- discriminate against **out-group** 
+- maximize inter-group **difference**, not **in-group** profit
+
+## Social Identity Theory
+
+From these results, a theory:
+
+1. people desire positive self-esteem
+2. social groups/categories have positive/negative connotations that reflect a person's **social identity**
+3. group status is based on favorable/unfavorable comparison with **other groups**
+4. people make decisions to increase their group status vis-a-vis other groups
+
+## Psychology of Ethnic Conflict
+
+Large body of research (notably, Horowitz 1985) links ethnic conflict to psychological roots in Social Identity Theory.
+
+- Sambanis and Shayo (2013) ask: is this really the prediction from this theory?
+- To answer this, translate Horowitz's argument to a formal mathematical model
+
+## Why formalize?
+
+What is a formal model?
+
+- assumptions (informed by prior research) about the relevant actors, the choices they can make, the information and calculations that inform those decisions
+- translate these to a mathematical model
+- solve for how actors behave under different conditions (find "equilibria")
+
+Why?
+
+- Derive predictions from  the model based on different conditions
+- Compare predictions with reality. (but compare with natural sciences)
+
+## Sambanis and Shayo
+
+Formalize the logic linking Social Identiy to Ethnic Conflict
+
+- Individuals choose to identify with their ethnic group $G$ or with the nation $N$
+
+    - set of relevant ethnic categories fixed, membership rules fixed, choice of identification only
+    - a function of the relative status of ethnic group $J$ or $N$, perceived similarity ('distance') to members of $J$ or $N$
+
+- Groups compete over resources that can allocated to benefit specific groups (could be money, political power, etc.)
+
+- Informed by these conditions, individuals make decisions on whether and how much to "fight" for these resources
+
+
+## Sambanis and Shayo
+
+Implications of the model:
+
+$1.$ There are **multiple equilibria**.
+
+- even with status differences between ethnic groups, and people are "closer" to ethnic group than nation...
+- history of peaceful relations can lead to stable peace, preference for national identity OR history of conflict can produce conflict
+
+For example: Kenya vs. Tanzania.
+
+- both highly diverse; but Tanzania has built strong national identity, equitable redistribution. Has less conflict than Kenya.
+
+## Sambanis and Shayo
+
+Implications of the model:
+
+$2$. **Lower national status** leads to greater ethnic identification and ethnic conflict.
+
+Example:
+
+- Catalan separatism took off as Spain declined as international power (lower national status), regional economic growth increased in Catalonia (higher ethnic status)
+- As Soviet Union declined in political power, ethnic separatist movements took off
+
+## Sambanis and Shayo
+
+Implications of the model:
+
+$3$. Increase in the **salience** (distance between) of ethnic identities increases ethnic identification, conflict.
+
+- linguistic differences associated with conflict; but can be reduced with schooling, assimilation
+- short term changes in salience are possible:
+
+    - Hindu nationalist processions, attempt to replace mosque with temple
+    - Mexican revolution reduced salience of indigenous/criollo divide in favor of national identity
+
+## Sambanis and Shayo
+
+Implications of the model:
+
+$4$. Increasing the share of resources that can be captured by a group increases ethnic identification.
+
+Example:
+
+- presence of natural resources (e.g. in Congo) permits ethnic armed groups to capture resources, leading to more conflict
+- moments when more political power is up for grabs (e.g. constitution-writing, independence) will be prone to conflict
+
+## Sambanis and Shayo
+
+Implications of the model:
+
+$6$. "Ethnic extremists" with **sufficient organizational resources** can generate ethnic conflict even if large numbers in their ethnic community prefer national identification. 
+
+Example
+
+- Many Serbs/Croats in Yugoslavia voted against ethnic parties in 1990,  some Serbian and Croat nationalists formed ethnic militias. Violence pushed moderates to back ethnic mobilization.
+
+## Psychology and Ethnic Conflict
+
+**Key insights:**
+
+Building on the insights of Social Identity Theory and Horowitz...
+
+- ethnicity may or may not lead to conflict (multiple equilibria). 
+- conflict depends on many other factors:
+
+    - perceived status of national/ethnic identities
+    - the perceived salience of ethnic differences
+    - whether institutions permit groups to capture more resources/power
+    - the organizational/violence capabilities of ethnic entrepreneuers 
+
+>- Psychology matters, but its effects depend on **structural conditions**
+
+## Example: Horowitz (1985)
+
+Conflict can be the result of ethnic groups seeking to raise their relative status:
+
+- the material and cultural status of ethnic groups the result of colonial government policies
+- "backward" (lower status) groups seek to improve status vis-a-vis "advanced" groups
+    - seek special protections, separation
+    - new status dimensions (legitimacy of groups)
+    - fears of "extinction"
+- groups seek political power as a form of status/means to status $\to$ conflict
+
+Material and ideological dimensions of imperialism structure ethnic conflict
+
+
