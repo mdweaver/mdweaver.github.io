@@ -1,0 +1,245 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "October 12, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+require(ggplot2)
+require(data.table)
+```
+
+
+# Ethnicity and Conflict
+
+## Outline
+
+- Democratic Institutions and Conflict
+- Ethnic Parties and Conflict
+- Electoral Systems and Conflict
+
+---
+
+menti.com code 8542 1834
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/84aaa4da6c35ed2f3fecd94950668883/9fb513f82a60' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+
+# Elections and Conflict
+
+## A Primer
+
+### Downs and the Spatial Model of Voting
+
+- Poli Sci Classic: *An Economic Theory of Democracy* (Downs 1957)
+- Voters have ideological preferences on policies (on L-R scale, or other single policy dimension)
+    - want to elect party that is *nearest* to them
+- Parties/candidates want to **win elections** (have no core beliefs)
+    - propose policy platform that is close to enough voters to win
+    
+*(to the board)*
+    
+## A Primer
+
+In two party district with majoritarian rules, and voters must choose a candidate (no abstention), then...
+
+- parties converge to the ideological position of the median voter (median voter theorem)
+- in practice, they take moderate (centrist) positions 
+
+<img src = "https://i2.wp.com/www.uqes.com.au/wp-content/uploads/2016/03/median_voter.png" width = 50%>
+
+## Ethnic Parties
+
+What happens in this model when there are **ethnic political parties**?
+
+**ethnic party** is a political party that:
+
+- draws support mostly or exclusively from one ethnic group
+    - does not need to win MAJORITY support from that group
+- makes policy demands related to that ethnic group
+
+This is a type of **institutional separation**
+
+## Ethnic Parties
+
+In contrast to non-ethnic parties, ethnic parties...
+
+- focus on policies around ethnic conflict...
+- so cannot really appeal to members of other ethnic groups
+- this produces a **segmented electorate**: parties compete only for votes from their corresponding ethnic group
+
+>- is there any reason for ethnic parties to adopt a moderate position?
+
+## Ethnic Parties
+
+```{r echo = F}
+plot_tab = data.table(x = rnorm(100000))
+plot_tab[, `Ethnic Group` := ifelse(x > 0, "B", "A" )]
+
+ggplot(plot_tab, aes(x = x, col = `Ethnic Group` , fill = `Ethnic Group` , group = `Ethnic Group` )) +
+    geom_histogram(binwidth = 0.01) +
+    theme_bw() + 
+    theme(legend.position = 'bottom',
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank()) +
+    xlab("Ethnic Ideology") +
+    ylab("") +
+    geom_vline(xintercept = -0.25, colour = 'red') + 
+    geom_vline(xintercept = 0.25, colour = "blue") +
+    ggtitle(label = "", subtitle = "Vertical lines are party positions")
+```
+
+## Ethnic Parties
+
+```{r echo = F}
+
+ggplot(plot_tab, aes(x = x, col = `Ethnic Group` , fill = `Ethnic Group` , group = `Ethnic Group`)) +
+    geom_histogram(binwidth = 0.01) +
+    theme_bw() + 
+    theme(legend.position = 'bottom',
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank()) +
+    xlab("Ethnic Ideology") +
+    geom_vline(xintercept = -0.25, colour = 'red') + 
+        geom_vline(xintercept = -1, colour = 'red', lty = 2) + 
+    geom_vline(xintercept = 0.25, colour = "blue") + 
+    geom_vline(xintercept = 1, colour = "blue", lty = 2)+
+    ggtitle(label = "", subtitle = "Vertical lines are party positions")
+```
+
+## Ethnic Parties
+
+
+Ethnic parties face "centrifugal" pressures - *away* from the middle (Horowitz 1985):
+
+- Ethnic parties face possible/actual competition from **other ethnic parties** for the same ethnic votes.
+- Taking a moderate position...
+
+    - wins **no votes** from the other ethnic group
+    - risks **losing** votes from ethnic extremists within the group
+    
+- If ethnic parties are too moderate:
+
+    - new ethnic parties may **outbid** or **flank** them: take a more extreme ethnic position
+    - typically, **ethnic outbidding** accuses moderate ethnic party of selling out group interests
+
+## Outbidding is Real
+
+### **Northern Ireland**
+
+- Catholic (Nationalist) Parties
+
+    - Social Democratic Labor Party (moderate)
+    - Sinn Fein (flank)
+    
+- Protestant (Unionist) Parties
+
+    - Ulster Unionist Party (moderate)
+    - Democratic Unionist Party (flank)
+
+## Outbidding is Real
+
+Ethnic outbidding **does not** require that ethnic parties start out as **extremists**
+
+- power rivalries between leaders/factions w/in ethnic parties $\to$ new ethnic parties
+- new ethnic parties $\to$ extremist appeals to win votes (e.g. SLFP in Sri Lanka)
+
+## Ethnic Parties and Conflict
+
+Horowitz suggests ethnic parties can drive conflict:
+
+1. Ethnic parties can face dynamic that pulls them toward extreme positions.
+2. Like all parties, ethnic parties downplay internal divisions: avoid issues that might unify voters across ethnic groups, emphasize issues that divide ethnic groups
+3. Elections become ethnic censuses: for ethnic parties, loss portrayed as losing group is  FOREVER  shut out of power.  exclusion $\to$ conflict
+
+Emergence of ethnic parties can drive vicious cycle toward conflict
+
+## Ethnic Parties and Conflict
+
+Ethnic outbidding has *unclear* relationship to conflict:
+
+- on one hand, leads to more extreme ethnic parties, less scope for compromise
+- on the other, multiple ethnic parties $\to$ elections less likely to be a "census"
+
+# Doomed to conflict?
+
+## Institutional Design
+
+Horowitz (1991) considers ways to limit ethnic extremism.
+
+Says we want electoral institutions that:
+
+1. Promote party **fractionalization**: we want there to be multiple viable parties. Makes it harder for anyone party/group to win/govern on its own $\to$ coalition building
+2. Reward parties for trying to win votes across ethnic boundaries
+3. Reduce the risk / costs of not winning
+
+## Institutional Design
+
+Worst institutional design?
+
+**First past the post**: single member districts, plurality winner (Canada, UK, US, etc.)
+
+- encourage two party competition (opposite of fractionalization)
+- no gains by appealing to members of other ethnic groups
+- winners get more seats than votes (exacerbates exclusion of losers)
+ 
+## Institutional Design
+
+**proportional representation**: many variants, but, generally: multi-member constituencies, seats allocated in proportion to votes won
+
+Pros:
+
+- encourages party fractionalization $\to$ coalitions
+- avoids total exclusion of minority groups
+
+Cons:
+
+- does not create incentives for ethnic parties to seek votes from other ethnic groups
+
+## Institutional Design
+
+What is the problem with PR (according to Horowitz)?: difference between vote-pooling vs. seat-pooling:
+
+**vote pooling**: political parties try to collect votes from multiple ethnic groups in advance of the election. This drives parties to propose moderate policies that are palatable to ethnic moderates in both groups.
+
+**seat pooling**: political parties representing different ethnic groups form a ruling coalition **after the election**. May not be very stable.
+
+- Northern Ireland: in recent years, government is coalition of Sinn Fein and DUP: the ethnic extremes. Took until 2020 to complete negotiations over 2017 elections.
+
+## Institutional Design
+
+**Alternative Vote**: single member districts, rank order candidates
+
+- drop candidate with fewest first preferences, allocate second preferences
+- repeat until one candidate has majority
+
+Pros:
+
+- encourages fractionalization
+- encourages parties to win second preferences from other ethnic groups...
+
+Why? Moderate ethnic parties can beat extremist ethnic parties with second preference votes from other ethnic group.
+
+## Institutional Design
+
+
+**Federalism**:
+
+dispersing power from central government to regional/local governments can reduce the costs of losing
+
+- can win some offices at local level that have meaningful power
+
+
+## Institutional Design
+
+Takeaway:
+
+- Ethnic parties can face incentives to become more extreme, driving conflict
+- But constitutional/electoral rules can shape the nature of these incentives.
+
+Conflict, in part, result of strategic interests facing elite actors (ethnic parties/political parties)
