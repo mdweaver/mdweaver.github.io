@@ -17,7 +17,7 @@ require(magrittr)
 
 ## Outline
 
-- Ethnic diversity and Civil War?
+- Ethnicity and Civil War?
 - Are diverse societies prone to conflict?
 - Paper Grades
 
@@ -88,16 +88,15 @@ In total, they find $127$ civil wars.
 
 >- What questions/concerns do you have about this approach to measuring civil war?
 
-## Measuring Ethnic Diversity
+---
 
-We want to compare ethnic diversity of *countries around the world*.
+We want to compare **ethnic diversity** of *countries around the world*.
 
 Discuss with your neighbors: 
 
 (a) what are ways we *can* or *should* measure ethnic diversity?
 
 (b) what are challenges or difficulties that would make measuring ethnic diversity difficult?
-
 
 Think about:
 
@@ -126,10 +125,15 @@ they find that...
 
 $1.$ Ethnic diversity: **no relationship**
     - measured as ELF, as size of largest group, presence of majority with large minority
+    
 $2.$ Linguistic/religious discrimination: **no relationship**
+
 $3.$ GDP per capita: **negative relationship**
+
 $4.$ Population size: **positive relationship**
+
 $5.$ Newly Independent: **positive relationship**
+
 $6.$ Mountainous terrain: **positive relationship**
 
 ## Ethnicity and Civil War?
