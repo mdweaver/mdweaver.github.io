@@ -1,0 +1,244 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "October 26, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+require(ggplot2)
+require(data.table)
+```
+
+# Ethnic Violence
+
+## Outline:
+
+- Patterns of violence
+  - four attributes
+- Perceptions of violence
+- Defining Ethnic Violence
+- Violence and Ethnic Boundaries
+
+## Motivation:
+
+In depth look at 1984 Delhi Riot (pogrom) shows:
+
+1. Violence not merely the result of increased "intensity" of conflict:
+    - who has capacity, motive, opportunity to do it?
+    - how are those capacities, motives, opportunities created?
+2. Production of violence is complex: 
+    - perpetrators, victims, bystanders, audiences
+    - these "groups" lack coherent/unified motives and understanding
+    - the practice of violence can vary widely
+
+## Motivation:
+
+Retaining these insights:
+
+1. What is ethnic violence?
+
+2. What are the causes of ethnic violence?
+
+# Patterns of Violence
+
+## Patterns of Violence
+
+Gutierrez-Sanin and Wood (2017) argue that a **pattern of violence** employed by a group/organization in some place over a period of time is characterized by its...
+
+1. *repertoire*
+2. *targeting*
+3. *frequency*
+4. *technique*
+
+## Patterns of Violence
+
+### **repertoire**: 
+
+forms of violence in which an organization/individual regularly engages
+
+#### Examples:
+
+killing, torture, forced displacement, rape, robbery, kidnapping/imprisonment, vandalism,  etc.
+
+## Patterns of Violence
+
+### **targeting**:
+
+which people or social groups are made the targets of specific repertoires of violence (not motive as much as, descriptively, who are the victims)
+
+### Examples:
+
+ethnic groups, genders, political groups, combatants, political rivals, people who fail to comply with rules, etc.
+
+## Kinds of Targeting
+
+### **selective** violence:
+
+violence against an *individual* because of specific allegations about their behavior or actions
+
+### Examples:
+
+assassinations, disappearance of political activists, etc.
+
+## Kinds of Targeting
+
+### **collective** or **identity-based** violence
+
+violence against individuals based on their membership in a social group.
+
+This kind of violence is connected to social boundaries: violence happens along the boundary because it targets people based on the categories they are labelled with
+
+### Examples
+
+ethnic cleansing; supporters of a political party; shelling cities with ethnic majorities; bombing villages held by insurgents
+
+## Kinds of Targeting
+
+### **indiscriminate** violence
+
+violence against individuals without regard to individual behavior or membership in social categories
+
+#### Example?
+
+bombing of entire villages? 
+
+<br>
+
+Rarely is violence **entirely** indiscriminate
+
+## Patterns of Violence
+
+### **technique** 
+
+*how* a repertoire of violence is performed
+
+### Examples
+
+murder by firing squad, massacre using knives, bombing, torture to death, disappearance;
+
+- in public vs in secret
+- with a "trial"?
+- what was said, symbols invoked during/after the killing
+
+## Patterns of Violence
+
+### **frequency** 
+
+the count or rate of victimization among specific groups in the population
+
+#### Examples
+
+fraction of Rwandan genocide victims that were Tutsi, Hutu
+
+proportion of victims of police violence by race
+
+---
+
+**What makes a pattern of violence *ethnic*?**
+
+- **repertoire**?
+- **targeting**?
+    - should any violence in which ethnicity of perpetrator/victim differs be "ethnic"?
+    - can intra-ethnic violence be "ethnic"?
+    - can selective targeting be ethnic? (must targeting be collective to be ethnic?)
+    - does targeting need to be **intentionally** ethnic?
+- **frequency**?
+    - if violence targets one group more than another, is that "ethnic"
+- **technique**?
+    - can a technique be ethnic? 
+    
+## Patterns of Violence
+
+On one hand...
+
+- Not clear that **any** attribute of pattern of violence is **necessary** for ethnic violence. No specific attribute that is by itself **sufficient** for ethnic violence.
+
+On the other hand...
+
+- Gutierrez-Sanin and Wood (2017) show that this perspective is helpful to describe and understand causes of violence.
+
+## Interlude
+
+### Three examples:
+
+- "a pair of Hungarian youths were pushed from a train by Slovakian youths after a soccer match. ... one of the youths was seriously injured, and ... the incident occurred after the Hungarians had been singing Hungarian nationalist songs" (Brubaker and Laitin 2004)
+
+>- Not coded as "ethnic", coded as "football" violence
+
+- Estonian-language school in Russian-speaking region of Estonia was burned down. (Brubaker and Laitin 2004)
+
+>- Coded as "mafia" violence
+
+- Police violence against villagers in Narayanpur, UP in response to complaints about compensation for hit and run killing. (Brass 1997)
+
+>- Coded as ethnic violence against Scheduled Castes
+
+## Perception Matters
+
+In addition to the **pattern of violence** (what was actually done), it matters **how** violence is *perceived*:
+
+- Who is the audience for violence (intended vs actual; local vs national vs global)? 
+- How does violence come to be perceived as an ethnic event or not?
+
+## Perception Matters
+
+Why does ethnic framing of violence happen?
+
+- It may be a strategic way to build alliances/coalitions. (Kalyvas 2003)
+- It may be that ethnic frames are cognitively more accessible (Hale 2004)
+- It may be that ethnic frames "make sense" or do not "make sense" in a particular ethnic boundary
+
+
+## Perception Matters
+
+Whether or not violence is seen as ethnic...
+
+- may determine the **consequences** of those events
+- changing consequences of violence alters the strategic calculus of perpetrators (**cause** of events)
+
+And so we observe efforts by perpetrators, victims, others to narrate events and portray violence as ethnic or not.
+
+>- Can you think of any examples where there has been disagreement over whether violence is "ethnic"?
+
+
+## Ethnic Violence
+
+**definition** (adapted from Brubaker and Laitin 2004)
+
+violence perpetrated across or within ethnic lines, in which at least one party is not a state (or a representative of a state), and in which putative ethnic differences or similarities are **coded**—by perpetrators, targets, other parties, or analysts—as having been integral rather than incidental to the violence, that is, in which the violence is **coded** as having been meaningfully oriented in some way to the ethnicity of the target.
+
+## Ethnic Violence
+
+**Another perspective** on ethnic violence is to ask:
+
+How does violence relate to ethnic boundaries?
+
+1. Violence that **transforms** ethnic boundaries:
+    - altering status, access to resources/power, along ethnic categories
+2. Violence that **defends**/**polices** ethnic boundaries:
+    - violence that punishes or deters transgressions/changes of an ethnic boundary 
+3. Violence that is **constitutive** of an ethnic boundary:
+    - **routine** violence that disproportionately targets/affects members of specific ethnic categories
+
+
+## Conclusion
+
+1. **Patterns of Violence**: explaining violence requires focusing on WHO is doing WHAT to WHOM?
+    - explanations need to consider motives of perpetrators, their resources, their constraints. Recognizing perpetrators are NOT a homogenous group.
+2. **Perception**: how does the process by which violence become coded as ethnic matter?
+    - motives: strategic/psychological
+    - costs/benefits of engaging in different patterns of violence
+    
+## Conclusion
+    
+$3.$ **Violence and Boundaries**: how does violence relate to ethnic boundary structure?
+
+  - causes and consequences may differ when violence is **constitutive** of boundaries rather than **transformative** of boundaries
+
+Next class: applying these ideas to police violence in the United States.
+
