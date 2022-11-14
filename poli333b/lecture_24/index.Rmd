@@ -1,0 +1,253 @@
+---
+title: "POLI 333b<br>Ethnic Conflict"
+author: "Michael Weaver"
+date: "November 14, 2022"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(knitr)
+require(kableExtra)
+require(magrittr)
+require(ggplot2)
+require(data.table)
+```
+
+# Psychology and Ethnic Violence
+
+## Outline:
+
+- Review
+- Horowitz (2001)
+- Example
+- Social Identity Theory
+- Relational Models Theory
+
+# Review
+
+## Why Ethnic Violence?
+
+### **Strategic Logic of Violence**:
+
+- use of ethnic violence as a means to an end (election, political power, economic gain)
+- even horrific abuses might be strategic/"rational"
+
+### **But why do people participate**?
+
+- humans usually averse to doing violence
+- it is dangerous to participate
+- violence sometimes seems to go beyond what is "rational"
+
+# Psychological Explanations
+
+## Deadly Ethnic Riots
+
+Horowitz (2001) tries to explain why ethnic riots emerge:
+
+1. prior **hostility between groups**
+2. **precipitating events** that trigger **outrage**
+3. sense of **justification in killing**
+4. **reduced risk of participation in violence**
+
+## Deadly Ethnic Riots
+
+$2.$ **precipitating events** that trigger **outrage**:
+
+- event that occurs that reveals "bad intentions" of the out-group:
+    - e.g.: challenge to domination (by in-group), threat of subordination (to out-group), display of hostility, demonstration of out-group strength, violation of norms
+- perceptions of events matter more than what actually happened
+- event unleashes moral **anger**...
+    - anger released by doing violence
+
+## Deadly Ethnic Riots
+
+$3.$ sense of **justification in killing**  
+    
+- people believe that use of violence is **justified** and may even expect **approval**
+- justifications tend to take two forms:
+    - **self-defense**: precipitating event indicates imminent danger; rumors of out-group preparation for attacks
+    - **retribution**: precipitating event as a "transgression". Violence to reverse dishonor/right a moral wrong
+
+## Wilmington Race Riot
+
+1898 Racial Violence in North Carolina...
+
+In what way are these factors present? (2 and 3)
+
+1. prior **hostility between groups**
+2. **precipitating events** that trigger **outrage**
+3. sense of **justification in killing**
+4. **reduced risk of participation in violence**
+
+## Example
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LVQomlXMeek?start=180" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+#
+
+# Psychological Explanations
+
+## Pyschology and Violence
+
+Horowitz's account of ethnic violence steeped in psychology:
+
+- Social Identity Theory
+- Relational Models Theory
+
+>- A tighter link between these theories
+
+
+## Social Identity Theory
+
+We've seen theories of ethnic political conflict motivated by Social Identity Theory:
+
+>- Can it also help us make sense of ethnic **violence**?
+
+## Social Identity Theory
+
+### **Assumptions**
+
+1. people desire positive self-esteem
+2. social groups/categories have positive/negative connotations that reflect a person's **social identity**
+3. group status is based on favorable/unfavorable comparison with **other groups**
+
+## Social Identity Theory
+
+### **Implications**
+
+1. people want to increase or maintain positive social identity
+2. positive social identity based on positive comparison between **in-group** and relevant **out-group**
+3. Individuals will leave group, change their group, alter the comparison to make identity more positive
+
+## Social Identity Theory
+
+What do people do when their social identity is a source of low esteem?
+
+1. **mobility**: change category membership 
+2. **social creativity: new dimensions of comparison**: *what are the features* we use to judge group status?
+3. **social creativity: new evaluative rules**:  *what counts as "better" or "worse"* on a given feature? 
+4. **social creativity: new comparison group**: *what is the other group* against which status is compared?
+5. **social competition**: reverse the status of groups being compared
+
+## Social Identity Theory
+
+Might any of these strategies lead to ethnic violence? How so?
+
+1. **mobility**: change category membership 
+2. **social creativity: new dimensions of comparison**: *what are the features* we use to judge group status?
+3. **social creativity: new evaluative rules**:  *what counts as "better" or "worse"* on a given feature? 
+4. **social creativity: new comparison group**: *what is the other group* against which status is compared?
+5. **social competition**: reverse the status of groups being compared
+
+## Relational Models Theory
+
+Fiske and Rai (2015)
+
+Relational Models Theory: psychological theory, from the perspective of **perpetrators**:
+
+- **people often judge that to constitute or regulate crucial relationships they are morally required to hurt or kill another person**
+
+- by **moral**, they mean evaluating actions, motives, and intentions with respect to an ideal model of how people *should* relate 
+  - what is **moral** is determined culturally: e.g., corporal punishment of children
+
+## Relational Models Theory
+
+Four varieties of **moral** relationships; focus on **two**
+
+### 1. **Communal Sharing**/unity: 
+
+relationship with people in the same group as undifferentiated and equivalent
+
+- shared responsibility, shared fate $\to$ moral demand to care for members of the in-group and integrity of the group
+- threat to one is a threat to all; crime of one is a crime by all
+- wrong against the group is a wrong against the individual
+- connection to **essentialism**, **social identity**
+
+## Relational Models Theory
+
+### 2. **Authority Ranking**/hierarchy
+
+rank individuals in a hierarchical relationship
+
+- subordinates are to respect/obey/defer to superiors
+- the hierarchical relationship is believed to be natural, good, legitimate, necessary
+- connection to **social identity theory**, **status**, **ranked systems**
+
+## Relational Models Theory
+
+### Violence is used to **regulate** at least one or more of these moral relationships with the victim *and others*
+
+## Relational Models Theory
+
+### Violence can...
+
+- **create** moral relationships (e.g. bonds of unity among perpetrators)
+- **enhance** or **transform** relationships (e.g. increase group unity, transform ethnic hierarchy)
+- **protect** relationships (preventative violence e.g. to defend ethnic group)
+- **redress**/**rectify** relationships (punitive violence: e.g. avenge transgression against the group/ethnic hierarchy)
+
+## Relational Models Theory
+
+People are more likely to use violence to regulate relationship...
+
+- when the stakes are high (people believe this relationship is very important or **essential**)
+- when the moral relationships involve Communal Sharing and Authority Ranking morality
+- if there is a transgression that threatens the very existence (constitution) of the relationship (e.g. infidelity in marriage)
+    - perceived threat to the existence/integrity of the ethnic group (no more group)
+    - perceived threat to 'natural' dominant status of the ethnic group (no more hierarchy)
+
+## RMT and SIT:
+
+We can re-frame key claims of SIT in terms of RMT:
+
+- association of individual worth with that of the group $\thickapprox$ Communal Sharing 
+- group worth determined by status comparisons $\thickapprox$ Authority Ranking
+
+## RMT and SIT:
+
+From this perspective, we can try to answer:
+
+- **Under what conditions is ethnic violence more likely?**
+- **What individual attributes might make people more likely to participate?**
+
+## When is there violence?
+
+Some of these strategies for status change might lead to ethnic violence:
+
+1. ~~**mobility**: change category membership~~
+2. **social creativity: new dimensions of comparison**: *what are the features* we use to judge group status?
+3. **social creativity: new evaluative rules**:  *what counts as "better" or "worse"* on a given feature? 
+4. ~~**social creativity: new comparison group**: *what is the other group* against which status is compared?~~
+5. **social competition**: reverse the status of groups being compared
+
+## When is there violence?
+
+When there are "precipitating events" (as per Horowitz)...
+
+- where in-groups believe their existence is threatened
+- where in-groups believe there has been a moral transgression against their status (Wilmington, Muzaffarnagar)
+
+>- But remember... this is about perception; where do these perceptions come from?
+
+## Who is doing violence?
+
+- People for whom social identity is more important / stakes of ethnic hierarchical relationship are higher:
+    - who are 'lower' status along other dimensions of social identity (e.g. poor whites in the US South)
+    
+- People who are persuaded that transgressions/threats against their group have occurred
+
+## Conclusion:
+
+Psychological theories, RMT and SIT, generate predictions about:
+
+- when/where we should see more ethnic violence
+- who should be involved in ethnic violence
+
+>- Wednesday: we will examine some evidence
+
+## Conclusion:
+
+Psychological theories ability to explain violence...
+
+depend on **structural** conditions.
