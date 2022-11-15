@@ -1,0 +1,451 @@
+---
+title: "Tools for Data Collection"
+author: "Michael Weaver"
+date: "November 15, 2022"
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+</style>
+
+## Tools for Data Collection and Management
+
+## Outline
+
+### Getting data
+
+- access online data
+- access data from digital files
+- digitize it yourself 
+- getting more out of data
+
+---
+
+### Using data
+
+- geospatial raster data
+- geospatial merging
+- merging
+- fuzzy matching
+- record linkage
+
+---
+
+### Automation
+
+Skills needed for accessing data help:
+
+1. Make a project **feasible** by access to necessary data
+2. Make a project **feasible** by reducing time/cost of data collection
+3. **Multiply** the return on your labor (work smarter, not harder)
+
+Even with limited financial support, PhD/MA students can produce more high-quality, unique research.
+
+- More time doing thinking, reading, writing
+
+## Getting Data
+
+## Scraping
+
+"Scraping" refers to using some programming tools to **automate** the process of 
+
+- accessing data hosted on a website/service (wide variety of possibilities)
+- extracting the data we desire
+
+Lots of online resources, but for a primer I've made [see here](http://mdweaver.github.io/ubc_scraping)
+
+## Scraping: Process
+
+1. Find that data you want
+2. Figure out how to use programming language to access that data.
+3. Structure the data for your needs
+4. Scale up: automate the rest of the data collection
+
+---
+
+### Ways of Scraping
+
+Usually, I scrape in one of three ways:
+
+1. Downloading browseable databases:
+  - HTML: a request for an HTML page that contains some data. Data is unfriendly to use, because it is in markup language for visual display
+2. Automating searches in databases:
+3. Accessing data via an API: 
+  - a request that directly interacts with some database or tool and returns data in a friendly format (usually JSON)
+
+--- 
+
+### Scraping: Browsing
+
+African American Sailors in the Civil War
+
+- effects of wealth transfers ('counterfactual' reparations)
+- [https://www.nps.gov/civilwar/search-sailors.htm](https://www.nps.gov/civilwar/search-sailors.htm)
+
+--- 
+
+### Scraping: Browsing
+
+African American Sailors in the Civil War
+
+- effects of wealth transfers ('counterfactual' reparations)
+- [https://www.nps.gov/civilwar/search-sailors.htm](https://www.nps.gov/civilwar/search-sailors.htm)
+- Automate the navigation and saving of this data
+
+--- 
+
+### Scraping: Browsing
+
+**Download online database**: full count 1860 US Census [Fold3.com](Fold3.com)
+
+- Subscription genealogy site. 
+- Access to census **images** is behind a paywall.
+- But page metadata (including all personal data transcribed) is exposed behind the scenes
+- Data is hidden in background requests (explain)
+
+--- 
+
+### Scraping: Searching
+
+**Searching a database**: Historical Newspaper Archives for lynching discourse
+
+Automate searches and saving of results.
+
+- First pass: submitted search queries to find which newspapers mentioned lynching on which dates
+- Second pass: which newspapers are NOT talking about lynching? Download an index of what newspapers were available on each date.
+
+--- 
+
+### Scraping: APIs
+
+What if you want natively digital data?:
+
+- Facebook users (Mueller and Schwarz), Twitter networks (w/ Celene Reynolds), Google Trends, Canvas (sure, why not)
+- These services have an API: an interface for requesting/receiving data. Usually there is an explicit guide.
+
+---
+
+### Scraping: Lessons Learned
+
+1. Need to understand how internet works (requests, responses)
+2. Learn a programming language to automate sending requests, processing responses 
+3. Robust code
+3. Think about how to save data (SQL databases are best)
+4. Be a sleuth (find where data is exposed)
+5. People protect proprietary data, think about permissions
+
+## Extracting Data from Documents
+
+Data may be locked in large/many PDF or Doc files.
+
+- `pdftools` package in `R` can read pdf text
+- `tabulizer` package in `R` can extract tables
+
+---
+
+### Extracting: Tables
+
+IMG gar
+
+---
+
+### Extracting: Tables
+
+myanmar img
+
+
+## Digitize it Yourself
+
+This usually means **optical character recognition**: OCR
+
+- ABBYY Finereader
+- [Google Vision](https://cloud.google.com/vision/docs/drag-and-drop) works very well
+- Questions to ask:
+  - what is the quality of the text image? can it be improved?
+  - how is text formatted?
+  - how tolerable are errors?
+
+
+---
+
+### Digitizing Archives: Examples
+
+Indiana **People's Guides** list partisanship of 30,000 people in 1874
+
+<img src="./0002.bin.png" width=100%>
+
+---
+
+### Digitizing Archives: Examples
+
+Indiana **People's Guides**
+
+- Thousands of pages, lots of names
+- [Google Vision](https://cloud.google.com/vision/docs/drag-and-drop)
+- Python script: send images to Google, letters to word, words to lines, lines to biographical entries.
+- R script to extract and format data.
+- ~1 week of work to learn this the first time
+
+---
+
+### Digitizing Archives: Examples
+
+USCT Monthly Reports:
+
+IMG
+
+---
+
+### Digitizing Archives: Examples
+
+prize list
+
+IMG
+
+## Extending Data
+
+Once you have data, you can also use online tools to extend/modify it:
+
+- automate the coding of data (machine learning)
+- pre-built classification tools 
+- extract locations, dates, syntactic dependencies, etc.
+- geo-referencing
+
+---
+
+### Extending Data: Machine Learning
+
+What is it?
+
+- Statistical algorithms that learn to classify texts based on their features (usually words, maybe meta-data)
+- So many varieties, but important distinction between "supervised" (you must label some data) and "unsupervised".
+- Workflow: collect data; code a training set; "learn" on part of training set; validate on other part; classify full data set
+
+---
+
+### Extending Data: Machine Learning
+
+Pros:
+
+- can automatically code large quantities of data
+- a more sophisticated way to classify documents
+- lots of work done on how to make these algorithms work well (thanks, tech monopolies)
+
+Cons:
+
+- Requires ground-truth data (can be costly to obtain)
+- Only as good as the training data (available $\neq$ good)
+- Risk of overfitting
+- How will you validate predictions?
+
+---
+
+### Extending Data: Machine Learning
+
+Examples:
+
+- Civil War era Partisanship
+- USCT unit reports: entity extraction
+
+Software recommendations:
+
+- easy to use out-of-the-box 
+- automatic "tuning"
+- fastText is one good option
+
+---
+
+### Extending Data: Trained Models
+
+You can just use existing trained AI models:
+
+- name gender [https://genderize.io/](https://genderize.io/)
+- name nationality [https://nationalize.io/](https://nationalize.io/)
+- what is in a photo (Google Cloud Vision, among others)
+- text sentiment
+
+But, if training data differs from your data, may not work the best.
+
+---
+
+### Extending Data: Natural Language Processing
+
+NLP parses **clean** textual data:
+
+- parts of speech, syntactic dependencies, entities (people, locations, dates, etc)
+- can **query** texts based on parts of speech, dependencies
+
+---
+
+### Extending Data: Natural Language Processing
+
+tree diagram
+
+---
+
+### Extending Data: Natural Language Processing
+
+USCT map
+
+---
+
+### Extending Data: Natural Language Processing
+
+Lots of useful tools:
+
+- Spacy (accessed in R using `spacyr`): high-quality, neural-net based natural language processor
+- query Spacy using `rsyntax`
+
+---
+
+### Extending Data: Geocoding
+
+You can add latitude/longitude to data; or get estimated travel times:
+
+- Google Maps API
+- Other geocoding APIs
+- `ggmap` implements Google Maps Geocoding API in R
+- not free, but relatively cheap
+
+
+# Working with Data
+
+## Working with Data
+
+We want to merge data together, but can be tricky if:
+
+- some data is geospatial raster images
+- data is geospatial in nature
+- data is large
+- names/place names are "messy"
+- you don't have unique identifiers
+
+---
+
+### Working with: Raster Data
+
+Lots of potentially interesting geospatial data comes as a raster:
+
+- temperature, rainfall, cloud cover, agricultural suitability, elevation
+- night-time lights, population, cell signal
+
+We want to compute values based on this data for points or boundaries 
+
+---
+
+### Working with: Raster Data
+
+Example: Myanmar
+
+- terrain ruggedness
+- wealth/inequality using night-time lights
+- exposure to cell service/Facebook
+
+---
+
+### Working with: Raster Data
+
+Multiple R packages, but use ``
+
+---
+
+### Working with: Geospatial Data
+
+We may want to merge data by geographic overlap; get distances in geospatial network
+
+- create stable boundaries over time
+- proximity of units to some treatment
+- distances along roads/railroads
+
+---
+
+### Working with: Geospatial Data
+
+IMG indian railroads example
+
+---
+
+### Working with: Geospatial Data
+
+R package `sf` is easiest to use.
+
+- compute distances, intersection, contains, nearest feature, etc.
+
+---
+
+### Working with: Large/Complex Data
+
+`data.table` package in `R`:
+
+- handles large data very well
+- can handle complex aggregations of data 
+- can handle complex merges
+- relatively concise code
+
+---
+
+### Working with: Large/Complex Data
+
+INDONESIA ELECTIONS CODE
+
+---
+
+### Working with: Large/Complex Data
+
+soldiers in same units code
+
+---
+
+### Working with: Messy Data
+
+
+- fuzzy matching: jaro winkler scores
+  - merging requires unique identifiers... may need to clean names
+  - different ways of measuring distances
+  - stringdist
+  
+---
+  
+### Working with: Record Linkage
+
+If data  contain records of people/organizations to be linked:
+
+1. Deterministic rules [(APSR civil war)](https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0003055419000170/resource/name/S0003055419000170sup001.pdf)
+2. Probabilistic Models [(FastLink)](https://github.com/kosukeimai/fastLink)
+3. Machine Learning [(Feigenbaum)](https://scholar.harvard.edu/files/jfeigenbaum/files/feigenbaum-censuslink.pdf)
+
+---
+
+### Working with: Record Linkage
+
+Matching soldiers to hometowns:
+
+- Township-level returns on votes for black suffrage in 1857/1865 for Iowa and Wisconsin
+- Iowa and Wisconsin enlistment data, including place of residence
+- If not uniquely linked to township by name, link soldier to 1860 census records using FastLink
+- Distribute unmatched among possible communities, weighting by population
+
+---
+
+<img src='./ia_wi_diff.png' width=45%>
+
+
