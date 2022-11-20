@@ -115,11 +115,11 @@ Assuming that people who hold a stereotype ("Black $=$ Dangerous") are quicker t
 
 Then, score for Implicit Bias is:
 
-$\mathrm{\overbrace{Speed(Black+Weapon) - Speed(Black+Tool)}^{Positive \ if \ associates \ Black = Dangerous}}$ 
+$\mathrm{\overbrace{Speed(Black+Tool) - Speed(Black+Weapon)}^{Positive \ if \ associates \ Black = Dangerous}}$ 
 
 $-$
 
-$\mathrm{\overbrace{Speed(White+Weapon) - Speed(White+Tool)}^{Negative \ if \ associates \ White = Safe}}$
+$\mathrm{\overbrace{Speed(White+Tool) - Speed(White+Weapon)}^{Negative \ if \ associates \ White = Safe}}$
 
 >- What do you think this means?
 
