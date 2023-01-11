@@ -1,0 +1,232 @@
+---
+title: "POLI 110<br>Investigating Politics"
+author: "Michael Weaver"
+date: "January 11, 2023"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What is the purpose of Science?
+
+## Objectives
+
+1. Why Max Weber?
+2. Possible answers to "what is value of science"?
+3. Weber's insights about what science is/is not
+4. Weber's answer: what is the value of science
+
+## {.centered}
+
+<figure>
+<img src="./weber.jpg" width=51%>
+<figcaption>Max Weber. German. 1864-1920</figcaption>
+</figure>
+
+# Science as Vocation
+
+# What is the value of science?
+
+## Answer 1?
+
+### **Science can reveal (God(s), Nature, Truth) that unite what exists (what is) with what is right (what ought) and gives our lives meaning.**
+
+<br> 
+
+>- Weber says: "Not a chance."
+
+## Answer 1?
+
+Science produces **disenchantment** 
+
+- $\to$ we can explain the world without the supernatural
+- $\to$ humanity is not special or meaningful
+- $\to$ erodes the idea of "natural right"
+
+## Insight 1
+
+**Compared to "theology" (unscientific forms of thought), science only assumes that objective factual truths about our world exist and, but otherwise all knowledge or claims are open to scrutiny or challenge**
+
+## Insight 1
+
+What do we mean by **objective**?
+
+- there exists a world that is independent of our subjective perceptions
+- it is possible to reach answers about what exists and the causes of phenomena in this world do not depend on the idiosyncrasies of an individual researcher
+- but the questions we investigate may be **subjective**
+
+## Insight 1
+
+What do we mean by **theology**?
+
+**In "theology"**: specific facts/values are taken as "revelation" or "faith" and cannot be questioned; other values /facts must be made to fit them
+
+>- "Theology" can be religious but also secular (e.g. some forms of capitalist or communist ideology)
+
+## Insight 1
+
+What do we mean by "assumptions open to challenge"
+
+- Procedures
+- Concepts
+
+## Paradoxically:
+
+The rise of science did not destroy theology:
+
+- instead, gives rise to a polytheism of values
+- gives rise to **value pluralism**
+
+## Answer 2?
+
+Ok. So maybe...
+
+### **Scientific knowledge and mastery over our lives leads to happiness.**
+
+<img src='./musk.jpg' width = 60%>
+
+## Answer 2?
+
+Weber throws shade :"Who believes this? Aside from a few big children in university chairs and editorial offices."
+
+<img src="https://media.giphy.com/media/Ubuy4D6xRJmso/giphy.gif" width = 50%>
+
+## Insight 2:
+
+> **"Science is meaningless because it gives no answer to our question: the only question important for us: What shall we do and how shall we live?"** - Tolstoi 
+
+<br> 
+
+>- Weber's point: science cannot resolve questions about **value**
+
+# What is the best music?
+
+## What is the best music?
+
+Think, then write down...
+
+- genre, artist, or song 
+
+## What is the best music?
+
+In groups, discuss your beliefs about the best music.
+
+Discuss: how would you prove who is right... **scientifically**?
+
+## What is the best music?
+
+# What *can* science do?
+
+## Insight 3
+
+### **Science is a form of knowledge concerned with prediction**
+
+>- It can tell us: if we take this action, what will happen
+>- Science is, at a fundamental level, concerned with causality
+>- This is related to science as objective
+ 
+##  Answer 3? 
+
+### **Science is valuable in itself because it increases objective knowledge**
+
+<br>
+
+>- Weber still says NO!
+
+## Insight 4
+
+### **Science is not "value-free". We use values to decide what is worthwhile to know about.**
+
+<br> 
+
+>- "More to know than can ever be known" - "The Circle of Life" by Tim Rice
+>- Humans decide which questions to answer, informed by our values
+>- Are these values/choices correct?
+
+## {.centered}
+
+<figure>
+<img src="./ig_1.png" width=75%>
+<figcaption>how, and why, wombats make cube-shaped faeces</figcaption>
+</figure>
+
+## {.centered}
+
+<figure>
+<img src="./ig_2.png" width=100%>
+<figcaption>measuring scrotal temperature asymmetry in naked and clothed postmen in France</figcaption>
+</figure>
+
+
+## {.centered}
+
+<figure>
+<img src="./ig_3.png" width=75%>
+<figcaption>measuring the amount of friction between a shoe and a banana skin, and between a banana skin and the floor, when a person steps on a banana skin that's on the floor</figcaption>
+</figure>
+
+## Not always silly:
+
+- Racial Bias in Policing
+- Women and Medicine
+- Study of "American Politics", "Canadian Politics"
+
+## Serious Questions
+
+- **Who decides what is worth studying?** 
+- **Who decides what research is funded?**
+
+**Why does this matter? Or not?**
+
+## Science and Democracy
+
+- science $\to$ value pluralism
+- science is about prediction $\to$ mastery
+- how is scientific knowledge used?
+
+# Do we *want* scientists <br> without values?
+
+# So what is the value <br>of science?
+
+## Weber's Answer:
+
+**clarity**: We hold values that tell us what is desirable. 
+
+Science can **clarify**:
+
+1. What actions we should take to reach the desirable outcome?
+2. Are there unexpected consequences that place our values in conflict?
+
+## Clarity: an example
+
+Libertarian utopian community in rural New Hampshire.
+
+- Value 1: **Individual freedom from government regulation** (including waste disposal)
+- Value 2: **Individual right to safety of person and property** 
+
+>- Empirically, these were in contradiction...
+
+#
+
+<img src ="https://ichef.bbci.co.uk/news/976/cpsprodpb/B7AB/production/_95991074_img_asdf31875.jpg" width=80%>
+
+## Weber's Answer:
+
+In modern times, we have two choices:
+
+1. go back with faith and devotion to theology 
+2. or: it is our **duty** to apply science to clarify our values and to inform our actions.
+
+But this responsibility ethics is a **value** that cannot be justified through science
+
+## Conclusion
+
+Using Weber's 4 insights we will:
+
+- Derive attributes of scientific thinking
+- Unscientific forms of thinking
+- Identify types of questions science can/cannot answer
+
+
