@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 10, 2022"
+date: "January 13, 2023"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -12,6 +12,12 @@ require(knitr)
 require(magrittr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+
+
+
+# Potential Outcomes and Causal Inference
 
 <style type="text/css">
   .reveal h2,h3,h4,h5,h6 {
@@ -28,7 +34,6 @@ knitr::opts_chunk$set(echo = TRUE)
   }
 </style>
 
-## Potential Outcomes and Causal Inference
 
 # Introduction
 
@@ -87,7 +92,8 @@ Whatever our approach...
 - Counterfactual Causality
 - Potential Outcomes
 - Causal Effects (unit vs average)
-- Neyman Causal Model for inference
+- Partial Identification
+- Neyman Causal Model (Point Identification)
 
 # Causality
 
@@ -151,6 +157,7 @@ More generally: $Y_i(Z \in (0,1))$
 
 ## Potential Outcomes
 
+*on the board*
 
 ## Potential Outcomes
 
@@ -166,6 +173,7 @@ Tables of potential outcomes for different units are **response schedules**
 
 ## Potential Outcomes
 
+*What kinds of assumptions are "baked in" to this response schedule?*
 
 ## Potential Outcomes
 
@@ -195,18 +203,88 @@ What happen when we've fallen from Mount Olympus, and we actually have to examin
 
 ## Potential Outcomes
 
-The potential outcomes model points toward a statistical solution:
+The potential outcomes model points towards possible solutions:
 
 - we have missing data about some potential outcomes for each case
 - similar to having data from a sample but not the entire population
 - different approaches we can take to solve this problem
-    - one approach makes "no assumptions", but only gives us *bounds*
-    - another approach makes assumptions, but gives us a *point estimate*
+    - one approach makes fewer assumptions, but only gives us *bounds* (partial identification)
+    - another approach makes more assumptions, but gives us a *point estimate* (point identification)
 
+## Potential Outcomes
+
+The potential outcomes model points also points toward different causal **estimands**:
+
+- We might want **unit causal effects**
+- We might want the **average causal effect**
+- We might want the **average treatment effect on treated**
+- different effects may be of interest, depending on the question
 
 # Partial Identification
 
-# A digression: Review
+## Partial Identification
+
+**identification**: when an attribute of an unobserved/population distribution can be inferred without bias to have a specific value, given the observed data.
+
+**partial identification**: when an attribute of an unobserved/population distribution can be inferred without bias to be within a range of values, given the observed data.
+
+## Partial Identification
+
+Using information about the treatment $Z$ (contact or no contact) and the outcome $Y$ (donation or no donation), we can infer a **range** of values for each unit treatment effect:
+
+Returning to our hypothetical experiment, what **possible** values could each unobserved potential outcome take?
+
+## Partial Identification
+
+If we want to know what is the average unit causal effect ($E[\tau_i] = \frac{1}{n}\sum\limits_{i=1}^{n}\tau_i$)...
+
+How might we get the upper and lower bounds for what that effect could be, given the observed data?
+
+## Partial Identification
+
+$E[\tau_i] = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$
+
+$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + E[Y_i(1)|Z_i = 0]Pr(Z_i=0)\} \\ & \phantom{=}\ - \{E[Y_i(0)|Z_i = 1]Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+
+We decompose the mean of $Y(1)$ and $Y(0)$ as a weighted average by principal strata: those treated ($Z=1$) and untreated ($Z=0$)
+
+## Partial Identification
+
+Some of the means within strata are $\color{black}{observed}$ and other are $\color{red}{counterfactual}$:
+
+$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{E[Y_i(1)|Z_i = 0]}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{E[Y_i(0)|Z_i = 1]}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+We can then plug in the maximum and minimum possible values for the unobserved counterfactuals, to calculate the highest and lowest possible values $E[\tau_i]$
+
+## Partial Identification
+
+If $Y \in {Y^L, Y^U}$ (the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively):
+
+$$\begin{equation}\begin{split}E[\tau_i]^U &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{Y^U}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{Y^L}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+
+$$\begin{equation}\begin{split}E[\tau_i]^L &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{Y^L}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{Y^U}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+
+## Partial Identification
+
+We can thus partially identify a range of values in which the $E[\tau_i]$ must be, with almost no assumptions (other than potential outcomes for an individual not affected by treatment assignment of **other** cases).
+
+These bounds may not be very informative (effect may be positive OR negative).
+
+But we can impose additional assumptions:
+
+- positive monotonic treatment effects: all $\tau_i \geq 0$
+- positive selection: treated units have greater probability of positive effect than untreated units.
+
+These additional assumptions can be translated into (usually tighter) bounds on $E[\tau_i]$
+
+## Partial Identification
+
+In a sense, there are no "statistics" here, as we don't appeal to any random variables.
+
+We can algebraically express bounds implied by specific assumptions.
+
+# Point Identification
+
+## A Digression
 
 ## Random Variables and Expectations
 
