@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 17, 2022"
+date: "January 20, 2023"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -48,7 +48,7 @@ require(data.table)
 ## Key ideas from last week
 
 * Reviewed **random variables** and their expectations
-* Potential Outcomes Model (Neyman Causal Model)
+* Potential Outcomes Model (and Neyman Causal Model)
 * Random assignment allows us to estimate unobserved potential outcomes (given assumptions)
 
 ### BUT...
@@ -59,7 +59,7 @@ require(data.table)
 
 ## Sampling variability
 
-In any given randomization, **treatment mean** and **control mean** are likely $\neq$  the true means of $Y(1)$ and $Y(0)$...
+In any given randomization, **treatment mean** and **control mean** are likely $\neq$ the true means of $Y(1)$ and $Y(0)$...
 
 We want to know:
 
@@ -78,12 +78,11 @@ We want to know:
 
 ### Unbiasedness of $\widehat{ACE}$
 
+**parameter**/**estimand**: unknown attribute of random variable (e.g., the mean) that we want to know
 
-**parameter**: unknown attribute of random variable (e.g., the mean)
+**estimator**: rule/procedure for **estimating** the parameter/estimand given observed data
 
-**estimator**: rule/procedure for **estimating** an unknown parameter given observed data
-
-**bias**: estimator if **biased** if, on average, the estimator yields a value different from the parameter
+**bias**: estimator is **biased** if, on average, the estimator yields a value different from the parameter
 
 So $\widehat{ACE}$ is unbiased if:
 
@@ -113,7 +112,7 @@ Variation on Rwandan study, in Eastern DRC.
 
 ## Paluck (2010)
 
->  "I would not like that group to belong to my community association"; (1 = totally disagree; 4 = totally agree)
+>  Intolerance: "I would not like that group to belong to my community association"; (1 = totally disagree; 4 = totally agree)
 
 | $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
 |---------|---------|---------|
@@ -175,7 +174,7 @@ randomizations %>% kable %>% scroll_box(height = "500px" )
 
 ---
 
-For each randomization, calculate the $\widehat{ACE}$
+For each randomization, calculate the $\widehat{ACE}$ (hint, express this in fractions $\frac{x}{3}$)
 
 
 | $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
@@ -341,7 +340,7 @@ But we never observe this histogram
 
 # Variance of $\widehat{ACE}$
 
-## Two approaches
+## Three approaches
 
 1) Analytic/Asymptotic approach
 
@@ -353,7 +352,7 @@ But we never observe this histogram
 
 **First**: we want to get variance of $\widehat{ACE}$
 
-- $\widehat{ACE}$ is a **difference** of random variables. Why?
+- $\widehat{ACE}$ is a **difference** of random variables. **Why?**
 - Need rules for calculating variance of **difference** between random variables
 
 $$Var[X - Y] = Var[X] + Var[Y] - 2 \cdot Cov[X,Y]$$
@@ -364,8 +363,8 @@ $$Var[X - Y] = Var[X] + Var[Y] - 2 \cdot Cov[X,Y]$$
 
 - **study group** of size $N$ ($N$ units are assigned)
 - $m$ units assigned to T; $N - m = n$ units assigned to C
-- $Y^T = \frac{1}{m}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1]$
-- $Y^C = \frac{1}{n}\sum\limits_{i=m+1}^{N}[Y_i(0) | Z_i= 0]$
+- $Y^T = \frac{1}{m}\sum\limits_{i=1}^{m}[\overbrace{Y_i(1) | Z_i = 1}^{\mathrm{observed \ Y \ for \ Treated}}]$
+- $Y^C = \frac{1}{n}\sum\limits_{i=m+1}^{N}[\underbrace{Y_i(0) | Z_i= 0}_{\mathrm{observed \ Y \ for \ Control}}]$
 - $\widehat{ACE} = Y^T - Y^C$
 
 What is $Var[Y^T - Y^C] = Var[\widehat{ACE}]$?
@@ -378,7 +377,9 @@ What is $Var[Y^T - Y^C] = Var[\widehat{ACE}]$?
 
 **Variances of Treatment/Control Group Means**
 
-if we assume **independent and identically distributed** draws from the **study group** (is this correct?)
+if we assume **independent and identically distributed** draws from the **study group** 
+
+>- (is this correct?)
 
 $$Var[Y^T] = \frac{Var[Y_i(1)]}{m}$$
 
@@ -390,11 +391,15 @@ Variance of **sampling distribution** of the **treatment-group mean** is varianc
 
 Variance of potential outcomes under treatment:
 
-$$Var[Y_i(1)] = \frac{1}{N}\sum\limits_{i=1}^{N} \left( Y_i(1) - \frac{\sum\limits_{i=1}^{N} Y_i(1)}{N} \right) ^2$$
+<small>
+$$Var[Y_i(1)] = \frac{1}{N}\sum\limits_{i=1}^{N} \left( Y_i(1) - \overbrace{\frac{\sum\limits_{i=1}^{N} Y_i(1)}{N}}^{mean \ Y_i(1)} \right) ^2$$
+</small>
 
 This is a *parameter*, often denoted $\sigma^2$
 
 $$Var[Y^T] = \frac{\sigma^2}{m}$$
+
+>- Why is $\sigma^2$ a parameter?
 
 --- 
 
@@ -414,7 +419,7 @@ $$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{\color{red}{m-1}}\sum\li
 
 Why is sample variance biased if we divide by $m$ (instead of $m-1$)?
 
-- mean of data minimizes the sum of squared errors
+- the mean is the value that minimizes the sum of squared errors
 
 - If the sample mean $\hat\mu$ $\neq$ population mean $\mu$, then $\left[ \sum\limits_{i = 1}^{m} [x_i - \hat\mu]^2 \right] < \left[ \sum\limits_{i = 1}^{m} [x_i - \mu]^2 \right]$
 
@@ -442,7 +447,6 @@ plot(out$x_bar, out$diff_sd, xlab = "Sample Mean - Population Mean", ylab = "Sam
 abline(h = 0, v = 0, col = 'red')
 ```
 
-
 ---
 
 ### Analytic Approach
@@ -468,7 +472,7 @@ $Var[\widehat{ACE}] = Var[Y^T] + Var[Y^C] - 2 Cov[Y^T, Y^C]$
 <br>
 
 <small>
-$$Cov(Y^T,Y^C) = -\frac{1}{N(N-1)}\sum\limits_{i=1}^{N} \left( Y_i(1) - \frac{\sum\limits_{i=1}^{N} Y_i(1)}{N} \right) \cdot \left(Y_i(0) - \frac{\sum\limits_{i=1}^{N} Y_i(0)}{N} \right)$$
+$$Cov(Y^T,Y^C) = -\frac{1}{N(N-1)}\sum\limits_{i=1}^{N} \left( Y_i(1) - \overbrace{\frac{\sum\limits_{i=1}^{N} Y_i(1)}{N}}^{mean \ Y_i(1)} \right) \cdot \left(Y_i(0) - \overbrace{\frac{\sum\limits_{i=1}^{N} Y_i(0)}{N}}^{mean \ Y_i(0)} \right)$$
 </small>
 
 >- **Can we estimate this?**
@@ -485,15 +489,20 @@ Can't estimate the covariance because we don't see both potential outcomes for e
 
 ### Analytic Approach
 
-We can ignore the covariance (**deflates variance**) safely, because
+We can **ignore** the covariance safely, because it **deflates the variance**.
 
-1. Estimator $\widehat{Var[Y^T]}$ ignores sampling **without replacement** from **finite** population (**inflates variance**)
-2. Which either **exactly** or **more than** offsets reduction in the $\widehat{Var}(\widehat{ACE})$ due to ignoring $Cov(Y^T,Y^C)$
+1. Estimator $\widehat{Var[Y^T]}$ ignores that we sample **without replacement** from **finite** population ($\to$ **estimated variance too large**)
+2. This either **exactly** or **more than** offsets the amount by which ignoring $Cov(Y^T,Y^C)$ makes  our estimate $\widehat{Var}(\widehat{ACE})$ **too small** 
+
+
+---
+
+### Analytic Approach
 
 Variances we obtain with $\widehat{Var}[\widehat{ACE}]$ are going to be:
 
 - **exactly correct** (if $\tau_i$ is the same for all $i$; effect is same for all cases)
-- **TOO LARGE**/conservative in all other cases.
+- **TOO LARGE**, conservative in all other cases.
 
 --- 
 
@@ -505,7 +514,7 @@ Variance is not usually what we want
 
 - units are squared. 
 - The **standard error** (**standard deviation of the sampling distribution**) of  $\widehat{ACE}$ is more helpful. It is the square-root of the **variance**.
-- Usually, though, we want to do a **hypothesis test**
+- Usually, though, we want to do a **hypothesis test** or create confidence intervals
 
 # Hypothesis Testing
 
@@ -557,7 +566,7 @@ m = rowMeans(s_x)
 
 x_m = mean(x)
 sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean (n = 5)", main= "Sampling Distribution of Mean", freq = F)
+hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
 lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
 ```
 
@@ -600,7 +609,7 @@ m = rowMeans(s_x)
 
 x_m = mean(x)
 sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean (n = 5)", main= "Sampling Distribution of Mean", freq = F)
+hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
 lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
 ```
 
@@ -618,7 +627,7 @@ n = 25
 
 x_m = mean(x)
 sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean (n = 30)", main= "Sampling Distribution of Mean", freq = F)
+hist(m, xlab = "Sample Mean(x) (n = 30)", main= "Sampling Distribution of Mean(x)", freq = F)
 lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(25)))
 ```
 
@@ -636,7 +645,7 @@ n = 100
 
 x_m = mean(x)
 sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean (n = 100)", main= "Sampling Distribution of Mean", freq = F)
+hist(m, xlab = "Sample Mean(x) (n = 100)", main= "Sampling Distribution of Mean(x)", freq = F)
 lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(100)))
 ```
 
@@ -697,17 +706,18 @@ The hypothesis test investigates: what is probability of observing a value this 
 
 ### Hypothesis Tests
 
+- choose an $\alpha$: arbitrary cutoff for rejecting null hypothesis
 - We need to estimate the standard error of ACE: $\widehat{SE}(\widehat{ACE})$
 - Divide $\widehat{ACE}$ by $\widehat{SE}$ (get $t$ statistic).
-- Compare test-statistic against $t$ distribution, and reject/fail to reject null (given choice of $\alpha$: the significance level)
-
+- Compare test-statistic against $t$ distribution with appropriate degrees of freedom, calculate $p$ value (interpretation depends on the alternative hypothesis)
+- and reject/fail to reject null (given choice of $\alpha$: the significance level)
 
 --- 
 
 ### Limitations of Analytical Hypothesis Tests
 
 - $t$-tests assume **normality** in potential outcomes
-- or assume **asymptotic** normality of sample mean sampling distribution. This may be incorrect with small $N$ or complex designs. (What about in our example?)
+- or assume **asymptotic** normality of sampling distribution of sample mean. This may be incorrect with small $N$ or complex designs. (What about in our example?)
 
 If distributional assumptions are wrong, hypothesis test will not be correct
 
@@ -734,7 +744,7 @@ Alternatives:
 Unlike analytical approach:
 
 - randomization inference **does not assume** any asymptotic distribution
-- can be applied to many different estimators (not just, e.g., the mean)
+- can be applied to many different estimators (not just, e.g., the $\widehat{ACE}$)
 
 --- 
 
@@ -757,14 +767,14 @@ that **every** unit treatment effect is $0$.
 Advantages:
 
 - No assumptions about distributions (no assumption of normality, no asymptotic convergence)
-- as we will see, directly flows from potential outcomes model
+- directly flows from potential outcomes model
 - any test statistic (median, ranks, whatever)
 
 Disadvantages
 
-- only tests **sharp null** which may be less interesting (ask about a caveat here)
+- only tests **sharp null** which may be less interestin$^*$
 - Confidence intervals only for **constant effects**
-- $p$ values limited by number of permutations (too few, and they are coarse, too many, they are approximate)
+- $p$ values limited by possible combinations (too few, and they are coarse, too many, they are approximate)
 
 --- 
 
@@ -772,7 +782,7 @@ Disadvantages
 
 In practice:
 
-- Null hypothesis of **sharp null** lets us complete the potential outcomes table based on the observed data
+- Null hypothesis of **sharp null** lets us **complete** the potential outcomes table/response schedule based on the observed data
 - Why?
 
 >- Sharp null implies that $Y_i^1 = Y_i^0$ for all units $i$.
@@ -811,11 +821,11 @@ Under the **sharp null**, this would be true:
 
 ### Randomization Inference
 
-Once we have this table of potential outcomes **under the sharp null**, we:
+Once we have this response schedule **under the sharp null**, we:
 
-1. Identify all possible permutations of randomizations (or sample from them, if this number is large)
+1. Create all possible permutations of randomizations (or sample them, if this number is large)
 2. Calculate the difference in means (or other statistic) for these different randomizations.
-3. Compare our **observed statistic** against this **null distribution** (distribution of **possible outcomes** that could have occurred by chance assuming the sharp null hypothesis is true)
+3. Compare our **observed statistic** against this **null distribution** (distribution of $\widehat{ACE}$ that could have occurred by chance assuming the sharp null hypothesis is true)
 4. Calculate $p$ value based on fraction of outcomes in null distribution more extreme than observed outcome.
 
 ## Randomization Inference
@@ -831,7 +841,7 @@ distout = gendist(Ys, perms)
 out = dispdist(distout, ate)
 ```
 
-## Randomziation Inference
+## Randomization Inference
 
 If $\widehat{ACE}=$ `r ate`, then $p(ACE != 0)$ is `r out$two.tailed.p.value`.
 
