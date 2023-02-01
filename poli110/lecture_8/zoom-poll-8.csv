@@ -1,0 +1,38 @@
+"Title","Questions Name","Questions Type","Answers"
+"Poll 1",,,
+,"“cause of death”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“number of gun deaths”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“change over time in # of gun deaths”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“proportion of all murders that involve guns”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“strictness of gun ownership laws”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,"“year in which a country banned assault weapons”: choose the level of measurement","single",
+,,,"nominal"
+,,,"ordinal"
+,,,"interval"
+,,,"ratio"
+,,,
+"Poll 2",,,
+,"Suppose we want to know whether Omicron transmission is lower among vaccinated than unvaccinated: Which variable would be best?","single",
+,,,"Number of COVID cases"
+,,,"Hospitalizations per 100,000"
+,,,"COVID cases per 100,000"
