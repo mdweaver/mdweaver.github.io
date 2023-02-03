@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 31, 2022"
+date: "February 3, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -55,13 +55,11 @@ options("kableExtra.html.bsTable" = T)
 
 3. Conditioning
 
-    - how it works
+    - how it works (two approaches)
     - what not to do
-    - methods
 
 
 # Example
-
 
 ---
 
@@ -70,9 +68,9 @@ options("kableExtra.html.bsTable" = T)
 **What happens when we don't have randomization**?
 
 - experiments are expensive, hard to do
-- randomization often impossible on certain questions (cost/ethically prohibitive)
+- randomization often impossible on important questions (cost/ethically prohibitive)
 
-How do we get unbiased estimate of $ACE$ or other causal parameters?
+How do we get unbiased estimates of $ACE$ or other causal parameters?
 
 ---
 
@@ -90,11 +88,11 @@ How do we get unbiased estimate of $ACE$ or other causal parameters?
 
 **Contact Hypothesis**:
 
-Imagine we survey and compare TFA participants and non-participants graduating from the same set of universities.
+Imagine we survey and compare TFA participants and non-participants graduating from the same  universities.
 
-"Racial resentment" is a based on a battery of questions (e.g. : "How much racial discrimination do you feel there is in the US today, limiting the chances of individuals from particular racial groups to get ahead?").
+"Racial resentment" is a based on a battery of questions (e.g. : "Racial discrimination in the US today limits the chances of individuals from [particular racial group] to get ahead?").
 
-Score $1$ to $5$, with $5$ being greatest resentment.
+Score $1$ to $5$, with $5$ being greatest resentment ("strongly disagree").
 
 ---
 
@@ -106,9 +104,9 @@ $i$ indexes individuals
 
 $TFA_i$ indicates TFA participation ($1$) or not ($0$) of person $i$
 
-$Y_i(0)$ is  "racial resentment" without TFA
+$Y_i(0)$ is  "racial resentment" without TFA participation
 
-$Y_i(1)$ is  "racial resentment" with TFA
+$Y_i(1)$ is  "racial resentment" with TFA participation
 
 ---
 
@@ -184,7 +182,7 @@ ace_hat
 
 Because we simply observe those treated and those untreated, with no randomization, there are no other alternate allocations of treatment.
 
-#### Why is the $\widehat{ACE}$  biased?
+#### Why is the $\widehat{ACE} \ $  biased?
 
 
 
@@ -227,7 +225,7 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 - **Can occur, despite randomization**
     - exclusion restriction violation
     - attrition
-    - mis-use of experiment
+    - breaking experiment
 - **Easy to understand graphically**
 
 
@@ -414,8 +412,7 @@ The "backdoor" criterion for confounding points to solutions:
 **conditioning** is when we examine the effect of $D_i$ on $Y_i$ *within subsets/strata* of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
 
 - Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
-- We examine relationship between $D$ and $Y$, within groups of cases where values of $\mathbf{X_i}$ are the same (hold value of  backdoor paths constant)
-
+- We can either: examine relationship between $D$ and $Y$, within groups of cases where values of $\mathbf{X_i}$ are the same (hold value of backdoor paths constant), adjusting for probability of $D$ for given values of $\mathbf{X_i}$
 
 ---
 
@@ -570,6 +567,82 @@ Revisit our diagram:
 
 ---
 
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+  - all 'backdoor' paths are blocked
+  - no conditioning on colliders to 'unblock' backdoor path
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+    
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+
+  - There must be variation in the levels of treatment **within every strata** of $X$
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+    
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+
+  - We'll revisit this in the context of regression
+
+
+---
+
+### Two Ways of Conditioning:
+
+- **imputation**/**matching**: "plug in" unobserved potential outcomes of $\color{red}{Y(1)}$ ($\color{red}{Y(0)}$) using observed potential outcomes of $Y(1)$($Y(0)$) from cases with **same**/**similar** values of $\mathbf{X_i}$.
+- **reweighting**: reweight members of "treated" and "untreated" groups based on $Pr(D_i | \mathbf{X_i})$
+
+---
+
+### Conditioning by Imputation
+
+**Conditioning** with imputation contrasts to calculating **naive** $\widehat{ACE}$:
+
+Rather than taking this difference:
+
+$\widehat{ACE} = E[Y^T - Y^C]$
+
+$\widehat{ACE} = E[Y(1) | D = 1] - E[Y(0) | D=0]$
+
+which may be biased... $ACE \neq E[\widehat{ACE}]$
+
+---
+
+### Conditioning by Imputation
+
+Instead, we find effect of $D$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
+
+$\widehat{ACE}[X = x] = E[Y(1) | D=1, X = x] - E[Y(0) | D=0, X = x]$ 
+
+for each value of $x$ in the data. 
+
+
+Under the Conditional Independence Assumption, $E[Y(1) | D=1, X=x] = \color{red}{E[Y(1) | D=0, X=x]}$ and $E[Y(0) | D=0, X=x] = \color{red}{E[Y(0) | D=1, X=x]}$
+
+
+---
+
+Then take a **weighted average** of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
+
+$$\widehat{ACE} = \sum\limits_{x} \widehat{ACE}[X = x]Pr(X=x)$$
+
+---
+
+### Conditioning by Imputation
+
+Why is this **imputation**? 
+
+We're filling in unobserved potential outcomes using observed potential outcomes.
+
+---
+
 ### Conditioning: Example
 
 Imagine we have our binary treatment $TFA_i$ and we want to know its average effect on $Y_i$, racial resentment.
@@ -598,28 +671,6 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ```
 
----
-
-In this case,  **conditioning** contrasts to calculating **naive** $\widehat{ACE}$:
-
-Rather than taking this difference:
-
-$\widehat{ACE} = E[Y^T - Y^C]$
-
-$\widehat{ACE} = E[Y(1) | TFA = 1] - E[Y(0)|TFA=0]$
-
-which we found to be biased... $ACE \neq E[\widehat{ACE}]$
-
----
-
-Instead, we find effect of $TFA$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
-
-$\widehat{ACE}[X = x] = E[Y(D = 1)][X = x]) - E[Y(D = 0)][X = x]$ 
-
-for each value of $x$ in the data. 
-
-
-Then take a **weighted average** of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$.
 
 ---
 
@@ -782,38 +833,16 @@ Can we use conditioning to recover the $ACE$?
 Why can't conditioning recover the true $ACE$?
 
 
-# Conditioning (2)
-
-
 ---
 
-In order for conditioning to estimate the $ACE$ without bias, we must assume
+### Conditioning by Imputation
 
-$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
-
-    - all 'backdoor' paths are blocked
-    - example (2) violated this
-    - no conditioning on colliders to 'unblock' backdoor path
-
+1. **Ignorability**/**Conditional Independence**: 
+    - violated in Example 2
+  
+2. **Positivity**/**Common Support**:
+    - violated in Example 4
     
----
-
-In order for conditioning to estimate the $ACE$ without bias, we must assume
-    
-$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
-
-    - There must be variation in the levels of treatment **within every strata** of $X$
-    - example (4) violated this
-    
----
-
-In order for conditioning to estimate the $ACE$ without bias, we must assume
-
-    
-3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
-
-    - We'll revisit this in the context of regression
-
 ---
 
 ### Conditioning: Limitations
@@ -828,7 +857,6 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
     
 3. **Measurement Error**:
     - This exacerbates problems with assumption (1)
-
 
 ---
 
@@ -845,71 +873,73 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 ---
 
-### Conditioning: Approaches
+### Conditioning by Imputation: Approaches
 
-1. Matching
+1. Matching: (**exact** matching is what we've been doing,  other types)
 
-2. Weighting
+2. Regression:
 
-3. Regression
-
----
-
-### Conditioning: Matching
-
-**Match treated units to untreated units most similar** in conditioning variables $\mathbf{X}$
-
-Many varieties:
-
-- exact matching
-- coarsened exact matching
-- mahalanobis distance
-- genetic
-- propensity score
+3. Machine Learning:
 
 ---
 
-### Conditioning: Matching
+### Conditioning by Reweighting
 
-Many varieties:
+Another way of conditioning focuses on the selection into treatment $D$, rather than imputing potential outcomes of $Y$.
 
-1. Identify set of conditioning variables
-2. Match treated (untreated) units to most similar untreated (treated) units using a criteria
-3. Check for balance on conditioning variables
-4. Take average difference between treated and untreated matched pairs/groups.
+If observed values of $Y(1)$ are systematically different than $E[Y(1)]$  (bias), that must be because some units are more/less likely to have $D=1$.
 
----
-
-### Conditioning: Weighting
-
-Use conditioning variables to weight observations such that:
-
-1. They are weighted inversely by probability of treatment (IPW)
-2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
+If we know **the probability each case was treated** ($Pr(D_i)$) then we can **re-weight** observed values of $Y(1)$ such that we **reconstruct** the $E[Y(1)]$. The same can be done for $Y(0)$
 
 ---
 
-### Conditioning: Weighting
+### Conditioning by Reweighting
 
-1. Identify set of conditioning variables
-2. Use conditioning variables in algorithm to:
-    - calculate probability of treatment, given value of $\mathbf{X}$
-    - or choose weights for balance
-3. Calculate difference in means, using calculated weights
+Under the conditional independence assumption, $Pr(D | X = x)$ is the same for all cases $X = x$, and adjusting for the probability of treatment $D$, potential outcomes of $Y$ are independent of $D$
+
+$Pr(D | X = x)$ is called the **propensity score**, which we can estimate.
+
 
 ---
 
-### Conditioning: Regression
+Example (1): Let's "condition" on $X$
 
-1. Identify set of conditioning variables
-2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
-3. Calculate relationship between $D$ and $Y$ after adjusting for relationship with conditioning variables
+```{r, echo = F}
+po.table[, y_i := ifelse(d_i == 1, y_i_1, y_i_0)]
+setkey(po.table, x_i, d_i)
+
+kable(po.table, col.names = c("$i$", "$Y_i(0)$",
+                       "$Y_i(1)$", "$TFA_i$", "$X_i$", "$Y_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+---
+
+### Conditioning by Reweighting
+
+This approach leads us to the inverse probability weighting estimator of the $ACE$:
+
+$$\widehat{ACE} = \frac{1}{N}\sum\limits_{i=1}^N \frac{D_iY_i}{\widehat{Pr}(D_i|\mathbf{X_i})}-\frac{(1-D_i)Y_i}{1-\widehat{Pr}(D_i|\mathbf{X_i})}$$
+
+---
+
+### Conditioning by Reweighting: Approaches
+
+1. Estimating Propensity Scores: known probabilities, logit regression, machine learning
+2. Inverse probability weighting (see last slide)
+
+---
+
+### Conditioning: Why not use both?
+
+We can use both **imputation** *and* **re-weighting** at the same time. This is called "doubly robust" estimation, as it can give us an unbiased estimate of the $ACE$ if either the imputation model or the propensity score model is correct.
+
 
 ---
 
 ### Conditioning:
 
-In absence of randomization, we condition. We always assume:
+In absence of randomization, we condition (by imputation or reweighting). We always assume:
 
 1. **Ignorability**/**Conditional Independence**
 2. **Positivity**/**Common Support**
