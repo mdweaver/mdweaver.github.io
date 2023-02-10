@@ -1,0 +1,1002 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "February 7, 2022"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+options("kableExtra.html.bsTable" = T)
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  color: #FFFFFF;
+  }
+</style>
+
+# Least Squares
+
+--- 
+
+### Objectives
+
+**Mechanics** of Bivariate Regression
+
+- Relationship between variables
+    - Covariance; Correlation
+- the mean (revisited)
+- conditional expectation function
+- "Ordinary Least Squares"
+    - algorithm
+    - mathematical properties of algorithm
+    - **no assumptions**
+
+## Introduction:
+
+**Why least squares?**
+
+- A "simple", flexible tool; many applications
+- Ubiquitous, "good enough"
+
+**Application to causality**
+
+- mean of $Y$ across different values of $Z$. 
+    - with assumptions, can give a causal interpretation.
+- mean of $Y$ across values of $D$, conditioning on $X$
+    - with more assumptions; can obtain **"ignorability"**
+  
+## Today
+
+**No causality**
+  
+- no effort to prove causality; no assumptions about causal model.
+
+**No parameters**
+
+- no statistical model; no random variables; no **parameters** to estimate
+  
+**Regression/Least Squares as Algorithm**
+
+- algorithm with mathematical properties
+- without further assumption, plug in data, generate a line
+- limited interpretation
+
+## Today
+
+
+- The Mean
+
+- Association between two variables
+
+- Regression/Least Squares extends the mean
+
+
+
+# Digression
+
+---
+
+### Covariance and Correlation
+
+How are these variables associated?
+
+```{r, echo = F}
+
+plot(trees$Girth, trees$Height, 
+     xlab = "Trunk Width (in.)",
+     ylab = "Height (ft.)",
+     main = "Relationship between tree trunk width and height")
+
+```
+
+
+---
+
+### Covariance and Correlation
+
+How are these variables associated?
+
+```{r, echo = F}
+
+plot(trees$Girth, trees$Volume, 
+     xlab = "Trunk Width (in.)",
+     ylab = "Timber Volume (ft.^3)",
+     main = "Relationship between tree trunk width\nand volume of timber")
+```
+
+
+---
+
+### Covariance and Correlation
+
+**Covariance**
+
+$$Cov(X,Y) = \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$$
+
+$$Cov(X,Y) = \overline{xy} - \bar{x}\bar{y}$$
+
+>- Divide by $n-1$ for sample covariance.
+
+---
+
+### Covariance and Correlation
+
+**Variance**
+
+Variance is also the **covariance** of a variable with itself:
+
+$$Var(X) =  \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})^2$$
+
+$$Var(X) = \overline{x^2} - \bar{x}^2$$
+
+
+---
+
+Covariance of tree width and tree height:
+
+```{r, echo = T}
+x1 = trees$Girth
+y1 = trees$Height
+mean(x1*y1) - (mean(x1)*mean(y1))
+```
+
+Covariance of tree width and timber volume:
+
+```{r, echo = T}
+x2 = trees$Girth
+y2 = trees$Volume
+mean(x2*y2) - (mean(x2)*mean(y2))
+```
+
+---
+
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
+
+```{r, echo = F, warning= F, message=F}
+t_dt = trees %>% as.data.table %>% melt.data.table(measure.vars = names(trees))
+
+ggplot(t_dt, aes(x = value)) + geom_histogram() + facet_wrap(. ~ variable, nrow = 1) + theme_bw() +
+  ggtitle("Histograms")
+```
+
+---
+
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
+
+- Scale of covariance reflects scale of the variables. 
+
+- Can't directly compare the two covariances
+
+---
+
+### Covariance: Intuition
+
+```{r, echo = F, message = F}
+require(ggplot2)
+require(grid)
+#get a data set
+X <- trees$Girth
+Y <- trees$Volume
+
+#build the data frame
+data <- data.frame(X,Y)
+
+#get the means
+X.bar <- mean(X)
+Y.bar <- mean(Y)
+
+#sign function the rectangle
+data$S <- sign((X-X.bar)*(Y-Y.bar))
+
+data = data[data$S != 0,]
+data$S = factor(data$S)
+
+#set ggplot parameters
+circle.size = 2
+colors = list('red', '#0066CC', '#4BB14B', '#FCE638')
+
+SD_Theme = theme(text = element_text(family='Avenir'),
+                 legend.position="none",
+                 axis.line = element_line(color='#BFBFBF', size=.5),
+                 panel.grid.major = element_line(color='#BFBFBF', size=.25),
+                 plot.margin = unit(c(2,2,2,2), "cm"),
+                 axis.title = element_text(family='Avenir', face='bold', hjust=.5, vjust=.5, size=12),
+                 axis.text = element_text(family='Avenir', color='black'),
+                 title = element_text(family='Avenir', face='bold', hjust=.5, vjust=1, lineheight=3150, size=10))
+
+
+ggplot(data, aes(X,Y, xmin=X.bar, xmax=X, ymin=Y.bar, ymax=Y)) + geom_point(size=circle.size, pch=21) +
+  geom_hline(yintercept=Y.bar, linetype='longdash') +
+  geom_vline(xintercept=X.bar, linetype='longdash') +
+  geom_rect(alpha=.2, aes(fill=S)) +   scale_fill_manual(values=c('red','#0066CC')) +
+  ggtitle('Products of deviations from the mean') +
+  SD_Theme + xlab("Tree Width") + ylab("Timber Volume")
+```
+
+---
+
+### Correlation
+
+#### **Correlation** puts covariance on a **standard scale**
+
+**Covariance**
+
+$Cov(X,Y) = \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
+
+
+**Pearson Correlation**
+
+$r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
+
+- Dividing by product of standard deviations scales the covariance
+
+- $|Cov(X,Y)| <= \sqrt{Var(X)*Var(Y))}$
+
+
+---
+
+### Correlation
+
+- Correlation coefficient must be between $-1, 1$
+
+- At $-1$ or $1$, all points are on a **straight line**
+
+- Negative value implies increase in $X$ associated with decrease $Y$.
+
+- If correlation is $0$, the covariance must be?
+
+- If $Var(X)=0$, then $Cor(X,Y) = ?$
+
+
+---
+
+### Correlation: Interpretation
+
+- Correlation of $(x,y)$ is same as correlation of $(y,x)$
+
+- Values closer to -1 or 1 imply "stronger" association
+    
+- Correlations cannot be understood using ratios.
+    - Correlation of $0.8$ is not "twice" as correlated as $0.4$.
+- Pearson correlation agnostic about outliers/nonlinearities
+- Correlation is not causation
+
+
+--- 
+
+### Practice:
+
+Get `data_1` here:  [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
+
+Without using `cor()` or `cov()` or `var()` functions in `R`
+
+1. Inspect `data_1`
+1. Calculate mean of $X$; mean of $Y$
+2. Calculate $Var(X)$ and $Var(Y)$
+3. Calculate correlation $(X,Y)$
+
+
+--- 
+
+### Practice:
+
+```{r, echo = F, message = F}
+plot_data = as.data.table(anscombe)
+plot_data$id = 1:nrow(plot_data)
+plot_data = melt.data.table(plot_data, id.vars = 'id', measure = patterns('^x', '^y'), value.name = c('x','y'), variable.name = 'dataset') 
+
+ggplot(plot_data, aes(x, y)) + geom_point() + geom_smooth(method = 'lm', se = F, fullrange = T) + facet_grid(. ~ dataset) + theme_bw()
+```
+
+--- 
+
+### Covariance and Correlation
+
+- Both measure linear association of two variables
+- Scale is either standardized (correlation) or in terms of products (covariance)
+- May be inappropriate in presence of non-linearity; outliers
+
+
+# The Mean: Revisited
+
+---
+
+### Squared Deviations
+
+**Why are we always squaring differences?**
+
+**Variance**
+
+$\frac{1}{n}\sum\limits_{i = 1}^{n} (x_i - \bar{x})^2$
+
+
+**Covariance**
+
+$\frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
+
+**Mean Squared Error**
+
+$\frac{1}{n}\sum\limits_{i=1}^n(\hat{y_i} - y_i)^2$
+
+
+
+---
+
+### Squared Deviations
+
+### It is about **distance**
+
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+<br>
+
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
+
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+
+---
+
+What is the distance between two points?
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  coord_fixed() + theme_bw()
+```
+
+---
+
+What is the distance between two points?
+
+$p = (3,0); q = (0,4)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+$$d(p,q) = \sqrt{(3 - 0)^2 + (0 - 4)^2}$$
+$$d(p,q) = \sqrt{3^2 + (-4)^2} = \ ?$$
+
+---
+
+What is the distance between two points?
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
+  geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
+  coord_fixed()
+```
+
+
+---
+
+### Remember Pythagoras?
+
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+<br>
+
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
+
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+
+
+
+## The Mean
+
+One way of thinking about the mean is as a **prediction**. 
+
+We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction of all the values in $Y$.
+
+The mean gives us the $\hat{y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
+
+- since distances are sums of squared differences, this is why mean minimizes the **variance**.
+
+---
+
+### Deriving the mean:
+
+Imagine we have a variable $Y$ that we observe as a sample of size $n$. We can represent this variable as a **vector** in $n$ dimensional space.
+
+$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+
+---
+
+### What is a vector?
+
+- a **vector** is a one-dimensional array of numbers of length $n$. 
+
+- can be portrayed graphically as an arrow from the origin to a point in $n$ dimensional space
+
+- can be multiplied by a number to extend/shorten their length
+
+---
+
+### Deriving the mean:
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,5))
+  ggplot(vectors, aes(x = x, y = y)) +
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
+  coord_fixed() + theme_bw() + xlab('n1') + ylab('n2')
+```
+
+---
+
+### Deriving the mean:
+
+We want to pick one number (a scalar) $\hat{y}$ to predict all of the values in our vector $y$. 
+
+This is equivalent to doing this:
+
+$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
+
+Multiplying a (1,1) vector by a constant.
+
+- $\hat{y}$ will be on the line that runs through the origin and (1,1)
+
+---
+
+Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $y$.
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,5))
+  ggplot(vectors, aes(x = x, y = y)) +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,1), yend = c(5,1)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
+  coord_fixed() + theme_bw() +
+    geom_text(aes(x=3,y=5.2,label='y')) + 
+    geom_text(aes(x=1.2,y=1.2, label = "(1,1)")) +
+    xlab('n1') + ylab('n2') 
+```
+
+---
+
+### Deriving the mean:
+
+$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
+
+$\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
+
+and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or prediction error):
+
+$\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
+
+---
+
+```{r, echo = F}
+ggplot() +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 3, y = 3, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'red', alpha = 0.5) + 
+  geom_segment(aes(x = 0, y = 0, xend = 3, yend = 3),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'green', alpha = 0.5) +
+  coord_fixed() + xlab('x') + ylab('y') + 
+  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) + 
+  theme_bw() + xlab('n1') + ylab('n2') 
+```
+
+---
+
+### Deriving the mean:
+
+This means our goal is to minimize $\mathbf{e}$, residuals.
+
+How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
+
+$$len(\mathbf{e})= \sqrt{(3-\hat{y})^2 + (5 - \hat{y})^2}$$
+
+**When is the length of $\mathbf{e}$ minimized?** 
+
+
+>- when angle between $\hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ and $\mathbf{e}$ is $90^{\circ}$.
+
+--- 
+
+### Deriving the mean:
+
+```{r, echo = F}
+ggplot() +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 4, y = 4, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'red', alpha = 0.75) + 
+  geom_segment(aes(x = 0, y = 0, xend = 4, yend = 4),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'green', alpha = 0.75) +
+  coord_fixed() + xlab('x') + ylab('y') + 
+  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) +
+   theme_bw() + xlab('n1') + ylab('n2') 
+```
+
+---
+
+### Deriving the mean:
+
+Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{y}$ is a prediction of $y$.
+
+- We choose a value $\hat{y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
+
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+
+
+---
+
+### Deriving the mean:
+
+What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
+
+We can then use this to improve our predictions, $\hat{y}$, of $y$.
+
+- We choose a value $\hat{y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
+
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+
+
+# Conditional Expectation Function
+
+---
+
+### Generalizing the Mean:
+
+The **mean** is useful...
+
+... but often we want generate better predictions of $Y$, using additional information $X$. 
+
+---
+
+### Generalizing the Mean:
+
+The **mean** is useful...
+
+... but often we want to know if the mean of something $Y$ is different across different values of something else $X$. 
+
+To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about random variables). Sometimes we want to know $E(Y | X)$
+
+- simplest version could be difference in means (experiments)
+
+
+---
+
+### Generalizing the Mean:
+
+We are interested in finding the **conditional expectation function** (Angrist and Pischke)
+
+**expectation**: because it is about the *mean*: $E(Y)$
+
+**conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
+
+**function**: because $E(Y) = f(X)$, there is some relationship we can look at between values of $X$ and $E(Y)$.
+
+$$E[Y | X = x]$$
+
+---
+
+### Generalizing the Mean:
+
+Another way of thinking about what the **conditional expectation function** is:
+
+$$E[Y | X = x] = \hat{y} | X = x$$
+
+What is the predicted value $\hat{y}$, where $X = x$, such that $\hat{y}$ has the smallest distance to $y$?
+
+---
+
+### Generalizing the Mean:
+
+There are **many ways** to define the **conditional expectation function**
+
+- one easy way is to assume that the CEF is **linear**.
+- That is to say $E(Y)$ is **linear** in $X$. 
+- The **function** takes the form of an equation of a line.
+- Bivariate regression
+
+---
+
+### Equation of a line
+
+```{r, echo = F}
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+```
+
+---
+
+### Equation of a line
+
+```{r, echo = F}
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+segments(x0=2,x1=4, y0 = 3+2*2, y1 = 3+2*2, col = 'red')
+segments(x0=4,x1=4, y0 = 3+2*2, y1 = 3+2*4, col = 'red')
+text(2,5,"Run = 2")
+text(2,3+2*2, pos = 3, "(x1,y1)")
+text(5,10,"Rise = 4")
+text(4,3+2*4, pos = 3, "(x2,y2)")
+
+```
+
+---
+
+### Equation of a line
+
+<div style="font-size: 150%;">$slope = \frac{rise}{run} = \frac{y2-y1}{x2-x1}$</div>
+
+
+>- Change in $y$ with a 1 unit change in $x$.
+
+
+---
+
+### Equation of a line
+
+```{r, echo = F}
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+segments(x0=2,x1=4, y0 = 3+2*2, y1 = 3+2*2, col = 'red')
+segments(x0=4,x1=4, y0 = 3+2*2, y1 = 3+2*4, col = 'red')
+text(2,5,"Run = 2")
+text(5,10,"Rise = 4")
+abline(h = 3, col = 'blue')
+text(0,3, "Intercept", col = 'blue', pos = 2)
+```
+
+---
+
+### Equation of a line
+
+<div style="font-size: 150%;">$intercept = (y | x=0)$</div>
+
+
+>- Value of $y$ when $x = 0$. Where the line crosses the $y$-axis.
+
+---
+
+### Equation of a line
+
+<div style="font-size: 200%;">$y = intercept + slope*x$</div>
+
+or, by convention:
+
+<div style="font-size: 200%;">$y = a + bx$</div>
+
+## Generalizing the Mean:
+
+### How do we choose the line that best captures:
+
+$$E(Y) = a + b\cdot X$$
+
+or 
+
+$$\hat{y} = a + b\cdot X$$
+
+---
+
+### What line fits this?
+
+
+```{r, echo = F, message = F, include = F}
+data(galton)
+```
+
+
+
+```{r, echo = F, message = F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha  = 0.5)  + 
+   xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") + theme_bw()
+```
+
+---
+
+### Which line?
+
+```{r, echo = F, message = F}
+m_x = mean(father.son$fheight)
+m_y = mean(father.son$sheight)
+sd_x = sd(father.son$fheight)
+sd_y = sd(father.son$sheight)
+slope = sd_x / sd_y
+x_norm = sort((father.son$fheight - m_x)/sd_x)
+
+range = -5:5
+line_x = x_norm*sd_x + m_x
+line_y = x_norm*slope*sd_y + m_y
+sd_line = data.frame(line_x, line_y)
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ theme_bw()
+```
+
+---
+
+### Which line?
+
+```{r, echo = F}
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + theme_bw()
+```
+
+--- 
+
+### Which line?
+```{r, echo = F, message=F, warning=F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + theme_bw()
+```
+
+---
+
+### Graph of Averages
+
+```{r, echo = F, message = F, include = F}
+father.son = as.data.table(father.son)
+father.son[, bin := round(fheight)]
+means = father.son[,list(m = mean(sheight),
+                     count = length(fheight)),by=bin]
+```
+
+```{r, echo = F, message=F, warning=F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.1) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + 
+  geom_point(aes(x = bin, y = m, size = count), data = means, alpha = 0.5) + theme_bw()
+```
+
+---
+
+### Which line?
+
+The **red** line above is the **regression line** or the fit using **least squares**.
+
+It closely approximates the conditional mean of **son's height** ($Y$) across values of **father's height** ($X$).
+
+How do we obtain this line mathematically?
+
+We can do it the same way we obtained the mean!
+
+---
+
+### Minimizing the Distance
+
+We are going to choose an intercept $a$ and slope $b$ such that:
+
+$\hat{y}_i = a + b \cdot x_i$
+
+and that minimizes the distance between the predicted ($\hat{y}_i$) and true ($y_i$) values:
+
+$\sqrt{\sum\limits_i^n (y_i - \hat{y_i})^2}$
+
+minimizes $\mathbf{e} = y_i - \hat{y_i}$
+
+---
+
+### Minimizing the Distance
+
+Another way of thinking of this is in terms of **residuals**, or the difference between true and predicted values using the equation of the line. (Prediction errors)
+
+$e_i = y_i - \hat{y_i}$
+
+Minimizing the distance also means minimizing the sum of squared **residuals** $e_i$
+  
+- this is exactly what we did above with the mean
+
+---
+
+```{r, echo = F, message=F, warning=F}
+m = lm(sheight~ fheight, father.son)
+ols_residuals = data.frame(y= father.son$sheight, y_hat = m$fitted.values, x = father.son$fheight)
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) + 
+   geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height")   + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + geom_segment(aes(x=x, xend=x, y=y_hat, yend=y), data = ols_residuals, col = 'darkred', alpha = 0.2) + theme_bw() + ggtitle("Residuals") 
+  
+```
+
+
+
+---
+
+### Minimizing the Distance
+
+We need to solve this equation:
+
+$$\min_{a,b} \sum\limits_i^n (y_i - a - b x_i)^2$$
+Choose $a$ and $b$ to minimize this value, **given $x_i$ and $y_i$**
+
+We can do this with calculus: solve for when first derivative is $0$
+
+ILLUSTRATE
+
+---
+
+### Minimizing the Distance
+
+First, we take derivative with respect to $a$: yields:
+
+$-2 \left[ \sum\limits_i^n (y_i - a - b x_i) \right] = 0$
+
+$\sum\limits_i^n y_i -  \sum\limits_i^n a - \sum\limits_i^n b x_i  = 0$
+
+$-\sum\limits_i^n a   = -\sum\limits_i^n y_i + \sum\limits_i^n b x_i$
+
+$\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
+
+---
+
+### Minimizing the Distance
+
+$\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
+
+Dividing both sides by $n$, we get:
+
+$a = \bar{y} - b\bar{x}$
+
+Where $\bar{y}$ is mean of $y$ and $\bar{x}$ is mean of $x$.
+
+**Implication**: regression line goes through the **point of averages** $\bar{y} = a + b \bar{x}$
+
+---
+
+### Minimizing the Distance
+
+Next, we take derivative with respect to $b$: 
+
+$-2 \left[ \sum\limits_i^n (y_i - a - b x_i) x_i\right] = 0$
+
+$\sum\limits_i^n (y_i - (\bar{y} - b\bar{x}) - b x_i) x_i = 0$
+
+$\sum\limits_i^n y_ix_i - \bar{y}x_i + b\bar{x}x_i - b x_ix_i= 0$
+
+
+---
+
+### Minimizing the Distance
+
+$\sum\limits_i^n (y_i - \bar{y})x_i = b\sum\limits_i^n (x_i - \bar{x})x_i$
+
+Dividing both sides by $n$ gives us:
+
+$\frac{1}{n}\sum\limits_i^n y_ix_i - \bar{y}x_i = b\frac{1}{n}\sum\limits_i^n x_i^2 - \bar{x}x_i$
+
+$\overline{yx} - \bar{y}\bar{x} = b \overline{xx} - \bar{x}\bar{x}$
+
+$Cov(y,x) = b \cdot Var(x)$
+
+$\frac{Cov(y,x)}{Var(x)} = b$
+
+---
+
+## Deriving Least Squares
+
+### The slope:
+
+
+$$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
+
+- Expresses how much mean of $Y$ changes for a 1-unit change in $X$
+- When expressed as function of correlation coefficient $r$, we see this rise ($SD_y$) over the run ($SD_x$)
+
+
+---
+
+### The Intercept:
+
+
+$$a = \overline{y} - \overline{x}\cdot b$$
+
+Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line (of predicted values) goes through the point $(\bar{x}, \bar{y})$ or the point of averages.
+
+---
+
+### Deriving Least Squares
+
+There are other ways to derive least squares.
+
+- Because we eventually want multiple variables, need to build from an intuition rooted in matrices and their relationship to distance.
+- Adding more variables means minimizing distance of $\hat{y}$ to $y$ in a $p > 3$ dimensional space, so it gets weird.
+
+---
+
+### Key facts about regression:
+
+The math of regression ensures that: 
+
+$1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+
+$2$. $Cov(X,e) = 0$.  This is true by definition of how we derived least squares. We will see why this is next week.
+
+- Also means: Correlation of $X$ and residuals $e$ is exactly $0$. **Why is this?**
+
+$3$. Must be that $Var(X) > 0$ in order to compute $a$ and $b$. **Why is this?**
+
+---
+
+### In small groups:
+
+Using the `data_2` from [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
+
+Take $Y =$ `gop_change` and $X =$ `enlistment` (board)
+
+1. Calculate $a$ and $b$ using the equations give above
+2. Interpret $a$ in terms of CEF.
+3. What is $\hat{y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
+2. Calculate $e$
+3. Calculate the mean of $e$
+4. Calculate the correlation of $X$ and $e$
+
+
+# Summary
+
+---
+
+### Key ideas
+
+These facts are mathematical truths about least squares. Unrelated to assumptions needed for statistical/causal inference.
+
+- Can fit least squares (LS) to **any** scatterplot, if $X$ has positive variance.
+
+- LS line minimizes the sum of squared residuals (minimizes the distance between predicted $\hat{y}$ and actual values $y$).
+
+- LS line always goes through point of averages; can be computed exactly from "graph of averages"
+
+- Residuals $e$ are always uncorrelated with $x$ if there is an intercept. Will see why next week.
+
+---
+
+### Key ideas
+
+- We have no addressed in any way how this relates to a statistical model or a causal model.
+- **linear conditional expectation function** should be evaluated visually (does it make sense?)
+- If the conditional expectation function is non-linear (e.g. a "U" shape in mean of $y$ across values of $x$) linear regression is **best linear approximation**.
+
+
