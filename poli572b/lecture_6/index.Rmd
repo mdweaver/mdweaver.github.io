@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 14, 2022"
+date: "February 7, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -45,294 +45,385 @@ options("kableExtra.html.bsTable" = T)
 
 ### Objectives
 
-**Matrix Algebra**
+**Mechanics** of Bivariate Regression
 
-- Key mathematical operations
-- Geometric intuition
+- Relationship between variables
+    - Covariance; Correlation
+- the mean (revisited)
+- conditional expectation function
+- "Ordinary Least Squares"
+    - algorithm
+    - mathematical properties of algorithm
+    - **no assumptions**
 
-**Deriving Multivariate Least Squares**
+## Introduction:
 
-- Relationship to the mean
-- Minimizing distance
-- Relationship to correlation
+**Why least squares?**
 
----
+- A "simple", flexible tool; many applications
+- Ubiquitous, "good enough"
 
-### Today
+**Application to causality**
+
+- mean of $Y$ across different values of $Z$. 
+    - with assumptions, can give a causal interpretation.
+- mean of $Y$ across values of $D$, conditioning on $X$
+    - with more assumptions; can obtain **"ignorability"**
+  
+## Today
+
+**No causality**
+  
+- no effort to prove causality; no assumptions about causal model.
+
+**No parameters**
+
+- no statistical model; no random variables; no **parameters** to estimate
+  
+**Regression/Least Squares as Algorithm**
 
 - algorithm with mathematical properties
-    - what are the assumptions and properties and why
 - without further assumption, plug in data, generate a line
 - limited interpretation
 
---- 
+## Today
 
-### Today
 
-- Matrix algebra
 - The Mean
-- Derive Least Squares algorithm
-- Multiple Regression requirements, interpretation
+
+- Association between two variables
+
+- Regression/Least Squares extends the mean
+
+
+
+# Digression
 
 ---
 
-### Bivariate Regression 
+### Covariance and Correlation
 
-To predict $y$ as a linear function of $x$:
+How are these variables associated?
 
-$\widehat{y}_i = a + b x_i$
+```{r, echo = F}
 
-#### slope:
+plot(trees$Girth, trees$Height, 
+     xlab = "Trunk Width (in.)",
+     ylab = "Height (ft.)",
+     main = "Relationship between tree trunk width and height")
 
-$$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
+```
 
-#### intercept:
-
-$$a = \overline{y} - \overline{x}\cdot b$$
 
 ---
 
-### Bivariate Regression 
+### Covariance and Correlation
 
-**Fitted/Predicted Values**
+How are these variables associated?
 
-$$\widehat{y_i} = a + b \cdot x_i$$
+```{r, echo = F}
 
-**Residuals** (prediction errors)
+plot(trees$Girth, trees$Volume, 
+     xlab = "Trunk Width (in.)",
+     ylab = "Timber Volume (ft.^3)",
+     main = "Relationship between tree trunk width\nand volume of timber")
+```
 
-$$y_i - \widehat{y}_i = e_i$$
 
 ---
 
-### Two "assumptions"
+### Covariance and Correlation
 
-In order for calculations of least squares to be possible, two things must be true:
+**Covariance**
 
-1. $Var(x) \neq 0$
+$$Cov(X,Y) = \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$$
 
-- Recall $b = \frac{Cov(x,y)}{Var(x)}$, so undefined if $Var(x) = 0$
+$$Cov(X,Y) = \overline{xy} - \bar{x}\bar{y}$$
 
-2. $n >= 2$, at least as many observations as coefficients to find ($a,b$). 
-
----
-
-### Two "properties"
-
-By choosing $a$ and $b$ to minimize distance between $Y$ and $\widehat{Y}$ the following are necessarily true:
-
-1. **the mean of the residuals is always zero** if we include an intercept ($a$); this is true of the mean as well.
-
-2. $Cov(X,e) = 0$. This is true by definition of how we derived least squares.
-
-
-# Matrix Algebra
+>- Divide by $n-1$ for sample covariance.
 
 ---
 
-### What is a vector?
+### Covariance and Correlation
 
-- a **vector** is a one-dimensional array of numbers. It is $n  \times   1$ or $1 \times n$.
+**Variance**
 
-$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+Variance is also the **covariance** of a variable with itself:
 
-- a **matrix** is a rectangular array of numbers. $X$ is a $3 \times 2$ matrix. $3$ rows and $2$ columns.
+$$Var(X) =  \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})^2$$
 
-$$ X = \begin{pmatrix} 1 & -1 \\ 1 & 2 \\ 1 & 4 \end{pmatrix}$$
+$$Var(X) = \overline{x^2} - \bar{x}^2$$
+
+
+---
+
+Covariance of tree width and tree height:
+
+```{r, echo = T}
+x1 = trees$Girth
+y1 = trees$Height
+mean(x1*y1) - (mean(x1)*mean(y1))
+```
+
+Covariance of tree width and timber volume:
+
+```{r, echo = T}
+x2 = trees$Girth
+y2 = trees$Volume
+mean(x2*y2) - (mean(x2)*mean(y2))
+```
+
+---
+
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
+
+```{r, echo = F, warning= F, message=F}
+t_dt = trees %>% as.data.table %>% melt.data.table(measure.vars = names(trees))
+
+ggplot(t_dt, aes(x = value)) + geom_histogram() + facet_wrap(. ~ variable, nrow = 1) + theme_bw() +
+  ggtitle("Histograms")
+```
+
+---
+
+Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
+
+- Scale of covariance reflects scale of the variables. 
+
+- Can't directly compare the two covariances
+
+---
+
+### Covariance: Intuition
+
+```{r, echo = F, message = F}
+require(ggplot2)
+require(grid)
+#get a data set
+X <- trees$Girth
+Y <- trees$Volume
+
+#build the data frame
+data <- data.frame(X,Y)
+
+#get the means
+X.bar <- mean(X)
+Y.bar <- mean(Y)
+
+#sign function the rectangle
+data$S <- sign((X-X.bar)*(Y-Y.bar))
+
+data = data[data$S != 0,]
+data$S = factor(data$S)
+
+#set ggplot parameters
+circle.size = 2
+colors = list('red', '#0066CC', '#4BB14B', '#FCE638')
+
+SD_Theme = theme(text = element_text(family='Avenir'),
+                 legend.position="none",
+                 axis.line = element_line(color='#BFBFBF', size=.5),
+                 panel.grid.major = element_line(color='#BFBFBF', size=.25),
+                 plot.margin = unit(c(2,2,2,2), "cm"),
+                 axis.title = element_text(family='Avenir', face='bold', hjust=.5, vjust=.5, size=12),
+                 axis.text = element_text(family='Avenir', color='black'),
+                 title = element_text(family='Avenir', face='bold', hjust=.5, vjust=1, lineheight=3150, size=10))
+
+
+ggplot(data, aes(X,Y, xmin=X.bar, xmax=X, ymin=Y.bar, ymax=Y)) + geom_point(size=circle.size, pch=21) +
+  geom_hline(yintercept=Y.bar, linetype='longdash') +
+  geom_vline(xintercept=X.bar, linetype='longdash') +
+  geom_rect(alpha=.2, aes(fill=S)) +   scale_fill_manual(values=c('red','#0066CC')) +
+  ggtitle('Products of deviations from the mean') +
+  SD_Theme + xlab("Tree Width") + ylab("Timber Volume")
+```
+
+---
+
+### Correlation
+
+#### **Correlation** puts covariance on a **standard scale**
+
+**Covariance**
+
+$Cov(X,Y) = \frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
+
+
+**Pearson Correlation**
+
+$r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
+
+- Dividing by product of standard deviations scales the covariance
+
+- $|Cov(X,Y)| <= \sqrt{Var(X)*Var(Y))}$
+
+
+---
+
+### Correlation
+
+- Correlation coefficient must be between $-1, 1$
+
+- At $-1$ or $1$, all points are on a **straight line**
+
+- Negative value implies increase in $X$ associated with decrease $Y$.
+
+- If correlation is $0$, the covariance must be?
+
+- If $Var(X)=0$, then $Cor(X,Y) = ?$
+
+
+---
+
+### Correlation: Interpretation
+
+- Correlation of $(x,y)$ is same as correlation of $(y,x)$
+
+- Values closer to -1 or 1 imply "stronger" association
+    
+- Correlations cannot be understood using ratios.
+    - Correlation of $0.8$ is not "twice" as correlated as $0.4$.
+- Pearson correlation agnostic about outliers/nonlinearities
+- Correlation is not causation
 
 
 --- 
 
-**Vectors have geometric interpretation** (matrices are groups of vectors)
+### Practice:
+
+Get `data_1` here:  [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
+
+Without using `cor()` or `cov()` or `var()` functions in `R`
+
+1. Inspect `data_1`
+1. Calculate mean of $X$; mean of $Y$
+2. Calculate $Var(X)$ and $Var(Y)$
+3. Calculate correlation $(X,Y)$
+
+
+--- 
+
+### Practice:
+
+```{r, echo = F, message = F}
+plot_data = as.data.table(anscombe)
+plot_data$id = 1:nrow(plot_data)
+plot_data = melt.data.table(plot_data, id.vars = 'id', measure = patterns('^x', '^y'), value.name = c('x','y'), variable.name = 'dataset') 
+
+ggplot(plot_data, aes(x, y)) + geom_point() + geom_smooth(method = 'lm', se = F, fullrange = T) + facet_grid(. ~ dataset) + theme_bw()
+```
+
+--- 
+
+### Covariance and Correlation
+
+- Both measure linear association of two variables
+- Scale is either standardized (correlation) or in terms of products (covariance)
+- May be inappropriate in presence of non-linearity; outliers
+
+
+# The Mean: Revisited
+
+---
+
+### Squared Deviations
+
+**Why are we always squaring differences?**
+
+**Variance**
+
+$\frac{1}{n}\sum\limits_{i = 1}^{n} (x_i - \bar{x})^2$
+
+
+**Covariance**
+
+$\frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
+
+**Mean Squared Error**
+
+$\frac{1}{n}\sum\limits_{i=1}^n(\hat{y_i} - y_i)^2$
+
+
+
+---
+
+### Squared Deviations
+
+### It is about **distance**
+
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+<br>
+
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
+
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+
+---
+
+What is the distance between two points?
 
 ```{r, echo = F}
-  vectors = data.frame(x = c(3,0), y = c(0,5))
-  ggplot(vectors, aes(x = x, y = y)) +
-  #geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,5)), 
-  #             arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-  #             alpha = 0.5) +
-  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlab("") + ylab('') + 
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  coord_fixed() + theme_bw()
+```
+
+---
+
+What is the distance between two points?
+
+$p = (3,0); q = (0,4)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+$$d(p,q) = \sqrt{(3 - 0)^2 + (0 - 4)^2}$$
+$$d(p,q) = \sqrt{3^2 + (-4)^2} = \ ?$$
+
+---
+
+What is the distance between two points?
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
+  geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
   coord_fixed()
 ```
 
 
-
-### Examples/ Practice
-
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
-
-Find 
-
-$$A'A = ?$$
-
-$$AA' = ?$$
-
 ---
 
-### Examples/ Practice
+### Remember Pythagoras?
 
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
+What is the distance between two points?
 
-$$B = \begin{pmatrix} 6 \\ 5 \\ 3 \\ -1 \end{pmatrix}$$
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
 
-Find 
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
 
-$$A'B = ?$$
+<br>
 
-$$AB = ?$$
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
 
---- 
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
 
-### Examples/ Practice
 
-$$u = \begin{pmatrix} 1 \\ -2 \\ 6 \end{pmatrix}; \ v =\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} $$
 
-And 
+## The Mean
 
-$$(u - a) \cdot v = 0$$
+One way of thinking about the mean is as a **prediction**. 
 
-Solve for $a$
+We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction of all the values in $Y$.
 
+The mean gives us the $\hat{y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
 
----
-
-### Vectors Can be Added
-
-Matrices and vectors of the **same dimensions** can be added or subtracted element-by-element.
-
-For example:
-
-$$\begin{pmatrix}1 \\ 1 \end{pmatrix} + \begin{pmatrix}-2 \\ 3 \end{pmatrix} = \begin{pmatrix}-1 \\ 4 \end{pmatrix}$$
-
-**Matrix Example**
-
---- 
-
-### Vectors Can be Added
-
-```{r, echo = F}
-  vectors = data.frame(x = c(1,1), y = c(-2,3))
-  ggplot(vectors, aes(x = x, y = y)) +
-  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(1,-2), yend = c(1,3)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               alpha = 1) +
-  geom_segment(aes(x = c(0), y = c(0), xend = c(-1), yend = c(4)), arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.25) + xlab("") + ylab('') + 
-  coord_fixed()
-```
-
---- 
-
-### Vectors Can be Multiplied
-
-Vectors are matrices with a single column (or row). 
-**scalars** are $1 \times 1$ matrices
-
-- Matrices/vectors can be multiplied (element-by-element) by a scalar.
-
-$$2.5 \cdot \begin{pmatrix}1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2.5 \\ 2.5 \end{pmatrix}$$
-
-$$0.5 \cdot \begin{pmatrix}-2 \\ 3 \end{pmatrix} = \begin{pmatrix} -1 \\ 1.5 \end{pmatrix}$$
-
---- 
-
-$a = 2.5 \cdot \begin{pmatrix}1 \\ 1 \end{pmatrix} = \begin{pmatrix} 2.5 \\ 2.5 \end{pmatrix}; \ b =  0.5 \cdot \begin{pmatrix}-2 \\ 3 \end{pmatrix} = \begin{pmatrix} -1 \\ 1.5 \end{pmatrix}$
-
-```{r, echo = F}
-vectors = data.frame(x = c(1,1), y = c(-2,3))
-ggplot(vectors, aes(x = x, y = y)) +
-   geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(1,-2), yend = c(1,3)),  arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),  alpha = 0.5) +
-     geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(2.5,-1), yend = c(2.5,1.5)),  arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),  alpha = 0.5, lty = 2, color = 'red') +
-     xlab("") + ylab('') + 
-  geom_text(aes(x = c(1, -1), y = c(0.5, 1), label = c('a','b'))) + 
-   coord_fixed()
-```
-
---- 
-
-### Vectors and Matrices can be transposed:
-
-**transposition**: rotate a matrix/vector so that columns turn into rows and vice versa:
-
-$$u = \begin{pmatrix} 1 \\ 5 \\  -2 \end{pmatrix}$$
-
-$$u^T = u' = \begin{pmatrix} 1 & 5 & -2 \end{pmatrix}$$
-
-**Matrix Example** (first row to first column, second row to second column, etc.)
-
---- 
-
-### Inner Products
-
-If $u$ and $v$ are $n \times 1$ vectors, the **inner product** or **dot product** of $u \bullet v = u' \times v$; $u'$ is **transpose** of $u$.
-
-$$u = \begin{pmatrix} 1 \\ -2 \end{pmatrix}; \ v =\begin{pmatrix} 4 \\ 2 \end{pmatrix} $$
-
-$$u \bullet v = \begin{pmatrix} 1 & -2 \end{pmatrix} \begin{pmatrix} 4 \\ 2 \end{pmatrix} = 0$$
-
---- 
-
-### Inner Products
-
-First element in $u$ times first element in $v$, plus
-
-Second element in $u$ times second element in $v$, plus
-
-Third element in $u$ times third element in $v$, plus...
-
-etc.
-
----
-
-When the inner product of two vectors ($u,v$) is $0$, then $u$ and $v$ are **orthogonal**: $u \perp v$
-
-```{r, echo = F}
-  vectors = data.frame(x = c(1,4), y = c(-2,2), lab  =  c('u', 'v'))
-  ggplot(vectors, aes(x = x, y = y, label = lab)) +
-  geom_text(hjust = 'bottom', vjust = 'bottom', position = position_dodge(width = 3)) + 
-  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(1,4), yend = c(-2,2)),  arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),  alpha = 1) +
-    geom_text(aes(x = 1, y = 0, label = "90 degrees")) + 
-    xlab("") + ylab('') + 
-  coord_fixed()
-```
-
-
----
-
-### Matrices can be Multiplied
-
-If matrices must have dimensions that match, can be multiplied
-
-- $m \times n$ matrix $A$ can be multiplied by matrix $B$ if $B$ is $n \times p$.
-- Matrix $AB$ is $m \times p$
-- Rows of $A$ multiplied with columns of $B$ and then summed: like inner product
-- Multiplication not commutative: cannot multiply $BA$
-- Multiplication not commutative: $B'A' = (AB)' \neq AB$
-
---- 
-
-### Matrices can be Multiplied
-
-$$\begin{pmatrix} 1 & 1 \\ -1 & 2 \end{pmatrix} \times \begin{pmatrix} 1 & -1 \\ 1 & 2 \end{pmatrix} =$$
-
-$$\begin{pmatrix} (1 \cdot 1)+(1\cdot1) &  (1\cdot-1) + (1 \cdot 2) \\ (-1\cdot1) + (2\cdot1) & (-1\cdot-1) + (2\cdot2) \end{pmatrix}  = $$
-
-$$ = \begin{pmatrix} 2 & 1 \\ 1 & 5 \end{pmatrix}$$
-
----
-
-### Matrices can be Divided
-
-This is known as **inverting** a matrix.
-
-- Inverse $A^{-1}$ of matrix $A$ that is **square** or $p\times p$ has the property:
-
-$$A \times A^{-1} = A^{-1} \times A = I_{p \times p} = \begin{pmatrix} 1 & 0 & \ldots & 0 \\ 0 & \ddots &  \ldots & 0 \\ 0 & \ldots & \ddots & 0 \\ 0 & \ldots & 0 & 1 \end{pmatrix}$$
-
-This is an **identity** matrix with 1s on diagonal, 0s everywhere else. $A_{p \times p} \times I_{p \times p} = A$ (identity matrix is matrix equivalent of 1)
-
----
-
-# Mean Again:
+- since distances are sums of squared differences, this is why mean minimizes the **variance**.
 
 ---
 
@@ -340,7 +431,29 @@ This is an **identity** matrix with 1s on diagonal, 0s everywhere else. $A_{p \t
 
 Imagine we have a variable $Y$ that we observe as a sample of size $n$. We can represent this variable as a **vector** in $n$ dimensional space.
 
-$$y = \begin{pmatrix} 3 \\ 5 \end{pmatrix}$$
+$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+
+---
+
+### What is a vector?
+
+- a **vector** is a one-dimensional array of numbers of length $n$. 
+
+- can be portrayed graphically as an arrow from the origin to a point in $n$ dimensional space
+
+- can be multiplied by a number to extend/shorten their length
+
+---
+
+### Deriving the mean:
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,5))
+  ggplot(vectors, aes(x = x, y = y)) +
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
+  coord_fixed() + theme_bw() + xlab('n1') + ylab('n2')
+```
 
 ---
 
@@ -353,6 +466,8 @@ This is equivalent to doing this:
 $$y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
 
 Multiplying a (1,1) vector by a constant.
+
+- $\hat{y}$ will be on the line that runs through the origin and (1,1)
 
 ---
 
@@ -374,13 +489,11 @@ Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $
 
 ### Deriving the mean:
 
-$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$
-
-can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
+$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
 
 $\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
 
-and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations:
+and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or prediction error):
 
 $\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
 
@@ -403,7 +516,7 @@ ggplot() +
 
 ### Deriving the mean:
 
-This means our goal is to minimize $\mathbf{e}$.
+This means our goal is to minimize $\mathbf{e}$, residuals.
 
 How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
 
@@ -435,322 +548,389 @@ ggplot() +
 
 ### Deriving the mean:
 
-We know that two vector are orthogonal ($\perp$) when their dot product is $0$, so we can create the following equality and solve for $\hat{y}$.
+Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{y}$ is a prediction of $y$.
 
-$\mathbf{e} \bullet \begin{pmatrix} 1 \\ 1 \end{pmatrix} = 0$  
+- We choose a value $\hat{y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
 
-$(\begin{pmatrix}3 & 5 \end{pmatrix} - \begin{pmatrix} \hat{y} & \hat{y} \end{pmatrix}) \bullet \begin{pmatrix} 1 \\ 1 \end{pmatrix} = 0$  
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
-$(\begin{pmatrix}3 & 5 \end{pmatrix} - \hat{y} \begin{pmatrix} 1 & 1 \end{pmatrix}) \bullet \begin{pmatrix} 1 \\ 1 \end{pmatrix} = 0$ 
 
 ---
 
 ### Deriving the mean:
 
-$(\begin{pmatrix} 3 & 5 \end{pmatrix} \bullet \begin{pmatrix} 1 \\ 1 \end{pmatrix}) - (\hat{y} \begin{pmatrix} 1 & 1 \end{pmatrix} \bullet  \begin{pmatrix} 1 \\ 1 \end{pmatrix})   = 0$ 
+What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
 
-$(8) - (\hat{y} 2)   = 0$ 
+We can then use this to improve our predictions, $\hat{y}$, of $y$.
 
-$8 = \hat{y} 2$ 
+- We choose a value $\hat{y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
 
-$4 = \hat{y}$ 
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
---- 
 
-### Deriving the mean:
+# Conditional Expectation Function
+
+---
+
+### Generalizing the Mean:
+
+The **mean** is useful...
+
+... but often we want generate better predictions of $Y$, using additional information $X$. 
+
+---
+
+### Generalizing the Mean:
+
+The **mean** is useful...
+
+... but often we want to know if the mean of something $Y$ is different across different values of something else $X$. 
+
+To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about random variables). Sometimes we want to know $E(Y | X)$
+
+- simplest version could be difference in means (experiments)
+
+
+---
+
+### Generalizing the Mean:
+
+We are interested in finding the **conditional expectation function** (Angrist and Pischke)
+
+**expectation**: because it is about the *mean*: $E(Y)$
+
+**conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
+
+**function**: because $E(Y) = f(X)$, there is some relationship we can look at between values of $X$ and $E(Y)$.
+
+$$E[Y | X = x]$$
+
+---
+
+### Generalizing the Mean:
+
+Another way of thinking about what the **conditional expectation function** is:
+
+$$E[Y | X = x] = \hat{y} | X = x$$
+
+What is the predicted value $\hat{y}$, where $X = x$, such that $\hat{y}$ has the smallest distance to $y$?
+
+---
+
+### Generalizing the Mean:
+
+There are **many ways** to define the **conditional expectation function**
+
+- one easy way is to assume that the CEF is **linear**.
+- That is to say $E(Y)$ is **linear** in $X$. 
+- The **function** takes the form of an equation of a line.
+- Bivariate regression
+
+---
+
+### Equation of a line
 
 ```{r, echo = F}
-ggplot() +
-  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
-  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 4, y = 4, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'red', alpha = 0.75) + 
-  geom_segment(aes(x = 0, y = 0, xend = 4, yend = 4),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'green', alpha = 0.75) +
-  coord_fixed() + xlab('x') + ylab('y') + 
-  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e")))
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+```
+
+---
+
+### Equation of a line
+
+```{r, echo = F}
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+segments(x0=2,x1=4, y0 = 3+2*2, y1 = 3+2*2, col = 'red')
+segments(x0=4,x1=4, y0 = 3+2*2, y1 = 3+2*4, col = 'red')
+text(2,5,"Run = 2")
+text(2,3+2*2, pos = 3, "(x1,y1)")
+text(5,10,"Rise = 4")
+text(4,3+2*4, pos = 3, "(x2,y2)")
+
+```
+
+---
+
+### Equation of a line
+
+<div style="font-size: 150%;">$slope = \frac{rise}{run} = \frac{y2-y1}{x2-x1}$</div>
+
+
+>- Change in $y$ with a 1 unit change in $x$.
+
+
+---
+
+### Equation of a line
+
+```{r, echo = F}
+x = -10:100
+y = 3 + 2*x
+plot(x,y, type ='l', ylim = c(-2,25), xlim = c(-2,10))
+abline(h=0,v=0, lty = 2)
+segments(x0=2,x1=4, y0 = 3+2*2, y1 = 3+2*2, col = 'red')
+segments(x0=4,x1=4, y0 = 3+2*2, y1 = 3+2*4, col = 'red')
+text(2,5,"Run = 2")
+text(5,10,"Rise = 4")
+abline(h = 3, col = 'blue')
+text(0,3, "Intercept", col = 'blue', pos = 2)
+```
+
+---
+
+### Equation of a line
+
+<div style="font-size: 150%;">$intercept = (y | x=0)$</div>
+
+
+>- Value of $y$ when $x = 0$. Where the line crosses the $y$-axis.
+
+---
+
+### Equation of a line
+
+<div style="font-size: 200%;">$y = intercept + slope*x$</div>
+
+or, by convention:
+
+<div style="font-size: 200%;">$y = a + bx$</div>
+
+## Generalizing the Mean:
+
+### How do we choose the line that best captures:
+
+$$E(Y) = a + b\cdot X$$
+
+or 
+
+$$\hat{y} = a + b\cdot X$$
+
+---
+
+### What line fits this?
+
+
+```{r, echo = F, message = F, include = F}
+data(galton)
 ```
 
 
----
 
-### More generally:
-
-$\mathbf{e} \bullet \begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix} = 0$  
-
-$(\begin{pmatrix} y_1 & \ldots & y_n \end{pmatrix} - \begin{pmatrix} \hat{y} & \ldots & \hat{y} \end{pmatrix}) \bullet \begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix} = 0$  
-
-$(\begin{pmatrix} y_1 & \ldots & y_n \end{pmatrix} -  \hat{y}\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix}) \bullet \begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix} = 0$ 
+```{r, echo = F, message = F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha  = 0.5)  + 
+   xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") + theme_bw()
+```
 
 ---
 
-### More generally:
+### Which line?
 
-$(\sum\limits_{i=1}^{n} y_i\cdot1) -  \hat{y} \sum\limits_{i=1}^{n} 1 = 0$ 
+```{r, echo = F, message = F}
+m_x = mean(father.son$fheight)
+m_y = mean(father.son$sheight)
+sd_x = sd(father.son$fheight)
+sd_y = sd(father.son$sheight)
+slope = sd_x / sd_y
+x_norm = sort((father.son$fheight - m_x)/sd_x)
 
-$\sum\limits_{i=1}^{n} y_i = \hat{y} n$ 
+range = -5:5
+line_x = x_norm*sd_x + m_x
+line_y = x_norm*slope*sd_y + m_y
+sd_line = data.frame(line_x, line_y)
 
-$\frac{1}{n}\sum\limits_{i=1}^{n} y_i = \hat{y}$ 
-
----
-
-### Deriving Least Squares
-
-Regression works similarly:
-
-Rather than project the $n \times 1$-dimensional vector $\mathbf{Y}$ into one dimension (as we did with the mean), we project it into $p$ (number of parameters) dimensional subspace. Hard to visualize, but we still end up minimizing the distance between our $n$ dimensional vector $\mathbf{\hat{Y}}$ and the vector $\mathbf{Y}$. 
-
-- If we have $n$ of $3$ and a bivariate regression, we find a $\mathbf{\hat{Y}}$ in $2$ dimensions that is nearest $\mathbf{Y}$
-
----
-
-### Deriving Least Squares
-
-Given $\mathbf{Y}$, an $n \times 1$ dimensional vector of all values $Y$ for $n$ observations
-
-and $\mathbf{X}$, an $n \times p$ dimensional matrix ($p$ columns, $n$ observations). We call this the **design matrix**. Almost always includes
-
-$\mathbf{\hat{Y}}$ is an $n \times 1$ dimensional vector of predicted values (for the mean of Y conditional on X) computed by $\mathbf{X\beta}$. $\mathbf{\beta}$ is a vector  $p\times 1$ of (parameters) that we multiply by $\mathbf{X}$.
-
-We'll assume there are only two parameters in $\mathbf{\beta}$: $a,b$ so that $Y_i = a + b \cdot X_i$, so $p = 2$
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ theme_bw()
+```
 
 ---
 
-### Deriving Least Squares
+### Which line?
 
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}; \beta = \begin{pmatrix} a \\  b \end{pmatrix}$$ 
+```{r, echo = F}
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + theme_bw()
+```
+
+--- 
+
+### Which line?
+```{r, echo = F, message=F, warning=F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + theme_bw()
+```
 
 ---
 
-### Deriving Least Squares
+### Graph of Averages
 
+```{r, echo = F, message = F, include = F}
+father.son = as.data.table(father.son)
+father.son[, bin := round(fheight)]
+means = father.son[,list(m = mean(sheight),
+                     count = length(fheight)),by=bin]
+```
 
-$$\widehat{Y_i} = a + b \cdot x_i$$
-
-$$\widehat{Y}_{n \times 1} = \mathbf{X}_{n \times p}\beta_{p \times 1}$$
-
-$$\begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix} \begin{pmatrix} a \\  b \end{pmatrix} = \widehat{Y} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix}$$ 
-
-$\mathbf{e} = \mathbf{Y} - \mathbf{\hat{Y}}$ gives us the residuals.
+```{r, echo = F, message=F, warning=F}
+ggplot(father.son, aes(x = fheight, y = sheight)) + 
+  geom_point(alpha = 0.1) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height") +
+  geom_line(aes(x = line_x, y = line_y), data = sd_line, colour = 'blue')+ geom_hline(yintercept = m_y, colour = 'green') + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + 
+  geom_point(aes(x = bin, y = m, size = count), data = means, alpha = 0.5) + theme_bw()
+```
 
 ---
 
-### Deriving Least Squares
+### Which line?
 
-We want to choose $\mathbf{\beta}$ or $a,b$ such that the distance between $\mathbf{Y}$ and $\mathbf{\hat{Y}}$ is minimized. Or sum of squared residuals is minimized. 
+The **red** line above is the **regression line** or the fit using **least squares**.
 
-Like before, the distance is minimized when the vector of **residuals** $\mathbf{Y} - \mathbf{\hat{Y}} = \mathbf{e}$ is $\perp$ to $\mathbf{X}$
+It closely approximates the conditional mean of **son's height** ($Y$) across values of **father's height** ($X$).
+
+How do we obtain this line mathematically?
+
+We can do it the same way we obtained the mean!
+
+---
+
+### Minimizing the Distance
+
+We are going to choose an intercept $a$ and slope $b$ such that:
+
+$\hat{y}_i = a + b \cdot x_i$
+
+and that minimizes the distance between the predicted ($\hat{y}_i$) and true ($y_i$) values:
+
+$\sqrt{\sum\limits_i^n (y_i - \hat{y_i})^2}$
+
+minimizes $\mathbf{e} = y_i - \hat{y_i}$
+
+---
+
+### Minimizing the Distance
+
+Another way of thinking of this is in terms of **residuals**, or the difference between true and predicted values using the equation of the line. (Prediction errors)
+
+$e_i = y_i - \hat{y_i}$
+
+Minimizing the distance also means minimizing the sum of squared **residuals** $e_i$
+  
+- this is exactly what we did above with the mean
+
+---
+
+```{r, echo = F, message=F, warning=F}
+m = lm(sheight~ fheight, father.son)
+ols_residuals = data.frame(y= father.son$sheight, y_hat = m$fitted.values, x = father.son$fheight)
+
+ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) + 
+   geom_point(alpha = 0.5) + 
+    xlab("Father's Height (in)") + ylab("Son's Height (in)") + labs(title = "Son's height by Father's Height")   + geom_smooth(method = 'lm', se = F, colour = 'red', fullrange = T) + geom_segment(aes(x=x, xend=x, y=y_hat, yend=y), data = ols_residuals, col = 'darkred', alpha = 0.2) + theme_bw() + ggtitle("Residuals") 
+  
+```
+
+
+
+---
+
+### Minimizing the Distance
+
+We need to solve this equation:
+
+$$\min_{a,b} \sum\limits_i^n (y_i - a - b x_i)^2$$
+Choose $a$ and $b$ to minimize this value, **given $x_i$ and $y_i$**
+
+We can do this with calculus: solve for when first derivative is $0$
+
+ILLUSTRATE
+
+---
+
+### Minimizing the Distance
+
+First, we take derivative with respect to $a$: yields:
+
+$-2 \left[ \sum\limits_i^n (y_i - a - b x_i) \right] = 0$
+
+$\sum\limits_i^n y_i -  \sum\limits_i^n a - \sum\limits_i^n b x_i  = 0$
+
+$-\sum\limits_i^n a   = -\sum\limits_i^n y_i + \sum\limits_i^n b x_i$
+
+$\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
+
+---
+
+### Minimizing the Distance
+
+$\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
+
+Dividing both sides by $n$, we get:
+
+$a = \bar{y} - b\bar{x}$
+
+Where $\bar{y}$ is mean of $y$ and $\bar{x}$ is mean of $x$.
+
+**Implication**: regression line goes through the **point of averages** $\bar{y} = a + b \bar{x}$
+
+---
+
+### Minimizing the Distance
+
+Next, we take derivative with respect to $b$: 
+
+$-2 \left[ \sum\limits_i^n (y_i - a - b x_i) x_i\right] = 0$
+
+$\sum\limits_i^n (y_i - (\bar{y} - b\bar{x}) - b x_i) x_i = 0$
+
+$\sum\limits_i^n y_ix_i - \bar{y}x_i + b\bar{x}x_i - b x_ix_i= 0$
+
+
+---
+
+### Minimizing the Distance
+
+$\sum\limits_i^n (y_i - \bar{y})x_i = b\sum\limits_i^n (x_i - \bar{x})x_i$
+
+Dividing both sides by $n$ gives us:
+
+$\frac{1}{n}\sum\limits_i^n y_ix_i - \bar{y}x_i = b\frac{1}{n}\sum\limits_i^n x_i^2 - \bar{x}x_i$
+
+$\overline{yx} - \bar{y}\bar{x} = b \overline{xx} - \bar{x}\bar{x}$
+
+$Cov(y,x) = b \cdot Var(x)$
+
+$\frac{Cov(y,x)}{Var(x)} = b$
+
+---
 
 ## Deriving Least Squares
 
-$\mathbf{X}'_{p\times n}\mathbf{e}_{n\times1} = \begin{pmatrix} 0_1 \\ \vdots \\ 0_p \end{pmatrix} = \mathbf{0}_{p \times 1}$
+### The slope:
 
-$\mathbf{X}'(\mathbf{Y} - \mathbf{\hat{Y}}) = \mathbf{0}_{p \times 1}$
-
-$\mathbf{X}'(\mathbf{Y} - \mathbf{X{\beta}}) = \mathbf{0}_{p \times 1}$
-
-$\mathbf{X}'\mathbf{Y} = \mathbf{X}'\mathbf{X{\beta}}$
-
-$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
-
-
----
-
-### Deriving Least Squares
-
-$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$$
-
-This is the matrix formula for **least squares** regression. 
-
-If $X$ is a column vector of $1$s, $\beta$ is just the mean of $Y$. (We just did this)
-
-If $X$ is a column of $1$s and a column of $x$s, it is bivariate regression.
-
-We can now add $p >2$: more variables
-
----
-
-### Example:
-
-```{r}
-n = 5
-x = rep(1, 5)
-y = c(1,2,1,6,3)
-
-#(x'x)^-1 x'y
-#t() gives transpose
-#solve() gives inverse
-#%*% is matrix/vector multiplication
-solve(t(x) %*% x) %*% t(x) %*% y
-
-#mean of y
-mean(y)
-
-```
-
----
-
-### Example:
-
-Let's do bivariate regression:
-
-$Y_i = a + b \cdot x_i$
-
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
-
-Take $x = 0,2,4,6,8,10$, $y = 0, 12, 21, 31, 40, 50$
-
-Solve for $a$ and $b$ using $b = \frac{Cov(x,y)}{Var(x)}$ and $a = \bar{y} - b \bar{x}$
-Solve for $a$ and $b$ using the matrix calculation. 
-
----
-
-```{r}
-x = c(0,2,4,6,8,10)
-y = c(0, 12, 21, 31, 40, 50)
-
-#Version 1
-b_1 = cov(x,y)/var(x)
-a_1 = mean(y) - mean(x)*b_1
-
-#Version 2
-X = cbind(1, x)
-beta = solve(t(X) %*% X) %*% t(X) %*% y
-
-#Estimates
-c(a_1, b_1)
-beta
-```
-
----
-
----
-
-### Just what are the matrices doing?
-
-But we also want to know more intuitively what these matrix operations are doing! It isn't **magic**.
-
-- We will walk through what exactly the matrix calculations do for us.
-
----
-
-### $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
-
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$ 
-
-$$\mathbf{X}'\mathbf{X} = \begin{pmatrix} 1 & \ldots & 1 \\ x_1 & \ldots & x_n \end{pmatrix} \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}$$
-
-$$= \begin{pmatrix} n & \sum_i x_i \\ \sum_i x_i & \sum_i x_i^2 \end{pmatrix} = n \begin{pmatrix} 1 & \overline{x} \\ \overline{x} & \overline{x^2} \end{pmatrix}$$
-
----
-
-### $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
-
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$ 
-
-
-$$\mathbf{X}'\mathbf{Y} = \begin{pmatrix} 1 & \ldots & 1 \\ x_1 & \ldots & x_n \end{pmatrix} \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
-$$= \begin{pmatrix}  \sum_i y_i \\ \sum_i x_i y_i \end{pmatrix} = n \begin{pmatrix} \overline{y} \\ \overline{xy} \end{pmatrix}$$
-
-## Inverting Matrices
-
-How do we get $^{-1}$? This is **inverting** a matrix.
-
-- Inverse $A^{-1}$ of matrix $A$ that is **square** or $p\times p$ has the property:
-
-$$A \times A^{-1} = A^{-1} \times A = I_{p \times p} = \begin{pmatrix} 1 & 0 & \ldots & 0 \\ 0 & \ddots &  \ldots & 0 \\ 0 & \ldots & \ddots & 0 \\ 0 & \ldots & 0 & 1 \end{pmatrix}$$
-
-This is an **identity** matrix with 1s on diagonal, 0s everywhere else.
-
-## Inverting Matrices
-
-We need to get the **determinant**
-
-For sake of ease, will show for a scalar and for a $2 \times 2$ matrix:
-
-$$det(a) = a$$
-
-
-$$det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - cb$$
-
-## Inverting Matrices
-
-Then we need to get the **adjoint**. It is the transpose of the matrix of cofactors (don't ask me why):
-
-$$adj(a) = 1$$
-
-$$adj\begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$$
-
-
-## Inverting Matrices
-
-The inverse of $A$ is $adj(A)/det(A)$
-
-$$A^{-1} = \frac{1}{ad - cb}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$$
-
---- 
-
-### Deriving Least Squares
-
-$$A^{-1} = \frac{1}{ad - cb}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$$
-
-$$(\mathbf{X}'\mathbf{X}) = n \begin{pmatrix} 1 & \overline{x} \\ \overline{x} & \overline{x^2} \end{pmatrix}$$
-
-$$(\mathbf{X}'\mathbf{X})^{-1} = \frac{n}{n^2(\overline{x^2} - \overline{x}^2)} \begin{pmatrix} \overline{x^2} & -\overline{x} \\ -\overline{x} & 1 \end{pmatrix}$$
-
-$$(\mathbf{X}'\mathbf{X})^{-1} = \frac{1}{n \cdot Var(x)} \begin{pmatrix} \overline{x^2} & -\overline{x} \\ -\overline{x} & 1 \end{pmatrix}$$
-
---- 
-
-### Deriving Least Squares
-
-We can put it together to get: $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
-
-$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \frac{1}{n \cdot Var(x)} \begin{pmatrix} \overline{x^2} & -\overline{x} \\ -\overline{x} & 1 \end{pmatrix} n \begin{pmatrix} \overline{y} \\ \overline{xy} \end{pmatrix}$$
-
-$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \frac{1}{Var(x)} \begin{pmatrix} \overline{x^2}\overline{y} -\overline{x} \ \overline{xy} \\ \overline{xy} - \overline{x}\ \overline{y}\end{pmatrix} = \begin{pmatrix}a \\ b \end{pmatrix}$$
-
---- 
-
-### Deriving Least Squares
-
-The slope:
-
-$$\beta = \frac{1}{Var(x)} \begin{pmatrix} \overline{x^2}\overline{y} -\overline{x} \ \overline{xy} \\ \overline{xy} - \overline{x} \ \overline{y}\end{pmatrix} = \begin{pmatrix}a \\ b \end{pmatrix}$$
-
-$$b = \frac{\overline{xy} - \overline{x} \ \overline{y}}{Var(x)} = \frac{Cov(x,y)}{Var(x)}$$
 
 $$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
 
-
---- 
-
-### Deriving Least Squares
-
-The slope:
-
 - Expresses how much mean of $Y$ changes for a 1-unit change in $X$
+- When expressed as function of correlation coefficient $r$, we see this rise ($SD_y$) over the run ($SD_x$)
 
 
 ---
 
 ### The Intercept:
 
-$$\beta = \frac{1}{Var(x)} \begin{pmatrix} \overline{x^2}\overline{y} -\overline{x} \ \overline{xy} \\ \overline{xy} - \overline{x} \ \overline{y}\end{pmatrix} = \begin{pmatrix}a \\ b \end{pmatrix}$$
-
-$$a = \frac{\overline{x^2}\overline{y} -\overline{x} \ \overline{xy}}{Var(x)} = \frac{(Var(x) + \overline{x}^2)\overline{y} - \overline{x}(Cov(x,y) + \overline{x}\overline{y})}{Var(x)}$$
-
-$$= \frac{Var(x)\overline{y} + \overline{x}^2\overline{y} - \overline{x}^2\overline{y} - \overline{x}Cov(x,y)}{Var(x)}$$
-
-$$= \overline{y} - \overline{x}\frac{Cov(x,y)}{Var(x)}$$
-
-$$a = \overline{y} - \overline{x}\cdot b$$
-
---- 
-
-### Deriving Least Squares
-
-The Intercept:
 
 $$a = \overline{y} - \overline{x}\cdot b$$
 
@@ -758,238 +938,65 @@ Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line
 
 ---
 
+### Deriving Least Squares
+
+There are other ways to derive least squares.
+
+- Because we eventually want multiple variables, need to build from an intuition rooted in matrices and their relationship to distance.
+- Adding more variables means minimizing distance of $\hat{y}$ to $y$ in a $p > 3$ dimensional space, so it gets weird.
+
+---
+
 ### Key facts about regression:
 
-The mathematical procedures we use in regression ensure that: 
+The math of regression ensures that: 
 
 $1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
 
----
+$2$. $Cov(X,e) = 0$.  This is true by definition of how we derived least squares. We will see why this is next week.
 
-### Why?
+- Also means: Correlation of $X$ and residuals $e$ is exactly $0$. **Why is this?**
 
-**the mean of the residuals is always zero**.
-
-We choose $\begin{pmatrix}a \\ b \end{pmatrix}$ such that $e$ is orthogonal to $\mathbf{X}$. One column of $\mathbf{X}$ is all $1$s, to get the intercept (recall how we used vectors to get the mean). So $e$ is orthogonal to $\begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix}$.
-
-$$\mathbf{1}'e = 0$$
-
-And if this is true, the $\sum e_i = 0$ so $\frac{1}{n}\sum e_i = 0$.
+$3$. Must be that $Var(X) > 0$ in order to compute $a$ and $b$. **Why is this?**
 
 ---
 
-### Key facts about regression:
+### In small groups:
 
-The mathematical procedures we use in regression ensure that: 
+Using the `data_2` from [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
 
-$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
+Take $Y =$ `gop_change` and $X =$ `enlistment` (board)
 
-We chose $\beta$ ($a,b$) such that $X'e = 0$ so they would be **orthogonal**. 
-
-$X'e = 0 \to \sum x_ie_i = 0 \to \overline{xe}=0$; 
-
-$\overline{e}=0$ from above; 
-
-so $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e} = 0 - \overline{x}0 = 0$.
-
----
-
-$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
-
-This also means that residuals $e$ are **always** <u>perfectly uncorrelated</u> (Pearson correlation) with **all** the columns in our matrix $\mathbf{X}$: all the variables we include in the regression model.
+1. Calculate $a$ and $b$ using the equations give above
+2. Interpret $a$ in terms of CEF.
+3. What is $\hat{y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
+2. Calculate $e$
+3. Calculate the mean of $e$
+4. Calculate the correlation of $X$ and $e$
 
 
-# Multivariate Least Squares
+# Summary
 
 ---
 
-### Multivariate Least Squares:
+### Key ideas
 
-Previously we fit the mean of $Y$ as a linear function of $X$:
+These facts are mathematical truths about least squares. Unrelated to assumptions needed for statistical/causal inference.
 
-$$Y_i = a + b \cdot X_i$$
+- Can fit least squares (LS) to **any** scatterplot, if $X$ has positive variance.
 
-Now, we can imagine fitting mean of $Y$ as a linear function of many variables:
+- LS line minimizes the sum of squared residuals (minimizes the distance between predicted $\hat{y}$ and actual values $y$).
 
-$$Y_i = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
+- LS line always goes through point of averages; can be computed exactly from "graph of averages"
 
----
-
-### Multivariate Least Squares:
-
-- When we calculated the mean using matrix algebra, we projected the $n$ dimensional vector $Y$ onto a point on a one-dimensional line.
-- When we calculated the bivariate regression line, we projected the $n$ dimensional vector $Y$ onto a $2$-dimensional space (one for $a$ and one for $b$)
-- When we use multi-variate regression, we project the $n$ dimensional vector $Y$ onto a $p$ dimensional space (one for each parameter/coefficient)
+- Residuals $e$ are always uncorrelated with $x$ if there is an intercept. Will see why next week.
 
 ---
 
-### Multivariate Least Squares:
+### Key ideas
 
-What is  "projecting onto $p$ dimensions"
+- We have no addressed in any way how this relates to a statistical model or a causal model.
+- **linear conditional expectation function** should be evaluated visually (does it make sense?)
+- If the conditional expectation function is non-linear (e.g. a "U" shape in mean of $y$ across values of $x$) linear regression is **best linear approximation**.
 
-When we project into two dimensions, these dimensions are **precisely like** the $x$ and $y$ axes on a graph: perpendicular/orthogonal to each other. 
 
-In multivariate regression, because we are going to project $Y$ onto $p$ **orthogonal** dimensions in $X$.
-
-
----
-
-### Mathematical Requirements:
-
-1. Matrix $X$ has "full rank"
-  - This means that all of the columns of $X$ are **linearly independent**.
-    - cannot have two identical columns
-    - cannot have  set of columns that sum up to another column multiplied by a scalar
-  - If $X$ is not full rank, cannot be inverted, cannot do least squares.
-    - but we'll see more on the intuition for this later.
-    
-2. $n \geq p$: we need to have more data points than variables in our equation
-  - no longer trivial with multiple regression
-  
-
----
-
-### Multivariate Least Squares:
-
-Examples: **Linear Dependence**?
-
-```{r, echo = F}
-
-cbind(1, c(1,0,0), c(0,1,0), c(0,0,1)) %>% kable
-
-```
-
-## Multivariate Least Squares:
-
-Examples: **Linear Dependence**?
-
-```{r, echo = F}
-
-cbind(1, c(2,0,0), c(0,2,0), c(0,0,2)) %>% kable
-
-```
-
-
-## Multivariate Least Squares:
-
-Examples: **Linear Dependence**?
-
-```{r, echo = F}
-
-cbind(1, c(0.5,0.25,0.25), c(0.25,0.5,0.25), c(0.25,0.25,0.5)) %>% kable
-
-```
-
----
-
-### Multivariate Least Squares:
-
-When we include more than one variable in the equation, we cannot calculate slopes using simple algebraic expressions like $\frac{Cov(X,Y)}{Var(X)}$.
-
-- Must use matrix algebra (this is why I introduced it)
-
-We calculate least squares using same matrix equation ($(X'X)^{-1}X'Y$) as in bivariate regression, but what is the math **doing** in the multivariate case?
-
----
-
-### Multivariate Least Squares:
-
-When fitting the equation:
-
-$Y_i = b_0 + b_1x_i + b_2z_i + e_i$
-
-(1) $b_1 = \frac{Cov(x^*, Y)}{Var(x^*)}$
-
-Where $x^* = x - \hat{x}$ from the regression: $\hat{x} = c_0 + c_1 z$.
-
-(2) $b_2 = \frac{Cov(z^*, Y)}{Var(z^*)}$
-
-Where $z^* = z - \hat{z}$ from the regression: $\hat{z} = d_0 + d_1 x$
-
-Does anything look familiar here?
-
----
-
-### Multivariate Least Squares:
-
-More generally:
-
-$$Y = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
-
-$b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$
-
-where $X_k^* = X_k - \hat{X_k}$ obtained from the regression:
-
-$X_{k} = c_0 + c_1 x_{1} + \ldots + c_{j} X_{j}$
-
-$X_k^*$ is the residual from regressing $X_k$ on all other $X_{j \neq k}$
-
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?
-
-- It is the residual in same way as $e$: $X_k^*$ is **orthogonal** to all other variables in $X_{j \neq k}$.
-  - it is "perpendicular" to other variables, as are axes on a graph.
-  - It is mechanically **uncorrelated** (in the linear sense) with all other variables in the regression.
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?)
-
-- The slope $b_k$ is the change in $Y$ with a one-unit change in the part of $X_k$ that is **uncorrelated with**/**orthogonal to** the other variables in the regression.
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?)
-
-- Sometimes people say "the slope of $X_k$ **controlling** for variables $X_{j \neq k}$". 
-  - is it "holding other factors constant"/*ceteris parabis*? Not quite.
-  - better to think of it as "partialling out" the relationship with other variables in $\mathbf{X}$. The $X_k$ that does not covary with other variables
-  
----
-
-### Multivariate Least Squares:
-
-There are additional implications of defining the slope $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$:
-
-Now we can see why columns of $X$ must be linearly independent:
-
-- e.g. if $X_1$ were linearly dependent on $X_2$ and $X_3$, then $X_2$ and $X_3$ *perfectly predict* $X_1$.
-- If $X_1$ is perfectly predicted by  $X_2$ and $X_3$, then the residuals $X_1^*$ will all be $0$.
-- If $X_1^*$ are all $0$s, then $Var(X_k^*) = 0$, and $b_k$ is undefined.
-
----
-
-### Exercise
-
-```{r}
-set.seed(1234)
-n = 1000
-u = rnorm(n)
-x = u + rnorm(n, sd = 0.5)
-z = sqrt(u^2) + rnorm(n, sd = 0.5)
-y = 0 + 1*x - z^2  +  rnorm(n)
-```
-
-Generate the data using code above.
-
----
-
-### Exercise
-
-In `R`:
-
-1. Create the design matrix $X$ to estimate $Y_i = b_0 + b_1 x_i + b_2 z_i$
-2. Use the matrix equation for least squares to obtain $\beta$ ($b_0, b_1, b_2$)
-3. Calculate $x^*$ as $x_i - \hat{x}_i$, where $\hat{x}_i$ comes from regressing $x$ on an intercept and $z$.
-4. What is the correlation of $x^*$ and $z$?
-5. Plot $x^*$ and $z$
-6. Is $x^*$ **independent** of $z$?
- 
