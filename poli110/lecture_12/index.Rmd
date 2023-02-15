@@ -1,0 +1,392 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "February 15, 2023"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+```
+
+## Objectives
+
+**Evaluating Descriptive Claims**
+
+- Concepts
+- Variables and Validity
+- Measures and Errors
+
+**Examples**
+
+- Illegal voting
+- Racial Bias in Police Shootings
+
+# Illegal Voting
+
+## Voter Fraud
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">In addition to winning the Electoral College in a landslide, I won the popular vote if you deduct the millions of people who voted illegally</p>&mdash; Donald J. Trump (@realDonaldTrump) <a href="https://twitter.com/realDonaldTrump/status/802972944532209664?ref_src=twsrc%5Etfw">November 27, 2016</a></blockquote>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+# {.centered}
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">White House senior advisor doubles down on voter fraud claims: “Voter fraud is a serious problem in this country” <a href="https://t.co/DC6lVPQznz">pic.twitter.com/DC6lVPQznz</a></p>&mdash; ABC News (@ABC) <a href="https://twitter.com/ABC/status/830787890309369856?ref_src=twsrc%5Etfw">February 12, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+## Voter Fraud
+
+Claim: Widespread voter fraud: "14% of non-citizens voted"
+
+### **Concept**
+
+- Non-citizen; voter fraud $\xrightarrow{}$
+
+### **Variable**(s)
+
+- Fraction of non-eligible people who voted $\xrightarrow{}$
+
+### **Measure**(s)
+
+- how do we measure these observable indicators of racial bias?  $\xrightarrow{}$
+
+### Answer?    
+    
+## Voter Fraud
+
+<img src="./richman.png" width=100%>
+
+## Voter Fraud
+
+Richman et al:
+
+- two large, random sample of adult Americans in 2008, 2010 (~**33,000 and 55,400 people**)
+- identify a **sample of non-citizens**: respondents who indicate on the survey that they are non-citizens ($N = 489$, or about $1\%$ of people in 2010) 
+- count who among the "non-citizen sample" voted ($13$) (validated voting measure - matched to public voter file)
+- conclude that 3.5% of non-citizens voted in 2010 (~700k), up to 14.7% in 2008 (~2.8 million people)
+
+### So, wait, was Trump right?
+
+**Discuss: Do you find this persuasive? Why or why not?**
+
+#
+
+## Two Big Problems:
+
+### Problem One: Measurement Error
+
+The political scientists who run the survey point out: 
+
+- Citizenship question suffers from (low) measurement error. 
+- Those surveyed in both 2010 and 2012: $99.7\%$ gave the same answer on citizenship, $0.19\%$ went from "non-citizen" to "citizen" (maybe true), $0.11\%$ went from **"citizen" to "non-citizen" (definitely false)**
+- **measurement error:** misclassifies $0.1\%$ of people (1 out of a 1000)
+
+>- to the board
+
+## Two Big Problems:
+
+### Problem Two: Sampling Error
+
+**measurement error** of individuals as citizens/non-citizens, leads Richman et al to sample of "non-citizens" that include **citizens** and non-citizens:
+
+- citizens $\gg$ non-citizens $\to$ many more **citizens** who are **misclassified** as **"non-citizens"**
+- We have **sampling error**... the sample does not reflect the population Richman et al/ Trump want to make inferences about.
+- It could be that the "non-citizen" voting is driven entirely by voting among citizens who clicked the wrong button on the survey.
+
+## Two Big Problems:
+
+<img src="./ansolabehere.png" width=100%>
+
+Nobody who consistently reports being a non-citizen votes.
+
+## Two Big Problems:
+
+**Measurement Error** (of individuals' citizenship) 
+
+$\Downarrow produces$
+
+**Sampling Error** (sample that should represent **non-citizens** includes **citizens**) 
+
+$\Downarrow produces$
+
+**Measurement Error** (about the *population of non-citizens*)
+
+$\Downarrow$
+
+authors make incorrect claims that hundreds of thousands of non-citizens vote illegally.
+
+#
+
+## In more detail
+
+### Overall Problem:
+
+1. Richman et al/ Trump want to make claims about the **population**  of all non-citizens. They use a **sample**.
+2. The **sample** is generated based on individual survey responses to a questions that are **wrong** for $0.1\%$ of individuals (**measurement error**)
+3. This generates **sampling bias** as the sample systematically includes **citizens** who are treated as representative of "non-citizens"
+4. Because Richman et al/ Trump are using the sample to make inferences about the **population** of non-citizens, the **sampling bias** produces **measurement bias**: systematically over-estimating noncitizen voting.
+
+
+# Racial Bias in Policing
+
+---
+
+<iframe loading="lazy" width="560" height="315" src="https://www.msnbc.com/msnbc/embedded-video/mmvo44060741959" scrolling="no" frameborder="0" allowfullscreen></iframe>
+
+---
+
+### **Do you find this evidence persuasive?**
+
+Discuss with your neighbors: 
+
+- **Why or why not?**
+- **What else would you want to know?**
+
+---
+
+### Question/Claim $\xrightarrow{}$
+
+### **Concept**
+
+- transparent **definition**; which **observable** traits makes something an "X" $\xrightarrow{}$
+
+
+### **Variable**(s)
+
+- **observable** properties of cases that correspond to the concept $\xrightarrow{}$
+
+### **Measure**(s)
+
+- **procedure** to find the **values** variables take for *specific* cases  $\xrightarrow{}$
+
+### "Answer"
+
+---
+
+Is there racial bias in police use of force? $\xrightarrow{}$
+
+### **Concept**
+
+- how do we define "racial bias"? $\xrightarrow{}$
+
+### **Variable**(s)
+
+- what are observable indicators of racial bias? $\xrightarrow{}$
+
+### **Measure**(s)
+
+- how do we measure these observable indicators of racial bias?  $\xrightarrow{}$
+
+### Answer?
+
+## Racial Bias: Concept
+
+### How should we define of racial bias?
+
+[Fryer (2019)](https://doi.org/10.1086/701423) defines racial bias as **differential treatment** of different racial groups attributable to "taste-based" (as opposed to "statistical") discrimination.
+
+## Racial Bias: Concept
+
+**statistical discrimination:**
+
+inequality that exists between demographic groups even though economic agents (police, consumers, workers, employers, etc.) are rational and non-prejudiced. 
+
+- Discrimination can be "rational" if individual attributes are hard to observe (e.g. propensity toward crime) while group membership is observable and different groups have different behaviors on average.
+- Discrimination is "rational" if relevant considerations ('objective threat', criminal activity) objectively correlate with group membership
+
+
+## Racial Bias: Concept
+
+**taste-based discrimination:**
+
+discrimination based on a preference to treat groups differently based solely on their membership in those groups
+
+## Racial Bias: Concept
+
+A focus on racial bias as **taste-based discrimination** leads social scientists to conceive of racial bias in policing as:
+
+- when two people who are different races but have "all else equal" are treated differently by the police.
+
+>- Do you agree with this conceptual definition of racial bias? Is there anything you think this definition **misses** that should count at "racial bias"?
+
+## Racial Bias: Concept
+
+[Lily Hu](https://www.phenomenalworld.org/analysis/direct-effects/) questions whether it makes sense to think of racial bias in this way:
+
+Given the legacy of slavery, explicit and sometimes state-sponsored and private discrimination by race, there are large income and wealth disparities between Black and white Americans.
+
+Does it make sense to say: "People who are poorer are more likely to be killed by the police, regardless of race. Due to racial inequalities in wealth, a greater fraction of Black Americans are poor. Some portion of the gap in police killings of white and Black Americans is explained by these racial differences in wealth; those killings are not part of 'racial bias'."?
+
+
+> "Why would we expect the way race 'causes' police killings to stay the same in a world in which Black people and white people had the exact same income or wealth distribution?" 
+
+## Racial Bias: Concept
+
+While we might dispute whether Fryer's definition of racial bias **is correct**...
+
+... we can still **use** his concept to test whether there is racial bias in police shootings, because it is a transparent definition based on observable traits that are what it means to "have racial bias".
+
+But the evidence that Fryer presents is not guaranteed to speak to *other* definitions of racial bias we may think are better.
+
+---
+
+Is there racial bias in police use of force? $\xrightarrow{}$
+
+### **Concept**
+
+- "taste based discrimination" $\xrightarrow{\mathrm{disputed \ definition!}}$
+
+### **Variable**(s)
+
+- what are observable indicators of racial bias? $\xrightarrow{}$
+
+### **Measure**(s)
+
+- how do we measure these observable indicators of racial bias?  $\xrightarrow{}$
+
+### Answer?
+
+## Racial Bias: Variable
+
+Fryer (2019) uses this variable to capture taste-based discrimination:
+
+**differences in stop outcome**: racial bias is the observed differences **between racial groups** in the **rate** at which police use force (a firearm) on people **stopped by the police** who are **otherwise similar on other attributes** (suspect demographics, officer demographics, circumstances of the stop). 
+
+>- Does this variable have validity (capture "taste-based discrimination")
+
+## Racial Bias: Validity?
+
+[Knox et al (2020)](https://www.cambridge.org/core/journals/american-political-science-review/article/administrative-records-mask-racially-biased-policing/66BC0F9998543868BB20F241796B79B8) raise concerns that these variables lack validity:
+
+- If there is **racial bias in police stops**, then this variable lacks validity. It will underestimate taste-based discrimination.
+
+---
+
+Is there racial bias in police use of force? $\xrightarrow{}$
+
+### **Concept**
+
+- "taste based discrimination" $\xrightarrow{\mathrm{disputed \ definition!}}$
+
+### **Variable**(s)
+
+- racial disparity in use of force among those who are stopped $\xrightarrow{\mathrm{underestimates \ bias}}$
+
+### **Measure**(s)
+
+- how do we measure these observable indicators of racial bias?  $\xrightarrow{}$
+
+### Answer?
+
+## Racial Bias: Measure
+
+**Data sourced from police records**
+
+- **Sample of Police Departments**:
+  - solicited police reports on incidents when officers discharged their weapons from 20 departments (not chosen at random) 
+  - only Houston, TX provided complete data on shootings and stops
+
+## Racial Bias: Measure
+
+**From police records**
+
+**Sample of 'Stops'**:
+
+  - data on **all** Officer Involved Shootings in Houston (2000-2015)
+  - but 16 million arrests in (2000-2015)
+  - randomly sample arrests for "attempted murder of a public safety officer, aggravated assault on a public safety officer, resisting arrest, evading arrest, and interfering in an arrest."
+
+Compare people shot by police to a sample of people who "could have been shot".
+
+## Racial Bias: Measure
+
+**Coded from sample of police reports**: to determine "otherwise similar encounters"
+
+- Suspect characteristics: **race**, age, gender
+- Suspect weapon: type of weapon suspect used or had in possession (including 'none')
+- Officer characteristics: race of office/unit, gender of officers, years on force, on duty, number of officers present
+- Officer response reason: reason why the officer was there (e.g. responding to robbery, suspicious activity) 
+- Other encounter characteristics: daytime/nighttime, suspect attacked first, suspect drew (attempted to draw) weapon
+
+## Racial Bias: Measure
+
+Based on these details of measurement procedures: discuss with your neighbors:
+
+Do you have any concerns about...
+
+- sampling bias?
+- measurement bias?
+- (large) random measurement error?$^*$
+
+What are they and why?
+
+## Racial Bias: Measure
+
+**Police reports as a source**:
+
+- attributes of police encounter may be misreported
+- incentive to misrepresent to justify use of force
+- prejudiced perceptions recorded in police reports
+- e.g. police may search some groups for weapons/drugs more than others (may mis-measure "possession of a weapon")
+
+## Racial Bias: Measure
+
+**Sampling bias**:
+
+- which cities share data on police shootings with researchers?
+- which shooting reports do cities share?
+
+Insofar as Fryer is interested in describing racial bias in policing in the United States, sample of cities may suffer from sampling bias.
+
+---
+
+Is there racial bias in police use of force? $\xrightarrow{}$
+
+### **Concept**
+
+- "taste based discrimination" $\xrightarrow{\mathrm{disputed \ definition!}}$
+
+### **Variable**(s)
+
+- racial disparity in use of force among those who are stopped $\xrightarrow{\mathrm{underestimates \ bias}}$
+
+### **Measure**(s)
+
+- police-generated data $\xrightarrow{\mathrm{possible \ measurement \ bias}}$
+
+### Answer?
+
+# Answer?
+
+---
+
+Is there racial bias in police use of force? $\xrightarrow{}$
+
+### **Concept**
+
+- "taste based discrimination" $\xrightarrow{\mathrm{problems!}}$
+
+### **Variable**(s)
+
+- racial disparity in use of force among those who are stopped $\xrightarrow{\mathrm{underestimates \ bias}}$
+
+### **Measure**(s)
+
+- police-generated data $\xrightarrow{\mathrm{possible \ measurement \ bias}}$
+
+There is **considerable** evidence racial bias in use of force and (probably) shootings
+
+# Conclusion
+
+## Conclusion:
+
+- Concept
+- Variable/validity
+- Measure/measurement error
+
+<br>
+
+- Causality

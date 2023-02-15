@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 28, 2022"
+date: "March 21, 2022"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -18,20 +18,12 @@ require(grid)
 require(data.table)
 require(UsingR)
 require(lfe)
-require(sandwich)
-require(stargazer)
-require(interflex)
 
 options("kableExtra.html.bsTable" = T)
-```
 
-```{r, include = F, echo = F, message = F}
-riots = fread("analysisPanelBW1.csv")
-riots = riots[rd_INC_closenum %in% 1, 
-              list(DISTRICT_ID_61, election_year,
-                   INC_win = rd_INC_ivnum, any_riot = COUNT.bin,
-                   ENP)]
-riots[, high_enp := ENP > median(ENP,na.rm = T)]
+analysis_df <- 
+    readRDS("/home/mdweaver/Dropbox/myanmar-prejudice/02-replication/analysis_df.rds")
+
 ```
 
 <style type="text/css">
@@ -54,366 +46,770 @@ riots[, high_enp := ENP > median(ENP,na.rm = T)]
 
 ## Plan for Today
 
-### Interaction Effects
+### Review
 
-### Robustness
+1. Conditioning
 
-1. Discussion of Papers
-2. Review
-    - McGrath
-    - Truex
-    - Kocher and Monteiro
-    - Fowler and Hall
-
-
-# Robustness
-
-# McGrath
-
-# Truex
-
-# Kocher and Monteiro
-
-# Fowler and Hall
-
-# Interaction Effects
-   
----
-
-### Interaction Effects
-
-Is the effect of some cause different for different sets of cases?
-
-- heterogeneous treatment effects
-- "moderators": factors that intensify/weaken some causal effect
+- Key assumptions
+- Regression and Conditioning
+- Alternatives
 
 ---
 
-### Interaction: **Example**
+### Least Squares: Practical Issues
 
-Did the local success of an explicitly secular political party, Indian National Congress (INC), reduce the likelihood of religious riots between Hindus and Muslims in India?
+1. Measurement Error
+
+- What are it's consequences?
+- When can it safely be ignored?
+
+2. Standard Errors
+
+- Robust Standard Errors
+- Clustered Standard Errors
+
+3. Sensitivity Analysis
+
+
+
+# Review: Conditioning
 
 ---
 
-### Example
+### Conditioning: Approaches
 
-[Nellis et al](https://www.nowpublishers.com/article/Details/QJPS-15051) compare the incidence of riots in districts in which the INC barely won and barely lost MLA elections (w/ in 1 ppt).
+1. Matching
 
-They estimate the model:
+2. Weighting
 
-$$\mathrm{Any \ Riot}_{it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \epsilon_{it}$$
+3. Regression
 
 ---
 
-### Example
+### Conditioning: Matching
 
-```{r echo = F, results='asis'}
-m1 = lm(any_riot ~ INC_win, data = riots)
+**Match treated units to untreated units most similar** in conditioning variables $\mathbf{X}$
 
-stargazer(m1,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("INC Win", "Intercept"),
-          dep.var.labels = 'Any Riots')
+Many varieties:
 
+- exact matching
+- coarsened exact matching
+- mahalanobis distance
+- genetic
+- propensity score
+
+---
+
+### Conditioning: Weighting
+
+Use conditioning variables to weight observations such that:
+
+1. They are weighted inversely by probability of treatment (IPW)
+2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
+
+Treatment and control groups weighted to be similar in covariates.
+
+---
+
+### Conditioning: Regression
+
+1. Identify set of conditioning variables
+2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
+3. Calculate relationship between $D$ and $Y$ after adjusting for relationship with conditioning variables
+
+---
+
+### Conditioning
+
+In order for conditioning to estimate causal effects without bias, we must assume
+
+1. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+2. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+    
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+
+
+# Measurement Error
+
+---
+
+### Measurement Error
+
+We have previously assumed we measured variables without error. Not a reasonable assumption. How does this affect estimated effects of $D$?
+
+- if errors in measurements correlated with causal variable $D$, estimates will be **biased**
+- if measurements have **random error**, it **depends**...
+
+---
+
+### Measurement Error
+
+First, the good news:
+
+> If we have **random** measurement error in $Y$ or $X$, problems are manageable.
+
+---
+
+### Measurement Error
+
+
+This is our statistical model; we take all OLS assumptions to be true.
+
+$$Y^* = \alpha + \beta D^* + \epsilon$$
+
+$Y^*$ is the true value of the variable that we observe as $Y$.
+
+- $E(\nu)=0$, $\nu$ independent of $Y^*, D^*$, i.i.d. with variance $\sigma^2_\nu$
+
+$$Y = Y^* + \nu$$
+
+---
+
+$D^*$ is the true value of the variable that we observe as $D$.
+
+- $E(\eta)=0$, $\eta$ independent of $D^*, Y^*$, i.i.d. with variance $\sigma^2_\eta$
+
+$$D = D^* + \eta$$
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $Y$? 
+
+$$Y = \alpha + \beta D^* + \epsilon + \nu$$
+
+Recall: $E(\nu) = 0; Cov(D^*,\nu) = 0$. So, estimate $\widehat{\beta}$ for $\beta$ is **unbiased**.
+
+Standard errors **are affected**:
+
+- Variance Covariance matrix is now:  
+- $Var(\epsilon + \nu)(D^{*\prime} D^{*})^{-1}$, not $Var(\epsilon)(D^{*\prime} D^{*})^{-1}$
+- Thus, variances, SEs will be **larger** due to random measurement error.
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $D$? 
+
+$$Y^* = \alpha + \beta (D - \eta) + \epsilon$$
+
+If we estimate the model using just $D$, not $D^*$
+
+$$Y^* = \alpha + \beta D + \rho$$
+- $\rho = (\epsilon - \beta\eta)$. 
+- This produces **bias** in $\widehat{\beta}$, because:
+
+$$cov(D, \rho) = cov(D^* + \eta, \epsilon - \beta\eta) = -\beta \sigma^2_\eta \neq 0$$
+
+---
+
+### Measurement Error
+
+What happens when we have measurement error in $D$? 
+
+We get **bias**... but what does this bias look like?
+
+$$\small\begin{eqnarray} 
+\widehat{\beta} &=& \frac{Cov(D, Y^*)}{Var(D)}    \\
+&=& \frac{Cov(D^* + \eta, \alpha + \beta D^* + \epsilon)}{Var(D^* + \eta)} \\
+&=& \frac{\beta Cov(D^*, D^*)}{Var(D^*) + Var(\eta)}   \\
+&=& \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}  \\
+\end{eqnarray}$$
+
+---
+
+### Measurement Error
+
+Attenuation bias!
+
+$$\widehat{\beta} = \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}$$
+
+This is $\beta$ times a ratio of variance of true value over that of the observed. (Signal to noise). As the errors $\eta$ increase, this ratio goes toward $0$. So $\widehat{\beta}$ suffers from **attenuation** bias.
+
+Our estimates of $\beta$ will be biased toward **zero**, which may be "conservative".
+
+---
+
+### Measurement Error
+
+#### The good news:
+
+- Measurement error in $Y$ produces wider standard errors; no bias
+- Measurement error in $D$ produces bias toward zero (*for* $D$); (known direction and bounds)
+
+#### But...
+
+What if we to estimate the causal effect of $D$ on $Y$, conditioning on $X$?
+
+---
+
+### Measurement Error:
+
+Imagine we evaluate the effect of COVID vaccination for people who **self select** into the vaccine.
+
+What is the effect of the vaccine? We can naively compare people who select into vaccination... 
+
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(100, 400, 400, 100),
+           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
+           ) %>%
+kable()
+```
+
+What is the naive (without conditioning) estimated effect of vaccination?
+
+---
+
+### Measurement Error:
+
+Or we can condition on, e.g., belief in conspiracies about COVID/vaccines that might relate to vaccine uptake and other COVID propensities...
+
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(100, 400, 400, 100),
+           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
+           ) %>%
+kable()
 ```
 
 ---
 
-### Example
 
-Wilkinson (2004) argues that political parties work to stop religious riots in India when Muslims are electorally pivotal.
+### Measurement Error:
 
-- Muslims are typically victims in riots; will vote against parties to punish them
-- Muslims more pivotal when the effective number of parties is higher
+In this example:
 
----
+Failing to condition on conspiracy beliefs leads us to overstate the effect of vaccines, because...
 
-### Example
-
-If the INC was responsive to this electoral logic, we should expect causal effect of INC victory on riots to be stronger when the ENP was above the median:
-
-This is a **Binary by Binary** interaction:
-
-- INC win/lose is **binary**
-- High/Low ENP is **binary**
+- Conspiracists less likely to take vaccine, have higher propensity to be exposed to/infected by COVID in absence of treatment.
 
 ---
 
-### Interaction Effects
+### Measurement Error:
 
-**How do we estimate an interaction effect?**
+What if we measure conspiracy beliefs **with error**: 40 percent chance of incorrect classification. We observe this data:
 
-Include both causal variable and interacting variable, **AND** their product.
+```{r, echo = F}
+data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
+           Conspiracy = rep(c("Yes", "No"), 2),
+           N = c(220, 280, 280, 220),
+           `COVID Rate` = c(0.0064, 0.0057, 0.093, 0.086)
+           ) %>%
+kable()
+```
 
-$y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i+ \beta_3 D_iX_i + \epsilon_i$
+What is the naive (no conditioning) estimate of the effect of the vaccine?
+
+What is the estimated  effect of the vaccine conditioning on conspiracy-belief?
+
 
 ---
 
-### Interaction Effects | Example
+### Measurement Error:
 
-Easy to do in `R`:
+- Measurement error in $X$ can lead to bias in estimated slope on $D$ ($\widehat{\beta_{D}} \neq \beta_{D}$)
+- A problem if $X$ is really needed for conditioning.
+
+---
+
+### Measurement Error
+
+#### The good news:
+
+- Measurement error in $Y$ produces wider standard errors; no bias
+- Measurement error in $X$ produces bias toward zero; (known direction and bounds)
+    - true in bivariate, multivariate cases
+    
+#### The bad news:
+
+- Conditioning will fail to remove bias if **conditioning variables** measured with error.
+
+
+# Standard Errors
+
+---
+
+### Statistical Inference with Least Squares
+
+1. **Model** equation is correctly specified (correct functional forms, all relevant variables are included). $Y_i = \alpha + \beta X_i + \epsilon_i$ is the true data-generating function
+
+2. $\epsilon_i$ are independently, identically distributed (i.i.d.), $E(\epsilon_i) = 0$ and variance of $\sigma^2$.
+
+3. $\epsilon_i$ is **independent** of $X_i$: $X \perp \!\!\! \perp \epsilon$
+
+---
+
+### We want reliable uncertainty
+
+When estimating effects, we want to know how much uncertainty there is:
+
+- Assumptions 1, 2, and 3 needed to derive OLS standard errors. 
+- SEs not useful if estimates are biased.
+- If assumptions 1 and 3  wrong $\Rightarrow$ bias
+- So, are there violations of assumption 2?
+
+---
+
+### Non-standard Errors
+
+How do we deal when 
+
+- errors are non-identically distributed? (heteroskedasticity)
+- errors are non-independent? (correlated errors)
+
+---
+
+### Example (1)
+
+Imagine we run an experiment with $D_i = 1$ indicating receipt of treatment, $D_i = 0$ indicating not receiving treatment.
+
+We use regression to estimate this model:
+
+$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$
+
+Let's write out the implied response schedule...
+
+---
+
+### Example (1)
+
+Effects are rarely constant... heterogeneous effects are captured by the $\epsilon_i$...
+
+$Y_i = Y_i(0) + \{Y_i(1) - Y_i(0)\}D_i$
+$Y_i = E[Y(0)] + \{Y_i(1) - Y_i(0)\}D_i + \{Y_i(0) - E[Y(0)]\}$
+$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
+
+---
+
+### Example (1)
+
+$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
+
+<br>
+
+$$\small\begin{eqnarray}
+Y_i &=& \mu_0 + \{E[Y(1)] - E[Y(0)]\}D_i + \nu_0 + \\ && \{(Y_i(1) - E[Y(1)]) - (Y_i(0) - E[Y(0)])\}D_i
+\end{eqnarray}$$
+
+<br>
+
+$Y_i = \mu_0 + \{\mu_1 - \mu_0\}D_i + \nu_0 + \{\nu_1 - \nu_0\}D_i$
+
+---
+
+### Example (1)
+
+$Y_i = \underbrace{\mu_0}_{\beta_0} + \overbrace{\{\mu_1 - \mu_0\}}^{\beta_1}D_i + \underbrace{\nu_0 + \{\nu_1 - \nu_0\}D_i}_{\epsilon_i}$
+
+1. Model is still plausibly correct
+2. Are $\epsilon_i$ **identically distributed**?
+3. By randomization, $\epsilon_i$ independent of $D_i$
+
+
+---
+
+### Example (2)
+
+Generate the following data:
+
+```{r, eval = F}
+set.seed(1234)
+n = 100
+x = rnorm(100)
+e = rnorm(100)
+y_star = 0 + 0.1*x + e
+y = pnorm(y_star)
+y = 1*(y > 0.5)
+```
+
+1. Table `y`
+2. Regress `y` on `x` using `lm`
+3. Plot residuals vs `x`.
+
+---
+
+### Example (2)
+
+- This is a linear probability model ($Y$ in 0 and 1)
+
+    - This is common use of regression
+    
+- Variances of $\epsilon$ must be smaller for cases where average Y is close to 0 or 1; larger for cases where average Y close to 0.5.
+
+
+---
+
+### Heteroskedasticity
+
+OLS assumptions are violated because errors $\epsilon_i$ are not **identically distributed**
+
+- **heteroskedasticity** occurs when $\epsilon_i$ has variance $Var(\epsilon_i) \neq Var(\epsilon_j)$
+- as opposed to **homoskedasticity**: $Var(\epsilon_i) = Var(\epsilon_j)$ for all $i$ and $j$.
+
+In this situation, OLS standard errors *may* be **too small**. (See MHE, CH 8)
+
+
+---
+
+### Robust Standard Errors:
+
+Solution to this is to use **heteroskedasticity** robust standard errors.
+
+- estimates of variance of $\widehat{\beta}$ (and entire variance-covariance matrix)
+- Typically called "Huber-White Standard Errors" or "Robust Standard Errors."
+- several varieties ("HC0", "HC1", "HC2", "HC3", etc.), make different adjustments in estimating $Var(\epsilon_i)$
+- differences larger when $N$ is small
+
+---
+
+
+### Robust Standard Errors:
+
+OLS: estimate SEs by estimating the variance covariance matrix of the regression coefficients: $\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}$. We estimate $\sigma^2$ as $\frac{1}{n-p}\sum e_i^2$.
+
+- but derivation **assumed** identically distributed errors to get the "meat" in this sandwich
+
+$$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
+
+---
+
+### Robust Standard Errors:
+
+Robust SEs: allow for **arbitrary hetereoskedasticity** (variances different for every $i$). 
+
+So we estimate (in its simplest form):
+
+$Var(\epsilon_i) \approx \widehat{e_i}^2$
+
+$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'diag(e_1^2 \dots e_n^2)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$
+
+(Draw Matrix Algebra on Board)
+
+---
+
+### Robust Standard Errors:
+
+One major caveat here:
+
+- These are **estimates**, not miracles.
+- Trading OLS standard errors for robust SEs is a tradeoff in assumptions.
+- Angrist and Pischke show:  Robust SEs can be biased, SOMETIMES SMALLER than OLS SEs.
+- Robust SEs are **consistent** as $n \to \infty$. How close to $\infty$ do we need to be?
+    - depends: $HC0$ and $HC1$ work best if $N >> 200$
+    - depends: $HC3$ works if $N > 30$
+    - $HC3$ should be default
+    
+---
+
+### Robust Standard Errors:
+
+In `R`:
+
+- `sandwich` package
+- `lmtest` package
+- pass standard errors to table-making package
+
+---
+
+### Robust Standard Errors:
+
+Obtaining them in `R`:
+
+1. Estimate your model
+2. Plug model into robust variance-covariance estimator (usually `vcovHC` from `sandwich` package)
+3. Get diagonal (manually, in "pretty" format using `coeftest` from `lmtest` package)
+
+---
+
+### Robust Standard Errors:
+
+1. copy this data: [https://pastebin.com/BDTKcKyC](https://pastebin.com/BDTKcKyC)
+2. create `enlist_rate = veterans/mil_age`
+3. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
+4. Use the `vcovHC` function in the `sandwich package` to get the HC1  vcov matrix
+5. Use the `vcovHC` function in the `sandwich package` to get the HC3  vcov matrix
+6. Use `diag` and `sqrt` to get the robust standard errors 
+7. Compare homoskedastic to HC1 and HC3 standard errors.
+
+---
+
+###
+
+```{r, echo = F}
+veterans = fread('./referenda_vote.csv')
+veterans[, enlist_rate := veterans/mil_age]
+```
 
 ```{r}
-m2 = lm(any_riot ~ INC_win*high_enp, data = riots)
-m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, data = riots)
-```
+require(sandwich)
+require(lmtest)
+#1: Estimate OLS / conventional Standard Errors
+lm_suff = lm(suff65_yes ~ enlist_rate + suff57_yes + state, 
+             data = veterans)
 
-`*` expands out the 'main' effects and interaction effects
+#2: Estimate robust variance covariance matrix:
+vcov_robust = vcovHC(lm_suff, type = "HC3")
 
-`:` just multiplies two variables together, no 'main' effects
-   
----
-
-### Interaction Effects | Interpretation?
-
-```{r echo = F, results='asis'}
-stargazer(m2,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("INC Win", "High ENP", "INC Win x High ENP", "Intercept"),
-          dep.var.labels = 'Any Riots')
-
+#3: SE
+vcov_robust %>% diag %>% sqrt
+#coeftest(lm_suff, vcov. = vcov_robust)
 ```
 
 
 ---
 
-### Interaction Effects | Example
-
-Different intercepts (means) for each group:
-
-|        | INC Lose | INC Win |
-|--------|------|--------|
-| ENP Low | `Intercept` | `Intercept + INC_win` |
-| ENP High | `Intercept + high_enp` | `Intercept + high_enp +` <br/> `INC_win + INC_win:high_enp` |
-
----
-
-### Interaction Effects | Example
-
-Interpretation:
-
-Interaction Effects: Effect of INC victory differs across ENP?
-
-- `INC_win:high_enp` tells us how much more likely riots are (on average) when INC wins vs loses in High ENP districts, compared to when INC wins vs loses in Low ENP districts.
-
-"Main Effects": 
-
-- `INC_win`: change probability of riot when INC wins (vs loses) in low ENP areas.
-- `hign_enp`: difference in probability of riot in high vs low ENP areas where INC loses.
-
-
----
-
-### Interaction Effects
-
-#### **Continuous by Binary variable**
-
-Rather than fitting different intercepts for groups:
-
-- Slope of $x_1$ depends on binary indicator ($x_2$)
-- effect of binary treatment ($x_2$) depends on level of continuous variable
-- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
-- $\hat{\beta_2}$ for $x_2$ will be mean of $x_2 = 1$ when $x_1 = 0$
-
-**Assumptions** 
-
-- We assume the change is linear 
-- Both levels of binary variable present across all levels of continuous variable (common support)
-      
-## Interaction Effects
-
-#### **Continuous by Continuous variable**
-
-- Slope of $x_1$ depends on value of $x_2$
-- Slope of $x_2$ depends on value of $x_1$
-- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
-- $\hat{\beta_2}$ for $x_2$ will be slope of $x_2$ when $x_1 = 0$
- 
-**Assumptions** 
-
-- We assume the change is linear 
-- all levels of one variable present across all levels of other variable (common support)
-- This is much harder to achieve!
-
----
-
-### Interaction Effects
-
-```{r, echo = F, include = F, message = F}
-iowa = fread('iowa_suffrage.csv')[enlist_pct < 1]
-
-```
-
-We can look at voting for Black Suffrage in Iowa. 
-
-Recall: investigation of effect of enlistment rates in the Civil War and on change in voting for suffrage between 1857 and 1868 (pre- and post- war). 
-
-Does the effect of having veterans in a county depend on what happened during their military service?
-
->- Does combat experience matter?
-
----
-
-### Example:
-
-```{r, echo = F, results='asis'}
-lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
-
-stargazer(lm_iowa,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("Enlist Rate", "Combat Days", "Enlist X Combat"),
-          dep.var.labels = 'Suffrage Difference')
+```{r echo = F, message=F, warning = F}
+require(modelsummary)
+modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj')
 
 ```
 
 ---
 
-### Example:
 
-We can center both variables at $0$ to make it easier to interpret:
-
-```{r}
-iowa$enlist_pct_c = iowa$enlist_pct %>% scale(scale = F)
-iowa$mean_combat_days_c = iowa$mean_combat_days %>% scale(scale = F)
-lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
+```{r, eval = F, message=F, warning = F}
+require(modelsummary)
+modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj')
 
 ```
 
 ---
 
-### Example:
+### Robust Standard Errors:
 
-```{r echo = F, results='asis'}
-stargazer(lm_iowa_c,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("Enlist Rate (0)", "Combat Days (0)", "Enlist X  Combat"),
-          dep.var.labels = 'Suffrage Difference')
+When do you need them?
+
+- If visual inspection of residuals shows pattern in variance
+- If you use linear probability model
+- If your data comes from differently sized units (e.g. votes in towns/counties)
+- Basically always a good idea to check both conventional and robust standard errors, report the largest (more conservative)
+
+---
+
+### Example (3)
+
+[Karaivanov, et al (2020)](https://www.medrxiv.org/content/10.1101/2020.09.24.20201178v2) estimate the effect of indoor mask mandates on COVID-19 case growth across public health districts in Ontario.
+
+They exploit the difference in the timing of imposing mask mandates across health districts
+
+
+
+---
+
+### Example (3)
+
+Estimate a (simplified) model
+
+$$Y_{it} = \alpha_{i} + \alpha_{t} + \beta_1 \mathrm{Mask \ Mandate}_{it} + \epsilon_{it}$$
+
+$i$ indexes 34 public health units; $t$ indexes 91 days. `r 91*34` observations total.
+
+Are each $\epsilon_{it}$ plausibly **independent** of each other?
+
+---
+
+### Clustered Standard Errors:
+
+There are estimators for standard errors for situations in which errors are not independent of each other across observations:
+
+- In PS4: we had you generate data in which errors were drawn for a group G, rather than for each individual
+- In reality: recall the experiment by Paluck: villages were assigned to treatment, but villagers were her unit of analysis. Villagers are likely similar to each other by virtue of things happening in that village, so share common "shocks". 
+
+---
+
+### Clustered Standard Errors:
+
+Ignoring dependence of errors **underestimates** sampling variability of an estimate
+
+---
+
+### Clustered Standard Errors:
+
+Extends robust standard errors:
+
+- allow for arbitrary heteroskedasticity
+- allow for arbitrary correlation of errors **within groups**s
+    - same unit OVER time;
+    - different units AT THE SAME time;
+    - both!?!?!
+- **consistent** as **number of groups** gets larger. Usually needs tens of groups (~40 +)
+
+---
+
+### Clustered Standard Errors:
+
+Unlike robust standard errors:
+
+- Clustered standard errors tend to change the variance estimate substantially.
+- The "meat" in the covariance matrix estimator changes (see the board)
+
+---
+
+### Clustered Standard Errors:
+
+In `R`: many options:
+
+1. `felm` in `lfe` extends `lm` for panel models and includes clustering options
+2. `feols` in `fixest` includes clustering options
+3. `sandwich`: (finally!) has clustered errors options
+
+---
+
+### Clustered Standard Errors:
+
+```{r, message=F}
+require(lfe)
+
+felm(suff65_yes ~ enlist_rate + suff57_yes + state | 0 | 0 | state, 
+     data = veterans) %>%
+  summary
 ```
 
-Now main effects are interpretable.    
+
+---
+
+Standard Errors are way smaller (but, with 2 clusters, not reliable!)
+
+
+---
+
+### Clustered Standard Errors:
+
+The big questions:
+
+What level do we cluster at?
+    - level at which "treatment" assigned
+    - level at which plausible spatial or temporal autocorrelation of errors
+
+Alternatively:
+
+- aggregate data within clusters: 
+- Simplifies the analysis, easy to compute conventional standard errors, randomization inference.
+
+---
+
+### Standard Errors Summary:
+
+How much uncertainty about effect sizes?
+
+1. All standard errors require some assumption about the chance process underlying our analysis
+2. All assumptions are likely flawed
+3. Best to show results are robust to different choices about standard errors
+    - particularly important to make sure you don't report the smaller standard errors when other estimates give very different results
+    
+    
+# Sensitivity
+
+
+---
+
+### Conditional Independence
+
+Main identifying assumption (for unbiased estimates of causal effects) is:
+
+- **Conditional Independence Assumption**: we have conditioned on all relevant confounding variables
+- Because we do not know nature of confounding, this is untestable
+- Must argue that:
+  - relevant confounders included in conditioning
+  - remaining possible confounders are unlikely to alter conclusions
   
----
-
-### Marginal Effects       
-
-For continuous interactions, we need to calculate the **marginal effect**
-
-**marginal effect**: unit effect of $x$ on $y$ at a given value of $z$.
-
-$y_i = \beta_0 + \beta_1 x_i+ \beta_2 z_i+ \beta_3 x_iz_i + \epsilon_i$
-
+- These arguments based on:
+  - case/theoretical knowledge
+  - tests of **sensitivity**
 
 ---
 
-### Marginal Effects       
+### Sensitivity
 
-Marginal effects have their own standard errors.
+Cinella and Hazlett (2020) develop tools to analyze **sensitivity** of regression results to **violations** of conditional independence assumption:
 
-- Must be computed using variance-covariance matrix
-- Why?: marginal effect is $\beta_1 + \beta_3 z_i$
-
-$Var(aX + bZ) = a^2 Var(X) + b^2 Var(Z) + 2ab Cov(X,Z)$
-
-$Var(\beta_1 + z_i \beta_3) = Var(\beta_1) + z_i^2 Var(\beta_3) + 2z_i Cov(\beta_1,\beta_3)$
+- assuming there is an unmeasured confounding variable, how "large" would it have to be alter the results?
+  - how strongly is the confounder related to **treatment**? to **outcome**?
+  - "strength" measured in terms of partial $R^2$: variation "explained" by the confounder
 
 ---
 
-### Marginal Effects example:
+### Sensitivity
+
+Link to partial identification:
+
+- Can be used to set bounds on causal effect in worst-case scenario, where **all remaining variation** in treatment and outcome explained by a confounder
+- Can establish "how big" that confounding is relative to **known confounders** to make an argument for plausible values
+  - comparison to "known confounder" creates standard candle
+
+---
+
+### Sensitivity
+
+Effect of income on Anti-Muslim Prejudice in Myanmar
 
 ```{r}
-combat_seq = seq(min(iowa$mean_combat_days), 
-                 max(iowa$mean_combat_days),
-                 length.out = 100)
-mfx = lm_iowa$coefficients['enlist_pct'] + 
-      lm_iowa$coefficients['enlist_pct:mean_combat_days']*combat_seq
+m_linear = lm(svy_sh_prejudice_avg_NAs_kept ~ svy_sh_income_rc + 
+                svy_sh_female_rc + svy_sh_age_rc + 
+                svy_sh_education_rc + svy_sh_ethnicity_rc +  
+                svy_sh_religion_rc + svy_sh_profession_type_rc + 
+                svy_sh_income_source_rc, data = analysis_df)
 ```
 
 ---
 
-### Marginal Effects example:
-
-```{r, echo = F}
-plot(combat_seq, mfx, 
-     ylab = 'Marginal Effect of Enlistment %',
-     xlab = 'Mean Days of Combat',
-     main = 'Marginal Effect of Enlistment across\nCombat Experience',
-     type = 'l')
-rug(iowa$mean_combat_days)
+```{r echo = F, warning = F, message = F}
+modelsummary(list(linear = m_linear), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T
+             )
 ```
 
 ---
 
-### Marginal Effects example:
-
-Standard Errors:
-
-```{r}
-cov_mat = vcov(lm_iowa)
-
-m_var = diag(cov_mat)['enlist_pct'] +
-  combat_seq^2*diag(cov_mat)['enlist_pct:mean_combat_days'] +
-  combat_seq*2*cov_mat['enlist_pct','enlist_pct:mean_combat_days']
-mse = sqrt(m_var)
-
-l = mfx - 1.96*mse
-u = mfx + 1.96*mse
-```
-
----
-
-### Marginal Effects example:
-
-```{r, echo = F}
-plot(combat_seq, mfx, 
-     ylab = 'Marginal Effect of Enlistment %',
-     xlab = 'Mean Days of Combat',
-     main = 'Marginal Effect of Enlistment across\nCombat Experience',
-     type = 'l', ylim = range(c(l,u)))
-rug(iowa$mean_combat_days)
-lines(combat_seq, l, lty= 2)
-lines(combat_seq, u, lty = 2)
-abline(h = 0, col = 'red')
-```
-
----
-
-### Continuous Interactions
-
-Hainmueller et al show this can go wrong:
-
-`interflex` package helpful for:
-
-- checking linearity assumptions
-- plotting linear and non-linear marginal effects
-- no need to calculate marginal effects w/ SEs
-
----
-
-```{r, echo = F, messages=F, warnings=F}
-
-inter_f = inter.binning(iowa, 
-                        Y = "Suffrage_Diff",
-                        D = 'enlist_pct',
-                        X = 'mean_combat_days',
-                        na.rm = T,
-                        Ylabel = 'Suffrage Difference',
-                        Dlabel = "Enlistment (%)",
-                        Xlabel = "Mean Combat Days",
-                        theme.bw = T)
-
-inter_f$graph
+```{r warning = F, message = F}
+require(sensemakr)
+require(stringr)
+covars = model.matrix(m_linear) %>% colnames
+covars_edu = covars %>% str_detect("education") %>% covars[.]
+myanmar.sensitivity <- sensemakr(model = m_linear, 
+                                treatment = "svy_sh_income_rc",
+                                benchmark_covariates = list('education' = covars_edu),
+                                kd = 1:3,
+                                ky = 1:3, 
+                                q = 1,
+                                alpha = 0.05, 
+                                reduce = TRUE)
 
 ```
 
+
 ---
 
-### Interactions:
+```{r echo = F}
+plot(myanmar.sensitivity)
+```
 
-- For **binary**-**binary** interactions, interpretation and estimation is straightforward.
-- For any **continuous** interactions, estimation is tricky and we must calculate marginal effects. 
-    - Use `interflex` package to handle this
-    - Get tests of linearity, SEs, plots
+Adjusted effect for confounder 1-3 times larger than education.
+
+---
+
+```{r echo = F}
+plot(myanmar.sensitivity, type = 'extreme')
+```
+
+Adjusted effect if confounder explained **all** or **most** of the outcome
+
+---
+
+### Practice:
+
+Using the `veterans` data:
+
+1. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
+2. Using `sensemakr`, examine the sensitivity of `enlist_rate`, using `suff57_yes` as the 'benchmark'
+3. Interpret the results of `plot(enlist_sensitivity)`
