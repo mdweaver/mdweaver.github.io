@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 7, 2022"
+date: "February 17, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -45,13 +45,14 @@ options("kableExtra.html.bsTable" = T)
 
 ### Objectives
 
+
 **Mechanics** of Bivariate Regression
 
 - Relationship between variables
     - Covariance; Correlation
 - the mean (revisited)
-- conditional expectation function
-- "Ordinary Least Squares"
+- Conditional Expectation Function
+- Least Squares 
     - algorithm
     - mathematical properties of algorithm
     - **no assumptions**
@@ -70,15 +71,15 @@ options("kableExtra.html.bsTable" = T)
 - mean of $Y$ across values of $D$, conditioning on $X$
     - with more assumptions; can obtain **"ignorability"**
   
-## Today
+## Introduction:
 
 **No causality**
   
 - no effort to prove causality; no assumptions about causal model.
 
-**No parameters**
+**No parameters/estimands**
 
-- no statistical model; no random variables; no **parameters** to estimate
+- no statistical model; no random variables; no potential outcomes
   
 **Regression/Least Squares as Algorithm**
 
@@ -86,16 +87,17 @@ options("kableExtra.html.bsTable" = T)
 - without further assumption, plug in data, generate a line
 - limited interpretation
 
-## Today
+## Introduction
 
 
-- The Mean
+**Why focus on prediction? Why focus on the mean?**
 
-- Association between two variables
+- Our causal estimands are mostly **average** effects
+- Estimation requires us 'plug-in' or predict unobserved potential outcomes. 
 
-- Regression/Least Squares extends the mean
+**Understanding how the mean, regression does this helps us understand more going forward**:
 
-
+- how does regression "control for a variable"? What does that mean?
 
 # Digression
 
@@ -106,11 +108,16 @@ options("kableExtra.html.bsTable" = T)
 How are these variables associated?
 
 ```{r, echo = F}
+dat = fread("./referenda_vote.csv") %>%
+      .[state %in% "IOWA"] %>%
+      .[, enlist_rate := veterans/mil_age] %>%
+      .[enlist_rate < 0.6] %>%
+      .[, suffrage_diff := suff65_yes - suff57_yes]
 
-plot(trees$Girth, trees$Height, 
-     xlab = "Trunk Width (in.)",
-     ylab = "Height (ft.)",
-     main = "Relationship between tree trunk width and height")
+plot(dat$mil_age, dat$suffrage_diff,
+     xlab = "Military Aged-Males (#)",
+     ylab = "Change in Pro Black Suffrage Vote (1865-1857)",
+     main = "Relationship between Military Aged Males and Suffrage Vote")
 
 ```
 
@@ -123,10 +130,12 @@ How are these variables associated?
 
 ```{r, echo = F}
 
-plot(trees$Girth, trees$Volume, 
-     xlab = "Trunk Width (in.)",
-     ylab = "Timber Volume (ft.^3)",
-     main = "Relationship between tree trunk width\nand volume of timber")
+
+plot(dat$enlist_rate, dat$suffrage_diff,
+     xlab = "Union Army Enlistment Rate (%)",
+     ylab = "Change in Pro Black Suffrage Vote (1865-1857)",
+     main = "Relationship between Enlistment Rate and Suffrage Vote")
+
 ```
 
 
@@ -157,30 +166,30 @@ $$Var(X) = \overline{x^2} - \bar{x}^2$$
 
 ---
 
-Covariance of tree width and tree height:
+Covariance of military aged males and suffrage vote:
 
 ```{r, echo = T}
-x1 = trees$Girth
-y1 = trees$Height
+x1 = dat$mil_age
+y1 = dat$suffrage_diff
 mean(x1*y1) - (mean(x1)*mean(y1))
 ```
 
-Covariance of tree width and timber volume:
+Covariance of enlistment rate and suffrage vote:
 
 ```{r, echo = T}
-x2 = trees$Girth
-y2 = trees$Volume
+x2 = dat$enlist_rate
+y2 = dat$suffrage_diff
 mean(x2*y2) - (mean(x2)*mean(y2))
 ```
 
 ---
 
-Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
+Why is the $Cov(MilAge,Suffrage)$ larger than $Cov(Enlist,Suffrage)$?
 
 ```{r, echo = F, warning= F, message=F}
-t_dt = trees %>% as.data.table %>% melt.data.table(measure.vars = names(trees))
+t_dt = dat[, list(mil_age, enlist_rate, suffrage_diff)] %>% as.data.table %>% melt.data.table(measure.vars = c('mil_age', 'enlist_rate', 'suffrage_diff'))
 
-ggplot(t_dt, aes(x = value)) + geom_histogram() + facet_wrap(. ~ variable, nrow = 1) + theme_bw() +
+ggplot(t_dt, aes(x = value)) + geom_histogram() + facet_wrap(. ~ variable, nrow = 1, scales = 'free_x') + theme_bw() +
   ggtitle("Histograms")
 ```
 
@@ -200,8 +209,8 @@ Why is the $Cov(Width,Volume)$ larger than $Cov(Width,Height)$?
 require(ggplot2)
 require(grid)
 #get a data set
-X <- trees$Girth
-Y <- trees$Volume
+X <- dat$enlist_rate
+Y <- dat$suffrage_diff
 
 #build the data frame
 data <- data.frame(X,Y)
@@ -235,7 +244,7 @@ ggplot(data, aes(X,Y, xmin=X.bar, xmax=X, ymin=Y.bar, ymax=Y)) + geom_point(size
   geom_vline(xintercept=X.bar, linetype='longdash') +
   geom_rect(alpha=.2, aes(fill=S)) +   scale_fill_manual(values=c('red','#0066CC')) +
   ggtitle('Products of deviations from the mean') +
-  SD_Theme + xlab("Tree Width") + ylab("Timber Volume")
+  SD_Theme + xlab("Enlist Rate") + ylab("Suffrage Change")
 ```
 
 ---
@@ -293,7 +302,9 @@ $r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
 
 Get `data_1` here:  [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeSpqKKk)
 
-Without using `cor()` or `cov()` or `var()` functions in `R`
+Without using `cor()` or `cov()` or `var()` or `sd()` functions in `R`
+
+**hint: generate your OWN functions**
 
 1. Inspect `data_1`
 1. Calculate mean of $X$; mean of $Y$
@@ -380,6 +391,15 @@ What is the distance between two points?
 $p = (3,0); q = (0,4)$
 
 $$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+---
+
+What is the distance between two points?
+
+$p = (3,0); q = (0,4)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
 $$d(p,q) = \sqrt{(3 - 0)^2 + (0 - 4)^2}$$
 $$d(p,q) = \sqrt{3^2 + (-4)^2} = \ ?$$
 
@@ -393,7 +413,7 @@ What is the distance between two points?
   geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
                arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
   geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
-  coord_fixed()
+  coord_fixed() + theme_bw()
 ```
 
 
@@ -419,9 +439,9 @@ $d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
 
 One way of thinking about the mean is as a **prediction**. 
 
-We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction of all the values in $Y$.
+We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{Y}$, that is the best prediction of all the values in $Y$.
 
-The mean gives us the $\hat{y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
+The mean gives us the $\hat{Y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
 
 - since distances are sums of squared differences, this is why mean minimizes the **variance**.
 
@@ -431,7 +451,9 @@ The mean gives us the $\hat{y}$ that has the shortest Euclidean distance to the 
 
 Imagine we have a variable $Y$ that we observe as a sample of size $n$. We can represent this variable as a **vector** in $n$ dimensional space.
 
-$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+
+More generally, we imagine our observed data $Y$ is a vector with one dimension for each data point (observation)
 
 ---
 
@@ -439,9 +461,9 @@ $$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
 
 - a **vector** is a one-dimensional array of numbers of length $n$. 
 
-- can be portrayed graphically as an arrow from the origin to a point in $n$ dimensional space
+- can be portrayed graphically as an arrow from the origin (the point $(0,0)$ or $(0,0,\dots,0)$) to a point in $n$ dimensional space
 
-- can be multiplied by a number to extend/shorten their length
+- vectors can be multiplied by a number to extend/shorten their length (each element multiplied by same number)
 
 ---
 
@@ -459,19 +481,20 @@ $$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
 
 ### Deriving the mean:
 
-We want to pick one number (a scalar) $\hat{y}$ to predict all of the values in our vector $y$. 
+We want to pick one number (a scalar) $\hat{Y}$ to predict all of the values in our vector $Y$. 
 
 This is equivalent to doing this:
 
-$$y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
+$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{Y} \\ \hat{Y} \end{pmatrix} = \hat{Y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
 
-Multiplying a (1,1) vector by a constant.
+Multiplying a $(1,1)$ vector by a constant.
 
-- $\hat{y}$ will be on the line that runs through the origin and (1,1)
+- $\hat{Y}$ will be on the line that runs through the origin $(0,0)$ and $(1,1)$ 
+- Why $(1,1)$
 
 ---
 
-Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $y$.
+Choose $\hat{Y}$ on the blue line at point that **minimizes** the distance to  $y$.
 
 ```{r, echo = F}
   vectors = data.frame(x = c(3,0), y = c(0,5))
@@ -482,20 +505,20 @@ Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $
   coord_fixed() + theme_bw() +
     geom_text(aes(x=3,y=5.2,label='y')) + 
     geom_text(aes(x=1.2,y=1.2, label = "(1,1)")) +
-    xlab('n1') + ylab('n2') 
+    xlab('n1') + ylab('n2') + theme_bw()
 ```
 
 ---
 
 ### Deriving the mean:
 
-$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
+$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{Y}$):
 
-$\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
+$\begin{pmatrix} \hat{Y} \\ \hat{Y} \end{pmatrix} = \hat{Y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
 
 and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or prediction error):
 
-$\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
+$\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{Y} \\ \hat{Y} \end{pmatrix}$
 
 ---
 
@@ -520,12 +543,12 @@ This means our goal is to minimize $\mathbf{e}$, residuals.
 
 How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
 
-$$len(\mathbf{e})= \sqrt{(3-\hat{y})^2 + (5 - \hat{y})^2}$$
+$$len(\mathbf{e})= \sqrt{(3-\hat{Y})^2 + (5 - \hat{Y})^2}$$
 
 **When is the length of $\mathbf{e}$ minimized?** 
 
 
->- when angle between $\hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ and $\mathbf{e}$ is $90^{\circ}$.
+>- when angle between $\hat{Y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ and $\mathbf{e}$ is $90^{\circ}$.
 
 --- 
 
@@ -548,11 +571,11 @@ ggplot() +
 
 ### Deriving the mean:
 
-Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{y}$ is a prediction of $y$.
+Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{Y}$ is a prediction of $y$.
 
-- We choose a value $\hat{y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
+- We choose a value $\hat{Y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
 
-- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+- Such that difference between $\hat{Y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
 
 ---
@@ -561,11 +584,11 @@ Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional
 
 What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
 
-We can then use this to improve our predictions, $\hat{y}$, of $y$.
+We can then use this to improve our predictions, $\hat{Y}$, of $y$.
 
-- We choose a value $\hat{y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
+- We choose a value $\hat{Y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
 
-- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+- Such that difference between $\hat{Y}$ and $y$---$\mathbf{e}$, residual---is shortest
 
 
 # Conditional Expectation Function
@@ -611,9 +634,9 @@ $$E[Y | X = x]$$
 
 Another way of thinking about what the **conditional expectation function** is:
 
-$$E[Y | X = x] = \hat{y} | X = x$$
+$$E[Y | X = x] = \hat{Y} | X = x$$
 
-What is the predicted value $\hat{y}$, where $X = x$, such that $\hat{y}$ has the smallest distance to $y$?
+What is the predicted value $\hat{Y}$, where $X = x$, such that $\hat{Y}$ has the smallest distance to $y$?
 
 ---
 
@@ -709,7 +732,7 @@ $$E(Y) = a + b\cdot X$$
 
 or 
 
-$$\hat{y} = a + b\cdot X$$
+$$\hat{Y} = a + b\cdot X$$
 
 ---
 
@@ -810,9 +833,9 @@ We can do it the same way we obtained the mean!
 
 We are going to choose an intercept $a$ and slope $b$ such that:
 
-$\hat{y}_i = a + b \cdot x_i$
+$\hat{Y}_i = a + b \cdot x_i$
 
-and that minimizes the distance between the predicted ($\hat{y}_i$) and true ($y_i$) values:
+and that minimizes the distance between the predicted ($\hat{Y}_i$) and true ($y_i$) values:
 
 $\sqrt{\sum\limits_i^n (y_i - \hat{y_i})^2}$
 
@@ -943,7 +966,7 @@ Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line
 There are other ways to derive least squares.
 
 - Because we eventually want multiple variables, need to build from an intuition rooted in matrices and their relationship to distance.
-- Adding more variables means minimizing distance of $\hat{y}$ to $y$ in a $p > 3$ dimensional space, so it gets weird.
+- Adding more variables means minimizing distance of $\hat{Y}$ to $y$ in a $p > 3$ dimensional space, so it gets weird.
 
 ---
 
@@ -969,7 +992,7 @@ Take $Y =$ `gop_change` and $X =$ `enlistment` (board)
 
 1. Calculate $a$ and $b$ using the equations give above
 2. Interpret $a$ in terms of CEF.
-3. What is $\hat{y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
+3. What is $\hat{Y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
 2. Calculate $e$
 3. Calculate the mean of $e$
 4. Calculate the correlation of $X$ and $e$
@@ -985,7 +1008,7 @@ These facts are mathematical truths about least squares. Unrelated to assumption
 
 - Can fit least squares (LS) to **any** scatterplot, if $X$ has positive variance.
 
-- LS line minimizes the sum of squared residuals (minimizes the distance between predicted $\hat{y}$ and actual values $y$).
+- LS line minimizes the sum of squared residuals (minimizes the distance between predicted $\hat{Y}$ and actual values $y$).
 
 - LS line always goes through point of averages; can be computed exactly from "graph of averages"
 
