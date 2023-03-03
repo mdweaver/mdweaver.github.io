@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 14, 2022"
+date: "March 3, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -49,30 +49,38 @@ options("kableExtra.html.bsTable" = T)
 
 - Key mathematical operations
 - Geometric intuition
+- Derive the mean
 
-**Deriving Multivariate Least Squares**
+**Deriving Least Squares**
 
 - Relationship to the mean
 - Minimizing distance
+- Matrix solution = bivariate formula
 - Relationship to correlation
+
+**Multivariate Least Squares**
+
+- 
+- What does "controlling" mean?
 
 ---
 
 ### Today
 
 - algorithm with mathematical properties
-    - what are the assumptions and properties and why
-- without further assumption, plug in data, generate a line
+    - what are the requirements and properties and why
+- without further assumption, plug in data, generate prediction
 - limited interpretation
+- The goal is to understand link to the mean, what does "controlling" do?
 
---- 
+---
 
-### Today
+### Regression as Prediction
 
-- Matrix algebra
-- The Mean
-- Derive Least Squares algorithm
-- Multiple Regression requirements, interpretation
+We can treat regression as a way of **predicting** values of $Y$, given values of $X$ (or choosing a constant - the mean)
+
+We obtain least squares regression by imposing the requirement that the (Euclidean) **distance** between our prediction and and the true values of $Y$ is as small as possible.
+
 
 ---
 
@@ -84,7 +92,7 @@ $\widehat{y}_i = a + b x_i$
 
 #### slope:
 
-$$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
+$$b = \frac{Cov(x,y)}{Var(x)}$$
 
 #### intercept:
 
@@ -152,47 +160,8 @@ $$ X = \begin{pmatrix} 1 & -1 \\ 1 & 2 \\ 1 & 4 \end{pmatrix}$$
   #             alpha = 0.5) +
   geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
                arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlab("") + ylab('') + 
-  coord_fixed()
+  coord_fixed() + theme_bw()
 ```
-
-
-
-### Examples/ Practice
-
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
-
-Find 
-
-$$A'A = ?$$
-
-$$AA' = ?$$
-
----
-
-### Examples/ Practice
-
-$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
-
-$$B = \begin{pmatrix} 6 \\ 5 \\ 3 \\ -1 \end{pmatrix}$$
-
-Find 
-
-$$A'B = ?$$
-
-$$AB = ?$$
-
---- 
-
-### Examples/ Practice
-
-$$u = \begin{pmatrix} 1 \\ -2 \\ 6 \end{pmatrix}; \ v =\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} $$
-
-And 
-
-$$(u - a) \cdot v = 0$$
-
-Solve for $a$
-
 
 ---
 
@@ -217,7 +186,7 @@ $$\begin{pmatrix}1 \\ 1 \end{pmatrix} + \begin{pmatrix}-2 \\ 3 \end{pmatrix} = \
                arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
                alpha = 1) +
   geom_segment(aes(x = c(0), y = c(0), xend = c(-1), yend = c(4)), arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.25) + xlab("") + ylab('') + 
-  coord_fixed()
+  coord_fixed() + theme_bw()
 ```
 
 --- 
@@ -244,7 +213,7 @@ ggplot(vectors, aes(x = x, y = y)) +
      geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(2.5,-1), yend = c(2.5,1.5)),  arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),  alpha = 0.5, lty = 2, color = 'red') +
      xlab("") + ylab('') + 
   geom_text(aes(x = c(1, -1), y = c(0.5, 1), label = c('a','b'))) + 
-   coord_fixed()
+   coord_fixed() + theme_bw()
 ```
 
 --- 
@@ -292,9 +261,8 @@ When the inner product of two vectors ($u,v$) is $0$, then $u$ and $v$ are **ort
   geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(1,4), yend = c(-2,2)),  arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),  alpha = 1) +
     geom_text(aes(x = 1, y = 0, label = "90 degrees")) + 
     xlab("") + ylab('') + 
-  coord_fixed()
+  coord_fixed() + theme_bw()
 ```
-
 
 ---
 
@@ -318,6 +286,7 @@ $$\begin{pmatrix} (1 \cdot 1)+(1\cdot1) &  (1\cdot-1) + (1 \cdot 2) \\ (-1\cdot1
 
 $$ = \begin{pmatrix} 2 & 1 \\ 1 & 5 \end{pmatrix}$$
 
+
 ---
 
 ### Matrices can be Divided
@@ -331,6 +300,41 @@ $$A \times A^{-1} = A^{-1} \times A = I_{p \times p} = \begin{pmatrix} 1 & 0 & \
 This is an **identity** matrix with 1s on diagonal, 0s everywhere else. $A_{p \times p} \times I_{p \times p} = A$ (identity matrix is matrix equivalent of 1)
 
 ---
+
+### Examples/ Practice
+
+$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}$$
+
+Find 
+
+$$A'A = ?$$
+
+$$AA' = ?$$
+
+---
+
+### Examples/ Practice
+
+$$ A = \begin{pmatrix} 1 & 5 \\ 1 & 7 \\ 1 & 8 \\ 1 & 11 \end{pmatrix}; B = \begin{pmatrix} 6 \\ 5 \\ 3 \\ -1 \end{pmatrix}$$
+
+Find 
+
+$$A'B = ?$$
+
+$$AB = ?$$
+
+--- 
+
+### Examples/ Practice
+
+$$u = \begin{pmatrix} 1 \\ -2 \\ 6 \end{pmatrix}; \ v =\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} $$
+
+And 
+
+$$(u - a) \cdot v = 0$$
+
+Solve for $a$
+
 
 # Mean Again:
 
@@ -508,7 +512,7 @@ Rather than project the $n \times 1$-dimensional vector $\mathbf{Y}$ into one di
 
 Given $\mathbf{Y}$, an $n \times 1$ dimensional vector of all values $Y$ for $n$ observations
 
-and $\mathbf{X}$, an $n \times p$ dimensional matrix ($p$ columns, $n$ observations). We call this the **design matrix**. Almost always includes
+and $\mathbf{X}$, an $n \times p$ dimensional matrix ($p$ columns, $n$ observations). We call this the **design matrix**. Almost always includes a vector of $\mathbf{1}$ (for an intercept, or the mean)
 
 $\mathbf{\hat{Y}}$ is an $n \times 1$ dimensional vector of predicted values (for the mean of Y conditional on X) computed by $\mathbf{X\beta}$. $\mathbf{\beta}$ is a vector  $p\times 1$ of (parameters) that we multiply by $\mathbf{X}$.
 
@@ -548,6 +552,8 @@ $\mathbf{X}'_{p\times n}\mathbf{e}_{n\times1} = \begin{pmatrix} 0_1 \\ \vdots \\
 $\mathbf{X}'(\mathbf{Y} - \mathbf{\hat{Y}}) = \mathbf{0}_{p \times 1}$
 
 $\mathbf{X}'(\mathbf{Y} - \mathbf{X{\beta}}) = \mathbf{0}_{p \times 1}$
+
+$\mathbf{X}'\mathbf{Y} - \mathbf{X}'\mathbf{X{\beta}} = \mathbf{0}_{p \times 1}$
 
 $\mathbf{X}'\mathbf{Y} = \mathbf{X}'\mathbf{X{\beta}}$
 
@@ -706,7 +712,7 @@ $$(\mathbf{X}'\mathbf{X})^{-1} = \frac{1}{n \cdot Var(x)} \begin{pmatrix} \overl
 
 We can put it together to get: $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$
 
-$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \frac{1}{n \cdot Var(x)} \begin{pmatrix} \overline{x^2} & -\overline{x} \\ -\overline{x} & 1 \end{pmatrix} n \begin{pmatrix} \overline{y} \\ \overline{xy} \end{pmatrix}$$
+$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \frac{1}{n \cdot Var(x)} \begin{pmatrix} \overline{x^2} & -\overline{x} \\ -\overline{x} & 1 \end{pmatrix} \frac{n}{1} \begin{pmatrix} \overline{y} \\ \overline{xy} \end{pmatrix}$$
 
 $$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \frac{1}{Var(x)} \begin{pmatrix} \overline{x^2}\overline{y} -\overline{x} \ \overline{xy} \\ \overline{xy} - \overline{x}\ \overline{y}\end{pmatrix} = \begin{pmatrix}a \\ b \end{pmatrix}$$
 
@@ -762,7 +768,7 @@ Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line
 
 The mathematical procedures we use in regression ensure that: 
 
-$1$. **the mean of the residuals is always zero**. Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+$1$. **the mean of the residuals is always zero** (if we include an intercept). Because we included an intercept ($a$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
 
 ---
 
@@ -784,11 +790,14 @@ The mathematical procedures we use in regression ensure that:
 
 $2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
 
+Recall that $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e}$
+
+
 We chose $\beta$ ($a,b$) such that $X'e = 0$ so they would be **orthogonal**. 
 
 $X'e = 0 \to \sum x_ie_i = 0 \to \overline{xe}=0$; 
 
-$\overline{e}=0$ from above; 
+And, from above, we know that $\overline{e}=0$; 
 
 so $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e} = 0 - \overline{x}0 = 0$.
 
@@ -796,7 +805,7 @@ so $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e} = 0 - \overline{x}0 = 0
 
 $2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
 
-This also means that residuals $e$ are **always** <u>perfectly uncorrelated</u> (Pearson correlation) with **all** the columns in our matrix $\mathbf{X}$: all the variables we include in the regression model.
+This **also means** that residuals $e$ are **always** <u>perfectly uncorrelated</u> (Pearson correlation) with **all** the columns in our matrix $\mathbf{X}$: all the variables we include in the regression model.
 
 
 # Multivariate Least Squares
@@ -829,18 +838,19 @@ What is  "projecting onto $p$ dimensions"
 
 When we project into two dimensions, these dimensions are **precisely like** the $x$ and $y$ axes on a graph: perpendicular/orthogonal to each other. 
 
-In multivariate regression, because we are going to project $Y$ onto $p$ **orthogonal** dimensions in $X$.
+In multivariate regression, because we are going to project $Y$ onto $p$ **orthogonal** dimensions in $\mathbf{X}$.
 
+- "under the hood", regression creates a new version of $\mathbf{X}$ where each column is **orthogonal to the others**
 
 ---
 
 ### Mathematical Requirements:
 
 1. Matrix $X$ has "full rank"
-  - This means that all of the columns of $X$ are **linearly independent**.
+  - This means that all of the columns of $\mathbf{X}$ are **linearly independent**.
     - cannot have two identical columns
     - cannot have  set of columns that sum up to another column multiplied by a scalar
-  - If $X$ is not full rank, cannot be inverted, cannot do least squares.
+  - If $\mathbf{X}$ is not full rank, cannot be inverted, cannot do least squares.
     - but we'll see more on the intuition for this later.
     
 2. $n \geq p$: we need to have more data points than variables in our equation
@@ -922,24 +932,23 @@ where $X_k^* = X_k - \hat{X_k}$ obtained from the regression:
 
 $X_{k} = c_0 + c_1 x_{1} + \ldots + c_{j} X_{j}$
 
-$X_k^*$ is the residual from regressing $X_k$ on all other $X_{j \neq k}$
-
+$X_k^*$ is the residual from regressing $X_k$ on all other $\mathbf{X_{j \neq k}}$
 
 ---
 
 ### Multivariate Least Squares:
 
-How do we make sense of  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?
+How do we make sense of  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?
 
-- It is the residual in same way as $e$: $X_k^*$ is **orthogonal** to all other variables in $X_{j \neq k}$.
+- It is the residual in same way as $e$: $X_k^*$ is **orthogonal** to all other variables in $\mathbf{X_{j \neq k}}$.
   - it is "perpendicular" to other variables, as are axes on a graph.
-  - It is mechanically **uncorrelated** (in the linear sense) with all other variables in the regression.
+  - It is perfectly **uncorrelated** (in the linear sense) with all other variables in the regression.
 
 ---
 
 ### Multivariate Least Squares:
 
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?)
+How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?)
 
 - The slope $b_k$ is the change in $Y$ with a one-unit change in the part of $X_k$ that is **uncorrelated with**/**orthogonal to** the other variables in the regression.
 
@@ -947,9 +956,9 @@ How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as
 
 ### Multivariate Least Squares:
 
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $X_{j \neq k}$?)
+How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?)
 
-- Sometimes people say "the slope of $X_k$ **controlling** for variables $X_{j \neq k}$". 
+- Sometimes people say "the slope of $X_k$ **controlling** for variables $\mathbf{X_{j \neq k}}$". 
   - is it "holding other factors constant"/*ceteris parabis*? Not quite.
   - better to think of it as "partialling out" the relationship with other variables in $\mathbf{X}$. The $X_k$ that does not covary with other variables
   
