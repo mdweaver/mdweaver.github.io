@@ -152,7 +152,7 @@ contrasts to what is **factual**: the way the world is, given the events that ha
 
 ## Counterfactuals:
 
-If Gwenyth Paltrow's character...
+If Gwyneth Paltrow's character...
 
 (a) **catches the train** then she catches her boyfriend cheating, and **dumps him**
 
@@ -200,7 +200,7 @@ then **potential outcomes** are the values of $Y$ that a **specific case** would
 
 **potential outcomes notation:**
 
-Where $i$ corresponds to a specific case (e.g., you or Gwenyth Paltrow)
+Where $i$ corresponds to a specific case (e.g., you or Gwyneth Paltrow)
 
 $\mathrm{Trans \ Friend}$ or $\mathrm{TF}$ ($X$) is the causal variable (and can take different values, e.g. $yes, no$), then the potential outcomes of $\mathrm{\$8 \ fee \ vote}$ ($Y_i$) are:
 
@@ -213,11 +213,13 @@ $^*$ Note, I will use $\color{red}{red}$ to indicate counterfactual potential ou
 
 ## Counterfactuals and Potential Outcomes
 
-$\mathrm{Love \ Life _{Gwenyth} (Catches \ the \ train )}$
+$\mathrm{Love \ Life _{Gwyneth} (Catches \ the \ train )}$
+$= \mathrm{Dump \ cheating \ BF}$
+
+$\mathrm{Love \ Life _{Gwyneth} (Doesn't \ catch \ the \ train )}$
+$= \mathrm{Dump \ cheating \ BF}$
 $= \mathrm{Stay \ with \ cheating \ BF}$
 
-$\mathrm{Love \ Life _{Gwenyth} (Doesn't \ catch \ the \ train )}$
-$= \mathrm{Dump \ cheating \ BF}$
 
 We only will observe **one** of these two possibilities. But both could **potentially** have happened.
 
