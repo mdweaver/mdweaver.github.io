@@ -1,0 +1,410 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "March 8, 2023"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+```
+
+## Objectives
+
+
+### **1. Review**
+  
+- causality as **counterfactual**
+- **potential outcomes**
+
+
+### **2. Types of Causal Claims**
+
+- deterministic causal claims
+- probabilistic causal claims
+
+### **3. Testing Causal Claims**
+
+- Fundamental Problem of Causal Inference
+
+# Recap
+
+## Causality is Counterfactual
+
+All causal claims are claims about how the world would be changed in an *alternate timeline* in which some thing (or things) were different than they actually are. 
+
+These alternate timelines/universes are **counterfactuals**
+
+## Causality is Counterfactual
+
+> "The expansion of NATO into Eastern Europe caused Russia to invade Ukraine"
+
+implicitly claims that...
+
+in the **counterfactual** world where NATO did not expand (the "cause" is not present), Russia would not have invaded Ukraine in February 2022 (the "effect" would be different).
+
+## Potential Outcomes Describe Counterfactuals
+
+**potential outcomes** are values for variables that describe the factual world (that has occurred) and counterfactual worlds (that have not). 
+
+-  a variable corresponding to what is "affected" or the "**outcome**" (e.g. Russia invasion: yes or no)
+-  the **values** that variable would take **for a particular case** (e.g. Ukraine) in different **potential** "universes" where the variable for the "cause" (e.g. # of E. European countries in NATO) were to take different values
+
+$\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 0) = ?$
+$\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 14) = ?$
+
+## Potential Outcomes
+
+Which of these potential outcomes is **factual**? **Counterfactual**?
+
+$\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 0) = ?$
+$\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 14) = ?$
+
+What are the values of these potential outcomes if the following claim is true?
+
+> "The expansion of NATO into Eastern Europe caused Russia to invade Ukraine"
+
+## Causality is Counterfactual
+
+> "The expansion of NATO into Eastern Europe caused Russia to invade Ukraine"
+
+If this causal claim were true: then it implies these potential outcomes:
+
+$\color{red}{\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 0) = \mathrm{No}}$
+$\mathrm{Russian \ Invasion}_{Ukr}(\mathrm{E. \ Europ. \ NATO \ Memb.} = 14) = \mathrm{Yes}$
+
+(red indicates $\color{red}{\mathrm{counterfactual}}$)
+
+## Counterfactual Claims:
+
+It follows that, all causal claims can be re-stated as **counterfactual claims**
+
+- They contain a **conditional clause**, starting with "If" (always in the **subjunctive mood**)
+- A "then" clause, stating what would happen if the **conditional**/**"If"** clause were true (always in the **conditional mood**)
+- May be in past, present, or future tense.
+
+## Counterfactual Claims:
+
+### Example:
+
+"News coverage of the discovery of unmarked graves at the Kamloops Residential School increased settler Canadian support for Truth and Reconciliation."
+
+$$\overbrace{\text{If there had not been news coverage of the graves}}^{\text{If-clause in Subjunctive Mood}}, \\ \underbrace{\text{there would  be less support for Truth and Reconciliation}}_{\text{Then-clause in Conditional Mood}}$$
+
+
+
+## Counterfactual Claims:
+
+Note: **Counterfactual claims get increasingly complicated, the more complicated your causal claim is**
+
+- On assignments/final exam do not come up with overly complex causal claims.
+
+## Practice:
+
+With your neighbors: turn these causal claims into counterfactual claims.
+
+1. "The rise of social media 'echo chambers' increased political polarization." 
+2. "Ownership of rental housing by large investment firms has increased the cost of rent." 
+3. "Remote learning during the pandemic increased mental health issues among students." 
+
+
+# Varieties of Causal Claims
+
+## Two ways of asking causal questions
+
+Usually... different kinds of causal questions are answered with **different kinds of causal claims**
+
+1. **causes of effects** $\to$ **deterministic** causal claims
+2. **effects of causes** $\to$ **probabilistic** causal claims
+
+
+And different types of causal claims imply different counterfactuals/potential outcomes
+
+## Deterministic Causal Claims
+
+**deterministic causal claims**
+
+claims about what happens with **certainty** under specific causal conditions
+
+- whenever some **cause** (or set of causes) is present, the **effect** <u>**always**</u> happens
+- or whenever some **cause** (or set of causes) is absent, the **effect** <u>**never**</u> happens
+- usually make these claims when we are interested in **causes of effects**
+
+## Deterministic Causal Claims
+
+There are several varieties **and** combinations
+
+- **necessary** conditions
+- **sufficient** conditions
+- conjunctural/multiple causation (combinations of multiple necessary/sufficiency conditions)
+
+## Necessary Conditions
+
+### **necessary conditions**
+
+A causal claim that there is some cause $C$ **without which** the effect $E$ **cannot occur**
+
+- A cause $C$ **must happen** in order for effect $E$ to happen.
+- **Does not mean** if the cause $C$ is present, effect $E$ must happen
+
+## Necessary Conditions: Example
+
+A claim: "If Canada had not signed the UN Declaration on the Rights of Indigenous Peoples, the Blueberry River First Nation would not have been able to successfully challenge BC's permitting of industrial activities on their ancestral lands."
+
+Also can be stated: "The signing of the UNDRIP by Canada was a necessary condition for the Blueberry River First Nation to be able to successfully challenge BC's permitting of industrial activities on their ancestral lands."
+
+Head to [menti.com](menti.com) and use code $4536 \ 6430$
+
+---
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/bc1597f5eddf982927631e3cc6c7f3c8/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+## Necessary Conditions: Example
+
+If this claim is true: "The signing of the UNDRIP by Canada was a necessary condition for the Blueberry River First Nation to be able to successfully challenge BC's permitting of industrial activities on their ancestral lands."...
+
+The fact that Canada signed the UNDRIP **does not mean** that the the BRFN's legal victory over BC was inevitable. 
+
+>- Presence of necessary condition $\not\to$ effect must happen. Instead, *absence* of necessary condition $\to$ effect does not happen
+
+## Necessary Conditions: Potential Outcomes
+
+Claims about necessary conditions have specific implications about potential outcomes:
+
+If we say that: "economic crisis is a necessary condition for populist dictatorship to replace democracy"
+
+It implies the potential outcomes in for democratic country $i$:
+
+$\mathrm{Dictatorship}_i \ (\mathrm{Economic \ Crisis = No}) = \mathrm{No}$
+
+$\mathrm{Dictatorship}_i \ (\mathrm{Economic \ Crisis = Yes}) = \mathrm{Yes} \ or \ \mathrm{No}$
+
+Something else might need to happen, in addition to economic crisis, for dictatorship to arise.
+
+
+## Sufficient Conditions
+
+(In contrast to **necessary conditions**)
+
+### **sufficient conditions**
+
+- cause $C$ **always** produces an effect $E$ when it is present
+- do not depend on other factors being present; cause $C$ can produce $E$ **by itself**
+- Sufficient conditions imply: every time $C$ is present, then $E$ will happen 
+
+## Sufficient Conditions: Example
+
+**"A military coup that overthrows a democratically elected government is a sufficient condition for large public protests."**
+
+- This *might* be the case every time
+- Does not appear to depend on other factors
+
+#### Generally, single causes that are sufficient conditions are **rare** in social sciences
+
+## Sufficient Conditions: Example
+
+Sufficient conditions also imply specific potential outcomes:
+
+**"A military coup that overthrows a democratically elected government is a sufficient condition for large public protests."** implies that for *every* democratic country $i$:
+
+$\mathrm{Protests}_i \ (\mathrm{Military \ Coup = No}) = \mathrm{No}$
+
+$\mathrm{Protests}_i \ (\mathrm{Military \ Coup = Yes}) = \mathrm{Yes}$
+
+
+## Misinformation Experiment
+
+### **What can be done to limit the spread of misinformation on social media?**
+
+>- Educating people about strategies used to spread misinformation  ("inoculation") may make them less susceptible to these techniques. 
+>- Does showing people a short video explaining a misinformation tactic increase their ability to recognize the tactic?
+
+# {.centered}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ER64qa_qnWg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+## Misinformation Experiment
+
+Aired this ad on YouTube and then surveyed people in "treatment" and "control" conditions  to see if they recognize the misinformation tactic
+
+<img src="./misinformation.png" width=100%>
+
+## Misinformation Experiment
+
+```{r,echo = F, message=F, warning=F}
+
+dd = data.frame(h = c(55.1, 52.5),
+                cond = factor(c("Emotional Language Inoculation", "Control"), levels = c("Emotional Language Inoculation", "Control"))
+)
+                
+ggplot(dd, aes(x = cond, y = h)) + geom_bar(stat = "identity") + ylab("% recognize Emotional Language") + xlab("Treatments") + ggtitle("Misinformation Recognition by Experimental Group") + theme_bw() 
+
+```
+
+[menti.com](menti.com) $6623 \ 9786$
+
+---
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/ac3a397793c03a7da0fd73d7a2350faa/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+## Complex Causality
+
+Does it make sense to say that "being inoculated" is a **necessary condition** for spotting misinformation?
+
+>- No. Clearly some people recognized misinformation without being inoculated.
+
+Does it make sense to say that "being inoculated" is a **sufficient condition** for spotting misinformation?
+
+>- No. Clearly some people were inoculated but did not recognize misinformation.
+
+>- It is simpler to state this as probabilistic: being "inoculated" increases likelihood of recognizing misinformation
+
+## Probabilistic Causal Claims
+
+### **probabilistic causal claims**
+
+are claims that the presence/absence of a cause $C$ makes an effect $E$ more or less likely to occur. Or cause $C$ increases/decreases effect $E$ **on average**
+
+- In contrast to **deterministic causal claims** this implies
+    - effect $E$ can happen when $C$ is absent
+    - effect $E$ may not happen when $C$ is present
+- **NOT** a claim that politics has some inherent randomness (e.g. quantum mechanics)
+- Usually make these claims when interested in **effects of causes**
+
+## Complex Causality
+
+Causality may be **deterministic**... there are exact conditions for when effect always/never happens.
+
+But in reality, it is almost always **complex** 
+
+- **multiple** factors might be necessary (conjunctural causality)
+- different causes produce same effect (multiple causality)
+- different groups of factors might, together be sufficient (multiple and conjunctural)
+- (INUS/SUIN conditions: [see here](https://doi.org/10.1111/1468-4446.12340))
+
+## Probabilistic Causal Claims
+
+Because causality is complex, we do not fully know the deterministic rules...
+
+$C$ appears to only cause a change in the **probability** or **likelihood** of seeing the effect $E$.
+
+- e.g. [coin flips](https://www.youtube.com/watch?v=AYnJv68T3MM)
+
+
+## Probabilistic Claims
+
+Which are probabilistic causal claims?
+
+#### **A) It's probably true that leftwing government reduce student tuition fees**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### **B) Electing a leftwing, rather than rightwing, government increases the likelihood that tuition fees wil be reduced**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### **C) Tuition fees are reduced more frequently under leftwing governments than rightwing governments**
+
+
+## Examples
+
+Which is a probabilistic causal claim?
+
+#### ~~**A) It's probably true that leftwing government reduce student tuition fees**~~
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### **B) Electing a leftwing, rather than rightwing, government increases the likelihood that tuition fees wil be reduced**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### ~~**C)  Tuition fees are reduced more frequently under leftwing governments than rightwing governments**~~
+    
+## Recognizing probabilistic causal claims
+
+Not every probabilistic statement is **causal**
+
+#### 1. ~~"Oppression is likely to cause a rebellion"~~
+
+- Says oppression is probably a cause out rebellion
+- Should say: cause $C$ **changes likelihood** of outcome $E$
+
+#### 2. ~~"Rebellions are more likely to occur in places where the population is oppressed"~~
+
+- Says we are more likely to **see** rebellion where population is oppressed
+- Not clearly **causal**; just a descriptive claim.
+
+# Evidence for Causal Claims
+
+## Evidence for Causal Claims
+
+We focus on how to provide evidence that answers questions about **effects of causes** rather than **causes of effects**.
+
+- easier to address **effects of causes**
+- both are **incredibly difficult**
+
+## Evidence for Causal Claims
+
+A claim for today:
+
+> BC's face-mask mandate reduced COVID mortality in the province over the course of the pandemic.
+
+>- Why is it relevant whether this claim is true?
+>- restate this as a **counterfactual claim**
+>- what kind of **empirical** evidence would help you decide whether this claim is true?
+
+## Evidence for Causal Claims
+
+**Causal claims** imply relationships between **potential outcomes**
+ 
+$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask \ Mandate}) < \\ \color{red}{\mathrm{COVID \ Deaths}_{BC}(\mathrm{No \ Mask \ Mandate})}$
+
+$\mathrm{Black}$ indicates **factual** potential outcomes (we observe this state of the world)
+
+$\color{red}{\mathrm{Red}}$ indicates **counter**factual potential outcomes (we do not observe this state of the world)
+
+## Evidence for Causal Claims
+
+$\mathrm{COVID \ Deaths}_{BC}(\mathrm{Mask \ Mandate}) = 5,218$
+
+$\color{red}{\mathrm{COVID \ Deaths}_{BC}(\mathrm{No \ Mask \ Mandate})} = \ \mathbf{????}$:
+
+>- How could we know what this is?
+>- We can **never know** what deaths in BC would have been absent the mask mandate.
+
+## What is the problem here?
+
+### **Fundamental Problem of Causal Inference**
+
+1. For BC, we can **only** observe the potential outcome of $\mathrm{COVID \ Deaths}_{BC}$ for where the value of $\mathrm{Mask \ Mandate} = Yes$: the **actual policy** that occurred in BC.
+
+2. We can **never observe** the other, **counterfactual**, potential outcomes of $\color{red}{\mathrm{COVID \ Deaths}_{BC}}$ where $\color{red}{\mathrm{Mask \ Mandate} = No}$, because that was not the actual policy.
+
+3. We can never **empirically** observe, for BC, whether $\mathrm{Mask \ Mandate}$ caused $\downarrow \mathrm{COVID \ Deaths}$.
+
+## What is the problem here?
+
+### **Fundamental Problem of Causal Inference**
+
+1. By definition, $X$ causes $Y$ if the value of $Y$ were different if we changed $X$ for the exact same case.
+
+2. For a specific case, we can **only** observe the potential outcome of $Y$ for the value of $X$ it **actually takes**. 
+
+3. We **never observe** the **counterfactual** potential outcomes of $Y$ for different possible values of $X$ that the case did not experience.
+
+4. We can never **empirically** observe, for a specific case, whether $X$ causes $Y$.
+
+#
+
+<img src='https://www.roypumphrey.com/wp-content/uploads/2018/04/jiFfM.jpg'>
+
+## Solving the Problem
+
+**What are the "solutions" to this problem?**
+
+**Stay tuned and find out!**
+
