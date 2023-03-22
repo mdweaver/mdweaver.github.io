@@ -166,11 +166,11 @@ In reality, only **one** of these possibilities can happen. If (a) happens, it i
 
 ### Think and write...
 
-In the current AMS election, you are asked vote on whether to increase student fees by \$8 to cover gender-affirming care.
+In the recent AMS election, you were asked vote on whether to increase student fees by \$8 to cover gender-affirming care.
 
-If you had a friend on campus who was trans/non-binary, would you vote "yes" on this measure?
+If you had a friend on campus who was trans/non-binary, would you have voted "yes" on this measure?
 
-If you did not have a friend on campus who was trans/non-binary, would you vote "yes" on this measure?
+If you did not have a friend on campus who was trans/non-binary, would you have voted "yes" on this measure?
 
 Go to [menti.com](menti.com) and enter $7377 4751$ (there are two questions, answer both)
 
@@ -205,7 +205,6 @@ Where $i$ corresponds to a specific case (e.g., you or Gwyneth Paltrow)
 $\mathrm{Trans \ Friend}$ or $\mathrm{TF}$ ($X$) is the causal variable (and can take different values, e.g. $yes, no$), then the potential outcomes of $\mathrm{\$8 \ fee \ vote}$ ($Y_i$) are:
 
 $$\mathrm{AMS \ fee \ vote}_{i}(\mathrm{TF} = yes), \mathrm{AMS \ fee \ vote}_i(\mathrm{TF} = no)$$
-
 
 For case $i$, $\mathrm{Trans \ Friend}$ can only ever be $yes$ or $no$: one potential outcome is **factual** (it will happen), while the other will remain **counterfactual** (it won't happen)
 
