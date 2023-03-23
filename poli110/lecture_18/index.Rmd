@@ -56,9 +56,9 @@ Story above not false, but misleading:
 
 ## Pandemic Misinformation
 
-Blatantly false or misleading information about COVID-19 and COVID vaccine circulate widely on social media [https://www.washingtonpost.com/technology/2020/12/18/faq-coronavirus-vaccine-misinformation/](See here.)
+Blatantly false or misleading information about COVID-19 and COVID vaccine circulate widely on social media [See here.](https://www.washingtonpost.com/technology/2020/12/18/faq-coronavirus-vaccine-misinformation/)
 
-Even [https://www.ctvnews.ca/health/canadian-cardiologists-debunk-florida-covid-19-vaccine-claims-1.6312178](public officials circulate misinformation.)
+Even [public officials circulate misinformation.](https://www.ctvnews.ca/health/canadian-cardiologists-debunk-florida-covid-19-vaccine-claims-1.6312178)
 
 Misleading information [can affect behavior](https://www.nber.org/system/files/working_papers/w27417/revisions/w27417.rev0.pdf), including reducing willingness to be vaccinated. 
 
@@ -90,7 +90,7 @@ If you had a friend on campus who was trans/non-binary, would you have voted "ye
 
 If you did not have a friend on campus who was trans/non-binary, would you have voted "yes" or "no" on this measure?
 
-Go to [menti.com](menti.com) and enter $4434 \ 9124$ (there are THREE questions, click through to answer all of them)
+Go to [menti.com](https://www.menti.com) and enter $4434 \ 9124$ (there are THREE questions, click through to answer all of them)
 
 
 ## Confounding a risk
@@ -108,7 +108,7 @@ dagify(
                   #"flag" = "Flag News\nas 'Fake'",
                   #'filter' = "Reveal\nCensoring",
                   "vaccine" = "COVID\nVaccination"
-                  #"other" = "Other\nStuff"
+                  #"exp" = "Other\nStuff"
                   )
                   )  %>%
   tidy_dagitty(layout='auto') %>%
@@ -154,7 +154,7 @@ dagify(
        #flag ~ assign,
        #block ~  assign,
        fake ~ other,
-       vaccine ~  distrust,
+       vaccine ~ fake + distrust,
        exposure = "fake", 
        outcome = 'vaccine',
        labels = c("fake" = "Consume\nMisinformation",
@@ -162,10 +162,10 @@ dagify(
                   #"flag" = "Flag News\nas 'Fake'",
                   #'filter' = "Reveal\nCensoring",
                   "vaccine" = "COVID\nVaccination",
-                  "other" = "????"
+                  "other" = "?"
                   )
                   )  %>%
-  tidy_dagitty(layout='auto') %>%
+  tidy_dagitty(layout='nicely') %>%
 ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges_link() +
   geom_dag_text(mapping = aes(label = label), colour = 'black') +
@@ -217,7 +217,7 @@ Cases are **about the same** in terms of potential outcomes, on average:
 
   - average in control group is **observable** "counterfactual" for average in treatment group
   - average in treatment group is **observable** "counterfactual" for average in control group
-  - EXACTLY like with random sampling: [https://mdweaver.shinyapps.io/shiny/](shiny app)
+  - EXACTLY like with random sampling: [https://mdweaver.shinyapps.io/shiny/](https://mdweaver.shinyapps.io/shiny/)
 
 
 ---
