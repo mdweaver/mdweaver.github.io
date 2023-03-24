@@ -1,0 +1,65 @@
+
+
+recap:
+
+- review regression properties
+
+
+- conditioning
+	- what does it assume?
+	- what does it do?
+	
+	
+- regression:
+	- conditioning is a conditional expectation function
+	- regression is also a way of estimating conditional expectation function
+	- it is linear and additive in its terms... 
+	- imputation...
+	- what is the basic idea of imputation: regression plugs in best guess of what missing potential outcome SHOULD be based on linear and additive model specification ... movement in linearly orthogonal segments of the data 
+	- assumptions:
+		- conditional independence (strong ignorability)-
+		- positivity
+		- considerations: regression CIA  hinges on linearity and additivity: are effects linear? are effects the same for different subgroups? when imputing, do values of potential outcomes of Y vary in interacting ways.
+		- considerations: positivity => not the average causal effect
+		- considerations: weights => what is the causal estimand?
+	- what does conditional independence mean in the case of regression? 
+		- linear dependence removed, but non-linear dependence persists... 
+			- EXAMPLE using effect of hours on earnings
+		- imputation EXERCISE: peacekeeping data... effects of peacekeeping, conditional on...
+			- take data, calculate the missing potential outcomes: 
+				- regress y on x
+				- create counterfactual data: copy data, change peacekeeping label
+				- generate predicted outcomes using counterfactual data
+				- create y1
+				- create y0
+				- calculate tau_i
+				- take average
+				- compare with regression coefficient
+			- calculate average effect
+		- omitted variable bias: what is magnitude of bias if we fail to condition on something...
+	- what is the role of linearity/additivity: interpolation bias: regression can generate biases due to functional form assumptions ...
+		- lack of cases that are identical...
+		- imputation...
+		- this can lead to bias if imputation is wrong
+		- we can relax linearity: polynomials, relax additivity: interactions:
+			- example of earnings
+	- what is the role of positivity?:
+		- extrapolation bias: rather than putting 0 weight on strata without variation in treatment, will impute what expected treatment is...
+		- extrapolation may lead to model dependence: where there is no data (untrated or treated) regression extrapolates an answer...
+		- activity
+		- weighting... should put 0 weight where there is no variance in treatment... but regression weights cases by variance in treatment conditional on x...
+			- in essence putting more weight on cases where residual D is farther from 0.
+			- may no longer correspond to your sample of interest
+			- may place extreme weight on some cases
+			
+			- weights on cases... not necessarily a BAD thing
+			- weights on levels of treatment... average causal response function... may put more weight on some parts of this function than others.
+			- weights are harder to describe when we permit many continuous variables.
+			
+			- but there are conditions where... no interpolation bias, no extrapolation, known weighting scheme.
+			
+			
+- modelsummary regression results
+- set up activities 
+- myanmar townships data: for linearity check...
+- 
