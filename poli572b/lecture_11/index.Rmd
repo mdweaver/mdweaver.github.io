@@ -339,8 +339,8 @@ k_dat_empty = k_dat_full[, list(`$i$`,
               `$\\tau_i$` = "$\\color{red}{?}$")]
 k_dat_xbeta = k_dat_full[, list(`$i$`,
               `$UN_i$` = UN, 
-              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 0 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
-              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 1 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 1 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 0 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
               `$\\tau_i$` = "$\\color{red}{?}$")]
 
 
