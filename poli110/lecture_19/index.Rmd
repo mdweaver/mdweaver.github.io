@@ -497,7 +497,7 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ## Conclusion
 
-**Confounding**
+**Conditioning**
 
 - What is it?: Another way to "solve" confounding.
 - How does it work?: Look at correlation between $X$ and $Y$, for cases with same value of $W$
