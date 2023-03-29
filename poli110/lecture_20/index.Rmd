@@ -1,0 +1,505 @@
+---
+title: "POLI 110: Confounding"
+author: "Michael Weaver"
+date: "March 29, 2023"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+require(ggdag)
+```
+
+# Correlation to Causation
+
+## Solutions to Confounding
+
+1. Conditioning:
+
+- what is it
+- how does it work?
+- Assumptions
+
+
+# Recap
+
+## Solutions to Confounding
+
+We want to use **correlation** to provide evidence of **causation**:
+
+- but we know that confounding (a form of **bias**) can lead us astray.
+- if we can reasonably *make some assumptions*, correlation can be *strong evidence of causality* without bias.
+
+>- What **are** the assumptions needed to infer correlation $\to$ causation?
+>- How can we check/interrogate those assumptions?
+
+## Internal vs External Validity
+
+**Every way** of using correlation as evidence for causality makes trade-off between:
+
+- **internal validity**: how plausible are assumptions that set aside confounding?
+- **external validity**: how much does this causal relationship speak to the causal claim/question of interest?
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | $X$ is random<br> Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | ? | ? | Low | High |
+
+# Conditioning
+
+## Conditioning
+
+### **conditioning**
+
+when we observe $X$ and $Y$ for multiple cases, we examine the correlation of $X$ and $Y$ *within* groups of cases that are **the same** on confounding variables $W, etc. \ldots$
+
+How does conditioning solve the problem? 
+
+- Cases compared have **same values** on confounding variable(s) $W$
+- In these groups, $W$ cannot affect $X$ or $Y$ (because $W$ is not moving, it can't move $X$ or)
+- "Backdoor path" from $X$ to $Y$ is "blocked"
+
+# How does it work?
+
+## Example: Conditioning
+
+[Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf) compare hate crimes in counties with and without Trump rallies, but condition on (hold constant):
+
+- percent Jewish
+- number of hate groups
+- crime rate
+- 2012 Republican vote share
+- percent university educated
+- region
+
+## Example: Conditioning
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + jewish + hate_group + crime + gop + univ + region,
+      rally ~ jewish + hate_group + crime + gop + univ + region,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'jewish' = '% Jewish',
+                  'hate_group' = '# Hate\nGroups',
+                  "crime" = "Crime\nRate",
+                  'gop' = 'GOP\nVoters',
+                  'univ'= 'Univ.\nEducated',
+                  'region' = "Region"
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c(rep('held constant',8), "" ,rep('held_constant', 5)), label_size = 2),
+                      angle_calc = "along", label_dodge = unit(rep(1,14),'lines'),
+                      edge_linetype = rep(c(3,3,3,3,3,3,3,3,1,3,3,3,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(0,0,0,0,0,0,0,0,0,0,0,10), 'pt'), type = 'closed')) + 
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Conditioning
+
+| County | HC(Yes) | HC(No) | Rally | Jewish<br>% | Hate<br>Groups | Crime<br>Rate | Rep.<br>% | Univ.<br> % | Region |
+|--------|---------|--------|-------|----------|-------------|------------|--------|---------|--------|
+| a      | $More$    | $\color{red}{Fewer}$  | Yes   | 2        | 3           | 15         | 53     | 38      | South  |
+|        |     $\Downarrow$    |    $\Uparrow$    |       |          |             |            |        |         |        |
+| b      | $\color{red}{More}$    | $Fewer$   | No    | 2        | 3           | 15         | 53     | 38      | South  
+
+## Example: Conditioning
+
+[Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf) find that, even after conditioning, Trump rallies increase the risk of hate crimes by 200%!
+
+- Lots of news headlines [like this](https://www.vox.com/2019/3/24/18279807/trump-hate-crimes-study-white-nationalism)
+
+
+## Example: Conditioning
+
+```{r echo = F, message = F, warning = F}
+
+rally_data = fread('./trump_rally_data.csv')
+
+
+data = rally_data %>% 
+        .[, list(rally = clintoneverrally[1], 
+                 hate_crimes = ifelse(clintoneverrally[1] == 1,
+                                      sum(incidentcount[clintonrallyoccured ==1]) / sum(clintonrallyoccured),
+                                      sum(incidentcount)/length(incidentcount)
+                                      )
+                 ), by = fips]
+
+ggplot(data, aes(x = rally, y = hate_crimes)) + geom_jitter(width = 0.1, alpha = 0.1) +  geom_smooth(method = lm, se = FALSE) + 
+  xlab("Clinton Rallies (Any)") +
+  ylab("Hate Crimes (per Month)") +
+  ggtitle("Clinton Rallies and Hate Crimes by County (2016):\nCorrelation") + 
+  theme_bw()
+```
+
+## Example: Conditioning
+
+[Economics PhD Candidates](https://github.com/lilleymatthew/Trump_Rallies_Replication_Materials/blob/master/Trump_Rallies_and_Hate_Crimes.pdf) show that **conditioning on the same variables**...
+
+- **Clinton rallies** increased hate crimes by **nearly 250%!!**
+
+>- What is going on here??
+
+---
+
+```{r, echo = F, warning = F, message = F}
+data = rally_data %>% 
+        .[, list(rally_trump = trumpeverrally[1], 
+                 hate_crimes_trump = ifelse(trumpeverrally[1] == 1,
+                                      sum(incidentcount[trumprallyoccured ==1]) / sum(trumprallyoccured),
+                                      sum(incidentcount)/length(incidentcount)
+                                      ),
+                 rally_clinton = clintoneverrally[1],
+                 hate_crimes_clinton = ifelse(clintoneverrally[1] == 1,
+                                      sum(incidentcount[clintonrallyoccured ==1]) / sum(clintonrallyoccured),
+                                      sum(incidentcount)/length(incidentcount)
+                                      ),
+                 log_pop = log_pop[1]
+                 ), by = fips] %>%
+  melt.data.table(., id.vars = c('fips', 'log_pop'), 
+                  measure = patterns("rally_", "hate_crimes_"), value.factor = F)
+data[, Candidate := ifelse(variable %in% 1, 'Trump', 'Clinton')]  
+
+ggplot(data, aes(x = log_pop, y = value1, color = Candidate )) + geom_jitter(height = 0.05, alpha = 0.1) +  geom_smooth(method = 'gam', se = FALSE) + 
+  ylab("Trump Rallies (Any)") +
+  xlab("Log population") +
+  ggtitle("Population and Rallies by County (2016):\nCorrelation") + 
+  theme_bw()
+```
+
+---
+
+```{r, echo = F, warning = F, message = F}
+
+ggplot(data, aes(x = log_pop, y = value2, color = Candidate )) + geom_jitter(height = 0.05, alpha = 0.1) +  geom_smooth(method = 'gam', se = FALSE) + 
+  ylab("Hate Crimes (per Month)") +
+  xlab("Log population") +
+  ggtitle("Population and Hate Crimes by County (2016):\nCorrelation") + 
+  theme_bw()
+```
+
+---
+
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + jewish + hate_group + crime + gop + univ + region+ pop,
+      rally ~ jewish + hate_group + crime + gop + univ + region + pop,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'jewish' = '% Jewish',
+                  'hate_group' = '# Hate\nGroups',
+                  "crime" = "Crime\nRate",
+                  'gop' = 'GOP\nVoters',
+                  'univ'= 'Univ.\nEducated',
+                  'region' = "Region",
+                  'pop' = 'Population'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c(rep('',8), "", "" ,"?",rep('', 5))),
+                      angle_calc = "along", label_dodge = unit(rep(1,15),'lines'),
+                      edge_linetype = rep(c(3,3,3,3,3,3,3,3,1,1,1,3,3,3,3), each = 100),
+                      arrow = grid::arrow(length=grid::unit(c(0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10), 'pt'), type = 'closed')) + 
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+---
+
+
+
+| County | HC(Yes) | HC(No) | Rally | Jewish<br>% | Hate<br>Groups | Crime<br>Rate | Rep.<br>% | Univ.<br> % | Region | Pop. |
+|--------|---------|--------|-------|----------|-------------|------------|--------|---------|--------|--------|
+| a      | $More$    | $\color{red}{More}$  | Yes   | 2        | 3           | 15         | 53     | 38      | South  | High |
+|        |     $\not\Downarrow$    |    $\not\Uparrow$    |       |          |             |            |        |         |        | |
+| b      | $\color{red}{Fewer}$    | $Fewer$   | No    | 2        | 3           | 15         | 53     | 38      | South  | Low |
+
+We would be wrong to use observed hate crimes in county $b$ (without a rally) to substitute in for counterfactual hate crimes in county $a$ (without a rally). 
+
+Population differences $\to$ difference in hate crimes regardless of rally.
+
+## Example: Conditioning
+
+After also conditioning on population (a confounder): no correlation.
+
+<img src="rallies_1.png" width = 80%>
+
+# Assumptions
+
+## Conditioning Assumptions
+
+In order to use conditioning to infer $X$ causes $Y$ if $X,Y$ correlated ...
+
+### **Must Assume**
+
+1. There are **no other confounding variables** (that you have not conditioned on)
+    - i.e. you have conditioned on ALL confounding variables
+    - sometimes called "ignorability assumption": you assume you can "ignore" other variables without confounding
+
+**How can we tell whether this assumption is correct?**
+
+DISCUSS
+
+## Conditioning Assumptions
+
+1. Assume there are **no other confounding variables** (that you have not conditioned on)
+
+- this can never be proven to be true: a "strong" assumption
+- we can't know whether all confounders are blocked because we don't know true causal graph
+- compare this against the assumption of randomization in experiments
+
+## Example
+
+In wake of recent mass shooting in Tennessee, we might ask:
+
+**Do mass shooting events cause people to become more supportive of stricter gun control policies?**
+
+## Example
+
+<img src='https://thehill.com/wp-content/uploads/sites/2/2017/10/nowaytoprevent10022017twitter.jpg?w=1280' width=80%>
+
+## Example
+
+[Newman and Hartman (2017)](https://www.cambridge.org/core/journals/british-journal-of-political-science/article/mass-shootings-and-public-support-for-gun-control/8F38356AF4DB22B8B7DF28052234FA09) examine whether exposure to mass shootings cause an increase in support for stricter gun control
+
+- Use large political attitudes survey (CCES) to look at individual responses to: "In general, do you feel that laws covering the sale of firearms should be made more strict, less strict, or kept as they are?"
+- Measure exposure to mass shooting as "distance to nearest mass shooting in recent years"
+
+>- **What might be possible confounding variables?**
+
+## Example
+
+```{r, echo = F, message=F, warning=F}
+dagify(gun_control ~ shooting + policy + crime + movie,
+       shooting ~ crime + mental + policy,
+       exposure = "shooting", 
+       outcome = 'gun_control',
+       labels = c('shooting' = "(X)Mass\nShooting", 
+                  'gun_control' = "(Y) Gun\nAttitudes",
+                  'mental' = 'Mental\nHealthcare',
+                  "crime" = "Crime",
+                  'policy' = 'Gun\nLaws',
+                  'movie' = "Loves\nJohn Wick")) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+Which variables do we NEED to condition on? Which variables do we NOT NEED to condition on?
+
+## Assumptions
+
+
+**Must Assume**
+
+1. There are **no other confounding variables** (that you have not conditioned on)
+
+  - i.e. you have conditioned on ALL confounding variables
+  - this can never be proven to be true: a "strong" assumption
+    
+But...  
+
+  - don't need to condition on **ALL** variables that might affect $X$ or affect $Y$: only confounders.
+
+
+## Example
+
+```{r, echo = F, message=F, warning=F}
+dagify(gun_control ~ shooting + med_2 + crime ,
+       shooting ~ crime  + med_1,
+       med_1 ~ policy,
+       med_2 ~ policy,
+       exposure = "shooting", 
+       outcome = 'gun_control',
+       labels = c('shooting' = "(X)Mass\nShooting", 
+                  'gun_control' = "(Y) Gun\nAttitudes",
+                  'med_1' = 'Gun Access',
+                  "crime" = "Crime",
+                  'policy' = 'Gun\nLaws',
+                  'med_2' = "Move to\nGun State")) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+Which variables do we NEED to condition on? Which variables do we NOT NEED to condition on?
+
+## Assumptions
+
+**Must Assume**
+
+1. There are **no other confounding variables** (that you have not conditioned on)
+
+  - i.e. you have conditioned on ALL confounding variables
+  - this can never be proven to be true: a "strong" assumption
+    
+But...  
+
+  - don't need to condition on **ALL** variables that might affect $X$ or affect $Y$: only confounders.
+  - don't need to condition on **ALL** variables on a backdoor path. Just one variable per backdoor path is needed.
+
+## Example
+
+[Newman and Hartman (2017)](https://www.cambridge.org/core/journals/british-journal-of-political-science/article/mass-shootings-and-public-support-for-gun-control/8F38356AF4DB22B8B7DF28052234FA09):
+
+Compare proximity to mass shooting and gun control attitudes, conditioning on:
+
+- community level: income, education, partisanship, racial composition, murder, firearms stores, population density, population
+- individual level: education, income, age, gender, race, property ownership, having children, in military, military family, partisanship, ideology, religiosity, region of birth
+
+>- Are there any potentially **really important** confounders that might not be included?
+
+---
+
+<img src='https://static.cambridge.org/binary/version/id/urn:cambridge.org:id:binary:20190926140054417-0736:S0007123417000333:S0007123417000333_fig3g.jpeg' width=80%>
+
+Proximity to mass shootings increases support for stricter gun laws... **assuming no other confounders**
+
+## Assumptions
+
+**Must Assume**
+
+1. There are **no other confounding variables** (that you have not conditioned on)
+
+  - i.e. you have conditioned on ALL confounding variables
+  - this can never be proven to be true: a "strong" assumption
+    
+But...  
+
+  - don't need to condition on **ALL** variables that might affect $X$ or affect $Y$: only confounders.
+  - don't need to condition on **ALL** variables on a backdoor path. Just one variable per backdoor path is needed.
+  - we **can** give reasons/arguments for why we think any remaining confounding is likely small OR biased against the correlation
+
+
+## Conditioning Assumptions
+
+In order to infer $X$ causes $Y$ if $X,Y$ correlated after conditioning
+
+### **Must Assume**
+
+<ol start=2>
+  <li> 
+  **Variables used to condition** relationship between $X$ and $Y$ are **measured without error**.</li>
+</ol>
+
+- even **random measurement error** in confounding variables leads conditioning to not remove bias.
+- Why? You are no longer comparing like-with-like.
+
+## Conditioning Assumptions
+
+Imagine we want to condition on gun ownership, when examining correlation of mass shootings and gun attitudes.
+
+What if we measure **gun ownership** with random measurement error?
+
+Let's see what happens... BOARD
+
+
+## Conditioning Assumptions
+
+In order to infer $X$ causes $Y$ if $X,Y$ correlated after conditioning
+
+### **Must Assume**
+
+<ol start=3>
+  <li> 
+  There are cases that are **the same** on confounding variables $W$ and different in $X$.</li>
+</ol>
+
+## Example:
+
+Let's say we want to examine the effect of gun laws on gun violence across countries:
+
+What are some factors that might affect strictness of gun regulation and gun violence?
+
+---
+
+
+```{r, echo = F, message=F, warning=F}
+dagify(gun_control ~ unemployment + inequality + welfare + capacity + slavery + settler  ,
+       shooting ~ gun_control + unemployment + inequality + welfare + capacity + slavery + settler ,
+       exposure = "gun_control", 
+       outcome = 'shooting',
+       labels = c('shooting' = "(Y)Gun\nViolence", 
+                  'gun_control' = "(X) Gun\nRestrictions",
+                  'unemployment' = 'Unemployment',
+                  "inequality" = "Inequality",
+                  'welfare' = 'Welfare\nSpending',
+                  'capacity' = "State\nCapacity",
+                  'slavery' = 'Slavery\nLegacy',
+                  'settler' = 'Settler\nColonial')) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+Is there, e.g., country that is similar to the US on all confounders?
+
+## Conditioning: Limitations
+
+In order to infer $X$ causes $Y$ if $X,Y$ correlated after conditioning
+
+### **Must Assume**
+
+<ol start=3>
+  <li> 
+  There are cases that are **the same** on confounding variables $W$ and different in $X$.</li>
+</ol>
+
+- as we want to condition on more and more variables...
+- less and less likely we find cases that exactly match
+- so, cannot condition on all confounding variables
+
+# Conclusion
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | $X$ is random<br> Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | Only variables <br> conditioned on | Condition on all confounders <br> Low measurement error <br> Similar cases | Low | High |
+
+## Conclusion
+
+**Conditioning**:
+
+- examine correlation of $X$ and $Y$ for cases that are the same on confounders $W$
+- Assumptions:
+  - no other confounding variables: can't check
+  - no measurement error: can check
+  - similar cases with different $X$: can check
+- While imperfect, we should not dismiss this approach.
+
+## Alternatives
+
+Return to the effects of Trump Rallies:
+
+What if we can't find counties without rallies that otherwise similar to counties with rallies?
+
+Is there another comparison we **can do** that might be an improvement?
