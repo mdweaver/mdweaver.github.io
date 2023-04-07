@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 28, 2022"
+date: "April 7, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -19,7 +19,7 @@ require(data.table)
 require(UsingR)
 require(lfe)
 require(sandwich)
-require(stargazer)
+require(modelsummary)
 require(interflex)
 
 options("kableExtra.html.bsTable" = T)
@@ -86,6 +86,7 @@ Is the effect of some cause different for different sets of cases?
 
 - heterogeneous treatment effects
 - "moderators": factors that intensify/weaken some causal effect
+- differences-in-differences
 
 ---
 
@@ -105,16 +106,13 @@ $$\mathrm{Any \ Riot}_{it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \ep
 
 ---
 
-### Example
-
 ```{r echo = F, results='asis'}
 m1 = lm(any_riot ~ INC_win, data = riots)
 
-stargazer(m1,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("INC Win", "Intercept"),
-          dep.var.labels = 'Any Riots')
+modelsummary(list("Any Riot" = m1),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c('INC_win' = "INC Win", "(Intercept)" = "Intercept"))
 
 ```
 
@@ -156,7 +154,8 @@ Easy to do in `R`:
 
 ```{r}
 m2 = lm(any_riot ~ INC_win*high_enp, data = riots)
-m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, data = riots)
+m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, 
+        data = riots)
 ```
 
 `*` expands out the 'main' effects and interaction effects
@@ -168,11 +167,10 @@ m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, data = riots)
 ### Interaction Effects | Interpretation?
 
 ```{r echo = F, results='asis'}
-stargazer(m2,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("INC Win", "High ENP", "INC Win x High ENP", "Intercept"),
-          dep.var.labels = 'Any Riots')
+modelsummary(list("Any Riot" = m2),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'INC_win' = "INC Win", 'hign_enp' = "High ENP", "INC_win:high_enp" = "INC Win x High ENP"))
 
 ```
 
@@ -203,6 +201,34 @@ Interaction Effects: Effect of INC victory differs across ENP?
 - `INC_win`: change probability of riot when INC wins (vs loses) in low ENP areas.
 - `hign_enp`: difference in probability of riot in high vs low ENP areas where INC loses.
 
+---
+
+### Interaction Effects | DiD
+
+Different intercepts (means) for each group:
+
+|        | Untreated | Treated |
+|--------|------|--------|
+| Pre | `Intercept` | `Intercept + Treated` |
+| Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
+
+`lm(Y ~ Treated*Post, data = data)`
+
+
+---
+
+### Interaction Effects | DiD
+
+If we have many treated, many untreated units $i$, across multiple time periods $t$, it is common to do this:
+
+```{r eval=F, echo = T}
+lm(Y ~ Treated*Post + dummy_i + dummy_t, data = data)
+feols(Y ~ Treated*Post | dummy_i + dummy_t, data = data)
+```
+
+Which of these four coefficients will we be able to actually estimate? (think about linear independence)
+
+`Intercept + Treated + Post + Treated:Post`
 
 ---
 
@@ -261,11 +287,10 @@ Does the effect of having veterans in a county depend on what happened during th
 ```{r, echo = F, results='asis'}
 lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
 
-stargazer(lm_iowa,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("Enlist Rate", "Combat Days", "Enlist X Combat"),
-          dep.var.labels = 'Suffrage Difference')
+modelsummary(list("Suffrage Change" = lm_iowa),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct' = "Enlist Rate", 'mean_combat_days' = "Combat Days", "enlist_pct:mean_combat_days" = "Enlist X Combat"))
 
 ```
 
@@ -284,14 +309,13 @@ lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
 
 ---
 
-### Example:
 
 ```{r echo = F, results='asis'}
-stargazer(lm_iowa_c,
-          type = 'html',
-          keep.stat = 'n',
-          covariate.labels = c("Enlist Rate (0)", "Combat Days (0)", "Enlist X  Combat"),
-          dep.var.labels = 'Suffrage Difference')
+
+modelsummary(list("Suffrage Change" = lm_iowa_c),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct_c' = "Enlist Rate (0-", 'mean_combat_days_c' = "Combat Days (0)", "enlist_pct_c:mean_combat_days_c" = "Enlist X Combat"))
 ```
 
 Now main effects are interpretable.    
@@ -385,7 +409,7 @@ abline(h = 0, col = 'red')
 
 Hainmueller et al show this can go wrong:
 
-`interflex` package helpful for:
+`interflex` [package](https://yiqingxu.org/packages/interflex/articles/continuous.html) helpful for:
 
 - checking linearity assumptions
 - plotting linear and non-linear marginal effects
@@ -393,13 +417,33 @@ Hainmueller et al show this can go wrong:
 
 ---
 
-```{r, echo = F, messages=F, warnings=F}
+```{r, echo = F, message=F, warning =F}
+
+inter_f = inter.raw(iowa, 
+                        Y = "Suffrage_Diff",
+                        D = 'enlist_pct',
+                        X = 'mean_combat_days',
+                        #na.rm = T,
+                        full.moderate = F,
+                        Ylabel = 'Suffrage Difference',
+                        Dlabel = "Enlistment (%)",
+                        Xlabel = "Mean Combat Days",
+                        theme.bw = T)
+
+inter_f
+
+```
+
+---
+
+```{r, echo = F, message =F, warning =F}
 
 inter_f = inter.binning(iowa, 
                         Y = "Suffrage_Diff",
                         D = 'enlist_pct',
                         X = 'mean_combat_days',
                         na.rm = T,
+                        full.moderate = F,
                         Ylabel = 'Suffrage Difference',
                         Dlabel = "Enlistment (%)",
                         Xlabel = "Mean Combat Days",
@@ -416,4 +460,5 @@ inter_f$graph
 - For **binary**-**binary** interactions, interpretation and estimation is straightforward.
 - For any **continuous** interactions, estimation is tricky and we must calculate marginal effects. 
     - Use `interflex` package to handle this
-    - Get tests of linearity, SEs, plots
+    - Check for common support
+    - Get tests of linearity, non-linear interactions, SEs, plots
