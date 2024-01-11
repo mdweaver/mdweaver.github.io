@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 13, 2023"
+date: "January 12, 2024"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -51,7 +51,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #### In pairs: 
 
-How do statistical tests help authors assess causality?
+How do **statistical** tests help authors assess causality?
 
 Do you find these statistical tests persuasive (about causality)?
 
@@ -65,7 +65,7 @@ Do you find these statistical tests persuasive (about causality)?
 
 A matter of **degree**
 
-Statistical evidence for causality combines **observed data** with a **mathematical model** of the world
+Statistical evidence for causality combines **observed data** and a **mathematical model** of the world.
 
 >- mathematical model describes how observed data are generated
 >- model always involves assumptions
@@ -73,11 +73,11 @@ Statistical evidence for causality combines **observed data** with a **mathemati
 
 ## Design vs. Model-based inferences
 
-Causal evidence varies in terms of complexity of math/assumptions: a matter of **degree**
+Causal evidence varies in terms of complexity of math/restrictiveness of assumptions: a matter of **degree**
 
-- **Model-based** inferences about causality depend on complex statistical models with many assumptions
+- **Model-based** inferences about causality depend on complex statistical models with many difficulty-to-assess assumptions
 
-- **Design-based** inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions
+- **Design-based** inferences about causality use carefully controlled comparisons with simple models and transparent assumptions
 
 ## Design vs. Model-based inferences
 
@@ -91,7 +91,7 @@ Whatever our approach...
 
 - Counterfactual Causality
 - Potential Outcomes
-- Causal Effects (unit vs average)
+- Causal Effects (unit, average, etc.)
 - Partial Identification
 - Neyman Causal Model (Point Identification)
 
@@ -128,17 +128,17 @@ Causality requires something acting on another (a mechanism)
 ### Counterfactual and manipulation together:
 
 - counterfactuals without manipulation do not give us the direction of causality
-- manipulation without counterfactuals may permit spurious results
+- manipulation without counterfactuals may yield spurious conclusions
 
 ## Potential Outcomes
 
-A powerful way to formalize the mathematical model of causality
+A powerful way to formalize a mathematical model of causality
 
 ## Potential Outcomes
 
 Imagine you were a participant in an experiment similar to the Broockman and Kalla paper...
 
-Imagine that, today, you were asked to contribute money to a trans-rights advocacy organization. Imagine: would you contribute (1) or not contribute (0)...
+Imagine that, today, you were asked to contribute money to a trans-rights advocacy organization. Write down: would you contribute (1) - and how much - or not contribute (0)...
 
 >- ... if, yesterday, you were in the **no contact** group
 
@@ -146,24 +146,18 @@ Imagine that, today, you were asked to contribute money to a trans-rights advoca
 
 ## Potential Outcomes
 
-In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take. 
+In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take.
 
 If $Y_i$ is the donation status of person $i$; $Z$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
 
 1. donation status with **no contact** is $Y_i(0)$
 2. donation status **with contact** is $Y_i(1)$
 
-More generally: $Y_i(Z \in (0,1))$
+More generally: $Y_i(Z_i \in (0,1))$
 
 ## Potential Outcomes
 
-*on the board*
-
-## Potential Outcomes
-
-The **unit causal effect** of contact for person $i$ is the **difference** between the potential outcomes:
-
-$$\tau_i = Y_i(1) - Y_i(0)$$
+**on the board**, let's make a table of potential outcomes corresponding to this thought experiment
 
 ## Potential Outcomes
 
@@ -171,13 +165,29 @@ Tables of potential outcomes for different units are **response schedules**
 
 - a general tool for thinking of how units behave under different possible counterfactual conditions
 
-## Potential Outcomes
-
-*What kinds of assumptions are "baked in" to this response schedule?*
 
 ## Potential Outcomes
 
-What happen when we've fallen from Mount Olympus, and we actually have to examine the data?
+Potential outcomes help us mathematically describe causal effects.
+
+The **unit causal effect** of contact for person $i$ is the **difference** between the potential outcomes:
+
+$$\tau_i = Y_i(1) - Y_i(0)$$
+
+
+## Potential Outcomes
+
+**What kinds of assumptions are built in this response schedule?**. Discuss in pairs
+
+>- We observe some value of $Y$ for everyone. (**no attrition**)
+>- Potential outcomes for person $i$ don't depend on treatment status of person $j$ (**SUTVA**)
+
+## Potential Outcomes
+
+What happens when we've fallen from Mount Olympus, and we actually have to examine the data?
+
+>- Let's "run" the experiment!
+>- What **unit causal effects** do we observe?
 
 ## Potential Outcomes
 
@@ -203,36 +213,41 @@ What happen when we've fallen from Mount Olympus, and we actually have to examin
 
 ## Potential Outcomes
 
-The potential outcomes model points towards possible solutions:
+The potential outcomes model allows us to imagine  different causal **estimands** for different purposes
+
+- We might want **unit causal effects**
+- We might want the **average causal effect**
+- We might want the **average treatment effect on treated**/**control**
+- We might want **quantile treatment effects**
+
+>- all suffer from fundamental problem of causal inference.
+
+## Potential Outcomes
+
+The potential outcomes model also points towards possible solutions:
 
 - we have missing data about some potential outcomes for each case
 - similar to having data from a sample but not the entire population
 - different approaches we can take to solve this problem
     - one approach makes fewer assumptions, but only gives us *bounds* (partial identification)
-    - another approach makes more assumptions, but gives us a *point estimate* (point identification)
+    - another approach makes more assumptions, but gives us a *specific value estimate* (point identification) with some uncertainty
 
-## Potential Outcomes
-
-The potential outcomes model points also points toward different causal **estimands**:
-
-- We might want **unit causal effects**
-- We might want the **average causal effect**
-- We might want the **average treatment effect on treated**
-- different effects may be of interest, depending on the question
 
 # Partial Identification
 
 ## Partial Identification
 
-**identification**: when an attribute of an unobserved/population distribution can be inferred without bias to have a specific value, given the observed data.
+**point identification**: when an attribute of an unobserved/population distribution can be inferred without bias to have a specific value, given the observed data.
 
 **partial identification**: when an attribute of an unobserved/population distribution can be inferred without bias to be within a range of values, given the observed data.
+
+>- what do we mean by bias?
 
 ## Partial Identification
 
 Using information about the treatment $Z$ (contact or no contact) and the outcome $Y$ (donation or no donation), we can infer a **range** of values for each unit treatment effect:
 
-Returning to our hypothetical experiment, what **possible** values could each unobserved potential outcome take?
+Return to the board: what **possible** values could each unobserved potential outcome take?
 
 ## Partial Identification
 
@@ -244,22 +259,42 @@ How might we get the upper and lower bounds for what that effect could be, given
 
 $E[\tau_i] = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$
 
-$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + E[Y_i(1)|Z_i = 0]Pr(Z_i=0)\} \\ & \phantom{=}\ - \{E[Y_i(0)|Z_i = 1]Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+- $Pr(Z_i = 0)$/$Pr(Z_i = 1)$ is fraction of units that are untreated/tretaed. Can shorten to $\pi_0$ and $\pi_1$
 
-We decompose the mean of $Y(1)$ and $Y(0)$ as a weighted average by principal strata: those treated ($Z=1$) and untreated ($Z=0$)
+We decompose the mean of $Y(1)$ and $Y(0)$ as a weighted mean of "principal strata": those treated ($Z=1$) and untreated ($Z=0$)
+
+$$\begin{equation}\begin{split}E[\tau_i] &= \overbrace{\{E[Y_i(1)|Z_i = 1]\pi_1 + E[Y_i(1)|Z_i = 0]\pi_0\}}^{\text{Mean of Y when treated}} \\ & \phantom{=}\ - \underbrace{\{E[Y_i(0)|Z_i = 1]\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\}}_{\text{Mean of Y when untreated}} \end{split} \end{equation}$$
+
+
 
 ## Partial Identification
 
-Some of the means within strata are $\color{black}{observed}$ and other are $\color{red}{counterfactual}$:
+Some of the means within strata are $\color{black}{observed}$ and other are $\color{red}{counterfactual}$: Why?
 
-$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{E[Y_i(1)|Z_i = 0]}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{E[Y_i(0)|Z_i = 1]}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
-We can then plug in the maximum and minimum possible values for the unobserved counterfactuals, to calculate the highest and lowest possible values $E[\tau_i]$
+$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{E[Y_i(1)|Z_i = 0]}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{E[Y_i(0)|Z_i = 1]}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+
+## Partial Identification
+
+$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{Mean Y(1) for untreated}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{Mean Y(0) for treated}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+
+
+We can plug in the maximum and minimum possible values for these unobserved counterfactuals, to calculate the highest and lowest possible values $E[\tau_i]$
+
+In groups, what is the **maximum** possible value for $E[\tau_i]$ using data on the board?  What is the **minimum**?
 
 ## Partial Identification
 
 If $Y \in {Y^L, Y^U}$ (the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively):
 
-$$\begin{equation}\begin{split}E[\tau_i]^U &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{Y^U}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{Y^L}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+Then:
+
+Highest possible average causal effect when untreated cases would have had highest value of $Y$ if treated and treated cases would have had lowest value of $Y$ if untreated. 
+
+$$\begin{equation}\begin{split}E[\tau_i]^U &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{Y^U}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{Y^L}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+
+
+Lowest possible average causal effect when untreated cases would have had highest value of $Y$ if treated and treated cases would have had lowest value of $Y$ if untreated. 
+
 
 $$\begin{equation}\begin{split}E[\tau_i]^L &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{Y^L}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{Y^U}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
 
@@ -278,9 +313,9 @@ These additional assumptions can be translated into (usually tighter) bounds on 
 
 ## Partial Identification
 
-In a sense, there are no "statistics" here, as we don't appeal to any random variables.
+In a sense, there are no "statistics" here, as we don't appeal to any random variables/stochastic processes.
 
-We can algebraically express bounds implied by specific assumptions.
+We algebraically express bounds implied by specific assumptions.
 
 # Point Identification
 
@@ -356,11 +391,11 @@ $X$ and $Y$ are random variables.
 - **random variables** are chance processes for generating numbers
     - permit us to use observed **realizations** to draw inferences about the random variable
     
-- to treat **data variables** as **random variables** need to *assume* a **model** for data generating process
+- to treat **data variables** as **random variables** need to *assume* a **model** for random data generating process
 
 ## Statistics and Parameters
 
-- Expected value and other attributes of a random variable are **parameters** 
+- Expected value and other attributes of a random variable are **parameters**/**estimands**
     - in our examples (e.g. fair die), we have known it
     - usually, we **want** to estimate it
     - (often greek letters)
@@ -384,7 +419,7 @@ $$E\left(\sum\limits_{i=1}^{n}S_i\right) = \sum\limits_{i=1}^{n}E\left(S_i\right
 
 $$\frac{1}{n}\sum\limits_{i=1}^{n}E\left(S_i\right) = n \cdot 3.5 \cdot \frac{1}{n}$$
 
-If we roll die $n$ times and take the mean of spots, it is a random variable. The mean of the $n$ draws is, in expectation, the mean of the random variable $S$. AND as $n$ gets large, sample mean will approximate the mean of $S$.
+If we roll die $n$ times and take the mean of spots, it is a random variable. The mean of the $n$ draws is, in expectation, the mean of the random variable $S$. AND as $n$ gets large, sample mean will converge on the mean of $S$.
 
 ## Key Takeaway:
 
@@ -401,7 +436,7 @@ Good for rolling dice...
 
 ## Average Causal Effects
 
-**unit causal effects** are fundamentally unobservable, so focus has been on **average causal effects** (or *average treatment effects*)
+**unit causal effects** are fundamentally un-observable, so focus has been on **average causal effects** (or *average treatment effects*)
 
 - For units in $i = 1 \ldots N$
 
@@ -413,7 +448,7 @@ $$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
     
 ## Solving the problem
 
-We have a **parameter** (average causal effect) that we would like to know. But data we need is always missing. 
+We have a **parameter**/**estimand** (average causal effect) that we would like to know. But data we need is always missing. 
 
 Analogical problem to estimating, e.g., population mean (a parameter) without observing the entire population.
 
@@ -427,7 +462,7 @@ Assuming **Random Assignment** does two things:
 1. $Z_i$ is independent of $Y_i(1)$ and $Y_i(0)$;
   - treated $Y(1)$s comes from same "box" as control $Y(1)$s and vice versa.
 2. $E(Y_i(1))$ and $E(Y_i(0))$ are random variables
-  - we know that expected value of sample is equal to "box" expected value.
+  - we know that expected value of sample is equal to expected value of "box" .
   
 
 ## 
