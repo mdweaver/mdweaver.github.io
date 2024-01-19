@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 20, 2023"
+date: "January 19, 2024"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -42,20 +42,58 @@ require(data.table)
 - Two ways to estimate variance of $\widehat{ACE}$
     - asymptotic
     - randomization inference
+    - bootstrap
 
 # Review
 
+
+
 ## Key ideas from last week
 
-* Reviewed **random variables** and their expectations
 * Potential Outcomes Model (and Neyman Causal Model)
-* Random assignment allows us to estimate unobserved potential outcomes (given assumptions)
+* Partial and Point Identification
+* Reviewed **random variables** and their expectations
 
-### BUT...
+## Potential Outcomes and Causal effects
 
->- ... random assignment **does not guarantee** that any **particular** randomization gives us an exact estimate of unobserved potential outcomes
+We never observe unit causal effects, but can estimate average causal effect, by filling in missing ($\color{red}{\text{counterfactual}}$) potential outcomes.
 
->- Need to account for **sampling variability**
+$$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{Mean Y(1) for untreated}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{Mean Y(0) for treated}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+
+## Partial Identification
+
+Given assumptions, we fill in the maximum/minimum logically possible values for missing potential outcomes to get **bounds**. Bounds must contain the true causal effect if the assumptions are true.
+
+
+## Random Variables
+
+**random variable**: a *chance* procedure for generating a number
+
+**observed value** (**realization**): value of a particular draw of a random variable.
+
+## Random Variables
+
+(1) Arithmetic operations on random variables are new random variables (e.g., sum and mean)
+
+(2) **Expected value** of a random variable $X$ is the mean of all possible realizations of $X$
+  
+(3) Independence and Dependence: random variables $X,Y$ are independent if knowing value of $X$ does not yield information about value of $Y$.
+
+(4) Mean of $n$ realizations (sample) from random variable $X$ is also a random variable, with mean same as $E[X]$. (*intuition for proof*?)
+
+## Point Identification
+
+* Random assignment of $Z$ lets us plug in sample means for unobserved potential outcomes: Why?
+
+$$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{plug in Y(1) for treated}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{plug in Y(0) for untreated}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+
+## BUT...
+
+- ... random assignment **does not guarantee** that any **particular** randomization gives us exact estimate of unobserved potential outcomes
+
+- different realizations of random process $\to$ **sampling variability**
+
+The extent of sampling variability depends on the nature of the **random process** that generates observations.
 
 ## Sampling variability
 
@@ -63,7 +101,7 @@ In any given randomization, **treatment mean** and **control mean** are likely $
 
 We want to know:
 
-1. By how much are they sample means likely to deviate from parameter?
+1. By how much are the sample means likely to deviate from true average causal effect?
 2. Given $\widehat{ACE}$, how confident can we be that $ACE \neq 0$
 
 ## Key idea
@@ -348,6 +386,17 @@ But we never observe this histogram
 
 3) <strike>Bootstrap</strike>
 
+## Three approaches
+
+All approaches involve:
+
+- assuming a particular process of randomization by which realizations from random variable are created
+- need to answer: 
+
+>- what do we want to make inferences about? the study cases or a broader population (randomness in which cases we see)?  counterfactuals (randomness in which potential outcomes we see)?
+
+>- what process generates the randomness? (sometimes this is clear, sometimes not at all)
+
 ## Analytic Approach
 
 **First**: we want to get variance of $\widehat{ACE}$
@@ -489,7 +538,7 @@ Can't estimate the covariance because we don't see both potential outcomes for e
 
 ### Analytic Approach
 
-We can **ignore** the covariance safely, because it **deflates the variance**.
+We can **ignore** the covariance safely, because doing so **deflates the variance**.
 
 1. Estimator $\widehat{Var[Y^T]}$ ignores that we sample **without replacement** from **finite** population ($\to$ **estimated variance too large**)
 2. This either **exactly** or **more than** offsets the amount by which ignoring $Cov(Y^T,Y^C)$ makes  our estimate $\widehat{Var}(\widehat{ACE})$ **too small** 
@@ -772,7 +821,7 @@ Advantages:
 
 Disadvantages
 
-- only tests **sharp null** which may be less interestin$^*$
+- only tests **sharp null** which may be less interesting$^*$
 - Confidence intervals only for **constant effects**
 - $p$ values limited by possible combinations (too few, and they are coarse, too many, they are approximate)
 
@@ -801,6 +850,9 @@ We run Paluck's experiment and see this:
 | 4       | 2       | ?       | 
 | 5       | ?       | 4       | 
 | 6       | ?       | 1       | 
+
+Under the **sharp null**, what are the values that are "?"?
+
 
 --- 
 

@@ -292,6 +292,9 @@ Highest possible average causal effect when untreated cases would have had highe
 
 $$\begin{equation}\begin{split}E[\tau_i]^U &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{Y^U}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{Y^L}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
+## Partial Identification
+
+If $Y \in {Y^L, Y^U}$ (the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively):
 
 Lowest possible average causal effect when untreated cases would have had highest value of $Y$ if treated and treated cases would have had lowest value of $Y$ if untreated. 
 
