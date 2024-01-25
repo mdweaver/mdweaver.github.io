@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 24, 2022"
+date: "January 26, 2024"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -147,13 +147,16 @@ hip = data.frame(z = c("Control", "Treatment", "Treatment"),
                           bc_deaths = c(nt0_n + c0_n, nt1_n, c1_n),
                           bc_rate = c((nt0_n + c0_n)/30, nt1_n/20, c1_n/10) %>% round(2),
                           all_deaths = c((nt0_n + c0_n),
-                                          (nt1_n + c1_n), NA),
-                          all_rate = c((nt0_n + c0_n)/30, (nt1_n + c1_n)/30, NA) %>% round(2))
+                                          (nt1_n + c1_n), (nt1_n + c1_n)),
+                          all_rate = c((nt0_n + c0_n)/30, (nt1_n + c1_n)/30, (nt1_n + c1_n)/30) %>% round(2))
 
-kable(hip, format = 'html',
+mammography_result_table = kable(hip, format = 'html',
       col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+  collapse_rows(columns = 6:7) %>%
+  group_rows("Assigned to Control Group", 1,1) %>% 
+  group_rows("Assigned to Treatment Group", 2,3) 
+
+mammography_result_table
   
 ```
 
@@ -173,10 +176,7 @@ Compare all **treated** (screened) to all **untreated** (not screened in both T 
 Compare all **treated** (screened) to all **untreated** (not screened in both T and C)
 
 ```{r, echo = F, message=F, warning=F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table
 ```
 
 >- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt1_n + nt0_n)/50), 2)` per 1000!
@@ -197,10 +197,7 @@ Compare all **treated** (screened) to the assigned-to-**control** group.
 
 
 ```{r, echo = F, message=F, warning=F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table
 ```
 
 >- This comparison says: effect of mammography is to increase breast cancer mortality rate by `r round((c1_n/10) - ((c0_n + nt0_n)/30), 2)` per 1000!
@@ -229,10 +226,7 @@ Compare **assigned-to-treatment** group to the **assigned-to-control** group.
 Compare **assigned-to-treatment** group to the **assigned-to-control** group.
 
 ```{r, echo = F, message=F, warning=F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table
 ```
 
 This comparison says: effect of mammography is to reduce breast cancer mortality rate by `r round(((c1_n + nt1_n)/30) - ((c0_n + nt0_n)/30), 2)` per 1000!
@@ -269,6 +263,8 @@ kable(d, col.names = c("Type", "Assigned to T", "Assigned to C"), format = 'html
 
 ### Potential Outcomes
 
+Potential outcomes of **treatment status** by **treatment assignment**
+
 $Z$ is **assignment to treatment**; $D$ is **receipt of treatment**
 
 ```{r, echo = F}
@@ -278,24 +274,24 @@ d = data.frame(type = c("compliers", "always takers", "never takers", "defiers")
                when_c = c(0,1,0,1)
                )
 
-kable(d, col.names = c("Type", "$D(Z = 1)$", "$D(Z = 0)$"), format = 'html')
+kable(d, col.names = c("Type", "$D_i(Z_i = 1)$", "$D_i(Z_i = 0)$"), format = 'html')
 ```
 
 ---
 
 ### Mammography:
 
-**Option 1**: Compares 
+**Option 1** (*treated vs untreated*): Compares 
 
 - compliers assigned to treatment
 - never-takers assigned to treatment; compliers, never-takers assigned to control
 
-**Option 2**: Compares 
+**Option 2** (*treated vs assigned to control*): Compares 
 
 - compliers assigned to treatment
 - compliers, never-takers assigned to control
 
-If compliers and never-takers have **different potential outcomes** $\to$ bias.
+If compliers and never-takers have **different potential outcomes** $\to$ bias. (any intuitions?)
 
 ---
 
@@ -324,14 +320,15 @@ One solution to non-compliance is to estimate the **intent to treat** ($ITT$) ef
 
 **Intent to treat** ($ITT$) compares **assigned-to-treatment** against **assigned-to-control**. Because this is randomly assigned, we know this comparison is unbiased (see Lectures 1 and 2).
 
+
 --- 
 
 ### Solution 1: Intent to Treat
 
 Where $Z$ is the treatment **assigned** and $D$ is the treatment **received**
-$$ ITT = \frac{1}{N} \sum\limits_{i=1}^{N} Y_{i}(Z=1) - Y_i(Z=0)$$
+$$ ITT = \frac{1}{N} \sum\limits_{i=1}^{N} Y_{i}(Z_i=1) - Y_i(Z_i=0)$$
 
-$$ ITT \neq ACE = \frac{1}{N} \sum\limits_{i=1}^{N} Y_i(D=1) - Y_i(D=0)$$
+$$ ITT \neq ACE = \frac{1}{N} \sum\limits_{i=1}^{N} Y_i(D_i=1) - Y_i(D_i=0)$$
 
 unless there is perfect compliance.
 
@@ -383,7 +380,9 @@ If we want to find the effect of **treatment**, not just of **assignment-to-trea
 
 If we add to the $ACE$ assumptions, we can find the $ACE$ for **compliers**: the **complier average causal effect** ($CACE$).
 
-$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D = 1) - Y_i(D = 0)$$
+$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D_i = 1) - Y_i(D_i = 0)$$
+
+where $N_c$ is the number of compliers in the experiment.
 
 --- 
 
@@ -393,7 +392,7 @@ Why look at effects for **compliers**?
 
 ---
 
-$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D = 1) - Y_i(D = 0)$$
+$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D_i = 1) - Y_i(D_i = 0)$$
 
 Where $N_c$ is the number of compliers.
 
@@ -406,10 +405,7 @@ Suggests: maybe we just find average $Y$ for compliers in treatment; average $Y$
 How do we find compliers... in the treatment group?
 
 ```{r echo = F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table
 ```
 
 ---
@@ -419,10 +415,7 @@ kable(hip, format = 'html',
 How do we find compliers... in the treatment group?
 
 ```{r echo = F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3) %>%
+mammography_result_table %>%
   row_spec(3, background = 'green', color = 'white')
 ```
 
@@ -433,10 +426,7 @@ kable(hip, format = 'html',
 How do we find compliers... in the control group?
 
 ```{r echo = F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table 
 ```
 
 ---
@@ -445,8 +435,8 @@ kable(hip, format = 'html',
 
 In general, we cannot directly observe...
 
-- $Y(D = 1)$ for compliers in treatment (unless, as in this case, no always-takers)
-- $Y(D = 0)$ for compliers in control (unless everyone is a complier)
+- $Y_i(D_i = 1)$ for compliers in treatment (unless, as in this case, no always-takers)
+- $Y_i(D_i = 0)$ for compliers in control (unless everyone is a complier)
 
 <br>
 
@@ -456,7 +446,7 @@ In general, we cannot directly observe...
 
 ### $CACE$
 
-With **three key assumptions**, can find the effect for compliers without knowing which persons are compliers!
+With **three key assumptions**, can find the effect for compliers without knowing which people *are* compliers!
 
 To understand, we first need potential outcomes model.
 
@@ -496,7 +486,7 @@ kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
 
 More generally:
 
-- **assignment to treatment** $Z$ can have only positive (negative) effects on **receipt of treatment** $D$.
+- **assignment to treatment** $Z$ can have only positive (only negative) effects on **receipt of treatment** $D$. (monotonic)
 
 ---
 
@@ -504,7 +494,7 @@ More generally:
 
 Why do we need this assumption?
 
-- Without defiers, the only units changing their treatment status between **assigned to control** and **assigned to treat** are **compliers**.
+- In absence of defiers, the only units changing their treatment status between **assigned to control** and **assigned to treat** are **compliers**.
 - With defiers, would not know the proportions of always taker/never taker/complier.
 
 ---
@@ -537,9 +527,9 @@ kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
 
 Why do we need this?
 
-- Allows us to assume that $Y(Z = 1) = Y(Z = 0)$ for **always takers** and **never takers**
+- Allows us to assume that $Y_i(Z_i = 1) = Y_i(Z_i = 0)$ for **always takers** and **never takers**
 - Allows us to assume that unit causal effects for **compliers** are the same in assign-to-treat and assign-to-control:
-    - $Y_c(Z=0,D=0) = Y_c(Z=1, D=0)$ and $Y_c(Z=0,D=1) = Y_c(Z=1, D=1)$
+    - $Y_c(Z_i=0,D_i=0) = Y_c(Z_i=1, D_i=0)$ and $Y_c(Z_i=0,D_i=1) = Y_c(Z_i=1, D_i=1)$
     - To find effect of $D$ for compliers whose values of $D$ **and** $Z$ are different, $Z$ cannot change $Y$.
 
 ---
@@ -606,13 +596,13 @@ Assignment status of one unit does not affect treatment receipt of another. (SUT
 
 First, the parameter:
 
-$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D = 1) - Y_i(D = 0)$$
+$$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D_i = 1) - Y_i(D_i = 0)$$
 
-$$CACE = Y_c(D = 1) - Y_c(D = 0)$$
+$$CACE = Y_c(D_i = 1) - Y_c(D_i = 0)$$
 
-Where $Y_c(D = 1)$ is the mean $Y(D = 1)$ for compliers
+Where $Y_c(D_i = 1)$ is the mean $Y_i(D_i = 1)$ for compliers
 
-Where $Y_c(D = 0)$ is the mean $Y(D = 0)$ for compliers
+Where $Y_c(D_i = 0)$ is the mean $Y_i(D_i = 0)$ for compliers
 
 ---
 
@@ -621,8 +611,8 @@ Where $Y_c(D = 0)$ is the mean $Y(D = 0)$ for compliers
 Could we estimate the $CACE$ like this?
 
 $$\begin{aligned}
-\widehat{CACE} & = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D = 1|Z=1) \\
-& - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D = 0|Z = 0)
+\widehat{CACE} & = \frac{1}{m} \sum_{i = 1}^{m} Y_i(D_i = 1|Z_i=1) \\
+& - \frac{1}{n} \sum_{i = 1}^{n}Y_i(D_i = 0|Z_i = 0)
 \end{aligned}$$
 
 >- If there are always takers and/or never takers?
@@ -641,7 +631,7 @@ $$\bar{x} = \sum\limits_{g=1}^{G} x_g \cdot w_g$$
 
 ### Estimating the CACE:
 
-Within the **population** (study group):
+Within the **population of interest** (in this case, the study group):
 
 proportion of (a)lways Takers is $\pi_{a}$
 proportion of (n)ever Takers is $\pi_{n}$
@@ -659,7 +649,7 @@ Where $Y_?(0)$ indicates the mean of $Y_?(Z = 0)$ for each group.
 
 By this logic: 
 
-$$ITT = Y(Z = 1) - Y(Z = 0)$$
+$$ITT = E[Y_i(Z_i = 1)] - E[Y_i(Z_i = 0)]$$
 
 Can be rewritten as
 
@@ -708,7 +698,7 @@ We need to estimate parameters $ITT$ and $\pi_c$
 
 ### Estimating the CACE:
 
-We can esimate $ITT$ by assuming random assignment:
+We can estimate $ITT$ without bias by using random assignment:
 
 - $E(\widehat{ITT}) = ITT$
 
@@ -720,7 +710,7 @@ We know this from before.
 
 We can estimate $\pi_c$, also by random assignment.
 
-$$ITT_D = \frac{1}{N} \sum\limits_{i=1}^{N} D_i(Z = 1) - D_i(Z = 0)$$
+$$ITT_D = \frac{1}{N} \sum\limits_{i=1}^{N} D_i(Z_i = 1) - D_i(Z_i = 0)$$
 
 $$ITT_D = (1\cdot\pi_c + 1\cdot\pi_a + 0\cdot\pi_n) - \\ (0\cdot\pi_c + 1\cdot\pi_a + 0\cdot\pi_n)$$
 
@@ -747,9 +737,10 @@ By dividing the estimate $\widehat{ITT}$ by the estimate of $\pi_c$, $\widehat{I
 
 ### Estimating the CACE
 
-This estimator of the $CACE$ is called the **wald estimator**
+This estimator of the $CACE$ is called the **Wald estimator**
 
 $$\widehat{CACE} = \frac{Y^T - Y^C}{D^T - D^C}$$
+Recall: $Y^T$ is mean of observed $Y_i(Z_i = 1)$
 
 And it is a kind of **instrumental variables** analysis.
 
@@ -765,7 +756,7 @@ $CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(\widehat{ITT})}{E(\wideh
 
 but **consistent**:
 
-as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **small samples**
+as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **small samples** (need hundreds of observations at least)
 
 ---
 
@@ -782,10 +773,7 @@ What does this $CACE$ show us? It is the **effect of treatment** for the units *
 Let's calculate the $\widehat{CACE}$
 
 ```{r, echo=F}
-kable(hip, format = 'html',
-      col.names = c("Assignment", "Screened", "$N$", "BC Deaths", "BCD per 1k", "BC Deaths (total)", "BCD per 1k (total)")) %>% 
-  group_rows("Control Group", 1,1) %>% 
-  group_rows("Treatment Group", 2,3)
+mammography_result_table
 ```
 
 # Practice
