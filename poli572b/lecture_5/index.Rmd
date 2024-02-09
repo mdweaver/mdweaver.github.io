@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 10, 2023"
+date: "February 9, 2024"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -85,26 +85,43 @@ Whatever our approach...
 
 ### Conditioning vs. Design
 
-When we **condition**, we block specific backdoor paths that generate **confounding** by comparing cases that are **similar on observable trait**:
+When we **condition**, we block specific backdoor paths that generate **confounding** by comparing cases that are **similar on observable trait**. We assume:
 
-- we must assume that treatment is **conditionally independent** on these traits, that there is **positivity**, and that there is **no measurement error**.
-- we did **exact matching** last week, but most conditioning strategies involve **additional modelling assumptions** to be tractable
+1. **Ignorability**/**Conditional Independence**
+2. **Positivity**/**Common Support**
+3. **No measurement error**
+
+>- Explain what these mean:
+>- Can we **test** or **prove** these assumptions?
 
 --- 
 
 ### Conditioning vs. Design
 
-In the absence of an experiment, we might choose more careful research **designs**, instead of relying on conditioning.
+Conditioning and model dependence:
+
+- we did **exact matching** last week: no model dependence, but **curse of dimensionality**
+- with finite cases, lots of variables, we use a mathematical model to plug-in/impute missing counterfactuals 
+
+These models bring additional **modelling assumptions**:
+
+- linearity, additivity, etc.
+
+On top of which: we always need to argue that we have blocked all backdoor paths
+
+--- 
+
+### Conditioning vs. Design
+
+Instead of relying conditioning, we might choose more careful research **designs**:
 
 - comparing the same unit over time
 - differences-in-differences
-- "natural" experiments:
-    - sources of "randomness" in the world
-    - arbitrary thresholds
+- "natural experiments"
 
 Here, the **structure of the comparison** motivates an argument for independence of cause and potential outcomes. Rather than block specific confounding variables, we eliminate confounding due to a **class** of confounding variables.
 
-# Difference-in-Difference
+# Design 
 
 ## Media Effects on Political Attitudes
 
@@ -114,48 +131,61 @@ Social and political theorists have frequently argued that media---by shaping pe
 >- Why might **experiments** be a poor strategy?
 >- Why might **conditioning** not work very well?
 
+[board]
+
 ---
 
 ### Media Effects
 
-Foos and Bischoff examine the effect of changing exposure to *The Sun* on anti-EU attitudes and voting in the UK.
+[Foos and Bischoff (2022)](https://doi.org/10.1017/S000305542100085X) examine the effect of changing exposure to *The Sun* on anti-EU attitudes and voting in the UK.
 
 - *The Sun* is a tabloid with long-standing anti-EU coverage and editorial slant
-- In 1989, ~100 fans of Liverpool FC died in stampede at a match; *The Sun* blamed the victims for the tragedy
-- Boycott of the *The Sun* by fans and teams in the Liverpool area.
+- They ask: did exposure to the *Sun*'s coverage change attitudes about the EU?
 
 ---
 
 ### Conditioning?
 
-We could ignore this shift, and simply compare attitudes about the EU in areas (or among people) with greater vs less readership of *The Sun*:
+We could simply compare attitudes about the EU in areas with greater and less readership of *The Sun* (or among people who read *The Sun* versus those that do not):
 
-- What might be some reasons to doubt the effectiveness of this approach?
+- What variables would you want to condition on? (Let's draw a DAG)
+
+>- What might be some reasons to doubt the effectiveness of this approach?
+
+---
+
+### Alternatives:
+
+In 1989, ~100 fans of Liverpool FC died in stampede at a match:
+
+- *The Sun* blamed the victims for the tragedy
+- Fans and teams in the Liverpool area boycotted the *The Sun*.
+
+Is there any way to make use of this event to learn about the effect of reading *The Sun*?
 
 ---
 
 ### Interrupted Time Series
 
-We could instead, compare attitudes toward the EU in Liverpool **before and after** the boycott:
+We could compare attitudes toward the EU in Liverpool **before and after** the boycott: this sometimes called an **interrupted time series**
 
-- What might some advantages of this be?
+- Compare this to conditioning: how is it different? what possible advantages/disadvantages are there?
 
 >- Block **all** confounding variables that remain **constant** over time within Liverpool 
->- Advantage: No need to know what these variables are, measure them, specify a model, etc.
+>- No need to *know* what these variables are, *measure* them, or *specify a model*, etc.
 
 ---
 
 ### Interrupted Time Series
+Plug in the **observed outcome *before* treatment** for the **counterfactual outcome *after* treatment**:  $t=1$ is post-treatment, $t=0$ is pre-treatment.
 
-In interrupted time series, we plug in the **observed outcome before treatment** for the **counterfactual outcome where treatment did not happen**: where $t=1$ indicates post-treatment, $t=0$ indicates before treatment.
-
-$$\tau_i = [Y_{i,t=1}(1) | D_i = 1] - \color{red}{[Y_{i,t=1}(0)|D_i = 1]}$$
+$$\tau_i = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$
 
 Plugging in:
 
-$$\widehat{\tau_i} = [Y_{i,t=1}(1) | D_i = 1] - [Y_{i,t=0}(0) | D_i = 1]$$
+$$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$$
 
-What can go wrong here?
+>- What can go wrong here?
 
 ---
 
@@ -163,7 +193,7 @@ What can go wrong here?
 
 In order for interrupted time series to work, we must assume:
 
-$$[Y_{i,t=0}(0) | D_i = 1] = \color{red}{[Y_{i,t=1}(0)|D_i = 1]}$$ 
+$$\overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}} = \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$ 
 
 That in the absence of the treatment, outcomes of $Y$ would not have changed from before to after treatment.
 
@@ -173,57 +203,78 @@ That in the absence of the treatment, outcomes of $Y$ would not have changed fro
 
 ### Interrupted Time Series
 
-**Assumptions mean:** none of the following
+**Assumptions imply** none of the following occurred
 
->- "history": bias related to **other** changes year-to-year changes (short-term trends)
->- "maturation":  bias / confounding due to long-term trends
->- "testing": bias /confounding related to selection into "treatment" (what kinds of things led to the policy adoption)
->- "regression": cases select into treatment due to extreme events, followed by return to the norm
->- "instrumentation": treatment induces change in measurement (non-random measurement error)
+>- "history": bias due to **other** short-term changes
+>- "maturation":  bias due to long-term trends
+>- "testing": bias related to selection into "treatment" (trends lead to policy)
+>- "regression": extreme events lead to treatment, followed by return to the norm
+>- "instrumentation": treatment induces change in measurement 
+
+>- How might we avoid these pitfalls?
 
 ---
 
 ### Interrupted Time Series
 
-A good example:
+**SUPER IMPORTANT**: If there is some other factor that changes over time and affects $Y$, it can induce bias ...
+
+...**EVEN IF IT DOES NOT CAUSE $D$**.
+
+The comparison holds the unit constant before and after the event $\to$ collider bias - generating dependencies between variables that move together over time.
+
+---
+
+### Interrupted Time Series
+
+A good example of how to do this persuasively:
 
 [Mummolo 2018](https://doi.org/10.1086/694393)
 
 ---
 
-### Difference-in-Differences:
+### Interrupted Time Series
 
-Difference-in-differences compares changes in the **treated** cases against changes in **untreated** cases.
-
-Again, we want to know:
+What kind of causal effect are we estimating when we do before and after comparisons?
 
 $$\begin{split}E[\tau_i | D_i = 1] = {}  \frac{1}{n}\sum\limits^{n}_{i=1} & [Y_{i,t=1}(1) | D_i = 1] - \\ & \color{red}{[Y_{i,t=1}(0)|D_i = 1]}\end{split}$$
 
->- Is this the **average causal effect**?
+
+Is this the **average causal effect**?
+
+>- It is the **average treatment effect on treated**
+
 
 ---
 
-### Difference-in-Differences:
+### Interrupted Time Series
 
-Interrupted Time Series forced us to assume **no other changes** in outcomes over time, but it is almost always true that:
+Before-after comparisons assume **no other changes** in outcomes over time, but it is almost always true that
 
 $\color{red}{Y_{i,t=1}(0) | D_i = 1]} - [Y_{i,t=0}(0)|D_i = 1] \neq 0$
 
-That is to say, *counterfactually*, **in the absence of treatment $D$**, potential outcomes $Y_i(0)$ are **changing over time**.Observed pre-treatment outcomes not a good substitute for post-treatment counterfactual outcomes.
+i.e., *counterfactually*, **in the absence of treatment $D$**, potential outcomes $Y_i(0)$ are **changing over time**. 
+
+Observed pre-treatment outcomes not a good substitute for post-treatment counterfactual outcomes.
 
 >- Do we have a way to estimate what these **counterfactual trends absent treatment** might be?
 
 ---
 
+In our example: we **don't know** how EU skepticism might have trended in Liverpool absent the boycott. We **do know** how  EU skepticism in *the rest of the UK* trended absent the boycott.
+
+
+We don't know: $\color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$
+
+We **do know**: $\underbrace{[Y_{i,t=1}(0) | D_i = 0]}_{\text{UK post-1989, no boycott}} - \underbrace{[Y_{i,t=0}(0)|D_i = 0]}_{\text{UK pre-1989, no boycott}}$
+
+---
+
 ### Difference-in-Differences:
 
-We don't know: $\color{red}{Y_{i,t=1}(0) | D_i = 1]} - [Y_{i,t=0}(0)|D_i = 1]$
+Differences-in-differences compares *changes* in the **treated** cases against *changes* in **untreated** cases.
 
-But we **do know**: $Y_{i,t=1}(0) | D_i = 0] - [Y_{i,t=0}(0)|D_i = 0]$
-
-<br>
-
-In our example: we **don't know** how EU skepticism might have trended in Liverpool absent the boycott. But we **do know** how  EU skepticism in *the rest of the UK* trended absent the boycott.
+We use the trends in the **untreated** cases to plug-in for the $\color{red}{counterfactual}$ trends (absent treatment) in the **treated cases**
 
 ---
 
@@ -279,11 +330,11 @@ And this gives us the name:
 
 This shows that the Boycott of the *Sun* reduced Euro Skepticism in Liverpool
 
-- Under the **parallel trends assumption** (untreated cases have the same *trends* as treated cases *in the absence of treatment*)
-- This is an unbiased estimate of the **Average Treatment on Treated** ($ATT$):
+Under the **parallel trends assumption** (untreated cases have the same *trends* as treated cases *in the absence of treatment*)
 
-  - the effect of treatment on the **treated** cases
-  - it is TOTALLY fine if the effect of treatment on untreated cases would be different
+- This is an unbiased estimate of the **Average Treatment on Treated** ($ATT$):
+    - the effect of treatment on the **treated** cases
+    - it is TOTALLY fine if the effect of treatment on untreated cases would have been different
 
 ---
 
@@ -291,11 +342,19 @@ This shows that the Boycott of the *Sun* reduced Euro Skepticism in Liverpool
 
 If parallel trends assumption holds, what kinds of confounding does this design eliminate?
 
-- Any time-invariant confounders within units
-- Any time-varying confounders that are **shared** by both treated cases and un-treated cases
+>- Any time-invariant confounders within units (unchanging causes of $Y$)
+>- Any time-varying confounders that are **shared** by both treated cases and un-treated cases (causes of $Y$ that change similarly in both groups)
 >- Crucial to choose right "control" cases to have parallel trends or e.g. share as many time-varying confounders.
 
-What are examples of confounders held constant in *Sun* Boycott difference in difference?
+What are examples of confounders held constant in *Sun* Boycott difference-in-differences?
+
+---
+
+### Difference-in-differences:
+
+In the newspaper example: what would be an example in which some other factor generates bias that **is not solved** by the difference-in-differences estimate?
+
+
 
 ---
 
@@ -305,6 +364,10 @@ What are examples of confounders held constant in *Sun* Boycott difference in di
 
 - Classical scenario: with two "treatment" conditions, two time periods: calculate differences-in-differences in means
 - We can use regression, dummy for ever-treated, dummy for post-treatment, interaction of the two
+
+$Y_{it} = \beta_0 + \beta_1 \text{Treated}_i + \beta_2 \text{Post}_t + \beta_3 \text{Treated}_i \times \text{Post}_t$
+
+$Y_{it} = \overbrace{\alpha_i}^{\text{dummies for each } i} + \underbrace{\alpha_t}_{\text{dummies for each } t} + \beta_3 \text{Treated}_i \times \text{Post}_t$
 
 ---
 
@@ -331,10 +394,15 @@ How do we validate the **parallel trends** assumption?
 
 **Staggered Treatment**: [Bacon-Goodman 2021](https://doi.org/10.1016/j.jeconom.2021.03.014)
 
+- some provinces pass laws, but some pass it later than others
+
 **Multiple Treatments**: [https://arxiv.org/pdf/1803.08807.pdf](https://arxiv.org/pdf/1803.08807.pdf)
+
+- units can enter and exit treatment - or there are different treatments they get
 
 **Continuous Treatment**: [https://psantanna.com/files/Callaway_Goodman-Bacon_SantAnna_2021.pdf](https://psantanna.com/files/Callaway_Goodman-Bacon_SantAnna_2021.pdf)
 
+**Covariates**: even conditioning on time-varying confounders has risks
 
 As we get away from simple DiD, assumptions and potential problems multiply, solutions get more complicated...
 
@@ -375,14 +443,13 @@ $GOP_{ie} = \alpha_i + \alpha_e + \beta Enlist_i \times PostWar_e + \epsilon_y +
 **Assumptions:**
 
 - parallel trends: treated and untreated have same changes over time except for shift in treatment.
-- equivalently: no time-varying omitted variable bias; no omitted variables correlated with changes in treatment, changes in outcome
+- equivalently: no time-varying confounding; no factors affecting $Y$ that change with $D$
 
 **Caveats:**
 
 - 'check' parallel trends
 - careful: what happens when units are treated at different times? different amounts?
 - careful: STANDARD ERRORS! Clustering may not save you with small $N$.
-
 
 # Natural Experiments
 
@@ -401,9 +468,9 @@ Address confounding in a different way:
 
 Distinguishing "natural experiment" from experiments:
 
-- Treatment and control groups
-- Random assignment (maybe)
-- **"as-if" random assigment**
+- Treatment and control groups - or different levels of treatment
+- Random assignment (e.g., government program with lottery)
+- **"as-if" random assigment** (we claim process is random)
 - **we don't do the manipulation**
 
 ---
@@ -420,10 +487,11 @@ An **observational study** where causal inference comes from the design that dra
 ### Regression Discontinuity
 
 - "Treatment" occurs for cases on one side of threshold, not to cases on other side
-- "Near" the hreshold, cases are effectively arbitrarily assigned.
-    - treatment can be for ALL cases on the "Treated" side (sharp RD) 
-    - treatment can increase at the threshold ("fuzzy" RD) (e.g. Mo 2018)
-   
+- "Near" the threshold, cases are effectively randomly assigned.
+    - **all units treated** when above the threshold  (sharp RD) 
+    - treatment can **increase** at the threshold ("fuzzy" RD) (e.g. Mo 2018)
+
+- Close elections is a common use:   
 
 ---
 
@@ -467,28 +535,12 @@ ggplot(use[mov %between% c(-10,10)], aes(x = mov, y = riot, size = n, weight = n
    
 ---
 
-```{r, echo = F, message=F}
-n = 5000
-x = runif(n, -1,1)
-y = 3 + 1*x + 2*(x>0) + rnorm(n)
-
-d = data.frame(x,y, d = x>0)
-ggplot(d, aes(x = x, y = y, group = d)) + 
-  geom_point() + 
-  geom_smooth() +
-  geom_vline(xintercept = 0)
-  theme_bw()
-
-```
-    
----
-
 ### Regression Discontinuity
 
 Two approaches:
 
-- Potential outcomes of $Y$ are approximately **linear** near the threshold; treatment shifts outcomes
-    - so we (flexibly) model $Y$ on either side of the cut-off
+- Potential outcomes of $Y(0)$ are approximately **linear** near the threshold; treatment shifts outcomes
+    - so we (flexibly) model slope of $Y$ on either side of the cut-off
 - Potential outcomes of $Y$ are random near the cut-off
     - difference in means near the cutoff
 
@@ -524,21 +576,22 @@ Assumptions:
 
 Follows from Wald estimator for non-compliance:
 
-- Instrumental Variables Least Squares uses variance "explained" in $D$ by  randomly induced $Z$
+- Instrumental Variables Least Squares uses variance "explained" in $D$ by "random" $Z$
     - $D$ is "treatment", $Z$ is "random assignment to treatment"
     - easy to understand when $Z$ is binary
     - when $Z$ is continuous, it is more complicated (and depends on assumptions of linearity)
+
+For more information on using them in practice: [Lal, Lockhart, Xu, and Zu 2023](https://arxiv.org/abs/2303.11399)
 
 ---
 
 ### Instrumental Variables
 
-Decisions
+Problems
 
 - is variation induced in $D$ by $Z$ linear?
 - does $Z$ actually predict change in $D$?
     - "weak instruments problem": identical to when there are very few compliers in an experiment: inference becomes very hard
-    - typically do $F$ test of regression of $Y$ on $X$; $F$ statistic $> 50$.
 
 ---
 
@@ -561,6 +614,8 @@ Assumptions:
 - Standard Errors:
     - What is the unit at which treatment is assigned?
     - Cluster/Randomization inference
+
+---
 
 ### Natural Experiments: Limitations
 
