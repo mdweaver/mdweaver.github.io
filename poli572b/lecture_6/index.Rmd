@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 17, 2023"
+date: "February 16, 2024"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -41,37 +41,67 @@ options("kableExtra.html.bsTable" = T)
 
 # Least Squares
 
---- 
+
+---
 
 ### Objectives
 
-
-**Mechanics** of Bivariate Regression
-
-- Relationship between variables
-    - Covariance; Correlation
-- the mean (revisited)
-- Conditional Expectation Function
-- Least Squares 
-    - algorithm
-    - mathematical properties of algorithm
-    - **no assumptions**
+- Recap key ideas on estimating causal effects
+- What kind of tools do we need to estimate?
+- Why least squares is a good-enough tool
 
 ## Introduction:
 
-**Why least squares?**
+Seen several approaches to estimating causal effects
 
-- A "simple", flexible tool; many applications
-- Ubiquitous, "good enough"
+>- all causal estimands we have seen are **average** effects: ACE, ATT, etc.
 
-**Application to causality**
+>- all estimands involves comparing **average** outcome in a treated state against **average** outcome in untreated state
 
-- mean of $Y$ across different values of $Z$. 
-    - with assumptions, can give a causal interpretation.
-- mean of $Y$ across values of $D$, conditioning on $X$
-    - with more assumptions; can obtain **"ignorability"**
-  
-## Introduction:
+---
+
+### Introduction
+
+Estimation of these causal effects involves:
+
+- plugging **average** outcome in some set of untreated cases for the unobserved **average** counterfactual outcome among treated cases
+- and vice versa, for ACE
+
+>- to the board
+
+---
+
+### Introduction
+
+We need a tool that lets us **plug in** and compare averages. 
+
+>- Least squares is a powerful, if limited tool to do this.
+
+---
+
+### **Why least squares?**
+
+- We need averages $\to$ LS is a generalization of the mean
+- A "simple", yet flexible tool to plug in these values
+- Ubiquitous, often "good enough"
+
+
+---
+
+### **Why least squares?**
+
+In order to use least squares in causal inference, need to understand what the math of regression is doing, as it pertains to:
+
+- given our need for average, how is regression related to the mean?
+- how does regression "plug-in" values? 
+- how does regression "control" for variables?
+- how does math of regression relate back to the causal estimands of interest?
+
+>- As we move from design-based toward model-based inference, we need to be in control of the tool we use.
+
+---
+
+### **Why least squares *math*?**
 
 **No causality**
   
@@ -84,22 +114,294 @@ options("kableExtra.html.bsTable" = T)
 **Regression/Least Squares as Algorithm**
 
 - algorithm with mathematical properties
-- without further assumption, plug in data, generate a line
+- without further assumption, plug in data, generate predictions
 - limited interpretation
 
-## Introduction
+---
+
+### Objectives
+
+**Mechanics** of Bivariate Regression
+
+- the mean (revisited)
+- Relationship between variables
+    - Covariance; Correlation
+- Conditional Expectation Function
+- Least Squares 
+    - algorithm to get CEF
+    - mathematical properties of algorithm
+    - **no assumptions**
+
+# The Mean: Revisited
+
+---
+
+**Why do we use the mean to summarize values?**
+
+>- For random variables, it is "best guess" of what value we will draw
+>- It is a kind of prediction
+>- In what sense is it the "best"?
+
+---
+
+### Squared Deviations
+
+**Why are we always squaring differences?**
+
+**Variance**
+
+$\frac{1}{n}\sum\limits_{i = 1}^{n} (x_i - \bar{x})^2$
 
 
-**Why focus on prediction? Why focus on the mean?**
+**Covariance**
 
-- Our causal estimands are mostly **average** effects
-- Estimation requires us 'plug-in' or predict unobserved potential outcomes. 
+$\frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
 
-**Understanding how the mean, regression does this helps us understand more going forward**:
+**Mean Squared Error**
 
-- how does regression "control for a variable"? What does that mean?
+$\frac{1}{n}\sum\limits_{i=1}^n(\hat{y_i} - y_i)^2$
+
+---
+
+### Squared Deviations
+
+It is linked to **distance**
+
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+<br>
+
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
+
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+
+---
+
+What is the distance between these two points?
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  coord_fixed() + theme_bw()
+```
+
+---
+
+What is the distance between these two points?
+
+$p = (3,0); q = (0,4)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+---
+
+What is the distance between these two points?
+
+$p = (3,0); q = (0,4)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+$$d(p,q) = \sqrt{(3 - 0)^2 + (0 - 4)^2}$$
+$$d(p,q) = \sqrt{3^2 + (-4)^2} = \ ?$$
+
+---
+
+What is the distance between these two points?
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,4))
+  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
+  geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
+  coord_fixed() + theme_bw()
+```
+
+
+---
+
+### Remember Pythagoras?
+
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
+
+$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
+
+<br>
+
+**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
+
+$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+
+
+## The Mean
+
+One way of thinking about the mean is as a **prediction**. 
+
+We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction for all the values in $Y$.
+
+If we say that the "best" prediction is one with with the shortest distance between the prediction $\hat{y}$ and the actual values of $y_1 \dots y_n$...
+
+then the algorithm that gives us this best prediction is the mean.
+
+- since distances are sums of squared differences, this is why mean minimizes the **variance** of prediction errors ($y_i - \hat{y}$).
+
+---
+
+### Deriving the mean:
+
+Imagine we have a variable $Y$ that we observe as a sample of size $n$. We can represent this variable as a **vector** in $n$ dimensional space.
+
+$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
+
+More generally, we imagine our observed data $Y$ is a vector with one dimension for each data point (observation)
+
+---
+
+### What is a vector?
+
+- a **vector** is an array of numbers of length $n$. 
+
+- can be portrayed graphically as an arrow from the origin (the point $(0,0)$ or $(0,0,\dots,0)$) to a point in $n$ dimensional space
+
+- vectors can be added, vectors can be multiplied by a number to extend/shorten their length (each element multiplied by same number)
+
+---
+
+### Deriving the mean:
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,5))
+  ggplot(vectors, aes(x = x, y = y)) +
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
+  coord_fixed() + theme_bw() + xlab('n1') + ylab('n2')
+```
+
+---
+
+### Deriving the mean:
+
+We want to pick one number (a scalar) $\hat{y}$ to predict all of the values in our vector $Y$. 
+
+This is equivalent to doing this:
+
+$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
+
+Multiplying a $(1,1)$ vector by a constant.
+
+- $\hat{y}$ will be on the line that runs through the origin $(0,0)$ and $(1,1)$ 
+- Why $(1,1)$?
+
+---
+
+Choose $\hat{y}$ on the blue line at point that **minimizes** the distance to  $y$.
+
+```{r, echo = F}
+  vectors = data.frame(x = c(3,0), y = c(0,5))
+  ggplot(vectors, aes(x = x, y = y)) +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,1), yend = c(5,1)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
+  coord_fixed() + theme_bw() +
+    geom_text(aes(x=3,y=5.2,label='y')) + 
+    geom_text(aes(x=1.2,y=1.2, label = "(1,1)")) +
+    xlab('n1') + ylab('n2') + theme_bw()
+```
+
+---
+
+### Deriving the mean:
+
+$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{y}$):
+
+$\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
+
+and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or **prediction error**):
+
+$\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
+
+---
+
+```{r, echo = F}
+ggplot() +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 3, y = 3, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'red', alpha = 0.5) + 
+  geom_segment(aes(x = 0, y = 0, xend = 3, yend = 3),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'green', alpha = 0.5) +
+  coord_fixed() + xlab('x') + ylab('y') + 
+  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) + 
+  theme_bw() + xlab('n1') + ylab('n2') 
+```
+
+---
+
+### Deriving the mean:
+
+This means our goal is to minimize $\mathbf{e}$, residuals.
+
+How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
+
+$$len(\mathbf{e})= \sqrt{(3-\hat{y})^2 + (5 - \hat{y})^2}$$
+
+**When is the length of $\mathbf{e}$ minimized?** 
+
+
+>- when angle between $\hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ and $\mathbf{e}$ is $90^{\circ}$.
+
+--- 
+
+### Deriving the mean:
+
+```{r, echo = F}
+ggplot() +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 4, y = 4, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'red', alpha = 0.75) + 
+  geom_segment(aes(x = 0, y = 0, xend = 4, yend = 4),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'green', alpha = 0.75) +
+  coord_fixed() + xlab('x') + ylab('y') + 
+  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) +
+   theme_bw() + xlab('n1') + ylab('n2') 
+```
+
+---
+
+### Deriving the mean:
+
+Values $Y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{y}$ is a prediction of $y$.
+
+- We choose a value $\hat{y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
+
+- Such that difference between $\hat{y}$ and $Y$---$\mathbf{e}$, residual---is shortest
+
+---
+
+### Deriving the mean:
+
+What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
+
+How can we use this to improve our predictions, $\hat{y}$, of $Y$?
+
+- We could choose a value $\hat{y}$ in **two dimensional** plane (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
+
+- Such that difference between $\hat{y}$ and $y$---$\mathbf{e}$, residual---is shortest
+
+>- As we will see, this is least squares
 
 # Digression
+
+---
+
+If we are thinking about how knowing the value of one variable informs us about the value of another... might want to think about correlation.
 
 ---
 
@@ -295,6 +597,21 @@ $r(X,Y) = \frac{Cov(X,Y)}{SD(X)SD(Y)}$
 - Pearson correlation agnostic about outliers/nonlinearities
 - Correlation is not causation
 
+---
+
+### Practice:
+
+Practice is two-fold: understand the concept and write functions in `R`
+
+```
+#name your function: my_mean
+#function(x); x is an argument, we can add other arguments
+my_mean = function(x) {
+  n = length(x) #we'll plug in whatever value of x we give to the function 
+  s = sum(x)
+  return(s/n) #what value(s) should the function return?
+}
+```
 
 --- 
 
@@ -333,263 +650,6 @@ ggplot(plot_data, aes(x, y)) + geom_point() + geom_smooth(method = 'lm', se = F,
 - May be inappropriate in presence of non-linearity; outliers
 
 
-# The Mean: Revisited
-
----
-
-### Squared Deviations
-
-**Why are we always squaring differences?**
-
-**Variance**
-
-$\frac{1}{n}\sum\limits_{i = 1}^{n} (x_i - \bar{x})^2$
-
-
-**Covariance**
-
-$\frac{1}{n}\sum\limits_{i=1}^n(x_i - \bar{x})(y_i - \bar{y})$
-
-**Mean Squared Error**
-
-$\frac{1}{n}\sum\limits_{i=1}^n(\hat{y_i} - y_i)^2$
-
-
-
----
-
-### Squared Deviations
-
-### It is about **distance**
-
-What is the distance between two points?
-
-**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
-
-$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
-
-<br>
-
-**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
-
-$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
-
----
-
-What is the distance between two points?
-
-```{r, echo = F}
-  vectors = data.frame(x = c(3,0), y = c(0,4))
-  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
-  coord_fixed() + theme_bw()
-```
-
----
-
-What is the distance between two points?
-
-$p = (3,0); q = (0,4)$
-
-$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
-
----
-
-What is the distance between two points?
-
-$p = (3,0); q = (0,4)$
-
-$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
-
-$$d(p,q) = \sqrt{(3 - 0)^2 + (0 - 4)^2}$$
-$$d(p,q) = \sqrt{3^2 + (-4)^2} = \ ?$$
-
----
-
-What is the distance between two points?
-
-```{r, echo = F}
-  vectors = data.frame(x = c(3,0), y = c(0,4))
-  ggplot(vectors, aes(x = x, y = y)) + geom_point() +
-  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,0), yend = c(0,4)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')), alpha = 0.5) + 
-  geom_segment(aes(x = c(3), y = c(0), xend = c(0), yend = c(4)), color = 'red') +
-  coord_fixed() + theme_bw()
-```
-
-
----
-
-### Remember Pythagoras?
-
-What is the distance between two points?
-
-**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
-
-$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
-
-<br>
-
-**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
-
-$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
-
-
-
-## The Mean
-
-One way of thinking about the mean is as a **prediction**. 
-
-We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{Y}$, that is the best prediction of all the values in $Y$.
-
-The mean gives us the $\hat{Y}$ that has the shortest Euclidean distance to the true values of $y_1 \dots y_n$.
-
-- since distances are sums of squared differences, this is why mean minimizes the **variance**.
-
----
-
-### Deriving the mean:
-
-Imagine we have a variable $Y$ that we observe as a sample of size $n$. We can represent this variable as a **vector** in $n$ dimensional space.
-
-$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$$
-
-More generally, we imagine our observed data $Y$ is a vector with one dimension for each data point (observation)
-
----
-
-### What is a vector?
-
-- a **vector** is a one-dimensional array of numbers of length $n$. 
-
-- can be portrayed graphically as an arrow from the origin (the point $(0,0)$ or $(0,0,\dots,0)$) to a point in $n$ dimensional space
-
-- vectors can be multiplied by a number to extend/shorten their length (each element multiplied by same number)
-
----
-
-### Deriving the mean:
-
-```{r, echo = F}
-  vectors = data.frame(x = c(3,0), y = c(0,5))
-  ggplot(vectors, aes(x = x, y = y)) +
-  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
-  coord_fixed() + theme_bw() + xlab('n1') + ylab('n2')
-```
-
----
-
-### Deriving the mean:
-
-We want to pick one number (a scalar) $\hat{Y}$ to predict all of the values in our vector $Y$. 
-
-This is equivalent to doing this:
-
-$$Y = \begin{pmatrix}3 \\ 5 \end{pmatrix} \approx \begin{pmatrix}\hat{Y} \\ \hat{Y} \end{pmatrix} = \hat{Y} \begin{pmatrix}1 \\ 1 \end{pmatrix}$$
-
-Multiplying a $(1,1)$ vector by a constant.
-
-- $\hat{Y}$ will be on the line that runs through the origin $(0,0)$ and $(1,1)$ 
-- Why $(1,1)$
-
----
-
-Choose $\hat{Y}$ on the blue line at point that **minimizes** the distance to  $y$.
-
-```{r, echo = F}
-  vectors = data.frame(x = c(3,0), y = c(0,5))
-  ggplot(vectors, aes(x = x, y = y)) +
-  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
-  geom_segment(aes(x = c(0,0), y = c(0,0), xend = c(3,1), yend = c(5,1)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + 
-  coord_fixed() + theme_bw() +
-    geom_text(aes(x=3,y=5.2,label='y')) + 
-    geom_text(aes(x=1.2,y=1.2, label = "(1,1)")) +
-    xlab('n1') + ylab('n2') + theme_bw()
-```
-
----
-
-### Deriving the mean:
-
-$y = \begin{pmatrix}3 \\ 5 \end{pmatrix}$ can be decomposed into two separate vectors: a vector containing our prediction  ($\hat{Y}$):
-
-$\begin{pmatrix} \hat{Y} \\ \hat{Y} \end{pmatrix} = \hat{Y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
-
-and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (the **residual** or prediction error):
-
-$\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{Y} \\ \hat{Y} \end{pmatrix}$
-
----
-
-```{r, echo = F}
-ggplot() +
-  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
-  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 3, y = 3, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'red', alpha = 0.5) + 
-  geom_segment(aes(x = 0, y = 0, xend = 3, yend = 3),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'green', alpha = 0.5) +
-  coord_fixed() + xlab('x') + ylab('y') + 
-  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) + 
-  theme_bw() + xlab('n1') + ylab('n2') 
-```
-
----
-
-### Deriving the mean:
-
-This means our goal is to minimize $\mathbf{e}$, residuals.
-
-How do we find the closest distance? The length of $\mathbf{e}$ is calculated by taking:
-
-$$len(\mathbf{e})= \sqrt{(3-\hat{Y})^2 + (5 - \hat{Y})^2}$$
-
-**When is the length of $\mathbf{e}$ minimized?** 
-
-
->- when angle between $\hat{Y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ and $\mathbf{e}$ is $90^{\circ}$.
-
---- 
-
-### Deriving the mean:
-
-```{r, echo = F}
-ggplot() +
-  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
-  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
-               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 4, y = 4, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'red', alpha = 0.75) + 
-  geom_segment(aes(x = 0, y = 0, xend = 4, yend = 4),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
-               colour = 'green', alpha = 0.75) +
-  coord_fixed() + xlab('x') + ylab('y') + 
-  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) +
-   theme_bw() + xlab('n1') + ylab('n2') 
-```
-
----
-
-### Deriving the mean:
-
-Values $y$ are sample of size $n$ are represented by a vector in $n$ dimensional space. $\hat{Y}$ is a prediction of $y$.
-
-- We choose a value $\hat{Y}$ in **one dimensional** sub-space (typically on a line through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$)
-
-- Such that difference between $\hat{Y}$ and $y$---$\mathbf{e}$, residual---is shortest
-
-
----
-
-### Deriving the mean:
-
-What if we have more information about each case $i$? Let's call this information $X$, with $x_1 \dots x_n$.
-
-We can then use this to improve our predictions, $\hat{Y}$, of $y$.
-
-- We choose a value $\hat{Y}$ in **two dimensional** sub-space (on 2D rectangle that passes through: $\begin{pmatrix} 1_1 \ 1_2  \ldots  1_n \end{pmatrix}$) and $\begin{pmatrix} x_1 \ x_2  \ldots  x_n \end{pmatrix}$)
-
-- Such that difference between $\hat{Y}$ and $y$---$\mathbf{e}$, residual---is shortest
-
 
 # Conditional Expectation Function
 
@@ -601,6 +661,7 @@ The **mean** is useful...
 
 ... but often we want generate better predictions of $Y$, using additional information $X$. 
 
+
 ---
 
 ### Generalizing the Mean:
@@ -609,10 +670,10 @@ The **mean** is useful...
 
 ... but often we want to know if the mean of something $Y$ is different across different values of something else $X$. 
 
-To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about random variables). Sometimes we want to know $E(Y | X)$
+To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about random variables). Sometimes we want to know $E[Y | X]$
 
-- simplest version could be difference in means (experiments)
-
+- In causal inference, we want $E[Y | Z = z]$ or $E[Y | D = d, X = x]$
+- differences in means in experiments, plug-in missing counterfactuals in conditioning, plug-in counterfactual trends in DiD
 
 ---
 
@@ -620,11 +681,11 @@ To put it another way: the mean of $Y$ is the $E(Y)$ (if we are talking about ra
 
 We are interested in finding the **conditional expectation function** (Angrist and Pischke)
 
-**expectation**: because it is about the *mean*: $E(Y)$
+**expectation**: because it is about the *mean*: $E[Y]$
 
 **conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
 
-**function**: because $E(Y) = f(X)$, there is some relationship we can look at between values of $X$ and $E(Y)$.
+**function**: because $E[Y | X] = f(X)$, there is some relationship we can look at between values of $X$ and $E[Y]$.
 
 $$E[Y | X = x]$$
 
@@ -634,20 +695,32 @@ $$E[Y | X = x]$$
 
 Another way of thinking about what the **conditional expectation function** is:
 
-$$E[Y | X = x] = \hat{Y} | X = x$$
+$$E[Y | X = x] = \hat{y} | X = x$$
 
-What is the predicted value $\hat{Y}$, where $X = x$, such that $\hat{Y}$ has the smallest distance to $y$?
+What is the predicted value $\hat{y}$, where $X = x$, such that $\hat{y}$ has the smallest distance to $Y$?
 
 ---
 
 ### Generalizing the Mean:
 
-There are **many ways** to define the **conditional expectation function**
+These points emphasize the **conditional** and **expectation** part of the CEF.
 
-- one easy way is to assume that the CEF is **linear**.
-- That is to say $E(Y)$ is **linear** in $X$. 
+The difficulty is: how do we find the function?
+
+>- a function takes some value of $X$ and uniquely maps it to some value of $E[Y]$
+>- we need to "learn" this function from the data
+>- depending on how much data we have, we have to make some choice of how to interpolate/extrapolate when "learning" this function
+
+---
+
+### Generalizing the Mean:
+
+There are **many ways** to define and estimate the **function** in the  **conditional expectation function**
+
+- one easy choice is to assume that the CEF is **linear**.
+- That is to say $E[Y]$ is **linear** in $X$. 
 - The **function** takes the form of an equation of a line.
-- Bivariate regression
+- This leads us to bivariate regression
 
 ---
 
@@ -728,11 +801,11 @@ or, by convention:
 
 ### How do we choose the line that best captures:
 
-$$E(Y) = a + b\cdot X$$
+$$E[Y] = a + b\cdot X$$
 
 or 
 
-$$\hat{Y} = a + b\cdot X$$
+$$\hat{y} = a + b\cdot X$$
 
 ---
 
@@ -819,7 +892,7 @@ ggplot(father.son, aes(x = fheight, y = sheight)) +
 
 ### Which line?
 
-The **red** line above is the **regression line** or the fit using **least squares**.
+The **red** line above is the prediction using **least squares**.
 
 It closely approximates the conditional mean of **son's height** ($Y$) across values of **father's height** ($X$).
 
@@ -833,13 +906,13 @@ We can do it the same way we obtained the mean!
 
 We are going to choose an intercept $a$ and slope $b$ such that:
 
-$\hat{Y}_i = a + b \cdot x_i$
+$\hat{y}_i = a + b \cdot x_i$
 
-and that minimizes the distance between the predicted ($\hat{Y}_i$) and true ($y_i$) values:
+and that minimizes the distance between the predicted ($\hat{y}_i$) and true ($y_i$) values:
 
 $\sqrt{\sum\limits_i^n (y_i - \hat{y_i})^2}$
 
-minimizes $\mathbf{e} = y_i - \hat{y_i}$
+minimizes the length of  $\mathbf{e} = y_i - \hat{y_i}$
 
 ---
 
@@ -871,7 +944,9 @@ ggplot(father.son, aes(x = fheight, y = sheight)) + geom_point(alpha = 0.5) +
 
 ### Minimizing the Distance
 
-We need to solve this equation:
+(Proof itself is not something you need to memorize)
+
+We need to solve this equation: 
 
 $$\min_{a,b} \sum\limits_i^n (y_i - a - b x_i)^2$$
 Choose $a$ and $b$ to minimize this value, **given $x_i$ and $y_i$**
@@ -898,7 +973,7 @@ $\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
 
 ### Minimizing the Distance
 
-$\sum\limits_i^n a   = \sum\limits_i^n y_i - b x_i$
+$\sum\limits_i^n a = \sum\limits_i^n y_i - b x_i$
 
 Dividing both sides by $n$, we get:
 
@@ -944,7 +1019,7 @@ $\frac{Cov(y,x)}{Var(x)} = b$
 ### The slope:
 
 
-$$b = \frac{Cov(x,y)}{Var(x)} = r \frac{SD_y}{SD_x}$$
+$$b = \frac{Cov(x,y)}{Var(x)}$$
 
 - Expresses how much mean of $Y$ changes for a 1-unit change in $X$
 - When expressed as function of correlation coefficient $r$, we see this rise ($SD_y$) over the run ($SD_x$)
@@ -990,9 +1065,9 @@ Using the `data_2` from [https://pastebin.com/LeSpqKKk](https://pastebin.com/LeS
 
 Take $Y =$ `gop_change` and $X =$ `enlistment` (board)
 
-1. Calculate $a$ and $b$ using the equations give above
+1. Make functions to calculate $a$ and $b$; then calculate $a$ and $b$
 2. Interpret $a$ in terms of CEF.
-3. What is $\hat{Y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
+3. What is $\hat{y}$ when `enlistment` is 0.2? What does this mean in terms of the CEF?
 2. Calculate $e$
 3. Calculate the mean of $e$
 4. Calculate the correlation of $X$ and $e$
