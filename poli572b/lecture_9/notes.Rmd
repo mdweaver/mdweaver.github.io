@@ -1,0 +1,122 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#lecture outline
+
+## recap
+
+- orthogonal projection
+- mean
+- bivariate (illustrate)
+- multivariate (meaning)
+
+- key facts implied by math of ls
+  - residuals orthogonal to predictors
+  - bc we want to add up x vars... they are basis vectors on 2d plane (3+d hyperplane) - so coefficients reflect orthogonal variation in x  (illustrate on board --- residual x on y
+    - example 
+    - alternate interpretation: predicted x hat --- deviation from mean of x hat
+  - math reqts: linear independence
+    - why? if no residual x... divide by 0
+    
+
+what are we we asking from regression
+
+- effects --- differences in means/average slopes: interpret coefficients as estimating something... what is being estimated?
+
+- how are observations being weighted?
+
+- plug in values of e y | X: how  are values being plugged in
+
+
+## implications/insights
+
+insight: minimizes overall distance from y to y-hat: 
+  - does not fit mean everywhere
+  - puts more weight on minimizing distance where there are more cases
+  - best linear approximation
+
+regression and best linear approximation of CEF:
+  - regress on group averages... w/ weights, ignoring weights.
+  - 
+
+
+insight: minimizes overall distance from y to yhat- puts more weight on minimizing distance where there are more cases.
+
+
+####
+y is linear in coefficients
+
+- implications for imputing, implications for controlling (conditioning on X, assume D is linear in X)
+
+- linear: multiplicative and additive  => implications for how to set up design matrix to get right coefficients
+
+
+- coefficients: fitting means --- fit difference in means: keep in mind predictions
+  - link to equation - design matrix
+  - just vector of 1s
+  - vector of 2s
+    - if we change scale of x variables, scale of betas changes: x times c, then beta times 1/c
+  - vector of 1s, vector, 0,1
+  - vector 0,1, vector 0,1
+  - vectors of 1s, 0,1, 0,1 (non independent) => dummy vars, reference categories
+
+  
+  
+  - diff in diff: 
+    - how can we get regression to calculate the relevant differences?
+    - 4 cases: treated, untreated, pre post --- how many columns, what values?
+  
+  lessons: 
+  
+  - we can get identical predictions of y, but different coefficients with different interpretations depending on how we set up design matrix (can be useful)
+  - can get group means directly from least squares
+  
+  
+  - continuous, no controls: angrist and pischke: bivariate... weighted average of derivative (weighted by what?)... intercept meaning
+    - intercept meaning
+    - what if we center the continuous variable  around its mean before hand?
+  
+coefficients with controls:
+
+  dummy variables: if 0/1 always able to pretty clearly interpret for specific groups;;; if 0/1 are not exclusive... what is going on?
+    - dummy variable orthogonal to the other --- what happens? how to interpret
+    - centered around the mean
+    - gender, profession, earnings.. plug in mean gender for profession.... what is implication of this...
+    - recall the coefficient for slope
+    - weighting --- what if all doctors were female? what weight would go 
+  
+
+  
+    
+  - conditioning on a dummy: rainfall... relationship b/t rainfall and brexit vote... how to interpret... 0 correlation with indicators for region... residual rainfall... what happens then?
+  
+  - continunous: age, conditioning on hours worked (continuous) - what does this mean?
+    - math: orthogonal - 0 correlation
+    - interpretation: 
+    - regression weights insight
+    - if this is wrong, what can we do?
+    
+      - dummies - at every single value of x 
+      
+    - transformations: log, sqrt, squared or highr polynomial
+      
+  
+  
+  - linearity and transformations. --- 
+    - linear in terms 
+    - polynomials can perfectly fit data... but...
+      - we no risk overfitting the data
+      - we no longer get clearly interpretable coefficients
+    - 
+      
+      
+      
+      
+      
+      
+  - additivity andtransformations
+    - gender x profession, interaction
+      
+  
