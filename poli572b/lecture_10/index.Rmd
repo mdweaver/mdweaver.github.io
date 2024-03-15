@@ -1,13 +1,14 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 7, 2022"
+date: "March 15, 2024"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
 ---
+
 
 ```{r setup, include = F}
 require(knitr)
@@ -17,6 +18,8 @@ require(ggplot2)
 require(grid)
 require(data.table)
 require(UsingR)
+require(modelsummary)
+require(haven)
 options("kableExtra.html.bsTable" = T)
 
 acs_data = fread("acs_lawmed.csv")
@@ -25,8 +28,17 @@ acs_data[, MARST_f := as.factor(MARST)]
 set.seed(1234)
 acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
 acs_data[, MALE := abs(FEMALE - 1)]
+acs_data[, MEDICINE := 1-LAW]
 acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+
+
+analysis_df <- 
+    readRDS("/home/mdweaver/Dropbox/myanmar-prejudice/02-replication/analysis_df.rds")
+
+ds2000 = read_dta("./DS2000replication.dta") %>% as.data.table
+ds2000[, success := pbs2s3]
 ```
+
 
 <style type="text/css">
   .reveal h2,h3,h4,h5,h6 {
@@ -47,97 +59,132 @@ acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
   }
 </style>
 
-# Inference with Least Squares
+# Regression Interpretation (2)
 
---- 
+---
 
 ### Objectives
 
 **Recap**
 
-- Least Squares as a predictive algorithm
+- LS is best linear approximation of CEF
+- Intercept and slope interpretations
+- LS can fit group means (dummy variables)
+
+**Interpretation**
+
+- Coefficients w/ Controls
+- Non-linearity
+
+**Regression and Causal Inference**
+
+- conditioning
+- 
 
 
-**Inference**
 
-- Least Squares as an **estimator** of some unknown **parameters**
-
----
-
-### Today
-
-Least Squares 
-
-- statistical model for inference
-    - what is the statistical model? (like, e.g. Neyman Causal Model)
-    - what are the assumptions we need for...
-        - unbiasedness of estimator
-        - deriving uncertainty of estimate
-        
 # Recap
 
 ---
 
-### Least Squares for Prediction
+### Least Squares and CEF
 
-So far, we...
+Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
 
-- ...start with a vector $\mathbf{Y} = (Y_1 \ldots Y_i \ldots Y_n)$
-
-- ... want to produce a vector of **predicted values** $\mathbf{\widehat{Y}} = (\widehat{Y_1} \ldots \widehat{Y_i} \ldots \widehat{Y_n})$
-
-- .... defined as $\mathbf{\widehat{Y}} = \mathbf{X}\mathbf{\beta}$:
-
-    - where $\mathbf{X}$ is a matrix of predictors (for the mean, just a vector of $1$s) and $\mathbf{\beta}$ is a vector of linear coefficients that are multiplied by $\mathbf{X}$ such that $\widehat{Y}_i = b_0x_0 + b_1x_1 + \ldots + b_px_p$
+>- It is "best" linear approximation in that the overall set of predictions $\hat{y}$ has least distance to $y$
+>- Least Squares could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
 
 ---
 
-### Least Squares for Prediction
+### Least Squares and CEF
+
+Alternatively, least squares is a particular weighted average of derivative of non-linear CEF (board)
+
+- weights greater closer to median of $x$ 
 
 
-Then, we...
-
-- ... choose $\beta$ such that $\mathbf{\widehat{Y}}$ have **minimum (euclidean) distance** to $\mathbf{Y}$:
-
-    - minimize  $\mathbf{Y} - \mathbf{\widehat{Y}} = \mathbf{e}$; where $\mathbf{e}$ is a vector of **residuals** (prediction errors) $(Y_1 - \hat{Y_1}, \ldots , Y_i - \hat{Y_i}, \ldots, Y_n - \hat{Y}_n)$
-  
--  $\mathbf{e}$ is minimized when $\mathbf{e}'\mathbf{X} = \mathbf{0}$: residuals are **orthogonal** to $\mathbf{X}$.
-
-This gave us $\mathbf{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}$
+# Linearity in Least Squares
 
 ---
 
-### Least Squares for Prediction
-
-This definition of least squares means that:
-
-- residuals $\mathbf{e}$ are orthogonal to $\mathbf{X}$; so if there is an intercept, the mean of the residuals is $0$, and covariance of residuals and $\mathbf{X}$ is $0$.
-    
-- If we just fit an intercept (same value of $\widehat{Y}$ for all cases): what is the mean of the residuals $E(Y_i - \widehat{Y_i})$?
+### Least Squares is linear in parameters
 
 
---- 
+What does this mean?
+
+- $\mathbf{X\beta}$ means we multiply values of $x$ by coefficients, then add them
+
+---
+
+
+$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
+
+---
+
+### Least Squares and Group Means
+
+Least Squares can predict group means when using binary variables:
+
+1. Despite different coefficients, least squares can make **identical predictions** $\hat{y}$
+
+2. We need to specify design matrix/model to get estimates of interest. (e.g. difference in means)
+
+3. If we have **exclusive** indicator variables for belonging to distinct categories (sometimes called "dummy variables"), must drop one group if we fit an intercept. (Why?)
+
+4. If we fit group means: residuals are deviation from group means (centered at 0 within each group). 
+
+
+# Least Squares with Controls
+
+---
+
+### Interpreting w/ Controls
+
+So far, we have considered fitting group means.
+
+- indicator/dummy variables have been for exclusive membership in groups
+- what happens if we control for membership in different groups?
+
+---
+
+### Interpreting w/ Controls
+
+We want to estimate differences in earnings across gender, but we want to control for the sector of employment.
+
+In this data, we only have doctors and lawyers, so we can estimate the following:
+
+$Earnings_i = b_0 + b_1 \ Female_i + b_2 \ Medicine_i$
+
+Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if they are a doctor $0$ if they are a lawyer.
+
+---
+
+### Interpreting w/ Controls
+
+1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Medicine_i$ and intercept, and $Earnings$
+
+- What is residual $Female_i^*$ in this case? (Think about residuals in models with group dummies above)
+
+>- Residual $Female_i^*$ will be deviation from mean level of $Female$ in law and medicine
+
+---
+
+### Interpreting w/ Controls
+
+2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Medicine_i$.
+
+- What would happen to $Var(Female^*)$ among doctors if ALL doctors were female?
+
+>- No variation left - no observations differ from the mean of $1$, do not contribute to the slope (zero weight)
+
+---
 
 ### Example
 
-Let's say we want to get the **conditional expectation function** for yearly earnings of professionals as a function of hours worked, profession, gender, and age.
-
-Using data from the American Community Survey, we can look at how hours worked is related to earnings for doctors and lawyers. 
-
-- `UHRSWORK` (the usual hours worked per week)
-- `FEMALE` (an indicator for female)
-- `AGE` (in years)
-- `LAW` (an indicator for being a lawyer)
-- `INCEARN` (total annual income earned in dollars). 
-
----
-
-### Example
-
-Let's now find the (approximate) linear conditional expectation function of earnings, across hours worked, age, profession, and gender:
+Let's now find the (approximate) linear conditional expectation function of earnings, across gender and profession:
 
 ```{r}
-ls = lm(INCEARN ~ UHRSWORK + AGE + LAW + FEMALE, acs_data)
+ls = lm(INCEARN ~ FEMALE + MEDICINE , acs_data)
 ```
 
 ---
@@ -149,8 +196,8 @@ summary(ls)
 ```
 
 ```{r, echo = F, include = F, message = F, warning=F}
-residual_hrswork = lm(FEMALE ~ AGE + LAW + UHRSWORK, acs_data)$residuals
-plot_data = rbind(acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, AGE, LAW, FEMALE, UHRSWORK)])
+residual_hrswork = lm(FEMALE ~ MEDICINE, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, MEDICINE)], acs_data[, list(INCEARN, FEMALE, MEDICINE)])
 plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
 plot_data[, FEMALE := as.numeric(FEMALE)]
 plot_data[type == 'Residual', FEMALE := residual_hrswork]
@@ -163,7 +210,7 @@ How do we make sense of, e.g., the slope on `FEMALE`?
 ### Example
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = AGE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Age")
+ggplot(plot_data, aes(x = MEDICINE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
 ```
 
 ---
@@ -171,16 +218,71 @@ ggplot(plot_data, aes(x = AGE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smo
 ### Example
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = LAW, y= FEMALE)) + geom_point(alpha = 0.01)  + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
+ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
 ```
+
+
+
+
+---
+
+### Example
+
+Let's now find the (approximate) linear conditional expectation function of earnings, across gender and hours worked:
+
+We're not controlling for a binary indicator, but a continuous variable.
+
+```{r}
+ls = lm(INCEARN ~ FEMALE + UHRSWORK , acs_data)
+```
+
+---
+
+### Interpreting w/ Controls
+
+1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Hours_i$ and intercept, and $Earnings$
+
+- What is the residual/orthogonal $Female_i^*$ in this case? ()
+
+>- Residual $Female_i^*$ will have perfectly $0$ covariance/correlation with $Hours_i$
+
+---
+
+### Example
+
+```{r, echo = F}
+summary(ls)
+```
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ UHRSWORK, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+How do we make sense of, e.g., the slope on `FEMALE`?
 
 ---
 
 ### Example
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Gender Residual on Hours Worked")
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Hours")
 ```
+
+Gender and age **orthogonal** but **NOT** *independent*
+
+---
+
+### Interpreting w/ Controls
+
+2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Hours_i$.
+
+- What happens to $Var(Female^*)$ for values of hours worked where $Hours_i$ badly predicts $Female_i$?
+
+>- Greater variance! Increased weight on those observations
 
 ---
 
@@ -192,657 +294,813 @@ ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geo
 
 ---
 
-Looking at residuals, gender and hours worked have *non-linear* relationship. How can we turn this *non-linear* relationship into a *linear* relationship?
+### Interpreting w/ Controls
 
-Angrist and Pischke, *MHE*, pp. 77-80
+What could we do if we really wanted to "hold hours worked constant"? 
 
->- transform continuous variables into dummies: dummies can **only** have a linear relationship
->- ensures that least squares correctly captures relationship between variables
+- Compare earnings by gender **within** groups where hours are the same  (think about our indicator variables from earlier)?
 
-# Inference
+- We can ensure that gender is exactly unrelated to each year of age by fitting an intercept for each age.
 
----
 
-### Regression for Inference:
+>- In this case, we have `r nrow(acs_data)` observations, so this is doable. Not always so lucky
 
-1. We want to interpret the $\beta$ vector causally.
-
-- typically just one coefficient of causal interest: why? (think about DAGs)
-
-2. There is a true $\beta_D$ ($\delta$) that is the effect of some $D$ on $Y$.
-
-- either a true linear effect, or weighted average of non-linear effects
-
-3. $\beta_D$ is an unknown parameter. 
-
-4. To **estimate** $\beta_D$, need a **statistical model** for least squares
+# Non-Linearity with Least Squares
 
 ---
 
-### A Statistical Model
+### Non-linearity with Least Squares
 
-As with experiments (e.g. the Neyman causal model), **statistical models** 
+If the the CEF, $E[Y|X]$ is not linear in $X$, we can still use least squares to model this relationship.
 
-- treat observed data as **realizations** of **random variables** (some chance process)
-- with some assumptions...
-- permit us to connect what we observe to **unobserved parameters**
+The easiest choice is to use a polynomial expansion of $X$. 
 
-Need to clarify what work is being done by
+If a straight-line relationship between $X$ and $Y$ is clearly wrong, we can model a "U"-shape by adding a squared term of $X$:
 
-- data
-- regression mathematics
-- assumptions of statistical model
+$Earnings_i = b_0 + b_1 Female + b_2 Hours + b_3 Hours^2$
+
+It is "linear" in that we still multiply values of $X$ by $\beta$ and sum, but we use non-linear transformations of the data.
 
 ---
 
-### An example: Hooke's Law
 
-> Hooke's law is a law of physics that states that the force ($D$) needed to extend or compress a spring by some distance $y$ increases **linearly** with respect to the distance. 
-
-Thus, for a given weight $D_i$ on a spring, the length $Y_i$ is determined by:
-
-$Y_i = \alpha + \beta D_i + \epsilon_i$ for $i$ in $1 \ldots n$
-
-
-
----
-
-### An example: Hooke's Law
-
-$Y_i = \alpha + \beta D_i + \epsilon_i$ for $i$ in $1 \ldots n$
-
-This is a **statistical** model:
-
-- $\alpha$ and $\beta$ are unknown **parameters** (thus, greek letters, not $a$ and $b$). They are **fixed**.
-    - $\alpha$ is the length of spring in absence of force
-    - $\beta$ is the change in length of spring with unit of force
-- $\epsilon_i$ is an unknown **random error** (a **random variable**). Each $\epsilon_i$ is...
-    - **independent** of $D_i$  
-    - each drawn from the **same distribution** with mean $0$ and variance $\sigma^2$ (another parameter)
-
-We use observed data to **estimate** the **parameters** $\alpha, \beta, \sigma^2$
-
----
-
-### In groups:
-
-Imagine we have a spring whose length is 3 cm. With each Newton of force applied, the spring increases by 0.5 cm.
-
-Using these facts and the statistical model described above: create a **response schedule**/**potential outcomes** table corresponding to the spring under loads of $0,1,2,3,5,8$ Newtons.
-
-$Y_i(D_i = 0), Y_i(D_i = 1), Y_i(D_i = 2), \ldots$
-
----
-
-### The Regression Model: 
-
-The statistical model assumes that this linear equation describes the process generating the data.
-
-$$Y_i = \alpha + \beta D_i + \epsilon_i$$
-
-**deterministic** (not random)
-$\alpha + \beta D_i$
-
-**stochastic** (random error)
-$\epsilon_i$
-
-
----
-
-### The Regression Model:
-
-$\alpha$: parameter for the intercept (fixed for all cases)
-
-$\beta$: parameter for the slope (fixed for all cases)
-
-$D_i$: value of independent variable (input into the equation)
-
-$Y_i$: value of dependent variable (determined by the equation)
-
-$\epsilon_i$: random error for observation $i$
-
-- each $\epsilon_i$ is realization of same random variable with mean $0$ and variance $\sigma^2$. 
-- **independent** of each other *and* $D_i$
-
----
-
-```{r, echo = T}
-d = rnorm(100); y = 3 + d * 0.5
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ UHRSWORK, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
 ```
 
-```{r, echo = F}
-plot(d, y, main = bquote(Y[i] == alpha + beta * D[i])); abline(a = 3, b = 0.5)
-```
 
----
-
-```{r, echo = T}
-epsilon_i = rnorm(100); y_star = 3 + d * 0.5 + epsilon_i
-```
-
-```{r, echo = F}
-plot(d, y_star, main = bquote(Y[i] == alpha + beta * d[i] + epsilon[i]))
-abline(a = 3, b = 0.5)
-```
-
----
-
-In the context of Hooke's law and other physical laws may make sense to expect the effect $\beta_D$ to be linear and fixed for all observations.
-
-Think back to experiments: in context of political science, does this make sense?
-
-- e.g., is the effect of income on preferences for redistribution the same for all people? Linear?
-
----
-
-### The Regression Model:
-
-It is possible to think of regression estimates like this:
-
-- $\beta_D$: is weighted average of non-linear effect of $D$ on $Y$ across different values of $D$
-- $\beta_D$: can represent the average effect, even if there are heterogeneous unit causal effects
-
-$Y_i = \alpha_i + \beta_{D_i} D_i + \nu_i$
-$Y_i = \alpha_i + (\beta_{D} + (\beta_{D_i} - \beta_{D})) D_i + \nu_i$
-$Y_i = \alpha_i + \beta_{D} D_i + (\nu_i + (\beta_{D_i} - \beta_{D})D_i)$
-
-... if heterogeneous effects are **independent** of $D$
-
----
-
-### The Regression Model: 
-
-The more general **regression model** (where $X_i$ is a matrix of variables)
-
-$$Y_i = \mathbf{X_i\beta} + \epsilon_i$$
-
-can be **estimated** with least squares:
-
-$$Y_i =  X_i\hat{\beta} + e_i$$
-
-where residuals used to estimate variance of errors: $Var(e) = \widehat{\sigma^2}$
-
----
-
-### The Regression Model:
-
-**Differences from Least Squares Algorithm**
-
-- we now have **estimates** ($\widehat{}$) of **parameters**
-- we now have **unobserved errors** $\epsilon_i$ instead of **residuals** $e_i$.
-
-Least Squares is the **Best Linear Unbiased Estimator** of our model parameters under 3 key assumptions.
-  
-- by unbiased we mean $\beta - E(\widehat{\beta}) = 0$
-- "best" as in estimate has least variance (not so important in practice)
-
----
-
-### Model Assumptions:
-
-$(1)$. **Model** equation is correctly specified 
-
-- correct functional form (e.g., linear, additive) for process by which variables in $X$ affect $Y$, and how variables in $X$ **affect each other**.
-- all **relevant variables** affecting $Y$ (will define next week) are included in the model
-- $Y_i =  \mathbf{X_i}\mathbf{\beta} + \epsilon_i$ is the true data-generating function
-
-In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
-
-$Earn_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
-
----
-
-### Model Assumptions:
-
-$(2.)$ $\epsilon_i$ are independent, identically distributed (i.i.d.)
-
-- $E(\epsilon_i) = 0$ and variance of $\sigma^2$. 
-- **homoskedastic**
-    - errors $\epsilon$ all come from same distribution with given variance
-- in contrast to **heteroskedastic**: 
-    - errors come from different distributions with different variances.
-
-In groups: come up with 2 ways this assumption could be wrong in the context of the Hooke's Law example.
-
----
-
-### Model Assumptions:
-
-$(3.)$ $\epsilon_i$ is **independent** of $X_i$: $X_i \perp \!\!\! \perp \epsilon_i$
-
-- This means $X$ is **independent** of $\epsilon$ (recall dependence versus independence)
-- **independence** is not **orthogonality**
-    
-In groups: come up with 2 ways this assumption could be wrong in the context of this model: 
-
-$Earn_i = b_0 + b_1 Hours_i + b_2 Age_i + b_3 Law_i + b_4 Female_i + \epsilon_i$
-    
----
-
-### Model Assumptions:
-
-Under these three assumptions, we call the model "ordinary least squares".
-
-We cannot **empirically verify** these assumptions.
-
-In particular, cannot verify assumption 3:
-
-- When using least squares to **estimate** this model, we mathematically impose $e_i$ to be **orthogonal** to $x_i$ and $E(e_i) = 0$. This is a mathematical feature of regression, not proof that $X_i \perp \!\!\! \perp \epsilon_i$
-
---- 
-
-### Model Assumptions:
-
-If these assumptions are reasonable for the data we observe, then with large $n$, we can estimate our parameters $\beta, \sigma^2$ using least squares. 
-
-And $\beta$ could have a causal interpretation.
-
-
-# Estimating the Regression Model
-
-
----
-
-### The Regression Model:
-
-What work is done by
-
-- the data?
-- the math of regression?
-- the assumptions?
-
----
-
-### The Regression Model:
-
-**Mathematical Assumptions** (least squares):
-
-- **design matrix** has **full rank** (no linear dependence b/t columns)
-- $n \geq p$
-
-**Statistical Assumptions** (statistical model):
-
-- $Y_i$ is generated by $\mathbf{X_i\beta} + \epsilon_i$
-- $\epsilon_i$ are independent, identically distributed, with variance $\sigma^2$
-- $X_i \perp \!\!\! \perp \epsilon_i$
-
-
----
-
-### Estimation:
-
-If $\mathbf{X}$ is $n \times p$ matrix: We want to estimate $p + 1$ parameters... (what are they?)
-
-$\beta$ estimated by $\widehat{\beta}$ using least squares:
-
-$$\widehat{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}$$
-
-- Note: $\widehat{\beta}$ is a random vector; each element is a **random variable**. **Why?**
-
----
-
-$Y_i = X_i\beta + \epsilon_i$
-
-$\epsilon_i$ is random variable.
-
-If we were to repeat the drawing of $\epsilon$ again, we would get different estimates: $\widehat{\beta}$.
-
-
----
-
-```{r, echo = T}
-d = rnorm(100); y = 3 + d * 0.5
-```
-
-```{r, echo = F}
-plot(d, y, main = bquote(Y[i] == alpha + beta * D[i])); abline(a = 3, b = 0.5)
-```
-
----
-
-```{r, echo = T}
-epsilon_i = rnorm(100); y_star = 3 + d * 0.5 + epsilon_i
-```
-
-```{r, echo = F}
-plot(d, y_star, main = bquote(Y[i] == alpha + beta * d[i] + epsilon[i]))
-abline(a = 3, b = 0.5)
-```
-
----
-
-```{r, echo = F}
-k = 1000
-out = data.frame(alpha_hat = rep(NA, k), beta_hat =  rep(NA,k))
-
-alpha = 3
-beta = 0.5
-
-for(i in 1:k){
-  y_star = alpha + beta*d + rnorm(100)
-  bs_m = lm(y_star ~ d)
-  out[i,] = bs_m$coefficients
-}
-
-u = data.frame(d, y)
-
-ggplot(u, aes(x = d, y=y)) + geom_point(alpha = 0) +
-  xlab('d') + ylab('y') +  
-  geom_abline(intercept = out$alpha_hat, slope = out$beta_hat, colour = 'red', linetype = 'dashed', alpha = 0.025) + geom_abline(intercept = alpha, slope = beta, colour = 'darkred') + theme_bw() + labs(title = 'Lines from 1000 draws of epsilons')
-
-```
-
----
-  
 ```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Gender and Hours (linear)")
+```
 
-ggplot(out, aes(x = beta_hat)) + geom_histogram() + theme_bw() + ggtitle("Sampling Distribution of Beta Hat")
+---
+
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ poly(UHRSWORK, degree = 2), acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Gender and Hours (quadratic)")
+```
+
+Can we do better?
+
+---
+
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ poly(UHRSWORK, degree = 3), acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Residual Gender and Hours (cubic)")
+```
+
+---
+
+```{r}
+m = lm(INCEARN ~ FEMALE + poly(UHRSWORK, 3, raw = T) , acs_data)
+summary(m)$coefficients
+```
+
+---
+
+### Non-linearity with Least Squares
+
+We can incorporate all kinds of non-linearity:
+
+- polynomials (up to $n-1$ degrees)
+- logarithms (natural log very common)
+- exponents
+- square-roots
+
+But there are trade-offs...
+
+---
+
+### Non-linearity with Least Squares
+
+1. Choice of non-linearity may be arbitrary:
+
+  - unless we have good theoretical motivation, which non-linearity do we choose?
+  - how do we decide which non-linear function is "best"?
+  - worst case scenario: we can fit to arbitrary precision.
+  
+---
+
+Linear fit
+
+```{r, echo = F, include = F, message = F, warning=F}
+data(Galton) 
+galton = Galton %>% as.data.table() %>%
+          .[, list(n = .N), by = list(parent, child)]
+w = galton$n/sum(galton$n)
+k = 14
+galton_s = galton[sample(1:.N, k, prob = w)]
+galton_s[, parent := parent + runif(.N, -0.25,25)]
+```
+
+```{r echo = F, include = T, message = F, warning=F}
+ggplot(galton_s, aes(parent, child)) + 
+  geom_point() +
+  theme_bw() +
+  xlab("Father Height (inches)") + ylab("Child Height (inches)") +
+  geom_smooth(method = 'lm', se = F, fullrange = T, col = 'black')  +
+  ylim(range(galton$child))
+
+```
+
+
+
+
+---
+
+Perfect Polynomial fit...
+
+```{r echo = F, warning=F, message=F}
+m = lm(child ~ poly(parent, degree = k - 1), galton_s)
+l = galton_s$parent %>% min %>% `-` (0.01)
+u = galton_s$parent %>% max %>% `+` (0.01)
+fit = data.frame(parent = seq(l,u,0.001))
+fit$child_hat = predict(m, newdata = fit)
+
+ggplot(galton_s, aes(parent, child)) + 
+  geom_point() +
+  theme_bw() +
+  xlab("Father Height (inches)") + ylab("Child Height (inches)") +
+  geom_line(data = fit, aes(x = parent, y = child_hat)) +
+  ylim(range(galton$child))
 
 ```
 
 ---
 
-### Regression and Random Variables
+Perfect Polynomial fit?
 
-Compare this against the logic of experiments:
+```{r echo = F, warning=F, message=F}
+ggplot(galton_s, aes(parent, child)) + 
+  geom_point() +
+  theme_bw() +
+  xlab("Father Height (inches)") + ylab("Child Height (inches)") +
+  geom_line(data = fit, aes(x = parent, y = child_hat))
+```
 
-- in experiments, random assignment makes mean observed potential outcomes of $Y$ into random variables.
-- in regression, what is the "chance process" generating $\epsilon$?
->- Doesn't really make a lot of sense; even recent textbooks hand-wave and say it isn't important to interpret this; the math just works
->- A big open question, because $\epsilon$ drives our variance estimates for $\widehat{\beta}$
 
 ---
 
-### Estimation:
+### Non-linearity with Least Squares
 
-Under the statistical assumptions we made, $\widehat{\beta}$ is an unbiased estimator of $\beta$, conditional on $X$: $E(\widehat{\beta}|X) = \beta$
+We risk **overfitting** the data, leading to very bad extrapolations/interpolations.
+
+1. Choice of non-linearity:
+  - In general, polynomials not a great idea
+  - natural splines fit cubic polynomials in pieces (better)
+  - machine learning tools (GAM, KRLS) fit arbitrary functions
+  - But we have to cross-validate to assess out-of-sample predictions
+
+---
+
+### Non-linearity with Least Squares
+
+2. Non-linearity makes interpreting coefficients difficult.
+
+  - If we include $x$ and $x^2$, we can't directly interpret these
+  - Non linearity means slope is not constant.
+  - Coefficients do not summarize the average slope
+  - We need to calculate average partial derivative/average partial effect
   
-- "conditional on $X$" means taking the values of $X$ as fixed; not a sample from a population
+  See Aronow and Miller, Chapter 4.3.4
 
---- 
-
-### LS estimate is unbiased:
-
-By assumption: $Y = \mathbf{X\beta} + \epsilon$, so:
-
-$\widehat{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y}$
-
-$\widehat{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'(\mathbf{X\beta} + \epsilon)$
-
-$\widehat{\beta} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$
-
-$\widehat{\beta} = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$
-
----
-
-### LS estimate is unbiased:
-
-$\widehat{\beta} = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$
-
-So:
-
-$E(\widehat{\beta}|X) = E(\mathbf{\beta}|\mathbf{X}) + E((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon|\mathbf{X})$
-
-$E(\widehat{\beta}|X) = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon|\mathbf{X})$
-
-And because, by assumption, $X \perp \!\!\! \perp \epsilon$
-
-$E(\widehat{\beta}|X) = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon)$
-
-And because, by assumption, $E(\epsilon) = 0$
-
-$E(\widehat{\beta}|X) = \mathbf{\beta}$
-
----
-
-### Variance of LS Estimator?
-
-Thus, if our model assumptions are correct, $\widehat{\beta}$ is an unbiased estimate of causal parameter $\beta$
-
-- $\widehat{\beta}$ is a random vector, as it depends on chance draws of $\epsilon$
-- As $n \to \infty$, $\widehat{\beta} \approx \beta$, but there is still uncertainty.
-
-How do we discover the uncertainty in our estimate $\widehat{\beta}$?
-
-
-# Variance of our Estimate
-
----
-
-### Variance of OLS Estimator:
-
-- Each element of $\widehat{\beta}_{p \times 1}$ is a random variable
-    - each $\widehat{\beta}_k$ has a variance 
-    - and a **covariance** with other $\widehat{\beta}_{j\neq k}$
-- These variances and covariances are found in the variance-covariance matrix of $\widehat{\beta}$
-    - a $p \times p$ matrix
-    - Diagonal elements are the **variances** for $\widehat{\beta}_{1} \dots \widehat{\beta}_p$
-    - off-diagonal elements are **covariances**; 
-    - matrix is **symmetric**
-
----
-
-Variance-Covariance Matrix
-
-$$\scriptsize{\begin{pmatrix} Var(\widehat{\beta}_1) & Cov(\widehat{\beta}_1,\widehat{\beta}_2) & Cov(\widehat{\beta}_1,\widehat{\beta}_3) &\ldots & Cov(\widehat{\beta}_1,\widehat{\beta}_p) \\
-  Cov(\widehat{\beta}_2,\widehat{\beta}_1) & Var(\widehat{\beta}_2) & Cov(\widehat{\beta}_2,\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_2,\widehat{\beta}_p) \\ 
-  Cov(\widehat{\beta}_3,\widehat{\beta}_1) & Cov(\widehat{\beta}_3,\widehat{\beta}_2) & Var(\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_3,\widehat{\beta}_p) \\ 
-  \vdots & \vdots & \vdots & \ddots & \vdots \\
-  Cov(\widehat{\beta}_p,\widehat{\beta}_1) & Cov(\widehat{\beta}_p,\widehat{\beta}_2) & Cov(\widehat{\beta}_p, \widehat{\beta}_3) & \ldots & Var(\widehat{\beta}_p)\end{pmatrix}}$$
-
-
----
-
-### Variance of OLS Estimator:
-
-**How do we use the variance-covariance matrix?**
-
-- The square-root of diagonal elements (variances) gives **standard error** for each parameter estimate in $\widehat{\beta}$ (hypothesis testing)
-
-- The off-diagonal elements can help answer: $\beta_2 + \beta_3 \neq 0$. We need $Cov(\beta_2, \beta_3)$ to get $Var(\beta_2 + \beta_3)$. (complex hypothesis testing, e.g. interaction effects )
-
----
-
-### Variance-Covariance Matrix
-
-$\widehat{\beta} = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$, So:
-
-$$cov(\widehat{\beta}|X) = E((\widehat{\beta} - \beta)(\widehat{\beta} - \beta)' | X)$$
-
-$$ = E(  ((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)' | X)$$
-
-$$ = E(  ((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon)(\epsilon'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}) | X)$$
-
-$$ = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
-
-What really matters here is: $E(\epsilon\epsilon'|X)$
-
----
-
-### Variance-Covariance Matrix
-
-All variance-covariance matrices are "sandwiches":
-
-$$ (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
-
-$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the bread; $E(\epsilon\epsilon'|X)$ is the meat. 
-
-Later on, we can make different choices of "meat".
-
----
-
-### Variance-Covariance Matrix
-
-In groups: if $\epsilon$ is a vector that is $n \times 1$ with elements $(\epsilon_1 \ldots \epsilon_n)$
-
-1. What are the dimensions of the matrix: $\epsilon\epsilon'$?
-
-2. What are the elements on the **diagonal** of the matrix?
-
-3. What is the **expected value** of the elements on the **off-diagonal** 
-
-Hints: We have assumed that $E(\epsilon) = 0$; $\epsilon_i$ are **independent** of each other
-
----
-
-### Variance-Covariance Matrix
-
-$$E(\epsilon\epsilon'|X) = \sigma^2\mathbf{I}_{n\times n}$$ 
-
-$\epsilon\epsilon'$ is $n \times n$ matrix with $ij$th elements $\epsilon_i\epsilon_j$
-
-- this is the variance covariance matrix of the **errors** (we don't subtract means because $E(\epsilon) = 0$)
-
----
-
-### Variance-Covariance Matrix
-
-Taking the expectation:
-
-- If $i \neq j$, the elements of the matrix are $E(\epsilon_i\epsilon_j)$. Because, by assumption, $E(\epsilon) = 0$, and $\epsilon$s are **independent**,  $E(\epsilon_i\epsilon_j) = E(\epsilon_i)E(\epsilon_j) = 0 \times 0 = 0$
-- but, for $i = j$, $E[\epsilon_i^2] = E[(\epsilon_i - E[\epsilon])^2]$ (a **variance**)
-- and because $\epsilon$ is **identically distributed**, then $Var(\epsilon_i) = Var(\epsilon) = \sigma^2$ for all $\epsilon$
-
-The result is a $n \times n$ matrix, with $\sigma^2$ on the diagonal, $0$ everywhere else.
-
----
-
-### Variance-Covariance Matrix
-
-$$ = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\sigma^2\mathbf{I}_{n\times n}\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
-
-$$ = \sigma^2(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
-$$cov(\widehat{\beta}|X) = \sigma^2(\mathbf{X}'\mathbf{X})^{-1}$$
-
-This gives us the variance-covariance matrix of $\widehat{\beta}$. Can we start computing standard errors for $\widehat{\beta}$ now?
-
----
-
-### Variance-Covariance Matrix
-
-We use **residuals** to stand in for $\epsilon$.
-
-$$\widehat{\sigma^2} = \frac{\sum\limits_i^n e_i^2}{n - p}$$
-
-
-$E[\widehat{\sigma^2} | X] = \sigma^2$ (unbiased)
-
-- Why $n-p$? The variance of the sample mean required $n-1$, because we calculated the mean first, so we lost 1 degree of freedom. With bivariate regression, we lose 2 df. With $p$ variables, we lose $p$ degrees of freedom.
-
-
----
-
-### Variance-Covariance Matrix
-
-so, we **estimate** the variance-covariance matrix: 
-
-$\widehat{cov}(\widehat{\beta}) = \widehat{\sigma^2}(\mathbf{X}'\mathbf{X})^{-1}$
-
----
-
-### Standard Errors of $\widehat{\beta_p}$
-
-The variance ($p$th diagonal element of $\widehat{cov}(\widehat{\beta})$) is
-
-$Var(\hat{\beta_p}) = \frac{\hat{\sigma^2}}{\sum\limits_i^n (X^*_{ip} - \overline{X_p^*})^2}$
-
-So the standard error is:
-
-$SE(\hat{\beta_p}) = \sqrt{Var(\hat{\beta_p})} = \frac{\widehat{\sigma}}{\sqrt{n}\sqrt{Var(X_p^*)}}$
-
-- standard errors get smaller (more precise): with growing $n$, increased (residual) variation in $X_p$, smaller error variance ($\sigma^2$)
-
----
-
-### Sampling Distribution of $\hat{\beta}$
-
-**asymptotic normality**:
-
-Even if $\epsilon$ not normally distributed: under our assumptions, then $\lim_{n\to\infty}$ sampling distribution of $\hat{\beta}$ is normally distributed by the central limit theorem. Reasonable if $n$ is moderately large and data is not highly skewed. 
-
-Because we **estimate** standard errors: $t$ statistic for hypothesis testing of $\widehat{\beta}$  asymptotically $t$ distributed:
-
----
-
-### Standard errors
-
-In sum:
-
-- We get $\widehat{\sigma^2}$ by taking variance of the residuals ($e$)
-- We take diagonal of variance-covariance matrix to get variances of slopes ($\widehat{\sigma^2}(\mathbf{X}'\mathbf{X})^{-1}$)
-- Take square root of variances to standard errors for $\widehat{\beta}$
-
----
-
-### Standard errors
-
-For standard errors of $\widehat{\beta}$ to be correct, we must assume:
-
-1. $Y$ is generated by $\mathbf{X\beta} + \epsilon$
-2. $\epsilon_i$ are independent, identically distributed, with variance $\sigma^2$ for *all* $i$
-3. $X_i \perp \!\!\! \perp \epsilon_i$
-
-If **any assumption is wrong**: standard errors will be incorrect.
-
-If assumption 1 and 3 are wrong: unbiasedness of $\widehat{\beta}$ does not hold.
-
----
-
-In groups:
-
-Download https://pastebin.com/LeSpqKKk
-
-1. Regress `gop_change` on `enlistment` and an intercept using matrix calacualtions
-2. Create the residuals `e`
-3. Create the variance-covariance matrix
-4. Get the coefficient and standard error for `enlistment`
-5. For each of the three least squares assumptions:
-
-- what is an example of the assumption being wrong in this case?
-- why would it lead standard errors to be wrong?
-
----
-
-### OLS Assumptions:
- 
- When do things go wrong?
- 
-- We incorrectly specify the model (it is multiplicative, or we forgot a term)
- 
->- $Y_i = \alpha + \beta_1 x + \beta_2 x^2 + \epsilon$
- 
->- $Y_i = \alpha + \beta_1 x + \beta_2 z + \epsilon$
-
-
-- Errors are **heteroskedastic**: errors have different variances. 
- 
- >- E.g.: At higher levels of education, incomes take on wider range of values (think PhD  vs. MBA students earning potential), so the errors are larger.
- 
----
-
-### OLS Assumptions:
- 
-- Errors are not **independent**: errors for different observations are correlated.
- 
->- We observe the same counties over time. The error we observer for county $i$ at time $t$ is likely to be correlated with the error of county $i$ at time $t+1$, because it is the same place.
- 
-- $\epsilon$ is not independent of $X$. The errors are in fact correlated with $X$:
- 
->- This is "confounding". Our estimate $\hat{\beta}$ as the coefficient of $x$ will be biased. If we excluded $z$ from the equation incorrectly, the bias in $x$ will be a function of the relationships between $x$ and $z$, and between $z$ and $y$.
+  Basically, if you non-linearly transform $Y$ or $X$, you need to check how to interpret.
   
+---
+
+### Key Takeaways:
+
+- If we 'control' for binary variables, we can exactly "hold things constant".
+  - this is only possible when $n >> g$: many more observations than 'groups' we want to hold constant
+- If we 'control' for continuous variables, least squares only ensures orthogonality between variable of interest and control.
+  - orthogonality $\neq$ independence
+  - this ensures only zero linear correlation.
+- We can split the difference w/ non-linear transformations
+  - how to choose? how to avoid overfitting?
+  - difficult to interpret coefficients for transformed variables.
+
+
+# Conditioning
+
+---
+
+Recall:
+
+When there is possible confounding, we want to "block" these causal paths using conditioning
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+  - all 'backdoor' paths are blocked
+  - no conditioning on colliders to 'unblock' backdoor path
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+  
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+
+  - There must be variation in the levels of treatment **within every strata** of $X$
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+    
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+
+  - We'll revisit this in the context of regression
 
 
 ---
 
-### Conclusion:
+### Two Ways of Conditioning:
 
-1. $Y$ is generated by $\mathbf{X\beta} + \epsilon$
-2. $\epsilon_i$ are independent, identically distributed, with variance $\sigma^2$ for *all* $i$
-3. $X_i \perp \!\!\! \perp \epsilon_i$
+- **imputation**/**matching**: "plug in" unobserved potential outcomes of $\color{red}{Y(1)}$ ($\color{red}{Y(0)}$) using observed potential outcomes of $Y(1)$($Y(0)$) from cases with **same**/**similar** values of $\mathbf{X_i}$.
+- **reweighting**: reweight members of "treated" and "untreated" groups based on $Pr(D_i | \mathbf{X_i})$
 
-With these assumptions:
+---
 
-- $\widehat{\beta}$ is **unbiased** estimator for $\beta$
-- known sampling distribution of $\widehat{\beta}$
+### Conditioning by Imputation
+
+We find effect of $D$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
+
+$\widehat{ACE}[X = x] = E[Y(1) | D=1, X = x] - E[Y(0) | D=0, X = x]$ 
+
+for each value of $x$ in the data.
+
+Under the Conditional Independence Assumption, $E[Y(1) | D=1, X=x] = \color{red}{E[Y(1) | D=0, X=x]}$ and $E[Y(0) | D=0, X=x] = \color{red}{E[Y(0) | D=1, X=x]}$
+
+We **impute** the missing potential outcomes... with the **expected value** of the outcome of observed cases with same values of $x$, different values of $D$.
+
+---
+
+### Conditioning by Imputation
+
+what have we seen that looks like these values: e.g., $E[Y(0) | D=0, X=x]$?
+
+>- this a conditional expectation function; something we can estimate using regression
+
+# A Causal Model for Least Squares
+
+---
+
+To understand how we can use regression to estimate causal effects, we need to describe the kinds of causal estimands we might be interested in.
+
+---
+
+### Response Schedule
+
+In the context of **experiments**, each observation has potential outcomes corresponding to their behavior under different treatments
+
+- To estimate $ACE$ of treatment without bias, assumed that  treatment status is **independent** of potential outcomes
+
+---
+
+### Response Schedule
+
+In regression, where levels of treatment might be continuous, we generalize this idea to the "response schedule":
+
+- each unit has a set of potential outcomes across every possible value of the "treatment" 
+  - $Y(0), Y(1), Y(2), \dots, Y(D_{max})$
+- we can summarize the causal effect of $D$ in two ways:
+
+---
+
+**average causal response function**: 
+
+- what is  $E[Y(d)]$ for all $d \in D$, or what are mean potential outcomes of $Y$ at values of $D$. 
+- this is a conditional expectation function, defined in terms of potential outcomes
+
+
+---
+
+**average partial derivative**: 
+
+- the average **slope** of the (possibly non-linear) average causal response function
+- what is the average causal change in $Y$ induced by $D$, averaged over all values $d$ in $D$
+- if there are just two levels, the difference between them is the $ACE$
+
+---
+
+### Response Schedule
+
+We can use regression to estimate the *linear approximation* of the average causal response function:
+
+$$Y_i(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
+Here $Y_i(D_i = d)$ is the potential outcome of case $i$ for a value of $D = d$. 
+
+- this response schedule says that $E[Y(D = d)]$, on average, changes by $\beta_1$ for a unit changes in $D$ (or a weighted average of non-linear effects of $D$... the average partial derivative)
+- $\epsilon_i$ is unit $i$ deviation from $Y_i(D=d) - E[Y(D = d)]$ 
+
+---
+
+### Response Schedule
+
+If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta}_1$ that we can give a **causal** interpretation? (On average, change in $D$ **causes** $\widehat{\beta}_1$ change in $Y$)
+
+**We must assume**
+
+- $Y_i$ actually produced according to the response schedule (equation is correctly specified; e.g., linear and additive)
+- $D_i$ is independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$.
+
+In this scenario, if $D$ were binary and we had randomization, this is equivalent to estimating the $ACE$ for an experiment.
+
+---
+
+### Response Schedule
+
+If we want to use regression for *conditioning*, then the model would look different:
+
+$$Y_i(D_i = d, X_i = x) = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i} + \epsilon_i$$
+
+- here we add conditioning variables $\mathbf{X_i}$ to the model. 
+- regression is estimating the conditional expectation function $E[Y(d) | D = d, X = x]$: this is what we need for conditioning 
+
+---
+
+$$Y_i(D_i = d, X_i = x) = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i} + \epsilon_i$$
+
+Given what we have learned about regression so far...
+
+>- How is using regression to estimate $E[Y(d) | D = d, X = x]$ different from when we exactly matched cases?
+>- How do the assumptions required for conditioning translate to the regression context?
+
+
+---
+
+### Conditioning with Regression
+
+**How it works**:
+
+Imagine we want to know the efficacy of UN Peacekeeping operations [(Doyle & Sambanis 2000)](https://www.jstor.org/stable/2586208) after civil wars:
+
+We can compare the post-conflict outcomes of countries with and without UN Peacekeeping operations.
+
+To address concern about confounding, we condition on war type (non/ethnic), war deaths, war duration, number of factions, economic assistance, energy consumption, natural resource dependence, and whether the civil war ended in a treaty. 
+
+---
+
+122 conflicts... can we find exact matches?
+
+```{r echo = F, message=F, warning=F}
+
+vars = c('wartype', 'untype4', 'logcost', 'wardur', 'factnum', 'trnsfcap', 'treaty', 'develop', 'exp', 'decade')
+
+ds2000[, id := 1:.N]
+plot_data = melt(ds2000, 
+                 id.vars = c('id', 'untype4', 'pbs2s3'),
+                  measure.vars = vars)
+plot_data[, Peacekeeping := factor(untype4, levels = c(0,1), labels = c('No', 'Yes'))]
+ggplot(plot_data[!(variable %in% c('untype4'))], aes(x = value, group = Peacekeeping, fill = Peacekeeping)) +
+  geom_histogram(position = 'identity', alpha = 0.5) + 
+  theme_bw() + 
+  facet_wrap(~ variable, nrow = 2, scales = 'free') +
+  theme(legend.position="bottom")
+
+```
+
+---
+
+Without perfect matches on possible confounders, we don't have cases without a Peacekeeping operation that we can use to substitute for the counterfactual outcome in conflicts with a Peacekeeping force.
+
+We can use regression to *linearly approximate* the conditional expectation function $E[Y(d) | D = d, X = x]$ to plug in the missing values.
+
+$$Y_i = \beta_0 + \beta_D \cdot D_i + \mathbf{X_i\beta_X} + \epsilon_i$$
+
+---
+
+Copy the data, `ds2000`, from here: [https://pastebin.com/bAcmrPdN](https://pastebin.com/bAcmrPdN)
+
+1. Regress `success` on `untype4`, `logcost`, `wardur`, `factnum`, `trnsfcap`, `treaty'`, `develop`, `exp`, `decade`, using `lm()`, save this as `m`
+2. Use model to predict *counterfactual* potential outcomes for each conflict:
+  - Create a copy of `ds2000`, and flip the value of `untype4` (0 to 1, 1 to 0).
+  - Use the `predict(m, newdata = ds2000_copy)` to add a new column called `y_hat` to `ds2000`.
+
+---
+
+Next:
+
+3. Create a new column `y1`, which equals `success` for cases with `untype4 == 1`, and `yhat` for cases with `untype4 == 0`
+4. Create a new column `y0`, which equals `success` for cases with `untype4 == 0`, and `yhat` for cases with `untype4 == 1`
+5. Calculate `tau_i` as the difference between `y1` and `y0`. Then calculate the mean `tau_i`.
+6. Compare to the coefficient on `untype4` in your regression results.
+
+---
+
+```{r}
+m = lm(success ~ untype4 + treaty +  wartype + decade + 
+                factnum + logcost +  wardur + trnsfcap + develop + exp,
+       data = ds2000)
+
+cf_ds2000 = ds2000 %>% as.data.frame
+cf_ds2000$untype4 =  1*!(cf_ds2000$untype4)
+
+ds2000[, y_hat := predict(m, newdata = cf_ds2000)]
+ds2000[, y1 := ifelse(untype4 %in% 1, success, y_hat)]
+ds2000[, y0 := ifelse(untype4 %in% 0, success, y_hat)]
+ds2000[, tau := y1 - y0]
+ds2000[, tau] %>% mean
+```
+
+---
+
+### Results:
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Model 1` = m), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T
+             )
+```
+
+</small>
+
+
+---
+
+```{r echo= F, warning=F, message=F, results = 'asis'}
+setkey(ds2000, untype4)
+
+k_dat_full = ds2000[, list(`$i$` = 1:.N,
+              UN = untype4, 
+              y1 = sprintf("%.2f", y1),
+              y0 = sprintf("%.2f", y0),
+              tau_i = sprintf("%.2f", y1 - y0))]
+
+k_dat_empty = k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{E[Y(1) | D = 0, X = x]}$"),
+              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{E[Y(0) | D = 1, X = x]}$"),
+              `$\\tau_i$` = "$\\color{red}{?}$")]
+k_dat_xbeta = k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 1 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 0 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$\\tau_i$` = "$\\color{red}{?}$")]
+
+
+k_dat_empty %>%
+  tail(12) %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
+
+```
+
+
+---
+
+```{r echo= F, warning=F, message=F, results = 'asis'}
+
+k_dat_xbeta %>%
+  tail(12) %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
+
+```
+
+---
+
+```{r echo= F, warning=F, message=F}
+
+k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = y1,
+              `$Y_i(0)$` = y0,
+              `$\\tau_i$` = paste0("$\\color{red}{",tau_i,"}$")
+              )] %>%
+  .[, `$Y_i(1)$` := cell_spec(`$Y_i(1)$`, color = ifelse(`$UN_i$`, "black", "red"))] %>%
+  .[, `$Y_i(0)$` := cell_spec(`$Y_i(0)$`, color = ifelse(!`$UN_i$`, "black", "red"))] %>%
+  tail(12) %>%
+  kbl(escape = F) %>%
+  kable_material(c("striped", "hover"))
+
+```
+
+
+---
+
+### Conditioning with Regression
+
+**How it works**:
+
+- Rather than "fill" missing potential outcomes of $Y(d)$ with observed outcomes that cases that **match** exactly on $X$, we fit the linear conditional expectation function, plug in the predicted value for counterfactual potential outcome
+- Rather than **hold confounders constant**, we ensure zero linear association between confounders and $D$.
+
+---
+
+### Conditioning with Regression
+
+**Assumptions**
+
+1. **Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+  - $\epsilon_i$ contributes to $Y_i$, so determines potential outcomes. Thus, this assumption is equivalent to $D_i \perp \!\!\! \perp \epsilon_i | X_i$.
+   - we specify the relationship between $X, D$, and $X,Y$ to be linear and additive. So we must assume that any dependence is *linear and additive*
+
+---
+
+### Conditioning with Regression
+
+**Assumptions**
+
+1. **Conditional Independence**: Questions that arise when using regression:
+
+- what if we've forgotten a variable?
+- what if things are not linear and additive?
+
+
+---
+
+### What if we forgot a variable?
+
+If the true process generating the data is:
+
+$$Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \nu_i$$
+
+with $(D_i,X_i) \perp \!\!\! \perp \nu_i$, $E(\nu_i) = 0$
+
+What happens when we estimate this model with a constant and $D_i$ but exclude $X_i$?
+
+$$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
+---
+
+$$\small\begin{eqnarray} 
+\widehat{\beta_1} &=& \frac{Cov(D_i, Y_i)}{Var(D_i)}    \\
+&=& \frac{Cov(D_i, \beta_0 + \beta_1 D_i + \beta_2 X_i + \nu_i)}{Var(D_i)} \\
+&=& \frac{Cov(D_i, \beta_1 D_i)}{Var(D_i)} + \frac{Cov(D_i,\beta_2 X_i)}{Var(D_i)} + \frac{Cov(D_i,\nu_i)}{Var(D_i)}   \\
+&=& \beta_1\frac{Var(D_i)}{Var(D_i)} + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)} \\
+&=& \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}
+\end{eqnarray}$$
+
+So, $E(\widehat{\beta_1}) \neq \beta_1$, it is **biased**
+
+---
+
+### Omitted Variable Bias
+
+When we exclude $X_i$ from the regression, we get: 
+
+$$\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$$
+
+This is **omitted variable bias**
+
+- recall: $\beta_1$ is the effect of $D$ on $Y$
+- recall: $\beta_2$ is the effect of $X$ on $Y$
+
+---
+
+Excluding $X$ from the model: $\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$
+
+What is the direction of the bias when:
+
+1. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} < 0$
+
+2. $\beta_2 < 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} < 0$
+
+2. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} > 0$
+
+2. $\beta_2 = 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} > 0$
+
+2. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} = 0$
+
+---
+
+### Omitted Variable Bias
+
+This only yields bias if two conditions are true:
+
+1. $\beta_2 \neq 0$: omitted variable $X$ has an effect on $Y$ 
+
+2. $\frac{Cov(D_i, X_i)}{Var(D_i)} \neq 0$: omitted variable $X$ is correlated with $D$. (on the same backdoor path)  
+
+This is why we don't need to include EVERYTHING that might affect $Y$ in our regression equation; **only those variables that affect <u>treatment</u> and <u>the outcome</u>.**
+
+---
+
+### Omitted Variable Bias
+
+Link to DAGs:
+
+- OVB solved when we "block" backdoor paths from $D$ to $Y$.
+
+Link to Conditional Independence:
+
+- OVB is a result of conditional independence assumption being wrong
+
+Link to linearity:
+
+- OVB formula only describes bias induced by exclusion of a confounder that has a **linear** relationship with $D$ and $Y$.
+
+---
+
+### Example: 
+
+Let's turn to a different example: do hours increase earnings? 
+
+Let's say that we estimate this **model**, and we have included all possible confounders.
+
+$$\begin{eqnarray}Y_i = \beta_0 + \beta_1 Hours_i + \beta_2 Female_i + \\ \beta_3 Age_i + \beta_4 Law_i + \epsilon_i\end{eqnarray}$$
+
+And we want to find $\beta_1$ with $\widehat{\beta_1}$
+
+- how are we assuming **linearity**?
+- how are we assuming **additivity**?
+
+---
+
+### Example:
+
+If we are imputing missing potential outcomes of earnings for different hours worked using this model...
+
+We need to ask...
+
+- Are relationships between age ($X$) and hours($D$), age ($X$) and income earned ($Y$) **linear**?
+- Are the earnings ($Y$) related to gender and age ($X$) in an **additive** way? (relationship between age and earnings the same for men and women?)
+- Are the effects of hours worked linear? The same, regardless of gender and age?
+
+---
+
+### Example: D and X
+
+```{r echo = F, include = F, warning=F, message = F}
+acs_data[, r_hours := lm(UHRSWORK ~ SEX + AGE + LAW, .SD)$residuals]
+acs_data[, r_hours_2 := lm(UHRSWORK ~ SEX*AGE*LAW, .SD)$residuals]
+acs_data[, r_hours_3 := lm(UHRSWORK ~ as.factor(SEX)*as.factor(AGE)*LAW, .SD)$residuals]
+acs_data[, Gender := ifelse(SEX == 1, "Female", "Male")]
+plot_data = acs_data[, list(hours = mean(UHRSWORK), inc = mean(INCEARN), 
+                r_hours = mean(r_hours), r_hours_2 = mean(r_hours_2),
+                r_hours_3 = mean(r_hours_3),
+                n = .N), by = list(Gender, AGE)]
+plot_data_2 = acs_data[, list(inc = mean(INCEARN), 
+                n = .N), by = list(Gender, UHRSWORK)]
+```
+
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Hours Worked") + ggtitle("Hours Worked by Age and Gender") + theme_bw()
+
+```
+
+
+---
+
+### Y and X
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Income") + ggtitle("Income by Age and Gender") + theme_bw()
+
+```
+
+---
+
+### D and Y
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data_2, aes(x = UHRSWORK, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Hours") + ylab("Mean Income") + ggtitle("Income by Hours and Gender") + theme_bw()
+
+```
+
+---
+
+Assuming additivity and linearity:
+
+```{r}
+m_linear_additive = lm(INCEARN ~ UHRSWORK + Gender + AGE + LAW, data = acs_data) 
+```
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law')
+             )
+```
+
+</small>
+
+>- How do we interpret the intercept?
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity and Additivity)") + geom_hline(yintercept = 0) + theme_bw()
+
+```
+
+Non-linear dependence between D and X, despite regression
+
+---
+
+Assuming linearity, not additivity: linear relationship between *Age* and hours/earnings varies by gender and profession
+
+```{r}
+m_linear_interactive = lm(INCEARN ~ UHRSWORK + Gender*AGE*LAW, data = acs_data)
+```
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive, `Linear/Interactive` = m_linear_interactive), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law')
+             )
+```
+
+</small>
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours_2, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity but NOT Additivity)") + geom_hline(yintercept = 0) + theme_bw()
+
+```
+
+Non-linear dependence between D and X, despite regression
+
+---
+
+Assuming neither linearity or additivity: fit an intercept for every combination of gender, profession, and age in years. (technically linear, but not an assumption)
+
+```{r}
+m_full = lm(INCEARN ~ UHRSWORK + as.factor(Gender)*as.factor(AGE) + LAW, data = acs_data)
+```
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive, `Linear/Interactive` = m_linear_interactive, `Nonlinear/Interactive` = m_full), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law')
+             )
+```
+
+</small>
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours_3 %>% round, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + geom_hline(yintercept = 0) + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
+
+```
+
+No dependence between $D$ and $X$, after regression
+
+---
+
+###  Conditional Independence in Regression
+
+Even if we included **all** variables on backdoor path between $D$ and $Y$, regression may still produce  biased estimate:
+
+- we assume the conditional expectation function is linear and additive. 
+- but the world might be non-linear and interactive 
+- even absent OVB, **our decisions** about how to **specify the regression equation** can lead to bias: $\Rightarrow$ **model dependence**
+- Our imputation of missing potential outcomes is biased due to choices we make about **how to impute** (linear/additive)
 
 

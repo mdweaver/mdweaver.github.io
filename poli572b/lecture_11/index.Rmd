@@ -192,7 +192,7 @@ $$Y_i(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
 Here $Y_i(D_i = d)$ is the potential outcome of case $i$ for a value of $D = d$. 
 
 - this response schedule says that $E[Y(D = d)]$, on average, changes by $\beta_1$ for a unit changes in $D$ (or a weighted average of non-linear effects of $D$... the average partial derivative)
-- $\epsilon_i$ is unit $i$ deviation from $E[Y(D = d)]$ 
+- $\epsilon_i$ is unit $i$ deviation from $Y_i(D=d) - E[Y(D = d)]$ 
 
 ---
 
