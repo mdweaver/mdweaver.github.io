@@ -696,7 +696,7 @@ $$Y_i = \beta_0 + \beta_D \cdot D_i + \mathbf{X_i\beta_X} + \epsilon_i$$
 
 ---
 
-Copy the data, `ds2000`, from here: [https://pastebin.com/bAcmrPdN](https://pastebin.com/bAcmrPdN)
+Copy the data, `ds2000`, from here: [https://pastebin.com/ADCesfUA](https://pastebin.com/ADCesfUA)
 
 1. Regress `success` on `untype4`, `logcost`, `wardur`, `factnum`, `trnsfcap`, `treaty'`, `develop`, `exp`, `decade`, using `lm()`, save this as `m`
 2. Use model to predict *counterfactual* potential outcomes for each conflict:

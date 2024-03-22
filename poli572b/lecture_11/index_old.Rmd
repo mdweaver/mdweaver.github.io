@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 22, 2024"
+date: "March 24, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -9,8 +9,7 @@ output:
     highlight: haddock
 ---
 
-
-```{r setup, include = F}
+```{r setup, include = F, warning=F, message=F}
 require(knitr)
 require(magrittr)
 require(kableExtra)
@@ -18,19 +17,18 @@ require(ggplot2)
 require(grid)
 require(data.table)
 require(UsingR)
-require(modelsummary)
-require(tidyverse)
+require(ggdag)
+require(dplyr)
 require(haven)
+require(tidyverse)
 require(fixest)
+require(modelsummary)
 options("kableExtra.html.bsTable" = T)
 
 acs_data = fread("acs_lawmed.csv")
 acs_data[, FEMALE := SEX]
 acs_data[, MARST_f := as.factor(MARST)]
-set.seed(1234)
-acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
 acs_data[, MALE := abs(FEMALE - 1)]
-acs_data[, MEDICINE := 1-LAW]
 acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 
 
@@ -40,7 +38,6 @@ analysis_df <-
 ds2000 = read_dta("./DS2000replication.dta") %>% as.data.table
 ds2000[, success := pbs2s3]
 ```
-
 
 <style type="text/css">
   .reveal h2,h3,h4,h5,h6 {
@@ -61,29 +58,24 @@ ds2000[, success := pbs2s3]
   }
 </style>
 
+# Causal Inference with Regression
 
-# Theme
-
----
+--- 
 
 ### Objectives
 
-**Recap**
 
-- LS is best linear approximation of CEF
-- Intercept and slope interpretations
-- LS can fit group means (dummy variables)
+**Causal Inference with Regression**
 
-**Interpretation**
-
-- Coefficients w/ Controls
-- Non-linearity
-
-**Regression and Causal Inference**
-
-- conditioning
-- 
-
+- Conditioning
+- Regression and Conditioning
+  - Conditional Independence:
+    - Omitted Variable Bias
+    - Interpolation Bias
+  - Positivity:
+    - Extrapolation Bias
+    - Weighting
+- Practical Example
 
 # Conditioning
 
@@ -279,7 +271,7 @@ $$Y_i = \beta_0 + \beta_D \cdot D_i + \mathbf{X_i\beta_X} + \epsilon_i$$
 
 ---
 
-Copy the data, `ds2000`, from here: [https://pastebin.com/ADCesfUA](https://pastebin.com/ADCesfUA)
+Copy the data, `ds2000`, from here: [https://pastebin.com/bAcmrPdN](https://pastebin.com/bAcmrPdN)
 
 1. Regress `success` on `untype4`, `logcost`, `wardur`, `factnum`, `trnsfcap`, `treaty'`, `develop`, `exp`, `decade`, using `lm()`, save this as `m`
 2. Use model to predict *counterfactual* potential outcomes for each conflict:
@@ -800,11 +792,6 @@ In the regression context, Conditional Independence involves
 
 If we are wrong, regression's linear and additive approximation of true CEF may lead us astray.
 
----
-
-### Conditional Independence
-
-
 - Can detect problems with scatterplot of $D$ and $X$; $Y$ and $X$
 - Can choose more flexible model (non-linear/interactive)
 - Linear/additive apprx. may be acceptable because least squares is best linear apprx. of non-linear functions **within the region where we have data**.
@@ -943,28 +930,18 @@ ggplot(plot_data[(variable %in% c('treaty', 'develop'))], aes(x = value, group =
 
 Is there common support here? Let's just condition on these two variables
 
-
----
-
-
-$$Success_i = b_0 + b_1 Peacekeeping_i + b_2 Treaty_i + b_3 Development_i$$
-
-We assume each variable contributes additively and linearly to successful post-conflict situations
-
 ---
 
 ```{r echo = F, warning = F, message = F}
 m_lin = lm(success ~ untype4 + treaty + develop ,
        data = ds2000)
 
-cf_ds2000 = ds2000 %>% copy
+cf_ds2000 = ds2000 %>% as.data.frame
 cf_ds2000$untype4 =  1 - (cf_ds2000$untype4)
 
 ds2000[, y_hat := predict(m_lin, newdata = cf_ds2000)]
 ds2000[, d_alt := factor(1-untype4, levels = 0:1, labels = c("No", "Yes"))]
 ds2000[, Peacekeeping := factor(untype4, levels = 0:1, labels = c("No", "Yes"))]
-
-ate_hat = ds2000[, ifelse(untype4 %in% 1, success - y_hat, y_hat - success)] %>% mean %>% round(3)
 
 ggplot(ds2000, aes(x = develop, y = success, color = Peacekeeping)) +
   geom_point() + 
@@ -975,11 +952,6 @@ ggplot(ds2000, aes(x = develop, y = success, color = Peacekeeping)) +
 
 ---
 
-In the linear context, the estimated average treatment effect of peacekeeping is `r ate_hat`
-
-What if we permit a more flexible model: we model effect of peacekeeping as possibly different across treaty, economic development (we permit treaty and development to interact with peacekeeping)?
-
-
 ```{r echo = F, warning = F, message = F}
 m_alt = lm(success ~ untype4 * treaty * develop ,
        data = ds2000)
@@ -989,19 +961,6 @@ ds2000[, y_hat := predict(m_alt, newdata = cf_ds2000)]
 ds2000[, d_alt := factor(1-untype4, levels = 0:1, labels = c("No", "Yes"))]
 ds2000[, Peacekeeping := factor(untype4, levels = 0:1, labels = c("No", "Yes"))]
 
-ate_hat_alt = ds2000[, ifelse(untype4 %in% 1, success - y_hat, y_hat - success)] %>% mean %>% round(3)
-
-```
-
-Then the estimated average treatment effect is: `r ate_hat_alt`
-
-Why the big discrepancy?
-
->- We are extrapolating to areas where there are no cases observed with a peacekeeping operation. Small changes in model lead to large changes in estimates.
-
----
-
-```{r echo = F, warning = F, message = F}
 ggplot(ds2000, aes(x = develop, y = success, color = Peacekeeping)) +
   geom_point() + 
   geom_point(aes(x = develop, y = y_hat, color = as.factor(d_alt)), shape = 17, alpha = 0.2) + 
@@ -1066,7 +1025,8 @@ If $D$ is continuous, regression **also** places more or less weight on differen
 
 ---
 
-<img src="./angrist_krueger.png" width = 55%>
+<img src="./angrist_krueger.png" width = 65%>
+
 
 
 # Conditioning with Regression in Practice
@@ -1088,7 +1048,7 @@ If $D$ is continuous, regression **also** places more or less weight on differen
 
 - No easy fixes
 - DAGs, justification
-- in the future, will discuss sensitivity tests (how much would you results change, given an unknown confounder of a given size)
+- in the future, will discuss sensitivity tests
 
 ---
 
@@ -1096,9 +1056,7 @@ If $D$ is continuous, regression **also** places more or less weight on differen
 
 #### Solutions?
 
-- Visually explore data to look for overlap (**positivity**), linearity (**conditional independence**)
-  - w/ binary treatment, histograms/scatterplots of conditioning variables color coded by treatment 
-  - w/ continuous treatment, scatterplots of conditioning and treatment variables
+- Visually explore data to look for overlap (positivity), linearity (conditional independence)
 - Restrict analyses to cases where we have overlap in conditioning variables (extrapolation)
 - Fewer functional form assumptions (interpolation/extrapolation)
 
@@ -1109,7 +1067,7 @@ If $D$ is continuous, regression **also** places more or less weight on differen
 There exist packages to analyze the weights cases receive in a model: `regweight`
 
 - no longer on CRAN, but possible to download.
-- can calculate and examine the weights across attributes of cases.
+- can calculate and examine the weights.
 
 ---
 
@@ -1216,10 +1174,10 @@ Using survey reported income and prejudice, examine the estimated effect of inco
   
 # modsum function
   modsum_fun <- 
-    function(models) {
+    function(mods = NULL) {
       
       df <- 
-        models %>%
+        models[mods] %>%
         modelsummary(., 
           stars = c("*" = 0.1, "**" = 0.05, "***" = 0.01),
           coef_map = c('svy_sh_income_rc' = "Income level (1-4)"),
@@ -1228,34 +1186,31 @@ Using survey reported income and prejudice, examine the estimated effect of inco
               ~raw, ~clean, ~fmt, ~omit,
               "nobs", "$N$", f2, F,
               "r.squared", "$R^2$", f1, F), 
-          output = "data.frame")       %>% 
-        mutate(term = ifelse(statistic == "std.error", "", term)) %>%
-        select(-1)
+          output = "data.frame") %>% 
+        mutate(term = ifelse(statistic == "modelsummary_tmp2", "", term)) %>%
+        select(matches("term|^model"))
       
     }
 
 # clean and combine
-  out <-  bind_rows(models %>% modsum_fun)
+  out <- 
+    bind_rows(modsum_fun(c(1:3)))
 
 # print   
     out %>% 
-    select(-2) %>%
     kable(
       #"latex", 
       #booktabs = T, 
       escape = F,
       align = c("l", rep("c", 3)),
-      col.names = linebreak(c("", "(1)", "(2)", "(3)"), align = "c"),
+      col.names = linebreak(c("", "Naive", "Linear", "Saturated"), align = "c"),
       linesep = "") %>% 
-    kable_styling(font_size = 14) %>% 
+    kable_styling(font_size = 10) %>% 
     add_header_above(
       c("Township covariates:", "None", "Linear", "Saturated"), 
       line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3))) %>% 
     add_header_above(
       c("Individual covariates:", "None", "Linear", "Saturated"), 
-      line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3))) %>%
-    add_header_above(
-      c("", "Naive", "Linear", "Saturated"), 
       line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3)))
   
 ```
