@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 21, 2022"
+date: "March 31, 2023"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -58,64 +58,523 @@ analysis_df <-
 
 ### Least Squares: Practical Issues
 
-1. Measurement Error
 
-- What are it's consequences?
-- When can it safely be ignored?
-
-2. Standard Errors
+1. Standard Errors
 
 - Robust Standard Errors
 - Clustered Standard Errors
 
+
+2. Measurement Error
+
+- What are it's consequences?
+- When can it safely be ignored?
+
+
 3. Sensitivity Analysis
 
+- If Conditional Independence does not hold
+
+
+# Standard Errors
+
+---
+
+When estimating causal effects:
+
+- $ACE$, or conditional $ACE$
+- average causal response functions, average partial derivatives,
+- linear approximations/weighted averages of $ACRF$ and $APD$
+
+We want to estimate uncertainty or variance of our estimated effects.
+
+---
+
+### Uses of Standard Errors:
+
+- reporting estimated standard errors (variability of sampling distribution of estimate)
+- hypothesis tests ($p$ values: probability observing estimate if true value is $0$. Reject null if $p < \alpha$)
+- confidence intervals (range of possible "null" hypothesis values around estimate $\hat{\beta}$  which we would not reject at $p <\alpha$)
+
+---
+
+### Abuses/Uses of Standard Errors:
+
+- how to estimate standard errors?
+- *which* standard errors?
+  - robust, clustered, spatial?
+  - bootstrap
+- multiple hypothesis tests
+
+---
+
+### Classical, "Ordinary" Least Squares assumes
+
+1. **Model** equation is correctly specified (correct functional forms, all relevant variables are included). $Y_i = \alpha + \beta D_i + \epsilon_i$ is the true data-generating function
+
+2. $\epsilon_i$ are independently, identically distributed (i.i.d.), $E(\epsilon_i) = 0$ and variance of $\sigma^2$.
+
+3. $\epsilon_i$ is **independent** of $X_i$: $X \perp \!\!\! \perp \epsilon$
+
+---
+
+```{r, echo = T}
+d = rnorm(100); y = 3 + d * 0.5
+```
+
+```{r, echo = F}
+plot(d, y, main = bquote(Y[i] == alpha + beta * D[i])); abline(a = 3, b = 0.5)
+```
+
+---
+
+```{r, echo = T}
+epsilon_i = rnorm(100); y_star = 3 + d * 0.5 + epsilon_i
+```
+
+```{r, echo = F}
+plot(d, y_star, main = bquote(Y[i] == alpha + beta * d[i] + epsilon[i]))
+abline(a = 3, b = 0.5)
+```
+
+---
+
+### Classical, "Ordinary" Least Squares:
+
+Two points:
+
+$1.$ If we accept $\hat{\beta}$ is linear approximation of $ACRF$, we only really need assumption $3$ (conditional independence)
+
+- don't need to assume normality of $\epsilon$
+- don't need to assume identical distribution of $\epsilon$
+- independence of errors **does matter**
+
+---
+
+### Classical, "Ordinary" Least Squares:
+
+$2.$ What are these $\epsilon$s? What is the "random process" that generates them?
+
+>- If we randomly sample units from a population, and want to estimate **population** value of $\beta$, $\epsilon$ random by sampling
+>- If we observe the **entire population of interest**, $\epsilon$ is result of "as-if random" realization of potential outcomes, conditional on $X$.
+
+[Abadie et al 2020](https://doi.org/10.3982/ECTA12675)
+
+---
+
+### Variance of LS Estimator:
+
+- Each element of $\widehat{\beta}_{p \times 1}$ is a random variable
+    - each $\widehat{\beta}_k$ has a variance 
+    - and a **covariance** with other $\widehat{\beta}_{j\neq k}$
+- These variances and covariances are found in the variance-covariance matrix of $\widehat{\beta}$
+    - a $p \times p$ matrix
+    - Diagonal elements are the **variances** for $\widehat{\beta}_{1} \dots \widehat{\beta}_p$
+    - off-diagonal elements are **covariances**; 
+    - matrix is **symmetric**
+
+
+---
+
+Variance-Covariance Matrix
+
+$$\scriptsize{\begin{pmatrix} Var(\widehat{\beta}_1) & Cov(\widehat{\beta}_1,\widehat{\beta}_2) & Cov(\widehat{\beta}_1,\widehat{\beta}_3) &\ldots & Cov(\widehat{\beta}_1,\widehat{\beta}_p) \\
+  Cov(\widehat{\beta}_2,\widehat{\beta}_1) & Var(\widehat{\beta}_2) & Cov(\widehat{\beta}_2,\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_2,\widehat{\beta}_p) \\ 
+  Cov(\widehat{\beta}_3,\widehat{\beta}_1) & Cov(\widehat{\beta}_3,\widehat{\beta}_2) & Var(\widehat{\beta}_3) & \ldots & Cov(\widehat{\beta}_3,\widehat{\beta}_p) \\ 
+  \vdots & \vdots & \vdots & \ddots & \vdots \\
+  Cov(\widehat{\beta}_p,\widehat{\beta}_1) & Cov(\widehat{\beta}_p,\widehat{\beta}_2) & Cov(\widehat{\beta}_p, \widehat{\beta}_3) & \ldots & Var(\widehat{\beta}_p)\end{pmatrix}}$$
+
+
+---
+
+### Variance of OLS Estimator:
+
+**How do we use the variance-covariance matrix?**
+
+- The square-root of diagonal elements (variances) gives **standard error** for each parameter estimate in $\widehat{\beta}$ (hypothesis testing)
+
+- The off-diagonal elements can help answer: $\beta_2 + \beta_3 \neq 0$. We need $Cov(\beta_2, \beta_3)$ to get $Var(\beta_2 + \beta_3)$. (complex hypothesis testing, e.g. interaction effects )
+
+---
+
+### Variance-Covariance Matrix
+
+$\widehat{\beta} = \mathbf{\beta} + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon$, So:
+
+$$cov(\widehat{\beta}|X) = E((\widehat{\beta} - \beta)(\widehat{\beta} - \beta)' | X)$$
+
+$$ = E(  ((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\epsilon)' | X)$$
+
+$$ = E(  ((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\epsilon)(\epsilon'\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}) | X)$$
+
+$$ = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
+
+What really matters here is: $E(\epsilon\epsilon'|X)$
+
+---
+
+### Variance-Covariance Matrix
+
+All variance-covariance matrix estimators are "sandwiches":
+
+$$ (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
+
+$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the bread; $E(\epsilon\epsilon'|X)$ is the meat. 
+
+We can make different choices of "meat", depending on whether we permit dependency in errors, non-identical distribution of the errors.
+
+---
+
+### Variance-Covariance Matrix
+
+In groups: if $\epsilon$ is a vector that is $n \times 1$ with elements $(\epsilon_1 \ldots \epsilon_n)$
+
+1. What are the dimensions of the matrix: $\epsilon\epsilon'$?
+
+2. What are the elements on the **diagonal** of the matrix?
+
+3. What is the **expected value** of the elements on the **off-diagonal** 
+
+Hints: We have assumed that $E(\epsilon) = 0$; $\epsilon_i$ are **independent** of each other
+
+---
+
+### Variance-Covariance Matrix
+
+Taking the expectation:
+
+- If $i \neq j$, the elements of the matrix are $E(\epsilon_i\epsilon_j)$. Because, by assumption, $E(\epsilon) = 0$, and $\epsilon$s are **independent**,  $E(\epsilon_i\epsilon_j) = E(\epsilon_i)E(\epsilon_j) = 0 \times 0 = 0$
+- but, for $i = j$, $E[\epsilon_i^2] = E[(\epsilon_i - E[\epsilon])^2]$ (a **variance**)
+
+---
+
+### Variance-Covariance Matrix
+
+We use **residuals** to stand in for $\epsilon_i$.
+
+$$\widehat{\epsilon_i} = e_i = Y_i - \mathbf{X_i\widehat{\beta}}$$
+where $\mathbf{X_i}$ is the full design matrix, including $D_i$
+
+---
+
+### Robust Standard Errors:
+
+If we plug in $e_i^2$ in for $\epsilon\epsilon'$, we get:
+
+**Robust (Eicker-Huber-White) SEs**: allow for arbitrary **hetereoskedasticity** (error variances different for every $i$). 
+
+So we estimate (in its simplest form):
+
+$Var(\epsilon_i) \approx \widehat{e_i}^2$
+
+$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'diag(e_1^2 \dots e_n^2)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$
+
+(Draw Matrix Algebra on Board)
+
+---
+
+### Contrast to OLS Standard Errors
+
+
+- If $i \neq j$, the elements of the matrix are $E(\epsilon_i\epsilon_j)$. Because, by assumption, $E(\epsilon) = 0$, and $\epsilon$s are **independent**,  $E(\epsilon_i\epsilon_j) = E(\epsilon_i)E(\epsilon_j) = 0 \times 0 = 0$
+- but, for $i = j$, $E[\epsilon_i^2] = E[(\epsilon_i - E[\epsilon])^2]$ (a **variance**)
+- and because $\epsilon$ is **identically distributed**, then $Var(\epsilon_i) = Var(\epsilon) = \sigma^2$ for all $\epsilon$
+
+The result is a $n \times n$ matrix, with $\sigma^2$ on the diagonal, $0$ everywhere else.
+
+---
+
+### Heteroskedasticity
+
+OLS assumptions are often violated because errors $\epsilon_i$ are not **identically distributed**
+
+- **heteroskedasticity** occurs when $\epsilon_i$ has variance $Var(\epsilon_i) \neq Var(\epsilon_j)$
+- as opposed to **homoskedasticity**: $Var(\epsilon_i) = Var(\epsilon_j)$ for all $i$ and $j$.
+- by default `lm` in `R` reports **homoskedastic** errors
+
+In this situation, OLS standard errors *may* be **too small**. (See MHE, CH 8)
+
+---
+
+### Robust Standard Errors:
+
+- estimates of variance of $\widehat{\beta}$ (and entire variance-covariance matrix)
+- several varieties ("HC0", "HC1", "HC2", "HC3", etc.), make different adjustments in estimating $Var(\epsilon_i)$
+- differences between "flavors" larger when $N$ is small
+
+---
+
+### Robust Standard Errors:
+
+Major caveat here:
+
+- These are **estimates**, not miracles.
+- Trading OLS standard errors for robust SEs is a tradeoff in assumptions.
+- Angrist and Pischke show:  Robust SEs can be biased, SOMETIMES SMALLER than OLS SEs.
+- Robust SEs are **consistent** as $n \to \infty$. How close to $\infty$ do we need to be?
+    - depends: $HC0$ and $HC1$ work best if $N >> 200$
+    - depends: $HC3$ works if $N > 30$
+    - $HC3$ should be default
+    
+---
+
+### Robust Standard Errors:
+
+In `R`:
+
+- `sandwich` package
+- `lmtest` package
+- pass standard errors to table-making package
+- `lm_robust` in `estimatr` package
+
+---
+
+### Robust Standard Errors:
+
+Obtaining them in `R`:
+
+1. Estimate your model
+2. Plug model into robust variance-covariance estimator (usually `vcovHC` from `sandwich` package)
+3. Get diagonal (manually, in "pretty" format using `coeftest` from `lmtest` package)
+
+---
+
+### Robust Standard Errors:
+
+1. copy this data: [https://pastebin.com/BDTKcKyC](https://pastebin.com/BDTKcKyC)
+2. create `enlist_rate = veterans/mil_age`
+3. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
+4. Use the `vcovHC` function in the `sandwich package` to get the HC1  vcov matrix
+5. Use the `vcovHC` function in the `sandwich package` to get the HC3  vcov matrix
+6. Use `diag` and `sqrt` to get the robust standard errors 
+7. Compare homoskedastic to HC1 and HC3 standard errors.
+
+---
+
+###
+
+```{r, echo = F, message = F, warning = F}
+veterans = fread('./referenda_vote.csv')
+veterans[, enlist_rate := veterans/mil_age]
+```
+
+```{r, , message = F, warning = F}
+require(sandwich)
+require(lmtest)
+#1: Estimate OLS / conventional Standard Errors
+lm_suff = lm(suff65_yes ~ enlist_rate + suff57_yes + state, 
+             data = veterans)
+
+#2: Estimate robust variance covariance matrix:
+vcov_robust = vcovHC(lm_suff, type = "HC3")
+
+#3: SE
+vcov_robust %>% diag %>% sqrt
+#coeftest(lm_suff, vcov. = vcov_robust)
+```
+
+
+---
+
+```{r echo = F, message=F, warning = F}
+require(modelsummary)
+modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj',
+             stars = T)
+
+```
+
+---
+
+
+```{r, eval = F, message=F, warning = F}
+require(modelsummary)
+modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', 
+             stars = T)
+
+```
+
+---
+
+### Robust Standard Errors:
+
+Probably should default to them:
+
+- Derived as conservative estimate of standard errors in causal context.
+- If you use linear probability model
+- If your data comes from differently sized units (e.g. votes in towns/counties)
+- Basically always a good idea to check both conventional and robust standard errors, report the largest (more conservative)
+
+---
+
+### The Bootstrap
+
+All **sandwich** based estimates of standard errors appeal to **asymptotic** consistency and normality to approximate sampling distribution of $\widehat{\beta}$
+
+The bootstrap takes a different approach:
+
+- **Simulate** sampling distribution
+
+---
+
+### The Bootstrap
+
+**Simulate** sampling distribution
+
+- Draw new "samples" from your data to simulate "draws from the population" (makes less sense if we have full population)
+- Estimate $\widehat{\beta}$
+- Repeat
+- Calculate standard deviation/calculate coverage quantiles.
+
+---
+
+### Exercise:
+
+1. Set `k` = 1000
+2. Generate 
+```
+bs = data.frame(i = rep(NA, k), beta_hat = rep(NA, k))
+```
+3. `for` loop from `1:k`.
+4. In each iteration, `sample` with replacement from `1:nrow(veterans)` to create `bs_idx`
+5. Create `data_bs = veterans[bs_idx, ]`
+6. Estimate 
+
+```
+m = lm(suff65_yes ~ enlist_rate + suff57_yes + state, 
+    data = data_bs)
+```
+
+7. Set `bs_out[k, ] = c(k, coef(m)[2])`
+
+---
+
+### Exercise:
+
+1. Calculate `sd` of `bs_out$beta_hat`.
+2. Calculate 
+```
+quantile(bs_out$beta_hat, 
+  probs = c(0.025,0.975))
+```
+3. Plot `hist(bs_out$bs_hat)`
+
+---
+
+### Example (3)
+
+[Karaivanov, et al (2020)](https://www.medrxiv.org/content/10.1101/2020.09.24.20201178v2) estimate the effect of indoor mask mandates on COVID-19 case growth across public health districts in Ontario.
+
+They exploit the difference in the timing of imposing mask mandates across health districts
+
+---
+
+### Example (3)
+
+Estimate a (simplified) model
+
+$$Y_{it} = \alpha_{i} + \alpha_{t} + \beta_1 \mathrm{Mask \ Mandate}_{it} + \epsilon_{it}$$
+
+$i$ indexes 34 public health units; $t$ indexes 91 days. `r 91*34` observations total.
+
+Are each $\epsilon_{it}$ plausibly **independent** of each other?
+
+---
+
+### Clustered Standard Errors:
+
+There are estimators for standard errors for situations in which errors are not independent of each other across observations:
+
+- In PS5: we had you generate data in which errors were drawn for a group G, rather than for each individual
+- In reality: recall the experiment by Paluck: villages were assigned to treatment, but villagers were her unit of analysis. Villagers are likely similar to each other by virtue of things happening in that village, so share common "shocks". 
+
+---
+
+### Clustered Standard Errors:
+
+Ignoring dependence of errors **underestimates** sampling variability of an estimate
+
+---
+
+### Clustered Standard Errors:
+
+Extends robust standard errors:
+
+- allow for arbitrary heteroskedasticity
+- allow for arbitrary correlation of errors **within groups**s
+    - same unit OVER time;
+    - different units AT THE SAME time;
+    - both!?!?!
+- **consistent** as **number of groups** gets larger. Usually needs tens of groups (~40 +), **if groups of similar size** 
+
+---
+
+### Clustered Standard Errors:
+
+Unlike robust standard errors:
+
+- Clustered standard errors tend to change the variance estimate substantially.
+- The "meat" in the covariance matrix estimator changes (see the board) to permit off-diagonal elements
+
+---
+
+### Clustered Standard Errors:
+
+In `R`: many options:
+
+1. `felm` in `lfe` extends `lm` for panel models and includes clustering options
+2. `feols` in `fixest` includes clustering options
+3. `sandwich`: (finally!) has clustered errors options
+4. Can also bootstrap them: `multiwayvcov`
+
+---
+
+### Clustered Standard Errors:
+
+```{r, message=F, warning = F}
+require(lfe)
+
+felm(suff65_yes ~ enlist_rate + suff57_yes + state | 0 | 0 | state, 
+     data = veterans) %>%
+  summary
+```
+
+
+---
+
+Standard Errors are way smaller (but, with 2 clusters, not reliable!)
+
+---
+
+### Clustered Standard Errors:
+
+Many questions: [Cameron and Miller](https://cameron.econ.ucdavis.edu/research/Cameron_Miller_JHR_2015_February.pdf)
+
+What level do we cluster at?
+
+- level at which "treatment" assigned
+- level at which plausible spatial or temporal autocorrelation of errors
+
+Alternatively:
+
+- aggregate data within clusters
+- Simplifies the analysis, easy to compute robust standard errors, randomization inference.
+
+---
+
+### Standard Errors Summary:
+
+How much uncertainty about effect sizes?
+
+1. All standard errors require some assumption about the chance process underlying our analysis
+2. All assumptions are likely flawed
+3. Best to show results are robust to different choices about standard errors
+    - particularly important to make sure you don't report the smaller standard errors when other estimates give very different results
+    
 
 
 # Review: Conditioning
-
----
-
-### Conditioning: Approaches
-
-1. Matching
-
-2. Weighting
-
-3. Regression
-
----
-
-### Conditioning: Matching
-
-**Match treated units to untreated units most similar** in conditioning variables $\mathbf{X}$
-
-Many varieties:
-
-- exact matching
-- coarsened exact matching
-- mahalanobis distance
-- genetic
-- propensity score
-
----
-
-### Conditioning: Weighting
-
-Use conditioning variables to weight observations such that:
-
-1. They are weighted inversely by probability of treatment (IPW)
-2. Treated/untreated balanced on conditioning variables (entropy/kernel balancing)
-
-Treatment and control groups weighted to be similar in covariates.
-
----
-
-### Conditioning: Regression
-
-1. Identify set of conditioning variables
-2. Specify functional form relationship (e.g. linear, polynomial) between conditioning variables and $D$, $Y$.
-3. Calculate relationship between $D$ and $Y$ after adjusting for relationship with conditioning variables
 
 ---
 
@@ -138,7 +597,8 @@ In order for conditioning to estimate causal effects without bias, we must assum
 
 We have previously assumed we measured variables without error. Not a reasonable assumption. How does this affect estimated effects of $D$?
 
-- if errors in measurements correlated with causal variable $D$, estimates will be **biased**
+- if errors in measurements (of $D$ or $Y$) correlated with causal variable $D$, estimates will be **biased** (can even be confounding)
+
 - if measurements have **random error**, it **depends**...
 
 ---
@@ -147,14 +607,14 @@ We have previously assumed we measured variables without error. Not a reasonable
 
 First, the good news:
 
-> If we have **random** measurement error in $Y$ or $X$, problems are manageable.
+> If we have **random** measurement error in $Y$ or $D$, problems are manageable.
 
 ---
 
 ### Measurement Error
 
 
-This is our statistical model; we take all OLS assumptions to be true.
+This is our model:
 
 $$Y^* = \alpha + \beta D^* + \epsilon$$
 
@@ -199,6 +659,7 @@ $$Y^* = \alpha + \beta (D - \eta) + \epsilon$$
 If we estimate the model using just $D$, not $D^*$
 
 $$Y^* = \alpha + \beta D + \rho$$
+
 - $\rho = (\epsilon - \beta\eta)$. 
 - This produces **bias** in $\widehat{\beta}$, because:
 
@@ -331,383 +792,9 @@ What is the estimated  effect of the vaccine conditioning on conspiracy-belief?
 - Conditioning will fail to remove bias if **conditioning variables** measured with error.
 
 
-# Standard Errors
 
----
-
-### Statistical Inference with Least Squares
-
-1. **Model** equation is correctly specified (correct functional forms, all relevant variables are included). $Y_i = \alpha + \beta X_i + \epsilon_i$ is the true data-generating function
-
-2. $\epsilon_i$ are independently, identically distributed (i.i.d.), $E(\epsilon_i) = 0$ and variance of $\sigma^2$.
-
-3. $\epsilon_i$ is **independent** of $X_i$: $X \perp \!\!\! \perp \epsilon$
-
----
-
-### We want reliable uncertainty
-
-When estimating effects, we want to know how much uncertainty there is:
-
-- Assumptions 1, 2, and 3 needed to derive OLS standard errors. 
-- SEs not useful if estimates are biased.
-- If assumptions 1 and 3  wrong $\Rightarrow$ bias
-- So, are there violations of assumption 2?
-
----
-
-### Non-standard Errors
-
-How do we deal when 
-
-- errors are non-identically distributed? (heteroskedasticity)
-- errors are non-independent? (correlated errors)
-
----
-
-### Example (1)
-
-Imagine we run an experiment with $D_i = 1$ indicating receipt of treatment, $D_i = 0$ indicating not receiving treatment.
-
-We use regression to estimate this model:
-
-$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$
-
-Let's write out the implied response schedule...
-
----
-
-### Example (1)
-
-Effects are rarely constant... heterogeneous effects are captured by the $\epsilon_i$...
-
-$Y_i = Y_i(0) + \{Y_i(1) - Y_i(0)\}D_i$
-$Y_i = E[Y(0)] + \{Y_i(1) - Y_i(0)\}D_i + \{Y_i(0) - E[Y(0)]\}$
-$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
-
----
-
-### Example (1)
-
-$Y_i = \mu_0 + \{Y_i(1) - Y_i(0)\}D_i + \nu_0$
-
-<br>
-
-$$\small\begin{eqnarray}
-Y_i &=& \mu_0 + \{E[Y(1)] - E[Y(0)]\}D_i + \nu_0 + \\ && \{(Y_i(1) - E[Y(1)]) - (Y_i(0) - E[Y(0)])\}D_i
-\end{eqnarray}$$
-
-<br>
-
-$Y_i = \mu_0 + \{\mu_1 - \mu_0\}D_i + \nu_0 + \{\nu_1 - \nu_0\}D_i$
-
----
-
-### Example (1)
-
-$Y_i = \underbrace{\mu_0}_{\beta_0} + \overbrace{\{\mu_1 - \mu_0\}}^{\beta_1}D_i + \underbrace{\nu_0 + \{\nu_1 - \nu_0\}D_i}_{\epsilon_i}$
-
-1. Model is still plausibly correct
-2. Are $\epsilon_i$ **identically distributed**?
-3. By randomization, $\epsilon_i$ independent of $D_i$
-
-
----
-
-### Example (2)
-
-Generate the following data:
-
-```{r, eval = F}
-set.seed(1234)
-n = 100
-x = rnorm(100)
-e = rnorm(100)
-y_star = 0 + 0.1*x + e
-y = pnorm(y_star)
-y = 1*(y > 0.5)
-```
-
-1. Table `y`
-2. Regress `y` on `x` using `lm`
-3. Plot residuals vs `x`.
-
----
-
-### Example (2)
-
-- This is a linear probability model ($Y$ in 0 and 1)
-
-    - This is common use of regression
-    
-- Variances of $\epsilon$ must be smaller for cases where average Y is close to 0 or 1; larger for cases where average Y close to 0.5.
-
-
----
-
-### Heteroskedasticity
-
-OLS assumptions are violated because errors $\epsilon_i$ are not **identically distributed**
-
-- **heteroskedasticity** occurs when $\epsilon_i$ has variance $Var(\epsilon_i) \neq Var(\epsilon_j)$
-- as opposed to **homoskedasticity**: $Var(\epsilon_i) = Var(\epsilon_j)$ for all $i$ and $j$.
-
-In this situation, OLS standard errors *may* be **too small**. (See MHE, CH 8)
-
-
----
-
-### Robust Standard Errors:
-
-Solution to this is to use **heteroskedasticity** robust standard errors.
-
-- estimates of variance of $\widehat{\beta}$ (and entire variance-covariance matrix)
-- Typically called "Huber-White Standard Errors" or "Robust Standard Errors."
-- several varieties ("HC0", "HC1", "HC2", "HC3", etc.), make different adjustments in estimating $Var(\epsilon_i)$
-- differences larger when $N$ is small
-
----
-
-
-### Robust Standard Errors:
-
-OLS: estimate SEs by estimating the variance covariance matrix of the regression coefficients: $\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}$. We estimate $\sigma^2$ as $\frac{1}{n-p}\sum e_i^2$.
-
-- but derivation **assumed** identically distributed errors to get the "meat" in this sandwich
-
-$$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'E(\epsilon\epsilon'|X)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$$
-
----
-
-### Robust Standard Errors:
-
-Robust SEs: allow for **arbitrary hetereoskedasticity** (variances different for every $i$). 
-
-So we estimate (in its simplest form):
-
-$Var(\epsilon_i) \approx \widehat{e_i}^2$
-
-$cov(\widehat{\beta}|X) = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'diag(e_1^2 \dots e_n^2)\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}$
-
-(Draw Matrix Algebra on Board)
-
----
-
-### Robust Standard Errors:
-
-One major caveat here:
-
-- These are **estimates**, not miracles.
-- Trading OLS standard errors for robust SEs is a tradeoff in assumptions.
-- Angrist and Pischke show:  Robust SEs can be biased, SOMETIMES SMALLER than OLS SEs.
-- Robust SEs are **consistent** as $n \to \infty$. How close to $\infty$ do we need to be?
-    - depends: $HC0$ and $HC1$ work best if $N >> 200$
-    - depends: $HC3$ works if $N > 30$
-    - $HC3$ should be default
-    
----
-
-### Robust Standard Errors:
-
-In `R`:
-
-- `sandwich` package
-- `lmtest` package
-- pass standard errors to table-making package
-
----
-
-### Robust Standard Errors:
-
-Obtaining them in `R`:
-
-1. Estimate your model
-2. Plug model into robust variance-covariance estimator (usually `vcovHC` from `sandwich` package)
-3. Get diagonal (manually, in "pretty" format using `coeftest` from `lmtest` package)
-
----
-
-### Robust Standard Errors:
-
-1. copy this data: [https://pastebin.com/BDTKcKyC](https://pastebin.com/BDTKcKyC)
-2. create `enlist_rate = veterans/mil_age`
-3. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
-4. Use the `vcovHC` function in the `sandwich package` to get the HC1  vcov matrix
-5. Use the `vcovHC` function in the `sandwich package` to get the HC3  vcov matrix
-6. Use `diag` and `sqrt` to get the robust standard errors 
-7. Compare homoskedastic to HC1 and HC3 standard errors.
-
----
-
-###
-
-```{r, echo = F}
-veterans = fread('./referenda_vote.csv')
-veterans[, enlist_rate := veterans/mil_age]
-```
-
-```{r}
-require(sandwich)
-require(lmtest)
-#1: Estimate OLS / conventional Standard Errors
-lm_suff = lm(suff65_yes ~ enlist_rate + suff57_yes + state, 
-             data = veterans)
-
-#2: Estimate robust variance covariance matrix:
-vcov_robust = vcovHC(lm_suff, type = "HC3")
-
-#3: SE
-vcov_robust %>% diag %>% sqrt
-#coeftest(lm_suff, vcov. = vcov_robust)
-```
-
-
----
-
-```{r echo = F, message=F, warning = F}
-require(modelsummary)
-modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
-             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj')
-
-```
-
----
-
-
-```{r, eval = F, message=F, warning = F}
-require(modelsummary)
-modelsummary(lm_suff, vcov = c('classical', paste0("HC", 0:3)), 
-             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj')
-
-```
-
----
-
-### Robust Standard Errors:
-
-When do you need them?
-
-- If visual inspection of residuals shows pattern in variance
-- If you use linear probability model
-- If your data comes from differently sized units (e.g. votes in towns/counties)
-- Basically always a good idea to check both conventional and robust standard errors, report the largest (more conservative)
-
----
-
-### Example (3)
-
-[Karaivanov, et al (2020)](https://www.medrxiv.org/content/10.1101/2020.09.24.20201178v2) estimate the effect of indoor mask mandates on COVID-19 case growth across public health districts in Ontario.
-
-They exploit the difference in the timing of imposing mask mandates across health districts
-
-
-
----
-
-### Example (3)
-
-Estimate a (simplified) model
-
-$$Y_{it} = \alpha_{i} + \alpha_{t} + \beta_1 \mathrm{Mask \ Mandate}_{it} + \epsilon_{it}$$
-
-$i$ indexes 34 public health units; $t$ indexes 91 days. `r 91*34` observations total.
-
-Are each $\epsilon_{it}$ plausibly **independent** of each other?
-
----
-
-### Clustered Standard Errors:
-
-There are estimators for standard errors for situations in which errors are not independent of each other across observations:
-
-- In PS4: we had you generate data in which errors were drawn for a group G, rather than for each individual
-- In reality: recall the experiment by Paluck: villages were assigned to treatment, but villagers were her unit of analysis. Villagers are likely similar to each other by virtue of things happening in that village, so share common "shocks". 
-
----
-
-### Clustered Standard Errors:
-
-Ignoring dependence of errors **underestimates** sampling variability of an estimate
-
----
-
-### Clustered Standard Errors:
-
-Extends robust standard errors:
-
-- allow for arbitrary heteroskedasticity
-- allow for arbitrary correlation of errors **within groups**s
-    - same unit OVER time;
-    - different units AT THE SAME time;
-    - both!?!?!
-- **consistent** as **number of groups** gets larger. Usually needs tens of groups (~40 +)
-
----
-
-### Clustered Standard Errors:
-
-Unlike robust standard errors:
-
-- Clustered standard errors tend to change the variance estimate substantially.
-- The "meat" in the covariance matrix estimator changes (see the board)
-
----
-
-### Clustered Standard Errors:
-
-In `R`: many options:
-
-1. `felm` in `lfe` extends `lm` for panel models and includes clustering options
-2. `feols` in `fixest` includes clustering options
-3. `sandwich`: (finally!) has clustered errors options
-
----
-
-### Clustered Standard Errors:
-
-```{r, message=F}
-require(lfe)
-
-felm(suff65_yes ~ enlist_rate + suff57_yes + state | 0 | 0 | state, 
-     data = veterans) %>%
-  summary
-```
-
-
----
-
-Standard Errors are way smaller (but, with 2 clusters, not reliable!)
-
-
----
-
-### Clustered Standard Errors:
-
-The big questions:
-
-What level do we cluster at?
-    - level at which "treatment" assigned
-    - level at which plausible spatial or temporal autocorrelation of errors
-
-Alternatively:
-
-- aggregate data within clusters: 
-- Simplifies the analysis, easy to compute conventional standard errors, randomization inference.
-
----
-
-### Standard Errors Summary:
-
-How much uncertainty about effect sizes?
-
-1. All standard errors require some assumption about the chance process underlying our analysis
-2. All assumptions are likely flawed
-3. Best to show results are robust to different choices about standard errors
-    - particularly important to make sure you don't report the smaller standard errors when other estimates give very different results
-    
     
 # Sensitivity
-
 
 ---
 
@@ -752,7 +839,7 @@ Link to partial identification:
 Effect of income on Anti-Muslim Prejudice in Myanmar
 
 ```{r}
-m_linear = lm(svy_sh_prejudice_avg_NAs_kept ~ svy_sh_income_rc + 
+m_linear = lm(svy_sh_anti_muslim_prejudice_all ~ svy_sh_income_rc + 
                 svy_sh_female_rc + svy_sh_age_rc + 
                 svy_sh_education_rc + svy_sh_ethnicity_rc +  
                 svy_sh_religion_rc + svy_sh_profession_type_rc + 

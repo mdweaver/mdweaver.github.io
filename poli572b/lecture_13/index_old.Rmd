@@ -1,0 +1,464 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "April 7, 2023"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+require(lfe)
+require(sandwich)
+require(modelsummary)
+require(interflex)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+```{r, include = F, echo = F, message = F}
+riots = fread("analysisPanelBW1.csv")
+riots = riots[rd_INC_closenum %in% 1, 
+              list(DISTRICT_ID_61, election_year,
+                   INC_win = rd_INC_ivnum, any_riot = COUNT.bin,
+                   ENP)]
+riots[, high_enp := ENP > median(ENP,na.rm = T)]
+```
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  }
+</style>
+
+## Plan for Today
+
+### Interaction Effects
+
+### Robustness
+
+1. Discussion of Papers
+2. Review
+    - McGrath
+    - Truex
+    - Kocher and Monteiro
+    - Fowler and Hall
+
+
+# Robustness
+
+# McGrath
+
+# Truex
+
+# Kocher and Monteiro
+
+# Fowler and Hall
+
+# Interaction Effects
+   
+---
+
+### Interaction Effects
+
+Is the effect of some cause different for different sets of cases?
+
+- heterogeneous treatment effects
+- "moderators": factors that intensify/weaken some causal effect
+- differences-in-differences
+
+---
+
+### Interaction: **Example**
+
+Did the local success of an explicitly secular political party, Indian National Congress (INC), reduce the likelihood of religious riots between Hindus and Muslims in India?
+
+---
+
+### Example
+
+[Nellis et al](https://www.nowpublishers.com/article/Details/QJPS-15051) compare the incidence of riots in districts in which the INC barely won and barely lost MLA elections (w/ in 1 ppt).
+
+They estimate the model:
+
+$$\mathrm{Any \ Riot}_{it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \epsilon_{it}$$
+
+---
+
+```{r echo = F, results='asis'}
+m1 = lm(any_riot ~ INC_win, data = riots)
+
+modelsummary(list("Any Riot" = m1),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c('INC_win' = "INC Win", "(Intercept)" = "Intercept"))
+
+```
+
+---
+
+### Example
+
+Wilkinson (2004) argues that political parties work to stop religious riots in India when Muslims are electorally pivotal.
+
+- Muslims are typically victims in riots; will vote against parties to punish them
+- Muslims more pivotal when the effective number of parties is higher
+
+---
+
+### Example
+
+If the INC was responsive to this electoral logic, we should expect causal effect of INC victory on riots to be stronger when the ENP was above the median:
+
+This is a **Binary by Binary** interaction:
+
+- INC win/lose is **binary**
+- High/Low ENP is **binary**
+
+---
+
+### Interaction Effects
+
+**How do we estimate an interaction effect?**
+
+Include both causal variable and interacting variable, **AND** their product.
+
+$y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i+ \beta_3 D_iX_i + \epsilon_i$
+
+---
+
+### Interaction Effects | Example
+
+Easy to do in `R`:
+
+```{r}
+m2 = lm(any_riot ~ INC_win*high_enp, data = riots)
+m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, 
+        data = riots)
+```
+
+`*` expands out the 'main' effects and interaction effects
+
+`:` just multiplies two variables together, no 'main' effects
+   
+---
+
+### Interaction Effects | Interpretation?
+
+```{r echo = F, results='asis'}
+modelsummary(list("Any Riot" = m2),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'INC_win' = "INC Win", 'hign_enp' = "High ENP", "INC_win:high_enp" = "INC Win x High ENP"))
+
+```
+
+
+---
+
+### Interaction Effects | Example
+
+Different intercepts (means) for each group:
+
+|        | INC Lose | INC Win |
+|--------|------|--------|
+| ENP Low | `Intercept` | `Intercept + INC_win` |
+| ENP High | `Intercept + high_enp` | `Intercept + high_enp +` <br/> `INC_win + INC_win:high_enp` |
+
+---
+
+### Interaction Effects | Example
+
+Interpretation:
+
+Interaction Effects: Effect of INC victory differs across ENP?
+
+- `INC_win:high_enp` tells us how much more likely riots are (on average) when INC wins vs loses in High ENP districts, compared to when INC wins vs loses in Low ENP districts.
+
+"Main Effects": 
+
+- `INC_win`: change probability of riot when INC wins (vs loses) in low ENP areas.
+- `hign_enp`: difference in probability of riot in high vs low ENP areas where INC loses.
+
+---
+
+### Interaction Effects | DiD
+
+Different intercepts (means) for each group:
+
+|        | Untreated | Treated |
+|--------|------|--------|
+| Pre | `Intercept` | `Intercept + Treated` |
+| Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
+
+`lm(Y ~ Treated*Post, data = data)`
+
+
+---
+
+### Interaction Effects | DiD
+
+If we have many treated, many untreated units $i$, across multiple time periods $t$, it is common to do this:
+
+```{r eval=F, echo = T}
+lm(Y ~ Treated*Post + dummy_i + dummy_t, data = data)
+feols(Y ~ Treated*Post | dummy_i + dummy_t, data = data)
+```
+
+Which of these four coefficients will we be able to actually estimate? (think about linear independence)
+
+`Intercept + Treated + Post + Treated:Post`
+
+---
+
+### Interaction Effects
+
+#### **Continuous by Binary variable**
+
+Rather than fitting different intercepts for groups:
+
+- Slope of $x_1$ depends on binary indicator ($x_2$)
+- effect of binary treatment ($x_2$) depends on level of continuous variable
+- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
+- $\hat{\beta_2}$ for $x_2$ will be mean of $x_2 = 1$ when $x_1 = 0$
+
+**Assumptions** 
+
+- We assume the change is linear 
+- Both levels of binary variable present across all levels of continuous variable (common support)
+      
+## Interaction Effects
+
+#### **Continuous by Continuous variable**
+
+- Slope of $x_1$ depends on value of $x_2$
+- Slope of $x_2$ depends on value of $x_1$
+- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
+- $\hat{\beta_2}$ for $x_2$ will be slope of $x_2$ when $x_1 = 0$
+ 
+**Assumptions** 
+
+- We assume the change is linear 
+- all levels of one variable present across all levels of other variable (common support)
+- This is much harder to achieve!
+
+---
+
+### Interaction Effects
+
+```{r, echo = F, include = F, message = F}
+iowa = fread('iowa_suffrage.csv')[enlist_pct < 1]
+
+```
+
+We can look at voting for Black Suffrage in Iowa. 
+
+Recall: investigation of effect of enlistment rates in the Civil War and on change in voting for suffrage between 1857 and 1868 (pre- and post- war). 
+
+Does the effect of having veterans in a county depend on what happened during their military service?
+
+>- Does combat experience matter?
+
+---
+
+### Example:
+
+```{r, echo = F, results='asis'}
+lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
+
+modelsummary(list("Suffrage Change" = lm_iowa),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct' = "Enlist Rate", 'mean_combat_days' = "Combat Days", "enlist_pct:mean_combat_days" = "Enlist X Combat"))
+
+```
+
+---
+
+### Example:
+
+We can center both variables at $0$ to make it easier to interpret:
+
+```{r}
+iowa$enlist_pct_c = iowa$enlist_pct %>% scale(scale = F)
+iowa$mean_combat_days_c = iowa$mean_combat_days %>% scale(scale = F)
+lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
+
+```
+
+---
+
+
+```{r echo = F, results='asis'}
+
+modelsummary(list("Suffrage Change" = lm_iowa_c),
+          output = 'html',
+          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
+          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct_c' = "Enlist Rate (0-", 'mean_combat_days_c' = "Combat Days (0)", "enlist_pct_c:mean_combat_days_c" = "Enlist X Combat"))
+```
+
+Now main effects are interpretable.    
+  
+---
+
+### Marginal Effects       
+
+For continuous interactions, we need to calculate the **marginal effect**
+
+**marginal effect**: unit effect of $x$ on $y$ at a given value of $z$.
+
+$y_i = \beta_0 + \beta_1 x_i+ \beta_2 z_i+ \beta_3 x_iz_i + \epsilon_i$
+
+
+---
+
+### Marginal Effects       
+
+Marginal effects have their own standard errors.
+
+- Must be computed using variance-covariance matrix
+- Why?: marginal effect is $\beta_1 + \beta_3 z_i$
+
+$Var(aX + bZ) = a^2 Var(X) + b^2 Var(Z) + 2ab Cov(X,Z)$
+
+$Var(\beta_1 + z_i \beta_3) = Var(\beta_1) + z_i^2 Var(\beta_3) + 2z_i Cov(\beta_1,\beta_3)$
+
+---
+
+### Marginal Effects example:
+
+```{r}
+combat_seq = seq(min(iowa$mean_combat_days), 
+                 max(iowa$mean_combat_days),
+                 length.out = 100)
+mfx = lm_iowa$coefficients['enlist_pct'] + 
+      lm_iowa$coefficients['enlist_pct:mean_combat_days']*combat_seq
+```
+
+---
+
+### Marginal Effects example:
+
+```{r, echo = F}
+plot(combat_seq, mfx, 
+     ylab = 'Marginal Effect of Enlistment %',
+     xlab = 'Mean Days of Combat',
+     main = 'Marginal Effect of Enlistment across\nCombat Experience',
+     type = 'l')
+rug(iowa$mean_combat_days)
+```
+
+---
+
+### Marginal Effects example:
+
+Standard Errors:
+
+```{r}
+cov_mat = vcov(lm_iowa)
+
+m_var = diag(cov_mat)['enlist_pct'] +
+  combat_seq^2*diag(cov_mat)['enlist_pct:mean_combat_days'] +
+  combat_seq*2*cov_mat['enlist_pct','enlist_pct:mean_combat_days']
+mse = sqrt(m_var)
+
+l = mfx - 1.96*mse
+u = mfx + 1.96*mse
+```
+
+---
+
+### Marginal Effects example:
+
+```{r, echo = F}
+plot(combat_seq, mfx, 
+     ylab = 'Marginal Effect of Enlistment %',
+     xlab = 'Mean Days of Combat',
+     main = 'Marginal Effect of Enlistment across\nCombat Experience',
+     type = 'l', ylim = range(c(l,u)))
+rug(iowa$mean_combat_days)
+lines(combat_seq, l, lty= 2)
+lines(combat_seq, u, lty = 2)
+abline(h = 0, col = 'red')
+```
+
+---
+
+### Continuous Interactions
+
+Hainmueller et al show this can go wrong:
+
+`interflex` [package](https://yiqingxu.org/packages/interflex/articles/continuous.html) helpful for:
+
+- checking linearity assumptions
+- plotting linear and non-linear marginal effects
+- no need to calculate marginal effects w/ SEs
+
+---
+
+```{r, echo = F, message=F, warning =F}
+
+inter_f = inter.raw(iowa, 
+                        Y = "Suffrage_Diff",
+                        D = 'enlist_pct',
+                        X = 'mean_combat_days',
+                        #na.rm = T,
+                        full.moderate = F,
+                        Ylabel = 'Suffrage Difference',
+                        Dlabel = "Enlistment (%)",
+                        Xlabel = "Mean Combat Days",
+                        theme.bw = T)
+
+inter_f
+
+```
+
+---
+
+```{r, echo = F, message =F, warning =F}
+
+inter_f = inter.binning(iowa, 
+                        Y = "Suffrage_Diff",
+                        D = 'enlist_pct',
+                        X = 'mean_combat_days',
+                        na.rm = T,
+                        full.moderate = F,
+                        Ylabel = 'Suffrage Difference',
+                        Dlabel = "Enlistment (%)",
+                        Xlabel = "Mean Combat Days",
+                        theme.bw = T)
+
+inter_f$graph
+
+```
+
+---
+
+### Interactions:
+
+- For **binary**-**binary** interactions, interpretation and estimation is straightforward.
+- For any **continuous** interactions, estimation is tricky and we must calculate marginal effects. 
+    - Use `interflex` package to handle this
+    - Check for common support
+    - Get tests of linearity, non-linear interactions, SEs, plots
