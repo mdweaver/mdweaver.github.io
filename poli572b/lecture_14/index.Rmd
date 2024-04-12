@@ -32,6 +32,10 @@ riots = riots[rd_INC_closenum %in% 1,
                    INC_win = rd_INC_ivnum, any_riot = COUNT.bin,
                    ENP)]
 riots[, high_enp := ENP > median(ENP,na.rm = T)]
+
+analysis_df <- 
+    readRDS("/home/mdweaver/Dropbox/myanmar-prejudice/02-replication/analysis_df.rds")
+
 ```
 
 <style type="text/css">
@@ -416,11 +420,12 @@ Hainmueller et al show this can go wrong:
 
 ```{r, echo = F, message=F, warning =F}
 
-inter_f = inter.raw(iowa, 
+inter_f = interflex("raw",
+                    iowa, 
                         Y = "Suffrage_Diff",
                         D = 'enlist_pct',
                         X = 'mean_combat_days',
-                        #na.rm = T,
+                        na.rm = T,
                         full.moderate = F,
                         Ylabel = 'Suffrage Difference',
                         Dlabel = "Enlistment (%)",
@@ -435,7 +440,7 @@ inter_f
 
 ```{r, echo = F, message =F, warning =F}
 
-inter_f = inter.binning(iowa, 
+inter_f = interflex("binning",iowa, 
                         Y = "Suffrage_Diff",
                         D = 'enlist_pct',
                         X = 'mean_combat_days',
@@ -446,7 +451,7 @@ inter_f = inter.binning(iowa,
                         Xlabel = "Mean Combat Days",
                         theme.bw = T)
 
-inter_f$graph
+inter_f$figure
 
 ```
 
