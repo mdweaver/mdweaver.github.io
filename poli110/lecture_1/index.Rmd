@@ -1,7 +1,7 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "January 9, 2023"
+date: "September 4, 2024"
 output: ioslides_presentation
 ---
 
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Today's Agenda
 
-### 1. Introductions
+### 1. Course Introduction
 
 ### 2. Course Expectations/Assignments
 
@@ -23,7 +23,25 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Course Introduction
 
-# Personal Introduction
+## Historical Context
+
+downton abbey
+
+## Historical Context
+
+the deluge
+
+##
+
+weber / first printing of science as vocation lectures
+
+##
+
+What is the value of Science?
+
+## Two Key Takeaways
+
+1. 
 
 # Course Expectations
 
@@ -31,23 +49,27 @@ knitr::opts_chunk$set(echo = FALSE)
 
 | Item             | Number | Points | Fraction of Grade |
 |------------------|--------|--------|-----------|
-| Short Assignments | 4      | 9 | 36%        |
-| Reflection Assignments | 2| 2 | 4% |
-| Group Project | 1 | 10 | 10% |
-| Midterm Exam     | 1      | 15 | 15%               |
-| Final Exam | 1      | 25 | 25%               |
-| Tutorial Participation | 1 | 9 | 9% |
+| Short Assignments | 4      | 5 | 20%        |
+| Group Project | 1 | 9 | 9% |
+| Midterm Exam     | 1      | 25 | 25%               |
+| Final Exam | 1      | 35 | 35%               |
+| Tutorial Participation | 1 | 10 | 10% |
 | Course Survey | 1 | 1 |  1% |
+
+## Reasoning
+
+- Thanks, OpenAI.
+- Don't train LLMs to take your (future) job.
+- LLMs useful tools, but not in this context.
+
 
 ## Key Dates
 
-1. Reflection 1: January 18
-2. Assignment 1: February 6
-3. Assignment 2: February 17$^*$
-4. Midterm Exam: March 1
-5. Assignment 3: March 27
-7. Assignment 4: April 7$^*$
-6. Reflection 2: April 11
+2. Assignment 1: September 27
+3. Assignment 2: October 18
+4. Midterm Exam: October 30
+5. Assignment 3: November 22
+7. Assignment 4: December 4
 
 
 ## Short Assignments
@@ -56,16 +78,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### $\bullet$ Available on Canvas 1 week prior to due date @ 9AM
 
-### $\bullet$ 1 week to complete/upload to Canvas$^*$
-
-$^*$ Assignments 2 and 4 will have a grace period, no late penalty
-
-
-## Reflection Assignments
-
-### $\bullet$ Practice evaluating real-world arguments 
-
-### $\bullet$ Graded for completion
+### $\bullet$ 1 week to complete/upload to Canvas
 
 
 ## Group Project
@@ -83,29 +96,29 @@ $^*$ Assignments 2 and 4 will have a grace period, no late penalty
 
 ## Midterm Exam
 
-### $\bullet$ **March 1** in class
+### $\bullet$ **October 30** in class
 
-### $\bullet$ Covers materials from weeks 1 to 6
+### $\bullet$ Covers materials from weeks 1 to 8
 
-### $\bullet$ Review session(s) AND lists of key terms/questions 
+### $\bullet$ Zoom / Tutorial Review session(s) AND lists of key terms/questions 
 
 ## Final Exam
 
 ### $\bullet$ Date TBD
 
-### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 9 to 14.
+### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 8 to 14.
 
 ### $\bullet$ Review session and key terms/questions
 
 ## Grading
 
-### $\bullet$ **TAs** (except for memo)
+### $\bullet$ **TAs** (except for group memo)
 
 ### $\bullet$ **Rubrics**
 
 ### $\bullet$ **Validation**
 
-### $\bullet$ **No "Curve"**
+### $\bullet$ **No expected distribution**
 
 ## What you need to do:
 
@@ -124,17 +137,14 @@ $^*$ Assignments 2 and 4 will have a grace period, no late penalty
 
 ## What I will do:
 
-### $\bullet$ **List of concepts**
+### $\bullet$ **List of concepts/Review**
 
 ### $\bullet$ **Slides**/**Lectures**
 
 ### $\bullet$ **Speed**
 
-### $\bullet$ **Discussion/Questions**
+### $\bullet$ **Discussion/Questions/Examples**
 
-### $\bullet$ **Examples**
-
-# Questions?
 
 # Course Policies
 
@@ -142,7 +152,7 @@ $^*$ Assignments 2 and 4 will have a grace period, no late penalty
 
 ### $\bullet$ **Scheduling Conflict**
 
-- Need to know ASAP to get a concession
+- Only applies to exams.
 
 ### $\bullet$ **Unforeseen Events**
 
@@ -159,10 +169,8 @@ $^*$ Assignments 2 and 4 will have a grace period, no late penalty
 
 Reasons: 
 
-1. Fairness
-2. Responsibility
-3. Equity
-4. The Iron Cage
+1. Responsibility
+2. Equity
 
 ## Grade Appeals:
 
@@ -192,7 +200,7 @@ Reasons:
 
 ## Office Hours
 
-Mondays after lecture
+Monday after lecture
 
 # Questions?
 
