@@ -1,7 +1,7 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "January 11, 2023"
+date: "September 9, 2024"
 output: ioslides_presentation
 ---
 
@@ -9,224 +9,332 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# What is the purpose of Science?
+# Politics and Science
 
 ## Objectives
 
-1. Why Max Weber?
-2. Possible answers to "what is value of science"?
-3. Weber's insights about what science is/is not
-4. Weber's answer: what is the value of science
+1. What is politics?
+2. What is the big question in politics?
+3. Forst on power and justification
+4. Perception
+5. The role of science?
 
-## {.centered}
+# What is politics?
 
-<figure>
-<img src="./weber.jpg" width=51%>
-<figcaption>Max Weber. German. 1864-1920</figcaption>
-</figure>
+## Politics
 
-# Science as Vocation
+Aristotle: how people live together in communities
 
-# What is the value of science?
+## Politics
 
-## Answer 1?
+For Aristotle and many others, the key question is:
 
-### **Science can reveal (God(s), Nature, Truth) that unite what exists (what is) with what is right (what ought) and gives our lives meaning.**
+How **should** we live together in communities? How **should** we organize our communities?
 
-<br> 
+>- Not to mention: who or what should be considered a member of our community?
 
->- Weber says: "Not a chance."
+## Politics
 
-## Answer 1?
+But Weber tells us that science cannot answer questions about value:
 
-Science produces **disenchantment** 
+Science can only tell us about the **is**, not the **ought** or **should**.
 
-- $\to$ we can explain the world without the supernatural
-- $\to$ humanity is not special or meaningful
-- $\to$ erodes the idea of "natural right"
 
-## Insight 1
 
-**Compared to "theology" (unscientific forms of thought), science only assumes that objective factual truths about our world exist and, but otherwise all knowledge or claims are open to scrutiny or challenge**
+## Politics
 
-## Insight 1
 
-What do we mean by **objective**?
+Is science irrelevant to politics?
 
-- there exists a world that is independent of our subjective perceptions
-- it is possible to reach answers about what exists and the causes of phenomena in this world do not depend on the idiosyncrasies of an individual researcher
-- but the questions we investigate may be **subjective**
 
-## Insight 1
+# Power and Justification
 
-What do we mean by **theology**?
+## Power
 
-**In "theology"**: specific facts/values are taken as "revelation" or "faith" and cannot be questioned; other values /facts must be made to fit them
+Rainer Forst (reading for this week) argues:
 
->- "Theology" can be religious but also secular (e.g. some forms of capitalist or communist ideology)
+- need not be a sharp divide between scientific investigation of politics and attempts to answer what we **should** do.
 
-## Insight 1
+## Power and Justification
 
-What do we mean by "assumptions open to challenge"
+Forst's argument in brief:
 
-- Procedures
-- Concepts
+1. Politics fundamentally about **power**
+2. Power is fundamentally linked to **justification**
+3. **Justification** brings together facts and values:
+  - justifications always include some **should** (values)
+  - moral intuitions to prefer "good" justification (values)
+  - justifications rest on factual claims about the world ("is")
+  - we can factually learn whether justifications are "good" ("is")
+  
+  
+  
+## Power
 
-## Paradoxically:
+**power**: "is the capacity of A to motivate B to think or do something that
+B would otherwise not have thought or done."
 
-The rise of science did not destroy theology:
+- motivation $\to$ "to have and exercise power means being able to influence, use, determine, occupy or even
+seal off the space of reasons for others."
 
-- instead, gives rise to a polytheism of values
-- gives rise to **value pluralism**
+>- normatively neutral definition. Could be a "good" or "bad" thing.
 
-## Answer 2?
 
-Ok. So maybe...
+## Power
 
-### **Scientific knowledge and mastery over our lives leads to happiness.**
+<img src="https://bedrockinfra.com/wp-content/uploads/2021/08/importance-of-traffic-signs-in-road-safety-1.png" width=80%>
 
-<img src='./musk.jpg' width = 60%>
+## Power
 
-## Answer 2?
+<img src="https://houstoncriminalfirm.com/wp-content/uploads/2016/02/armed-robbery.jpg" width=80%>
 
-Weber throws shade :"Who believes this? Aside from a few big children in university chairs and editorial offices."
+## Power
 
-<img src="https://media.giphy.com/media/Ubuy4D6xRJmso/giphy.gif" width = 50%>
+<img src="https://ih1.redbubble.net/image.5558029093.6524/flat,750x,075,f-pad,750x1000,f8f8f8.jpg" width=60%>
 
-## Insight 2:
+## Power
 
-> **"Science is meaningless because it gives no answer to our question: the only question important for us: What shall we do and how shall we live?"** - Tolstoi 
+<img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*0m0ZFaRrqQyeE8Pt" width=60%>
 
-<br> 
 
->- Weber's point: science cannot resolve questions about **value**
+## Justifications
 
-# What is the best music?
+**justification**: is a reason to motivate someone to adopt some behavior.
 
-## What is the best music?
+Justifications include key elements:
 
-Think, then write down...
+- a value or values about what is good or desirable
+- factual claims about the state of the world
 
-- genre, artist, or song 
+    - to show that values are relevant
+    - to alter behavior
 
-## What is the best music?
+- factual claims about what causes various phenomena
 
-In groups, discuss your beliefs about the best music.
 
-Discuss: how would you prove who is right... **scientifically**?
+## Justifications
 
-## What is the best music?
+**Values about what is desirable**: Catholic Church and the sale of indulgences.
 
-# What *can* science do?
+- Medieval church cultivate belief in heaven, purgatory, hell; access to these places through **grace**
+- "Excess Grace" could be acquired by donation to Church, monasteries, military orders
+- Nobility of Europe endowed church with extensive resources.
 
-## Insight 3
 
-### **Science is a form of knowledge concerned with prediction**
+## Justifications
 
->- It can tell us: if we take this action, what will happen
->- Science is, at a fundamental level, concerned with causality
->- This is related to science as objective
- 
-##  Answer 3? 
+**Factual claims to show values are relevant**:
 
-### **Science is valuable in itself because it increases objective knowledge**
+> "You know, in New York, what’s happening with crime is it's through the roof, and it's called 'migrant' ... They beat up police officers. You've seen that they go in, they stab people, hurt people, shoot people. It's a whole new form, and they have gangs now that are making our gangs look like small potatoes."
 
-<br>
+---
 
->- Weber still says NO!
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hzFMRetL-LY?si=yu8G8dVrWTHAYHNO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Insight 4
+## Justifications
 
-### **Science is not "value-free". We use values to decide what is worthwhile to know about.**
+Claims about migrant crime used to invoke values of security; also to motivate people to vote for Trump.
 
-<br> 
+## Justifications
 
->- "More to know than can ever be known" - "The Circle of Life" by Tim Rice
->- Humans decide which questions to answer, informed by our values
->- Are these values/choices correct?
+**factual claims to alter behavior**:
 
-## {.centered}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nr-zxgOlSLg?si=_vM3ZLZC9QpX8awP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<figure>
-<img src="./ig_1.png" width=75%>
-<figcaption>how, and why, wombats make cube-shaped faeces</figcaption>
-</figure>
+## Justifications
 
-## {.centered}
+**factual claims about causes**
 
-<figure>
-<img src="./ig_2.png" width=100%>
-<figcaption>measuring scrotal temperature asymmetry in naked and clothed postmen in France</figcaption>
-</figure>
+- Carbon Tax in Canada
+- Justification for taxing carbon emissions rests on claim that $\mathrm{CO_2}$ emissions drive climate change.
 
 
-## {.centered}
+## Justifications and Power
 
-<figure>
-<img src="./ig_3.png" width=75%>
-<figcaption>measuring the amount of friction between a shoe and a banana skin, and between a banana skin and the floor, when a person steps on a banana skin that's on the floor</figcaption>
-</figure>
+**How are justifications linked to power**?
 
-## Not always silly:
+Power implicitly/explicitly involves justification to alter behavior.
 
-- Racial Bias in Policing
-- Women and Medicine
-- Study of "American Politics", "Canadian Politics"
+---
 
-## Serious Questions
+Is armed robbery a use of power? What is the justification?
 
-- **Who decides what is worth studying?** 
-- **Who decides what research is funded?**
+<img src="https://houstoncriminalfirm.com/wp-content/uploads/2016/02/armed-robbery.jpg" width=50%>
 
-**Why does this matter? Or not?**
+---
 
-## Science and Democracy
+**Does the power in armed robbery depend on the gun?**
 
-- science $\to$ value pluralism
-- science is about prediction $\to$ mastery
-- how is scientific knowledge used?
+<img src="https://houstoncriminalfirm.com/wp-content/uploads/2016/02/armed-robbery.jpg" width=70%>
 
-# Do we *want* scientists <br> without values?
+---
 
-# So what is the value <br>of science?
+**What happens to power when threats of violence do not deter people?**
 
-## Weber's Answer:
+<img src="https://static01.nyt.com/images/2013/08/16/world/beijing/beijing-superJumbo.jpg" width=70%>
 
-**clarity**: We hold values that tell us what is desirable. 
+## Justification and Power
 
-Science can **clarify**:
+**violence** (for Forst) is when others are reduced to mere physical objects to be moved or
+destroyed. Violence might used in justifications for **OTHERS** to behave in a certain way, but the use of violence shows that A no longer can motivate a change in the behavior of B. 
 
-1. What actions we should take to reach the desirable outcome?
-2. Are there unexpected consequences that place our values in conflict?
+- When A no longer attempts to motivate B to do something, it reflect a loss of power of A over B
 
-## Clarity: an example
+- the **material capability** for violence may be meaningless when it loses justification.
 
-Libertarian utopian community in rural New Hampshire.
+---
 
-- Value 1: **Individual freedom from government regulation** (including waste disposal)
-- Value 2: **Individual right to safety of person and property** 
+Bangladesh, August 2024
 
->- Empirically, these were in contradiction...
+<img src="https://cdn.cfr.org/sites/default/files/styles/slide_3_2/public/image/2024/08/bangladesh%202_0.webp" width=80%>
 
-#
+## Justifications and Values
 
-<img src ="https://ichef.bbci.co.uk/news/976/cpsprodpb/B7AB/production/_95991074_img_asdf31875.jpg" width=80%>
+In two ways, justifications connected to value:
 
-## Weber's Answer:
+1. Justifications invovle claims about values
+2. We can develop a normative standard about good vs poor justifications
 
-In modern times, we have two choices:
+## Justifications and Values
 
-1. go back with faith and devotion to theology 
-2. or: it is our **duty** to apply science to clarify our values and to inform our actions.
+Forst defines:
 
-But this responsibility ethics is a **value** that cannot be justified through science
+**domination**: when justifications for power are *hegemonic* (crowd out others) by  limiting the ability of others to question or challenge justifications by controlling information or using threats or violence.
 
-## Conclusion
 
-Using Weber's 4 insights we will:
+## Justification and Values
 
-- Derive attributes of scientific thinking
-- Unscientific forms of thinking
-- Identify types of questions science can/cannot answer
 
+**critical theory principle** (criteria for good vs. poor justifications):
 
+>"the acceptance of a justification does not count if the acceptance itself is produced by the coercive power which is supposedly being justified."
+
+If acceptance of justification is itself dependent on **domination** or using unjustified power, it is a poor justification.
+
+- note: this does not specify the CONTENT of the justifications or what is justified, just the mode of justification
+
+## Justification and Values:
+
+**Values about what is desirable**: Catholic Church and the sale of indulgences.
+
+- Critics of Catholic Church policy on accumulating wealth and indulgences deemed "heretics" 
+- Excommunication and execution (violence)
+- Ban on vernacular translations of the Bible (control over information)
+
+## Justification and Values:
+
+**Factual claims to show values are relevant**:
+
+- Politicians in public eye use their power to push (possibly distorted) information about crime rates
+
+## Justification and Values:
+
+**factual claims to alter behavior**: use of threats to get participation in mass rallies, for the illusion of support
+
+<img src="https://i0.wp.com/asiatimes.com/wp-content/uploads/2020/10/North-Korea-parade.jpg" width=70%>
+
+## Justification and Values:
+
+**factual claims about causes**:
+
+Petroleum companies spending money on sponsored research and advertising to undermine belief in climate change: uses power to secure acceptance of justification to not tax carbon
+
+
+## Right to Justification
+
+If **we** want to be given good justifications by others for power
+
+- we don't want to accept under threat of violence
+- we don't want to be duped/misled into acceptance based on misrepresentation
+
+We should also give good justifications to others.
+
+## Justification and Facts
+
+If justification involves **values** and we have moral intuition that we deserve **good** justification... **what is the role of facts?**
+
+## Justification and Facts
+
+Facts are relevant to:
+
+1. Claims about how the world is and what causes what. (interrogate justifications)
+2. Claims about whether unjustified power acts on us to **secure our acceptance** to other uses of power. (interrogate the quality of justifications: good vs poor)
+
+- how might power shape information we have? shape our perception? shape our values? 
+- how might power be used to deny access to debates over justification?
+
+# Politics and Science
+
+## How do we evaluate facts?
+
+If justifications can be factually interrogated for correctness and whether they are "proper" (good) justifications...
+
+**How do we do that?**
+
+**Why is *science* the way?**
+
+## Plato's Allegory of the Cave
+
+<img src="https://faculty.washington.edu/smcohen/320/platoscave.gif" width=80%>
+
+## Plato's Allegory of the Cave
+
+We are not in a Cave.
+
+We can certainly use our senses of perception.
+
+# Detour
+
+---
+
+What color are these fruits?
+
+<img src="./oranges_0.webp" width=80%>
+
+---
+
+What color are these fruits?
+
+<img src="./oranges_1.webp" width=80%>
+
+---
+
+<img src="./illu_colourconstancy-copie.png" width=80%">
+
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/af78RPi6ayE?si=m2x-1XvOq_nTq7WO&amp;start=1818" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+---
+
+What color are these chess pieces?
+
+<img src="./chess_illusion.jpeg" width=70%">
+
+# A problem
+
+## Politics and Science
+
+Our vision can be tricked and manipulated.
+
+We perceive even less about the political world in which we live:
+
+- How much have you directly experienced: government, people from opposing political camps, specific political issues?
+- How much of what you "know" comes from representations from others? Video? Social media?
+
+Those who can shape **what** we see and **how** we see it have great power over us.
+
+>- is "proper" justification even possible?
+
+---
+
+<img src="https://imgcdn.stablediffusionweb.com/2024/3/9/b48018e0-3154-402b-b179-e2164a41287a.jpg" width= 80%>
+
+# Conclusion
+
+## What is science?
+
+What is science as a form of knowledge?
+
+Can science help us learn about the world in a manner free from domination? How?
