@@ -1,0 +1,17 @@
+"Title","Questions Name","Questions Type","Answers"
+"Poll Immigration",,,
+,"Which claims could be supported or rejected using scientific evidence (select all that apply)?","multiple",
+,,,"US is not experiencing mass immigration"
+,,,"High immigration rates do not lead to instability"
+,,,"US labor market can provide jobs to immigrants"
+,,,"Lack of immigration will slow US economic growth"
+,,,"America should admit 1 million more immigrants per year"
+,,,
+"Poll Vaccines",,,
+,"We agree that our only goal is minimizing deaths. Which vaccine policy should we adopt?","single",
+,,,"Plan A (vaccine mandate for cross-border truckers)"
+,,,"Plan B (purchase and distribute large numbers of rapid antigen tests)"
+,,,"Plan C (deploy Canadian Armed Forces to create field hospitals for non-ICU COVID patients)"
+,"We agree that our only goal is minimizing deaths. Could science tell us which policy to adopt?","single",
+,,,"Yes"
+,,,"No"
