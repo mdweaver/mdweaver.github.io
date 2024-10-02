@@ -100,6 +100,9 @@ ggplot(d2, aes(x = year, y = democracy*100)) +
 
 ```
 
+
+
+
 ---
 
 ```{r, echo = F, warning = F, message = F}
@@ -111,13 +114,37 @@ d3 = fread("./fh_scores.csv")
 ggplot(d3[year >= 2000], aes(x = year, y = fh_score)) +
   geom_line() + 
   xlab('Year') +
-  ylab('Average Freedom House Score') +
-  ggtitle("Democracy Over Time:\nClass Definition") +
+  ylab('Average Freedom House Democracy Score') +
+  ggtitle("Democracy Over Time:\nFreedom House") +
   theme_bw() +
   #ylim(0,12) +
   geom_vline(xintercept = 2016, color = 'red')
 
 ```
+
+[data description](https://freedomhouse.org/reports/freedom-world/freedom-world-research-methodology)
+
+---
+
+```{r, echo = F, warning = F, message = F}
+require(ggplot2)
+require(data.table)
+
+d3 = fread("./vdem.csv")
+
+ggplot(d3[Year >= 2000], aes(x = Year, y = ldi)) +
+  geom_line() + 
+  xlab('Year') +
+  ylab('Average Liberal Democracy Score') +
+  ggtitle("Democracy Over Time:\nVarieties of Democracy") +
+  theme_bw() +
+  #ylim(0,12) +
+  geom_vline(xintercept = 2016, color = 'red')
+
+```
+
+
+[data description](https://v-dem.net/documents/38/V-Dem_Codebook_v14.pdf)
 
 ---
 
@@ -181,9 +208,9 @@ What is the tallest mountain on the North Shore?
 
 ### **We need to:**
 
-- define a the concept of "tall"/"height"
+- define a the concept of "tall"
 - create a variable that matches that definition and is observable
-- develop a procedure to obtain values of that variable for mountains on the North Shore
+- develop a procedure to obtain **values** of that variable for mountains on the North Shore
 
 ---
 
@@ -191,14 +218,14 @@ What is the tallest mountain on the North Shore?
 
 ## Concept to Measurement: 
 
-### Concept: Height (of a mountain)
+### Concept: tallness (of a mountain)
 
-Elevation of peak above sea level
+Elevation (distance from peak to sea level)
 
 
 ### $\xrightarrow{}$ Variable: 
 
-Vertical distance in meters from sea level to the top of the peak
+Vertical distance in meters from mean sea level to the top of the peak
 
 ### $\xrightarrow{}$  Measure:
 
@@ -212,7 +239,7 @@ Are you going to climb the mountain? Prominence might be a better concept of hei
 
 ## Concept to Measurement:
 
-### Concept: Height (of a mountain)
+### Concept: tallness (of a mountain)
 
 the elevation of a summit relative to the highest point to which one must descend before reascending to a higher summit
 
@@ -220,7 +247,6 @@ the elevation of a summit relative to the highest point to which one must descen
 
 Vertical distance in meters from top of the peak to lowest contour line surrounding it and no other higher peaks.
 
-  
 ### $\xrightarrow{}$ Measure:
 
 Satellites using radar interferometry create topographical maps; computer algorithm to find lowest contour
@@ -240,8 +266,6 @@ Different Answer:
 - Using elevation from sea level, West Lion is taller
 - Using prominence, Seymour is taller.
 
-
-
 # Variables
 
 ## Variables
@@ -257,28 +281,29 @@ Different Answer:
 ## Variables: Example:
 
 
-immigrant crime rate
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R7feLxRtEmo?si=73asTyiqcizcqBRC&amp;start=66" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Variables: Example
 
-**A question:** Is transmission of Omicron lower among vaccinated people than unvaccinated? (Setting aside whether vaccination **causes** a change in transmission)
+Attempt to persuade: "There is an influx in violent migrant crime"
 
-**Concept:** Transmissibility of Omicron
+**A claim:** "13,099 convicted murderers have crossed the border and are free to roam and kill in [the United States]"
 
-**Variable**: Number of new COVID infections
+**Concept(s):** undocumented immigrants, convicted murderers, legal detention
+
+**Variable**: number of non-citizens with criminal convictions facing deportation proceedings but who are not held in immigration agency custody
 
 
 ---
 
-If we were to go look at the vaccinated and unvaccinated in Saskatchewan and count the "Number of new COVID-19 infections" since the start of the Omicron wave in each group...
+If we were to go look at "number of non-citizens with criminal convictions facing deportation proceedings but who are not held in immigration agency custody"
 
 What kind of **values** could this variable take?
 
 
 ## Variables: Example
 
-**Number of new COVID-19 infections per week:**
+**number of non-citizens with criminal convictions facing deportation proceedings but who are not held in immigration agency custody:**
 
 - integer
 - must be greater or equal to $0$
@@ -288,25 +313,17 @@ What kind of **values** could this variable take?
 
 - what values could they take?
 
->- e.g. "effective reproduction number" or $R$: average number of new infections in the susceptible population linked to a single infected individual.
+>- e.g. "convicted murderers per capita among undocumented migrants"
 
 ## Variables: Example
 
-
-country of origin of asylum speakers
-
-
-<img src='./toronto_languages.jpg' width=100%>
-
-## Variables: Example
-
-"The first language learned by a person."
+"The immigration status of a person."
 
 This is a variable: what values does it take?
 
->- Categories
+>- Categories (e.g., natural born citizen, naturalized citizen, visa holder, permanent resident, undocumented, etc.)
 >- No numeric range
->- One language is not "higher"/"lower" than another.
+>- One immigration status is not "higher"/"lower" than another.
 
 ## Variables
 
@@ -454,17 +471,15 @@ Suppose we want to know whether this is true: **Canada has less gun violence tha
 
 ## Variables: Example
 
-**A question:** Is transmission of Omicron lower among vaccinated people than unvaccinated? (Setting aside whether vaccination **causes** a change in transmission)
+**A claim:** "13,099 convicted murderers have crossed the border and are free to roam and kill in [the United States]"
 
-**Concept:** Transmissibility of Omicron
+**Concept(s):** undocumented immigrants, convicted murderers, legal detention
 
-**Variable**: Number of new COVID infections
+**Variable**: number of non-citizens with criminal convictions facing deportation proceedings but who are not held in immigration agency custody
 
-**Measure**: Number of positive tests reported to Saskatchewan Health Authority among those (not) registered as vaccinated
-
->- "The new cases that we have in this province are roughly about the same in vaccinated and unvaccinated people here in Saskatchewan," Moe said earlier this week.
 
 >- What could go wrong here?
+>- non-citizens include legal migrants, ignores detention by other agencies, ignores relative propensity of citizens, non-citizens to murder
 
 # Validity
 
@@ -474,6 +489,12 @@ Even if we develop a useful concept...
 
 ### **variables may not correspond to the concept**
 
+It doesn't mean the claim is wrong, but it means that evidence is potentially irrelevant.
+
+We have to develop variables that better match the concepts in the claim.
+
+
+
 ## Variable Trouble: Validity
 
 #### **validity**: 
@@ -481,7 +502,7 @@ Even if we develop a useful concept...
 - Degree of fit between a variables the concept the variable is intended to capture.
 - When a variable  "captures" or "maps onto" the concept we are interested in, then we say they have "validity"
 - When a variable "captures" or "maps onto" other concepts we are not interested in, then we say they lack "validity"
-- If variable lacks validity, even if **measured perfectly**, we may not be able to evaluate the claim
+- How to know we are talking about validity problems: even if we are able to  perfectly observe (**measure**) something, it doesn't speak to the claim.
 
 ## Variable Trouble: Validity
 
@@ -514,21 +535,29 @@ Even if we develop a useful concept...
 
 ## Variable Trouble: Validity
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">For every 10,000 black people arrested for violent crime, 3 are killed<br><br>For every 10,000 white people arrested for violent crime, 4 are killed<br><br>I&#39;m going to keep tweeting this until someone can explain to me how this is possible if there is truly pervasive racial bias in policing</p>&mdash; Leonydus Johnson (leave/me/alone) (@LeonydusJohnson) <a href="https://twitter.com/LeonydusJohnson/status/1267466345844740098?ref_src=twsrc%5Etfw">June 1, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+[Light et al 2020](https://doi.org/10.1073/pnas.2014704117)  investigate claim: "undocumented migrants are prone to violent crime"
+
+**concepts**: undocumented, violent criminals
+
+**variable**: arrest rates for violent crime (homicide, assault, robbery, sexual assault) for US-born citizens, legal immigrants, undocumented immigrants
+
+**measure**: crimes listed in arrests in the Texas Computerized Criminal History database, immigration status as determined by DHS and ICE using biometrics database, estimates of undocumented migrants using Census data
 
 ## Variable Trouble: Validity
 
-**Claim**: "Racial bias in policing is not pervasive" 
 
-**Concept**: racial bias in policing: disparity in police use of force holding constant "reasonable" contextual factors such as objective threat
+[Light et al 2020](https://doi.org/10.1073/pnas.2014704117)  investigate claim: "undocumented migrants are prone to violent crime"
 
-**Variable**: number of people killed by police per persons arrested for violence crimes
+**concepts**: undocumented, violent criminals
 
-**Measure**: count press-reported police-shootings, FBI report on arrests by crime-type
+**variable**: arrest **rates** for violent crime (homicide, assault, robbery, sexual assault) for US-born citizens, legal immigrants, undocumented immigrants
 
-### Does this variable have **validity**?
+**measure**: crimes listed in arrests in the Texas Computerized Criminal History database, immigration status as determined by DHS and ICE using biometrics database, estimates of undocumented migrants using Census data
 
-## Objectives
+>- arrests $\neq$ convictions $\neq$ actual crimes 
+>- many violent crimes go "unsolved"
+
+## Conclusion
 
 1. Distinguish between Variables and Measures
 2. Variables:
