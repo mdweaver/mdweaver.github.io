@@ -1,0 +1,426 @@
+---
+title: "POLI 110"
+author: "Michael Weaver"
+date: "October 7, 2024"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(stringr)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+```
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+TeX: {extensions: ["cancel.js"]}
+});
+</script> 
+
+## Objectives
+
+### (1) **Recap**
+
+- Evaluating Descriptive Claims
+- Variables vs. Measures
+- Validity
+
+### (2) **Measurement Error**
+
+- **Bias**
+- **Random**
+
+# Recap
+
+---
+
+### Severity and Evidence for Descriptive Claims
+
+We want our evidence to:
+
+- be capable of showing claim to be wrong (*weak* severity)
+- stand up to multiple checks on where it could be wrong (*strong* severity)
+
+
+We want to be sensitive to:
+
+- what properties of evidence $\to$ absence of *weak* severity
+- what are the multiple failure points (assumptions) that we can check $\to$ *strong* severity
+
+---
+
+### Descriptive Claim 
+
+$\to$ Concepts
+
+$\to$ Variables
+
+$\to$ Measures
+
+### $\to$ Answer
+
+
+Where are we at risk of failing *weak severity*? Where are the failure points (assumptions) we can check?
+
+---
+
+### Descriptive Claim 
+
+**Concepts not transparent/systematic** $\xrightarrow{\xcancel{weak \ severity}}$
+
+
+Variable does not map onto concept **(lack of validity)** $\xrightarrow{\xcancel{weak \ severity}}$ or $\xrightarrow{\xcancel{pass \ severe \ test}}$
+
+Procedure does not return the true value **(measurement error)** $\xrightarrow{\xcancel{pass \ severe \ test}}$ 
+
+
+### $\xcancel{\to}$ "Answer"
+
+---
+
+### Strategies of Political Activists:
+
+- Groups attempting to mobilize support/transform policy capitalize on **highly publicized events**.
+
+- They often use individual events to diagnose a "problem" they propose to solve.
+
+Whether this is effective or not or their claims are true or not,  picking individual events is a form of evidence that lacks severity.
+
+---
+
+<img src="./say_her_name_0.jpg" width=80%>
+
+---
+
+<img src="./say_her_name_1.jpg"  width=80%>
+
+---
+
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">For every 10,000 black people arrested for violent crime, 3 are killed<br><br>For every 10,000 white people arrested for violent crime, 4 are killed<br><br>I&#39;m going to keep tweeting this until someone can explain to me how this is possible if there is truly pervasive racial bias in policing</p>&mdash; Leonydus Johnson (leave/me/alone) (@LeonydusJohnson) <a href="https://twitter.com/LeonydusJohnson/status/1267466345844740098?ref_src=twsrc%5Etfw">June 1, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+## Validity
+
+**Claim**: "Racial bias in policing is not pervasive" 
+
+**Concept**: racial bias in policing: disparity in police use of force in excess of "reasonable" considerations such as objective threat posed by suspect
+
+**Variable**: difference by race in number of people killed by police per persons arrested for violent crimes
+
+**Measure**: count press-reported police-shootings by race, FBI data on arrests by crime-type and race
+
+### Discuss: Does this variable have **validity**?
+
+(Or we could ask, do we have to *assume* something in order to believe it is valid?)
+
+# Board
+
+## Validity
+
+**Claim**: "Illegal immigrants commit murder at higher rates" 
+
+**Concept**: "illegal immigrant", "murder"
+
+**Variable**: correlation between fraction of people in a city who are undocumented immigrants, fraction of people in a city who are murderers
+
+**Measure**: Pew Research [estimate of undocumented migrants](http://www.pewhispanic.org/2016/09/20/methodology-10/), FBI data on murders per capita
+
+
+---
+
+```{r include = T, echo = F, message=F, warning=F}
+
+require(data.table)
+require(ggplot2)
+d = fread("./migrant_crime.csv")
+d[, murder_pct := murder_rate/100000*100]
+d[, undocumented_pct := undocumented_pct*100]
+
+ggplot(d, aes(x = undocumented_pct, y = murder_pct)) +
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F) +
+  xlab("Undocumented Percent") +
+  ylab("Murderer Percent") +
+  theme_bw() +
+  ggtitle("Evidence against Undocumented Migrants as Murderers?")
+```
+
+
+### Discuss: Is this a "severe" test of the claim? Or are there possible problems?
+
+---
+
+
+```{r include = T, echo = F, message=F, warning=F}
+
+ggplot(d, aes(x = undocumented_pct, y = murder_pct)) +
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F) +
+  xlab("Undocumented Percent") +
+  ylab("Murderer Percent") +
+  theme_bw() +
+  ggtitle("Evidence against Undocumented Migrants as Murderers?")
+```
+
+
+>- We can't say, based on this.
+
+
+---
+
+One **type** of validity problem:
+
+### [Ecological Fallacy](https://www.youtube.com/watch?v=yavcwYS9qc0)
+
+- using variables that observe behavior at **aggregate** levels (e.g. country, province, city) and making inferences about **individual** behaviors.
+- even if we have **perfect data** on aggregate variables (e.g. undocumented migrants, murderers), can still draw incorrect conclusions
+- not wrong *if assumptions correct*: assumes that behaviors (e.g. murder) of individuals of different "types" (undocumented migrant, everyone else) are the same regardless of aggregate context (proportion that is undocumented). 
+
+
+## Validity
+
+Whenever we can make the case that the variable---what we intend to observe---(before we EVER collect any data) does not match the concept, then there is a lack of validity
+
+# Example
+
+---
+
+### Undocumented Migrants and Murder
+
+[Light et al 2020](https://doi.org/10.1073/pnas.2014704117)  investigate claim: "undocumented migrants are prone to violent crime"
+
+**concepts**: undocumented, violent criminals
+
+**variable**: conviction rates for violent crime (homicide, assault, robbery, sexual assault) for US-born citizens, legal immigrants, undocumented immigrants
+
+**measure**: crimes listed in arrests in the Texas Computerized Criminal History database, immigration status as determined by DHS and ICE using biometrics database, estimates of undocumented migrants using Census data
+
+---
+
+<img src="./light_et_al.jpg" width=60%>
+
+---
+
+Not the end of the story: [Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality) at Center for Immigration Studies dispute these findings:
+
+
+Complaints focus on:
+
+- how does Texas identify undocumented migrants in arrest and prison records?
+- how do DHS/ICE identify undocumented migrants?
+
+That is, the **procedures** by which we observe the variable "murders committed by undocumented migrants".
+
+---
+
+[Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality), argue:
+
+- It takes time for undocumented immigrants in custody to be identified. 
+
+    - $\to$ **undercounting** of arrested undocumented
+    - $\to$ more **undercounting** in recently arrested
+
+- Only people in custody for longer periods of time for serious crimes likely to be thoroughly checked:
+
+    - $\to$ undercounting is lower/minimal for **homicide convictions**
+    - $\to$ need to use DHS **and** Texas prison (TDCJ) checks on migration status
+
+---
+
+<img src="./cis.jpg" width=80%>
+
+
+>- Argue that "fixing" measurement problems, conclusions reversed.
+
+# Measurement Error
+
+## Digression: Histograms
+
+[video explanation here](https://www.khanacademy.org/math/pre-algebra/pre-algebra-math-reasoning/pre-algebra-picture-bar-graphs/v/histograms)
+
+```{r echo = F, warning=F, message=F}
+
+bc_data = fread('./BCCDC_COVID19_Dashboard_Case_Details.csv')
+bc_data[, age := str_extract(Age_Group, "\\d\\d$") %>% as.numeric %>% `-` (1)]
+
+ggplot(bc_data, aes(x = age)) + geom_histogram(breaks = seq(0,90,10), col = "white") + theme_bw(base_size = 18) + ggtitle("Histogram of BC COVID Cases by Age \n Through February, 2023") + xlab("Age (Bins)") + ylab("Count (of COVID-19 Cases)")  +
+    scale_x_continuous(breaks=seq(0,90,10)) +
+    scale_y_continuous(breaks = seq(0,80000,10000))
+```
+
+---
+
+About how many cases among people between 70 and 80?
+
+About how many cases among people between 20 and 30?
+
+```{r echo = F, warning=F, message=F}
+ggplot(bc_data, aes(x = age)) + geom_histogram(breaks = seq(0,90,10), col = "white") + theme_bw(base_size = 18) + ggtitle("Histogram of BC COVID Cases by Age") + xlab("Age (Bins)") + ylab("Count (of COVID-19 Cases)")  +
+    scale_x_continuous(breaks=seq(0,90,10)) +
+    scale_y_continuous(breaks = seq(0,80000,10000))
+```
+
+## Measurement Error
+
+#### **Validity** is about link between **variable** and **concept**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### **Measurement Error** is about link between **measure** and **variable**.
+
+<hr style="height:8px; visibility:hidden;" />
+
+
+## Measurement Error
+
+### **measurement error**
+
+is a **difference** between the **observed** value of a variable for a case (produced by the **measure**ment procedure) and the **true** value of the variable for that case.
+
+$$\mathrm{Value}_{observed} - \mathrm{Value}_{true} \neq 0 \xrightarrow{then} \mathrm{measurement \ error}$$
+
+If what we observe is **different** from the true value for a case (difference is not 0), then there is measurement **ERROR**
+
+
+## Measurement Error
+
+What is the incidence of sexual misconduct [defined here](https://universitycounsel.ubc.ca/files/2024/10/Sexual-Misconduct-Policy_SC17.pdf) at UBC?
+
+Let's say a **variable** is the number of breaches of Sexual Misconduct Policy in a given year.
+
+**Measure**: Reporting from the UBC Investigations Office.
+
+---
+
+<img src="./ubc_io.png" width=80%>
+
+## Measurement Error
+
+What is the incidence of sexual misconduct [defined here](https://universitycounsel.ubc.ca/files/2024/10/Sexual-Misconduct-Policy_SC17.pdf) at UBC?
+
+Let's say a **variable** is the number of breaches of Sexual Misconduct Policy in a given year.
+
+**Measure**: Reporting from the [UBC Investigations Office](https://io.ubc.ca/).
+
+That implies $15$ incidents in 2022-2023 Academic Year (last available data). 64 reports $\to$ 39 investigations $\to$ 24 completed investigations $\to$ 15 breaches found
+
+>- Is this observed value **too high**? **too low**? **correct**? Why?
+
+
+## Measurement Error
+
+$$\mathrm{Sexual \ Misconduct }_{observed} - \mathrm{Sexual \ Misconduct}_{true} \neq 0$$
+
+$$\xrightarrow{then} \mathrm{measurement \ error}$$
+
+>- Most likely $\mathrm{Sexual \ Misconduct }_{observed} - \mathrm{Sexual \ Misconduct}_{true} < 0$
+
+
+---
+
+### Two varieties of **measurement error**
+
+- **bias**/**systematic measurement error**
+- **random measurement error**
+
+Differ in the patterns of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ that we see.
+
+Measures may suffer from **both**.
+
+## Measurement Error: Bias
+
+**bias** or **systematic measurement error**: error produced when our measurement procedure obtains values that are, **on average**, too high or too low (or, incorrect) compared to the truth. 
+
+- Key phrase is "on average": error is not a one-off fluke, will happen **systematically** even if you repeat the measurement procedure.
+- can have an *upward* (observed value too high) or *downward* (observed value too low) bias
+- **not** "politically" biased
+- bias might not be the same for all cases or different across subgroups
+    - example: economic evaluations and partisanship in surveys
+
+
+## Measurement Error
+
+[Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality) argue that [Light et al](https://doi.org/10.1073/pnas.2014704117)'s measurement procedures lead to:
+
+$$\mathrm{Migrant \ Homicide \ Rate }_{observed} - \mathrm{Migrant \ Homicide \ Rate}_{true} < 0$$
+
+$$\xrightarrow{then} \mathrm{measurement \ bias}$$
+
+Though, this debate over measurement isn't over.
+
+
+---
+
+
+<img src=https://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/jqdpkwv9_uyxmhowjz7gew.png width=100%>
+
+bias different in different subgroups
+
+
+## Measurement Error: Random
+
+**random measurement error**: errors that occur due to *random* features of measurement process or phenomenon. So even if observed values are sometimes wrong, they are, **on average**, correct
+
+- Due to chance, we get values that are too high or too low
+- May be lots of idiosyncratic errors
+- There is no tilt one way or another (no bias)
+- In aggregate, values that are "too high" are balanced out by values that are "too low" compared to the truth
+
+## Measurement Error: Random
+
+**Variable**: relative change in COVID-19 infections
+
+**Measure**: "Composite wastewater influent is collected over a 24-hour period from wastewater treatment plants (WWTPs). Samples are collected 2-3x per week at each WWTP and are transported by the BCCDC PHL for analysis. Wastewater samples are concentrated by ultracentrifugal filtration, nucleic acids extracted and SARS-CoV-2 envelope gene (E gene) is detected by real-time quantitative polymerase chain reaction (RT-qPCR)."
+
+## Measurement Error: Random
+
+<img src="./newplot.png">
+
+## Measurement Error: Random
+
+Day-to-day variation in:
+
+- wastewater volume (e.g. rain, snowmelt, showering)
+- fecal matter (e.g. diet, exercise, other diseases)
+
+can lead to errors in measurement, but these errors likely cancel out in the long run.
+
+## Practice
+
+```{r, echo = F, message=F}
+require(ggplot2)
+n = 10000
+x1 = rnorm(n, 0, 0.5) + 1
+x2 = rnorm(n, 0, 3)
+x3 = rnorm(n, -7, 3)
+plot_data = data.frame(Measure = rep(paste0("X",1:3), each = n), value = c(x1, x2, x3))
+xlims = range(c(x1,x2, x3))
+ggplot(plot_data, aes(value, fill = Measure)) + 
+  geom_histogram(bins = 100, alpha = 0.5, position = 'identity') +
+  labs(title = 'Measurement error for\ndifferent measures of variable X') + xlab("Observed Value X - True Value X") + ylab("# of Cases") + 
+  theme_bw() +
+  geom_vline(xintercept = 0, colour = 'red')
+```
+
+Go to [menti.com/](https://www.menti.com/) and enter the code $59 \ 93 \ 07 \ 9$
+
+---
+
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/69e188f2c79c30b9ccf182ae7859563a/e5831669bcd0' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+
+
+## Conclusion:
+
+### **Measurement Error**
+
+1. **Bias**/systematic measurement error
+2. **Random** measurement error
+
+- What is "bias"?
+- How do you recognize these?
+- We can have both.
+
+
