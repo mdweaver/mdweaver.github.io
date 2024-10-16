@@ -13,6 +13,13 @@ require(ggplot2)
 require(magrittr)
 ```
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+TeX: {extensions: ["cancel.js"]}
+});
+</script> 
+
+
 ## Objectives
 
 ### (1) **Measurement Error**
@@ -21,11 +28,6 @@ require(magrittr)
 - **Random**
 - **Sources** and **Solutions**
 
-### (2) **Sampling Error**
-
-- **Population, Sample, Inference**
-- **Sampling Bias**
-- **Random Sampling Error**
 
 # Measurement Error
 
