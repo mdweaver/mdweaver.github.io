@@ -13,16 +13,51 @@ require(ggplot2)
 require(magrittr)
 ```
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+TeX: {extensions: ["cancel.js"]}
+});
+</script> 
+
+
 ## Objectives
 
-### (1) **Sampling Error**
+### (1) **Measurement Error**
+
+- **Measurement error**
+
+### (2) **Sampling Error**
 
 - **Sampling Bias** vs **Random Sampling Error**
 - **Random Sampling**
 
-### (2) **Sampling Error** vs **Measurement Error**
 
 # Measurement Error
+
+---
+
+### Descriptive Claim
+
+**Concepts not transparent/systematic** $\xrightarrow{\xcancel{weak \ severity}}$
+
+
+Variable does not map onto concept **(lack of validity)** $\xrightarrow{\xcancel{weak \ severity}}$ or $\xrightarrow{\xcancel{pass \ severe \ test}}$
+
+Procedure does not return the true value **(measurement error)** $\xrightarrow{\xcancel{pass \ severe \ test}}$ 
+
+
+### $\xcancel{\to}$ "Answer"
+
+
+## What do we do...
+
+...if there is measurement error?
+
+Measurement error is everywhere. Does not mean we can say nothing about descriptive claims.
+
+1. Depending on the descriptive claim and what we observe, some types of measurement error are tolerable.
+2. Depending on the **direction** of the measurement error, we may still be able to evaluate claims
+3. Depending on the **magnitude** of the measurement error, errors may be irrelevant
 
 
 ## If errors, then...
@@ -31,10 +66,9 @@ require(magrittr)
 
 2. Does the evidence using this measure appear to support or reject the claim?
 
-3. Is the **magnitude** of the error likely to be large or small? Is it possible to assess how wrong it could be?
+4. If the error is a bias, what is the **direction** of the bias?  (upward?, downward?) Is this bias toward supporting or rejecting the claim?
 
-4. If the error is a bias, what is the **direction** of the bias?  (upward?, downward?)
-
+3. Is the **magnitude** of the error likely to be large or small? Is it large enough that it could incorrectly lead us to accept/reject the claim?
 
 ---
 
@@ -89,6 +123,103 @@ Then, bias is a problem. Claim could be true or false.
 
 ### Random Error: When is it a problem?
 
+If:
+
+- evidence appears to **support**/**reject** a claim
+- random error has **large magnitude**
+- claim is about/we use data on few cases
+
+Then, random error is a problem. 
+
+---
+
+### Random Error: When is it a problem?
+
+If:
+
+- claim is about patterns/associations
+- evidence appears to **reject** the claim
+- random error has relatively **large magnitude**
+
+Then, random error is a problem (biased toward finding no pattern). 
+
+---
+
+### Random Error: When is it a problem?
+
+If:
+
+- evidence appears to **support**/**reject** a claim
+- random error has **small magnitude**
+
+Then, random error is unlikely to be a problem. 
+
+--- 
+
+### Specific Descriptive Claims
+
+**What is the type of *this case* ?**
+
+- e.g., "this person is an undocumented migrant"
+- measurement procedure indicates the person is "undocumented"
+- Bias is tolerable if procedure is biased **against** labelling them as undocumented.
+- Random error is tolerable if **magnitude** is small.
+
+>- What if the measurement procedure indicated the person is NOT undocumented?
+
+
+--- 
+
+### Specific Descriptive Claims
+
+**What is the amount/frequency of some phenomena?**
+
+- e.g., "The homicide rate in Canada is at least 1.94 per 100,000"
+- Measurement procedure says it is 1.95 per 100,000
+- Bias is acceptable if procedure is biased **downward**
+- Random error is acceptable if **magnitude** is small (relative to the claim).
+
+>- What if the measurement returned a homicide rate of 1.5 per 100,000?
+
+
+--- 
+
+### Specific Descriptive Claims
+
+**What is the relative amount/frequency of something across different cases/times?**
+
+- e.g., "The murder rate in the United States has gone down."
+- Measurement procedure shows a decline between 2022 and 2023
+- Bias is acceptable if the bias is **constant** over time or across cases.
+- Random error acceptable if small relative to the claim
+
+>- What if the measurement returned no change in murders?
+>- Bias is a problem if the pattern of errors is *toward the claim*
+>- Random error a problem because it creates **attenuation bias** $\to$ bias to find **no change**/**no pattern** 
+
+--- 
+
+### Specific Descriptive Claims
+
+**What patterns are there between two different phenomena?**
+
+- e.g., "Higher gun ownership rates associated with higher rates of gun deaths."
+- Measurement procedure shows a no pattern between gun ownership and gun deaths
+- Bias is acceptable if **constant**, **unrelated** across measures, or biased toward finding a positive relationship.
+- Random Error a **problem** because it creates **attenuation bias**
+
+>- What if measurement procedure shows a positive association between gun ownership and gun deaths?
+>- Bias acceptable if **constant**, **unrelated**, or toward negative relatinship
+>- Random error acceptable if relatively small.
+
+--- 
+
+### Specific Descriptive Claims
+
+- **what is the type of a specific phenomenon**: **bias** and **random** error a problem.
+- **amount/frequency of phenomena**: **bias**/**random error** is a problem.
+- **relative amount/frequency of phenomena across different places/times**: **bias** is ok if it is *constant*. **random error** is a problem
+- **what patterns are there between two different phenomena**: **bias** is ok if it is *constant*. **random error** a problem
 
 
 
@@ -154,6 +285,7 @@ The difference between the value of the measure for the sample and the true valu
 $$\mathrm{Value}_{sample} - \mathrm{Value}_{population} \neq 0 \xrightarrow{then} \mathrm{sampling \ error}$$
 
 >- Just like **measurement error**, there are two types: one that is **bias** and one that is **random**
+>- Sampling error is a **kind of measurement error**
 
 ---
 
@@ -208,13 +340,11 @@ This procedure creates **samples** that:
 
 ---
 
-Cost of living among student:
+A quick survey: (Answer BOTH questions - you have to click through)
 
-How much of your monthly budget do you spend on rent? (Answer ALL questions - you have to click through)
+Go [here](https://www.menti.com/alpakri564ov)
 
-Go here: [https://www.menti.com/gdezmsmxkn](https://www.menti.com/gdezmsmxkn)
-
-Or go to [menti.com](https://menti.com) and enter: $1557 \ 1602$
+Or go to [menti.com](https://menti.com) and enter: $1735 \ 7291$
 
 ## Example: {.build}
 
@@ -226,7 +356,7 @@ Students in lecture hall, responding to poll are the **sample**
 
 ---
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/f944d685e9a8a2b1ed3a5897b970de4d/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/n/alfnkdovta2xkht5qgztobpgg8hj89xw/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
 ## Example: Contacts
 
