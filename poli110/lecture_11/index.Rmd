@@ -70,6 +70,18 @@ Measurement error is everywhere. Does not mean we can say nothing about descript
 
 3. Is the **magnitude** of the error likely to be large or small? Is it large enough that it could incorrectly lead us to accept/reject the claim?
 
+
+##
+
+
+1. measurement bias:
+  
+  - a problem if evidence supports (rejects) claim and bias is toward supporting (rejecting) claim: evidence and bias go in the same direction.
+
+- not a problem if **small**, bias not large enough to explain evidence.
+
+- not a problem unless bias "matches" the claim (e.g. claims about relative frequencies bias only relevant if it )
+
 ---
 
 ### Bias: When is it a problem?
