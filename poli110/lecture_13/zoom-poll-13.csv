@@ -1,0 +1,19 @@
+"Title","Questions Name","Questions Type","Answers"
+"Poll Necessary 1",,,
+,"If this claim is true: ""Global air travel is a necessary condition for a new disease to become a pandemic."", does this map of global air travel imply that the next virus that jumps from another species to humans will become a pandemic.","single",
+,,,"Yes"
+,,,"No"
+,,,
+"Poll Voting",,,
+,"Based on this figure, does it make sense to claim that being shamed is a necessary condition for voting?","single",
+,,,"Yes"
+,,,"No"
+,"Based on this figure, does it make sense to claim that being shamed is a sufficient condition for voting?","single",
+,,,"Yes"
+,,,"No"
+,,,
+"Poll Probabilistic",,,
+,"Indicate which of the following are probabilistic causal claims (you may select more than one)","multiple",
+,,,"It's probably true that leftwing government reduce student tuition fees"
+,,,"Electing a leftwing, rather than rightwing, government increases the likelihood that tuition fees wil be reduced"
+,,,"Tuition fees are reduced more frequently under leftwing governments than rightwing governments"
