@@ -210,7 +210,7 @@ Sufficient conditions also imply specific potential outcomes:
 
 **"A military coup that overthrows a democratically elected government is a sufficient condition for large public protests."** implies that for *every* democratic country $i$:
 
-$\mathrm{Protests}_i \ (\mathrm{Military \ Coup = No}) = \mathrm{No}$
+$\mathrm{Protests}_i \ (\mathrm{Military \ Coup = No}) = \mathrm{No \ or \ Yes}$
 
 $\mathrm{Protests}_i \ (\mathrm{Military \ Coup = Yes}) = \mathrm{Yes}$
 
