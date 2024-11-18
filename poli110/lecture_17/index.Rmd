@@ -51,14 +51,15 @@ ggplot(g, aes(x = midterm, fill = grade)) +
   xlab("Score")
 
 ```
+
 ---
 
-```{r}
+```{r }
 ggplot(g[!is.na(midterm)], aes(x = midterm)) + 
   geom_rect(data = g_cut, aes(xmin = start , xmax = end, ymin = -Inf, ymax = Inf, fill = grade),
             inherit.aes=FALSE, alpha = 0.3) +
   scale_fill_viridis_d() +
-  geom_step(aes(y = 1 - ..y..), stat='ecdf') + theme_bw() + 
+  geom_step(aes(y = 1 - after_stat(y)), stat='ecdf') + theme_bw() + 
   ggtitle("Midterm Grade Distribution") + 
   xlab("Score") + 
   ylab("Fraction with score > than X")
