@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 12, 2024"
+date: "January 10, 2025"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -37,6 +37,155 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
+## What are we doing in this course?
+
+One set of a tools to help us scientifically interrogate claims about causal relationships.
+
+
+## Why causality?
+
+- all of our questions/arguments ultimately connect to some set of causal claims
+- appears to be *a priori* category of our understanding
+- "innate" disposition to attribute causal relations
+
+## Why science?
+
+We can easily concoct causal explanations for phenomena/experiences that are **wrong**
+
+- Need guiding principles to reign our thinking in.
+
+## Severity
+
+#### (weak) severity principle:
+
+> *One does not have evidence for a claim if nothing has been done to rule out the ways the claim may be false.* If data x agree with a claim C, but the method is … guaranteed to find such agreement, and had little or no capability of finding flaws with C even if they exist, they we have bad evidence, no test
+
+(Mayo 2018, pp. 5)
+
+## Weak Severity
+
+This principle can guide us at all stages of research:
+
+- When propose theory to explain some phenomenon: have we considered rival expanations?
+- When linking theory/claim to observable hypothesis: do other explanations make same predictions? (Could our theory "pass" the test but nevertheless be wrong?)
+- When we collect data: do our procedures for observing the world bias us toward "passing" the test?
+- When we analyze data: do our procedures for comparison/interpretation bias us toward "passing" the test?
+
+
+## Severity
+
+(strong) severity requirement:
+
+> *We have evidence for a claim C just to the extent it survives stringent scrutiny.* If C passes a test that was highly capable of finding flaws or discrepancies from C, and yet none or few are found, then the passing result, $x$, is evidence for C.
+
+(Mayo 2018, pp. 14)
+
+We want to deliberately engage with ways in which our claim and evidence for that claim may be wrong.
+
+## Strong Severity
+
+Severity principle does not REQUIRE statistics (or even quantitative data).
+
+- Consider Mayo's example on pp. 14-15: weighs herself on three scales, weighs herself holding three copies of 1-pound book, finds 3 lb. difference for each scale. Then upon return from travel, all three scales show her 4 pounds heavier, books add same amount of weight.
+
+What about this procedure makes it "highly capable" of finding the claim that "Mayo gained weight" to be wrong?
+
+## Severity, Statistics, Causality
+
+Statistical methods not needed, but they are a (potentially) potent tool to help us achieve tests with strong severity
+
+- help us clarify the ways in which evidence of causality may be wrong
+- identify (and sometimes check) assumptions required to infer causality
+- assign probability to whether test procedure will let our causal claim "pass" its test **in error**
+
+## Severity and Falsification:
+
+Severity as a criterion of evidence relates to falsification: we are not interested in inferring that claim is true from tests; we are interested in testing whether claim is false
+
+$H$: All swans are white.
+
+$H \to O$: See no swans of other colors 
+
+$not \ O \to not \ H$: Black swan $\to$ claim is false
+
+## Severity and Falsification:
+
+Falsification not actually so simple (Duhem, in Mayo 2018, pp. 84-6)
+
+Any statistical test of a claim involves, in addition to the hypothesis $H$:
+
+- assumptions about links between the theory/claim and observable phenomena ($A_1 \dots A_k$)
+- assumptions of the statistical model ($E_1 \dots E_k$)
+
+If the claim "fails" a test, it could be that $H$ is wrong. Or any $A_1 \dots A_k$, $E_1 \dots E_k$.
+
+---
+
+> "The only thing the experiment teaches us is ... there is at least one error; but where this error lies is just what it does not tell us."
+
+Strong severity involves doing the work to **rule out** the possibility that it is an incorrect assumption made in the test that leads us to say evidence supports/rejects our claim.
+
+## Course Goals
+
+Understand canonical statistical designs and models used for testing causal hypotheses, such that:
+
+- you can interpret their results
+- know and understand the assumptions they entail
+- for each assumption, know how to :
+    - test/check its correctness using data
+    - if not testable, give justifications
+    - show whether results of tests change when changing/relaxing them
+
+- We will see that contextual ("qualitative") knowledge is required for this
+
+## Course Goals
+
+
+Meta-level:
+
+- Be a competent/honest severe tester (in your work; as a reviewer of others)
+- you know how to learn about new models/designs and their assumptions as well
+
+## Course Agenda
+
+Tests of causal theories/claims/hypotheses involve making additional assumptions...
+
+- about match between theory and empirical test (quantitative or otherwise)
+- about the link between observed data and the proposed test of the theory
+- **when choosing a research design**
+- **when choosing a particular statistical model for testing**
+
+## Course Agenda
+
+When using/evaluating statistical tools... ask:
+
+<small>
+
+- **What is causal estimand that our research design gives us?** Is it relevant to our theory/hypothesis?
+- **What are the assumptions of the (canonical) estimator for this design?**
+    - to get **unbiasedness** in causal estimates
+    - to get correct **error probabilities**
+- **How might these *design* assumptions be violated?** Can we test/relax/defend this assumption?
+- **How does statistical *model* we estimate match our estimand?**
+- **What additional assumptions does statistical model impose?**: (for unbiasedness? for error probabilities?)
+- **What are the ways these *model* assumptions can be violated?** Can we test/relax/defend this assumption?
+
+</small>
+
+## Syllabus
+
+- Group Project
+- Problem Sets (date for PS 4 and 5 to be set)
+- Exam (could drop, reweight to PS and group project)
+
+## Syllabus
+
+- Read before class; don't suffer too long on equations. Revisit equations after class.
+- Shifting toward Aronow and Miller textbook; Mostly Harmless Econometrics is good, but a bit dated (on differences in differences, standard errors)
+- Supplemental readings can be remedial (you're feeling lost); advanced (need more gory detail)
+
+# Testing Causal Claims
+
 ## Does Contact Reduce Prejudice?
 
 #### Allport (1954) and a large literature suggests that prejudice against groups can sometimes be reduced through interpersonal contact
@@ -47,13 +196,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <img src="./bk_1.png" width = 100%>
 
+- summarize the experiment; how related to contact hypothesis?
+
 ## Does Contact Reduce Prejudice?
 
 #### In pairs: 
 
-How do **statistical** tests help authors assess causality?
+What do the authors do to subject contact hypothesis to severe testing? (What specific role do **statistical** tests play in assessing whether contact **causes** a reduction in prejudice?)
 
-Do you find these statistical tests persuasive (about causality)?
 
 ## Compare and contrast
 
@@ -75,17 +225,9 @@ Statistical evidence for causality combines **observed data** and a **mathematic
 
 Causal evidence varies in terms of complexity of math/restrictiveness of assumptions: a matter of **degree**
 
-- **Model-based** inferences about causality depend on complex statistical models with many difficulty-to-assess assumptions
+- **Model-based** inferences about causality involve many choices in complex statistical models with many difficult-to-assess assumptions
 
 - **Design-based** inferences about causality use carefully controlled comparisons with simple models and transparent assumptions
-
-## Design vs. Model-based inferences
-
-Whatever our approach...
-
-<br>
-
-**do the assumptions needed to use this mathematical tool reasonably fit reality?**
 
 ## Objectives
 
@@ -138,17 +280,19 @@ A powerful way to formalize a mathematical model of causality
 
 Imagine you were a participant in an experiment similar to the Broockman and Kalla paper...
 
-Imagine that, today, you were asked to contribute money to a trans-rights advocacy organization. Write down: would you contribute (1) - and how much - or not contribute (0)...
+Imagine that, today, you were asked to contribute money to a trans-rights advocacy organization. 
 
->- ... if, yesterday, you were in the **no contact** group
+Write down: would you contribute (1) - and how much - or not contribute (0)...
 
->- ... if, yesterday, you were in the **contact** group
+- ... if, yesterday, you were in the **no contact** group
+
+- ... if, yesterday, you were in the **contact** group
 
 ## Potential Outcomes
 
 In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take.
 
-If $Y_i$ is the donation status of person $i$; $Z$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
+If $Y_i$ is the donation status of person $i$; $Z_i$ is the experimental condition: $1$ indicates contact, $0$ no contact, then we have two **potential outcomes**
 
 1. donation status with **no contact** is $Y_i(0)$
 2. donation status **with contact** is $Y_i(1)$
@@ -174,6 +318,9 @@ The **unit causal effect** of contact for person $i$ is the **difference** betwe
 
 $$\tau_i = Y_i(1) - Y_i(0)$$
 
+<br>
+
+*n.b.* $\tau$ and other Greek letters used to stand in for quantities of interest. Here, presumably for "**t**reatment effect".
 
 ## Potential Outcomes
 
@@ -187,6 +334,9 @@ $$\tau_i = Y_i(1) - Y_i(0)$$
 What happens when we've fallen from Mount Olympus, and we actually have to examine the data?
 
 >- Let's "run" the experiment!
+
+>- `r sample(1:11)` (first 5 are treated)
+
 >- What **unit causal effects** do we observe?
 
 ## Potential Outcomes
@@ -214,6 +364,8 @@ What happens when we've fallen from Mount Olympus, and we actually have to exami
 ## Potential Outcomes
 
 The potential outcomes model allows us to imagine  different causal **estimands** for different purposes
+
+**estimand** is just a formal definition of a quantity we want to know. **causal estimands** are expressed as some function of unit causal effects.
 
 - We might want **unit causal effects**
 - We might want the **average causal effect**
@@ -251,7 +403,10 @@ Return to the board: what **possible** values could each unobserved potential ou
 
 ## Partial Identification
 
-If we want to know what is the average unit causal effect ($E[\tau_i] = \frac{1}{n}\sum\limits_{i=1}^{n}\tau_i$)...
+If we want to know what is the average unit causal effect 
+
+$$E[\tau_i] = \frac{1}{n}\sum\limits_{i=1}^{n}\tau_i$$
+
 
 How might we get the upper and lower bounds for what that effect could be, given the observed data?
 
@@ -259,9 +414,9 @@ How might we get the upper and lower bounds for what that effect could be, given
 
 $E[\tau_i] = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$
 
-- $Pr(Z_i = 0)$/$Pr(Z_i = 1)$ is fraction of units that are untreated/tretaed. Can shorten to $\pi_0$ and $\pi_1$
+- $Pr(Z_i = 0)$,$Pr(Z_i = 1)$ is fraction of units that are untreated/treated. Can shorten to $\pi_0$ and $\pi_1$
 
-We decompose the mean of $Y(1)$ and $Y(0)$ as a weighted mean of "principal strata": those treated ($Z=1$) and untreated ($Z=0$)
+We decompose the mean of $Y_i(1)$ and $Y_i(0)$ as a weighted mean of "principal strata": those treated ($Z_i=1$) and untreated ($Z_i=0$)
 
 $$\begin{equation}\begin{split}E[\tau_i] &= \overbrace{\{E[Y_i(1)|Z_i = 1]\pi_1 + E[Y_i(1)|Z_i = 0]\pi_0\}}^{\text{Mean of Y when treated}} \\ & \phantom{=}\ - \underbrace{\{E[Y_i(0)|Z_i = 1]\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\}}_{\text{Mean of Y when untreated}} \end{split} \end{equation}$$
 
@@ -275,35 +430,39 @@ $$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{re
 
 ## Partial Identification
 
-$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{Mean Y(1) for untreated}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{Mean Y(0) for treated}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
+$$\begin{equation}\begin{split}E[\tau_i] &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{\overbrace{E[Y_i(1)|Z_i = 0]}^{\text{Mean Y(1) for untreated}}}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{\underbrace{E[Y_i(0)|Z_i = 1]}_{\text{Mean Y_i(0) for treated}}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
-
-We can plug in the maximum and minimum possible values for these unobserved counterfactuals, to calculate the highest and lowest possible values $E[\tau_i]$
+We don't know what these missing values are, but we can plug in the **maximum** and **minimum** possible values for these unobserved counterfactuals, to calculate the highest and lowest possible values $E[\tau_i]$
 
 In groups, what is the **maximum** possible value for $E[\tau_i]$ using data on the board?  What is the **minimum**?
 
 ## Partial Identification
 
-If $Y \in {Y^L, Y^U}$ (the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively):
+If the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively:
 
-Then:
+Highest possible average causal effect when:
 
-Highest possible average causal effect when untreated cases would have had highest value of $Y$ if treated and treated cases would have had lowest value of $Y$ if untreated. 
+- untreated cases, if treated, would have had **highest value** of $Y$.
+- treated cases, if untreated, would have had **lowest value** of $Y$ . 
+
 
 $$\begin{equation}\begin{split}E[\tau_i]^U &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{Y^U}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{Y^L}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
 ## Partial Identification
 
-If $Y \in {Y^L, Y^U}$ (the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively):
+If the minimum and maximum possible values of $Y$ are $Y^L, Y^U$ respectively:
 
-Lowest possible average causal effect when untreated cases would have had highest value of $Y$ if treated and treated cases would have had lowest value of $Y$ if untreated. 
+Lowest possible average causal effect when:
+
+- untreated cases, if treated, would have had **lowest value** of $Y$.
+- treated cases, if untreated, would have had **highest value** of $Y$ . 
 
 
-$$\begin{equation}\begin{split}E[\tau_i]^L &= \{E[Y_i(1)|Z_i = 1]Pr(Z_i=1) + \color{red}{Y^L}Pr(Z_i=0)\} \\ & \phantom{=}\ - \{\color{red}{Y^U}Pr(Z_i=1) + E[Y_i(0)|Z_i = 0]Pr(Z_i=0)\} \end{split} \end{equation}$$
+$$\begin{equation}\begin{split}E[\tau_i]^L &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \color{red}{Y^L}\pi_0\} \\ & \phantom{=}\ - \{\color{red}{Y^U}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
 ## Partial Identification
 
-We can thus partially identify a range of values in which the $E[\tau_i]$ must be, with almost no assumptions (other than potential outcomes for an individual not affected by treatment assignment of **other** cases).
+We can thus partially identify a range of values in which the $E[\tau_i]$ **must be**, with almost no assumptions (other than potential outcomes for an individual not affected by treatment assignment of **other** cases).
 
 These bounds may not be very informative (effect may be positive OR negative).
 
@@ -312,17 +471,128 @@ But we can impose additional assumptions:
 - positive monotonic treatment effects: all $\tau_i \geq 0$
 - positive selection: treated units have greater probability of positive effect than untreated units.
 
-These additional assumptions can be translated into (usually tighter) bounds on $E[\tau_i]$
 
 ## Partial Identification
 
-In a sense, there are no "statistics" here, as we don't appeal to any random variables/stochastic processes.
+In a sense, there are no "statistics" here, as we don't appeal to any random variables/stochastic processes. There is no error probability. If assumptions hold, then true value is within the bounds.
 
-We algebraically express bounds implied by specific assumptions.
+- we can definitively rule out specific causal effects of some magnitudes
 
 # Point Identification
 
-## A Digression
+[review](#random-variables-review)
+
+## Average Causal Effects
+
+**unit causal effects** are fundamentally un-observable, so focus has been on **average causal effects** (or *average treatment effects*)
+
+- For units in $i = 1 \ldots N$
+
+$$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
+
+- This parameter takes the difference between two counterfactuals:
+    - average outcome of all units if assigned to treatment
+    - average outcome of all units if assigned to control
+    
+## Solving the problem
+
+We have a **parameter**/**estimand** (average causal effect) that we would like to know. But data we need is always missing. 
+
+Analogical problem to estimating, e.g., population mean (a parameter) without observing the entire population.
+
+>- We want an **estimator**: mathematical model applied to data we **can** observe that, with assumptions, estimates our **parameter** *without bias*. 
+>- Use **random assignment** to solve our problem
+
+## Solving the problem
+
+Assuming **Random Assignment** does two things:
+
+1. $Z_i$ is independent of $Y_i(1)$ and $Y_i(0)$;
+  - treated $Y_i(1)$s comes from same "box" as control $\color{red}{Y_i(1)}$s and vice versa.
+2. $E[Y_i(1)]$ and $E[Y_i(0)]$ are random variables
+  - we know that expected value of sample is equal to expected value of "box" .
+  
+
+## 
+
+<img src="./box_model.png" width = 100%>
+
+## If we randomly sample
+
+**estimand**: $ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$
+
+We use the **estimator** ($\widehat{ACE}$ or $\widehat{\bar{\tau}}$):
+
+$$\normalsize\underbrace{\frac{1}{m}\sum\limits_{i=1}^m}_{\text{Avg. over T}} \overbrace{[Y_i(1) | Z_i = 1]}^{\text{Y(treated) for T}} - \underbrace{\frac{1}{N-m}\sum\limits_{i=m + 1}^N}_{\text{Avg. over C}} \overbrace{[Y_i(0) | Z_i = 0]}^{\text{Y(control) for C}}$$
+
+<small>
+Where units $1 \to m$ (group $T$) are assigned to treatment $Z_i = 1$ and units $(N - m) \to N$ (group $C$) assigned to control $Z_i = 0$.
+</small>
+
+
+## Causal Inference Using Statistics
+
+This **estimator** ($\widehat{ACE}$) uses the
+
+- mean value of $Y_i(1)$ for the **treatment** group (observable) to stand in for mean $\color{red}{Y_i(1)}$ for **all** units (unobservable)
+- mean value of $Y_i(0)$ for the **control** group (observable) to stand in for mean $\color{red}{Y_i(0)}$ for **all** units (unobservable)
+
+## Causal Inference Using Statistics
+
+#### **Because we randomly assign**  $Z$
+
+1. Expected value of mean for **sample** in treatment $E[Y_i(1) | Z_i = 1]$ equals population mean $E[Y_i(1)]$
+2. Expected value of mean for **sample** in control $E[Y_i(0) | Z_i = 0]$ equals population mean $E[Y_i(0)]$
+3. Because **sample** means are random variables, $\widehat{ACE}$ in a sample may differ from the true $ACE$ (**estimand**).
+5. Across **all possible assignments**: $E[ACE] = E[\widehat{ACE}]$, thus $\widehat{ACE}$ is unbiased.
+ 
+
+## Algebraically:
+
+$$ACE =\frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
+
+$$ACE =E[Y_i(1) - Y_i(0)]$$
+
+$$ACE = E[Y_i(1)] - E[Y_i(0)]$$
+
+And if $Z_i$ is randomly assigned:
+
+$$ACE = E[Y_i(1)|Z_i = 1] - E[Y_i(0)|Z_i = 0]$$
+$$ACE = E(\widehat{ACE})$$
+
+## Key Assumptions
+
+For us to get an **unbiased** estimator of the average causal effect, we use a statistical model that **assumes**:
+
+1. **Random assignment**: units are sample at random (or as if at random) from the study group and assigned to treatment or control ($Z$ is independent of $Y_i(1)$ and $Y_i(0)$)
+2. **Non-interference/SUTVA**: each unit's outcome depends only on its treatment assignment (not on assignment of others)
+3. **Exclusion restriction**: treatment assignment only affects outcomes through receipt of treatment
+
+## Key Assumptions
+
+Limitations:
+
+- Only reveals **average** effect
+- Trade-offs in terms of relevance:
+     - does experimental sample reflect population of interest?
+     - might there be "general equilibrium effects"?
+
+## Design vs Model
+
+A randomized experiment as a comparison could be used to make estimators of *different* **estimands**
+
+- quantile treatment effects, e.g.
+
+These would require a different set of assumptions, different estimator.
+
+More complex experiments (e.g. testing "spillover effects" from contact) imply different estimands, different estimators.
+
+We focus on **canonical estimators** for each design.
+
+     
+# Random Variables Review
+
+[return](#point-identification)
 
 ## Random Variables and Expectations
 
@@ -404,7 +674,8 @@ $X$ and $Y$ are random variables.
     - (often greek letters)
     
 - **statistics** (e.g., sample mean) are data we observe; if model assumptions hold, let us draw inferences about **parameters**.
-    - (often latin letters or $\widehat{greek}$)
+    - (sometimes regular letters, or as **estimators** $\widehat{wearing \ hats}$)
+
 
 ## Statistics and Parameters
 
@@ -433,101 +704,3 @@ We did this assuming independent and identically distributed random draws.
 Good for rolling dice...
 
 ### but reality is complicated. 
-
-
-# Return to Causal Effects
-
-## Average Causal Effects
-
-**unit causal effects** are fundamentally un-observable, so focus has been on **average causal effects** (or *average treatment effects*)
-
-- For units in $i = 1 \ldots N$
-
-$$ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
-
-- This parameter takes the difference between two counterfactuals:
-    - average outcome of all units if assigned to treatment
-    - average outcome of all units if assigned to control
-    
-## Solving the problem
-
-We have a **parameter**/**estimand** (average causal effect) that we would like to know. But data we need is always missing. 
-
-Analogical problem to estimating, e.g., population mean (a parameter) without observing the entire population.
-
->- We want an **estimator**: mathematical model applied to data we **can** observe that, with assumptions, estimates our **parameter** *without bias*. 
->- Use **random assignment** to solve our problem
-
-## Solving the problem
-
-Assuming **Random Assignment** does two things:
-
-1. $Z_i$ is independent of $Y_i(1)$ and $Y_i(0)$;
-  - treated $Y(1)$s comes from same "box" as control $Y(1)$s and vice versa.
-2. $E(Y_i(1))$ and $E(Y_i(0))$ are random variables
-  - we know that expected value of sample is equal to expected value of "box" .
-  
-
-## 
-
-<img src="./box_model.png" width = 100%>
-
-## If we randomly sample
-
-**parameter**: $ACE = \bar{\tau} = \frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$
-
-We use the **estimator** ($\widehat{ACE}$ or $\widehat{\bar{\tau}}$):
-
-$$\normalsize\underbrace{\frac{1}{m}\sum\limits_{i=1}^m}_{\text{Avg. over T}} \overbrace{[Y_i(1) | Z_i = 1]}^{\text{Y(treated) for T}} - \underbrace{\frac{1}{N-m}\sum\limits_{i=m + 1}^N}_{\text{Avg. over C}} \overbrace{[Y_i(0) | Z_i = 0]}^{\text{Y(control) for C}}$$
-
-<small>
-Where units $1 \to m$ (group $T$) are assigned to treatment $Z = 1$ and units $(N - m) \to N$ (group $C$) assigned to control $Z = 0$.
-</small>
-
-
-## Causal Inference Using Statistics
-
-This **estimator** ($\widehat{ACE}$) uses the
-
-- mean value of $Y(1)$ for the **treatment** group (observable) to stand in for mean $Y(1)$ for **all** units (unobservable)
-- mean value of $Y(0)$ for the **control** group (observable) to stand in for mean $Y(0)$ for **all** units (unobservable)
-
-## Causal Inference Using Statistics
-
-#### **Because we randomly assign**
-
-1. Expected value of mean for **sample** in treatment $E(Y_i(1) | Z = 1)$ equals population mean $E(Y_i(1))$
-2. Expected value of mean for **sample** in control $E(Y_i(0) | Z = 0)$ equals population mean $E(Y_i(0))$
-3. Because **sample** means are random variables, $\widehat{ACE}$ in a sample may differ from the parameter $ACE$.
-5. Across **all possible assignments**: $E(ACE) = E(\widehat{ACE})$, thus $\widehat{ACE}$ is unbiased.
- 
-
-## Algebraically:
-
-$$ACE =\frac{1}{N}\sum\limits_{i=1}^N [Y_i(1) - Y_i(0)]$$
-
-$$ACE =E[Y_i(1) - Y_i(0)]$$
-
-$$ACE =E[Y_i(1)] - E[Y_i(0)]$$
-
-And if $Z_i$ is randomly assigned:
-
-$$ACE = E[Y_i(1)|Z_i = 1] - E[Y_i(0)|Z_i = 0]$$
-$$ACE = E(\widehat{ACE})$$
-
-## Key Assumptions
-
-For us to get an **unbiased** estimator of the average causal effect, we use a statistical model that **assumes**:
-
-1. **Random assignment**: units are sample at random (or as if at random) from the study group and assigned to treatment or control ($Z$ is independent of $Y(1)$ and $Y(0)$)
-2. **Non-interference/SUTVA**: each unit's outcome depends only on its treatment assignment (not on assignment of others)
-3. **Exclusion restriction**: treatment assignment only affects outcomes through receipt of treatment
-
-## Key Assumptions
-
-Limitations:
-
-- Only reveals **average** effect
-- Trade-offs in terms of relevance:
-     - does experimental sample reflect population of interest?
-     - might there be "general equilibrium effects"?
