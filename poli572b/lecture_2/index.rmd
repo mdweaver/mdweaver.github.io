@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 19, 2024"
+date: "January 17, 2025"
 output: 
   revealjs::revealjs_presentation:
     theme: white
@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 require(knitr)
 require(magrittr)
-require(ri)
+require(ri2)
 require(kableExtra)
 require(data.table)
 ```
@@ -32,7 +32,7 @@ require(data.table)
 </style>
 
 
-# Potential Outcomes Model and Sampling Variability
+# Potential Outcomes Model and Hypothesis Testing
 
 
 ## Plan for Today
@@ -46,13 +46,10 @@ require(data.table)
 
 # Review
 
-
-
 ## Key ideas from last week
 
 * Potential Outcomes Model (and Neyman Causal Model)
 * Partial and Point Identification
-* Reviewed **random variables** and their expectations
 
 ## Potential Outcomes and Causal effects
 
@@ -64,22 +61,6 @@ $$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\col
 
 Given assumptions, we fill in the maximum/minimum logically possible values for missing potential outcomes to get **bounds**. Bounds must contain the true causal effect if the assumptions are true.
 
-
-## Random Variables
-
-**random variable**: a *chance* procedure for generating a number
-
-**observed value** (**realization**): value of a particular draw of a random variable.
-
-## Random Variables
-
-(1) Arithmetic operations on random variables are new random variables (e.g., sum and mean)
-
-(2) **Expected value** of a random variable $X$ is the mean of all possible realizations of $X$
-  
-(3) Independence and Dependence: random variables $X,Y$ are independent if knowing value of $X$ does not yield information about value of $Y$.
-
-(4) Mean of $n$ realizations (sample) from random variable $X$ is also a random variable, with mean same as $E[X]$. (*intuition for proof*?)
 
 ## Point Identification
 
@@ -95,28 +76,167 @@ $$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\col
 
 The extent of sampling variability depends on the nature of the **random process** that generates observations.
 
+---
+
 ## Sampling variability
 
 In any given randomization, **treatment mean** and **control mean** are likely $\neq$ the true means of $Y(1)$ and $Y(0)$...
 
-We want to know:
+Given this, we want to know...
 
-1. By how much are the sample means likely to deviate from true average causal effect?
-2. Given $\widehat{ACE}$, how confident can we be that $ACE \neq 0$
+**Error probabilities**: if we use this **estimator** to estimate the ACE, how likely are we to conclude there is a causal effect when in fact there is not? 
 
-## Key idea
+What are the range of causal effect sizes we can rule out, with known error probabilities? (if these were the true effects, we are highly unlikely to observe our estimated effect)
 
-### Sampling Distribution of the Mean
 
->- What is it?
+--- 
 
->- We'll do an example
+### Sampling Distributions
 
-## Bonus idea
+If we run an experiment (implement a set of randomization procedures that dictate treatment assignment)...
 
-### Unbiasedness of $\widehat{ACE}$
+> "You give me the rule, and I consider its latitude for erroneous outputs. We're actually looking at the probability distribution of the rule, over outcomes in the sample space. This distribution is called a sampling distribution." (Mayo 2018)
 
-**parameter**/**estimand**: unknown attribute of random variable (e.g., the mean) that we want to know
+What are the other (*counterfactual*) outcomes that we could have observed through implementing this procedure/test?
+
+
+Sampling distributions can $\to$ severe tests of claims
+
+---
+
+### Hypothesis tests: Hypotheses
+
+We evaluate hypotheses (claims) about some **estimand** of interest (e.g. $ACE$).
+
+- in pairs with a null hypothesis and some alternative hypothesis about the estimand (complements: if one is true the other must be false, so cover the entire set of possible values of the **estimand**)
+- It is common (but not required) for the null hypothesis to be stated in terms of $0$:
+
+$H_0: ACE <= 0; H_a: ACE > 0$ one-sided
+
+$H_0: ACE >= 0; H_a: ACE < 0$ one-sided
+
+$H_0: ACE = 0; H_a: ACE \neq 0$ two-sided
+
+---
+
+### Hypothesis tests: test statistic
+
+We then use the sampling distribution of the estimate (usually a test statistic), **assuming the null hypothesis is true**
+
+- Often, we use a $t$ statistic when working with means. Other comparisons may require different test statistics.
+- we assume that the true $ACE = 0$ (or whatever is implied by the null) and then construct the sampling distribution of $\widehat{ACE}$
+
+---
+
+### Hypothesis tests: $p$ value
+
+$p$ value tells us how likely we are to observe the data, **assuming the null hypothesis is correct**.
+
+- it is the probability of observing something as extreme as the data or more, assuming the null is true.
+- The calculation of probability depends on **knowing the shape of the sampling distribution** (how frequently would different outcomes occur?)
+
+---
+
+### Hypothesis tests: $p$ value
+
+```{r , echo=FALSE, message=F, warning=F}
+library(tidyverse)
+ggplot(NULL, aes(c(-3, 3))) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(2, 3)) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(-3, -2)) +
+  geom_area(stat = "function", fun = dnorm, fill = "grey80", xlim = c(-2, 2)) +
+  labs(x = "t Statistic", y = "probability") +
+  geom_vline(xintercept = c(2)) +
+  geom_vline(xintercept = 0, colour = 'red') +
+  scale_y_continuous(breaks = NULL) +
+  geom_segment(aes(x = 0, y = 0.1, xend = 1, yend = 0.1), 
+               arrow = arrow(length = unit(0.03, "npc"), ends = "both")) + 
+  # scale_x_continuous(breaks = 4) +
+  theme_classic()
+
+```
+
+
+---
+
+### Hypothesis tests: significance level
+
+We want to either reject the null hypothesis as False or not reject the null hypothesis.
+
+- since we can not know for sure whether it is true or false, we choose some probability ($p$ value), below which, we arbitrarily decide that the null hypothesis can be rejected.
+
+- $\alpha$ is the threshold which gives us the significance level, and decision rule for rejecting the null. 
+
+---
+
+### Hypothesis tests: rejecting the null
+
+Because the null hypothesis is always either True or False, our decision to reject the null based on some **probability** threshold ($\alpha$) may be correct or an error.
+
+- Type I error: false positive. We incorrectly **reject the null**
+- Type II error: false negative. We incorrectly **fail to reject the null**
+
+With a single test, the $p$ value can be interpreted as the false positive rate of **this test procedure** using that value as $\alpha$. If we use $\alpha=.05$, we  are saying that we are comfortable with our testing procedure making false positive errors in **no more than 5% of tests**. 
+
+
+---
+
+### Hypothesis tests: rejecting the null
+
+From the severe testing perspective, we judge the alternative hypothesis to be "severely tested" when we observe evidence that would only occur 5% of the time if the null hypothesis were true.
+
+---
+
+### Hypothesis tests: rejecting the null
+
+- If we say, "The result is significantly different from the
+hypothesized value of zero ($p=.001$)! We reject that hypothesis!" **when the truth is zero** we are making a **false positive error** (claiming to detect something positively when there is no signal, only noise).
+
+- If we say, "We cannot distinguish this result from zero ($p=.3$). We cannot reject the hypothesis of zero." **when the truth is not zero** we are making a **false negative error**.
+
+---
+
+### Hypothesis tests: Warnings
+
+Hypothesis tests can be useful for learning, if used appropriately.
+
+- $p$-values indicate probability of false positive in **a single test**. If you conduct many tests they no longer have the same interpretation. (Multiple hypotheses require adjustments)
+- $p$-values will get smaller, when $n$ gets large. They do not indicate the **magnitude** of the effect.
+- absence of evidence $\neq$ evidence of absence: failing to reject the null does not mean the null is true. Your test may be under-powered.
+- null hypotheses should be meaningful with respect to theory.
+
+---
+
+### Confidence Intervals
+
+Confidence intervals summarize a **group** of hypothesis tests.
+
+- Imagine an infinite number of hypothesis tests, where the $H_0: ACE = b$ and $b \in (-\infty,\infty)$. 
+- For each null hypothesis, we conduct a hypothesis test using the cutoff $\alpha$ to decide on rejecting the null.
+- Then a $100(1-\alpha)$% confidence interval is the set of values in $b$ where we **fail to reject the null**.
+
+So a 95% confidence interval contains all values $b$ where we fail to reject the null with $\alpha = 0.05$.
+
+
+---
+
+### Confidence Intervals
+
+Because confidence intervals **invert hypothesis tests**, they are the product of the random process. They either do or do not include the true parameter value.
+
+The correct way to interpret them is:
+
+Our procedure severely tests the observed $\widehat{ACE}$ against the true $ACE$ being outside of confidence interval. If true $ACE$ is outside of the confidence interval, we would have observed $\widehat{ACE}$ smaller(larger) than we saw, with probability $1-\alpha$.
+
+---
+
+But **hypothesis tests** and **confidence intervals** require that we have access to the **sampling distribution** of $\widehat{ACE}$... how do we do that?
+
+---
+
+### Bonus: Unbiasedness of $\widehat{ACE}$
+
+**parameter**/**estimand**: unknown attribute of random variable (e.g., the difference in treatment/control group means) that we want to know
 
 **estimator**: rule/procedure for **estimating** the parameter/estimand given observed data
 
@@ -126,7 +246,18 @@ So $\widehat{ACE}$ is unbiased if:
 
 $$E(\widehat{ACE}) - ACE = 0$$
 
+
 # Example
+
+## Key ideas
+
+- To understand sampling distribution
+- To understand unbiasedness of the **estimator** $\widehat{ACE}$
+
+We can work through an actual experiment.
+
+
+
 
 ## Paluck (2010)
 
@@ -192,7 +323,7 @@ Variation on Rwandan study, in Eastern DRC.
 - How many possible random assignments are there?
 
 - What are all possible random assignments (to treatment and control)?
-    - on paper/in `R`
+    - on paper/in `R` (hint, use the `combn` function)
 
 ## All possible treatment groups
 
@@ -201,10 +332,9 @@ Variation on Rwandan study, in Eastern DRC.
 ### All possible treatment groups
 
 ```{r, echo=F}
-require(ri) #combn is a function in this package
 require(magrittr) # %>% is from this package
 require(kableExtra) #scroll_box is from this package
-  
+
 randomizations = combn(6,3,simplify = T) %>% t
 randomizations %>% kable %>% scroll_box(height = "500px" )
 
@@ -212,7 +342,7 @@ randomizations %>% kable %>% scroll_box(height = "500px" )
 
 ---
 
-For each randomization, calculate the $\widehat{ACE}$ (hint, express this in fractions $\frac{x}{3}$)
+For each randomization, calculate the estimated $\widehat{ACE}$ (hint, calculate in R, or express this in fractions $\frac{x}{3}$)
 
 
 | $Region_i$ | $Y_i(1)$ | $Y_i(0)$ |
@@ -234,7 +364,7 @@ For each randomization, calculate the $\widehat{ACE}$ (hint, express this in fra
 
 - Are there any $\widehat{ACE} = ACE$
 
-##
+
 
 ---
 
@@ -260,7 +390,6 @@ ace
 Let's check our work:
 
 ```{r}
-require(ri) #combn is a function in this package
 require(magrittr) # %>% is from this package
 
 randomizations = combn(6,3,simplify = T) %>% t
@@ -368,8 +497,7 @@ abline(v = ace, col = 'red')
 This sampling distribution could tell us 
 
 - how likely we are to observe $\widehat{ACE}$ by chance
-- variability in estimate $\widehat{ACE}$ 
-- also the true $ACE$
+- ... but also the true $ACE$
 
 But we never observe this histogram
 
@@ -384,13 +512,13 @@ But we never observe this histogram
 
 2) Randomization inference
 
-3) <strike>Bootstrap</strike>
+3) <strike>Bootstrap: later in the course</strike>
 
 ## Three approaches
 
 All approaches involve:
 
-- assuming a particular process of randomization by which realizations from random variable are created
+- assuming a particular process of randomization by which $\widehat{ACE}$ is drawn from a random variable
 - need to answer: 
 
 >- what do we want to make inferences about? the study cases or a broader population (randomness in which cases we see)?  counterfactuals (randomness in which potential outcomes we see)?
@@ -399,7 +527,173 @@ All approaches involve:
 
 ## Analytic Approach
 
-**First**: we want to get variance of $\widehat{ACE}$
+This takes three steps:
+
+1) We assume a **known shape** for the sample distribution of the $\widehat{ACE}$: approximately Normal (or $t$)
+
+2) We estimate the variance (or standard deviation) of this sampling distribution
+
+3) We estimate probability of observing $\widehat{ACE}$ if $ACE = 0$ using this distribution
+
+--- 
+
+### Normal approximation:
+
+Per the **Central Limit Theorem**: the **sampling distributions** of **sums of random variables** (and by extension, their means) **approach** the normal distribution as the $N \rightarrow\infty$.
+
+Using this fact; estimated sample mean and variance of the sample mean:
+
+This approximation performs well, but depends on **sample size** and **population distribution**. 
+
+--- 
+
+
+If the **population** looks like this:
+
+```{r, echo = F}
+x = rnorm(30)
+
+hist(x)
+```
+
+--- 
+
+...Predict the shape of sampling distribution of sample mean for $(n= 5$)
+
+
+```{r, echo = F}
+hist(x)
+```
+
+--- 
+
+The shape of sampling distribution of sample mean for $(n= 5$)
+
+```{r, echo = F}
+k = 10000
+s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 5)
+m = rowMeans(s_x)
+
+x_m = mean(x)
+sd_m = (x - mean(x))^2 %>% mean %>% sqrt
+hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
+lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
+```
+
+
+--- 
+
+If the **population** looks like this:
+
+```{r, echo = F}
+x = rbinom(1000, size = 2, prob = 0.05)
+
+hist(x)
+```
+
+
+--- 
+
+Predict the shape of sampling distribution of sample mean for $(n= 5$)
+
+
+```{r, echo = F}
+hist(x)
+```
+
+
+--- 
+
+The shape of sampling distribution of sample mean for $(n= 5$)
+
+```{r, echo = F}
+k = 10000
+s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 5)
+m = rowMeans(s_x)
+
+x_m = mean(x)
+sd_m = (x - mean(x))^2 %>% mean %>% sqrt
+hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
+lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
+```
+
+--- 
+
+The sampling distibution of sample mean for $n = 25$ is:
+
+```{r, echo = F}
+k = 10000
+s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 25)
+m = rowMeans(s_x)
+n = 25
+
+x_m = mean(x)
+sd_m = (x - mean(x))^2 %>% mean %>% sqrt
+hist(m, xlab = "Sample Mean(x) (n = 30)", main= "Sampling Distribution of Mean(x)", freq = F)
+lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(25)))
+```
+
+---
+
+The sampling distribution of sample mean for $(n= 100$) is
+
+```{r, echo = F}
+k = 10000
+s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 100)
+m = rowMeans(s_x)
+n = 100
+
+x_m = mean(x)
+sd_m = (x - mean(x))^2 %>% mean %>% sqrt
+hist(m, xlab = "Sample Mean(x) (n = 100)", main= "Sampling Distribution of Mean(x)", freq = F)
+lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(100)))
+```
+
+---
+
+### Normal approximation:
+
+Does normality hold in our experiment?
+
+```{r, echo = F}
+hist(ace_hats,
+     xlab = "ACE",
+     main = "Sampling Distribution of ACE hat",
+     breaks = 20)
+
+```
+
+---
+
+### Normal approximation:
+
+Does normality hold in our experiment?
+
+```{r, echo = F}
+hist(t_means,
+     xlab = "Y^T",
+     main = "Sampling Distribution of Y^T",
+     breaks = 20)
+
+```
+
+
+---
+
+### Normal approximation:
+
+Does normality hold in our experiment?
+
+```{r, echo = F}
+hist(t_means,
+     xlab = "Y^C",
+     main = "Sampling Distribution of Y^C",
+     breaks = 20)
+```
+
+---
+
+**Then**: we want to get variance of $\widehat{ACE}$
 
 - $\widehat{ACE}$ is a **difference** of random variables. **Why?**
 - Need rules for calculating variance of **difference** between random variables
@@ -432,7 +726,7 @@ if we assume **independent and identically distributed** draws from the **study 
 
 $$Var[Y^T] = \frac{Var[Y_i(1)]}{m}$$
 
-Variance of **sampling distribution** of the **treatment-group mean** is variance of  potential outcomes under treatment for **all cases** divided by the treatment group size
+Variance of **sampling distribution** of the **treatment-group mean** is variance ofpotential outcomes under treatment for **all cases** divided by the treatment group size
 
 --- 
 
@@ -460,7 +754,7 @@ Like sample mean, sample variance is an unbiased estimator of population varianc
 
 - **if we divide by $m - 1$ not $m$**
 
-$$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{\color{red}{m-1}}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
+$$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{\color{green}{m-1}}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$$
 
 ---
 
@@ -538,7 +832,7 @@ Can't estimate the covariance because we don't see both potential outcomes for e
 
 ### Analytic Approach
 
-We can **ignore** the covariance safely, because doing so **deflates the variance**.
+We can **ignore** the covariance safely, even though it **deflates the variance** (how does this relate to severity?).
 
 1. Estimator $\widehat{Var[Y^T]}$ ignores that we sample **without replacement** from **finite** population ($\to$ **estimated variance too large**)
 2. This either **exactly** or **more than** offsets the amount by which ignoring $Cov(Y^T,Y^C)$ makes  our estimate $\widehat{Var}(\widehat{ACE})$ **too small** 
@@ -551,217 +845,179 @@ We can **ignore** the covariance safely, because doing so **deflates the varianc
 Variances we obtain with $\widehat{Var}[\widehat{ACE}]$ are going to be:
 
 - **exactly correct** (if $\tau_i$ is the same for all $i$; effect is same for all cases)
-- **TOO LARGE**, conservative in all other cases.
+- **TOO LARGE**, conservative in all other cases. (What are implications for severity)
+
+So...
+
+$$\widehat{Var}[\widehat{ACE}] = \widehat{Var}[Y^T] + \widehat{Var}[Y^C]$$
+
 
 --- 
 
 ### Analytic Approach
 
-We've been trying to estimate the **variance** of the $\widehat{ACE}$.
 
-Variance is not usually what we want
+Variance is not what we want...
 
 - units are squared. 
 - The **standard error** (**standard deviation of the sampling distribution**) of  $\widehat{ACE}$ is more helpful. It is the square-root of the **variance**.
-- Usually, though, we want to do a **hypothesis test** or create confidence intervals
-
-# Hypothesis Testing
-
---- 
-
-### Normal approximation:
-
-Per the **Central Limit Theorem**: the **sampling distributions** of **sums of random variables** (and by extension, their means) **approach** the normal distribution as the $N \rightarrow\infty$.
-
-Using this fact; estimated sample mean and variance of the sample mean:
-
-- Use the area under the normal (usually $t$: why?) curve to get compute chance of observing sample mean by chance, given a **null hypothesis**.
-
-This approximation performs well, but depends on **sample size** and **population distribution**. 
-
---- 
-
-### Normal approximation:
-
-If the **population** looks like this:
-
-```{r, echo = F}
-x = rnorm(30)
-
-hist(x)
-```
-
---- 
-
-### Normal approximation:
-
-Predict the shape of sampling distribution of sample mean for $(n= 5$)
-
-
-```{r, echo = F}
-hist(x)
-```
-
---- 
-
-### Normal approximation:
-
-The shape of sampling distribution of sample mean for $(n= 5$)
-
-```{r, echo = F}
-k = 10000
-s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 5)
-m = rowMeans(s_x)
-
-x_m = mean(x)
-sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
-lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
-```
-
-
---- 
-
-### Normal approximation:
-
-If the **population** looks like this:
-
-```{r, echo = F}
-x = rbinom(1000, size = 2, prob = 0.05)
-
-hist(x)
-```
-
-
---- 
-
-### Normal approximation:
-
-Predict the shape of sampling distribution of sample mean for $(n= 5$)
-
-
-```{r, echo = F}
-hist(x)
-```
-
-
---- 
-
-### Normal approximation:
-
-The shape of sampling distribution of sample mean for $(n= 5$)
-
-```{r, echo = F}
-k = 10000
-s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 5)
-m = rowMeans(s_x)
-
-x_m = mean(x)
-sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean(x) (n = 5)", main= "Sampling Distribution of Mean(x)", freq = F)
-lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(5)))
-```
-
---- 
-
-### Normal approximation:
-
-The sampling distibution of sample mean for $n = 25$ is:
-
-```{r, echo = F}
-k = 10000
-s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 25)
-m = rowMeans(s_x)
-n = 25
-
-x_m = mean(x)
-sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean(x) (n = 30)", main= "Sampling Distribution of Mean(x)", freq = F)
-lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(25)))
-```
-
----
-
-### Normal approximation:
-
-The sampling distribution of sample mean for $(n= 100$) is
-
-```{r, echo = F}
-k = 10000
-s_x = sample(x, k * 5, replace = T) %>% matrix(ncol = 100)
-m = rowMeans(s_x)
-n = 100
-
-x_m = mean(x)
-sd_m = (x - mean(x))^2 %>% mean %>% sqrt
-hist(m, xlab = "Sample Mean(x) (n = 100)", main= "Sampling Distribution of Mean(x)", freq = F)
-lines(seq(min(m), max(m), 0.01), dnorm(seq(min(m), max(m),0.01), mean = x_m, sd = sd_m/sqrt(100)))
-```
-
----
-
-### Normal approximation:
-
-Does normality hold in our experiment?
-
-```{r, echo = F}
-hist(ace_hats,
-     xlab = "ACE",
-     main = "Sampling Distribution of ACE hat",
-     breaks = 20)
-
-```
-
----
-
-### Normal approximation:
-
-Does normality hold in our experiment?
-
-```{r, echo = F}
-hist(t_means,
-     xlab = "Y^T",
-     main = "Sampling Distribution of Y^T",
-     breaks = 20)
-
-```
-
-
----
-
-### Normal approximation:
-
-Does normality hold in our experiment?
-
-```{r, echo = F}
-hist(t_means,
-     xlab = "Y^C",
-     main = "Sampling Distribution of Y^C",
-     breaks = 20)
-```
+- Standard errors $\to$  **hypothesis test** or confidence intervals
 
 ---
 
 ### Hypothesis Tests
 
-We run an experiment on our 6 regions, and observe $\widehat{ACE} = 0.667$
-
-The hypothesis test investigates: what is probability of observing a value this large or larger if the true $ACE = 0$ 
-
-- **Null hypothesis** $H_0$ is $ACE = 0$ 
-- **alternative hypotheses** are $ACE > 0$ or $ACE < 0$ or $ACE \neq 0$.
-
----
-
-### Hypothesis Tests
-
-- choose an $\alpha$: arbitrary cutoff for rejecting null hypothesis
+- choose an $\alpha$: cutoff for rejecting null hypothesis (what counts as "severely testing $H_a$")
+- assume sampling distribution is $t$-distribution
 - We need to estimate the standard error of ACE: $\widehat{SE}(\widehat{ACE})$
 - Divide $\widehat{ACE}$ by $\widehat{SE}$ (get $t$ statistic).
 - Compare test-statistic against $t$ distribution with appropriate degrees of freedom, calculate $p$ value (interpretation depends on the alternative hypothesis)
 - and reject/fail to reject null (given choice of $\alpha$: the significance level)
 
 --- 
+
+
+```{r, echo = F}
+
+ts = randomizations[2,]
+y = p_o_table[, ifelse(region_i %in% ts, y_i_1, y_i_0)]
+Z = p_o_table[, 1*(region_i %in% ts)]
+exp_data = data.frame(Y = y, Z = Z)
+
+```
+
+Let's assume that villages `r ts` are treated, and the others are untreated
+
+Let's calculate $\widehat{ACE}$...
+
+```{r, echo = F}
+
+kable(p_o_table)
+
+```
+
+
+--- 
+
+
+```{r}
+
+y1s = p_o_table[region_i %in% c(1,2,4), y_i_1]
+
+y0s = p_o_table[!(region_i %in% c(1,2,4)), y_i_0]
+
+ace_hat = mean(y1s) - mean(y0s)
+
+ace_hat
+```
+
+--- 
+
+Now, let's calculate the estimated **variance** of the $\widehat{ACE}$
+
+$\widehat{Var[Y_i(1)]} = \widehat{\sigma^2} = \frac{1}{m-1}\sum\limits_{i=1}^{m}[Y_i(1) | Z_i = 1] - Y^T)^2$
+
+```{r}
+
+var_y_10 = function(y) {
+  m = length(y)
+  mean_y = mean(y)
+  1/(m-1)*sum((y-mean_y)^2)
+}
+#Variance Y(1)
+var_y_10(y1s)
+#Variance Y(0)
+var_y_10(y0s)
+```
+
+
+--- 
+
+Now, let's calculate the estimated **variance** of the $\widehat{ACE}$ 
+
+$\widehat{Var[Y^T]} = \frac{\widehat{\sigma^2}}{m}$
+
+```{r}
+var_y_tc = function(y) {
+  var_y_hat = var_y_10(y)
+  var_y_hat/length(y)
+}
+
+#Var Y_T (treatment group sample mean)
+var_y_tc(y1s)
+#Var Y_C (control group sample mean)
+var_y_tc(y0s)
+
+```
+
+
+--- 
+
+Now, let's calculate the estimated **variance** of the $\widehat{ACE}$ 
+
+$\widehat{Var}[\widehat{ACE}] = \widehat{Var}[Y^T] + \widehat{Var}[Y^C]$
+
+```{r}
+var_ace_hat = function(y1, y0) {
+  var_y_tc(y1) + var_y_tc(y0)
+}
+
+#Variance ACE hat (our estimate)
+var_ace_hat(y1s, y0s)
+```
+
+---
+
+Now, let's use this to do a one-sided hypothesis test: $H_a: ACE > 0$; $H_0: ACE <= 0$
+
+First, we need get the $t$ statistic (relative to the null):
+
+$$t = \frac{\widehat{ACE} - H_0}{\widehat{SE}(\widehat{ACE})}$$
+
+$SE$ is just the square root of the variance:
+
+```{r}
+se_ace = var_ace_hat(y1s, y0s) %>% sqrt
+
+t = (ace_hat - 0)/se_ace
+
+t
+```
+
+---
+
+```{r, echo = F}
+df = t.test(y1s, y0s)$parameter
+```
+
+Next we need to calculate $p$ values: need to know the distribution. $t$ distribution depends on degrees of freedom, here we can assume it is `r df`.
+
+We want to know probability of observing $t =$ `r t` or larger:
+
+```{r}
+#we want to look at UPPER TAIL because we want to know probability of observing t or larger.
+pt(t, df = df, lower.tail = F)
+
+```
+
+---
+
+Compare assumed $t$ distribution against actual sampling distribution (shifted to be centered at 0)
+
+```{r, echo = F}
+
+hist(ace_hats - mean(ace_hats),
+     xlab = "ACE-hat",
+     freq = F,
+     main = "Sampling Distribution of ACE-hat\nassuming the null",
+     breaks = 20, xlim = c(-2.5*se_ace, 2.5*se_ace))
+lines(seq(-2.5*se_ace, 2.5*se_ace, length.out = 100), dt(seq(-2.5,2.5,length.out= 100), df = df))
+abline(v = ace_hat, col = 'red')
+
+```
+
+
+---
 
 ### Limitations of Analytical Hypothesis Tests
 
@@ -774,15 +1030,7 @@ If distributional assumptions are wrong, hypothesis test will not be correct
     - is $N$ large? 
     - Are values of $Y(1) | Z=1$ and $Y(0) | Z =0$ approximately normal?
 
---- 
 
-### Limitations of Analytical Hypothesis Tests
-
-Alternatives:
-
-<strike>**bootstrap**</strike>
-
-**randomization inference**
 
 # Randomization Inference
 
@@ -823,7 +1071,7 @@ Disadvantages
 
 - only tests **sharp null** which may be less interesting$^*$
 - Confidence intervals only for **constant effects**
-- $p$ values limited by possible combinations (too few, and they are coarse, too many, they are approximate)
+- $p$ values limited by possible randomizations (too few, and they are coarse, too many, they are approximate)
 
 --- 
 
@@ -885,22 +1133,40 @@ Once we have this response schedule **under the sharp null**, we:
 ``` {r, echo = F, warning=F,message =F}
 ts = randomizations[2,]
 y = p_o_table[, ifelse(region_i %in% ts, y_i_1, y_i_0)]
-Z = p_o_table[, region_i %in% ts]
-ate = estate(y, Z)
-perms = genperms(Z)
-Ys = genouts(y, Z, ate = 0)
-distout = gendist(Ys, perms)
-out = dispdist(distout, ate)
+Z = p_o_table[, 1*(region_i %in% ts)]
+exp_data = data.frame(Y = y, Z = Z)
+
+declaration <- declare_ra(N = nrow(p_o_table), m = 3)
+# Conduct Randomization Inference
+ri2_out <- conduct_ri(
+  formula = Y ~ Z,
+  declaration = declaration,
+  sharp_hypothesis = 0,
+  data = exp_data,
+  p = 'upper'
+)
+
+plot(ri2_out)
 ```
 
 ## Randomization Inference
 
-If $\widehat{ACE}=$ `r ate`, then $p(ACE != 0)$ is `r out$two.tailed.p.value`.
+If $\widehat{ACE}=$ `r ri2_out %>% summary %>% .[2]`, then $p(ACE != 0)$ is `r ri2_out %>% summary %>% .[3]`.
 
 In `R`:
 
 ```{r}
-#install.packages('ri')
-require(ri)
+#install.packages('ri2')
+require(ri2)
+
+declaration <- declare_ra(N = nrow(p_o_table), m = 3)
+# Conduct Randomization Inference
+ri2_out <- conduct_ri(
+  formula = Y ~ Z,
+  declaration = declaration,
+  sharp_hypothesis = 0,
+  data = exp_data,
+  p = 'upper'
+)
 ```
 
