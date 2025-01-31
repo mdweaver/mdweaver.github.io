@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 2, 2024"
+date: "January 31, 2025"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -63,14 +63,15 @@ options("kableExtra.html.bsTable" = T)
 
 ---
 
-### An Example
+So far, we have looked at **experiments**...
 
-**What happens when we don't have randomization**?
+**What happens when we *don't* have randomization**?
 
-- experiments are expensive, hard to do
-- randomization often impossible on important questions (cost/ethically prohibitive)
+- some questions can't be answered with survey experiments
+- field experiments are expensive, hard to do
+- randomization often impossible on important questions (cost/ethics)
 
-How do we get unbiased estimates of $ACE$ or other causal parameters?
+In absence of randomization, how do we get unbiased estimates of $ACE$ or other causal estimands?
 
 ---
 
@@ -88,11 +89,25 @@ How do we get unbiased estimates of $ACE$ or other causal parameters?
 
 **Contact Hypothesis**:
 
-Imagine we survey and compare TFA participants and non-participants graduating from the same  universities.
+Imagine we **survey** and compare TFA **participants** and **non-participants** graduating from the same  universities.
 
-"Racial resentment" is a based on a battery of questions (e.g. : "Racial discrimination in the US today limits the chances of individuals from [particular racial group] to get ahead?").
+Measure "racial resentment" using a battery of questions (e.g. : "Racial discrimination in the US today limits the chances of individuals from [particular racial group] to get ahead?").
 
-Score $1$ to $5$, with $5$ being greatest resentment ("strongly disagree").
+Score $1$ to $5$, with $5$ being greatest resentment ("strongly disagree"), $1$ being least ("strongly agree").
+
+
+---
+
+### An Example
+
+Participating in Teach For America involves multiple stages of "selection"/"choice":
+
+- University graduates **choose** to apply.
+- Teach For America **selects** candidates based on applicants.
+- Selected candidates **choose** to accept or reject the offer.
+
+How does this relate to the assumptions we made when analyzing experiments?
+
 
 ---
 
@@ -102,7 +117,7 @@ We can imagine **potential outcomes**:
 
 $i$ indexes individuals
 
-$TFA_i$ indicates TFA participation ($1$) or not ($0$) of person $i$
+$TFA_i$ indicates TFA participation ($1$) or not ($0$) of person $i$ ($D_i$)
 
 $Y_i(0)$ is  "racial resentment" without TFA participation
 
@@ -144,7 +159,7 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ---
 
-What is the estimate, $\widehat{ACE}$?, comparing actually treated to actually untreated?
+What is the estimate, $\widehat{ACE}$?, if we just compare means of TFA participants to non-participants?
 
 ```{r, echo = F}
 po.table = data.table(i = 1:6, 
@@ -180,7 +195,7 @@ ace_hat
 
 ---
 
-Because we simply observe those treated and those untreated, with no randomization, there are no other alternate allocations of treatment.
+Because we simply observe those treated and those untreated, without randomization, there are no other alternate allocations of TFA enrollment possible.
 
 #### Why is the $\widehat{ACE} \ $  biased?
 
@@ -235,10 +250,13 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 **DAGs**:
 
-- **nodes**/**vertices** represent variables in **causal chain**
+Graphs of *hypothesized* causal relationships between variables
+
+- **nodes**/**vertices** represent variables in **causal chain** ($G$raph)
     - may be observed (filled) / unobserved (empty)
-- **directed arrows** represents flow of causality (not the magnitude/direction/functional form of effect)
-- **no cycles**: variables cannot cause themselves (even indirectly)
+- **$D$irected arrows** represents flow of causality (not the magnitude/direction/functional form of effect)
+- **no cycles**/$A$cyclic: variables  cannot cause themselves (even indirectly)
+
 
 ---
 
@@ -268,12 +286,12 @@ dagify(mammogram ~ invite,
 
 Using a **DAG**:
 
-**Confounding** exists when there is a **backdoor path** between **causal variable** $D$ and the outcome $Y$.
+**Confounding** exists when there is a **backdoor path** between variable of interest $D$ and the outcome $Y$.
 
 A **backdoor path** is a **non-causal** path from $D$ to $Y$: 
 
 - a path that remains after we remove arrows point outward from $D$
-- that only changes direction once (backwards from $D$, forwards to $Y$)
+- that only *changes direction once* (backwards from $D$, forwards to $Y$)
 - "backdoor" because it follows arrows backwards out of $D$
 
 ---
@@ -307,7 +325,7 @@ The "backdoor" criterion for confounding points to solutions:
 
 1. Find a causal variable that has no backdoor paths:
 
-    - randomization is only way to be sure: $Z$ as instrument
+    - randomization is only way to be sure: $Z$ as "instrument"
 
 ---
 
@@ -323,9 +341,9 @@ dagify(mammogram ~ invite,
        death ~ educ,
        exposure = "invite", 
        outcome = 'death',
-       labels = c('mammogram' = "Mammogram", 
+       labels = c('mammogram' = "Mammogram (D)", 
                   'death' = 'BC Death',
-                  'invite' = "HIP Invite",
+                  'invite' = "HIP Invite (Z)",
                   'class' = 'Class',
                   'educ' = 'Education')) %>%
   ggdag(use_labels = "label", text = F, layout = 'auto')
@@ -335,42 +353,43 @@ dagify(mammogram ~ invite,
 
 ---
 
-[Paluck 2010](https://doi.org/10.1177%2F0146167210379868)
+[Miguel et al 2004](https://www.journals.uchicago.edu/doi/10.1086/421174)
 
 ```{r, echo = F}
-dagify(discuss ~ talk_show,
-       anger ~ talk_show,
-       ethnic ~ discuss,
-       ethnic ~ anger,
-       ethnic ~ u,
-       exposure = "talk_show", 
-       outcome = 'ethnic',
-       labels = c('discuss' = "Discussion", 
-                  'ethnic' = 'Ethnic Trust',
-                  'talk_show' = "Talk Show",
+dagify(agr_out ~ rain,
+       roads ~ talk_show,
+       cw ~ agr_out,
+       cw ~ roads,
+       cw ~ u,
+       exposure = "agr_out", 
+       outcome = 'cw',
+       labels = c('rain' = "Rainfall\nShock", 
+                  'agr_out' = 'Agr. Output',
+                  'cw' = "Civil War",
                   'u' = 'Other',
-                  'anger' = 'Anger')) %>%
+                  'roads' = 'Roads\nClosed')) %>%
   ggdag(use_labels = "label", text = F, layout = 'auto')
 ```
 
 
 ---
 
-Exclusion Restriction Violation in $CACE$ [Paluck 2010](https://doi.org/10.1177%2F0146167210379868)
+Exclusion Restriction Violation in $CACE$ [Miguel et al 2004](https://www.journals.uchicago.edu/doi/10.1086/421174)
+
 
 ```{r, echo = F}
-dagify(discuss ~ talk_show,
-       anger ~ talk_show,
-       ethnic ~ discuss,
-       ethnic ~ anger,
-       ethnic ~ u,
-       exposure = "talk_show", 
-       outcome = 'ethnic',
-       labels = c('discuss' = "Discussion", 
-                  'ethnic' = 'Ethnic Trust',
-                  'talk_show' = "Talk Show",
+dagify(agr_out ~ rain,
+       roads ~ talk_show,
+       cw ~ agr_out,
+       cw ~ roads,
+       cw ~ u,
+       exposure = "agr_out", 
+       outcome = 'cw',
+       labels = c('rain' = "Rainfall\nShock", 
+                  'agr_out' = 'Agr. Output',
+                  'cw' = "Civil War",
                   'u' = 'Other',
-                  'anger' = 'Anger')) %>%
+                  'roads' = 'Roads\nClosed')) %>%
   ggdag_paths(layout = 'circle', text = F, use_labels = 'label') + 
         theme(legend.position = 'none')
 ```
@@ -381,13 +400,13 @@ dagify(discuss ~ talk_show,
 
 What if we don't have randomization?
 
-**As a class, on the board**:
+In groups: Create a DAG for the TFA.
 
-Create a DAG for the TFA example on the white board.
+- what are $3$ variables that might **affect joining TFA**?
+- For each of these, identify $1$ possible cause of that variable
+- For every variable (max 6) you came up with, could it directly/indirectly  **affect racial resentment**?
+- Draw a DAG corresponding to these connections on the white board.
 
-- what are variables that might **affect racial resentment**?
-- what are variables that might **affect joining TFA**?
-- what are causal links between them?
 
 ---
 
@@ -409,16 +428,22 @@ The "backdoor" criterion for confounding points to solutions:
 
 ### Conditioning:
 
-**conditioning** is when we examine the effect of $D_i$ on $Y_i$ using *subsets/strata* of the data defined by the values of $\mathbf{X_i}$, **blocking** backdoor (non-causal) paths from $D$ to $Y$.
+**conditioning** is when we compare values of $Y_i$ across values of $D_i$ (e.g. TFA) using information on the values of other variables $\mathbf{X_i}$, 
 
-- Where $\mathbf{X_i}$ is a set of variables on backdoor paths from $D$ to $Y$.
-- We can either: examine relationship between $D$ and $Y$, (a) within groups of cases where values of $\mathbf{X_i}$ are the same (hold value of backdoor paths constant), or (b) adjusting for probability of $D$ for given values of $\mathbf{X_i}$
+
+- Where $\mathbf{X_i}$ is a set of variables such that *at least one member* of the set appears on every backdoor path from $D$ to $Y$.
+- We use values of $\mathbf{X_i}$ to:
+    - **impute**: compare values of $Y_i$ across values of $D_i$ (within strata) where values of $\mathbf{X_i}$ are the same
+    - (and/or)  **reweight**: compare values of $Y_i$ across values of $D_i$, **weighting** $i$ by probability of "treatment" given $\mathbf{X_i}$ ($Pr(D_i  | X_i)$)
+
+Result is **blocking** backdoor (non-causal) paths from $D$ to $Y$.
+
 
 ---
 
 ### Directed Acyclic Graphs (DAGs)
 
-**Condition on** all variables that
+**Condition on** variables that
 
 - have causal paths toward $D$ and toward $Y$  **or**
 - have causal paths toward $Y$ and backdoor path to $D$ 
@@ -438,17 +463,21 @@ dagify(income ~ u,
        university ~ score,
        university ~ motivation,
        income ~ motivation,
-       exposure = "score", 
-       outcome = 'income',
-       labels = c('income' = "Earnings", 
-                  'score' = 'Exam Score',
-                  'ability' = "Ability",
+       latent = "ability",
+       labels = c('income' = "Earnings\n(Y)", 
+                  'score' = 'Exam\nScore',
+                  'ability' = "Ability (D)",
                   'u' = 'Other',
-                  'parent_income' = 'Parent Income',
+                  'parent_income' = 'Parent\nIncome',
                   'university' = 'University',
                   'motivation'= 'Motivation')) %>%
-  ggdag(layout = 'auto', text = F, use_labels = 'label') + 
-  theme(legend.position = 'none')
+  tidy_dagitty() %>%
+  node_status %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label, colour = status)) +
+theme_dag()
+  
 ```
 
 ---
@@ -464,17 +493,20 @@ dagify(income ~ u,
        university ~ score,
        university ~ motivation,
        income ~ motivation,
-       exposure = "score", 
-       outcome = 'income',
-       labels = c('income' = "Earnings", 
-                  'score' = 'Exam Score',
-                  'ability' = "Ability",
+       latent = "ability",
+       labels = c('income' = "Earnings\n(Y)", 
+                  'score' = 'Exam\nScore',
+                  'ability' = "Ability (D)",
                   'u' = 'Other',
-                  'parent_income' = 'Parent Income',
+                  'parent_income' = 'Parent\nIncome',
                   'university' = 'University',
                   'motivation'= 'Motivation')) %>%
-  ggdag(layout = 'auto', text = F, use_labels = 'label') + 
-  theme(legend.position = 'none')
+  tidy_dagitty() %>%
+  node_status %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label, colour = status)) +
+theme_dag()
 ```
 
 
@@ -550,17 +582,20 @@ dagify(income ~ u,
        university ~ score,
        university ~ motivation,
        income ~ motivation,
-       exposure = "score", 
-       outcome = 'income',
-       labels = c('income' = "Earnings", 
-                  'score' = 'Exam Score',
-                  'ability' = "Ability",
+       latent = "ability",
+       labels = c('income' = "Earnings\n(Y)", 
+                  'score' = 'Exam\nScore',
+                  'ability' = "Ability (D)",
                   'u' = 'Other',
-                  'parent_income' = 'Parent Income',
+                  'parent_income' = 'Parent\nIncome',
                   'university' = 'University',
                   'motivation'= 'Motivation')) %>%
-  ggdag(layout = 'auto', text = F, use_labels = 'label') + 
-  theme(legend.position = 'none')
+  tidy_dagitty() %>%
+  node_status %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label, colour = status)) +
+theme_dag()
 ```
 
 ---
@@ -595,13 +630,13 @@ When does this arise?
 
 2. **Do NOT condition on** variables that
 
-- **are on causal path** from $D$ to $Y$ (mediators)
+- **are on causal path** from $D$ to $Y$ (**mediators**)
 - **are "colliders"**
 
 3. Best practice:
 
-**Condition on variables that have causal paths toward $D$ and $Y$**: "pre-treatment"
-
+- **Condition on variables that have causal paths toward $D$ and $Y$**: "pre-treatment"
+- DAGs are hypothetical, "severity" suggests we consider all **plausible** DAGs, results should be robust to choices
 
 ---
 
@@ -609,7 +644,7 @@ When does this arise?
 
 **As a class**:
 
-Revisit our diagram:
+Revisit our TFA DAGs:
 
 **Identify variables we need to condition on to close backdoor paths** and find effect of TFA on racial resentment
 
@@ -619,14 +654,18 @@ Revisit our diagram:
 
 #### Pros:
 
+- Can help us be **explicit** about our assumptions (what backdoors or colliders can/cannot exist)
+
+Given an assumed DAG...
+
 - Can tell us when conditioning can/cannot block backdoor paths
 - Can tell us what to condition on/ not to condition on
-- Can help us be **explicit** about our assumptions (what backdoors or colliders can/cannot exist)
 - Software to figure out complex situations
 
 #### Cons:
 
 - DAGs are assumed, never really known
+- How to make logic of DAGs compatible with **weak severity**?
 
 # Conditioning
 
@@ -638,6 +677,7 @@ $1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potent
 
   - all 'backdoor' paths are blocked
   - no conditioning on colliders to 'unblock' backdoor path
+  - Connects to how **imputation** and **reweighting** work
 
 ---
 
@@ -646,17 +686,16 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 $2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
 
   - There must be variation in the levels of treatment **within every strata** of $X$
+  - If not, we can get other **causal estimands** but not $ACE$
 
 ---
 
 In order for conditioning to estimate the $ACE$ without bias, we must assume
 
-    
-3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
+3. **No Measurement Error**: If conditioning variables $X$ are mismeasured, bias will persist.
 
-  - We'll revisit this in the context of regression
-  - even random measurement error in $X$ a problem
-
+  - If substantial measurement error, backdoor paths not blocked
+  - Even random measurement error in $X$ a problem
 
 ---
 
@@ -675,8 +714,6 @@ Both implicitly assume that, for cases with same values in conditioning variable
 
 Rather than taking this difference:
 
-$\widehat{ACE} = E[Y^T - Y^C]$
-
 $\widehat{ACE} = E[Y(1) | D = 1] - E[Y(0) | D=0]$
 
 which may be biased... $ACE \neq E[\widehat{ACE}]$
@@ -685,23 +722,27 @@ which may be biased... $ACE \neq E[\widehat{ACE}]$
 
 ### Conditioning by Imputation
 
-Instead, we find effect of $D$ on $Y$ within each subset of the data wih same values of $X_i$. 
+Instead, we find effect of $D$ on $Y$ within each subset of the data with same values of $X_i$.
 
-$\widehat{ACE}[X = x] = E[Y(1) | D=1, X = x] - E[Y(0) | D = 0, X = x]$ 
+$\widehat{ACE}[X_i = x] = E[Y_i(1) | D_i=1, X_i = x] - E[Y_i(0) | D_i = 0, X_i = x]$ 
 
-for each unique set of values of $x$ in the data. 
-
-
-Under the Conditional Independence Assumption, 
-
-$\underbrace{E[Y(1) | D=1, X=x]}_{\text{among treated cases w/ value of X}} = \overbrace{\color{red}{E[Y(1) | D=0, X=x]}}^{\text{among untreated cases w/ value of X} }$ 
-
-and $E[Y(0) | D=0, X=x] = \color{red}{E[Y(0) | D=1, X=x]}$
+for **all** unique set of values of $x$ in the data. 
 
 ---
 
+### Conditioning by Imputation
 
-Then take a **weighted average** of all $\widehat{ACE}[X = x]$, weighted by $Pr(X = x)$ (fraction of cases where $X = x$)
+Under the Conditional Independence Assumption, 
+
+$\overbrace{E[Y_i(1) | D_i=1, X_i=x]}_{\text{among treated cases w/ value of X}} = \underbrace{\color{red}{E[Y_i(1) | D_i=0, X_i=x]}}^{\text{among untreated cases w/ value of X} }$ 
+
+and $E[Y_i(0) | D_i=0, X_i=x] = \color{red}{E[Y_i(0) | D_i=1, X_i=x]}$
+
+In short, CIA $\to$ we assume that with $X$ held constant, like drawing $Y_(1)$ and $Y_i(0)$ at random (VERY IMPORTANT, re: sampling distribution of conditioning estimators)
+
+---
+
+Then take a **weighted average** of all $\widehat{ACE}[Xi_ = x]$, weighted by $Pr(X_i = x)$ (fraction of cases where $X_i = x$)
 
 $$\widehat{ACE} = \sum\limits_{x} \widehat{ACE}[X = x]Pr(X=x)$$
 
@@ -713,7 +754,7 @@ $$\widehat{ACE} = \sum\limits_{x} \widehat{ACE}[X = x]Pr(X=x)$$
 
 Why is this **imputation**? 
 
-We're filling in unobserved potential outcomes using observed potential outcomes.
+We're **imputing**/**plugging in** $\color{red}{unobserved}$ potential outcomes using $observed$ potential outcomes.
 
 ---
 
@@ -723,9 +764,15 @@ Imagine we have our binary treatment $TFA_i$ and we want to know its average eff
 
 But we lack random assignment; potential outcomes of $Y_i$ are dependent on values of $TFA_i$. 
 
-We think that this dependence is induced by $X_i$, which affects $TFA_i$ and $Y_i$. $X$ could be majoring in economics.
+We think that this dependence is induced by majoring in economics ($X_i$), which affects $TFA_i$ and $Y_i$.
 
 We solve this problem with conditioning.
+
+---
+
+Economists
+
+<img src="./prof.jpg" width=70%>
 
 ---
 
@@ -934,7 +981,7 @@ Why can't conditioning recover the true $ACE$?
     
 2. **Positivity**/**Common Support**:
     - with more conditioning variables: less likely positivity is to hold
-    - many unique combinations of $X$ with little variation in $D$
+    - many unique combinations of $X$ with little variation in $D$ (curse of dimensionality)
     
 3. **Measurement Error**:
     - This exacerbates problems with assumption (1)
@@ -958,15 +1005,21 @@ Why can't conditioning recover the true $ACE$?
 
 1. Matching: (**exact** matching is what we've been doing,  other types)
 
-2. Regression: 
+2. Regression: (interpolate values of $Y$ as **linear** and **additive** in $X$)
 
-3. Machine Learning: 
+3. Machine Learning:
 
 ---
 
 ### Conditioning by Reweighting
 
-Another way of conditioning focuses on the selection into treatment $D$, rather than imputing potential outcomes of $Y$.
+Another way of conditioning focuses on the **selection** into treatment $D$, rather than imputing potential outcomes of $Y$.
+
+---
+
+### Conditioning by Reweighting
+
+
 
 If there is confounding, then the observed values of $Y(1)$ are systematically different than $E[Y_i(1)]$ for all of the cases (bias). Why? (board)
 
