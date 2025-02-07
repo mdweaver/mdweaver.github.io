@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 9, 2024"
+date: "February 7, 2025"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -17,6 +17,7 @@ require(ggplot2)
 require(grid)
 require(data.table)
 require(UsingR)
+require(ggdag)
 require(lfe)
 
 options("kableExtra.html.bsTable" = T)
@@ -43,71 +44,231 @@ options("kableExtra.html.bsTable" = T)
 </style>
 
 
-## Design-Based Inference
+## Conditioning and "Design"
 
-- Contrast to conditioning
+- Conditioning with Weighting
+- Interrupted Time Series
 - Difference-in-Differences
-- Natural Experiments
+
+- ~~Natural Experiments~~ (Extra slides)
+
+
+
+
+# Conditioning
+
+---
+
+### Conditioning
+
+We want to "block" backdoor paths / confounding variables ($X_i$) by...
+
+- "holding constant" those variables
+    - Either we "impute" (plug-in missing potential outcomes of $Y$), using information about $X_i$
+    - Or we "reweight" observed $Y$ using information about $X_i$
+
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of $D$ (i.e. for cases with same values of $X$, $D$ must be as-if random)
+
+  - all 'backdoor' paths are blocked
+  - no conditioning on colliders to 'unblock' backdoor path
+  - Connects to how **imputation** and **reweighting** work: 'as-if random assignment' of $D$ for same values of $X_i = x$
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+    
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+
+  - There must be variation in the levels of treatment **within every strata** of $X$
+  - If not, we can get other **causal estimands** but not $ACE$
+
+---
+
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+3. **No Measurement Error**: If conditioning variables $X$ are mismeasured, bias will persist.
+
+  - If substantial measurement error, backdoor paths not blocked
+  - Even random measurement error in $X$ a problem
+
+---
+
+### Conditioning by Reweighting
+
+**Imputation** "blocks" the part of the backdoor path **toward** the outcome $Y$ (condition on variables to adjust missing potential outcomes of $Y$)
+
+**Reweighting** focuses on the **selection** into treatment $D$ (condition on variables to adjust for probability of receiving $D$).
+
+---
+
+Consider this situation:
+
+During the US Civil War, sailors earned "prize money" if they served on ships that captured vessels that were running the blockade of the Confederacy. What was the effect of receiving transfers of prize money from the federal government for the economic status of African Americans?
+
+We can compare property held by former black sailors who **received** ($D_i = 1$) prize money vs those **did not** ($D_i = 0$)
+
+---
+
+```{r, echo = F}
+dagify(
+       property ~ prize,
+       maritime ~ free_state,
+       ship ~ free_state,
+       ship ~ maritime,
+       prize ~ ship,
+       discrimination ~ free_state,
+       property ~ discrimination,
+       labels = c('property' = "Property\n(Y)", 
+                  'prize' = 'Prize $ (D)',
+                  'free_state' = 'Born\nFree',
+                  'maritime' = 'Maritime\nTrade',
+                  'ship'= 'Vessel\nType',
+                  'discrimination' = "Racial\nBias")) %>%
+  tidy_dagitty() %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label), colour = 'black') +
+theme_dag()
+  
+```
+
+---
+
+
+```{r, echo = F}
+po.table = data.table(i = 1:8, 
+                      y_i_0 = c(1,1,1,0,1,0,0,0),
+                      y_i_1 = c(3,3,3,1,3,1,1,1),
+                      d_i = c(1,1,1,1,0,0,0,0),
+                      x_i = c(1,1,1,0,1,0,0,0)
+                      )
+po.table[, y_i := ifelse(d_i %in% 1, y_i_1, y_i_0)]
+kable(po.table, col.names = c("$i$", "$Property_i(0)$",
+                       "$Property_i(1)$", "$Prize_i$", "$Free_i$", "$Property_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+
+```
+
+If confounding $\to$ observed $E[Y_i(1)|D_i = 1] \neq E[Y_i(1)]$. Observed property for prize winners $\neq$ mean property if all won prizes. Why? (board)
+
+---
+
+### Conditioning by Reweighting
+
+People who were **born free** more likely to end up "treated" with prizes: "over-represented" in our estimates of average $Y_i(1)$
+
+People who were **born slaves** less likely to end up "treated" with prizes: "under-represented" in our estimates of average $Y_i(1)$
+
+(converse is true for $Y_i(0)$)
+
+
+But, if we know **the probability each case was treated** ($Pr(D_i)$), so we can **re-weight** observed values of $Y(1)$ such that we **reconstruct** to be representative of the "population" $E[Y(1)]$. The same can be done for $Y(0)$
+
+---
+
+### Conditioning by Reweighting
+
+Under the conditional independence assumption, $Pr(D | X = x)$ is the same for all cases $X = x$:
+
+- i.e. for cases same in $X_i = x$, we choose $D_i$ at random with some probability (but it can be any probability: e.g. Game Master says you have to roll above 15 on a D20)
+
+$Pr(D | X = x)$ is called the **propensity score**, which we can estimate.
+
+TO THE BOARD
+
+---
+
+Example (1): Let's "condition" on $X$ with reweighting
+
+```{r, echo = F}
+setkey(po.table, x_i, d_i)
+
+kable(po.table, col.names = c("$i$", "$Property_i(0)$",
+                       "$Property_i(1)$", "$Prize_i$", "$Free_i$", "$Property_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+What are the "propensity scores" when $Free_i = 1$? $Free_i = 0$?
+
+---
+
+### Conditioning by Reweighting
+
+This approach leads us to the inverse probability weighting estimator of the $ACE$:
+
+$$\widehat{ACE} = \frac{1}{N}\sum\limits_{i=1}^N \frac{D_iY_i}{\widehat{Pr}(D_i|\mathbf{X_i})}-\frac{(1-D_i)Y_i}{1-\widehat{Pr}(D_i|\mathbf{X_i})}$$
+
+---
+
+Example (1): Let's "condition" on $X$ with reweighting
+
+```{r, echo = F}
+setkey(po.table, x_i, d_i)
+
+kable(po.table, col.names = c("$i$", "$Property_i(0)$",
+                       "$Property_i(1)$", "$Prize_i$", "$Free_i$", "$Property_i$"), format = 'html') %>% 
+  kable_styling(c( 'bordered', 'condensed', 'hover'))
+```
+
+
+Let's calculate the $ACE$...
+
+---
+
+### Conditioning by Reweighting: Approaches
+
+1. Estimating Propensity Scores: known probabilities (experiments), logit regression, machine learning
+2. "Balancing Weights": choose propensity scores to ensure "balance" on observed $\mathbf{X_i}$ between treated and untreated.
+3. Apply weights using Inverse Weighting 
+
+---
+
+### Conditioning: Why not use both?
+
+If "imputation" and "reweighting" are different, could we do both?
+
+Yes.
+
+This is called "doubly robust" estimation, as it can give us an unbiased estimate of the $ACE$ if either the imputation model or the propensity score model is correct.
+
+>- Many techniques that have this property
 
 # Design vs Conditioning
 
 --- 
 
-### **Design vs. Model-based inferences**
+### Design vs Conditioning
 
-A matter of **degree**
-
-Statistical evidence for causality combines **observed data** with a **mathematical model** of the world
-
->- mathematical model describes how observed data are generated
->- model always involves assumptions
->- can almost always apply the model, even if it is wrong
-
-## Design vs. Model-based inferences
-
-Causal evidence varies in terms of complexity of math/assumptions: a matter of **degree**
-
-- **Model-based** inferences about causality depend on complex statistical models with many assumptions
-
-- **Design-based** inferences about causality use carefully controlled comparisons with simple, transparent models and assumptions
-
---- 
-
-### **Design vs. Model-based inferences**
-
-Whatever our approach...
-
-<br>
-
-**do the assumptions needed to use this mathematical tool reasonably fit reality?**
-
---- 
-
-### Conditioning vs. Design
-
-When we **condition**, we block specific backdoor paths that generate **confounding** by comparing cases that are **similar on observable trait**. We assume:
+When we **condition**, we block *specific* backdoor paths that generate **confounding** by comparing cases that are **similar on observable trait**. We assume:
 
 1. **Ignorability**/**Conditional Independence**
 2. **Positivity**/**Common Support**
 3. **No measurement error**
 
->- Explain what these mean:
+
+<br> 
+
 >- Can we **test** or **prove** these assumptions?
 
 --- 
 
-### Conditioning vs. Design
+### Design vs Conditioning
 
 Conditioning and model dependence:
 
 - we did **exact matching** last week: no model dependence, but **curse of dimensionality**
-- with finite cases, lots of variables, we use a mathematical model to plug-in/impute missing counterfactuals 
+- with finite cases, lots of variables, we use a mathematical model to plug-in/impute missing counterfactuals
 
-These models bring additional **modelling assumptions**:
+Many models bring additional **modelling assumptions**:
 
 - linearity, additivity, etc.
 
-On top of which: we always need to argue that we have blocked all backdoor paths
+On top of which: we always need to argue that we have blocked all backdoor paths (conditional independence)
 
 --- 
 
@@ -117,9 +278,8 @@ Instead of relying conditioning, we might choose more careful research **designs
 
 - comparing the same unit over time
 - differences-in-differences
-- "natural experiments"
 
-Here, the **structure of the comparison** motivates an argument for independence of cause and potential outcomes. Rather than block specific confounding variables, we eliminate confounding due to a **class** of confounding variables.
+Here, the **structure of the comparison** motivates an argument for independence of $D$ and potential outcomes. Rather than block specific confounding variables, we eliminate confounding due to a **class** of confounding variables.
 
 # Design 
 
@@ -177,15 +337,16 @@ We could compare attitudes toward the EU in Liverpool **before and after** the b
 ---
 
 ### Interrupted Time Series
+
 Plug in the **observed outcome *before* treatment** for the **counterfactual outcome *after* treatment**:  $t=1$ is post-treatment, $t=0$ is pre-treatment.
 
 $$\tau_i = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$
 
 Plugging in:
 
-$$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$$
 
->- What can go wrong here?
+
+$$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$$
 
 ---
 
@@ -195,6 +356,7 @@ In order for interrupted time series to work, we must assume:
 
 $$\overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}} = \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$ 
 
+
 That in the absence of the treatment, outcomes of $Y$ would not have changed from before to after treatment.
 
 >- Why might this be incorrect in general? In the context of the Liverpool *Sun* boycott?
@@ -203,7 +365,7 @@ That in the absence of the treatment, outcomes of $Y$ would not have changed fro
 
 ### Interrupted Time Series
 
-**Assumptions imply** none of the following occurred
+**Assumptions imply** none of the following occurred (terms from Campbell and Ross)
 
 >- "history": bias due to **other** short-term changes
 >- "maturation":  bias due to long-term trends
@@ -223,6 +385,8 @@ That in the absence of the treatment, outcomes of $Y$ would not have changed fro
 
 The comparison holds the unit constant before and after the event $\to$ collider bias - generating dependencies between variables that move together over time.
 
+[TO THE BOARD]
+
 ---
 
 ### Interrupted Time Series
@@ -231,11 +395,16 @@ A good example of how to do this persuasively:
 
 [Mummolo 2018](https://doi.org/10.1086/694393)
 
+- Treatment window "small" (one day to the next)
+- Treatment a "surprise" (police officers working the streets did not anticipate)
+- Treatment adopted for reasons unrelated to trends in outcome (policy change in response to court cases, not detection of guns on the street)
+
+
 ---
 
 ### Interrupted Time Series
 
-What kind of causal effect are we estimating when we do before and after comparisons?
+What kind of causal estimand are we estimating when we do before and after comparisons?
 
 $$\begin{split}E[\tau_i | D_i = 1] = {}  \frac{1}{n}\sum\limits^{n}_{i=1} & [Y_{i,t=1}(1) | D_i = 1] - \\ & \color{red}{[Y_{i,t=1}(0)|D_i = 1]}\end{split}$$
 
@@ -259,10 +428,11 @@ Observed pre-treatment outcomes not a good substitute for post-treatment counter
 
 >- Do we have a way to estimate what these **counterfactual trends absent treatment** might be?
 
+# Differences in Differences
+
 ---
 
 In our example: we **don't know** how EU skepticism might have trended in Liverpool absent the boycott. We **do know** how  EU skepticism in *the rest of the UK* trended absent the boycott.
-
 
 We don't know: $\color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$
 
@@ -272,7 +442,7 @@ We **do know**: $\underbrace{[Y_{i,t=1}(0) | D_i = 0]}_{\text{UK post-1989, no b
 
 ### Difference-in-Differences:
 
-Differences-in-differences compares *changes* in the **treated** cases against *changes* in **untreated** cases.
+Difference-in-differences compares *changes* in the **treated** cases against *changes* in **untreated** cases.
 
 We use the trends in the **untreated** cases to plug-in for the $\color{red}{counterfactual}$ trends (absent treatment) in the **treated cases**
 
@@ -291,7 +461,7 @@ Then we can plug-in the $observed$ **untreated group** trend for the $\color{red
 
 ### Difference-in-Differences:
 
-This is the **parallel trends assumption**. It is equivalent to saying there are no time-varying confounding variables that *differ* between treated and untreated.
+This is the **parallel trends assumption**. It is equivalent to saying there are no time-varying confounding variables that *differ* between treated and untreated (recall that over-time comparisons open up collider paths).
 
 
 If it is true, we can do some simple algebra and find that
@@ -303,6 +473,8 @@ $[\tau_i | D_i = 1] = [Y_{i,t=1}(1) | D_i = 1] - \color{red}{[Y_{i,t=1}(0)|D_i =
 $\begin{equation}\begin{split}[\tau_i | D_i = 1] = {} & \{\overbrace{[Y_{i,t=1}(1) | D_i = 1] - [Y_{i,t=0}(0) | D_i = 1]}^{\text{Treated observed trend}}\} - \\ &        \{\underbrace{\color{red}{Y_{i,t=1}(0) | D_i = 1]} - [Y_{i,t=0}(0)|D_i = 1]}_{\text{Treated counterfactual trend}}\}\end{split}\end{equation}$
 
 ---
+
+Plugging in:
 
 $\begin{equation}\begin{split}[\widehat{\tau_i} | D_i = 1] = {} & \{\overbrace{[Y_{i,t=1}(1) | D_i = 1] - [Y_{i,t=0}(0) | D_i = 1]}^{\text{Treated observed trend}}\} - \\ & \{\underbrace{Y_{i,t=1}(0) | D_i = 0] - [Y_{i,t=0}(0)|D_i = 0]}_{\text{Untreated observed trend}}\}\end{split}\end{equation}$
 
@@ -330,11 +502,11 @@ And this gives us the name:
 
 This shows that the Boycott of the *Sun* reduced Euro Skepticism in Liverpool
 
-Under the **parallel trends assumption** (untreated cases have the same *trends* as treated cases *in the absence of treatment*)
+If the **parallel trends assumption** (untreated cases have the same *trends* as treated cases *in the absence of treatment*) is true...
 
 - This is an unbiased estimate of the **Average Treatment on Treated** ($ATT$):
     - the effect of treatment on the **treated** cases
-    - it is TOTALLY fine if the effect of treatment on untreated cases would have been different
+    - it is TOTALLY fine if the **effect of treatment on untreated cases would have been different**
 
 ---
 
@@ -352,7 +524,7 @@ What are examples of confounders held constant in *Sun* Boycott difference-in-di
 
 ### Difference-in-differences:
 
-In the newspaper example: what would be an example in which some other factor generates bias that **is not solved** by the difference-in-differences estimate?
+In the newspaper example: what would be an example of some variable that would **violate** parallel trends assumption?
 
 
 
@@ -369,24 +541,150 @@ $Y_{it} = \beta_0 + \beta_1 \text{Treated}_i + \beta_2 \text{Post}_t + \beta_3 \
 
 $Y_{it} = \overbrace{\alpha_i}^{\text{dummies for each } i} + \underbrace{\alpha_t}_{\text{dummies for each } t} + \beta_3 \text{Treated}_i \times \text{Post}_t$
 
+```{r eval = F}
+#Different ways (these do not use correct standard errors)
+lm(y ~ EverTreated*PostTreatment, data = my_data)
+lm(y ~ as.factor(unit_id) + as.factor(time_id) + EverTreated:PostTreatment, data = my_data)
+require(fixest)
+feols(y ~ EverTreated:PostTreatment | unit_id + time_id, data = my_data)
+```
+
 ---
 
 ### Difference-in-differences:
 
 How do we validate the **parallel trends** assumption?
 
-- We cannot directly test it, but we can try to see if it is plausible
+- We cannot directly test it, but we can try to see if it is violated.
 
-**Placebo Tests**:
+
+We want to see if... there are divergences in trends between treated and untreated ... in absence of treatment.
+
+- Look at trends **prior to treatment**
+
+---
+
+### Difference-in-differences:
+
+
+**Tests of Parallel Trends**: Event Study
 
 - If "treatment" happens between time $t$ and $t+1$, we should not see an effect between $t-1$ and $t$!
-- If design is right, there should be no effects of the treatment **prior** to the treatment taking place.
-- If we "pass" placebo test, does not reject possibility that something **other than "treatment"** caused a change.
+- If design is right, there should be no effects of the treatment **prior** to the treatment taking place. (No differential trends between treated and untreated before treatment)
+- If we "pass" placebo test, does not reject possibility that something **other than "treatment"** caused a change. Only can "reject" divergent trends before treatment $\xrightarrow{infer}$ parallel counterfactual trends post treatment.
 - You need multiple pre-treatment data points
 
 ---
 
 <img src="./diff_in_diff_paper.png">
+
+Difference between treated and untreated at $t=-1$ etc. compared to at $t=0$.
+
+---
+
+### Hypothesis Tests
+
+We shouldn't just "eyeball" the difference: 
+
+We can test the null hypothesis that the difference in trends between treated and untreated $= 0$. If the $p > 0.05$ (or some other $\alpha$) we can "fail to reject" the null of no difference in trends.
+
+- Is this a **severe test**?
+- Should we use this test?
+
+>- recall, $p$ values advertise **false positive rate** of finding a difference.
+
+---
+
+### Equivalence Tests
+
+Here we are **looking** for negatives. We want to $p$ value that tell us the **false negative rate**
+
+- In a difference-in-difference we want to show that there are **no meaningful differences** in trends between treated and untreated cases **prior to treatmeant** (evidence in favor of parallel trends assumption)
+- In a natural experiment, we want to show that there are **no meaningful differences** between treated and untreated cases on variables that could be confounders (evidence in favor of as-if random assignment process).
+
+We don't want a test that stacks the deck **in favor** of our hypothesis of no difference..
+
+
+---
+
+### Equivalence Tests
+
+Analogous to this situation:
+
+We want a COVID test that we plan to use as evidence that we **don't have COVID** and so can safely spend time with immunocompromised people.
+
+But the COVID test we use has been designed to minimize **false positives**. 
+
+What could go wrong?
+
+>- Worst case scenario, the "test" is just a piece of paper. 0% false positive rate but 100% false negative rate.
+
+---
+
+### Equivalence Tests
+
+To solve this problem and get useful $p$ values, we can conduct an  **equivalence test**. We transform the null hypothesis.
+
+Let us assume that there is some level of imbalance that we consider negligible, lets call that $\delta$.
+
+Our new null hypothesis is:
+
+$H_{01}: \tau <= -\delta$ OR $H_{02}: \tau >= \delta$
+
+Where $\tau$ is the difference in, e.g. pre-treatment trends for treated/untreated.
+
+That is, two one-sided tests (TOST).
+
+
+---
+
+### Equivalence Tests
+
+TOST:
+
+If the probability of observing $\hat{\beta}$ under both null hypotheses is less than $\alpha$ we can reject the null:
+
+$H_1: -\delta < \tau < \delta$: the true difference is within some acceptable $\delta$ distance to $0$.
+
+
+---
+
+TOST visualization
+
+```{r normp, echo=FALSE}
+library(tidyverse)
+ggplot(NULL, aes(c(-3, 3))) +
+  geom_area(stat = "function", fun = function(x) {dnorm(x, mean = 2.5, sd = 1)}, fill = "grey80", xlim = c(0.5, 3)) +
+  geom_area(stat = "function", fun = function(x) {dnorm(x, mean = 2.5, sd = 1)}, fill = "#00998a", xlim = c(0, 0.5)) +
+ geom_area(stat = "function", fun = function(x) {dnorm(x, mean = -2.5, sd = 1)}, fill = "grey80", xlim = c(-3, -0.5)) +
+  geom_area(stat = "function", fun = function(x) {dnorm(x, mean = -2.5, sd = 1)}, fill = "#00998a", xlim = c(-0.5, 0)) +  labs(x = "statistic", y = "probability") +
+  geom_vline(xintercept = c(0.5)) +
+  geom_vline(xintercept = c(2.5,-2.5), colour = 'red') +
+  scale_y_continuous(breaks = NULL) +
+  geom_segment(aes(x = 0, y = 0.1, xend = 2.5, yend = 0.1), 
+               arrow = arrow(length = unit(0.03, "npc"), ends = "both")) + 
+  # scale_x_continuous(breaks = 4) +
+  theme_classic()
+
+```
+
+---
+
+### Equivalence Tests
+
+These tests can be conducted in `R` using:
+
+- `TOSTER` packages
+- `equivalence_test` in `parameters` package
+- `fect` package (for differences in differences and extensions)
+
+These tests can be inverted to get confidence intervals (range of values for $delta$ which cannot be rejected at $\alpha$)
+
+These tests require, in addition to everything else:
+
+- specifying what range of values counts as "practical equivalence" ($-\delta,\delta$)
+- this requires justification, though there are standard recommendations for particular applications (natural experiments, difference in difference)
+
 
 ---
 
@@ -402,39 +700,13 @@ How do we validate the **parallel trends** assumption?
 
 **Continuous Treatment**: [https://psantanna.com/files/Callaway_Goodman-Bacon_SantAnna_2021.pdf](https://psantanna.com/files/Callaway_Goodman-Bacon_SantAnna_2021.pdf)
 
-**Covariates**: even conditioning on time-varying confounders has risks
+**Covariates**: conditioning on time-varying confounders has risks
 
 As we get away from simple DiD, assumptions and potential problems multiply, solutions get more complicated...
 
 ---
 
 <img src="./bacon_goodman.jpg" width = 100%>
-
----
-
-### An Example:
-
-What was the effect of enlistment in the US Civil War on voting for the Republican party?
-
-$GOP_{ie} = \alpha_i + \alpha_e + \beta Enlist_i \times PostWar_e + \epsilon_y + \epsilon_i$
-
-- $i$ is a county
-- $e$ is a state-election (election year in a specific state)
-- $y$ is a year between 1854 and 1880
-- $PostWar$ indicates if election is after 1861 $(1)$ or before $(0)$
-
----
-
-### An Example:
-
-<img src="./gop_panel_parallel.svg" width = 100%>
-
----
-
-### An Example:
-
-<img src="./cw_did.png" width = 70%>
-
 
 ---
 
@@ -447,11 +719,12 @@ $GOP_{ie} = \alpha_i + \alpha_e + \beta Enlist_i \times PostWar_e + \epsilon_y +
 
 **Caveats:**
 
-- 'check' parallel trends
-- careful: what happens when units are treated at different times? different amounts?
-- careful: STANDARD ERRORS! Clustering may not save you with small $N$.
+- 'check' parallel trends; compare against "placebos" with triple differences
+- careful: what happens when units are treated at **different times**? **different amounts**?
+- careful: STANDARD ERRORS!
 
-# Natural Experiments
+
+# Natural Experiments (Extra Slides)
 
 ---
 

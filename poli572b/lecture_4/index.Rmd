@@ -357,7 +357,7 @@ dagify(mammogram ~ invite,
 
 ```{r, echo = F}
 dagify(agr_out ~ rain,
-       roads ~ talk_show,
+       roads ~ rain,
        cw ~ agr_out,
        cw ~ roads,
        cw ~ u,
@@ -379,7 +379,7 @@ Exclusion Restriction Violation in $CACE$ [Miguel et al 2004](https://www.journa
 
 ```{r, echo = F}
 dagify(agr_out ~ rain,
-       roads ~ talk_show,
+       roads ~ rain,
        cw ~ agr_out,
        cw ~ roads,
        cw ~ u,
