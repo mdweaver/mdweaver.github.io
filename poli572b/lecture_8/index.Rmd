@@ -261,6 +261,7 @@ What do these equations tell us about "controlling" for variables?
 
 >- Need linear algebra to understand.
 
+
 # Linear Algebra
 
 ---
