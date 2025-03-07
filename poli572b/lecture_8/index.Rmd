@@ -657,6 +657,36 @@ brexit$Region2 = factor(brexit$Region, levels = regions[c(12, 1:11)])
 
 Repeat the regression. How has the interpretation of coefficients changed?
 
+---
+
+### Least Squares and Continuous Variables
+
+Return to the `earnings` data...
+
+```{r}
+m = lm(INCEARN ~ AGE, data = earnings, weights = earnings$respondents)
+summary(m)$coefficients
+```
+
+How do we interpret `(Intercept)`?
+
+>- does this make sense?
+
+How do we interpret `AGE`?
+
+---
+
+### Least Squares and Continuous Variables
+
+In pairs:
+
+1. Create a new variable in `earnings`: `AGE_c` which is `AGE` minus mean of `AGE`
+2. Regress `INCEARN` on `AGE_c`
+3. Examine the coefficients:
+
+- How do we interpret `(Intercept)`?
+- How do we interpret `AGE`?
+
 
 ## Least Squares with Controls
 
@@ -668,6 +698,7 @@ So far, we have considered fitting group means.
 
 - indicator/dummy variables have been for exclusive membership in groups
 - what happens if we control for membership in different groups?
+
 
 ---
 
@@ -746,8 +777,6 @@ ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geo
 ```
 
 
-
-
 ---
 
 ### Example
@@ -769,6 +798,16 @@ ls = lm(INCEARN ~ FEMALE + UHRSWORK , acs_data)
 - What is the residual/orthogonal $Female_i^*$ in this case? ()
 
 >- Residual $Female_i^*$ will have perfectly $0$ covariance/correlation with $Hours_i$
+
+---
+
+### Exercise
+
+Using the `brexit` data:
+
+1. Using `lm`, regress `Pct_Lev` on `total_precip_polling` and `Region`
+2. Using `lm`, regress `total_precip_polling` on `Region` and get residuals (`m$residuals`) as `precip_star`
+3. Regress `precip_star` on `Region`.
 
 ---
 
