@@ -486,8 +486,8 @@ $Earnings_i = b_0 + b_1 \ Female_i$
 assuming, as the survey data does, the gender binary
 
 1. What does the design matrix $X$ in this regression look like?
-2. What is the interpretation of $\hat{y}$ when $b_1 = 0$?
-4. What is the interpretation of $\hat{y}$ when $b_1 = 1$?
+2. What is the interpretation of $\hat{y}$ when $Female_i = 0$?
+4. What is the interpretation of $\hat{y}$ when $Female_i = 1$?
 3. What does the $b_0$ tell us? 
 3. What does the $b_1$ tell us? 
 
@@ -502,8 +502,8 @@ summary(m1) %>% .$coefficients
 
 What would change if we changed the design matrix so that instead of a vector of $1$ and  indicated Female ($1$) vs Male ($0$), we used a vector of $2$ and indicated Female ($2$) vs Male ($0$)?
 
-2. What is the interpretation of $\hat{y}$ when $b_1 = 0$?
-4. What is the interpretation of $\hat{y}$ when $b_1 = 2$?
+2. What is the interpretation of $\hat{y}$ when $Female_i = 0$?
+4. What is the interpretation of $\hat{y}$ when $Female_i = 2$?
 3. What does the $b_0$ tell us? 
 3. What does the $b_1$ tell us? 
 
@@ -515,8 +515,8 @@ What would change if we changed the design matrix so that instead of a vector of
 $Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
 
 1. What does the design matrix $X$ in this regression look like?
-2. What is the interpretation of $\hat{y}$ when $b_1 = 0$ and $b_2 = 1$?
-4. What is the interpretation of $\hat{y}$ when $b_1 = 1$ and $b_2 = 0$?
+2. What is the interpretation of $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
+4. What is the interpretation of $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 4. What does the $b_2$ tell us?
@@ -535,8 +535,8 @@ $Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
 
 
 1. What does the design matrix $X$ in this regression look like?
-2. What is the interpretation of $\hat{y}$ when $b_0 = 0$ and $b_1 = 1$?
-4. What is the interpretation of $\hat{y}$ when $b_0 = 1$ and $b_1 = 0$?
+2. What is the interpretation of $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
+4. What is the interpretation of $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 

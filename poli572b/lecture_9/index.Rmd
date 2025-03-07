@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 8, 2024"
+date: "March 7, 2025"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -19,6 +19,10 @@ require(grid)
 require(data.table)
 require(UsingR)
 require(modelsummary)
+require(tidyverse)
+require(haven)
+require(fixest)
+require(ggdag)
 options("kableExtra.html.bsTable" = T)
 
 acs_data = fread("acs_lawmed.csv")
@@ -30,7 +34,11 @@ acs_data[, MALE := abs(FEMALE - 1)]
 acs_data[, MEDICINE := 1-LAW]
 acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
 
-brexit = fread("analysisData.csv")
+
+analysis_df <- 
+    readRDS("/home/mdweaver/Dropbox/myanmar-prejudice/02-replication/analysis_df.rds")
+ds2000 = read.csv("https://www.dropbox.com/s/4miay9ezzjp03w7/ds2000.csv?dl=1") %>% as.data.table
+
 ```
 
 
@@ -53,739 +61,1479 @@ brexit = fread("analysisData.csv")
   }
 </style>
 
-# Regression Interpretation
+
+# Introduction
 
 ---
 
-### Objectives
-
-**Recap**
+### Outline
 
 
-- Multivariate Least Squares mathematical properties
+1. Regression and Conditioning
+
+2. How regression "conditions"
+
+3. Potential Problems
+
+  - Interpolation Bias (Conditional Independence Assumption)
+  - Extrapolation Bias (Positivity Assumption)
+
+4. How to Practically Addres these Problems
 
 
-**Interpretation**
-
-- Best Linear Approximation of CEF
-- Dummy Variables
-- Slopes and Intercepts
 
 
-
-# Multivariate Least Squares
+# Conditioning
 
 ---
 
+Recall:
 
-### Multivariate Least Squares:
-
-Mean and least squares are **orthogonal projection** of $y$ on $X$.
-
-Previously we predicted $Y$ as a linear function of $x$:
-
-$$\hat{y_i} = b_0 + b_1 \cdot x_i$$
-
-Now, we can imagine predicting $y$ as a linear function of many variables:
-
-$$\hat{y_i} = b_0 + b_1 x_1 + b_2 x_2 + \ldots + b_k x_k$$
+When there is possible confounding, we want to "block" these causal paths using conditioning
 
 
 ---
 
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+
+$1$. **Ignorability**/**Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
+
+  - all 'backdoor' paths are blocked
+  - no conditioning on colliders to 'unblock' backdoor path
 
 ---
 
-$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
+In order for conditioning to estimate the $ACE$ without bias, we must assume
+  
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
 
-
----
-
-
-### Key facts about regression:
-
-The mathematical procedures we use in regression ensure that: 
-
-$1$. **the mean of the residuals is always zero** (if we include an intercept). Because we included an intercept ($b_0$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+  - There must be variation in the levels of treatment **within every strata** of $X$
 
 ---
 
-### Why?
+In order for conditioning to estimate the $ACE$ without bias, we must assume
 
-**the mean of the residuals is always zero**.
-
-We choose $\begin{pmatrix}b_0 \\ b_1 \end{pmatrix}$ such that $e$ is orthogonal to $\mathbf{X}$. One column of $\mathbf{X}$ is all $1$s, to get the intercept (recall how we used vectors to get the mean). So $e$ is orthogonal to $\begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix}$.
-
-$$\mathbf{1}'e = 0$$
-
-And if this is true, the $\sum e_i = 0$ so $\frac{1}{n}\sum e_i = 0$.
-
----
-
-### Key facts about regression:
-
-The mathematical procedures we use in regression ensure that: 
-
-$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
-
-Recall that $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e}$
-
-
-We chose $\beta$ ($a,b$) such that $X'e = 0$ so they would be **orthogonal**. 
-
-$X'e = 0 \to \sum x_ie_i = 0 \to \overline{xe}=0$; 
-
-And, from above, we know that $\overline{e}=0$; 
-
-so $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e} = 0 - \overline{x}0 = 0$.
-
----
-
-$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
-
-This **also means** that residuals $e$ are **always** <u>perfectly uncorrelated</u> (Pearson correlation) with **all** the columns in our matrix $\mathbf{X}$: all the variables we include in the regression model.
-
-
----
-
-### Multivariate Least Squares:
-
-- When we calculated the mean using matrix algebra, we projected the $n$ dimensional vector $Y$ onto a point on a one-dimensional line.
-- When we calculated the bivariate regression line, we projected the $n$ dimensional vector $Y$ onto a $2$-dimensional space **spanned** by $\mathbf{1}$ and $\mathbf{x}$ (one for $b_0$ and one for $b_1$) (**board**)
-- When we use multi-variate regression, we project the $n$ dimensional vector $Y$ onto a $p$ dimensional space (one for each parameter/coefficient)
-
----
-
-### Multivariate Least Squares:
-
-What is  "projecting onto $p$ dimensions"
-
-When we project into two dimensions, these dimensions are **precisely like** the $x$ and $y$ axes on a graph: perpendicular/orthogonal to each other. 
-
-In multivariate regression, because we are going to project $y$ onto $p$ **orthogonal** dimensions in $\mathbf{X}$. ($(\mathbf{X}'\mathbf{X})^{-1}$ transforms to orthogonal basis)
-
-- "under the hood", regression creates a new version of $\mathbf{X}$ where each column is **orthogonal to the others**
-
----
-
-### Mathematical Requirements:
-
-1. Matrix $X$ has "full rank"
-  - This means that all of the columns of $\mathbf{X}$ are **linearly independent**.
-    - cannot have two identical columns
-    - cannot have  set of columns that sum up to another column multiplied by a scalar
-  - If $\mathbf{X}$ is not full rank, cannot be inverted, cannot do least squares.
-    - but we'll see more on the intuition for this later.
     
-2. $n \geq p$: we need to have more data points than variables in our equation
-  - no longer trivial with multiple regression
-  
----
+3. **No Measurement Error**: If conditioning variables $X$ are mis-measured, bias will persist.
 
-### Multivariate Least Squares:
-
-When we include more than one variable in the equation, we cannot calculate slopes using simple algebraic expressions like $\frac{Cov(X,Y)}{Var(X)}$.
-
-- Must use matrix algebra (this is why I introduced it)
-
-We calculate least squares using same matrix equation ($(X'X)^{-1}X'Y$) as in bivariate regression, but what is the math **doing** in the multivariate case?
-
----
-
-### Multivariate Least Squares:
-
-When fitting the equation:
-
-$\hat{y_i} = b_0 + b_1x_i + b_2z_i$
-
-(1) $b_1 = \frac{Cov(x^*, Y)}{Var(x^*)}$
-
-Where $x^* = x - \hat{x}$ from the regression: $\hat{x} = c_0 + c_1 z$.
-
-(2) $b_2 = \frac{Cov(z^*, Y)}{Var(z^*)}$
-
-Where $z^* = z - \hat{z}$ from the regression: $\hat{z} = d_0 + d_1 x$
-
-Does anything look familiar here?
-
----
-
-### Multivariate Least Squares:
-
-More generally:
-
-$$\hat{y} = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
-
-$b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$
-
-where $X_k^* = X_k - \hat{X_k}$ obtained from the regression:
-
-$X_{k} = c_0 + c_1 x_{1} + \ldots + c_{j} X_{j}$
-
-$X_k^*$ is the residual from regressing $X_k$ on all other $\mathbf{X_{j \neq k}}$
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?
-
-- It is the residual in same way as $e$: $X_k^*$ is **orthogonal** to all other variables in $\mathbf{X_{j \neq k}}$.
-  - it is "perpendicular" to other variables, as are axes on a graph.
-  - It is perfectly **uncorrelated** (in the linear sense) with all other variables in the regression.
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?)
-
-- The slope $b_k$ is the change in $Y$ with a one-unit change in the part of $X_k$ that is **uncorrelated with**/**orthogonal to** the other variables in the regression.
-
----
-
-### Multivariate Least Squares:
-
-How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ 
-
-- Sometimes people say "the slope of $X_k$ **controlling** for variables $\mathbf{X_{j \neq k}}$". 
-  - is it "holding other factors constant"/*ceteris parabis*? Not quite.
-  - better to think of it as "partialling out" the relationship with other variables in $\mathbf{X}$. The $X_k$ that does not co-vary with other variables
-  - better to think of it as variation in $X_k$ residual on the mean $X_k$ predicted by all other variables in $X$
-  - this residual variation has implications for how least squares **weights observations**
-  
----
-
-### Multivariate Least Squares:
-
-There are additional implications of defining the slope $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$:
-
-Now we can see why columns of $X$ must be linearly independent:
-
-- e.g. if $X_1$ were linearly dependent on $X_2$ and $X_3$, then $X_2$ and $X_3$ *perfectly predict* $X_1$.
-- If $X_1$ is perfectly predicted by  $X_2$ and $X_3$, then the residuals $X_1^*$ will all be $0$.
-- If $X_1^*$ are all $0$s, then $Var(X_k^*) = 0$, and $b_k$ is undefined.
-
-# Applying Regression
-
----
-
-### Math of Regression relevant to:
-
-1. How we estimate "effects":
-
-effects are differences in means/average slopes: regression coefficients interpreted as estimating something... 
-
-what is being estimated?
-
-2. Conditioning involves imputing potential outcomes of $Y$ at different values of $X$: how does this imputation take place?
-
-3. Average causal effects weight cases equally: how does regression weight cases?
-
-
-# Regression and the CEF
-
---- 
-
-### The CEF
-
-$$E(Y_i | X_i) = f(X)$$
-
-**Conditional**: mean of $Y$ is different at different levels of $X$
-
-**Expectation**: expected value/mean of $Y$
-
-**Function**: mathematical function links values of $X$ to mean of $Y$. Could be, does not need to be, **linear**
 
 
 ---
 
-### Regression and CEF
+### Two Ways of Conditioning:
 
-How does multivariate regression relate back to Conditional Expectation Function?
+- **imputation**: "plug in" unobserved potential outcomes of $\color{red}{Y(1)}$ ($\color{red}{Y(0)}$) using observed potential outcomes of $Y(1)$($Y(0)$) from cases with **same**/**similar** values of $\mathbf{X_i}$.
+- **reweighting**: compare values of $Y_i$ across values of $D_i$, **weighting** $i$ by probability of "treatment" given $\mathbf{X_i}$ ($Pr(D_i  | X_i)$)
 
-- least squares is the **best linear approximation** of the conditional expectation function $E(Y_i | X_i)$
 
---- 
+---
 
-```{r, echo=F}
-cef = acs_data[, list(INCEARN = mean(INCEARN), respondents = .N) , by = AGE]
-setkey(cef, AGE)
-ggplot(cef, aes(x = AGE, y = INCEARN)) + geom_point(alpha = 0.75, aes( size = respondents)) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors")
+### Conditioning by Imputation
+
+We find effect of $D$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
+
+$\widehat{ACE}[X = x] = E[Y(1) | D=1, X = x] - E[Y(0) | D=0, X = x]$ 
+
+for each value of $x$ in the data.
+
+Under the Conditional Independence Assumption, $E[Y(1) | D=1, X=x] = \color{red}{E[Y(1) | D=0, X=x]}$ and $E[Y(0) | D=0, X=x] = \color{red}{E[Y(0) | D=1, X=x]}$
+
+We **impute** the missing potential outcomes... with the **expected value** of the outcome of observed cases with same values of $x$, different values of $D$.
+
+---
+
+### Conditioning by Imputation
+
+$E[Y(0) | D=0, X=x]$ is a conditional expectation function; something we can estimate using regression
+
+# A Causal Model for Least Squares
+
+---
+
+To understand how we can use regression to estimate causal effects, we need to describe the kinds of causal estimands we might be interested in.
+
+---
+
+### Response Schedule
+
+In the context of **experiments**, each observation has potential outcomes corresponding to their behavior under different treatments. If treatment is dichotomous, we might generally be interested in:
+
+$$ACE = E[Y(1)] - E[Y(0)]$$
+
+---
+
+### Response Schedule
+
+In regression, where levels of treatment might be continuous, we generalize this idea to the "response schedule":
+
+- each unit has a set of potential outcomes across every possible value of the "treatment" 
+  - $Y(0), Y(1), Y(2), \dots, Y(D_{max})$
+- we can summarize the causal effect of $D$ in two ways:
+
+---
+
+**average causal response function**: 
+
+- what is  $E[Y(d)]$ for all $d \in D$, or what are mean potential outcomes of $Y$ at values of $D$. 
+- this is a conditional expectation function, defined in terms of **potential outcomes**
+- board: income returns to years of education...
+
+We typically assume that we are only interested in the $ACRF$ for the cases in our study; otherwise need to make assumptions about the sampling from a population.
+
+---
+
+**average partial derivative** (of the $ACRF$: 
+
+- the average **slope** of the (possibly non-linear) average causal response function
+- what is the average causal (rate of) change in $Y$ induced by $D$, averaged over all values $d$ in $D$
+- if there are just two levels, the difference between them is the $ACE$
+
+(Return to board)
+
+---
+
+### Response Schedule
+
+We can use regression to estimate the *linear approximation* of the average causal response function:
+
+$$Y_i(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
+Here $Y_i(D_i = d)$ is the potential outcome of case $i$ for a value of $D = d$. 
+
+- this response schedule says that $E[Y(D = d)]$, on average, changes by $\beta_1$ for a unit changes in $D$ (or a weighted average of non-linear effects of $D$... the average partial derivative)
+- $\epsilon_i$ is unit $i$ deviation from $Y_i(D=d) - E[Y_i(D = d)]$ 
+- We are using $\beta$ rather than $b$ because we are interpreting coefficients as **estimands**/**parameters** (giving a causal interpretation)
+
+---
+
+### Response Schedule
+
+If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta}_1$ that we can give a **causal** interpretation? (On average, change in $D$ **causes** $\widehat{\beta}_1$ change in $Y$)
+
+**We must assume**
+
+- $Y_i$ actually produced according to the response schedule (equation is correctly specified; e.g., linear and additive)
+- $D_i$ is independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$.
+
+In this scenario, if $D$ were binary and we had randomization, this is equivalent to estimating the $ACE$ for an experiment.
+
+---
+
+### Response Schedule
+
+If we want to use regression for *conditioning*, then the model would look different:
+
+$$E[Y_i(D_i = d, X_i = x)] = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i}$$
+
+- here we add conditioning variables $\mathbf{X_i}$ to the model. 
+- regression is estimating the conditional expectation function $E[Y(d) | D = d, X = x]$: this is what we need for conditioning 
+
+---
+
+$$Y_i(D_i = d, X_i = x) = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i} + \epsilon_i$$
+
+Given what we have learned about regression so far...
+
+- How is using regression to estimate $E[Y(d) | D = d, X = x]$ different from when we exactly matched cases?
+- How do the assumptions required for conditioning translate to the regression context?
+
+
+---
+
+Classic "matching" to impute...
+
+$\widehat{ACE} = \sum\limits_{x \in X} \underbrace{Pr[X = x]}_{\text{Fraction } X = x}\overbrace{(E[Y_i(1) | D_i=1, X_i = x] - E[Y_i(0) | D_i = 0, X_i = x])}^{\text{Treated - Untreated, same in x}}$ 
+
+
+How does Regression differ?
+
+---
+
+
+### Regression: Causal Effect Weights
+
+Positivity requirement speaks to **what subsets of the data** contribute to our causal estimate:
+
+- in exact matching, subsets of $X$ without variation in $D$ get weight of $0$
+- otherwise, in proportion to number of cases in strata of $X$.
+
+If regression returns weighted average partial derivative of $ACRF$...
+
+>- What are the weights?
+
+---
+
+### Regression: Causal Effect Weights
+
+[Aronow and Samii (2016)](https://doi.org/10.1111/ajps.12185) discuss how regression weights cases:
+
+In a regression context, cases contribute to estimating $\beta_D$ (causal effect of $D$) as a weighted average:
+
+$$\beta_D = \frac{1}{\sum\limits_i^n w_i}\sum\limits_i^n \tau_iw_i$$
+Where $w_i = [D_i - E(D_i | X_i)]^2$: the square of $D$ residual on $\hat{D}$ predicted by $X$.
+
+$\tau_i = Y(D_i = 1) - Y(D_i = 0)$ (unit causal effect)
+
+
+---
+
+### Regression: Causal Effect Weights
+
+These weights are **lower** when $D$ is well predicted by $X$.
+
+These weights are **higher** when $D$ is less well predicted by $X$.
+
+Thus, for cases where values of $X$ nearly perfectly predict $D$, there is close to zero positivity, and weights are closer to zero:
+
+- in the best case scenario where $D$ is truly linear in $X$, these weights make sense
+- if $D$ is not linear in $X$, then these weights also reflect errors in model and **upweight** cases which are fit poorly.
+
+---
+
+### Regression: Causal Effect Weights
+
+Regression weights may behave usefully (less weight where we have less variation in $D$, so less information), but they **change** causal estimand:
+
+- we need to ask, for what set of cases are we estimating effects?
+- the weights used are only easily interpreted under specific conditions
+
+---
+
+### Regression and Weights
+
+If $D$ is *continuous*, regression **also** places more or less weight on different values of $d$:
+
+---
+
+<img src="./angrist_krueger.png" width = 55%>
+
+
+---
+
+
+<img src="./angrist_pischke.jpeg" width = 80%>
+
+
+# Conditioning w/ Regression
+
+---
+
+### Conditioning with Regression
+
+**How it works**:
+
+Imagine we want to know the efficacy of UN Peacekeeping operations [(Doyle & Sambanis 2000)](https://www.jstor.org/stable/2586208) after civil wars:
+
+We can compare the post-conflict outcomes of countries with and without UN Peacekeeping operations.
+
+To address concern about confounding, we condition on war type (non/ethnic), war deaths, war duration, number of factions, economic assistance, energy consumption, natural resource dependence, and whether the civil war ended in a treaty. 
+
+---
+
+122 conflicts... can we find exact matches?
+
+```{r echo = F, message=F, warning=F}
+
+vars = c('untype4', 'logcost', 'wardur', 'factnum', 'trnsfcap', 'treaty', 'develop', 'exp', 'decade')
+
+ds2000[, id := 1:.N]
+plot_data = melt(ds2000, 
+                 id.vars = c('id', 'untype4'),
+                  measure.vars = vars)
+plot_data[, Peacekeeping := factor(untype4, levels = c(0,1), labels = c('No', 'Yes'))]
+ggplot(plot_data[!(variable %in% c('untype4'))], aes(x = value, group = Peacekeeping, fill = Peacekeeping)) +
+  geom_histogram(position = 'identity', alpha = 0.5) + 
+  theme_bw() + 
+  facet_wrap(~ variable, nrow = 2, scales = 'free') +
+  theme(legend.position="bottom")
 
 ```
 
+---
 
---- 
+Using just `treaty` (2 values), `decade` (6 values), `factnum` (8 values), `wardur` (43 values), we have only one exact match... 
 
-```{r, echo=F, message=F}
-ggplot(cef, aes(x = AGE, y = INCEARN,  weight = respondents)) + geom_point(alpha = 0.75, aes( size = respondents))  + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
 
+---
+
+Without perfect matches on possible confounders, we don't have cases without a Peacekeeping operation that we can use to substitute for the counterfactual outcome in conflicts with a Peacekeeping force.
+
+We can use regression to *linearly approximate* the conditional expectation function $E[Y(d) | D = d, X = x]$ to plug in the missing values.
+
+$$Y_i = \beta_0 + \beta_D D_i + \mathbf{X_i\beta_X} + \epsilon_i$$
+
+---
+
+Download the data
+
+```{r, eval = F}
+ds2000 = read.csv("https://www.dropbox.com/s/4miay9ezzjp03w7/ds2000.csv?dl=1") 
 ```
 
-Does the regression line fit all values of $E[Y|X=x]$ equally well?
+
+1. Regress `success` on `untype4` ($D$) and `logcost`, `wardur`, `factnum`, `trnsfcap`, `treaty'`, `develop`, `exp`, `decade`, using `lm()`, save this as `m`
+2. Use model to predict *counterfactual* potential outcomes for each conflict:
+  - Create a copy of `ds2000`, `ds2000_cf`, and flip the value of `untype4` (0 to 1, 1 to 0).
+  - Use the `predict(m, newdata = ds2000_cf)` to add a new column called `y_hat` to `ds2000`.
 
 ---
 
-### Least Squares and CEF
+Next:
 
-Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
-
->- It is "best" linear approximation in that the overall set of predictions $\hat{y}$ has least distance to $y$
->- Least Squares could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
-
-### Least Squares and CEF
-
-Alternatively, least squares is a particular weighted average of derivative of non-linear CEF (board)
-
-- weights greater closer to median of $x$ 
-
----
-
-Exercise: Download the data. Contains mean income for each group of people with the same `AGE` in years
-
-[https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
-
----
-
-Exercise:
-
-- Plot INCEARN by AGE (`plot` or `ggplot`)
-
-Use matrix calculations in `R` to obtain the linear approximation of $E(Y_i | X_i)$:
-
-`solve(t(X) %*% X) %*% t(X) %*% y`
-
-- What is the intercept? What does it mean?
-- What is the slope? What does it mean?
+3. Create a new column `y1`, which equals `success` for cases with `untype4 == 1`, and `yhat` for cases with `untype4 == 0`
+4. Create a new column `y0`, which equals `success` for cases with `untype4 == 0`, and `yhat` for cases with `untype4 == 1`
+5. Calculate `tau_i` as the difference between `y1` and `y0`. Then calculate the mean `tau_i`.
+6. Compare to the coefficient on `untype4` in your regression results.
 
 ---
 
 ```{r}
-#With individual, not grouped data...
-X = cbind(1, acs_data$AGE)
-y = acs_data$INCEARN
+m = lm(success ~ untype4 + treaty  + decade + 
+                factnum + logcost +  wardur + trnsfcap + develop + exp,
+       data = ds2000)
 
-beta = solve(t(X) %*% X) %*% t(X) %*% y
+ds2000_cf = ds2000 %>% copy
+ds2000_cf$untype4 =  1*!(ds2000_cf$untype4)
 
-beta
-```
-
-Do your estimates agree? Why or why not?
-
----
-
-We are not accounting for the **number of people in each value of $X_i$**
-
-```{r}
-#With aggregate data...
-X = cbind(1, cef$AGE)
-y = cef$INCEARN
-w = cef$respondents 
-w = w * diag(length(w))
-beta = solve(t(X) %*% w %*% X) %*% t(X) %*% w %*% y
-
-beta
+ds2000[, y_hat := predict(m, newdata = ds2000_cf)]
+ds2000[, y1 := ifelse(untype4 %in% 1, success, y_hat)]
+ds2000[, y0 := ifelse(untype4 %in% 0, success, y_hat)]
+ds2000[, tau := y1 - y0]
+ds2000[, tau] %>% mean
 ```
 
 ---
 
-### Least Squares and CEF
+### Results:
 
-We can reproduce any individual-level least squares by:
+<small>
 
-1. Collapsing data to all unique values $X_i$ to groups: $X_g$ across $g \in G$
-2. Take the group mean of $Y_i$: $Y_g$
-3. Regress $Y_g$ on $X_g$, weighting by group size $n_g$.
-
-We are directly modelling the conditional expectation of $E(Y_i | X_i)$ as a linear function.
-
----
-
-### Least Squares and CEF
-
-What does this tell us?
-
-- Least squares will more closely approximate $E[Y|X=x]$ for values of $x$ that are more frequent
-
----
-
-### Least Squares and CEF
-
-Given this, how can we interpret the coefficients of the least squares regression you performed **in terms of the CEF**?
-
-- how do you interpret intercept?
-- how do you interpret slope?
-
-
-# Linearity in Least Squares
-
----
-
-### Least Squares is linear in parameters
-
-
-What does this mean?
-
-- $\mathbf{X\beta}$ means we multiply values of $x$ by coefficients, then add them
-
-This has implications for:
-
-- imputing values/controlling for possible confounders
-- how we set up design matrix to estimate effects
-- how to interpret these coefficients
-
----
-
-
-$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
-
----
-
-### Least Squares and Group Means
-
-We can calculate the mean using least squares ($X$ is just a vector of $1$s).
-
-Simplest extension is to fit means for different groups.
-
->- Contrast this with weighted average of derivatives. We can fit the mean of $y$ for any arbitrary value of $x$
-
----
-
-### Least Squares and Group Means
-
-Suppose we want to estimate earnings as a function of gender
-
-$Earnings_i = b_0 + b_1 \ Female_i$
-
-assuming, as the survey data does, the gender binary
-
-1. What does the design matrix $X$ in this regression look like?
-2. What does the $b_0$ tell us?
-3. What does the $b_1$ tell us? 
-4. What does $b_0 + b_1$ tell us?
-
-
----
-
-```{r}
-m1 = lm(INCEARN ~ FEMALE, acs_data)
-summary(m1) %>% .$coefficients
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Model 1` = m), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T
+             )
 ```
 
-How would the coefficients change if we changed the design matrix so that instead of a vector of $1$ and  indicated Female ($1$) vs Male ($0$), we used a vector of $2$ and indiciated Female ($2$) vs Male ($0$)?
+</small>
+
 
 ---
 
+```{r echo= F, warning=F, message=F, results = 'asis'}
+setkey(ds2000, untype4)
 
-### Least Squares and Group Means
+k_dat_full = ds2000[, list(`$i$` = 1:.N,
+              UN = untype4, 
+              y1 = sprintf("%.2f", y1),
+              y0 = sprintf("%.2f", y0),
+              tau_i = sprintf("%.2f", y1 - y0))]
 
-$Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
+k_dat_empty = k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{E[Y(1) | D = 0, X = x]}$"),
+              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{E[Y(0) | D = 1, X = x]}$"),
+              `$\\tau_i$` = "$\\color{red}{?}$")]
+k_dat_xbeta = k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = ifelse(UN, y1, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 1 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$Y_i(0)$` = ifelse(!UN, y0, "$\\color{red}{\\widehat{\\beta_0} + \\widehat{\\beta_{D}} \\cdot 0 + \\mathbf{X_i\\widehat{\\beta_{X}}}}$"),
+              `$\\tau_i$` = "$\\color{red}{?}$")]
 
-1. What does the design matrix $X$ in this regression look like?
-2. What does the $b_0$ tell us?
-3. What does the $b_1$ tell us?
-4. What does the $b_2$ tell us?
 
+k_dat_empty %>%
+  tail(12) %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
 
-```{r}
-m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
 ```
 
 
 ---
 
-### Least Squares and Group Means
+```{r echo= F, warning=F, message=F, results = 'asis'}
 
-$Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
+k_dat_xbeta %>%
+  tail(12) %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
 
-
-1. What does the design matrix $X$ in this regression look like?
-2. What does the $b_0$ tell us?
-3. What does the $b_1$ tell us?
-4. What would the residuals be in this case? In the other models?
-
-```{r}
-m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
 ```
 
---- 
+---
 
-$Earnings_i = b_0 + b_1 \ Female_i $
+```{r echo= F, warning=F, message=F}
 
-```{r, }
-#Design matrix
-model.matrix(m1) %>% head
+k_dat_full[, list(`$i$`,
+              `$UN_i$` = UN, 
+              `$Y_i(1)$` = y1,
+              `$Y_i(0)$` = y0,
+              `$\\tau_i$` = paste0("$\\color{red}{",tau_i,"}$")
+              )] %>%
+  .[, `$Y_i(1)$` := cell_spec(`$Y_i(1)$`, color = ifelse(`$UN_i$`, "black", "red"))] %>%
+  .[, `$Y_i(0)$` := cell_spec(`$Y_i(0)$`, color = ifelse(!`$UN_i$`, "black", "red"))] %>%
+  tail(12) %>%
+  kbl(escape = F) %>%
+  kable_material(c("striped", "hover"))
 
-#Interpret:
-coefficients(m1)
-```
-
---- 
-
-$Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
-
-```{r}
-#Design matrix
-model.matrix(m2) %>% head
-
-#Interpret:
-coefficients(m2)
-```
-
---- 
-
-$Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
-
-```{r}
-#Design matrix
-model.matrix(m3) %>% head
-
-#Interpret:
-coefficients(m3)
 ```
 
 
 ---
 
-### Least Squares and Group Means
+### Conditioning with Regression
 
-Lessons from these examples:
+**How it works**:
 
-1. Despite different coefficients, least squares makes **identical predictions** $\hat{y}$
-
-2. We need to specify design matrix/model to get estimates of interest. (e.g. difference in means)
-
-3. If we have **exclusive** indicator variables for belonging to distinct categories (sometimes called "dummy variables"), must drop one group if we fit an intercept. (Why?)
-
-4. If we fit group means: residuals are deviation from group means (centered at 0 within each group). 
+- Rather than "fill" missing potential outcomes of $Y(d)$ with observed outcomes that cases that **match** exactly on $X$, we fit the linear conditional expectation function, plug in the predicted value for counterfactual potential outcome
+- Rather than **hold confounders constant**, we obtain "plug-in" equation by requiring conditioning variables and $D$ to be orthogonal (perfectly $0$ linear correlation).
 
 ---
 
-### Dummy Variables
+### Conditioning with Regression
 
-If there is an intercept
+**Assumptions**
 
-- **one category must be excluded** ("reference group"); otherwise linear dependence.  (`R` will do this by default)
-- coefficient is **difference in means** between the group indicated by the dummy and the intercept ("reference group" mean)
+1. **Conditional Independence**: within strata of $X$, potential outcomes of $Y$ must be **independent** of cause $D$ (i.e. within values of $X$, $D$ must be as-if random)
 
-If there is no intercept:
-
-- all categories **must be included**
-- separate **intercepts** for each group: coefficient is the mean of the group indicated by the dummy (when all other variables are $0$).
+  - $\epsilon_i$ contributes to $Y_i$, so determines potential outcomes. Thus, this assumption is equivalent to $D_i \perp \!\!\! \perp \epsilon_i | X_i$.
+   - we specify the relationship between $X, D$, and $X,Y$ to be linear. So we must assume that any dependence is *linear* and *additive* (does not depend on combinations of variables in $X$)
 
 ---
 
-### Exercise:
+### Example: 
 
-How did different regions in the UK vote on Brexit?
+Let's turn to a different example: does working more hours increase earnings? Here we are interested in the **causal effect** of hours worked.
 
-- Download the `brexit` data: [https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
-- use the `table` function to find out how what the different `Region` names are
 
 ---
-
-### Exercise:
-
-Using the `lm` function: (`lm(y ~ x, data = data)`)
-
-1. Regress `Pct_Lev` on `Region`
-2. Interpret the coefficients. (`summary(your_model)`)
-3. (Without looking at them) What would the predicted values $\widehat{Y}$ from this regression tell be - with respect to the regions?
-4. How should we interpret the residuals $e$?
-
----
-
-### Difference in Differences
-
-We have seen regression can generate group means, AND coefficients can be used to calculate differences in means.
-
-Recall, $ATT = (Treated_{post} - Treated_{pre}) - \\ (Untreated_{post} - Untreated_{pre})$
-
-How might we set up a regression to calculate the ATT?
-
----
-
-### Difference in Differences
-
-$Y_{it} = b_0 + b_1 Treated_i + b_2 Post_t + b_3 Treated_i\times Post_t$
-
-(board for design matrix)
-
-Different intercepts (means) for each group:
-
-|        | Untreated | Treated |
-|--------|------|--------|
-| Pre | `Intercept` | `Intercept + Treated` |
-| Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
-
-`lm(Y ~ Treated*Post, data = data)`
-
-# Least Squares with Controls
-
----
-
-### Interpreting w/ Controls
-
-So far, we have considered fitting group means.
-
-- indicator/dummy variables have been for exclusive membership in groups
-- what happens if we control for membership in different groups?
-
----
-
-### Interpreting w/ Controls
-
-We want to estimate differences in earnings across gender, but we want to control for the sector of employment.
-
-In this data, we only have doctors and lawyers, so we can estimate the following:
-
-$Earnings_i = b_0 + b_1 \ Female_i + b_2 \ Medicine_i$
-
-Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if they are a doctor $0$ if they are a lawyer.
-
----
-
-### Interpreting w/ Controls
-
-1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Medicine_i$ and intercept, and $Earnings$
-
-- What is residual $Female_i^*$ in this case? (Think about residuals in models with group dummies above)
-
->- Residual $Female_i^*$ will be deviation from mean level of $Female$ in law and medicine
-
----
-
-### Interpreting w/ Controls
-
-2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Medicine_i$.
-
-- What would happen to $Var(Female^*)$ among doctors if ALL doctors were female?
-
->- No variation left - no observations differ from the mean of $1$, do not contribute to the slope (zero weight)
-
----
-
-### Example
-
-Let's now find the (approximate) linear conditional expectation function of earnings, across gender and profession:
-
-```{r}
-ls = lm(INCEARN ~ FEMALE + MEDICINE , acs_data)
-```
-
----
-
-### Example
 
 ```{r, echo = F}
-summary(ls)
+dagify(
+       income ~ hours,
+       income ~ gender,
+       income ~ age,
+       income ~ profession,
+       hours ~ gender,
+       hours ~ age,
+       hours ~ profession,
+       profession ~ gender,
+       labels = c('income' = "Earnings\n(Y)", 
+                  'hours' = 'Hours\nWorked (D)',
+                  'gender' = "Gender",
+                  'age' = 'Age',
+                  'profession' = 'Profession')) %>%
+  tidy_dagitty() %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label), color ='black') +
+theme_dag()
+  
 ```
-
-```{r, echo = F, include = F, message = F, warning=F}
-residual_hrswork = lm(FEMALE ~ MEDICINE, acs_data)$residuals
-plot_data = rbind(acs_data[, list(INCEARN, FEMALE, MEDICINE)], acs_data[, list(INCEARN, FEMALE, MEDICINE)])
-plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
-plot_data[, FEMALE := as.numeric(FEMALE)]
-plot_data[type == 'Residual', FEMALE := residual_hrswork]
-```
-
-How do we make sense of, e.g., the slope on `FEMALE`?
 
 ---
 
-### Example
+Let's say that we to block all backdoor paths, we estimate this **model**
 
-```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = MEDICINE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
+$$\begin{eqnarray}Y_i = \beta_0 + \beta_1 Hours_i + \beta_2 Female_i + \\ \beta_3 Age_i + \beta_4 Law_i + \epsilon_i\end{eqnarray}$$
+
+And we want to find $\beta_1$ with $\widehat{\beta_1}$
+
+- how are we assuming **linearity**?
+- how are we assuming **additivity**?
+
+---
+
+### Example:
+
+If we are imputing missing potential outcomes of earnings for different hours worked using this model...
+
+We need to ask...
+
+- Are relationships between age ($X$) and hours($D$), age ($X$) and income earned ($Y$) **linear**?
+- Are the earnings ($Y$) related to gender and age ($X$) in an **additive** way? (relationship between age and earnings the same for men and women?)
+- Are the effects of hours worked linear? The same, regardless of gender and age?
+
+---
+
+### Example: D and X
+
+```{r echo = F, include = F, warning=F, message = F}
+acs_data[, r_hours := lm(UHRSWORK ~ SEX + AGE + LAW, .SD)$residuals]
+acs_data[, r_hours_2 := lm(UHRSWORK ~ SEX*AGE*LAW, .SD)$residuals]
+acs_data[, r_hours_3 := lm(UHRSWORK ~ as.factor(SEX)*as.factor(AGE)*LAW, .SD)$residuals]
+acs_data[, Gender := ifelse(SEX == 1, "Female", "Male")]
+plot_data = acs_data[, list(hours = mean(UHRSWORK), inc = mean(INCEARN), 
+                r_hours = mean(r_hours), r_hours_2 = mean(r_hours_2),
+                r_hours_3 = mean(r_hours_3),
+                n = .N), by = list(Gender, AGE)]
+plot_data_2 = acs_data[, list(inc = mean(INCEARN), 
+                n = .N), by = list(Gender, UHRSWORK)]
+```
+
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Hours Worked") + ggtitle("Hours Worked by Age and Gender") + theme_bw()
+```
+
+
+---
+
+### Y and X
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Income") + ggtitle("Income by Age and Gender") + theme_bw()
+
 ```
 
 ---
 
-### Example
+### D and Y
 
-```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data_2, aes(x = UHRSWORK, y = inc, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Hours") + ylab("Mean Income") + ggtitle("Income by Hours and Gender") + theme_bw()
+
 ```
-
-
-
 
 ---
 
-### Example
-
-Let's now find the (approximate) linear conditional expectation function of earnings, across gender and hours worked:
-
-We're not controlling for a binary indicator, but a continuous variable.
+Assuming additivity and linearity:
 
 ```{r}
-ls = lm(INCEARN ~ FEMALE + UHRSWORK , acs_data)
+m_linear_additive = lm(INCEARN ~ UHRSWORK + Gender + AGE + LAW, data = acs_data) 
 ```
 
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law', "(Intercept)" = "Intercept")
+             )
+```
+
+
+How should we causally interpret coefficient for "Hours Worked"?
+
+</small>
+
+
 ---
 
-### Interpreting w/ Controls
+Assuming additivity and linearity:
 
-1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Hours_i$ and intercept, and $Earnings$
+```{r}
+m_linear_additive = lm(INCEARN ~ UHRSWORK + Gender + AGE + LAW, data = acs_data) 
+```
 
-- What is the residual/orthogonal $Female_i^*$ in this case? ()
+<small>
 
->- Residual $Female_i^*$ will have perfectly $0$ covariance/correlation with $Hours_i$
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law', "(Intercept)" = "Intercept")
+             )
+```
+
+
+Can we give causal interpretation to, e.g. coefficient "Law"? 
+
+</small>
+
 
 ---
 
-### Example
+
 
 ```{r, echo = F}
-summary(ls)
+dagify(
+       income ~ hours,
+       income ~ gender,
+       income ~ age,
+       income ~ profession,
+       hours ~ gender,
+       hours ~ age,
+       hours ~ profession,
+       profession ~ u,
+       income ~ u,
+       profession ~ gender,
+       labels = c('income' = "Earnings\n(Y)", 
+                  'hours' = 'Hours\nWorked (D)',
+                  'gender' = "Gender",
+                  'age' = 'Age',
+                  'profession' = 'Profession',
+                  'u' = '?')) %>%
+  tidy_dagitty() %>%
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+geom_dag_edges() +
+geom_dag_text(aes(label = label), color ='black') +
+theme_dag()
+  
 ```
-
-```{r, echo = F, include = F, message = F, warning=F}
-residual_hrswork = lm(FEMALE ~ UHRSWORK, acs_data)$residuals
-plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
-plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
-plot_data[, FEMALE := as.numeric(FEMALE)]
-plot_data[type == 'Residual', FEMALE := residual_hrswork]
-```
-
-How do we make sense of, e.g., the slope on `FEMALE`?
 
 ---
 
-### Example
+### Side note:
+
+We generally **cannot** give clear causal interpretation coefficients for variables $\mathbf{X}$ in our regression model. 
+
+We have chosen $X$ to block backdoor paths out of $D$. At a minimum...
+
+- $D$ is a possible mediator between $X$ and $Y$.
+- $D$ may be a collider. 
+- We have not blocked backdoor paths out of $X$.
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity and Additivity)") + geom_hline(yintercept = 0) + theme_bw()
+
+```
+
+Non-linear dependence between residual $D^*$ and X, despite regression
+
+---
+
+Assuming linearity, not additivity: linear relationship between *Age* and hours($D$)/earnings($Y$) allowed to differ by gender and profession
+
+```{r}
+m_linear_interactive = lm(INCEARN ~ UHRSWORK + Gender*AGE*LAW, data = acs_data)
+```
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive, `Linear/Interactive` = m_linear_interactive), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law')
+             )
+```
+
+</small>
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours_2, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + ggtitle("Residual Hours Worked (Assuming Linearity but NOT Additivity)") + geom_hline(yintercept = 0) + theme_bw()
+
+```
+
+Non-linear dependence between D and X, despite regression
+
+---
+
+Assuming neither linearity or additivity: fit an intercept for every combination of gender, profession, and age in years. (linear, but not by assumption)
+
+```{r}
+m_full = lm(INCEARN ~ UHRSWORK + as.factor(Gender)*as.factor(AGE) + LAW, data = acs_data)
+```
+
+<small>
+
+```{r echo = F, warning=F, message=F}
+modelsummary(list(`Linear/Additive` = m_linear_additive, `Linear/Interactive` = m_linear_interactive, `Nonlinear/Interactive` = m_full), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T,
+             fmt = 0,
+             coef_map = c('UHRSWORK' = 'Hours Worked', 'GenderMale' = 'Male', 'AGE' = "Age (Years)", "LAW" = 'Law')
+             )
+```
+
+</small>
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = AGE, y = r_hours_3 %>% round, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + geom_hline(yintercept = 0) + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
+
+```
+
+No dependence between $D$ and $X$, after regression
+
+---
+
+###  Conditional Independence in Regression
+
+Even if we included **all** variables on backdoor path between $D$ and $Y$, regression may still produce  biased estimate:
+
+- we assume the conditional expectation function is linear and additive. 
+- but the world might be non-linear and interactive 
+- **our decisions** about how to **specify the regression equation** can lead to bias: $\Rightarrow$ **model dependence**
+- Our imputation of missing potential outcomes is biased due to choices we make about **how to impute** (linear/additive)
+
+
+This bias can take two forms.
+
+---
+
+### (2) Interpolation Bias: 
+
+Typically: we approximate the relationship between variables in $X$ and $D$ to be additive and linear. If this approximation is wrong, we can have bias.
+
+- By forcing relationship between $X$ and $D$ to be linear and additive, conditioning on $X$ may not remove non-linear association between $X$ and $D$, $X$ and $Y$. $\to$ bias.
+- This unmodeled relationship will become part of $\epsilon_i$ (because $X$ affects $Y$), and will not be independent of $D_i$ (because there is a non-linear dependence between $X$ and $D$).
+- In other words, regression may "impute" wrong counterfactual values of $Y$.
+
+---
+
+What is wrong with interpolation bias?
+
+- In conditioning, we want to compare $Y_i(D_i = 1)|X_i$ to $Y_i(D_i = 0)|X_i$ for cases where values of confounding variables $X_i = x$ are the same
+- In regression, we compare $Y_i(D_i = 1)|X_i$ against **linear prediction** of $\widehat{Y}(D_i = 0)|X_i$.
+- In regression, $\beta_D$, effect of $D$, weighted by $w_i = [D_i - E(D_i | X_i)]^2 = [D_i - \hat{D_i}|X_i]^2$ the square of residual $D$ (**linearly predicted by** $X$)
+- This approximation may fail, sometimes spectacularly...
+
+---
+
+```{r, echo = F, message=F}
+set.seed(20250307)
+n = 100
+x = rnorm(n, sd = 2) %>% round
+d = ((4 + 0.75*x - 0.5*x^2 + rnorm(n, sd= 2))/3) %>% pnorm %>% rbinom(n = n, size = 1, prob = .)
+x[d == 0] = x[d==0] - 0.5
+y = 2 + d + -0.5*x+ x^2 + rnorm(n)
+
+m = lm(y ~ d + x)
+r_d = lm(d ~ x)$residuals
+
+y_alt = predict(m, newdata = data.frame(d = 1 - d, x = x))
+plot_data = data.table(x = x,
+           d = d %>% as.factor,
+           y = y,
+           y_alt = y_alt,
+           d_alt = (1 - d) %>% as.factor,
+           d_hat = lm(d ~ x)$fit,
+           var_d = r_d^2
+           )
+
+
+dens_data = plot_data[, list(raw = .N/100, adj = (.N/100)*mean(var_d)) , by = x]
+dens_data[, adj := adj / sum(adj)]
+setkey(dens_data, x)
+ggplot(plot_data, aes(x = x, y = y, color = d)) + geom_point(size = 2) + geom_point(aes(x = x, y = y_alt, color = d_alt), alpha = 0.4, size = 3, stroke = 0,  stat = 'unique', shape = 17) + theme_bw() + ggtitle("Interpolation Bias") 
+```
+
+transparent triangles indicate $\color{red}{\widehat{Y}}$ imputed by regression.
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+ggplot(plot_data, aes(x = x, y = d_hat)) + 
+  geom_point(size = 2, alpha = 0.4, stroke = 0,  stat = 'unique', shape = 17) + 
+  geom_point(aes(x = x, y = as.numeric(d) - 1)) + 
+    geom_smooth(aes(x = x, y = as.numeric(d) - 1), se = F, method = 'loess') +
+  theme_bw() + ggtitle("Interpolation Bias: Approximation of D|X") + 
+geom_line(data = dens_data, aes(x = x, y = raw * 2), inherit.aes = F) + 
+  geom_line(data = dens_data, aes(x = x, y = adj * 2), inherit.aes = F, color = 'red')
+
+```
+Actual (black) vs Regression (red) weights
+
+
+---
+
+```{r, echo = F, message = F, warning=F}
+require(modelsummary)
+
+m1 = lm(y ~ d + x)
+x2 = x^2
+m2 = lm(y ~ d + x + x2)
+
+modelsummary(list(m1,m2), gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T)
+```
+
+
+---
+
+
+```{r, echo = F, message=F}
+set.seed(20250307)
+n = 100
+x = rnorm(n, sd = 2) %>% round
+d = ((4 + 0.75*x - 0.5*x^2 + rnorm(n, sd= 2))/3) %>% pnorm %>% rbinom(n = n, size = 1, prob = .)
+x[d == 0] = x[d==0] - 0.5
+y = 2 + d + -0.5*x+ x^2 + rnorm(n)
+
+m = lm(y ~ d + x)
+r_d = lm(d ~ x)$residuals
+
+y_alt = predict(m, newdata = data.frame(d = 1 - d, x = x))
+plot_data = data.table(x = x,
+           d = d %>% as.factor,
+           y = y,
+           y_alt = y_alt,
+           d_alt = (1 - d) %>% as.factor,
+           var_d = r_d^2
+           )
+
+dens_data = plot_data[, list(raw = .N/100, adj = (.N/100)*mean(var_d)) , by = x]
+dens_data[, adj := adj / sum(adj)]
+setkey(dens_data, x)
+ggplot(plot_data, aes(x = x, y = y, color = d)) + geom_point(size = 2) + geom_point(aes(x = x, y = y_alt, color = d_alt), alpha = 0.4, size = 3, stroke = 0, stat = 'unique', shape = 17) + theme_bw() + ggtitle("Interpolation Bias") +
+geom_line(data = dens_data, aes(x = x, y = raw * 100), inherit.aes = F) + 
+  geom_line(data = dens_data, aes(x = x, y = adj * 100), inherit.aes = F, color = 'red') 
+```
+
+Actual (black) vs Regression (red) weights
+
+---
+
+### Interpolation Bias:
+
+When we  **approximate** of the relationship of confounding variables $X$ with $D$ and $Y$ through **linearity** (or any imposed functional form) and **additivity**, we may generate **interpolation bias** even if all confounders "blocked":
+
+- there may be non-linear, interactive dependencies between $D, X$, $X, Y$. (not blocked backdoor path)
+- prediction errors in $E[D|X]$ may up-weight/down-weight observations. (different causal estimand)
+
+---
+
+### Conditional Independence
+
+In the regression context, Conditional Independence involves
+
+- assuming that potential outcomes of $Y$ are independent of $D$, conditional on values of $X$ (as always, a very big assumption)
+- assuming that we have the chosen correct **functional form** of relationship between $Y,D,X$.
+
+If we specify model wrong, regression's linear and additive approximation of true CEF may lead us astray.
+
+---
+
+### Conditional Independence
+
+- Can detect problems with scatterplot of $D$ and $X$; $Y$ and $X$
+- Can choose more flexible model (non-linear/interactive)
+- Linear/additive apprx. may be acceptable because least squares is best linear apprx. of non-linear functions **within the region where we have data**.
+
+---
+
+### Positivity and Regression
+
+$2$. **Positivity**/**Common Support**: For **all** values of treatment $d$ in $D$ and all value of $x$ in $X$: $Pr(D = d | X = x) > 0$ and $Pr(D = d | X = x) < 1$
+
+  - There must be variation in the levels of treatment **within every strata** of $X$
+  - Without positivity, we cannot get an estimate of the $ACE$ or average causal response function, because there are subsets of the data that are missing values (can only get $ACE$ for subset of cases with positivity)
+
+---
+
+### Positivity and Regression
+
+
+Regression **seems** to solve the problem of positivity
+
+- on one hand: regression fills in missing potential outcomes using linear estimate of CEF
+
+---
+
+### Example:
+
+Does being a democracy cause a country to provide better public goods?
+
+We decide to estimate the following regression model. Let's assume that log GDP per capita is the only confounder we need to block.
+
+$Public \  Goods_i = \beta_0 + \beta_1 Democracy_i +$ $\beta_2 ln(Per \ Capita \ GDP_i) + \epsilon_i$
+
+---
+
+Download (simulated) data from here:
+
+```{r}
+data_9 = read.csv('https://www.dropbox.com/s/ultold1kgsvfs4s/example_9.csv?dl=1')
+```
+
+
+---
+
+$1$. Estimate $Public \  Goods_i = \beta_0 + \beta_1 Democracy_i + \beta_2 ln(Per \ Capita \ GDP_i) + \epsilon_i$ using the `lm` function. What is the 'effect' of democracy on public goods?
+
+$2$. What does this model assume about the relationship between per capita GDP and public goods for democracies? For non-democracies?
+
+$3$. Plot public goods on GDP per capita, grouping by democracy
+
+```
+require(ggplot2)
+ggplot(data_9, aes(x = l_GDP_per_capita, y = public_goods, colour = Democracy %>% as.factor)) + geom_point()
+```
+
+---
+
+$4$. What is the true functional form of the relationship between GDP per capita and public goods for Democracies? For non-democracies where GDP per capita is $> 0$? 
+
+$5$. Create a new variable for per capita GDP $< 0$.
+
+$6$. Repeat the regression from (1) for cases where `l_GDP_per_capita` $ < 0$. Why is the estimate of $\widehat{\beta_1}$ different?
+
+---
+
+### In this example:
+
+We observe no non-democracies with GDP per capita as high as some democracies, but want to condition on GDP per capita.
+
+#### Options
+
+- Using regression ($1$ on previous slide): we linearly **extrapolated** from the model what public goods for non-democracies with high per capita GDP would be (where we have no data, only the model)
+
+---
+
+```{r, echo = F, message = F, warning = F}
+data_9 = data_9 %>% as.data.table
+m_extrap = lm(public_goods ~ Democracy + l_GDP_per_capita, data_9)
+
+y_alt = predict(m_extrap, newdata = data.frame(Democracy = 1 - data_9$Democracy, 
+                                             l_GDP_per_capita = data_9$l_GDP_per_capita))
+plot_data = data.table(l_GDP_per_capita = data_9$l_GDP_per_capita,
+           Democracy = data_9$Democracy %>% as.factor,
+           public_goods = data_9$public_goods,
+           public_goods_cf = y_alt,
+           d_alt = (1 - data_9$Democracy) %>% as.factor)
+
+ggplot(plot_data, aes(x = l_GDP_per_capita, y = public_goods, color = Democracy)) + geom_point(size = 2) + geom_point(aes(x = l_GDP_per_capita, y = public_goods_cf, color = d_alt), alpha = 0.4, size = 3, stroke = 0,  stat = 'unique', shape = 17) + theme_bw() + ggtitle("Extrapolating beyond common support")
+```
+
+
+---
+
+We observe no non-democracies with GDP per capita as high as some democracies, but want to condition on GDP per capita.
+
+#### Options
+
+- Using regression ($1$ on previous slide): we linearly **extrapolated** from the model what public goods for non-democracies with high per capita GDP would be (where we have no data, only the model)
+
+or
+
+- Using regression ($6$ on previous slide): we restrict our analysis to the region of the data with common support (range of GDP per capita values that contain both democracies and non-democracies). Linear interpolation, but the model is not extrapolating to regions without data.
+
+---
+
+
+```{r, echo = F, message = F, warning = F}
+data_9_sub = data_9[l_GDP_per_capita < 0]
+m_sub = lm(public_goods ~ Democracy + l_GDP_per_capita, data_9_sub)
+
+y_alt = predict(m_sub, newdata = data.frame(Democracy = 1 - data_9_sub$Democracy, 
+                                             l_GDP_per_capita = data_9_sub$l_GDP_per_capita))
+plot_data = data.table(l_GDP_per_capita = data_9_sub$l_GDP_per_capita,
+           Democracy = data_9_sub$Democracy %>% as.factor,
+           public_goods = data_9_sub$public_goods,
+           public_goods_cf = y_alt,
+           d_alt = (1 - data_9_sub$Democracy) %>% as.factor)
+
+ggplot(plot_data, aes(x = l_GDP_per_capita, y = public_goods, color = Democracy)) + geom_point(size = 2) + geom_point(aes(x = l_GDP_per_capita, y = public_goods_cf, color = d_alt), alpha = 0.4, size = 3, stroke = 0,  stat = 'unique', shape = 17) + theme_bw() +  ggtitle("Restricting to common support")
+```
+
+
+---
+
+### Extrapolation Bias
+
+Typically: we approximate the relationship between variables in $X$ and $D$ to be additive and linear. 
+
+If $D = 1$ never occurs for certain values of $X$ (e.g. $X > 0$), regression model will use linearity (or ANY functional form$^*$) to **extrapolate** a predicted value of what $D = 1$ would look like when $X > 0$.
+
+- King and Zeng show that extrapolations are very **sensitive to model choice**: small changes in assumptions create large changes in estimates.
+
+$^*$: Linearity might not even be the **worst** for extrapolation.
+
+---
+
+### Positivity and Regression
+
+Regression **seems** to solve the problem of positivity:
+
+- on one hand: regression fills in missing potential outcomes using linear estimate of CEF
+- on the **other hand**: regression extrapolates out to infinity, even where this is no data (recall: interpreting the intercept). 
+- if there is a lack of positivity, our results may depend on extensive extrapolation **beyond the data**. 
+- linear approximations of potential outcomes where we have no data likely to be **terrible** (no data to determine the best linear fit)
+- a lack of positivity **exacerbates** problems of regression
+
+---
+
+```{r echo = F, message=F, warning=F}
+
+vars = c('untype4', 'logcost', 'wardur', 'factnum', 'trnsfcap', 'treaty', 'develop', 'exp', 'decade')
+
+ds2000[, id := 1:.N]
+plot_data = melt(ds2000, 
+                 id.vars = c('id', 'untype4'),
+                  measure.vars = vars)
+plot_data[, Peacekeeping := factor(untype4, levels = c(0,1), labels = c('No', 'Yes'))]
+ggplot(plot_data[(variable %in% c('treaty', 'develop'))], aes(x = value, group = Peacekeeping, fill = Peacekeeping)) +
+  geom_histogram(position = 'identity', alpha = 0.5) + 
+  theme_bw() + 
+  facet_wrap(~ variable, scales = 'free') +
+  theme(legend.position="bottom")
+
+```
+
+Is there common support here? Let's just condition on these two variables
+
+
+---
+
+
+$$Success_i = b_0 + b_1 Peacekeeping_i + b_2 Treaty_i + b_3 Development_i$$
+
+We assume each variable contributes additively and linearly to successful post-conflict situations
+
+---
+
+```{r echo = F, warning = F, message = F}
+m_lin = lm(success ~ untype4 + treaty + develop ,
+       data = ds2000)
+
+cf_ds2000 = ds2000 %>% copy
+cf_ds2000$untype4 =  1 - (cf_ds2000$untype4)
+
+ds2000[, y_hat := predict(m_lin, newdata = cf_ds2000)]
+ds2000[, d_alt := factor(1-untype4, levels = 0:1, labels = c("No", "Yes"))]
+ds2000[, Peacekeeping := factor(untype4, levels = 0:1, labels = c("No", "Yes"))]
+
+ate_hat = ds2000[, ifelse(untype4 %in% 1, success - y_hat, y_hat - success)] %>% mean %>% round(3)
+
+ggplot(ds2000, aes(x = develop, y = success, color = Peacekeeping)) +
+  geom_point() + 
+  geom_point(aes(x = develop, y = y_hat, color = as.factor(d_alt)), shape = 17, alpha = 0.2) + 
+  theme_bw() + 
+  ggtitle("Linear and Additive")
+```
+
+---
+
+In the linear context, the estimated average treatment effect of peacekeeping is `r ate_hat`
+
+What if we permit a more flexible model: we model effect of peacekeeping as possibly different across treaty, economic development (we permit treaty and development to interact with peacekeeping)?
+
+
+```{r echo = F, warning = F, message = F}
+m_alt = lm(success ~ untype4 * treaty * develop ,
+       data = ds2000)
+
+
+ds2000[, y_hat := predict(m_alt, newdata = cf_ds2000)]
+ds2000[, d_alt := factor(1-untype4, levels = 0:1, labels = c("No", "Yes"))]
+ds2000[, Peacekeeping := factor(untype4, levels = 0:1, labels = c("No", "Yes"))]
+
+ate_hat_alt = ds2000[, ifelse(untype4 %in% 1, success - y_hat, y_hat - success)] %>% mean %>% round(3)
+
+```
+
+Then the estimated average treatment effect is: `r ate_hat_alt`
+
+Why the big discrepancy?
+
+>- We are extrapolating to areas where there are no cases observed with a peacekeeping operation. Small changes in model lead to large changes in estimates.
+
+---
+
+```{r echo = F, warning = F, message = F}
+ggplot(ds2000, aes(x = develop, y = success, color = Peacekeeping)) +
+  geom_point() + 
+  geom_point(aes(x = develop, y = y_hat, color = as.factor(d_alt)), shape = 17, alpha = 0.2) + 
+  theme_bw() + 
+  ggtitle("Linear and Interactive")
+```
+
+(Allowing effects of peacekeeping to vary across treaty and development)
+
+---
+
+### Extrapolation Bias
+
+Regression will **extrapolate** coefficients beyond the support of the data to "plug in" missing counter-factuals.
+
+- extrapolation is **unconstrained** and can be wildly wrong
+- no warning that this is happening.
+
+
+# Conditioning with Regression in Practice
+
+---
+
+### How do we address these issues?
+
+- Interpolation Bias
+- Extrapolation Bias
+- ~~Weighting~~ (another time)
+
+
+
+
+what to do about...
+
+  interpolation bias:
+    - flexible functional forms... polynomials not a great choice (show slide from last week)
+    - natural splines:
+        - splines: fit different slopes for different segments of the data...
+        - basics: cubic polynomial that are "piece-wise", but must be continuous at cutpoints; linear at ends
+        - example... hours worked
+        - choice of knots...
+            - how do we choose? cross validation
+            - cross-validation explained
+  
+  extrapolation bias:
+    - convex hull? 
+    - histogram of covariates by treatment group (what to do if treatment is continuous?... not clear)
+    
+    
+  saturated regression... 
+  
+    - what is it?
+    - how does it work?
+    - limits extrapolation
+
+---
+
+### Interpolation Bias
+
+#### Solutions?
+
+- Visually explore data to look into plausible linearity (scatter plots)
+- More flexible functional form assumptions 
+
+---
+
+### Visual Inspection:
+
+Before running a regression, scatterplots and histograms of variables. Looking to explore possible non-linearities, unexpectedly large/small values.
+
+`ggpairs` in `GGally` package is nice.
+
+```ggpairs(ds2000)```
+
+
+---
+
+```{r echo = F, message=F, warning=F}
+require(GGally)
+my_fn <- function(data, mapping, method="loess", ...){
+      p <- ggplot(data = data, mapping = mapping) + 
+      geom_point() + 
+      geom_smooth(method=method, ...)
+      p
+    }
+ggpairs(ds2000[,ncol(ds2000):1], lower = list(continuous = my_fn))
+```
+
+---
+
+### Flexible Specification
+
+We saw we can use polynomial expansions
+
+- but these have problems with over-fitting, bad interpolation/extrapolation.
+
+
+**Splines** [https://bookdown.org/ssjackson300/Machine-Learning-Lecture-Notes/splines.html](See here) 
+
+- fit separate slopes/polynomials for different segments along values of $X$.
+
+---
+
+
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on AGE")
+library(MASS)
+require(splines)
+y = Boston$medv
+x = Boston$lstat
+sort.x = sort(x)
+y.lab = 'Median Property Value'
+x.lab = 'Lower Status (%)'
+plot(x, y, cex.lab = 1.1, col="darkgrey", xlab = x.lab, ylab = y.lab,
+     main = "", bty = 'l')
 ```
 
----
 
-### Interpreting w/ Controls
-
-2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Hours_i$.
-
-- What happens to $Var(Female^*)$ for values of hours worked where $Hours_i$ badly predicts $Female_i$?
-
->- Greater variance! Increased weight on those observations
 
 ---
 
-### Example
+Instead of fitting a single slope in X...
 
 ```{r, echo = F, warning=F, message=F}
-ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+fit1 = predict(lm(y ~ x), newdata = list(x = sort.x))
+
+plot(x, y, cex.lab = 1.1, col="darkgrey", xlab = x.lab, ylab = y.lab,
+     main = "", bty = 'l')
+lines(sort.x, fit1, lwd = 2, col = "black")
 ```
 
 ---
 
-### Interpreting w/ Controls
 
-What could we do if we really wanted to "hold hours worked constant"? 
+We can fit slopes, piecewise..
 
-- Compare earnings by gender **within** groups where hours are the same  (think about our indicator variables from earlier)?
+```{r, echo = F, warning=F, message=F}
 
-# Conclusion
+cuts = quantile(x, probs = c(1:3)/4)
 
+fit2 = predict(lm(y ~ bs(x, degree = 1, knots = cuts)), newdata = list(x = sort.x))
+
+plot(x, y, cex.lab = 1.1, col="darkgrey", xlab = x.lab, ylab = y.lab,
+     main = "", bty = 'l')
+lines(sort.x, fit1, lwd = 2, col = "black")
+lines(sort.x, fit2, lwd = 2, col = "red")
+
+```
+
+---
+
+
+Better still is to fit polynomials, piecewise...
+
+```{r, echo = F, warning=F, message=F}
+
+cuts = quantile(x, probs = c(1:3)/4)
+
+fit3 = predict(lm(y ~ bs(x, degree = 3, knots = cuts)), newdata = list(x = sort.x))
+
+plot(x, y, cex.lab = 1.1, col="darkgrey", xlab = x.lab, ylab = y.lab,
+     main = "", bty = 'l')
+lines(sort.x, fit1, lwd = 2, col = "black")
+lines(sort.x, fit2, lwd = 2, col = "red")
+lines(sort.x, fit3, lwd = 2, col = "blue")
+
+```
+
+---
+
+### Splines
+
+Choices to be made:
+
+- what degree polynomial?
+- where are the "knots" that define separate segments?
+- what should happen at the extreme values of X?
+
+Common choice: "natural cubic splines"
+
+- cubic polynomial, but linear at the min/max of X.
+- still have to choose knots. Common to choose by quantile (e.g. quartiles)
+
+
+---
+
+```{r, eval = F}
+lm(success ~ untype4 + splines::ns(logcost), data = ds2000)
+```
+
+
+Replicate regression `success` on `untype4` and other variables; now using `splines::ns()` for all other continuous variables.
+
+
+--- 
+
+### Addressing Extrapolation Bias
+
+If treatment is binary:
+
+- histograms of covariates, color coded by treatment.
+- use flexible model to fit "propensity score" (probability of treatment); drop observations with $Pr(D=1)$ close to $0,1$.
+
+If treatment is continuous:
+
+- Not any really great tools.
+
+
+
+
+---
+
+### Saturated Regression
+
+One solution to **extrapolation** and **interpolation** bias is **saturated regression**
+
+- a dummy variable for **every** unique combination of values for conditioning variables $X$.
+- we now compare difference in averages of treated/untreated **within** each strata of $X$
+- returns **an** average causal effect, but weighted by $N$ and **variance** of $D$ within each strata of $X$. If $D$ is binary, weights have precise interpretation.
+
+---
+
+### Saturated Regression
+
+Pros:
+
+- no possibility of **interpolation**: model is still linear and additive in $X$, but "assumption-free" because all unique values of $X$ have their own means (turn potentially non-linear/interactive CEF into a linear problem).
+- zero weight on strata of $X$ with all "treatment"/all "control" (no **extrapolation**)
+    - why is this the case?
+
+---
+
+### Example:
+
+What is the effect of poverty on prejudice?
+
+Courtin, Nellis, and Weaver examine the determinant of Anti-Muslim prejudice in Myanmar just before the 2017 genodice of the Rohingya.
+
+Using survey reported income and prejudice, examine the estimated effect of income on prejudice.
+
+
+---
+
+
+```{r, echo = F, warning = F, message = F}
+# declare outcomes
+  ys <- 
+    c("svy_sh_anti_muslim_prejudice_average")
+
+# declare explanatory variables
+  xes <- 
+    c("svy_sh_income_rc")
+
+# declare controls (with labels)      
+  controls_w_labels <- 
+    tribble(
+      ~vname, ~vlabel, ~type,
+      "svy_sh_female_rc", "Female", "ind",
+      "svy_sh_age_rc", "Age Group", "ind",
+      "svy_sh_education_rc", "Education Level", "ind",
+      "svy_sh_ethnicity_rc", "Ethnicity", "ind",
+      "svy_sh_religion_rc", "Religion", "ind",
+      "svy_sh_profession_type_rc", "Profession", "ind",
+      "svy_sh_income_source_rc", "Income Source", "ind",
+      "cen21_hindu_pct", "Hindu pct. 1921", "twp",
+      "cen21_muslim_pct", "Muslim pct. 1921", "twp",
+      "cen83_urban_pct", "Urban pct. 1983", "twp",
+      "cen83_total_pop", "Total pop. 1983", "twp",
+      "geo_border_township", "Border township", "twp",
+      "geo_elevation", "Elevation", "twp",
+      "geo_km_to_yangon", "Distance to Yangoon", "twp",
+      "geo_terrain_ruggedness", "Ruggedness", "twp",
+      "svy_sh_tsp_code", "Township FE", "fe",)
+
+  t_fe = 'svy_sh_tsp_code'
+# subset to Buddhist respondents   
+  ind_df <- 
+    analysis_df %>% 
+    filter(svy_sh_religion_rc %in% "Buddhist")
+
+# Define covariates
+  i_covs <- controls_w_labels %>% filter(type %in% "ind") %>% pull(vname)
+  t_covs <- controls_w_labels %>% filter(type %in% "twp") %>% pull(vname)
+  t_sat <- "t_saturated"
+
+# Create saturated controls
+  ind_df <-  
+    ind_df %>%
+    unite("i_saturated", all_of(i_covs), sep = ":", remove = F) %>%
+    unite("t_saturated", all_of(c(i_covs, t_covs)), sep = ":", remove = F)
+
+# equations
+  rhs <-  
+    paste(c(xes, #naive
+    paste(c(xes, i_covs, t_covs), collapse = " + "), #individual covariates
+    paste(c(xes), collapse = " + ") #individual + town saturated covars
+    ),
+    c(0, 0, 't_saturated'),
+    sep = " | ")
+
+# combine with DV
+  formulae <- 
+    lapply(ys, function(y) paste(y, "~", rhs)) %>% 
+    unlist
+
+# run models
+  models <- 
+    lapply(formulae, function(f) feols(formula(f), data = ind_df, cluster = t_fe))
+
+# formatting functions  
+  f1 <- function(x) format(round(x, 2), nsmall = 2)
+  f2 <- function(x) format(round(x, 0), big.mark=",")  
+  
+# modsum function
+  modsum_fun <- 
+    function(models) {
+      
+      df <- 
+        models %>%
+        modelsummary(., 
+          stars = c("*" = 0.1, "**" = 0.05, "***" = 0.01),
+          coef_map = c('svy_sh_income_rc' = "Income level (1-4)"),
+          gof_map = 
+            tribble(
+              ~raw, ~clean, ~fmt, ~omit,
+              "nobs", "$N$", f2, F,
+              "r.squared", "$R^2$", f1, F), 
+          output = "data.frame")       %>% 
+        mutate(term = ifelse(statistic == "std.error", "", term)) %>%
+        select(-1)
+      
+    }
+
+# clean and combine
+  out <-  bind_rows(models %>% modsum_fun)
+
+# print   
+    out %>% 
+    select(-2) %>%
+    kable(
+      #"latex", 
+      #booktabs = T, 
+      escape = F,
+      align = c("l", rep("c", 3)),
+      col.names = linebreak(c("", "(1)", "(2)", "(3)"), align = "c"),
+      linesep = "") %>% 
+    kable_styling(font_size = 14) %>% 
+    add_header_above(
+      c("Township covariates:", "None", "Linear", "Saturated"), 
+      line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3))) %>% 
+    add_header_above(
+      c("Individual covariates:", "None", "Linear", "Saturated"), 
+      line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3))) %>%
+    add_header_above(
+      c("", "Naive", "Linear", "Saturated"), 
+      line = F, italic = c(T, rep(F, 3)), align = c("l", rep("c", 3)))
+  
+```
+
+
+---
+
+### Saturated Regression
+
+```{r}
+analysis_df = analysis_df %>% 
+  mutate(saturated = paste(svy_sh_female_rc, svy_sh_age_rc, 
+                           svy_sh_education_rc, svy_sh_ethnicity_rc,  
+                           svy_sh_religion_rc, svy_sh_profession_type_rc, 
+                           svy_sh_income_source_rc, 
+                           sep = ":"))
+```
+
+
+---
+
+```{r, echo = F}
+
+analysis_df$saturated %>% head(10) %>% kable
+
+```
+
+---
+
+### Saturated Regression
+
+We can use regression for conditioning without **interpolation** bias, **extrapolation** bias, but
+
+- we still make conditional independence assumption
+- saturated regression suffers from **curse of dimensionality** (a lot of $N$ needed, usually)
+- returns a **variance-weighted effect**, may not be what we want (this is fixable, though)
+
+>- Nevertheless, is a good starting point for choosing a model.
 

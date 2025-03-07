@@ -1,0 +1,791 @@
+---
+title: "POLI 572B"
+author: "Michael Weaver"
+date: "March 8, 2024"
+widgets: [bootstrap]
+output: 
+  revealjs::revealjs_presentation:
+    theme: white
+    highlight: haddock
+---
+
+
+```{r setup, include = F}
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(ggplot2)
+require(grid)
+require(data.table)
+require(UsingR)
+require(modelsummary)
+options("kableExtra.html.bsTable" = T)
+
+acs_data = fread("acs_lawmed.csv")
+acs_data[, FEMALE := SEX]
+acs_data[, MARST_f := as.factor(MARST)]
+set.seed(1234)
+acs_data = acs_data[sample(1:nrow(acs_data), size = 10000)]
+acs_data[, MALE := abs(FEMALE - 1)]
+acs_data[, MEDICINE := 1-LAW]
+acs_data[, sex := as.factor(ifelse(FEMALE == 1, 'Female', 'Male'))]
+
+brexit = fread("analysisData.csv")
+```
+
+
+<style type="text/css">
+  .reveal h2,h3,h4,h5,h6 {
+    text-align: left;
+  }
+  .reveal p {
+    text-align: left;
+  }
+  .reveal ul {
+    display: block;
+  }
+  .reveal ol {
+    display: block;
+  }
+  .table-hover > tbody > tr:hover { 
+  background-color: #696969;
+  color: #FFFFFF;
+  }
+</style>
+
+# Regression Interpretation
+
+---
+
+### Objectives
+
+**Recap**
+
+
+- Multivariate Least Squares mathematical properties
+
+
+**Interpretation**
+
+- Best Linear Approximation of CEF
+- Dummy Variables
+- Slopes and Intercepts
+
+
+
+# Multivariate Least Squares
+
+---
+
+
+### Multivariate Least Squares:
+
+Mean and least squares are **orthogonal projection** of $y$ on $X$.
+
+Previously we predicted $Y$ as a linear function of $x$:
+
+$$\hat{y_i} = b_0 + b_1 \cdot x_i$$
+
+Now, we can imagine predicting $y$ as a linear function of many variables:
+
+$$\hat{y_i} = b_0 + b_1 x_1 + b_2 x_2 + \ldots + b_k x_k$$
+
+
+---
+
+$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}$$
+
+---
+
+$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
+
+
+---
+
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$1$. **the mean of the residuals is always zero** (if we include an intercept). Because we included an intercept ($b_0$), and the regression line goes through the point of averages, the mean of the **residuals** is always 0. $\overline{e} = 0$. This is also true of residuals of the mean.
+
+---
+
+### Why?
+
+**the mean of the residuals is always zero**.
+
+We choose $\begin{pmatrix}b_0 \\ b_1 \end{pmatrix}$ such that $e$ is orthogonal to $\mathbf{X}$. One column of $\mathbf{X}$ is all $1$s, to get the intercept (recall how we used vectors to get the mean). So $e$ is orthogonal to $\begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix}$.
+
+$$\mathbf{1}'e = 0$$
+
+And if this is true, the $\sum e_i = 0$ so $\frac{1}{n}\sum e_i = 0$.
+
+---
+
+### Key facts about regression:
+
+The mathematical procedures we use in regression ensure that: 
+
+$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
+
+Recall that $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e}$
+
+
+We chose $\beta$ ($a,b$) such that $X'e = 0$ so they would be **orthogonal**. 
+
+$X'e = 0 \to \sum x_ie_i = 0 \to \overline{xe}=0$; 
+
+And, from above, we know that $\overline{e}=0$; 
+
+so $Cov(X,e) = \overline{xe}-\overline{x} \ \overline{e} = 0 - \overline{x}0 = 0$.
+
+---
+
+$2$. $Cov(X,e) = 0$. This is true by definition of how we derived least squares. 
+
+This **also means** that residuals $e$ are **always** <u>perfectly uncorrelated</u> (Pearson correlation) with **all** the columns in our matrix $\mathbf{X}$: all the variables we include in the regression model.
+
+
+---
+
+### Multivariate Least Squares:
+
+- When we calculated the mean using matrix algebra, we projected the $n$ dimensional vector $Y$ onto a point on a one-dimensional line.
+- When we calculated the bivariate regression line, we projected the $n$ dimensional vector $Y$ onto a $2$-dimensional space **spanned** by $\mathbf{1}$ and $\mathbf{x}$ (one for $b_0$ and one for $b_1$) (**board**)
+- When we use multi-variate regression, we project the $n$ dimensional vector $Y$ onto a $p$ dimensional space (one for each parameter/coefficient)
+
+---
+
+### Multivariate Least Squares:
+
+What is  "projecting onto $p$ dimensions"
+
+When we project into two dimensions, these dimensions are **precisely like** the $x$ and $y$ axes on a graph: perpendicular/orthogonal to each other. 
+
+In multivariate regression, because we are going to project $y$ onto $p$ **orthogonal** dimensions in $\mathbf{X}$. ($(\mathbf{X}'\mathbf{X})^{-1}$ transforms to orthogonal basis)
+
+- "under the hood", regression creates a new version of $\mathbf{X}$ where each column is **orthogonal to the others**
+
+---
+
+### Mathematical Requirements:
+
+1. Matrix $X$ has "full rank"
+  - This means that all of the columns of $\mathbf{X}$ are **linearly independent**.
+    - cannot have two identical columns
+    - cannot have  set of columns that sum up to another column multiplied by a scalar
+  - If $\mathbf{X}$ is not full rank, cannot be inverted, cannot do least squares.
+    - but we'll see more on the intuition for this later.
+    
+2. $n \geq p$: we need to have more data points than variables in our equation
+  - no longer trivial with multiple regression
+  
+---
+
+### Multivariate Least Squares:
+
+When we include more than one variable in the equation, we cannot calculate slopes using simple algebraic expressions like $\frac{Cov(X,Y)}{Var(X)}$.
+
+- Must use matrix algebra (this is why I introduced it)
+
+We calculate least squares using same matrix equation ($(X'X)^{-1}X'Y$) as in bivariate regression, but what is the math **doing** in the multivariate case?
+
+---
+
+### Multivariate Least Squares:
+
+When fitting the equation:
+
+$\hat{y_i} = b_0 + b_1x_i + b_2z_i$
+
+(1) $b_1 = \frac{Cov(x^*, Y)}{Var(x^*)}$
+
+Where $x^* = x - \hat{x}$ from the regression: $\hat{x} = c_0 + c_1 z$.
+
+(2) $b_2 = \frac{Cov(z^*, Y)}{Var(z^*)}$
+
+Where $z^* = z - \hat{z}$ from the regression: $\hat{z} = d_0 + d_1 x$
+
+Does anything look familiar here?
+
+---
+
+### Multivariate Least Squares:
+
+More generally:
+
+$$\hat{y} = b_0 + b_1 X_1 + b_2 X_2 + \ldots + b_k X_k$$
+
+$b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$
+
+where $X_k^* = X_k - \hat{X_k}$ obtained from the regression:
+
+$X_{k} = c_0 + c_1 x_{1} + \ldots + c_{j} X_{j}$
+
+$X_k^*$ is the residual from regressing $X_k$ on all other $\mathbf{X_{j \neq k}}$
+
+---
+
+### Multivariate Least Squares:
+
+How do we make sense of  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?
+
+- It is the residual in same way as $e$: $X_k^*$ is **orthogonal** to all other variables in $\mathbf{X_{j \neq k}}$.
+  - it is "perpendicular" to other variables, as are axes on a graph.
+  - It is perfectly **uncorrelated** (in the linear sense) with all other variables in the regression.
+
+---
+
+### Multivariate Least Squares:
+
+How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ (if  $X_k^*$ as residual $X_k$ after regressing on all other $\mathbf{X_{j \neq k}}$?)
+
+- The slope $b_k$ is the change in $Y$ with a one-unit change in the part of $X_k$ that is **uncorrelated with**/**orthogonal to** the other variables in the regression.
+
+---
+
+### Multivariate Least Squares:
+
+How do we make sense of $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$ 
+
+- Sometimes people say "the slope of $X_k$ **controlling** for variables $\mathbf{X_{j \neq k}}$". 
+  - is it "holding other factors constant"/*ceteris parabis*? Not quite.
+  - better to think of it as "partialling out" the relationship with other variables in $\mathbf{X}$. The $X_k$ that does not co-vary with other variables
+  - better to think of it as variation in $X_k$ residual on the mean $X_k$ predicted by all other variables in $X$
+  - this residual variation has implications for how least squares **weights observations**
+  
+---
+
+### Multivariate Least Squares:
+
+There are additional implications of defining the slope $b_k = \frac{Cov(X_k^*, Y)}{Var(X_k^*)}$:
+
+Now we can see why columns of $X$ must be linearly independent:
+
+- e.g. if $X_1$ were linearly dependent on $X_2$ and $X_3$, then $X_2$ and $X_3$ *perfectly predict* $X_1$.
+- If $X_1$ is perfectly predicted by  $X_2$ and $X_3$, then the residuals $X_1^*$ will all be $0$.
+- If $X_1^*$ are all $0$s, then $Var(X_k^*) = 0$, and $b_k$ is undefined.
+
+# Applying Regression
+
+---
+
+### Math of Regression relevant to:
+
+1. How we estimate "effects":
+
+effects are differences in means/average slopes: regression coefficients interpreted as estimating something... 
+
+what is being estimated?
+
+2. Conditioning involves imputing potential outcomes of $Y$ at different values of $X$: how does this imputation take place?
+
+3. Average causal effects weight cases equally: how does regression weight cases?
+
+
+# Regression and the CEF
+
+--- 
+
+### The CEF
+
+$$E(Y_i | X_i) = f(X)$$
+
+**Conditional**: mean of $Y$ is different at different levels of $X$
+
+**Expectation**: expected value/mean of $Y$
+
+**Function**: mathematical function links values of $X$ to mean of $Y$. Could be, does not need to be, **linear**
+
+
+---
+
+### Regression and CEF
+
+How does multivariate regression relate back to Conditional Expectation Function?
+
+- least squares is the **best linear approximation** of the conditional expectation function $E(Y_i | X_i)$
+
+--- 
+
+```{r, echo=F}
+cef = acs_data[, list(INCEARN = mean(INCEARN), respondents = .N) , by = AGE]
+setkey(cef, AGE)
+ggplot(cef, aes(x = AGE, y = INCEARN)) + geom_point(alpha = 0.75, aes( size = respondents)) + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors")
+
+```
+
+
+--- 
+
+```{r, echo=F, message=F}
+ggplot(cef, aes(x = AGE, y = INCEARN,  weight = respondents)) + geom_point(alpha = 0.75, aes( size = respondents))  + theme_bw() + xlab("Age") + ylab("Earnings (USD)") + ggtitle("CEF of Earnings by Age for Lawyers and Doctors") + geom_smooth(method = 'lm', se = F)
+
+```
+
+Does the regression line fit all values of $E[Y|X=x]$ equally well?
+
+---
+
+### Least Squares and CEF
+
+Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
+
+>- It is "best" linear approximation in that the overall set of predictions $\hat{y}$ has least distance to $y$
+>- Least Squares could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**
+
+### Least Squares and CEF
+
+Alternatively, least squares is a particular weighted average of derivative of non-linear CEF (board)
+
+- weights greater closer to median of $x$ 
+
+---
+
+Exercise: Download the data. Contains mean income for each group of people with the same `AGE` in years
+
+[https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
+
+---
+
+Exercise:
+
+- Plot INCEARN by AGE (`plot` or `ggplot`)
+
+Use matrix calculations in `R` to obtain the linear approximation of $E(Y_i | X_i)$:
+
+`solve(t(X) %*% X) %*% t(X) %*% y`
+
+- What is the intercept? What does it mean?
+- What is the slope? What does it mean?
+
+---
+
+```{r}
+#With individual, not grouped data...
+X = cbind(1, acs_data$AGE)
+y = acs_data$INCEARN
+
+beta = solve(t(X) %*% X) %*% t(X) %*% y
+
+beta
+```
+
+Do your estimates agree? Why or why not?
+
+---
+
+We are not accounting for the **number of people in each value of $X_i$**
+
+```{r}
+#With aggregate data...
+X = cbind(1, cef$AGE)
+y = cef$INCEARN
+w = cef$respondents 
+w = w * diag(length(w))
+beta = solve(t(X) %*% w %*% X) %*% t(X) %*% w %*% y
+
+beta
+```
+
+---
+
+### Least Squares and CEF
+
+We can reproduce any individual-level least squares by:
+
+1. Collapsing data to all unique values $X_i$ to groups: $X_g$ across $g \in G$
+2. Take the group mean of $Y_i$: $Y_g$
+3. Regress $Y_g$ on $X_g$, weighting by group size $n_g$.
+
+We are directly modelling the conditional expectation of $E(Y_i | X_i)$ as a linear function.
+
+---
+
+### Least Squares and CEF
+
+What does this tell us?
+
+- Least squares will more closely approximate $E[Y|X=x]$ for values of $x$ that are more frequent
+
+---
+
+### Least Squares and CEF
+
+Given this, how can we interpret the coefficients of the least squares regression you performed **in terms of the CEF**?
+
+- how do you interpret intercept?
+- how do you interpret slope?
+
+
+# Linearity in Least Squares
+
+---
+
+### Least Squares is linear in parameters
+
+
+What does this mean?
+
+- $\mathbf{X\beta}$ means we multiply values of $x$ by coefficients, then add them
+
+This has implications for:
+
+- imputing values/controlling for possible confounders
+- how we set up design matrix to estimate effects
+- how to interpret these coefficients
+
+---
+
+
+$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
+
+---
+
+### Least Squares and Group Means
+
+We can calculate the mean using least squares ($X$ is just a vector of $1$s).
+
+Simplest extension is to fit means for different groups.
+
+>- Contrast this with weighted average of derivatives. We can fit the mean of $y$ for any arbitrary value of $x$
+
+---
+
+### Least Squares and Group Means
+
+Suppose we want to estimate earnings as a function of gender
+
+$Earnings_i = b_0 + b_1 \ Female_i$
+
+assuming, as the survey data does, the gender binary
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us? 
+4. What does $b_0 + b_1$ tell us?
+
+
+---
+
+```{r}
+m1 = lm(INCEARN ~ FEMALE, acs_data)
+summary(m1) %>% .$coefficients
+```
+
+How would the coefficients change if we changed the design matrix so that instead of a vector of $1$ and  indicated Female ($1$) vs Male ($0$), we used a vector of $2$ and indiciated Female ($2$) vs Male ($0$)?
+
+---
+
+
+### Least Squares and Group Means
+
+$Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us?
+4. What does the $b_2$ tell us?
+
+
+```{r}
+m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
+```
+
+
+---
+
+### Least Squares and Group Means
+
+$Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
+
+
+1. What does the design matrix $X$ in this regression look like?
+2. What does the $b_0$ tell us?
+3. What does the $b_1$ tell us?
+4. What would the residuals be in this case? In the other models?
+
+```{r}
+m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
+```
+
+--- 
+
+$Earnings_i = b_0 + b_1 \ Female_i $
+
+```{r, }
+#Design matrix
+model.matrix(m1) %>% head
+
+#Interpret:
+coefficients(m1)
+```
+
+--- 
+
+$Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
+
+```{r}
+#Design matrix
+model.matrix(m2) %>% head
+
+#Interpret:
+coefficients(m2)
+```
+
+--- 
+
+$Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
+
+```{r}
+#Design matrix
+model.matrix(m3) %>% head
+
+#Interpret:
+coefficients(m3)
+```
+
+
+---
+
+### Least Squares and Group Means
+
+Lessons from these examples:
+
+1. Despite different coefficients, least squares makes **identical predictions** $\hat{y}$
+
+2. We need to specify design matrix/model to get estimates of interest. (e.g. difference in means)
+
+3. If we have **exclusive** indicator variables for belonging to distinct categories (sometimes called "dummy variables"), must drop one group if we fit an intercept. (Why?)
+
+4. If we fit group means: residuals are deviation from group means (centered at 0 within each group). 
+
+---
+
+### Dummy Variables
+
+If there is an intercept
+
+- **one category must be excluded** ("reference group"); otherwise linear dependence.  (`R` will do this by default)
+- coefficient is **difference in means** between the group indicated by the dummy and the intercept ("reference group" mean)
+
+If there is no intercept:
+
+- all categories **must be included**
+- separate **intercepts** for each group: coefficient is the mean of the group indicated by the dummy (when all other variables are $0$).
+
+---
+
+### Exercise:
+
+How did different regions in the UK vote on Brexit?
+
+- Download the `brexit` data: [https://pastebin.com/Y8AmJK7C](https://pastebin.com/Y8AmJK7C)
+- use the `table` function to find out how what the different `Region` names are
+
+---
+
+### Exercise:
+
+Using the `lm` function: (`lm(y ~ x, data = data)`)
+
+1. Regress `Pct_Lev` on `Region`
+2. Interpret the coefficients. (`summary(your_model)`)
+3. (Without looking at them) What would the predicted values $\widehat{Y}$ from this regression tell be - with respect to the regions?
+4. How should we interpret the residuals $e$?
+
+---
+
+### Difference in Differences
+
+We have seen regression can generate group means, AND coefficients can be used to calculate differences in means.
+
+Recall, $ATT = (Treated_{post} - Treated_{pre}) - \\ (Untreated_{post} - Untreated_{pre})$
+
+How might we set up a regression to calculate the ATT?
+
+---
+
+### Difference in Differences
+
+$Y_{it} = b_0 + b_1 Treated_i + b_2 Post_t + b_3 Treated_i\times Post_t$
+
+(board for design matrix)
+
+Different intercepts (means) for each group:
+
+|        | Untreated | Treated |
+|--------|------|--------|
+| Pre | `Intercept` | `Intercept + Treated` |
+| Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
+
+`lm(Y ~ Treated*Post, data = data)`
+
+# Least Squares with Controls
+
+---
+
+### Interpreting w/ Controls
+
+So far, we have considered fitting group means.
+
+- indicator/dummy variables have been for exclusive membership in groups
+- what happens if we control for membership in different groups?
+
+---
+
+### Interpreting w/ Controls
+
+We want to estimate differences in earnings across gender, but we want to control for the sector of employment.
+
+In this data, we only have doctors and lawyers, so we can estimate the following:
+
+$Earnings_i = b_0 + b_1 \ Female_i + b_2 \ Medicine_i$
+
+Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if they are a doctor $0$ if they are a lawyer.
+
+---
+
+### Interpreting w/ Controls
+
+1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Medicine_i$ and intercept, and $Earnings$
+
+- What is residual $Female_i^*$ in this case? (Think about residuals in models with group dummies above)
+
+>- Residual $Female_i^*$ will be deviation from mean level of $Female$ in law and medicine
+
+---
+
+### Interpreting w/ Controls
+
+2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Medicine_i$.
+
+- What would happen to $Var(Female^*)$ among doctors if ALL doctors were female?
+
+>- No variation left - no observations differ from the mean of $1$, do not contribute to the slope (zero weight)
+
+---
+
+### Example
+
+Let's now find the (approximate) linear conditional expectation function of earnings, across gender and profession:
+
+```{r}
+ls = lm(INCEARN ~ FEMALE + MEDICINE , acs_data)
+```
+
+---
+
+### Example
+
+```{r, echo = F}
+summary(ls)
+```
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ MEDICINE, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, MEDICINE)], acs_data[, list(INCEARN, FEMALE, MEDICINE)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+How do we make sense of, e.g., the slope on `FEMALE`?
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = MEDICINE, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on Profession")
+```
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+```
+
+
+
+
+---
+
+### Example
+
+Let's now find the (approximate) linear conditional expectation function of earnings, across gender and hours worked:
+
+We're not controlling for a binary indicator, but a continuous variable.
+
+```{r}
+ls = lm(INCEARN ~ FEMALE + UHRSWORK , acs_data)
+```
+
+---
+
+### Interpreting w/ Controls
+
+1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Hours_i$ and intercept, and $Earnings$
+
+- What is the residual/orthogonal $Female_i^*$ in this case? ()
+
+>- Residual $Female_i^*$ will have perfectly $0$ covariance/correlation with $Hours_i$
+
+---
+
+### Example
+
+```{r, echo = F}
+summary(ls)
+```
+
+```{r, echo = F, include = F, message = F, warning=F}
+residual_hrswork = lm(FEMALE ~ UHRSWORK, acs_data)$residuals
+plot_data = rbind(acs_data[, list(INCEARN, FEMALE, UHRSWORK)], acs_data[, list(INCEARN, FEMALE, UHRSWORK)])
+plot_data[, type := factor(rep(c('Observed', 'Residual'), each = nrow(acs_data)))]
+plot_data[, FEMALE := as.numeric(FEMALE)]
+plot_data[type == 'Residual', FEMALE := residual_hrswork]
+```
+
+How do we make sense of, e.g., the slope on `FEMALE`?
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = UHRSWORK, y= FEMALE)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) +  geom_smooth(method = 'loess', colour = 'blue', se = F) + theme_bw() + facet_wrap(~type) + ggtitle("Gender Residual on AGE")
+```
+
+---
+
+### Interpreting w/ Controls
+
+2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Hours_i$.
+
+- What happens to $Var(Female^*)$ for values of hours worked where $Hours_i$ badly predicts $Female_i$?
+
+>- Greater variance! Increased weight on those observations
+
+---
+
+### Example
+
+```{r, echo = F, warning=F, message=F}
+ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geom_smooth(method = 'lm', colour = 'red', se = F) + theme_bw() + facet_wrap(~type)  + ggtitle("Earnings on Residual Gender")
+```
+
+---
+
+### Interpreting w/ Controls
+
+What could we do if we really wanted to "hold hours worked constant"? 
+
+- Compare earnings by gender **within** groups where hours are the same  (think about our indicator variables from earlier)?
+
+# Conclusion
+
+
