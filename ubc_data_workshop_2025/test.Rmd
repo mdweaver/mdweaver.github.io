@@ -1,0 +1,77 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+require(reticulate)
+require(png)
+
+use_python("/usr/bin/python")
+
+require(httr)
+require(rvest)
+```
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{python}
+import requests
+
+form_url = 'http://www.dalbydata.com/user.php?action=civwarsearchresults'
+form = {'CivWarSearch' : 'Search', 'lastname' : 'b'}
+response = requests.post(form_url, data = form)
+print(response.text)
+```
+
+
+```{r}
+form_url = 'http://www.dalbydata.com/user.php?action=civwarsearchresults&lastname=b'
+form = list(CivWarSearch = 'Search', lastname = 'b')
+response = GET(form_url)
+content(response)
+```
+
+
+
+```{r}
+url = "https://api.optiic.dev/process"
+params = list(apiKey = "FnW7XoGbvgMA9yL1Da4ED7MKLmt3DXE8HW2Rpt4JYrzJ", 
+              image = httr::upload_file("/home/mdweaver/Downloads/0002.bin.png"))
+
+
+response = POST(url, config = params)
+
+
+
+```
+
+
+wikipedia
+
+```{r}
+url = "https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy"
+
+response = GET(url)
+content(response)
+```
+
+```{r}
+
+"https://nominatim.org/release-docs/develop/api/Search/"
+
+
+url = "https://nominatim.openstreetmap.org/search"
+params= list(street='1866 Main Mall',
+             city='Vancouver',
+             country='Canada',
+             state='BC',
+             format='geojson',
+             limit = 1)
+response = GET(url, query = params)
+content(response)
+```
+
