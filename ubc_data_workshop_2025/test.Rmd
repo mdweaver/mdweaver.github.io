@@ -4,60 +4,173 @@ output: html_notebook
 ---
 
 ```{r}
-require(reticulate)
-require(png)
+use_python = F
+if (use_python) {
+  require(reticulate)
+  require(png)
+  use_python("/usr/bin/python")
+}
 
-use_python("/usr/bin/python")
-
-require(httr)
+require(httr2)
 require(rvest)
 ```
 
+# Web Scraping
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+## Exercise 1.a
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+Let's say I want to get data on ships in the Union Navy during the American Civil War.
 
-```{python}
-import requests
+Let's go to this page [https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy](https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy)
 
-form_url = 'http://www.dalbydata.com/user.php?action=civwarsearchresults'
-form = {'CivWarSearch' : 'Search', 'lastname' : 'b'}
-response = requests.post(form_url, data = form)
-print(response.text)
-```
+### Step 1: Find the data you want
 
+On this page, we just want to get the list of ships and links to them.
 
-```{r}
-form_url = 'http://www.dalbydata.com/user.php?action=civwarsearchresults&lastname=b'
-form = list(CivWarSearch = 'Search', lastname = 'b')
-response = GET(form_url)
-content(response)
-```
+### Step 2: Open developer tools
 
+Hover over one of the ships, then right click > "Inspect".
 
+Now we can explore the HTML tags that contain the data.
 
-```{r}
-url = "https://api.optiic.dev/process"
-params = list(apiKey = "FnW7XoGbvgMA9yL1Da4ED7MKLmt3DXE8HW2Rpt4JYrzJ", 
-              image = httr::upload_file("/home/mdweaver/Downloads/0002.bin.png"))
+### Step 3: What request generates the data?
 
+What "requests" show up?
 
-response = POST(url, config = params)
+- Main body of the page is created by a `GET` request
+- Let's examine: 
+    - what is the address for this request? ("Headers" tab)
 
+### Step 4: Replicate the request
 
+We can see that the `POST` request went to: `https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy`. 
 
-```
-
-
-wikipedia
 
 ```{r}
 url = "https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy"
-
-response = GET(url)
-content(response)
+req = request(url)
+response = req %>% req_perform()
+page = response %>% resp_body_html()
 ```
+
+### Step 5: Let's find the data on the page:
+
+"Inspect the page", until you can highlight the entire list of ships.
+
+We see this is in a `<div>` tag with the class `mw-category mw-category-columns`. Let's pull this feature out.
+
+```{r}
+div = page %>% html_nodes("div[class='mw-category mw-category-columns']")
+div %>% print
+```
+
+We see that each ship an its link is in an `a` tag:
+
+```{r}
+ships = div %>% html_nodes("a")
+print(ships)
+```
+
+We want to pull out the `href` and the text.
+
+```{r}
+ship_data = lapply(ships, function(s)
+                    data.table(url = s %>% html_attr('href') %>% paste0("https://en.wikipedia.org", .),
+                               ship_name = s %>% html_text)
+                  ) %>% 
+            rbindlist()
+```
+
+Now, we could loop over pages to get all ships.
+
+We could also write code to open each ship URL to pull out the data in the information box
+
+## Exercise 2
+
+Let's go here: [http://www.dalbydata.com/user.php?action=civwarsearch](http://www.dalbydata.com/user.php?action=civwarsearch)
+
+### Step 1: Find the data you want
+
+This page lets us search for soldiers from Minnesota who served in the American Civil War. Let's search for last names starting with "A". 
+
+
+### Step 2: Open developer tools
+
+Now return to search page; open the developer tools (right click > "Inspect" > click to network tab). Let's search for soldiers with last names starting with "B".
+
+
+### Step 3: What request generates the data?
+
+What "requests" show up?
+
+- Main body of the page is created by a `POST` request
+- Let's examine: 
+    - what is the address for this request? ("Headers" tab)
+    - what is the content of this request? ("Request" tab)
+
+### Step 4: Replicate the request
+
+We can see that the `POST` request went to: `http://www.dalbydata.com/user.php?action=civwarsearchresults`. 
+
+We can also see that the "request" contained several attributes (related to the original search options), but our request only had two filled in:
+
+- `CivWarSearch:'Search'`
+- `lastname:'b'`
+
+As this is a POST request, 
+
+We can use `httr2` to generate the request
+
+```{r}
+#Define request URL
+url = 'http://www.dalbydata.com/user.php?action=civwarsearchresults'
+#Request
+req = request(url)
+response = req %>% 
+            #this req_body... make it a "POST" request
+            req_body_form(CivWarSearch = 'Search',
+                          lastname = 'b') %>%
+            req_perform()
+page = response %>% resp_body_html()
+
+```
+
+### Step 5: Process the data
+
+We want to grab a table. We might just grab the `table` tags.
+
+```{r}
+page %>% html_nodes("table")
+```
+
+There are 7 `table` elements. So we want to look for what attributes uniquely identify the data.
+
+Using the inspect tool, we see that our table has `cellspacing="1"`
+
+```{r}
+page %>% html_nodes("table[cellspacing='1']")
+```
+
+
+Now we can turn the HTML table into data in R:
+
+```{r}
+table_data = page %>% 
+              html_nodes("table[cellspacing='1']") %>%
+              html_table
+table_data
+```
+
+Now we could loop over starting letters (e.g., "aa", "ab") to get all of the data.
+
+
+## Exercise 3
+
+We want to geocode locations for a project (to, let's say, merge in additional data using spatial location).
+
+We can use the [OpenStreetMap API](https://nominatim.org/release-docs/latest/api/Search/), which is free. Google also has a geocoder, which is not free.
+
+This guide tells us that the 
 
 ```{r}
 

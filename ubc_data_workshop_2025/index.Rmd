@@ -134,8 +134,7 @@ Right click in your browser, select "Inspect", choose "Network" tab (may need to
 1. Access some static content (you are scraping data on some specific html page)
 2. Search/query database: usually uses a GET request with several search parameters
 
-[example](http://chroniclingamerica.loc.gov/search/titles/results/?&page=2){target="_blank"}
-
+[http://chroniclingamerica.loc.gov/search/titles/results/?state=Alabama&page=2](http://chroniclingamerica.loc.gov/search/titles/results/?state=Alabama&page=2)
 
 
 ---
@@ -159,39 +158,182 @@ Request includes a 'form' that is submitted:
 
 Click on a request, examine the "Headers" tab...
 
+<img src="./headers.png">
+
 ---
 
 ### Responses
 
 When we submit requests, the format of the **response** may vary:
 
-1. **HTML**: a text markup language that is converted to a visual page in a browser.
+**HTML**: a text markup language that is converted to a visual page in a browser.
+ 
+- tags: `<tag>stuff</tag>`
+- css: `<tag id="style1" class="style2">stuff</tag>`
+- attributes: `<tag attribute="something">stuff</tag>`
 
-
-ADD DETAILS ABOUT tags, css, attributes
-
-
-2. **JSON**: a structured data object:
-    - contains dictionaries (in "{}") of "keys" (labels), a ":", and values (things that are labeled), separated by commas.
-    - lists of values (in "[]"), separated by commas.
-    - {'Key1':'Value', 'Key2': ['Value1','Value2']}
-3. Other formats: XML, CSV, PDF, etc.
+<img src="https://cdn.statically.io/img/codetheweb.blog/assets/img/posts/html-syntax/tag-structure-2.png?f=webp&w=720">
 
 
 ---
 
-### Using data
+### Responses
 
-- geospatial raster data
-- geospatial merging
-- merging
-- fuzzy matching
-- record linkage
+**JSON**: a structured data object:
+    - contains dictionaries (in "`{}`") of "keys" (labels), a ":", and values (things that are labeled), separated by commas.
+    - lists of values (in "`[]`"), separated by commas.
+    - `{'Key1':'Value', 'Key2': ['Value1','Value2']}`
+    
+<img src="https://hackolade.com/help/lib/JSON%20key-value%20pairs.png">
 
 ---
 
-### Automation
+<img src="https://hackolade.com/help/lib/JSON%20document%20object.png">
 
+---
+
+### Responses
+
+**Other responses** are possible:
+
+- Sometimes a request generates a pdf, csv, etc.
+
+---
+
+### Using Web Requests
+
+What you do...
+
+1. Accessing Data:
+    - "scraping" or using "API" to automate collection of data you found online
+2. Extracting Data
+    - using API tool to get/generate data out of some original file (e.g. image to text)
+3. Extending Data
+    - using API tool to add something new to data (geocode, classification, etc)
+
+# Scraping
+
+## Web Scraping
+
+"Scraping" refers to using some programming tools to **automate** the process of 
+
+- generating **requests** for data hosted on a website/service
+- extracting the data we need from **responses**
+- Usually a situation where the data is primarily formatted for visual display (HTML)
+
+---
+
+### Scraping
+
+Procedure:
+
+1. Find the data you want online
+2. Open developer tools in browser
+3. Click in browser to start request(s) that generate data
+4. What requests return the data? $\to$ replicate the request
+5. How is request formatted? $\to$ structure new request
+6. What is the response? $\to$ code to parse/extract data
+
+---
+
+### Scraping in R
+
+
+For sending requests:
+[httr2](https://httr2.r-lib.org/)
+
+For parsing HTML
+[rvest](https://rvest.tidyverse.org/articles/rvest.html)
+
+
+---
+
+### Exercise 1
+
+Let's go here: [https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy](https://en.wikipedia.org/w/index.php?title=Category:Ships_of_the_Union_Navy)
+
+
+---
+
+### Exercise 2
+
+Let's go here: [http://www.dalbydata.com/user.php?action=civwarsearch](http://www.dalbydata.com/user.php?action=civwarsearch)
+
+--- 
+
+### Commmon Problems with Scraping
+
+- Permissions/Headers: you may need to be logged in, or to have correct "cookies" or "referer" to access data using R instead of browser
+- Captchas
+- Too many requests $\to$ blocked IP.
+
+# APIs
+
+## Using APIs
+
+Where as "scraping" refers to pulling data from webpage that you'd visit with your browser...
+
+An API (application programming interface) uses HTTP requests to directly access structured data (typically in JSON format).
+
+[See here](https://www.postman.com/what-is-an-api/)
+
+---
+
+### Using APIs
+
+APIs may be useful to:
+
+- Access the data you want directly
+- Use a tool to extract new data (e.g., Google Vision for text or image classification, OpenAI GPT, etc.)
+- Use a tool that extends your data (e.g., add latitude/longitude)
+
+Lots of APIs for various purposes
+
+---
+
+### Using APIs
+
+Two situations:
+
+1. **Public API**: well-documented API designed with you as a user in mind
+
+- requires API Key (pay per use) 
+- well-documented guide to API parameters
+
+2. **"Hidden" API**: many sites use APIs internally, not designed for us to use.
+
+- No documentation
+- Harder to find
+
+---
+
+### Using APIs
+
+Procedure:
+
+1. Find the API
+2. Sign up and get a key (if you need one)
+3. Find a guide to the API
+4. Format and submit a request
+5. Process the response
+
+---
+
+### Using APIs
+
+Let's say we want to get latitude and longitude for a list of addresses.
+
+We could look them up in Google Maps one by one, but this would take a long time.
+
+We could instead use [OpenStreetMap API](https://nominatim.org/release-docs/latest/api/Search/)
+
+---
+
+### Exercise 3
+
+The Nominatim API from OSM is **public**
+
+Let's turn to our R Notebook.
 
 --- 
 
