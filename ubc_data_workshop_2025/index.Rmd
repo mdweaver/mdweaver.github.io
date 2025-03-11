@@ -287,7 +287,7 @@ APIs may be useful to:
 - Use a tool to extract new data (e.g., Google Vision for text or image classification, OpenAI GPT, etc.)
 - Use a tool that extends your data (e.g., add latitude/longitude)
 
-Lots of APIs for various purposes
+Lots of APIs for various purposes. Next session will cover using APIs for LLMs like GPT
 
 ---
 
@@ -335,15 +335,96 @@ The Nominatim API from OSM is **public**
 
 Let's turn to our R Notebook.
 
---- 
 
-### Goals
+---
 
-- Exposure to many tools
-- Not a detailed "how-to" guide
-- Ask questions today about possible applications
-- Reach out to get further guidance
-- A project is better than a workshop for learning
+### Example of Hidden API 
+
+[https://www.fold3.com/publication/120/us-navy-survivors-certificates-1861-1910/](https://www.fold3.com/publication/120/us-navy-survivors-certificates-1861-1910/)
+
+Open Network tool; start clicking through, look for Requests, filtering by "XHR"; check "Request", "Response"
+
+---
+
+### Common Issues with APIs
+
+- Errors: usually because you have formatted request in correctly.
+- Rate limits: APIs restrict requests per time period.
+- "Hidden APIs" usually have security features to deter us. May limit how much data you can extract at a time.
+
+
+# Extracting Data from Files
+
+## Extracting Data
+
+A common situation is:
+
+We have images or PDFs with text data or tables that we want to digitize.
+
+- reports from governments/agencies
+- archival records
+- books/volumes of historical data
+
+---
+
+### Extracting Data
+
+Which tool to use:
+
+- Is the data "natively" digital (not a scan/image)? If NO $\to$ OCR and computer vision
+- Is the data you want a TABLE? If yes $\to$ `tabulapdf` in `R` or `camelot` in Python
+- Is the data you want just text? If yes $\to$ pdftools
+
+---
+
+### Extracting Data
+
+If your data is in a natively digital PDF... you can get text and tables.
+
+- `pdftools` package in `R` can read pdf text [how to](https://library.virginia.edu/data/articles/reading-pdf-files-into-r-for-text-mining)
+- `tabulapdf` package in `R` can extract tables [guide](https://cran.r-project.org/web/packages/tabulapdf/vignettes/tabulapdf.html)
+
+PDF table extraction is finnicky, sometimes installation trouble. Consensus that `camelot` in Python is "best".
+
+---
+
+### Extracting Data
+
+PDF table extraction often requires some code to "clean" up the table:
+
+- e.g., long text spread across multiple rows needs to be collapsed
+
+---
+
+
+
+---
+
+### Extracting Data
+
+If your data is in a scanned image, you can get text and tables, but it will be harder.
+
+We need to use some combination of OCR (optical character recognition) and layout parsing.
+
+- `tesseract`: open source OCR engine with R package. (Alternatively, Google Vision API)
+- [LayourParser](https://layout-parser.github.io/) can detect formatting in images, but is hard to install and train the model.
+- GPT works really well with text tables; bizarrely it has trouble with tables of numbers.
+
+
+---
+
+### Example
+
+Indiana **People's Guides** list partisanship of 30,000 people in 1874
+
+<img src="./0002.bin.png" width=100%>
+
+Let's see how to get the text...
+
+---
+
+
+
 
 # Getting Data
 
@@ -462,13 +543,7 @@ This usually means **optical character recognition**: OCR
 
 ---
 
-### Digitizing Archives: Examples
 
-Indiana **People's Guides** list partisanship of 30,000 people in 1874
-
-<img src="./0002.bin.png" width=100%>
-
----
 
 ### Digitizing Archives: Examples
 
