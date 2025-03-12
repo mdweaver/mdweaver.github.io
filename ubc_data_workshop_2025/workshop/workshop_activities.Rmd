@@ -382,8 +382,7 @@ Both the text and the formatting are a mess. We almost certainly cannot clean th
 
 In this situation, we either need to use a more sophisticated layout tool (e.g., [LayoutParser](https://layout-parser.github.io/)) or turn to GPT. 
 
-I have found that GPT is way easier to work with, but that is for next session.
-
+I have found that GPT is way easier to work with, but that is for next session. See the text extracted below, using prompts to improve both the reading of text and formatting of the data.
 
 ```{r}
 fread("wu_1874.csv") %>%

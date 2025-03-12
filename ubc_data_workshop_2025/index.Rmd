@@ -15,8 +15,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Outline
 
-
-
 <style type="text/css">
   .reveal h2,h3,h4,h5,h6 {
     text-align: left;
@@ -72,21 +70,50 @@ Do:
 - PDFs/OCR to get text/tables (+ exercise)
 - Cleaning/Data Management (brief)
 
+
 # Examples
 
 ---
 
-lynching coverage in newspapers
+### Examples
 
-- newspaper search queries; geocoding places
+African American Sailors in the Civil War
+
+- effects of wealth transfers ('counterfactual' reparations)
+- [https://www.nps.gov/civilwar/search-sailors.htm](https://www.nps.gov/civilwar/search-sailors.htm)
+- Automate the navigation and saving of this data
 
 ---
 
-civil war soldiers data (scraping)
+### Examples
+
+**Download online database**: full count 1860 US Census [Fold3.com](Fold3.com)
+
+- Subscription genealogy site. 
+- Access to census **images** is behind a paywall.
+- But page metadata (including all personal data transcribed) is exposed behind the scenes
+- Data is hidden in background requests (explain)
 
 ---
 
-old lists to data => partisanship (ocr)
+### Examples
+
+**Searching a database**: Historical newspaper archives for lynching discourse
+
+Automate searches and saving of results.
+
+- First pass: submitted search queries to find which newspapers mentioned lynching on which dates
+- Second pass: which newspapers are NOT talking about lynching? Download an index of what newspapers were available on each date.
+
+---
+
+### Examples
+
+What if you have natively digital data?:
+
+- Facebook users (Mueller and Schwarz), Twitter networks, Google Trends, Canvas (sure!)
+- Google Vision, GPT, etc.
+- These services have an API: an interface for requesting/receiving data. Usually there is an explicit guide.
 
 
 # Web Requests
@@ -392,11 +419,7 @@ PDF table extraction is finnicky, sometimes installation trouble. Consensus that
 
 PDF table extraction often requires some code to "clean" up the table:
 
-- e.g., long text spread across multiple rows needs to be collapsed
-
----
-
-
+- e.g., long cell entries spread across multiple rows needs to be collapsed
 
 ---
 
@@ -410,7 +433,6 @@ We need to use some combination of OCR (optical character recognition) and layou
 - [LayourParser](https://layout-parser.github.io/) can detect formatting in images, but is hard to install and train the model.
 - GPT works really well with text tables; bizarrely it has trouble with tables of numbers.
 
-
 ---
 
 ### Example
@@ -421,443 +443,24 @@ Indiana **People's Guides** list partisanship of 30,000 people in 1874
 
 Let's see how to get the text...
 
----
+# Additional Resources
 
+## Cleaning Data
 
+Common to need to process the data you extract further:
 
-
-# Getting Data
-
-## Scraping
-
-"Scraping" refers to using some programming tools to **automate** the process of 
-
-- accessing data hosted on a website/service (wide variety of possibilities)
-- extracting the data we desire
-
-Lots of online resources, but for a primer I've made [see here](http://mdweaver.github.io/ubc_scraping)
-
-## Scraping: Process
-
-1. Find that data you want
-2. Figure out how to use programming language to access that data.
-3. Structure the data for your needs
-4. Scale up: automate the rest of the data collection
+- Extract strings (regular expressions)
+- Matching/Fuzzy Matching
+- Linking Records
 
 ---
 
-### Ways of Scraping
+### Working with: Regular Expressions
 
-Usually, I scrape in one of three ways:
+If you need to pull out specific segments of text (e.g. Names? Addresses?)...
 
-1. Downloading browseable databases:
-  - HTML: a request for an HTML page that contains some data. Data is unfriendly to use, because it is in markup language for visual display
-2. Automating searches in databases:
-  - might be HTML or JSON
-3. Accessing data via an API: 
-  - a request that directly interacts with some database or tool and returns data in a friendly format (usually JSON)
+- In R use `stringr` package: [reference guide here](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html)
 
---- 
-
-
-### Scraping: Browsing
-
-African American Sailors in the Civil War
-
-- effects of wealth transfers ('counterfactual' reparations)
-- [https://www.nps.gov/civilwar/search-sailors.htm](https://www.nps.gov/civilwar/search-sailors.htm)
-- Automate the navigation and saving of this data
-
---- 
-
-### Scraping: Browsing
-
-**Download online database**: full count 1860 US Census [Fold3.com](Fold3.com)
-
-- Subscription genealogy site. 
-- Access to census **images** is behind a paywall.
-- But page metadata (including all personal data transcribed) is exposed behind the scenes
-- Data is hidden in background requests (explain)
-
---- 
-
-### Scraping: Searching
-
-**Searching a database**: Historical newspaper archives for lynching discourse
-
-Automate searches and saving of results.
-
-- First pass: submitted search queries to find which newspapers mentioned lynching on which dates
-- Second pass: which newspapers are NOT talking about lynching? Download an index of what newspapers were available on each date.
-
---- 
-
-### Scraping: APIs
-
-What if you want natively digital data?:
-
-- Facebook users (Mueller and Schwarz), Twitter networks (w/ Celene Reynolds), Google Trends, Canvas (sure, why not)
-- These services have an API: an interface for requesting/receiving data. Usually there is an explicit guide.
-
----
-
-### Scraping: Lessons Learned
-
-1. Need to understand how internet works (requests, responses)
-2. Learn a programming language to automate sending requests, processing responses 
-3. Robust code
-3. Think about how to save data (SQL databases are best)
-4. Be a sleuth (find where data is exposed)
-5. People protect proprietary data, think about permissions
-
-## Extracting Data from Documents
-
-Data may be locked in large/many PDF or Doc files.
-
-- `pdftools` package in `R` can read pdf text
-- `tabulizer` package in `R` can extract tables
-
----
-
-### Extracting: Tables
-
-<img src='./gar_tables.png' width = 90%>
-
----
-
-### Extracting: Tables
-
-<img src='./myanmar_pdf.png' width = 90%>
-
-## Digitize it Yourself
-
-This usually means **optical character recognition**: OCR
-
-- ABBYY Finereader (licenses software)
-- [Google Vision](https://cloud.google.com/vision/docs/drag-and-drop) (price per image)
-- Questions to ask:
-  - what is the quality of the text image? can it be improved?
-  - how is text formatted?
-  - how tolerable are errors?
-
-
----
-
-
-
-### Digitizing Archives: Examples
-
-Indiana **People's Guides**
-
-- Thousands of pages, lots of names
-- [Google Vision](https://cloud.google.com/vision/docs/drag-and-drop)
-- Python script: send images to Google, letters to word, words to lines, lines to biographical entries.
-- R script to extract and format data.
-- ~1 week of work to learn this the first time
-
----
-
-### Digitizing Archives: Examples
-
-USCT Monthly Reports:
-
-<img src="./77-005.png" width=100%>
-
-
----
-
-### Digitizing Archives: Examples
-
-Prize list
-
-<img src="./prizes.png" width=100%>
-
-
-## Extending Data
-
-Once you have data, you can also use online tools to extend/modify it:
-
-- automate the coding of data (machine learning)
-- pre-built classification tools 
-- extract locations, dates, syntactic dependencies, etc.
-- geo-referencing
-
----
-
-### Extending Data: Machine Learning
-
-What is it?
-
-- Statistical algorithms that learn to classify texts based on their features (usually words, maybe meta-data)
-- So many varieties, but important distinction between "supervised" (you must label some data) and "unsupervised".
-- Workflow: collect data; code a training set; "learn" on part of training set; validate on other part; classify full data set
-
----
-
-### Extending Data: Machine Learning
-
-Pros:
-
-- can automatically code large quantities of data
-- a more sophisticated way to classify documents
-- lots of work done on how to make these algorithms work well (thanks, tech monopolies)
-
-Cons:
-
-- Requires ground-truth data (can be costly to obtain)
-- Only as good as the training data (available $\neq$ good)
-- Risk of overfitting
-- How will you validate predictions?
-
----
-
-### Extending Data: Machine Learning
-
-Examples:
-
-- Civil War era Partisanship
-- USCT unit reports: entity extraction
-
-Software recommendations:
-
-- easy to use out-of-the-box 
-- automatic "tuning"
-- fastText is one good option
-
----
-
-### Extending Data: Trained Models
-
-You can just use existing trained AI models:
-
-- name gender [https://genderize.io/](https://genderize.io/)
-- name nationality [https://nationalize.io/](https://nationalize.io/)
-- what is in a photo (Google Cloud Vision, among others)
-- text sentiment
-
-But, if training data differs from your data, may not work the best.
-
----
-
-### Extending Data: Natural Language Processing
-
-NLP parses **clean** textual data:
-
-- parts of speech, syntactic dependencies, entities (people, locations, dates, etc)
-- can **query** texts based on parts of speech, dependencies
-
----
-
-### Extending Data: Natural Language Processing
-
-<img src="./usct_tree.png" width=100%>
-
----
-
-[map link](https://mdweaver107.carto.com/builder/efb8f286-7594-43b0-873f-3e701780aedc/embed)
-
----
-
-### Extending Data: Natural Language Processing
-
-Lots of useful tools:
-
-- [spaCy](https://spacy.io/) (accessed in R using `spacyr`): high-quality, neural-net based natural language processor
-- query spaCy using `rsyntax`
-
----
-
-### Extending Data: Geocoding
-
-You can add latitude/longitude to data; or get estimated travel times:
-
-- Google Maps API
-- Other geocoding APIs
-- `ggmap` implements Google Maps Geocoding API in R
-- not free, but relatively cheap
-
-# Working with Data
-
-## Working with Data
-
-We want to merge data together, but can be tricky if:
-
-- some data is geospatial raster images
-- data is geospatial in nature
-- data is large
-- names/place names are "messy"
-- you don't have unique identifiers
-
----
-
-### Working with: Raster Data
-
-Lots of potentially interesting geospatial data comes as a raster:
-
-- temperature, rainfall, cloud cover, agricultural suitability, elevation
-- night-time lights, population, cell signal
-
-We want to compute values based on this data for points or boundaries 
-
----
-
-### Working with: Raster Data
-
-Example: Myanmar townships
-
-- terrain ruggedness
-- wealth/inequality using night-time lights
-- exposure to cell service/Facebook
-
----
-
-<img src='https://hub.worldpop.org/tabs/gdata/img/6401/mmr_ppp_wpgp_2020_Image.png' width=90%>
-
----
-
-### Working with: Raster Data
-
-Multiple R packages, but use `terra` package
-
-- faster
-- handle larger data
-
----
-
-### Working with: Geospatial Data
-
-We may want to merge data by geographic overlap; get distances in geospatial network
-
-- create stable boundaries over time
-- proximity of units to some treatment
-- distances along roads/railroads
-
----
-
-### Working with: Geospatial Data
-
-<img src='./india_railroads.png' width=100%>
-
----
-
-### Working with: Geospatial Data
-
-R package `sf` is easiest to use.
-
-- compute distances, intersection, contains, nearest feature, etc.
-- [spatial networks](https://r-spatial.org/r/2019/09/26/spatial-networks.html) requires additional packages
-
----
-
-### Working with: Large/Complex Data
-
-`data.table` package in `R`:
-
-- handles large data very well
-- can handle complex aggregations of data 
-- can handle complex merges
-- relatively concise code
-
----
-
-```
-dapil_elections_2004 = results_2004_clean[, {
-  p_no = no_partai_politik;
-  dapil_seats = meta_total_seats %>% unique;
-  all_total_votes = sum(total_votes, na.rm = T);
-  p_vs = total_votes / all_total_votes;
-  enp = 1 / sum(p_vs^2);
-  ni_vs = p_vs[which(p_no %in% p_NI_2004)];
-  enp_NI =  1 / sum((ni_vs/sum(ni_vs, na.rm = T))^2, na.rm = T);
-  icit_vs = p_vs[which(p_no %in% p_ICIT_2004)];
-  enp_ICIT = 1 / sum((icit_vs/sum(icit_vs, na.rm = T))^2, na.rm = T);
-  ic_vs = p_vs[which(p_no %in% p_IC_2004)];
-  enp_IC = 1 / sum( (ic_vs/sum(ic_vs, na.rm = T)) ^2, na.rm = T);
-  it_vs = p_vs[which(p_no %in% p_IT_2004)];
-  enp_IT = 1 / sum( (it_vs/sum(it_vs, na.rm = T)) ^2, na.rm = T);
-  quota = round(all_total_votes/dapil_seats);
-  first_round_seats = floor(total_votes / quota);
-  remaining_seats = dapil_seats - sum(first_round_seats, na.rm = T);
-  remainder = total_votes - (first_round_seats*quota);
-  remainder_rank = frankv(remainder, order = -1L);
-  remainder_quota = (remainder_rank <= remaining_seats);
-  won_seats = first_round_seats + remainder_quota;
-  last_seat = (remainder_rank %in% (remaining_seats + 0:1));
-  last_seat_win = remainder_rank %in% (remaining_seats);
-  last_seat_lose = remainder_rank %in% (remaining_seats + 1);
-  last_seat_mov_pct = (remainder[which(last_seat_win)] - 
-                         remainder[which(last_seat_lose)]) / all_total_votes;
-  party_last_seat_winner = p_no[which(last_seat_win)];
-  party_last_seat_loser = p_no[which(last_seat_lose)];
-  winner_remainder = remainder[which(last_seat_win)];
-  loser_remainder = remainder[which(last_seat_lose)]
-  winner_first_round_seats = first_round_seats[which(last_seat_win)];
-  loser_first_round_seats = first_round_seats[which(last_seat_lose)];
-  winner_total_votes = total_votes[which(last_seat_win)];
-  loser_total_votes = total_votes[which(last_seat_lose)];
-  list(
-    bw = last_seat_mov_pct,
-    enp = enp,
-    enp_NI = enp_NI,
-    enp_ICIT = enp_ICIT,
-    enp_IC = enp_IC,
-    enp_IT = enp_IT, 
-    remaining_seats = remaining_seats,
-    remaining_seats_pct = remaining_seats/dapil_seats,
-    party_last_seat_winner = party_last_seat_winner,
-    party_last_seat_loser = party_last_seat_loser,
-    winner_first_round_seats = winner_first_round_seats,
-    loser_first_round_seats = loser_first_round_seats,
-    winner_total_votes = winner_total_votes, 
-    loser_total_votes = loser_total_votes,
-    winner_remainder =winner_remainder,
-    loser_remainder = loser_remainder,
-    NI_close = any(p_no[which(last_seat)] %in% p_NI_2004),
-    ICIT_close = any(p_no[which(last_seat)] %in% p_ICIT_2004),
-    IC_close = any(p_no[which(last_seat)] %in% p_IC_2004),
-    IT_close = any(p_no[which(last_seat)] %in% p_IT_2004),
-    all_total_votes = all_total_votes,
-    meta_total_votes = unique(meta_total_votes) %>% sum,
-    dapil_seats = dapil_seats,
-    all_NI_vs = sum(total_votes[which(p_no %in% p_NI_2004)]),
-    all_ICIT_vs = sum(total_votes[which(p_no %in% p_ICIT_2004)]),
-    all_IC_vs = sum(total_votes[which(p_no %in% p_IC_2004)]),
-    all_IT_vs = sum(total_votes[which(p_no %in% p_IT_2004)]),
-    all_NI_fr_seats = sum(first_round_seats[which(p_no %in% p_NI_2004)]),
-    all_ICIT_fr_seats = sum(first_round_seats[which(p_no %in% p_ICIT_2004)]),
-    all_IC_fr_seats = sum(first_round_seats[which(p_no %in% p_IC_2004)]),
-    all_IT_fr_seats = sum(first_round_seats[which(p_no %in% p_IT_2004)]),
-    all_NI_seats = sum(won_seats[which(p_no %in% p_NI_2004)]),
-    all_ICIT_seats = sum(won_seats[which(p_no %in% p_ICIT_2004)]),
-    all_IC_seats = sum(won_seats[which(p_no %in% p_IC_2004)]),
-    all_IT_seats = sum(won_seats[which(p_no %in% p_IT_2004)]),
-    all_NI_remainder = sum(remainder[which(p_no %in% p_NI_2004)]),
-    all_ICIT_remainder = sum(remainder[which(p_no %in% p_ICIT_2004)]),
-    all_IC_remainder = sum(remainder[which(p_no %in% p_IC_2004)]),
-    all_IT_remainder = sum(remainder[which(p_no %in% p_IT_2004)]),
-    IT_count = sum(total_votes[which(p_no %in% p_IT_2004)] > 0), 
-    NI_count = sum(total_votes[which(p_no %in% p_NI_2004)] > 0),
-    IC_count = sum(total_votes[which(p_no %in% p_IC_2004)] > 0),
-    ICIT_count = sum(total_votes[which(p_no %in% p_ICIT_2004)] > 0),
-    quota = quota
-  )
-}, by =  list(province, kabupaten, kab_code, dapil)]
-```
-
----
-
-### Working with: Large/Complex Data
-
-```
-setkey(a, companypk, indate, expected_out)
-setkey(b, companypk, indate, expected_out)
-
-company_casualty_rate = foverlaps(na.omit(a), na.omit(b), by.x = c('companypk', 'indate', 'expected_out'), by.y = c('companypk', 'indate', 'expected_out')) %>% 
-  .[personpk != i.personpk, list(in_company_n = .N, 
-                                 company_deaths = sum(i.died),
-                                 company_kia = sum(i.kia),
-                                 company_disabled = sum(i.disabled)), by = list(personpk, companypk)]
-```
 
 
 ---
@@ -875,7 +478,7 @@ company_casualty_rate = foverlaps(na.omit(a), na.omit(b), by.x = c('companypk', 
   
 ### Working with: Record Linkage
 
-If data  contain records of people/organizations to be linked:
+If data contain records of people/organizations to be linked:
 
 1. Deterministic rules [(APSR civil war)](https://static.cambridge.org/content/id/urn:cambridge.org:id:article:S0003055419000170/resource/name/S0003055419000170sup001.pdf)
 2. Probabilistic Models [(FastLink)](https://github.com/kosukeimai/fastLink)
@@ -883,17 +486,12 @@ If data  contain records of people/organizations to be linked:
 
 ---
 
-### Working with: Record Linkage
+### Scaling Up
 
-Matching soldiers to hometowns:
+When scraping or using APIs...
 
-- Township-level returns on votes for black suffrage in 1857/1865 for Iowa and Wisconsin
-- Iowa and Wisconsin enlistment data, including place of residence
-- If not uniquely linked to township by name, link soldier to 1860 census records using FastLink
-- Distribute unmatched among possible communities, weighting by population
+- Keep your code modular (write functions to do different parts of the project; e.g. wiki data)
+- Error handling: code what to do when requests fail?
+- Data management: larger projects benefit from a SQL database (what requests have been completed? start from where you've left off)
+    - I like SQLite, can use `RSQLite` package
 
----
-
-<img src='./ia_wi_diff.png' width=45%>
-
-# Questions
