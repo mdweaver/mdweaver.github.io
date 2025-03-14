@@ -1,0 +1,246 @@
+regression weights
+
+
+
+---
+
+### Conditioning with Regression
+
+**Assumptions**
+
+1. **Conditional Independence**: Questions that arise when using regression:
+
+- what if we've forgotten a variable?
+- what if things are not linear and additive?
+
+
+---
+
+### What if we forgot a variable?
+
+If the true process generating the data is:
+
+$$Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \nu_i$$
+
+with $(D_i,X_i) \perp \!\!\! \perp \nu_i$, $E(\nu_i) = 0$
+
+What happens when we estimate this model with a constant and $D_i$ but exclude $X_i$?
+
+$$Y_i = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
+---
+
+$$\small\begin{eqnarray} 
+\widehat{\beta_1} &=& \frac{Cov(D_i, Y_i)}{Var(D_i)}    \\
+&=& \frac{Cov(D_i, \beta_0 + \beta_1 D_i + \beta_2 X_i + \nu_i)}{Var(D_i)} \\
+&=& \frac{Cov(D_i, \beta_1 D_i)}{Var(D_i)} + \frac{Cov(D_i,\beta_2 X_i)}{Var(D_i)} + \frac{Cov(D_i,\nu_i)}{Var(D_i)}   \\
+&=& \beta_1\frac{Var(D_i)}{Var(D_i)} + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)} \\
+&=& \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}
+\end{eqnarray}$$
+
+So, $E(\widehat{\beta_1}) \neq \beta_1$, it is **biased**
+
+---
+
+### Omitted Variable Bias
+
+When we exclude $X_i$ from the regression, we get: 
+
+$$\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$$
+
+This is **omitted variable bias**
+
+- recall: $\beta_1$ is the effect of $D$ on $Y$
+- recall: $\beta_2$ is the effect of $X$ on $Y$
+
+---
+
+Excluding $X$ from the model: $\widehat{\beta_1} = \beta_1 + \beta_2\frac{Cov(D_i, X_i)}{Var(D_i)}$
+
+What is the direction of the bias when:
+
+1. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} < 0$
+
+2. $\beta_2 < 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} < 0$
+
+2. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} > 0$
+
+2. $\beta_2 = 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} > 0$
+
+2. $\beta_2 > 0$; $\frac{Cov(D_i, X_i)}{Var(D_i)} = 0$
+
+---
+
+### Omitted Variable Bias
+
+This only yields bias if two conditions are true:
+
+1. $\beta_2 \neq 0$: omitted variable $X$ has an effect on $Y$ 
+
+2. $\frac{Cov(D_i, X_i)}{Var(D_i)} \neq 0$: omitted variable $X$ is correlated with $D$. (on the same backdoor path)  
+
+This is why we don't need to include EVERYTHING that might affect $Y$ in our regression equation; **only those variables that affect <u>treatment</u> and <u>the outcome</u>.**
+
+---
+
+### Omitted Variable Bias
+
+Link to DAGs:
+
+- OVB solved when we "block" backdoor paths from $D$ to $Y$.
+
+Link to Conditional Independence:
+
+- OVB is a result of conditional independence assumption being wrong
+
+Link to linearity:
+
+- OVB formula only describes bias induced by exclusion of a confounder that has a **linear** relationship with $D$ and $Y$.
+
+
+
+
+
+
+# Sensitivity (Formal)
+
+Following from omitted variable bias, these approaches conceive of the the relationship between omitted variable U and Y, U and D
+
+---
+  
+### Conditional Independence
+  
+  Main identifying assumption (for unbiased estimates of causal effects) is:
+  
+  - **Conditional Independence Assumption**: we have conditioned on all relevant confounding variables
+- Because we do not know nature of confounding, this is untestable
+- Must argue that:
+  - relevant confounders included in conditioning
+- remaining possible confounders are unlikely to alter conclusions
+
+- These arguments based on:
+  - case/theoretical knowledge
+- tests of **sensitivity**
+  
+  ---
+  
+  ### Sensitivity
+  
+  Cinella and Hazlett (2020) develop tools to analyze **sensitivity** of regression results to **violations** of conditional independence assumption:
+  
+  - assuming there is an unmeasured confounding variable, how "large" would it have to be alter the results?
+  - how strongly is the confounder related to **treatment**? to **outcome**?
+  - "strength" measured in terms of partial $R^2$: variation "explained" by the confounder
+
+---
+  
+  ### Sensitivity
+  
+  Link to partial identification:
+  
+  - Can be used to set bounds on causal effect in worst-case scenario, where **all remaining variation** in treatment and outcome explained by a confounder
+- Can establish "how big" that confounding is relative to **known confounders** to make an argument for plausible values
+- comparison to "known confounder" creates standard candle
+
+---
+  
+### Sensitivity
+  
+  Effect of income on Anti-Muslim Prejudice in Myanmar
+
+```{r}
+m_linear = lm(svy_sh_anti_muslim_prejudice_all ~ svy_sh_income_rc + 
+                svy_sh_female_rc + svy_sh_age_rc + 
+                svy_sh_education_rc + svy_sh_ethnicity_rc +  
+                svy_sh_religion_rc + svy_sh_profession_type_rc + 
+                svy_sh_income_source_rc, data = analysis_df)
+```
+
+---
+  
+```{r echo = F, warning = F, message = F}
+modelsummary(list(linear = m_linear), 
+             estimate  = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T
+)
+```
+
+---
+  
+  ```{r warning = F, message = F}
+require(sensemakr)
+require(stringr)
+covars = model.matrix(m_linear) %>% colnames
+covars_edu = covars %>% str_detect("education") %>% covars[.]
+myanmar.sensitivity <- sensemakr(model = m_linear, 
+                                 treatment = "svy_sh_income_rc",
+                                 benchmark_covariates = list('education' = covars_edu),
+                                 kd = 1:3,
+                                 ky = 1:3, 
+                                 q = 1,
+                                 alpha = 0.05, 
+                                 reduce = TRUE)
+
+```
+
+
+---
+  
+  ```{r echo = F}
+plot(myanmar.sensitivity)
+```
+
+Adjusted effect for confounder 1-3 times larger than education.
+
+---
+  
+  ```{r echo = F}
+plot(myanmar.sensitivity, type = 'extreme')
+```
+
+Adjusted effect if confounder explained **all** or **most** of the outcome
+
+---
+
+### Practice:
+  
+  Using the `veterans` data:
+  
+1. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
+2. Using `sensemakr`, examine the sensitivity of `enlist_rate`, using `suff57_yes` as the 'benchmark'
+3. Interpret the results of `plot(enlist_sensitivity)`
+
+
+# Sensitivity (Informal)
+
+
+
+Conditioning and dags
+
+- which dag is right?
+- is a variable a collider? or not?
+
+We can say we don't know, and report the effect across all combination of possible conditioning variables.
+
+
+advantage:
+
+- is a variable requried to condition or is it possibly collider? if results do not change then it is reassuring that this question is irrelevant
+- does conditioning on some variable induce strange weights to substantially alter sample about which we draw inference? If results do not change, this concern is immaterial.
+- agnostic about the correct "DAG" within a set of plausible assumptions.
+
+
+---
+
+what to do:
+
+data from hw 3: 
+
+- what choices can you make? proliferate choices
+- all combinations
+- plot combinations
+- evaluate which choices matter
+
+
+
