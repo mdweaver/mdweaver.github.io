@@ -1131,6 +1131,8 @@ State of the art: [More details](https://www.sciencedirect.com/science/article/a
 
 # Bootstrapping
 
+---
+
 ### The Bootstrap
 
 All **sandwich** based estimates of standard errors appeal to **asymptotic** consistency and normality to approximate sampling distribution of $\widehat{\beta}$
