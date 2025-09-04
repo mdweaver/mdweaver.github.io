@@ -53,7 +53,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - **Analyze** real-world causal claims and **identify** the types of causal evidence provided and **explain** the assumptions needed for this evidence to be valid.
 - **Apply** these tools of analysis to **explain** how both claims and a critical engagement with the evidence for those claims change their opinion on the issue at hand. 
 
-<\div>
+</div>
 
 ---
 
