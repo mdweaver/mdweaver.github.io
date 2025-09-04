@@ -1,7 +1,7 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "September 4, 2024"
+date: "September 4, 2025"
 output: ioslides_presentation
 ---
 
@@ -21,223 +21,58 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### 4. Questions
 
+
 # Course Introduction
 
+---
 
-## Historical Context
+### Exercise {.build}
 
-<img src="https://upload.wikimedia.org/wikipedia/en/a/a4/The_Deluge_%28history_book%29.jpg">
+#### With your neighbors, discuss: What is the most important political problem facing the world today?
 
-## Science as a Vocation
+#### Discuss with your neighbors: how would you find out what is true about this issue?
 
-<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSjn7UZ-m_adyLxPvonPnxwm2OdrtcZQ_kE4hE_0UjbY3N3cN5A" width= 50%>
+(be honest with yourself... how would, not how should)
 
-# What is the value of Science?
+#### Does this get at the actual "truth"? Why or why not?
 
-## Two Key Takeaways
-
-1. Science cannot resolve questions of value (good vs. bad, desirable vs. undesirable). It cannot tell us what we ***should* do.**
-
-2. Science *can* answer questions about what is happening in the world, what are the causes of some outcome or consequences of some action.
-
->- Does this make a science of politics valuable to us today?
+#### What role should "truth" play in forming your opinion on this issue?
 
 ---
 
-Climate Change and its consequences
+### **Learning Objectives**
 
-<img src="https://media.canadianunderwriter.ca/uploads/2021/11/CP129528376BC-wildfire.jpg">
+<div style="font-size:x-large">
 
----
+- **Give reasons** for why truth is important in politics.
+- **Identify** the types of claims made (implicitly or explicitly) in real-world political discourse.
+- **Identify** which of these claims can be subject to scientific scrutiny.
+- **Explain** what distinguishes scientific from unscientific forms of evidence.
+- **Analyze** real-world descriptive and causal claims about politics and **identify** specific errors with the use of evidence and **explain** *why* these errors occurred.
+- **Analyze** real-world causal claims and **identify** the types of causal evidence provided and **explain} the assumptions needed for this evidence to be valid.
+- **Apply** these tools of analysis to **explain** how both claims and a critical engagement with the evidence for those claims change their opinion on the issue at hand. 
 
-Immigration
-
-<img src="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/rockcms/2023-10/231003-eagle-pass-border-rio-grande-ew-710p-99c39c.jpg" width=80%>
-
----
-
-Inequality
-
-<img src="https://www.visualcapitalist.com/wp-content/uploads/2021/09/The-100-Billion-Dollar-Club-Regular-1.jpg" width=80%>
+<\div>
 
 ---
 
-Interstate War
+### **Practically**
 
-<img src="https://www.atlanticcouncil.org/wp-content/uploads/2015/02/20150212_UkraineTroopsDebaltseve_528.jpg" width=90%>
-
----
-
-Perils of Social Media, AI, new technology
-
-<img src="https://images.firstpost.com/uploads/2023/06/Australia-may-start-fining-Google-Meta-and-Twitter-millions-for-fake-news-on-their-platforms.jpg?im=FitAndFill=(596,336)">
-
----
-
-And in the face of these challenges, fears that democracy is under threat
-
-
-<img src = "https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fd1e00ek4ebabms.cloudfront.net%2Fproduction%2Fe1fb3a3a-ef86-4721-b915-224d0035494e.jpg?source=next-article&fit=scale-down&quality=highest&width=700&dpr=1">
+- Is this media or message that I am exposed to attempting to persuade me or change my behavior?
+- What is this message attempting to get me to do/believe?
+- How does this message attempt to persuade or motivate me?
+- Does the message employ claims and evidence?
+- What could go wrong with this evidence?
+- What would be **better** evidence?
 
 ---
 
-Maybe...
+Ultimate goal is to teach critical reasoning about what is true in the world, to face up to the reality of our age:
 
-Science's value is in helping us to be **rational** in responding to these crises
+- can be uncomfortable
+- can be difficult
 
->- Is there a problem? Is it a *new* problem?
->- If we, e.g., want to reduce CO$_2$ emissions, what policies will work?
 
----
-
-But, if science is value neutral...
-
- **How can it help us when people disagree, sometimes violently, about values?**
-
-
-<img src="https://swiftmedia.s3.amazonaws.com/mountain.swiftcom.com/images/sites/6/2020/06/25143422/JuneteenthMarch-rct-062520-6-1024x683.jpg" width = 60%>
-
----
-
-How can we stop science from being a tool of domination and oppression?
-
-<img src="https://www.journalofdemocracy.org/wp-content/uploads/2019/03/3-21-19-Digital-Freedom-1-1000x717.jpg" width = 60%>
-
----
-
-How can science grapple with values that are thrust upon us by parents, schools, states?
-
-
-
-
----
-
-To understand the value of science in politics, need to think about what politics is about: 
-
-### **Power**
-
-
-
-## Power 
-
-... is the capacity of A to motivate B to think or do something that B would otherwise not have thought or done.
-
-
-Power involves **justification**: giving some reason that combines stories ("facts") about the world with values to tell us what is wrong in the world and how to fix it (or what is good in the world that need protecting).
-
-
----
-
-We receive and accept justifications, implicitly and explicitly, all the time:
-
----
-
-<img src="https://media.wired.com/photos/5bef1ad95ee368750513ed75/master/w_1920,c_limit/AirportBiometrics_M27JY5.jpg" width=80%>
-
-
----
-
-<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/10/09/11/Amazon-warehouse.jpg?quality=75&width=1250&crop=3%3A2%2Csmart&auto=webp" width=80%>
-
----
-
-<img src="https://thumbnails.texastribune.org/ywi2dda7Xx7-Q84JByHiBN472H0=/850x570/smart/filters:format(webp):quality(75)/https://static.texastribune.org/media/files/4015218e49f510ea10dfae0397f4bcce/Trump_El_Paso_rally_1_REUTERS_TT.jpg" width = 80%>
-
----
-
-<img src="https://www.retailcouncil.org/wp-content/uploads/2021/06/Step-3-Restart-Plan-Current-Guidelines-169-1024x576.jpg" width = 80%>
-
-
-
-## Bringing values back in
-
-What distinguishes a **good** justification (to act a certain way) versus a **poor** justification?
-
->- Consider Residential Schools
->- Justifications were abundant and rich in detail.
-
----
-
-One intuitive way to recognize **poor** justifications is through the following principle:
-
-> "the acceptance of a justification does not count if the acceptance itself is produced by the coercive power which is supposedly being justified."
-
->- Residential schools coercively took children into an educational program aimed at providing justifications for that very coercion.
->- It also removed children from the perspectives and voices of their communities
-
-
----
-
-We cannot abolish **power**, but are we entitled to **good** justification?
-
-If you want to be given good justifications for the power exercised over you, it is only reasonable that we give good justifications for power exercised over others.
-
----
-
-What is the connection between values and science? And what is the value of science to us today?
-
-It comes through the connection between science and justifications of power. 
-
----
-
-At a meta level, the central claims of this course are:
-
-$1.$ Interrogating poor justifications **requires science**.
-
-Only science gives us principles and tools to interrogate — **independent of those exercising power**:
-
-- are the claims about **what is happening** or **what has happened** that are used to invoke specific values and to justify the exercise of power correct?
-- are the claims about **why** the world is at is (what is the problem?) correct?
-- are the claims about what actions will "fix the problem" correct?
-- how are justifications for power shared in the world? how is power used to persuade people of its own justifications?
-
----
-
-At a meta level, the central claims of this course are:
-
-$2.$ Scientific inquiry cannot proceed in contexts of domination:
-
-- When power is used to secure its own justification, it suppresses incompatible facts and holds certain claims **above independent scrutiny**.
-
-
----
-
-At a meta level, the central claims of this course are:
-
-$3.$ Principles of good scientific inquiry map onto principles of good justification.
-
-> "the acceptance of a justification does not count if the acceptance itself is produced by the coercive power which is supposedly being justified." 
-
-> "One does not have evidence for a claim if nothing has been done to rule out ways the claim may be false. If data $x$ agree with a claim $C$ but the method used is practically guaranteed to find such agreement, and had little or no capability of finding flaws with $C$ even if they exist, then we have bad evidence, no test."
-
-
-# What this course is about
-
----
-
-### **Themes**
-
-How are justifications related to power?
-
-What kinds of claims are embedded in justifications for power? How can we recognize them?
-
-What is science and scientific evidence?
-
-How can science help us interrogate justifications?
-
----
-
-### **Themes**
-
-Justifications involve claims about what is the state of the world, why it is that way, and about the values we should use to judge the world.
-
-Science is fundamentally about keeping assumptions open to challenge and scrutinizing the ways in which claims may be wrong.
-
-**Practically, we learn:**
-
-How do justifications use **descriptive** and **causal** claims about the world?
-
-What are the ways in which evidence for **descriptive** and **causal** claims may yield incorrect answers? How do we recognize them?
 
 ---
 
@@ -245,19 +80,15 @@ What are the ways in which evidence for **descriptive** and **causal** claims ma
 
 **Examples used in class**
 
-- Unfortunately, US elections are probably globally consequential.
-- Values inform questions
+We will likely use many examples that come from the US and the Trump Administration:
+
+- Why? (Two Reasons)
+- No need for agreement. 
+
+
+# Course Administration
 
 ---
-
-### **Why take this course?**
-
->- A requirement for the political science major; probably useful.
->- A civics lesson for citizens of the world: how to think critically about the power exercised over us (and the evidence used to justify or question that power)
-
----
-
-Speaking of exercising power over others...
 
 # Course Expectations
 
@@ -265,27 +96,28 @@ Speaking of exercising power over others...
 
 | Item             | Number | Points | Fraction of Grade |
 |------------------|--------|--------|-----------|
-| Short Assignments | 4      | 5 | 20%        |
+| Short Assignments | 4      | 2.5 | 10%        |
 | Group Project | 1 | 9 | 9% |
 | Course Survey | 1 | 1 |  1% |
 | Tutorial Participation | 1 | 10 | 10% |
-| Midterm Exam     | 1      | 25 | 25%               |
-| Final Exam | 1      | 35 | 35%               |
+| Midterm Exam     | 1      | 30 | 30%               |
+| Final Exam | 1      | 40 | 40%               |
 
 ## Reasoning
 
 - Thanks, OpenAI.
 - Don't train LLMs to take your (future) job.
 - LLMs useful tools, but won't cultivate critical thinking.
+- AI tools (e.g. chat bots, Grammarly, etc.) not permitted for assignments. Welcome to use as study aid
 
 
 ## Key Dates
 
-2. Assignment 1: September 27
-3. Assignment 2: October 18
-4. Midterm Exam: October 30
-5. Assignment 3: November 22
-7. Assignment 4: December 4
+2. Assignment 1: September 29
+3. Assignment 2: October 13
+4. Midterm Exam: October 23
+5. Assignment 3: November 17
+7. Assignment 4: November 28
 8. Final Exam: TBD
 
 
@@ -312,7 +144,7 @@ Speaking of exercising power over others...
 
 ### $\bullet$ Write memo with incremental deadlines
 
-### $\bullet$ Overall grade multiplied by personal contribution
+### $\bullet$ Overall grade weighted by personal contribution
 
 
 <br>
@@ -322,11 +154,11 @@ Speaking of exercising power over others...
 
 ## Midterm Exam
 
-### $\bullet$ **October 30** in class
+### $\bullet$ **October 23** in class
 
-### $\bullet$ Covers materials from weeks 1 to 8
+### $\bullet$ Covers materials from weeks 1 to 7
 
-### $\bullet$ Zoom / Tutorial Review session(s) AND lists of key terms/example questions 
+### $\bullet$ In class / Tutorial Review session(s) AND lists of key terms/example questions 
 
 ## Final Exam
 
@@ -335,6 +167,11 @@ Speaking of exercising power over others...
 ### $\bullet$ **Cumulative** over **entire course**, but **emphasizes** weeks 8 to 14.
 
 ### $\bullet$ Review session and key terms/example questions
+
+## Exam Study
+
+- Previous exams available already
+- Piazza to ask/draft answers to these questions: collectively produce a study guide
 
 ## Grading
 
@@ -361,6 +198,9 @@ Speaking of exercising power over others...
 
 ### $\bullet$ **Canvas**
 
+### $\bullet$ **Piazza**
+
+
 ## What I will do:
 
 ### $\bullet$ **List of concepts/Review**
@@ -386,7 +226,7 @@ Speaking of exercising power over others...
 
 - midterms, assignments in other courses are not "unforeseen"
 - Contact professor: concessions can be prospective/retroactive
-- May direct you to Arts Advising concession
+- May direct you to Arts Advising for concession
 
 ### $\bullet$ **Lateness**
 
@@ -427,7 +267,7 @@ Reasons:
 
 ## Office Hours
 
-Monday after lecture
+Tuesdays after lecture
 
 # Questions?
 
