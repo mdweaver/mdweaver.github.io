@@ -24,19 +24,20 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Course Introduction
 
+
+
+## Exercise 
+
+>- With your neighbors, discuss: What is the most important political problem facing the world today?
+
+>- Discuss with your neighbors: how would you find out what is true about this issue? (be honest with yourself... how would, not how should)
+
+>- Does this get at the actual "truth"? Why or why not?
+
+>- What role should "truth" play in forming your opinion on this issue?
+
+
 ---
-
-### Exercise {.build}
-
-#### With your neighbors, discuss: What is the most important political problem facing the world today?
-
-#### Discuss with your neighbors: how would you find out what is true about this issue?
-
-(be honest with yourself... how would, not how should)
-
-#### Does this get at the actual "truth"? Why or why not?
-
-#### What role should "truth" play in forming your opinion on this issue?
 
 ---
 
@@ -49,7 +50,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - **Identify** which of these claims can be subject to scientific scrutiny.
 - **Explain** what distinguishes scientific from unscientific forms of evidence.
 - **Analyze** real-world descriptive and causal claims about politics and **identify** specific errors with the use of evidence and **explain** *why* these errors occurred.
-- **Analyze** real-world causal claims and **identify** the types of causal evidence provided and **explain} the assumptions needed for this evidence to be valid.
+- **Analyze** real-world causal claims and **identify** the types of causal evidence provided and **explain** the assumptions needed for this evidence to be valid.
 - **Apply** these tools of analysis to **explain** how both claims and a critical engagement with the evidence for those claims change their opinion on the issue at hand. 
 
 <\div>
@@ -67,12 +68,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ---
 
-Ultimate goal is to teach critical reasoning about what is true in the world, to face up to the reality of our age:
-
-- can be uncomfortable
-- can be difficult
-
-
+What is the ultimate goal of this course?
 
 ---
 
@@ -108,7 +104,7 @@ We will likely use many examples that come from the US and the Trump Administrat
 - Thanks, OpenAI.
 - Don't train LLMs to take your (future) job.
 - LLMs useful tools, but won't cultivate critical thinking.
-- AI tools (e.g. chat bots, Grammarly, etc.) not permitted for assignments. Welcome to use as study aid
+- AI tools (e.g. chat bots, Grammarly, etc.) not permitted for assignments, with one exception. Welcome to use as study aid
 
 
 ## Key Dates
@@ -172,6 +168,7 @@ We will likely use many examples that come from the US and the Trump Administrat
 
 - Previous exams available already
 - Piazza to ask/draft answers to these questions: collectively produce a study guide
+- Piazza to ask any course-content related questions
 
 ## Grading
 
@@ -231,7 +228,7 @@ We will likely use many examples that come from the US and the Trump Administrat
 ### $\bullet$ **Lateness**
 
 - non-catastrophic deduction (5% deduction **after** every 24 hours)
-- maximum penalty of 30% (after one week), but delayed grading
+- max penalty of 30% (after 1 week), delayed grading
 
 ---
 
