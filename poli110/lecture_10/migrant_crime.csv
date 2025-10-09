@@ -1,0 +1,155 @@
+metro,undocumented,undocumented_pct,violent_rate,murder_rate,property_rate
+"Yuma, AZ",20000,0.103,368,4.9,2496.4
+"Salinas, CA",50000,0.102,427.2,10.8,2388.9
+"McAllen-Edinburg-Mission, TX",85000,0.102,304.7,3.2,3319.9
+"Gainesville, GA",20000,0.101,173.9,3.3,2013.1
+"Yakima, WA",25000,0.099,275.2,5.9,3397.5
+"Brownsville-Harlingen, TX",40000,0.09,266.4,1.4,3360.4
+"Houston-The Woodlands-Sugar Land, TX",575000,0.087,564.3,6.2,3348.5
+"Naples-Immokalee-Marco Island, FL",30000,0.084,305.3,2.2,1673.5
+"Napa, CA",10000,0.081,361.7,2.3,1776.5
+"Santa Maria-Santa Barbara, CA",35000,0.081,313.9,3,2142.8
+"Las Vegas-Henderson-Paradise, NV",170000,0.08,745.3,6.4,2875.5
+"Los Angeles-Long Beach-Anaheim, CA",1000000,0.075,384.7,4.6,2188.6
+"Laredo, TX",20000,0.075,406.3,3.3,3725
+"Miami-Fort Lauderdale-West Palm Beach, FL",450000,0.073,548.1,6.8,3621.7
+"Dallas-Fort Worth-Arlington, TX",475000,0.069,335.3,4.2,2795.4
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",400000,0.068,323.9,4.2,2070
+"Madera, CA",10000,0.068,598.9,5.7,2387.1
+"Bridgeport-Stamford-Norwalk, CT",65000,0.067,230.2,2,1566.4
+"San Jose-Sunnyvale-Santa Clara, CA",120000,0.065,250.4,2.5,2309.2
+"Fayetteville-Springdale-Rogers, AR-MO",30000,0.065,334.6,2.5,2380.7
+"Visalia-Porterville, CA",30000,0.064,429.9,9.1,2522.1
+"Merced, CA",15000,0.063,588.8,10.4,2896.1
+"El Centro, CA",10000,0.063,352.9,1.3,3325.3
+"Reno, NV",25000,0.06,401.5,4.6,2528
+"Trenton, NJ",25000,0.059,377.4,8.3,1876.6
+"Oxnard-Thousand Oaks-Ventura, CA",50000,0.057,224.1,3.1,1987.2
+"New York-Newark-Jersey City, NY-NJ-PA",1150000,0.057,380.8,3.3,1609.9
+"El Paso, TX",50000,0.057,356.8,2.4,2010.4
+"Riverside-San Bernardino-Ontario, CA",250000,0.056,346.3,4.7,2733.6
+"Hanford-Corcoran, CA",10000,0.056,467.6,4,2454.6
+"College Station-Bryan, TX",10000,0.055,326.5,2.9,2512.8
+"Phoenix-Mesa-Scottsdale, AZ",250000,0.055,390.4,4.7,2824.2
+"Stockton-Lodi, CA",40000,0.054,750,8.3,3674.4
+"Santa Rosa, CA",25000,0.054,366.9,1.7,1783.1
+"Hilton Head Island-Bluffton-Beaufort, SC",10000,0.054,423.4,6.7,2631.7
+"San Francisco-Oakland-Hayward, CA",240000,0.053,513.9,4.9,3514
+"San Diego-Carlsbad, CA",170000,0.053,335.2,2.3,1975.8
+"Fresno, CA",50000,0.052,506,6.1,3552.7
+"San Luis Obispo-Paso Robles-Arroyo Grande, CA",15000,0.052,403.5,1.3,2229.4
+"Midland, TX",10000,0.051,308.4,4.7,2603.1
+"Bakersfield, CA",45000,0.051,547.7,7,3514.8
+"Austin-Round Rock, TX",100000,0.05,283.3,2.5,2910
+"Atlantic City-Hammonton, NJ",15000,0.049,413.9,5.3,2908.2
+"Waco, TX",10000,0.048,379.8,5.1,3149.6
+"Cape Coral-Fort Myers, FL",35000,0.048,376.1,4.9,2193.8
+"Salt Lake City, UT",55000,0.047,365.6,2.2,4411.4
+"Denver-Aurora-Lakewood, CO",130000,0.047,340.7,3.4,2746.8
+"Modesto, CA",25000,0.047,542.4,6.5,3700.8
+"Santa Cruz-Watsonville, CA",15000,0.047,406.4,3.2,3135.1
+"Orlando-Kissimmee-Sanford, FL",110000,0.046,585.1,5.3,3512.8
+"Raleigh, NC",60000,0.045,219.3,2.7,2283.3
+"Odessa, TX",5000,0.045,938.3,6.9,4132.4
+"Atlanta-Sandy Springs-Roswell, GA",250000,0.045,396.2,6.1,3210.6
+"Chicago-Naperville-Elgin, IL-IN-WI",425000,0.045,378.9,6.7,2074.7
+"Albuquerque, NM",40000,0.043,758.4,5.6,4454
+"Las Cruces, NM",10000,0.041,293.3,3.9,3034.5
+"Seattle-Tacoma-Bellevue, WA",150000,0.039,325,2.6,4021.6
+"Charlotte-Concord-Gastonia, NC-SC",95000,0.038,398.3,4.9,2901.6
+"Winston-Salem, NC",25000,0.038,387.3,3.5,3538.7
+"Boston-Cambridge-Newton, MA-NH",180000,0.037,354.5,1.8,1890.3
+"Portland-Vancouver-Hillsboro, OR-WA",90000,0.037,254.8,1.7,2944.9
+"San Antonio-New Braunfels, TX",85000,0.037,433.8,5.3,4188.5
+"Greensboro-High Point, NC",30000,0.036,354.6,4.9,3161.1
+"Oklahoma City, OK",50000,0.036,476.2,6,3454.1
+"Yuba City, CA",5000,0.036,346,3,2750.7
+"Tucson, AZ",35000,0.036,427.5,5.8,4798.9
+"Port St. Lucie, FL",15000,0.035,318,4.2,2084.1
+"New Haven-Milford, CT",30000,0.034,355.7,3.2,2738.7
+"Vallejo-Fairfield, CA",15000,0.034,479,6.9,3105
+"Provo-Orem, UT",20000,0.033,71,0.7,1713.9
+"Lakeland-Winter Haven, FL",20000,0.031,386.6,3.4,2891
+"Boise City, ID",20000,0.03,228.8,1.5,1732.7
+"Urban Honolulu, HI",30000,0.03,243.9,1.5,3110.7
+"North Port-Sarasota-Bradenton, FL",20000,0.03,460.5,3.5,2837.5
+"Nashville-Davidson--Murfreesboro--Franklin, TN",55000,0.028,606.6,4.3,2621.8
+"Lafayette-West Lafayette, IN",5000,0.028,253.6,1.6,2562.3
+"Lake Havasu City-Kingman, AZ",5000,0.028,206.4,3.3,3130.4
+"Ann Arbor, MI",10000,0.027,303.3,2.1,1910.9
+"Hickory-Lenoir-Morganton, NC",10000,0.027,193.7,4.7,2746.7
+"Beaumont-Port Arthur, TX",10000,0.027,517.4,7.9,3049.9
+"Myrtle Beach-Conway-North Myrtle Beach, SC-NC",10000,0.027,438.6,8.9,4100.5
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",160000,0.026,472.3,7.2,2334.9
+"Memphis, TN-MS-AR",30000,0.026,1021.6,11.5,4094.6
+"Tampa-St. Petersburg-Clearwater, FL",75000,0.026,409.4,4.6,2865.4
+"Sacramento--Roseville--Arden-Arcade, CA",60000,0.026,423.8,4.3,2607.1
+"New Orleans-Metairie, LA",30000,0.026,504.2,17.4,3138.4
+"Salisbury, MD-DE",10000,0.026,415,3,3119.3
+"Reading, PA",10000,0.025,311.3,3.1,1779.4
+"Amarillo, TX",5000,0.025,541,3.6,3697.6
+"Providence-Warwick, RI-MA",40000,0.024,333.6,2.2,2123.2
+"Minneapolis-St. Paul-Bloomington, MN-WI",85000,0.023,273.6,2.3,2486.3
+"Baltimore-Columbia-Towson, MD",65000,0.023,615.5,10.9,2810.2
+"Omaha-Council Bluffs, NE-IA",25000,0.023,359.3,5,3014.1
+"Hartford-West Hartford-East Hartford, CT",30000,0.023,256.4,3.9,2202.7
+"Kansas City, MO-KS",45000,0.022,495.5,7.5,3072.3
+"Richmond, VA",25000,0.022,237.5,6.6,2357.8
+"Little Rock-North Little Rock-Conway, AR",15000,0.022,698.9,8.2,4467.4
+"Deltona-Daytona Beach-Ormond Beach, FL",15000,0.022,434.3,3.4,3068.4
+"Indianapolis-Carmel-Anderson, IN",40000,0.021,660.3,7.9,3306.6
+"Wichita, KS",15000,0.021,620.8,4.1,4136.1
+"Milwaukee-Waukesha-West Allis, WI",35000,0.021,633.7,7.7,2945
+"Grand Rapids-Wyoming, MI",20000,0.02,315,2.1,1786.2
+"Fort Wayne, IN",5000,0.02,261.3,5.8,2568.1
+"Rockford, IL",5000,0.02,731.6,7,2836.7
+"Greenville-Anderson-Mauldin, SC",20000,0.02,562.3,5.4,4026.1
+"Scranton--Wilkes-Barre--Hazleton, PA",10000,0.019,229.4,3.7,2135.6
+"Champaign-Urbana, IL",5000,0.019,470.1,4.3,2411.3
+"Eugene, OR",5000,0.019,261.8,2.4,3495.3
+"Corpus Christi, TX",10000,0.019,572.8,5.7,3905.4
+"Huntsville, AL",5000,0.018,482.1,5.8,3161.5
+"Columbus, OH",35000,0.018,296.5,4.8,2983.6
+"Columbia, SC",15000,0.018,604.7,6,3504.3
+"Detroit-Warren-Dearborn, MI",75000,0.018,532.4,9.1,2263.7
+"Ogden-Clearfield, UT",10000,0.017,158.9,1.8,2084
+"Des Moines-West Des Moines, IA",10000,0.017,317.4,2.5,2537.7
+"Birmingham-Hoover, AL",20000,0.017,596.1,9,3533.7
+"Allentown-Bethlehem-Easton, PA-NJ",15000,0.017,184.1,2.6,2070.9
+"Colorado Springs, CO",10000,0.017,371.3,4.4,3002.5
+"Asheville, NC",10000,0.017,203.8,2.8,2233.9
+"Lincoln, NE",5000,0.016,320.1,1.4,3066.9
+"Jacksonville, FL",20000,0.016,516.8,7.4,3204.4
+"Bellingham, WA",5000,0.016,199.2,1.9,3193.2
+"Louisville/Jefferson County, KY-IN",20000,0.015,409,5.9,3325.9
+"Chattanooga, TN-GA",10000,0.015,524.2,5.7,3676.8
+"Worcester, MA-CT",15000,0.015,426,1.4,1872.4
+"Fayetteville, NC",5000,0.015,474.4,8.8,4658
+"Manchester-Nashua, NH",5000,0.014,276.6,2.5,2102.8
+"Virginia Beach-Norfolk-Newport News, VA-NC",25000,0.014,307.1,7.1,2842.1
+"Charleston-North Charleston, SC",10000,0.014,383.8,7.9,2968.7
+"Anchorage, AK",5000,0.013,892.3,5.7,4043.1
+"Augusta-Richmond County, GA-SC",5000,0.013,287.6,6.1,3484.9
+"Palm Bay-Melbourne-Titusville, FL",5000,0.013,538.6,3.8,2821.2
+"Ocala, FL",5000,0.013,402.9,4.5,2062.5
+"Harrisburg-Carlisle, PA",5000,0.012,237.9,3.9,1903.2
+"Knoxville, TN",10000,0.012,389.3,3.4,3058.9
+"Spokane-Spokane Valley, WA",5000,0.012,330.1,3.4,5302
+"Gainesville, FL",5000,0.012,595.4,3,2991.6
+"Baton Rouge, LA",10000,0.011,494,10.7,3570
+"Cincinnati, OH-KY-IN",20000,0.01,270.6,4.7,2962.1
+"St. Louis, MO-IL",25000,0.009,449.2,8.8,2550.7
+"Pensacola-Ferry Pass-Brent, FL",5000,0.009,563.2,6.3,3438.4
+"Springfield, MA",5000,0.009,519.7,3.5,2598.8
+"Norwich-New London, CT",5000,0.008,347.7,3.4,2291.6
+"Pittsburgh, PA",15000,0.007,282.1,4.7,1819.7
+"Dayton, OH",5000,0.007,282.6,4.8,3119.7
+"Lansing-East Lansing, MI",5000,0.007,418.3,3.3,2026.4
+"Albany-Schenectady-Troy, NY",5000,0.006,267.3,3.2,2261.4
+"Rochester, NY",5000,0.006,274.4,3.8,2255.6
+"Portland-South Portland, ME",5000,0.005,136,1.1,2034.4
+"Toledo, OH",5000,0.005,557.8,4.6,2999.6
+"Akron, OH",5000,0.004,270.2,5,2737.8
+"Lancaster, PA",5000,0.003,172.2,2.4,1620.3
+"Buffalo-Cheektowaga-Niagara Falls, NY",5000,0.003,422.5,5.3,2612.6
+"Syracuse, NY",5000,0.002,274.1,3.9,2274.8
