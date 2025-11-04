@@ -35,11 +35,8 @@ require(magrittr)
 <img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width =80%>
 </div>
 
-If we identify polarization as a problem, what are its causes?
+If we identify polarization as a problem, addressing it requires understanding what are its causes.
 
----
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7tz3qJMbo0M?si=0f8UGjS2ezMQF7Hg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
@@ -50,7 +47,7 @@ If we identify polarization as a problem, what are its causes?
 
 ### Social Media and Polarization:
 
-**Claim:** "Using social media for political news increases political polarization."
+**Claim:** "Getting political information social media increases political polarization."
 
 <br>
 
