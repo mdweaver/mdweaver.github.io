@@ -167,6 +167,8 @@ $X$ (Independent Variable): Trump's Twitter gained attention after he announced 
 
 <img src='./mueller_2.png' width=70%>
 
+---
+
 ### Trump's Twitter and Hate Crimes
 
 $Y$ (Dependent variable): When Trump gained prominence, anti-Muslim hate crimes increased
