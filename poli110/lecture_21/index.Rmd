@@ -1,0 +1,1071 @@
+---
+title: "POLI 110: Confounding"
+author: "Michael Weaver"
+date: "November 27, 2025"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+require(haven)
+require(data.table)
+require(ggplot2)
+require(magrittr)
+require(ggdag)
+require(stringr)
+```
+
+# Correlation to Causation
+
+## Solutions to Confounding
+
+1. Recap
+2. Before/After Comparisons
+
+# Recap
+
+## Solutions to Confounding
+
+**Every way** of using correlation as evidence for causality **makes assumptions**
+
+- FPCI cannot be solved without assumptions
+- With assumptions, can say confounding/bias is not a problem
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | Only confounders <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error<br> 3. Cases similar in $W$ | Low | High |
+
+
+---
+
+Yesterday
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KuSB279t6b0?si=jyu6mRmKcmqOOCCm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+---
+ 
+Back in 2017...
+
+<iframe loading='lazy' width='560' height='315' src='https://www.nbcnews.com/news/embedded-video/mmvo43051077972' scrolling='no' frameborder='0' allowfullscreen></iframe>
+
+
+---
+
+Did Trump's rhetoric affect anti-Muslim hate crimes?
+
+```{r, echo = F, message=F, warning=F}
+hc = fread("./crimes_m.csv")
+
+hc[, month := month(incident_date)]
+
+hc_m = hc[, .(count = .N) , by = month]
+hc_d = hc[, .(count = .N) , by = .(incident_date, month)]
+
+ggplot(hc_m[month %in% 10:11], aes(x = factor(month, levels = c(10,11), labels = c("Before", "After")), y = count)) +
+  geom_bar(stat = 'identity') +
+  theme_bw() +
+  xlab("Month") + 
+  ylab("Anti-Muslim Hate Crimes in the US")
+
+```
+
+
+# Before and After
+
+## Before and After
+
+We can make Before and After comparisons: What is it?
+
+**before and after**: examine the change in $Y$ in a single case (or group of cases) where $X$ changes over time (from before to after)
+
+
+## Example: Before and After
+
+Taking the same data from [Feinberg, Branton, and Martinez-Ebers ](https://lmas.unt.edu/sites/lmas.unt.edu/files/lmas/Hate%20Incidents%20Spike_0.pdf)...
+
+- we focus **only** on counties that **ever had** a Trump (Clinton) rally
+- compare the month **after** the rally $(X = \text{Rally})$ to the month **before** the rally $(X = \text{No Rally})$
+
+---
+
+```{r, echo = F, warning=F, message=F}
+rally_data = fread('./trump_rally_data.csv')
+
+#trump rallies
+trump_rally = rally_data[trumpeverrally %in% 1]
+trump_rally[, month_num := str_extract(monthyear, "\\d+$") %>% as.numeric]
+trump_rally[, t_window := month_num - min(month_num[trumprallyoccured > 0]), by = fips]
+trump_rally[, hc_per_capita := incidentcount/exp(log_pop)*100000]
+trump_rally[, hc_per_capita_alt := hate_crimes/exp(log_pop)*100000]
+
+trump_rally[, t_window_f := factor(t_window, levels = c(0, -4:-1, 1:4))]
+trump_rally[, min_window := min(t_window), by = fips]
+trump_rally[, max_window := max(t_window), by = fips]
+
+#clinton rallies
+clinton_rally = rally_data[clintoneverrally %in% 1]
+clinton_rally[, month_num := str_extract(monthyear, "\\d+$") %>% as.numeric]
+clinton_rally[, t_window := month_num - min(month_num[clintonrallyoccured > 0]), by = fips]
+clinton_rally[, hc_per_capita := incidentcount/exp(log_pop)*100000]
+clinton_rally[, hc_per_capita_alt := hate_crimes/exp(log_pop)*100000]
+clinton_rally[, min_window := min(t_window), by = fips]
+clinton_rally[, max_window := max(t_window), by = fips]
+
+#Plot
+ggplot(trump_rally[t_window %in% c(0,1) & min_window <= 0 & max_window >= 1], aes(x = factor(t_window, labels = c("Before", "After")), y = 1*(hc_per_capita))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
+  geom_hline(yintercept = 0) +
+  theme_bw() + 
+  xlab("(X) Time Since Rally - Months") +
+  ylab("(Y) Hate Crimes per Capita") +
+  ggtitle("Hate Crimes in 195 Counties:\nBefore and After Trump Rallies") +
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+---
+
+```{r, echo = F, warning=F, message=F}
+#Plot
+ggplot(clinton_rally[t_window %in% c(0,1) & min_window <= 0 & max_window >= 1], aes(x = factor(t_window, labels = c("Before", "After")), y = hc_per_capita )) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'red', linetype = 'dashed') +
+  geom_hline(yintercept = 0) +
+  theme_bw() + 
+ xlab("(X) Time Since Rally - Months") +
+  ylab("(Y) Hate Crimes per Capita") +
+  ggtitle("Hate Crimes in 40 Counties:\nBefore and After Clinton Rallies")+
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+## Design Based Solutions
+
+**Conditioning** removes confounding by:
+
+- **identify** possible confounding variables
+- **measure** confounding variables
+- relationship b/t $X$ and $Y$ for cases with **similar value** of confounding variables $W$.
+
+
+## Design Based Solutions
+
+**Design-based** solutions (like **Before and After**) remove confounding by:
+
+- selecting cases for comparison in order to eliminate **many** known/unknown as well as measurable/unmeasurable confounding variables.
+- the nature of the comparison holds constant **classes of confounding variables**, not  **specific** confounding variables.
+- by a "class" we mean all confounding variables that share certain properties
+
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + jewish + hate_group + crime + gop + univ + region + pop,
+      rally ~ jewish + hate_group + crime + gop + univ + region + pop,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'jewish' = '% Jewish',
+                  'hate_group' = 'Racism',
+                  "crime" = "Crime Rate",
+                  'gop' = 'Republican\nVoters',
+                  'univ'= 'Univ.\nEducated',
+                  'region' = "Region",
+                  'pop' = 'Population'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c(rep('',11), "?" ,rep('', 4))),
+                      angle_calc = "along", label_dodge = unit(rep(1,15),'lines')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + unchanging + changing,
+      rally ~ unchanging + changing,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Before and After
+
+```{r, echo = F, warning = F, message = F}
+dagify(hate_crime ~ rally + unchanging + changing,
+      rally ~ unchanging + changing,
+       exposure = "rally", 
+       outcome = 'hate_crime',
+       labels = c('rally' = "(X) Trump\nRally", 
+                  'hate_crime' = "(Y) Hate Crimes",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c("","","", "","held constant\n(link broken)", "held constant\n(link broken)")),  
+                                    angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,-1),'lines'),
+                                    edge_linetype = rep(c(1,1,1,2,2), each = 100),
+                                    arrow = grid::arrow(length=grid::unit(c(10,10,10,0,0,0), 'pt'), type = 'closed')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Before and After
+
+### **How does it work?**...
+
+**All** confounding variables (affect whether a rally occurs; affect hate crimes) that are **unchanging over time** (before to) are held constant.
+
+- because held constant, cannot produce confounding
+- e.g., demographic features, political leaning, location/geography, long-term economic trends, 8chan white nationalists
+- any variable that **does not change *in the time period of the comparison* ** (in this case, two months) held constant
+- does not matter if we can think of or even measure the confounders
+
+---
+
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | Only confounders <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error<br> 3. Cases similar in $W$ | Low | High |
+| Before and After | Hold confounders <br> constant | **variables <br> unchanging <br> over time** | ? | ? | ? | 
+
+
+# Before and After Assumptions...
+
+## Design Based Solutions
+
+Just like experiments and confounding, **Before and After** comparisons plug in for MISSING potential outcomes.
+
+| County | Time   |  $Y:$ HC(Yes) | $Y:$ HC(No) | $X:$ Rally |
+|--------|--------|:-------:|:------:|:-----:|
+| $c$      | Before | $\color{red}{\text{Hate Crimes}_{c,Before}[\text{Rally}]}$    | $\color{black}{\text{Hate Crimes}_{c,Before}[\text{No Rally}]}$  | No    |
+|        |        |         |   $\Downarrow$     |       |
+| $c$    | After  | $\color{black}{\text{Hate Crimes}_{c,After}[\text{Rally}]}$    |  $\color{red}{\text{Hate Crimes}_{c,After}[\text{No Rally}]}$ | Yes   |
+
+## Design Based Solutions
+
+| County | Time   |  $Y:$ HC(Yes) | $Y:$ HC(No) | $X:$ Rally |
+|--------|--------|:-------:|:------:|:-----:|
+| $c$    | Before | $\color{red}{\text{Hate Crimes}_{c,Before}[\text{Rally}]}$    | $\color{black}{\text{Hate Crimes}_{c,Before}[\text{No Rally}]}$  | No    |
+|        |        |         |   $\Downarrow$     |       |
+| $c$    | After  | $\color{black}{\text{Hate Crimes}_{c,After}[\text{Rally}]}$    |  $\boxed{\color{black}{\text{Hate Crimes}_{c,Before}[\text{No Rally}]}}$ | Yes   |
+
+We **assume** $\color{red}{\text{Hate Crimes}_{c,After}[\text{No Rally}]} = \\ \color{black}{\text{Hate Crimes}_{c,Before}[\text{No Rally}]}$
+
+That is: if $X$ had not changed, $Y$ would not have changed.
+
+---
+
+
+```{r}
+
+cf = trump_rally[t_window %in% c(0,1) & min_window <= 0 & max_window >= 1, .(hc_per_capita = mean(hc_per_capita)), by = t_window]
+cf[t_window %in% 1, hc_per_capita := cf[t_window %in% 0, hc_per_capita]]
+#Plot
+ggplot(trump_rally[t_window %in% c(0,1) & min_window <= 0 & max_window >= 1], aes(x = factor(t_window, labels = c("Before", "After")), y = 1*(hc_per_capita))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 1.5, colour = 'darkgray', linetype = 'dashed') +
+  geom_hline(yintercept = 0) +
+  geom_line(data = cf, aes(x = t_window + 1, y = hc_per_capita), colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("(X) Time Since Rally - Months") +
+  ylab("(Y) Hate Crimes per Capita") +
+  ggtitle("Hate Crimes in 195 Counties:\nBefore and After Trump Rallies") +
+  coord_cartesian(ylim = c(0,0.1))
+
+```
+
+## Before and After 
+
+### External Validity
+
+- We can examine "real world" causes of interest
+- BUT... limited set of cases (only find effects of cases with change in $X$ over time)
+
+Not *quite* as widely applicable as confounding... $\to$ Higher, but not Highest external validity
+
+## Before and After 
+
+### Assumptions:
+
+- assume that counterfactual potential outcomes of $Y$ without $X$ **after** $X$ happens, same as factual $Y$ without $X$ **before** $X$ happens
+- equivalently: assume there are **no variables** $W$ that affect $Y$ and *change over time* with $X$.
+
+Any $W$ that affects $Y$ and changes with $X$ will produce confounding **even if it does not *cause*** $X$.
+
+- this is a *new* source of confounding (result of our comparison)
+- we **eliminate** confounding from **unchanging** variables, but open up possible **new** confounding from **changing** variables.
+
+
+
+## Example: Before and After
+
+Must assume there are **no variables** $W$ that affect $Y$ and *change over time* with $X$.
+
+### **Why might this assumption fail?**
+
+>- Did Trump rallies take place in places that are already **trending** toward having more hate crimes?
+>- Is it possible that Trump wanted to avoid controversy and waited to hold rallies in places until they had a month with a lower-than-usual number of hate crimes? (board)
+
+>- We can address these concerns by looking at longer-term trends...
+
+
+---
+
+```{r, echo = F, warning=F, message=F}
+l = -4
+u = 2
+#Plot
+temp = trump_rally[t_window %in% c(l:u) & min_window <= l & max_window >= u]
+u_c = temp$fips %>% unique %>% length
+ggplot(temp, aes(x = as.factor(t_window), y = 1*(hc_per_capita ))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per capita") +
+  ggtitle(paste0("Hate Crimes in ", u_c ," Counties:\nBefore and After Trump Rallies")) + 
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+Mostly flat trend; change when rallies occur
+
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+l = -4
+u = 2
+#Plot
+temp = clinton_rally[t_window %in% c(l:u) & min_window <= l & max_window >= u ]
+u_c = temp$fips %>% unique %>% length
+
+ggplot(temp, aes(x = as.factor(t_window), y = (hc_per_capita))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per Capita") +
+  ggtitle(paste0("Hate Crimes in ", u_c ," Counties:\nBefore and After Clinton Rallies"))  +
+  coord_cartesian(ylim = c(0,0.1))
+```
+
+Mostly constant upward trend; no change when rallies occur
+
+## Example: Before and After
+
+### **When does this assumption fail?**
+
+**Over-time comparison**, we can **create** confounding from variables that do not **cause** $X$ to change, if they also **change with** $X$ over time...
+
+- Does rally change **measurement**, but not **actual number** of hate crimes? (Measurement bias)
+
+- Are there are other changes over the same time-frame (change at the same time as $X$, rallies)?
+    - Less of a problem when comparing across very short time periods (fewer variables change)
+
+---
+
+Looking at the 2017 Truck attack: by **DAY**
+
+```{r}
+ggplot(hc_d[month %in% 10:11], aes(x = incident_date, y = count)) +
+  geom_bar(stat = 'identity') +
+  theme_bw() +
+  xlab("Day") + 
+  ylab("Anti-Muslim Hate Crimes by Day") +
+  geom_vline(xintercept = as.Date("2017-10-31"), color = 'red')
+```
+
+
+---
+
+
+Looking at the 2017 Truck attack: by **MONTH**
+
+```{r}
+ggplot(hc_m, aes(x = month, y = count)) +
+  geom_bar(stat = 'identity') +
+  theme_bw() +
+  xlab("Month") + 
+  ylab("Anti-Muslim Hate Crimes by Month") +
+  geom_vline(xintercept = 10.5, color = 'red')
+```
+
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+l = -4
+u = 2
+#Plot
+temp = trump_rally[t_window %in% c(l:u) & min_window <= l & max_window >= u]
+u_c = temp$fips %>% unique %>% length
+ggplot(temp, aes(x = as.factor(t_window), y = 1*(hc_per_capita_alt ))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per capita") +
+  ggtitle(paste0("Hate Crimes in ", u_c ," Counties:\nBefore and After Trump Rallies\n FBI Hate Crime Data")) + 
+  coord_cartesian(ylim = c(0,0.4))
+```
+
+FBI data shows no change, compared to Anti-Defamation League $\to$ "effect" is changing measurement of hate crimes?
+
+---
+
+```{r, echo = F, warning=F, message=F}
+
+#Plot
+l = -4
+u = 2
+#Plot
+temp = clinton_rally[t_window %in% c(l:u) & min_window <= l & max_window >= u ]
+u_c = temp$fips %>% unique %>% length
+
+ggplot(temp, aes(x = as.factor(t_window), y = (hc_per_capita_alt))) +
+  stat_summary(fun.data=mean_cl_normal, fun.args = list(mult=1), 
+               geom="errorbar", color="black", width=0.2) +     
+  stat_summary(fun=mean, geom="point", color="black") +
+  geom_vline(xintercept = 5.5, colour = 'red', linetype = 'dashed') +
+  theme_bw() + 
+  xlab("Time Since Rally") +
+  ylab("Hate Crimes per Capita") +
+  ggtitle(paste0("Hate Crimes in ", u_c ," Counties:\nBefore and After Clinton Rallies\nFBI Hate Crime Data"))  +
+  coord_cartesian(ylim = c(0,0.4))
+```
+
+
+
+---
+
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | High | Low | 
+| Conditioning | Hold confounders<br>constant | Only confounders <br> conditioned on | 1. Condition on all confounders <br> 2. Low measurement error<br> 3. Cases similar in $W$ | Low | High |
+| Before and After | Hold confounders <br> constant | variables <br> unchanging <br> over time | No causes of $Y$ <br> change w/ $X$ | Lower | Higher | 
+
+
+# Beyond Before and After
+
+## Example: AI
+
+<img src="https://i0.wp.com/www.edwardconard.com/wp-content/uploads/2025/07/33315-is-ai-killing-graduate-jobs-image-gallery-image-01.png?fit=1054%2C1048&ssl=1" width=70%>
+
+
+## Example: Gun Laws
+
+### **Does easing restrictions on gun laws increase murders committed using guns?**
+
+- Some states in the US require all handgun purchasers to acquire a permit-to-purchase (PTP) license (LIKE CANADA).
+- Only persons with a permit may purchase firearms
+- In late 2007, Missouri eliminated its PTP requirement
+
+## Example: Gun Laws
+
+[Webster et al (2014)](https://link.springer.com/article/10.1007/s11524-014-9865-8) investigate:
+
+- Did the removal of the PTP law **increase** firearms homicides in Missouri?
+
+>- Conditioning?: Lots of unique features of Missouri; no "otherwise similar" state.
+
+---
+
+```{r, echo = F, message=F, warning=F}
+guns = fread('./results.csv', integer64 = 'double') %>%
+       .[!is.na(Year)] 
+guns[, gun_rate := as.numeric(`Age-Adjusted Rate`)]
+
+border = c("Illinois", "Iowa", "Nebraska", "Kansas", "Oklahoma", "Arkansas", "Tennessee", "Kentucky")
+guns_use = guns[State %in% c("Missouri", "Arkansas")]
+guns_use[, States := ifelse(State %in% border, "Border", "Missouri")]
+guns_all = guns_use[, list(gun_rate = mean(gun_rate)), by = list(States, Year)]
+#guns_use = guns_use[, list(gun_rate = mean(gun_rate)), by = list(States, Year)]
+ggplot(guns_use[Year %in% 2007:2008 & State %in% "Missouri"], aes(x = Year, y = gun_rate)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'red') +
+  theme_bw() +
+  ylim(0,7) +
+  scale_x_continuous(breaks=c(2007,2008)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri, before and after PTP repeal")
+```
+
+Did the repeal CAUSE a change in murders using guns?
+
+---
+
+```{r, echo = F, warning = F, message = F}
+dagify(murders ~ repeal + unchanging + changing,
+      repeal ~ unchanging + changing,
+       exposure = "repeal", 
+       outcome = 'murders',
+       labels = c('repeal' = "(X) PTP\nRepeal", 
+                  'murders' = "(Y) Gun Murders",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link() +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Gun Laws
+
+Holds all unique, **unchanging** characteristics of Missouri constant...
+
+---
+
+```{r, echo = F, warning = F, message = F}
+dagify(murders ~ repeal + unchanging + changing,
+      repeal ~ unchanging + changing,
+       exposure = "repeal", 
+       outcome = 'murders',
+       labels = c('repeal' = "(X) PTP\nRepeal", 
+                  'murders' = "(Y) Gun Murders",
+                  'changing' = 'Changing\nAttributes',
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c("","","", "","held constant\n(link broken)", "held constant\n(link broken)")),  
+                                    angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,-1),'lines'),
+                                    edge_linetype = rep(c(1,1,1,2,2), each = 100),
+                                    arrow = grid::arrow(length=grid::unit(c(10,10,10,0,0,0), 'pt'), type = 'closed')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+## Example: Gun Laws
+
+But, we have to **assume** that there is nothing else about Missouri that
+
+1. changed around the same time as the PTP (gun control) repeal
+2. and affected Firearms Homicides
+
+(or more technically, assume that $\color{red}{\text{Murders}_{MO,After}[\text{No Repeal}]} = \color{black}{\text{Murders}_{MO,Before}[\text{No Repeal}]}$)
+
+No long-term trends, no effects on measurement, 
+
+no changes in crimes $\to$ PTP repeal
+
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+f_trends = guns_use[Year %in% 2007:2008 & State %in% c("Missouri")] %>% 
+  .[, Trend := "Factual"]
+y_cf = f_trends[Year %in% 2007, gun_rate]
+cf1_trends = copy(f_trends) %>% 
+              .[, State := "Missouri CF 3"] %>%
+              .[Year %in% 2008, gun_rate := y_cf ] %>% 
+  .[, Trend := "Assumed Counterfactual"]
+plot_data = rbindlist(list(f_trends, cf1_trends))
+plot_data[, Trend := factor(Trend, levels = c("Factual", "Assumed Counterfactual"))]
+effects = data.table(Year = 2008, 
+                     start = plot_data$gun_rate[c(4,6,8)],
+                     end =  plot_data$gun_rate[2]
+                     )
+
+ggplot(data = plot_data, aes(x = Year, y = gun_rate, linetype = Trend, colour = Trend, group = State)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  theme_bw() +
+  ylim(0,8) +
+  scale_x_continuous(breaks=c(2007:2008)) + 
+  scale_color_manual(values=c("black", "red")) + 
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  ylab("Firearms Homicide Rate") + 
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri Trends, factual and assumed counterfactual") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+ggplot(guns_use[Year %in% 1999:2012 & State %in% "Missouri"], aes(x = Year, y = gun_rate)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'gray30') +
+  geom_segment(aes(x = 2007, xend = 2012, y = y_cf, yend = y_cf), colour = "red", linetype = 2) +
+  theme_bw() +
+  ylim(0,7) +
+  scale_x_continuous(breaks=c(1999:2012)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri, before and after PTP repeal")
+```
+
+Does this plot make it easier/harder to believe PTP repeal caused more murders? (DISCUSS)
+
+## Example: Gun Laws
+
+Could be that **other things were changing between 2007-2008** that confound relationship between PTP and Murders?
+
+- Maybe an upward trend in long term?
+- Maybe 2006-2007 was aberration, 2008 a return to trend?
+- Did anything else happen in 2008?
+
+
+## Example: Gun Laws
+
+| State | Time   | Murder(Yes) | Murder(No) | Repeal |
+|--------|--------|:-------:|:------:|:-----:|
+| Missouri | Before | $\color{red}{\text{Murders}_{MO,Before}[\text{Repeal}]}$    | $\color{black}{\text{Murders}_{MO,Before}[\text{No Repeal}]}$  | No    |
+|        |        |         |   $\neq\not\Downarrow$     |       |
+| Missouri | After  | $\color{black}{\text{Murders}_{MO,After}[\text{Repeal}]}$    |  $\color{red}{\text{Murders}_{MO,After}[\text{No Repeal}]}$ | Yes   |
+
+<br> 
+
+It appears that $\color{red}{\text{Murders}_{MO,After}[\text{No Repeal}]} \neq \\  \color{black}{\text{Murders}_{MO,Before}[\text{No Repeal}]}$
+
+Because other factors **changing murders**, regardless of repeal
+
+## Example: Gun Laws
+
+What can we do to remove confounding from other variables that **change over time**, like...
+
+- weather patterns (hot weather $\to$ murders)
+- global financial crises/economic shocks
+- political events
+
+>- Another way to put this question is: what would the trend in gun murders in Missouri have been **had there been no PTP repeal**? What was the **counterfactual trend**?
+
+## Example: Gun Laws
+
+We want to compare the **actual trend** in Missouri:
+
+$\begin{equation}\begin{split}\text{Trend}_{MO} ={} & \color{black}{\text{Murders}_{MO,After}[\text{Repeal}]} - \\ & \color{black}{\text{Murders}_{MO,Before}[\text{No Repeal}]}\end{split}\end{equation}$
+
+against the **counterfactual trend** in Missouri:
+
+$\begin{equation}\begin{split}\color{red}{\text{CF Trend}_{MO}} ={} & \color{red}{\text{Murders}_{MO,After}[\text{No Repeal}]} - \\ & \color{black}{\text{Murders}_{MO,Before}[\text{No Repeal}]}\end{split}\end{equation}$
+
+---
+
+$\small{\begin{equation}\begin{split} = {} & \overbrace{\{\text{Murders}_{MO,After}(\text{Repeal}) - \text{Murders}_{MO,Before}(\text{No Repeal})\}}^{\text{Missouri observed trend}} - \\ & \underbrace{\{\color{red}{\text{Murders}_{MO,After}(\text{No Repeal})} - \text{Murders}_{MO,Before}(\text{No Repeal})\}}_{\color{red}{\text{Missouri counterfactual trend}}}\end{split}\end{equation}}$
+
+- Before and After assumes the **counterfactual trend** is always 0
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+f_trends = guns_use[Year %in% 1999:2008 & State %in% c("Missouri")] %>% 
+  .[, Trend := "Factual"]
+cf1_trends = copy(f_trends[Year %in% 2007:2008]) %>% 
+              .[, State := "Missouri CF 1"] %>%
+              .[Year %in% 2008, gun_rate := 4.599769 + 3] %>% 
+  .[, Trend := "Counterfactual?"]
+cf2_trends = copy(f_trends[Year %in% 2007:2008])  %>% 
+              .[, State := "Missouri CF 2"] %>%
+              .[Year %in% 2008, gun_rate := 4.599769 - 2] %>% 
+  .[, Trend := "Counterfactual?"]
+cf3_trends = copy(f_trends[Year %in% 2007:2008]) %>% 
+              .[, State := "Missouri CF 3"] %>%
+              .[Year %in% 2008, gun_rate := 4.599769 ] %>% 
+  .[, Trend := "Counterfactual?"]
+plot_data = rbindlist(list(f_trends, cf1_trends, cf2_trends, cf3_trends))
+plot_data[, Trend := factor(Trend, levels = c("Factual", "Counterfactual?"))]
+plot_data = plot_data[Year >= 2003]
+effects = data.table(Year = 2008, 
+                     start = plot_data[Year %in% 2008 & Trend %in% "Counterfactual?", gun_rate],
+                     end =  plot_data[Year %in% 2008 & Trend %in% "Factual", gun_rate]
+                     )
+
+ggplot(data = plot_data, aes(x = Year, y = gun_rate, linetype = Trend, colour = Trend, group = State)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  theme_bw() +
+  ylim(0,8) +
+  scale_x_continuous(breaks=c(1999:2008)) + 
+  scale_color_manual(values=c("black", "red")) + 
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  ylab("Firearms Homicide Rate") + 
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri Trends, factual and possible counterfactuals") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+Many possible counterfactual trends... 
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+
+ggplot(data = plot_data, aes(x = Year, y = gun_rate, linetype = Trend, colour = Trend, group = State)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  theme_bw() +
+  ylim(0,8) +
+  scale_x_continuous(breaks=c(1999:2008)) + 
+  scale_color_manual(values=c("black", "red")) + 
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  ylab("Firearms Homicide Rate") +
+  geom_segment(data = effects[1], aes(x = Year, 
+                   xend = Year, 
+                   y = start,
+                   yend = end,
+                   linetype = NULL,
+                   colour = NULL,
+                   group = NULL
+                   ),
+                  show.legend = FALSE,
+                  linewidth = 1,
+                  arrow = arrow(length = unit(0.25, "cm")),
+               color = c("#F8766D")) + 
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri Trends, factual and possible counterfactuals") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+Which counterfactual is right?
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+
+ggplot(data = plot_data, aes(x = Year, y = gun_rate, linetype = Trend, colour = Trend, group = State)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  theme_bw() +
+  ylim(0,8) +
+  scale_x_continuous(breaks=c(2007:2008)) + 
+  scale_color_manual(values=c("black", "red")) + 
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  ylab("Firearms Homicide Rate") +
+  geom_segment(data = effects[1:2], aes(x = Year, 
+                   xend = Year, 
+                   y = start,
+                   yend = end,
+                   linetype = NULL,
+                   colour = NULL,
+                   group = NULL
+                   ),
+                  show.legend = FALSE,
+                  linewidth = 1,
+                  arrow = arrow(length = unit(0.25, "cm")),
+               color = c("#F8766D", '#619CFF')) + 
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri Trends, factual and counterfactual") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+Which counterfactual is right?
+
+## Example: Gun Laws
+
+We can't know the counterfactual trend in Missouri...
+
+but we **can observe** the trends in **other states** that **did not change** their gun purchasing laws (no change in Gun Control, $X$).
+
+>- We can plug in the $\text{factual TREND}$ in an "untreated" case (no change in $X$) for the $\color{red}{\text{counterfactual TREND}}$ in the "treated" case (where $X$ did change).
+
+---
+
+<img src='http://ontheworldmap.com/usa/state/missouri/map-of-arkansas-and-missouri-max.jpg' width = 30%>
+
+Arkansas has a different history that Missouri, so there are differences that are unchanging between them. 
+
+But, if Arkansas experiences same regional economic, political, cultural, weather trends as Missouri, they likely share the **same trends over time**.
+
+---
+
+Then, we can plug in
+
+$\small{\begin{equation}\begin{split} = {} & \overbrace{\{\text{Murders}_{MO,After}(\text{Repeal}) - \text{Murders}_{MO,Before}(\text{No Repeal})\}}^{\text{Missouri observed trend}} - \\ & \{\underbrace{\text{Murders}_{AR,After}(\text{No Repeal}) - \text{Murders}_{AR,Before}(\text{No Repeal})\}}_{\text{Arkansas observed trend}}\end{split}\end{equation}}$
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+ggplot(guns_use[Year %in% 2007:2008 & State %in% c("Missouri", "Arkansas")], aes(x = Year, y = gun_rate, color = State)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'red') +
+  theme_bw() +
+  ylim(0,7) +
+  scale_x_continuous(breaks=c(2007:2008)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri and Arkansas, before and after Missouri PTP repeal") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+Missouri/Arkansas different in 2007, but if Missouri had same trend (counterfactually) as Arkansas, what would we expect Murders to have done in 2008 w/out the repeal?
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+p_data = guns_use[Year %in% 2007:2008 & State %in% c("Missouri", "Arkansas"), list(State, Year, gun_rate, Trend = 'Factual')]
+
+cf_data = guns_use[Year %in% 2007:2008 & State %in% c("Missouri", "Arkansas"), list(State, Year, gun_rate, Trend = 'Counterfactual')]
+ar_diff = p_data[, gun_rate[2] - gun_rate[1]]
+mo_2007 = p_data[, gun_rate[3]]
+mo_2008 = p_data[, gun_rate[4]]
+
+cf_data[Year %in% 2008 & State %in% c("Missouri"), gun_rate := mo_2007 + ar_diff]
+
+plot_data = rbind(p_data, cf_data[State %in% "Missouri"])
+plot_data[, Trend := factor(Trend, levels = c("Factual", "Counterfactual"))]
+ggplot(plot_data, aes(x = Year, y = gun_rate, color = State, linetype = Trend)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  geom_segment(y = mo_2007 + ar_diff, yend= mo_2008, x = 2008, xend = 2008, colour = 'black', linewidth = 1, alpha= 0.5, arrow = arrow(length = unit(0.25, "cm")), show.legend = F) +
+  theme_bw() +
+  ylim(0,7) +
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  scale_x_continuous(breaks=c(2007:2008)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri and Arkansas, before and after Missouri PTP repeal") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+Missouri's counterfactual trend is **parallel to** / same as Arkansas's factual trend
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+p_data = guns_use[Year %in% 2007:2008 & State %in% c("Missouri", "Arkansas"), list(State, Year, gun_rate, Trend = 'Factual')]
+
+cf_data = guns_use[Year %in% 2007:2008 & State %in% c("Missouri", "Arkansas"), list(State, Year, gun_rate, Trend = 'Counterfactual')]
+ar_diff = p_data[, gun_rate[2] - gun_rate[1]]
+mo_2007 = p_data[, gun_rate[3]]
+mo_2008 = p_data[, gun_rate[4]]
+
+cf_data[Year %in% 2008 & State %in% c("Missouri"), gun_rate := mo_2007 + ar_diff]
+
+plot_data = rbind(p_data, cf_data[State %in% "Missouri"])
+plot_data[, Trend := factor(Trend, levels = c("Factual", "Counterfactual"))]
+ggplot(plot_data, aes(x = Year, y = gun_rate, color = State, linetype = Trend)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'black') +
+  geom_segment(y = mo_2007 + ar_diff, yend= mo_2008, x = 2008, xend = 2008, colour = 'black', linewidth = 1, alpha = 0.5, arrow = arrow(length = unit(0.25, "cm")), show.legend = F) +
+  theme_bw() +
+  ylim(0,7) +
+  scale_linetype_manual(values=c("solid", "longdash")) +
+  scale_x_continuous(breaks=c(2007:2008)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri and Arkansas, before and after Missouri PTP repeal") + 
+  theme(legend.position = 'bottom') + 
+  theme(text = element_text(size = 15))  
+```
+
+With your neighbors, discuss: Do you believe this is evidence of **causality**? What confounding does this address? What confounding does it not address?
+
+# Difference in Differences
+
+## Design Based Solution:
+
+Like **before and after**, **difference in differences** comparisons are **design** based
+
+- careful comparison rules out **groups** of confounding variables
+
+## Design: Difference in Differences
+
+**What is it?**
+
+- Compare changes in "treated" cases before and after "treatment" to before and after changes in "untreated" cases
+
+
+## Design: Difference in Differences
+
+Why is it called **difference** in **differences**?
+
+$\small{\begin{equation}\begin{split} = {} & \overbrace{\{\text{Murders}_{MO,After}(\text{Repeal}) - \text{Murders}_{MO,Before}(\text{No Repeal})\}}^{\text{Missouri observed trend}} - \\ & \{\underbrace{\text{Murders}_{AR,After}(\text{No Repeal}) - \text{Murders}_{AR,Before}(\text{No Repeal})\}}_{\text{Arkansas observed trend}}\end{split}\end{equation}}$
+
+## Design: Difference in Difference
+
+So:
+
+- $\mathrm{Difference \ 1} = Murders_{After} - Murders_{Before}$ gives us trend in murders in a $State$...
+    - holding **unchanging attributes of state** constant (*difference over time*)
+- $\mathrm{Difference \ 2} = \mathrm{Difference \ 1}_{Missouri} - \mathrm{Difference \ 1}_{Arkansas}$ gives us change in murders in $Treated$ over time, compared to trend in $Control$
+    - holds **changing attributes of both states** constant (*difference in trends*)
+
+## Design: Difference in Difference
+
+|                   | $Murder_{Before}$ | $Murder_{After}$ | **First Difference** |
+|-------------------|:--------:|:--------:|:----------------:|
+| $\mathrm{Missouri}$         |   $4.6$  |   $6.2$  |       $1.6$      |
+| $\mathrm{Arkansas}$         |   $5.6$  |   $5.4$  |       $-0.2$      |
+| **Second Difference** |          |          |      $1.8$      |
+
+
+## Design: Difference in Differences
+
+**How does it work?**
+
+- Hold constant **unchanging** attributes of cases (compare same case before and after "treatment")
+- Hold constant variables that **change together** over time in both "treated" and "untreated" cases
+
+We don't need to know/measure what these variables are!
+
+## Design: Difference in Differences
+
+### **Confounding Solved**...
+
+All confounding variables (affect whether a PTP repealed; affect firearms homicides) that are **unchanging over time** are held constant 
+
+- comparing change over time with-in the same case
+
+All confounding variables that **change the similarly** in "treated" and "untreated" case are held constant.
+
+- By comparing change over time in "treated" to change over time in "control"
+
+---
+
+```{r, echo = F, warning = F, message = F}
+dagify(murders ~ repeal + unchanging + sim_changing + diff_changing,
+      repeal ~ unchanging + sim_changing + diff_changing,
+       exposure = "repeal", 
+       outcome = 'murders',
+       labels = c('repeal' = "(X) PTP\nRepeal", 
+                  'murders' = "(Y) Gun Murders",
+                  'sim_changing' = 'Similarly\nChanging\nAttributes',
+                  'diff_changing' = "Differently\nChanging\nAttributes",
+                  'unchanging' = 'Unchanging\nAttributes'
+                  )) %>%
+  tidy_dagitty(layout='circle') %>%
+ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  #geom_dag_node() +
+  geom_dag_edges_link(mapping = aes(label = c("","","","", "held constant\n(link broken)", "held constant\n(link broken)", "held constant\n(link broken)", "held constant\n(link broken)")),  
+                                    angle_calc = "along", label_dodge = unit(c(1,-1,1,-1,-1),'lines'),
+                                    edge_linetype = rep(c(1,1,1,2,2,2,2), each = 100),
+                                    arrow = grid::arrow(length=grid::unit(c(10,10,10,0,0,0,0), 'pt'), type = 'closed')) +
+  geom_dag_text(mapping = aes(label = label), colour = 'black') +
+  theme_dag() +
+  scale_adjusted()
+```
+
+
+
+## Design: Difference in Differences
+
+In order to infer $X$ causes $Y$ if $X,Y$ correlated in difference-in-differences comparison...
+
+### **Assumption**
+
+- we assume the observed **trend** in $Y$ for "untreated" case is **equal to** the "counterfactual trend" in $Y$ for the "treated" case.
+- Equivalently: we assume "treated" and "untreated" have the "parallel trends" in $Y$, absent the change in $X$.
+- Equivalently: **no variables** that affect $Y$ and **change over time differently** in "treated" and "untreated" cases
+
+---
+
+```{r, echo = F, message=F, warning=F}
+
+p_data = guns_use[Year %in% 1999:2012 & State %in% c("Missouri", "Arkansas"), list(State, Year, gun_rate, Trend = 'factual')]
+
+cf_data = guns_use[Year %in% 2007:2012 & State %in% c("Missouri"), list(State, Year, gun_rate, Trend = 'assumed\ncounterfactual')]
+ar_diff = p_data[, gun_rate[9:14] - gun_rate[9]]
+mo_2007 = p_data[, gun_rate[23]]
+#mo_post = p_data[, gun_rate[4]]
+
+cf_data[, gun_rate := mo_2007 + ar_diff]
+
+plot_data = rbind(p_data, cf_data[State %in% "Missouri"])
+plot_data[, Trend := factor(Trend, levels = c("factual", "assumed\ncounterfactual"))]
+ggplot(plot_data, aes(x = Year, y = gun_rate, color = State, linetype = Trend)) +
+  geom_line() +
+  geom_point() +
+  geom_vline(xintercept = 2007.5, linetype = 2, colour= 'red') +
+  theme_bw() +
+  ylim(0,7) +
+  scale_x_continuous(breaks=c(1999:2012)) + 
+  ylab("Firearms Homicide Rate") +
+  ggtitle("Firearms Homicide Rate:", subtitle = "Missouri and Arkansas, before and after Missouri PTP repeal") + 
+  theme(legend.position = 'bottom')
+```
+
+Do you believe assumption of "parallel trends"? (Counterfactual Missouri trend same as factual Arkansas trend)
+
+## Design: Difference in Differences
+
+### **Confounding UNSolved**...
+
+- Arkansas and Missouri murder rates mostly move together before 2007. 
+- But large change in AR in 2001/2002 not in MO
+- But in 2007, before law took effect, murders dipped
+
+<br>
+
+Perhaps there are some things that affect murder rates that change differently in these two states.
+
+## Design: Difference in Differences
+
+When is the assumption plausible?
+
+- We can check to see if cases share trends **before** treatment, but does not prove they would have shared trends **after** treatment
+- We should compare cases that experience many similar changes over time: comparing Missouri to British Columbia may not be helpful.
+
+---
+
+| Solution | How Bias<br>Solved | Which Bias<br>Removed | Assumes | Internal<br>Validity | External<br>Validity |
+|--------------------|------------------------------|------------------------------------------------|---------|----------------------|----------------------|
+| Experiment | Randomization<br>Breaks $W \rightarrow X$ link | **All** confounding variables | 1. $X$ is random<br> 2. Change only $X$ | Highest | Lowest | 
+| Conditioning | Hold confounders<br>constant | Only variables <br> conditioned on | see above  | Lowest | Highest |
+| Before and After | Hold confounders <br> constant | variables <br> unchanging <br> over time | No causes of $Y$ <br> change w/ $X$ | Lower | Higher | 
+| Diff in Diff | Hold confounders <br> constant | unchanging and <br> similarly changing | Parallel trends | Higher | Lower | 
+
