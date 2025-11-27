@@ -20,7 +20,8 @@ require(stringr)
 ## Solutions to Confounding
 
 1. Recap
-2. Before/After Comparisons
+2. Before/After Assumptions
+3. Beyond Before and After
 
 # Recap
 
