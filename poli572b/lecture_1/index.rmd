@@ -296,7 +296,7 @@ Write down: what would be your feeling (0 being no, 1 being yes)...
 
 In an experiment with two conditions: each subject, prior to intervention has two possible states that it could take.
 
-If $Y_i$ is the willingness to have lunch of person $i$; $Z_i$ is the experimental condition: $1$ indicates downranking, $0$ no change, then we have two **potential outcomes**
+If $Y_i$ is the willingness to have lunch with person $i$; $Z_i$ is the experimental condition: $1$ indicates downranking, $0$ no change, then we have two **potential outcomes**
 
 1. lunch status with **no change** is $Y_i(0)$
 2. lunch status **with downranking** is $Y_i(1)$
