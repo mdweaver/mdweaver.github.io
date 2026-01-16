@@ -1,10 +1,13 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 17, 2025"
+date: "January 16, 2026"
 output: 
   revealjs::revealjs_presentation:
     theme: white
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 ```{r setup, include=FALSE}
@@ -42,12 +45,12 @@ require(data.table)
 - Two ways to estimate variance of $\widehat{ACE}$
     - asymptotic
     - randomization inference
-    - bootstrap
 
 # Review
 
 ## Key ideas from last week
 
+* Severity
 * Potential Outcomes Model (and Neyman Causal Model)
 * Partial and Point Identification
 
@@ -59,8 +62,9 @@ $$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\col
 
 ## Partial Identification
 
-Given assumptions, we fill in the maximum/minimum logically possible values for missing potential outcomes to get **bounds**. Bounds must contain the true causal effect if the assumptions are true.
+Given assumptions, we fill in the maximum/minimum **logically possible** values for missing potential outcomes to get **bounds**. Bounds must contain the true causal effect if the assumptions are true.
 
+$$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{plug in max/min values of Y}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{plug in min/max values of Y}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
 ## Point Identification
 
@@ -68,13 +72,46 @@ Given assumptions, we fill in the maximum/minimum logically possible values for 
 
 $$\begin{equation}\begin{split}ACE &= \{E[Y_i(1)|Z_i = 1]\pi_1 + \overbrace{\color{red}{E[Y_i(1)|Z_i = 0]}}^{\text{plug in Y(1) for treated}}\pi_0\} \\ & \phantom{=}\ - \{\underbrace{\color{red}{E[Y_i(0)|Z_i = 1]}}_{\text{plug in Y(0) for untreated}}\pi_1 + E[Y_i(0)|Z_i = 0]\pi_0\} \end{split} \end{equation}$$
 
+---
+
+###  Unbiasedness of $\widehat{ACE}$
+
+**parameter**/**estimand**: unknown attribute of random variable (e.g., the difference in treatment/control group means) that we want to know
+
+**estimator**: rule/procedure for **estimating** the parameter/estimand given observed data
+
+**bias**: estimator is **biased** if, on average, the estimator yields a value different from the parameter
+
+So $\widehat{ACE}$ is unbiased if:
+
+$$E(\widehat{ACE}) - ACE = 0$$
+
+## Point Identification
+
+For us to get an **unbiased** estimator of the average causal effect, need to make **assumptions** to permit "plugging in" observed data for missing ($\color{red}{\text{counterfactuals}}$):
+
+1. **Random assignment**: units are sample at random (or as if at random) from the study group and assigned to treatment or control ($Z$ is independent of $Y_i(1)$ and $Y_i(0)$)
+2. **Non-interference/SUTVA**: each unit's outcome depends only on its treatment assignment (not on assignment of others)
+3. **Exclusion restriction**: treatment assignment only affects outcomes through receipt of treatment
+
+
 ## BUT...
 
-- ... random assignment **does not guarantee** that any **particular** randomization gives us exact estimate of unobserved potential outcomes
+- ... random assignment **does not guarantee** that any **particular** randomization gives us exact estimate of unobserved potential outcomes, only that this **procedure** gives us correct answer **on average**
 
 - different realizations of random process $\to$ **sampling variability**
 
-The extent of sampling variability depends on the nature of the **random process** that generates observations.
+The extent of sampling variability depends on the nature of the **random process** that generates observations...
+
+---
+
+With a partner:
+
+In your own words, as best you understand it...
+
+- what is a hypothesis test?
+- what is a $p$ value? What does it mean?
+- what is a confidence interval?
 
 ---
 
@@ -84,10 +121,12 @@ In any given randomization, **treatment mean** and **control mean** are likely $
 
 Given this, we want to know...
 
-**Error probabilities**: if we use this **estimator** to estimate the ACE, how likely are we to conclude there is a causal effect when in fact there is not? 
+**Error probabilities**: if we use this **estimator** to estimate the ACE (as a test of causal theory):
 
-What are the range of causal effect sizes we can rule out, with known error probabilities? (if these were the true effects, we are highly unlikely to observe our estimated effect)
+- (Type I/false positive rate) how likely are we to wrongly conclude there is a **causal effect** when in fact there is **not**? 
+- (Type II/false negative rate) how likely are we to wrongly conclude there is **no causal effect** when in fact there **is**? 
 
+What are the range of causal effect sizes we can rule out, with known error probabilities? 
 
 --- 
 
@@ -97,7 +136,7 @@ If we run an experiment (implement a set of randomization procedures that dictat
 
 > "You give me the rule, and I consider its latitude for erroneous outputs. We're actually looking at the probability distribution of the rule, over outcomes in the sample space. This distribution is called a sampling distribution." (Mayo 2018)
 
-What are the other (*counterfactual*) outcomes that we could have observed through implementing this procedure/test?
+What are the other (*counterfactual*) outcomes that we could have observed through implementing this experimental procedure/test?
 
 
 Sampling distributions can $\to$ severe tests of claims
@@ -108,7 +147,7 @@ Sampling distributions can $\to$ severe tests of claims
 
 We evaluate hypotheses (claims) about some **estimand** of interest (e.g. $ACE$).
 
-- in pairs with a null hypothesis and some alternative hypothesis about the estimand (complements: if one is true the other must be false, so cover the entire set of possible values of the **estimand**)
+- pair a null hypothesis (claim is false) and some alternative hypothesis (claim is true) about the estimand (complements: if one is true the other must be false, so cover the entire set of possible values of the **estimand**)
 - It is common (but not required) for the null hypothesis to be stated in terms of $0$:
 
 $H_0: ACE <= 0; H_a: ACE > 0$ one-sided
@@ -123,17 +162,9 @@ $H_0: ACE = 0; H_a: ACE \neq 0$ two-sided
 
 We then use the sampling distribution of the estimate (usually a test statistic), **assuming the null hypothesis is true**
 
-- Often, we use a $t$ statistic when working with means. Other comparisons may require different test statistics.
-- we assume that the true $ACE = 0$ (or whatever is implied by the null) and then construct the sampling distribution of $\widehat{ACE}$
+- Often, we use a $t$ statistic when working with means. Other comparisons may require different test statistics. (these just **standardize** the sampling distribution)
+- we assume that the true $ACE = 0$ (or whatever is implied by the null) and then construct the sampling distribution of $\widehat{ACE}$ 
 
----
-
-### Hypothesis tests: $p$ value
-
-$p$ value tells us how likely we are to observe the data, **assuming the null hypothesis is correct**.
-
-- it is the probability of observing something as extreme as the data or more, assuming the null is true.
-- The calculation of probability depends on **knowing the shape of the sampling distribution** (how frequently would different outcomes occur?)
 
 ---
 
@@ -161,7 +192,7 @@ ggplot(NULL, aes(c(-3, 3))) +
 
 ### Hypothesis tests: significance level
 
-We want to either reject the null hypothesis as False or not reject the null hypothesis.
+We want to either reject the null hypothesis as False or not reject the null hypothesis (*falsification*).
 
 - since we can not know for sure whether it is true or false, we choose some probability ($p$ value), below which, we arbitrarily decide that the null hypothesis can be rejected.
 
@@ -173,10 +204,10 @@ We want to either reject the null hypothesis as False or not reject the null hyp
 
 Because the null hypothesis is always either True or False, our decision to reject the null based on some **probability** threshold ($\alpha$) may be correct or an error.
 
-- Type I error: false positive. We incorrectly **reject the null**
-- Type II error: false negative. We incorrectly **fail to reject the null**
+- Type I error: false positive. We incorrectly **reject the null** $\to$ $p$ values
+- Type II error: false negative. We incorrectly **fail to reject the null** $\to$ statistical power
 
-With a single test, the $p$ value can be interpreted as the false positive rate of **this test procedure** using that value as $\alpha$. If we use $\alpha=.05$, we  are saying that we are comfortable with our testing procedure making false positive errors in **no more than 5% of tests**. 
+With a single test, the $p$ value can be interpreted as the **false positive rate** of **this test procedure** using that value as $\alpha$. If we use $\alpha=.05$, we  are saying that we are comfortable with our testing procedure making false positive errors in **no more than 5% of tests**. 
 
 
 ---
@@ -184,6 +215,8 @@ With a single test, the $p$ value can be interpreted as the false positive rate 
 ### Hypothesis tests: rejecting the null
 
 From the severe testing perspective, we judge the alternative hypothesis to be "severely tested" when we observe evidence that would only occur 5% of the time if the null hypothesis were true.
+
+- choice of $0.05$ is arbitrary. In particle physics they use $0.0000006$
 
 ---
 
@@ -204,6 +237,7 @@ Hypothesis tests can be useful for learning, if used appropriately.
 - $p$-values will get smaller, when $n$ gets large. They do not indicate the **magnitude** of the effect.
 - absence of evidence $\neq$ evidence of absence: failing to reject the null does not mean the null is true. Your test may be under-powered.
 - null hypotheses should be meaningful with respect to theory.
+- only indicates probability of incorrectly rejecting null **due to random procedure**
 
 ---
 
@@ -226,25 +260,14 @@ Because confidence intervals **invert hypothesis tests**, they are the product o
 
 The correct way to interpret them is:
 
-Our procedure severely tests the observed $\widehat{ACE}$ against the true $ACE$ being outside of confidence interval. If true $ACE$ is outside of the confidence interval, we would have observed $\widehat{ACE}$ smaller(larger) than we saw, with probability $1-\alpha$.
+Our procedure rejects that the true $ACE$ is outside of confidence interval, with an error rate of $\alpha$. Our choice of $\alpha$ indicates extent to which we can reject values of $ACE$ with severity.
 
 ---
 
 But **hypothesis tests** and **confidence intervals** require that we have access to the **sampling distribution** of $\widehat{ACE}$... how do we do that?
 
----
 
-### Bonus: Unbiasedness of $\widehat{ACE}$
 
-**parameter**/**estimand**: unknown attribute of random variable (e.g., the difference in treatment/control group means) that we want to know
-
-**estimator**: rule/procedure for **estimating** the parameter/estimand given observed data
-
-**bias**: estimator is **biased** if, on average, the estimator yields a value different from the parameter
-
-So $\widehat{ACE}$ is unbiased if:
-
-$$E(\widehat{ACE}) - ACE = 0$$
 
 
 # Example
@@ -252,7 +275,7 @@ $$E(\widehat{ACE}) - ACE = 0$$
 ## Key ideas
 
 - To understand sampling distribution
-- To understand unbiasedness of the **estimator** $\widehat{ACE}$
+- To prove unbiasedness of the **estimator** $\widehat{ACE}$
 
 We can work through an actual experiment.
 
@@ -499,7 +522,7 @@ This sampling distribution could tell us
 - how likely we are to observe $\widehat{ACE}$ by chance
 - ... but also the true $ACE$
 
-But we never observe this histogram
+But we never observe this histogram (sampling distribution is $\color{red}{\text{counterfactual}}$)
 
 - we need a way to **estimate** the sampling distribution of $\widehat{ACE}$.
 
@@ -693,7 +716,18 @@ hist(t_means,
 
 ---
 
-**Then**: we want to get variance of $\widehat{ACE}$
+Normal Distribution requires we specify:
+
+- mean under the null hypothesis (often $0$)
+- the standard deviation (which we derive from the variance)
+
+$t$ Distribution additionally requires:
+
+- degrees of freedom (adjustment for **estimating** the standard deviation)
+
+---
+
+**Thus**: we want to get variance of $\widehat{ACE}$
 
 - $\widehat{ACE}$ is a **difference** of random variables. **Why?**
 - Need rules for calculating variance of **difference** between random variables
