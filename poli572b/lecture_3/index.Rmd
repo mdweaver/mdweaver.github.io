@@ -1,11 +1,14 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "January 24, 2025"
+date: "January 23, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 ```{r setup, include = F}
@@ -40,9 +43,9 @@ options("kableExtra.html.bsTable" = T)
 
 ### Non-compliance in experiments
 
-- Example and the Problem
+- Example of the Problem
 - Solutions
-- CACE
+- CACE (estimand and estimator)
 - Practice
 
 # Example
@@ -75,6 +78,7 @@ To find out whether this test actually results in medical interventions that red
 - e.g. in a medical trial for a new drug, patients assigned to a control group seek out the treatment anyway
 - in an experiment on contacting voters, people do not answer the phone or answer the door.
 - wartime drafts assigned people to treatment by random numbers, but some people dodged the draft or were found exempt; some joined anyway
+- people assigned to get off social media; some get on anyway
 
 ---
 
@@ -106,9 +110,9 @@ In 1963, researchers for the Health Insurance Plan of Greater New York (HIP) con
 
 ### Mammography
 
-Many who were invited chose not to be screened.
+Many who were *invited* chose **not to be screened**.
 
-None who were not invited were screened.
+None who were *not invited* were screened.
 
 - How can they find the effect of mammography on breast cancer death rates when large numbers of treatment group never were treated?
 
@@ -294,13 +298,13 @@ kable(d, col.names = c("Type", "$D_i(Z_i = 1)$", "$D_i(Z_i = 0)$"), format = 'ht
 
 **Option 1** (*treated vs untreated*): Compares 
 
-- compliers assigned to treatment
-- never-takers assigned to treatment; compliers, never-takers assigned to control
+- **compliers** assigned to treatment
+- **never-takers** assigned to treatment; **compliers**, **never-takers** assigned to control
 
 **Option 2** (*treated vs assigned to control*): Compares 
 
-- compliers assigned to treatment
-- compliers, never-takers assigned to control
+- **compliers** assigned to treatment
+- **compliers**, **never-takers** assigned to control
 
 If compliers and never-takers have **different potential outcomes** $\to$ bias. (any intuitions?)
 
@@ -346,7 +350,7 @@ $$ ITT = \frac{1}{N} \sum\limits_{i=1}^{N} Y_{i}(Z_i=1) - Y_i(Z_i=0)$$
 
 $$ ITT \neq ACE = \frac{1}{N} \sum\limits_{i=1}^{N} Y_i(D_i=1) - Y_i(D_i=0)$$
 
-unless there is perfect compliance.
+unless there is perfect compliance ($D_i = Z_i$ for all units $i$).
 
 --- 
 
@@ -370,7 +374,7 @@ Policy makers might care about the overall effect of policy when costs are fixed
 
 - e.g. felon re-integration; reminder to apply for healthcare in US
 
-In policy-oriented contexts, $ITT$ is usually desirable.
+In policy-oriented contexts, $ITT$ is usually desirable. Always good to report $ITT$ ("**reduced form**" in instrumental variables)
 
 ---
  
@@ -398,7 +402,7 @@ In examining causal effects related to **theories**: it may not be enough.
 
 If we want to find the effect of **treatment**, not just of **assignment-to-treatment**, there is a way to do better than the $ITT$.
 
-If we add to the $ACE$ assumptions, we can find the $ACE$ for **compliers**: the **complier average causal effect** ($CACE$).
+If we add to the $ACE$ assumptions, we can find the $ACE$ for **compliers**: the **complier average causal effect** ($CACE$. **estimand**
 
 $$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D_i = 1) - Y_i(D_i = 0)$$
 
@@ -474,7 +478,7 @@ In general, we cannot directly observe...
 
 With **three key assumptions**, can find the effect for compliers **without knowing** which people *are* compliers!
 
-To understand how, we first need potential outcomes model.
+To understand how, we first need a new potential outcomes model.
 
 - need an indicator for **random assignment**: $Z$
 - indicator for **receipt of treatment**: $D$
@@ -502,7 +506,7 @@ kable(d, col.names = c("$D_i(Z = 1)$", "$D_i(Z = 0)$",
 ### Assumption 1: No Defiers / Monotonicity
 
 - Assume that "defiers" do not exist.
-    - Seems plausible, but sometimes defiers may exist.
+    - Seems plausible, but sometimes defiers may exist. (example: school birth cut offs)
 
 <br> 
 
@@ -624,7 +628,7 @@ Imagine there is a variable $Type_?$ indicating the type of unit (where $?$ coul
 
 ### Estimating the CACE:
 
-First, the parameter:
+First, the **estimand**:
 
 $$CACE = \frac{1}{N_c} \sum_{i = 1}^{N_c} Y_i(D_i = 1) - Y_i(D_i = 0)$$
 
@@ -653,7 +657,7 @@ $$\begin{aligned}
 
 A path:
 
-Mean $\bar{x}$ can always be decomposed as a weighted average of sub-group means of $x$, $x_g$:
+Mean  of $x$, $\bar{x}$ can always be decomposed as a **weighted average** of sub-group means of $x$, $\bar{x}_g$, for sub-groups $g$:
 
 If there are $G$ sub-groups, then each group is weighted by its proportion of the total $N$: $w_g = \frac{N_g}{N}$. All $w$ must sum to $1$.
 
@@ -719,11 +723,11 @@ $$ITT = [Y_c(1) - Y_c(0)]\pi_c = CACE \cdot \pi_c$$
 
 ### Estimating the CACE:
 
-Doing some rearranging, we just need to estimate two parameters to get the $CACE$:
+Doing some rearranging, we just need to estimate two **estimands**/**parameters** to get the $CACE$:
 
 $$\frac{ITT}{\pi_c} =  CACE $$
 
-We need to estimate parameters $ITT$ and $\pi_c$
+We need to estimate $ITT$ and $\pi_c$
 
 
 ---
@@ -732,7 +736,7 @@ We need to estimate parameters $ITT$ and $\pi_c$
 
 We can estimate $ITT$ without bias by using random assignment:
 
-- $E(\widehat{ITT}) = ITT$
+- $E[\widehat{ITT}] = ITT$
 
 We know this from before.
 
@@ -748,20 +752,20 @@ $$ITT_D = (1\cdot\pi_c + 1\cdot\pi_a + 0\cdot\pi_n) - \\ (0\cdot\pi_c + 1\cdot\p
 
 $$ITT_D = (1\cdot\pi_c  - 0\cdot\pi_c) = \pi_c$$
 
-
 ---
 
 ### Estimating the CACE:
 
 And because $ITT_D$ is also an $ITT$, due to random assignment...
 
-$$E(\widehat{ITT_D}) = ITT_D = \pi_c$$
+$$E[\widehat{ITT_D}] = ITT_D = \pi_c$$
 
-We can estimate $\pi_c$ without bias.
+We can estimate $\pi_c$ without bias: just use estimator $\widehat{ACE}$ with outcome as $D$ instead of $Y$
 
 ---
 
 ### Estimating the CACE:
+
 
 $$\widehat{CACE} = \frac{\widehat{ITT}}{\widehat{ITT_D}}$$
 
@@ -771,7 +775,7 @@ By dividing the estimate $\widehat{ITT}$ by the estimate of $\pi_c$, $\widehat{I
 
 ### Estimating the CACE
 
-This estimator of the $CACE$ is called the **Wald estimator**
+This **estimator** of the $CACE$ is called the **Wald estimator**
 
 $$\widehat{CACE} = \frac{Y^T - Y^C}{D^T - D^C}$$
 Recall: $Y^T$ is mean of observed $Y_i(Z_i = 1)$
@@ -784,13 +788,13 @@ And it is a kind of **instrumental variables** analysis. (Instrumental variables
 
 It turns out, that our **estimator** $\widehat{CACE}$ is **biased**:
 
-$E \left( \frac{a}{b} \right) \neq \frac{E(a)}{E(b)}$
+$E\left[ \frac{a}{b} \right] \neq \frac{E[a]}{E[b]}$
 
-$CACE = E \left( \frac{ITT}{ITT_D} \right) \neq \frac{E(\widehat{ITT})}{E(\widehat{ITT_D})} = \widehat{CACE}$
+$CACE = E \left[ \frac{ITT}{ITT_D} \right] \neq \frac{E[\widehat{ITT}]}{E[\widehat{ITT_D}]} = \widehat{CACE}$
 
 but **consistent**:
 
-as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **small samples** (typically, need hundreds of observations or)
+as $n \to \infty$, the bias goes to $0$. Thus, this approach is biased in **small samples** (typically, need several hundred observations or more)
 
 
 --- 
@@ -811,11 +815,11 @@ How do you interpret this result?
 
 ### Interpreting the CACE
 
-What does this $CACE$ show us? It is the **effect of treatment** for the units **change treatment status** due to **random assignment**
+What does the $CACE$ tell us?: It is the **effect of treatment** for the units that **change treatment status** due to **random assignment**
 
-- **external validity**?: are the cases that comply with treatment assignment different from population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others.
+- **external validity**?: are the cases that comply with treatment assignment different from population of interest? Often, yes. CACE is limited only to compliers and may be uninformative about others. (**are compliers weird?**)
 
-- **"weak instruments"**?: does random assignment actually induce a change in "taking treatment"? If intervention doesn't affect behavior ($ITT_D$ is small), these approaches prone to bias, incorrect estimates of standard errors.
+- **"weak instruments"**?: does random assignment actually induce a change in "taking treatment"? If intervention doesn't affect behavior ($ITT_D$ is small), these approaches prone to bias, incorrect estimates of standard errors. (beyond weird compliers, **estimator has bad properties** when "nudge" to treatment is too weak.)
 
 
 ---
@@ -824,11 +828,11 @@ What does this $CACE$ show us? It is the **effect of treatment** for the units *
 
 We have discussed **canonical** $CACE$:
 
-- if treatment assignment/treatment takes multiple values, assumptions/interpretation may change.
-- If someone has "**instrumental variable**" with an experiment or **natural experiment**, can you map it onto this framework? If not, be suspicious.
+- if treatment assignment/treatment takes multiple values, assumptions/interpretations change.
+- If someone has "**instrumental variable**" with an experiment or **natural experiment**, can you map it onto this framework? If not, be suspicious. (examples?)
 
-- Assumptions here are "bigger"
-    - "no defiers" not always plausible (partial identification available)
+- Assumptions here are "bigger":
+    - "no defiers"/monotonicity not always plausible (partial identification available)
     - exclusion restriction is hard to defend in many cases. (partial identification available)
 
 
@@ -845,6 +849,6 @@ In groups of 2-3, refer to Pereira et al (2024) "Innoculation Reduces Misinforma
 2. What is/are the "treatments" ($D$) that can be received?
 3. In terms of this study: Who is a Complier? Never taker, Always taker, Defier?
 4. For each of the three assumptions needed to estimate $CACE$: What does it mean? Is it plausible?
-5. Interpret the results of the estimates of $CACE$ (What do they mean, substantively? Are they biased?)
+5. Interpret the results from the estimates $\widehat{CACE}$ (What do they mean, substantively? Might they be biased?)
 
 </medium>
