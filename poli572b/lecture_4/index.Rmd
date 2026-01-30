@@ -197,7 +197,7 @@ ace_hat
 
 ---
 
-Because we simply observe those treated and those untreated, without randomization, there are **no other** alternate allocations of TFA enrollment possible.
+Because people select themselves into TFA, no randomization... if we reran this process again we would get the same result.  **No alternate** allocations of TFA enrollment possible.
 
 #### Why is the $\widehat{ACE} \ $  biased?
 
@@ -208,11 +208,10 @@ Because we simply observe those treated and those untreated, without randomizati
 
 ### Confounding
 
-**Confounding** occurs when, in the cases we observe, the values of treatment $D$ are **not independent** of potential outcomes of $Y$.
+**Confounding** occurs when, in the cases we observe, the values of treatment $D$ are **not independent** of potential outcomes of $Y$. Lead estimator $\widehat{ACE}$ to be **biased**
 
-If we ignore confounding, then our estimate of the $ACE$ will be **biased**.
 
->- Why might the potential outcomes of $Y$ (racial resentment) be **dependent** on the value of treatment (TFA)?
+>- Why might the potential outcomes of $Y$ (racial resentment) be **dependent** on the value of treatment ($TFA$)?
 
 ---
 
@@ -228,14 +227,13 @@ po.table = data.table(i = 1:6,
 kable(po.table, col.names = c("$i$", "$Y_i(0)$",
                        "$Y_i(1)$", "$TFA_i$"), format = 'html') %>% 
   kable_styling(c( 'bordered', 'condensed', 'hover'))
-
 ```
 
 ---
 
 ### Confounding
 
-- **Occurs frequently when we don't have randomization**
+- **Occurs usually when we don't have randomization**
     - Note: $Z$ will be reserved for randomized variables; $D$ when randomization is unclear.
     - **size of bias** may vary, depending on extent of confounding
 - **Can occur, despite randomization**
@@ -245,27 +243,68 @@ kable(po.table, col.names = c("$i$", "$Y_i(0)$",
 
 ---
 
-### Confounding
+### Confounding: Decomposition
 
-Bias decomposition:
+Start with our "plug in" estimator of $ACE$:
 
+$$E[\widehat{ACE}] = \overbrace{E[Y_i(1) | D_i = 1 ]}^{\text{mean Y(1) in treated}} - \underbrace{E[Y_i(0) | D_i = 0]}_{\text{mean Y(0) in untreated}}$$
 
-$$E[\widehat{ACE}] = E[Y_i(1) | D_i = 1 ] - E[Y_i(0) | D_i = 0]$$
+Add and subtract counterfactual $\color{red}{E[Y_i(0) | D_i = 1]}$
+
 $$
 \begin{align*}
-E[\widehat{ACE}] =& \overbrace{E[Y_i(1)] - E[Y_i(0)]}^{\text{ACE}} \ + \\
-& \overbrace{E[Y_i(0) | D_i = 1 ] - E[Y_i(0) | D_i = 0]}^{\text{Selection Bias}} \ +\\
-& \overbrace{(1-\pi_1)(E[\tau_i | D_i = 1 ] - E[\tau_i | D_i = 0])}^{\text{Heterogenetiy Bias}}
+E[\widehat{ACE}] =& E[Y_i(1) | D_i = 1 ] - \color{red}{E[Y_i(0) | D_i = 1]}  \\
+&+\color{red}{E[Y_i(0) | D_i = 1]} - E[Y_i(0) | D_i = 0]
 \end{align*}
 $$
 
+---
+
+### Confounding
+
+$$
+\begin{align*}
+E[\widehat{ACE}] =& \overbrace{E[Y_i(1) | D_i = 1 ] - \color{red}{E[Y_i(0) | D_i = 1]}}^{\text{ACE for treated (ATT)}}  \\
+&+ \underbrace{\color{red}{E[Y_i(0) | D_i = 1]} - E[Y_i(0) | D_i = 0]}_{\text{treated-untreated diff. in Y(0)}}
+\end{align*}
+$$
+If randomization... Is the top term different from ATU/ATC? What is the bottom term?
+
+We need find substitution for $ATT$ in terms of $ACE$...
 
 ---
 
 ### Confounding
 
 
-**selection bias**: *baseline* differences in $Y(0)$ between "treated" and "untreated" units ($D=1$, $D=0$). Treated group **already** different in absence of treatment.
+$$ACE = \pi ATT + (1 - \pi) ATU$$
+$$ACE = \pi ATT + (1-\pi) ATT - (1-\pi)ATT + (1 - \pi) ATU$$
+$$ACE = [\pi + (1-\pi)] ATT - (1-\pi)ATT + (1 - \pi) ATU$$
+$$ACE = ATT - (1-\pi)(ATT - ATU)$$
+$$ACE + (1-\pi)(ATT - ATU) = ATT$$
+
+---
+
+### Confounding
+
+$$\begin{align*}
+E[\widehat{ACE}] =& ATT  \\
+&+\color{red}{E[Y_i(0) | D_i = 1]} - E[Y_i(0) | D_i = 0]
+\end{align*}$$
+
+
+$$\begin{align*}
+E[\widehat{ACE}] =& \overbrace{E[Y_i(1)] - E[Y_i(0)]}^{\text{ACE}} \ + \\
+& \overbrace{(1-\pi)(ATT - ATU)}^{\text{Heterogeneity Bias}} + \\
+& \overbrace{\color{red}{E[Y_i(0) | D_i = 1]} - E[Y_i(0) | D_i = 0]}^{\text{Selection Bias}} 
+\end{align*}$$
+
+---
+
+### Confounding
+
+
+**selection bias**: *baseline* differences in $Y(0)$ between "treated" and "untreated" units ($D=1$, $D=0$). Treated/untreated groups **already** different in absence of treatment.
 
 **heterogeneity bias**: **effects** of treatment differ between "treated" and "untreated" units.
 
@@ -273,9 +312,10 @@ $$
 
 ### Confounding
 
-**Easier to understand graphically**
+**Easier to understand confounding graphically**
 
 - what it is, how it arises
+- doesn't distinguish between SOURCES of bias (selection/heterogeneity)
 
 ---
 
@@ -304,9 +344,9 @@ dagify(mammogram ~ invite,
        death ~ educ,
        exposure = "invite", 
        outcome = 'death',
-       labels = c('mammogram' = "Mammogram", 
+       labels = c('mammogram' = "Mammogram (D)", 
                   'death' = 'BC Death',
-                  'invite' = "HIP Invite",
+                  'invite' = "HIP Invite (Z)",
                   'class' = 'Class',
                   'educ' = 'Education')) %>%
 tidy_dagitty() %>%
@@ -345,9 +385,9 @@ dagify(mammogram ~ invite,
        death ~ educ,
        exposure = "invite", 
        outcome = 'death',
-       labels = c('mammogram' = "Mammogram", 
+       labels = c('mammogram' = "Mammogram (D)", 
                   'death' = 'BC Death',
-                  'invite' = "HIP Invite",
+                  'invite' = "HIP Invite (Z)",
                   'class' = 'Class',
                   'educ' = 'Education')) %>%
   tidy_dagitty() %>%
@@ -410,8 +450,8 @@ dagify(agr_out ~ rain,
        cw ~ u,
        exposure = "agr_out", 
        outcome = 'cw',
-       labels = c('rain' = "Rainfall\nShock", 
-                  'agr_out' = 'Agr. Output',
+       labels = c('rain' = "Rainfall\nShock (Z)", 
+                  'agr_out' = 'Agr. Output (D)',
                   'cw' = "Civil War",
                   'u' = 'Other',
                   'roads' = 'Roads\nClosed')) %>%
@@ -437,8 +477,8 @@ dagify(agr_out ~ rain,
        cw ~ u,
        exposure = "agr_out", 
        outcome = 'cw',
-       labels = c('rain' = "Rainfall\nShock", 
-                  'agr_out' = 'Agr. Output',
+       labels = c('rain' = "Rainfall\nShock (Z)", 
+                  'agr_out' = 'Agr. Output (D)',
                   'cw' = "Civil War",
                   'u' = 'Other',
                   'roads' = 'Roads\nClosed')) %>%
@@ -482,6 +522,7 @@ The "backdoor" criterion for confounding points to solutions:
 ### Conditioning:
 
 **conditioning** is when we compare values of $Y_i$ across values of $D_i$ (e.g. TFA) using information on the values of other variables $\mathbf{X_i}$, 
+
 - Where $\mathbf{X_i}$ is a set of variables (we suspect) appear on backdoor paths from $D$ to $Y$.
 - We use values of $\mathbf{X_i}$ to:
     - **impute** missing counterfactual values of $Y_i$ across values of $D_i$ (within strata) where values of $\mathbf{X_i}$ are the same
