@@ -309,8 +309,12 @@ dagify(mammogram ~ invite,
                   'invite' = "HIP Invite",
                   'class' = 'Class',
                   'educ' = 'Education')) %>%
-  ggdag(use_labels = "label", text = F, layout = 'auto')
-
+tidy_dagitty() %>%
+  node_status %>% 
+  ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_text(aes(label = label), color = "black", alpha = 0.8) +
+geom_dag_edges() +
+theme_dag()
 ```
 
 ---
