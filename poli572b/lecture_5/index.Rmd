@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 7, 2025"
+date: "February 6, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -346,7 +346,8 @@ Plugging in:
 
 
 
-$$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$$
+$$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post-1989, boycott}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool } \textbf{pre-1989}\text{, no boycott}}$$
+
 
 ---
 
@@ -354,7 +355,7 @@ $$\widehat{\tau_i} = \underbrace{[Y_{i,t=1}(1) | D_i = 1]}_{\text{Liverpool post
 
 In order for interrupted time series to work, we must assume:
 
-$$\overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}} = \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$ 
+$$\overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool } \textbf{pre-1989}\text{, no boycott}} = \color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}}$$ 
 
 
 That in the absence of the treatment, outcomes of $Y$ would not have changed from before to after treatment.
@@ -383,7 +384,7 @@ That in the absence of the treatment, outcomes of $Y$ would not have changed fro
 
 ...**EVEN IF IT DOES NOT CAUSE $D$**.
 
-The comparison holds the unit constant before and after the event $\to$ collider bias - generating dependencies between variables that move together over time.
+The comparison holds the unit constant before and after the event $\to$ collider bias: generating dependencies between variables that move together over time.
 
 [TO THE BOARD]
 
@@ -434,9 +435,9 @@ Observed pre-treatment outcomes not a good substitute for post-treatment counter
 
 In our example: we **don't know** how EU skepticism might have trended in Liverpool absent the boycott. We **do know** how  EU skepticism in *the rest of the UK* trended absent the boycott.
 
-We don't know: $\color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool pre-1989, no boycott}}$
+We don't know: $\color{red}{\overbrace{[Y_{i,t=1}(0)|D_i = 1]}^{\text{Liverpool post-1989, no boycott}}} - \overbrace{[Y_{i,t=0}(0)|D_i = 1]}^{\text{Liverpool } \textbf{pre-1989}\text{, no boycott}}$
 
-We **do know**: $\underbrace{[Y_{i,t=1}(0) | D_i = 0]}_{\text{UK post-1989, no boycott}} - \underbrace{[Y_{i,t=0}(0)|D_i = 0]}_{\text{UK pre-1989, no boycott}}$
+We **do know**: $\underbrace{[Y_{i,t=1}(0) | D_i = 0]}_{\text{UK post-1989, no boycott}} - \underbrace{[Y_{i,t=0}(0)|D_i = 0]}_{\text{UK } \textbf{pre-1989}\text{, no boycott}}$
 
 ---
 
@@ -541,6 +542,8 @@ $Y_{it} = \beta_0 + \beta_1 \text{Treated}_i + \beta_2 \text{Post}_t + \beta_3 \
 
 $Y_{it} = \overbrace{\alpha_i}^{\text{dummies for each } i} + \underbrace{\alpha_t}_{\text{dummies for each } t} + \beta_3 \text{Treated}_i \times \text{Post}_t$
 
+---
+
 ```{r eval = F}
 #Different ways (these do not use correct standard errors)
 lm(y ~ EverTreated*PostTreatment, data = my_data)
@@ -556,7 +559,6 @@ feols(y ~ EverTreated:PostTreatment | unit_id + time_id, data = my_data)
 How do we validate the **parallel trends** assumption?
 
 - We cannot directly test it, but we can try to see if it is violated.
-
 
 We want to see if... there are divergences in trends between treated and untreated ... in absence of treatment.
 
@@ -651,7 +653,7 @@ $H_1: -\delta < \tau < \delta$: the true difference is within some acceptable $\
 
 TOST visualization
 
-```{r normp, echo=FALSE}
+```{r normp, echo=FALSE, message=F, warning=F}
 library(tidyverse)
 ggplot(NULL, aes(c(-3, 3))) +
   geom_area(stat = "function", fun = function(x) {dnorm(x, mean = 2.5, sd = 1)}, fill = "grey80", xlim = c(0.5, 3)) +
@@ -678,7 +680,11 @@ These tests can be conducted in `R` using:
 - `equivalence_test` in `parameters` package
 - `fect` package (for differences in differences and extensions)
 
-These tests can be inverted to get confidence intervals (range of values for $delta$ which cannot be rejected at $\alpha$)
+These tests can be inverted to get confidence intervals (range of values for $\delta$ which cannot be rejected at $\alpha$)
+
+---
+
+### Equivalence Tests
 
 These tests require, in addition to everything else:
 
