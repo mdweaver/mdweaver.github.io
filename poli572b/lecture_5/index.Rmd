@@ -7,6 +7,9 @@ output:
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 ```{r setup, include = F}
