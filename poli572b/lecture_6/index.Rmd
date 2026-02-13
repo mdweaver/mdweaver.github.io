@@ -1,12 +1,15 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 14, 2025"
+date: "February 13, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 ```{r setup, include = F}
@@ -72,29 +75,21 @@ the **conditional expectation function** (Angrist and Pischke)
 
 $$E[Y | X = x] = f(x)$$
 
----
-
-### Conditional Expectation Function
-
-The difficulty is: how do we find the function?
-
-- a function takes some value of $X$ and uniquely maps it to some value of $E[Y]$
-- we need to "learn" this function from the data
-  - how do we learn without "overfitting" the data?
-- depending on how much data we have, we have to make some choice of how to interpolate/extrapolate when "learning" this function
-
+(BOARD)
 
 ---
 
 ### Conditional Expectation Function
 
-Another way of thinking about what the **conditional expectation function** is:
+Another way of thinking about what the **conditional expectation function** is as a **prediction function**:
 
-$$E[Y | X = x] = \hat{y} | X = x$$
+A prediction function takes in values of $X$ and gives us a **prediction** of $Y$ --- $\hat{y}$.
 
-What is our predicted value $\hat{y}$, where $X = x$, such that our prediction of $Y$, $\hat{y}$ has the least error?
+>- What makes for a good prediction? Least error.
+>- What is our "rule" for judging errors? 
+>- If the rule is: prediction $\hat{y}$ have the smallest **distance** to the true values of $Y$...
+>- this leads to the CEF $$E[Y | X = x] = \hat{y} | X = x$$
 
-- With the CEF, we choose a particular definition of what it means to have the "least error": minimum (Euclidean) distance
 
 ---
 
@@ -103,49 +98,50 @@ What is our predicted value $\hat{y}$, where $X = x$, such that our prediction o
 The difficulty is: how do we find the function?
 
 >- a function takes some value of $X = x$ and uniquely maps it to some value of $E[Y]$
->- we need to "learn" this function from the data
+>- we need to "learn" this function from the data (without "overfitting")?
 >- depending on how much data we have, we have to make some choice of how to interpolate/extrapolate when "learning" this function
 
 <br>
 
->- This naturally leads us to the "imputation" approach to conditioning
-
+>- This naturally connects to the "imputation" approach to conditioning
 
 ---
 
 ### Conditional Expectation Function
 
+We make **choices**/**constraints** to make it possible to **estimate** the CEF:
+
 - one easy choice is to approximate the CEF as **linear**.
 - That is to say $E[Y]$ is **linear** in $X$.
 - The **function** takes the form of an equation of a line.
-- This leads us to least squares
+
+>- This leads us to **least squares**
 
 
 ---
 
 ### **Why least squares?**
 
-- We need averages $\to$ LS is a generalization of the mean
-- A "simple", yet flexible tool to plug in these values
+- We need mean of $Y$ across values of $X$ $\to$ LS is a generalization of the mean
+- (comparatively) "Simple", yet flexible tool to generate predictions/plug in missing counter-factuals
 - Ubiquitous, often "good enough"
 
 <br>
 
->- As we move from design-based toward model-based inference, we need to be in control of the tool we use.
+>- As we move from design-based to model-based inference, we need to be in control of the modelling tool we use.
 
 
 ---
 
-### **Why least squares?**
+### **Why least squares *math*?**
 
-In order to use least squares in causal inference, need to understand what the math of regression is doing, as it pertains to:
+In order to use least squares for causal inference, need to understand what the **math** of regression is doing:
 
-- given our need for average, how is regression related to the mean?
-- given our need to "impute": how does regression "plug-in" values?
+- given need for averages: how is regression related to the mean?
+- given need to "impute": how does regression "plug-in" missing counterfactuals?
 - how does regression "control" for variables? (conditional independence)
 - how does assumption of "common support" translate to regression?
-- how does math of regression relate back to the causal estimands of interest? (how are they similar/different?)
-
+- how does math of regression relate back to the causal estimands of interest?
 
 ---
 
@@ -173,8 +169,8 @@ In order to use least squares in causal inference, need to understand what the m
 
 **Why do we use the mean to summarize values?**
 
->- For random variables, it is "best guess" of what value we will draw
->- It is a kind of prediction
+>- For random variables, it is "best guess" of what value we will get on a given draw
+>- It is a kind of prediction.
 >- In what sense is it the "best"?
 
 ---
@@ -206,17 +202,11 @@ What is the distance between two points, $p$ and $q$?
 
 **In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
 
-$$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
-
-<br>
-
-**In $k$ dimensional space**: $(p_1,p_2, \ldots, p_k)$, $(q_1,q_2, \ldots ,q_k)$
-
-$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
+(Board)
 
 ---
 
-What is the distance between these two points?
+What is the distance between these two points? $(3,0)$ and $(0,4)$
 
 ```{r, echo = F}
   vectors = data.frame(x = c(3,0), y = c(0,4))
@@ -226,15 +216,19 @@ What is the distance between these two points?
 
 ---
 
-What is the distance between these two points?
+### Remember Pythagoras?
 
-$p = (3,0); q = (0,4)$
+What is the distance between two points?
+
+**In $2$ dimensional space**: $(p_1,p_2)$, $(q_1,q_2)$
 
 $$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
 
+
+
 ---
 
-What is the distance between these two points?
+What is the distance between *these* two points?
 
 $p = (3,0); q = (0,4)$
 
@@ -259,7 +253,7 @@ What is the distance between these two points?
 
 ---
 
-### Remember Pythagoras?
+### Distances: Remember Pythagoras?
 
 What is the distance between two points?
 
@@ -273,25 +267,30 @@ $$d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}$$
 
 $d(p,q) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2 + \ldots + (p_k - q_k)^2}$
 
+---
 
-## The Mean
+### The Mean
 
-One way of thinking about the mean is as a **prediction**. 
+One way of thinking about the mean is as a **prediction** algorithm. 
 
-We observe many values in $Y$: $y_1 \dots y_n$. We want to choose a **single value**, $\hat{y}$, that is the best prediction for all the values in $Y$.
+We observe $n$ values of $Y$: $y_1 \dots y_n$. This has a coordinate in $n$-dimensional space.
 
-If we say that the "best" prediction is one with with the **shortest distance** between the prediction $\hat{y}$ and the actual values of $y_1 \dots y_n$...
+We want to predict $Y$ with $\hat{y}$ (also a coordinate in $n$ dimensional space), with two constraints:
 
-then the algorithm that gives us this best prediction is the mean.
+1. $\hat{y}$ has the same value in each dimension... (lives at point $(\hat{y} \dots \hat{y})$)
+2. Our criterion for "best" prediction is having the **shortest distance** between $y_1 \dots y_n$ and $\hat{y}$ is is
 
+If we impose this rules, we end up at choosing the **mean** as our **prediction algorithm**
 
-## The Mean
+---
 
-"Geometric Interpretation" is helpful:
+### The Mean
 
-- since distances are sums of squared differences, this is why mean minimizes the **variance** of prediction errors ($y_i - \hat{y}$).
-- key to understanding how least squares is related to the mean
-- key to understanding how least squares works
+This "Geometric Interpretation" is helpful:
+
+- since distances are sums of squared differences, this is why mean minimizes the **variance** of prediction errors ($(y_i - \hat{y})^2$).
+- key to understanding how least squares is connected to the mean
+- key to understanding how least squares works (how does it impute? how does it "control" for variables?)
 
 To understand this "geometric" interpretation, we need linear algebra.
 
@@ -393,7 +392,7 @@ The **span** of a vector is the set of points which it could reach by scaling it
 
 For the vector $\begin{pmatrix}1 \\ 1 \end{pmatrix}$, the span is the straight line stretching from $\begin{pmatrix}-\infty \\ -\infty \end{pmatrix}$ to $\begin{pmatrix}\infty \\ \infty \end{pmatrix}$
 
-The span of any vector always goes through the origin: Why?
+The span of any vector always goes through the **origin** $(0,0)$: Why?
 
 ---
 
@@ -427,7 +426,7 @@ For instance, $\begin{pmatrix}3 \\ 4 \\ 5 \end{pmatrix}$ can be achieved by addi
 - $4 \times \begin{pmatrix}0 \\ 1 \\ 0 \end{pmatrix}$ (basis vector in $y$ axis)
 - $5 \times \begin{pmatrix}0 \\ 0 \\ 1 \end{pmatrix}$ (basis vector in $z$ axis)
 
-Note this kind of addition is only possible because $x,y,z$ are perpendicular or **orthogonal** to each other
+Note this kind of addition is **only possible** because $x,y,z$ are perpendicular or **orthogonal** to each other
 
 We can **change the space** a vector lives in by giving it new basis vectors.
 
@@ -441,11 +440,11 @@ Matrices are 2-dimensional arrays of numbers $m \times n$, essentially multiple 
 
 - better understood a **linear transformation**: set of instructions that **transforms a vector** by setting **new locations for the basis vectors**
 - each column in the matrix indicates the new position of the basis vector (in terms of the current coordinate space)
-- if matrix is not square you transform between spaces with different dimensions
+- if matrix is **not square** you transform between spaces with different dimensions
 
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kYB8IZa5AuE?si=X_5vNzTfAlbmZ2yQ&amp;start=364" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kYB8IZa5AuE?si=eqeg42cLrhUdouL-&amp;start=364" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
@@ -510,7 +509,7 @@ The dot product is equal to the **length of the projection** of $u$ on $v$ multi
 - if the dot product is equal to $0$, then $u$ and $v$ are **orthogonal** or **perpendicular** (no projection, no "shadow")
 - have we seen anything that looks like this dot product before?
 
->- matrix multiplication, covariance!
+>- matrix multiplication, covariances
 
 ---
 
@@ -539,7 +538,8 @@ How does this relate to orthogonality?
 - Because dot products of row $i$ and column $j$ have dot product of $0$
 - Multiply a matrix by its inverse transforms vectors to be orthogonal
 
-We keep talking about orthogonality because it is key to understanding what least squares does
+We keep talking about **orthogonality** because it is key to understanding what least squares does
+
 
 ---
 
@@ -577,7 +577,7 @@ can be decomposed into two separate vectors: a vector containing our prediction 
 
 $\begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix} = \hat{y} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$
 
-and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations:
+and another vector $\mathbf{e}$, which is difference between the prediction vector and the vector of observations (**residuals**):
 
 $\mathbf{e} = \begin{pmatrix}3 \\ 5 \end{pmatrix} - \begin{pmatrix} \hat{y} \\ \hat{y} \end{pmatrix}$
 
@@ -721,7 +721,11 @@ $$\mathbf{\hat{y}} = b_0 + b_1\cdot \mathbf{x}$$
 
 An intercept $b_0$ and coefficient $b_1$ multiplied by $\mathbf{x}$
 
+<br>
+ 
+A **conditional expectation function**:
 
+$$E(Y | X = x) = b_0 + b_1\cdot x$$
 
 --- 
 
@@ -789,23 +793,13 @@ It closely approximates the conditional mean of **son's height** ($y$) across va
 
 How do we obtain this line mathematically? [(proof/derivation here)](#proof_bivariate)
 
-- we don't need geometric intuition for this; or for the mean
-
----
-
-### Which line?
-
-The **red** line above is the prediction using **least squares**.
-
-It closely approximates the conditional mean of **son's height** ($y$) across values of **father's height** ($x$).
-
-How do we obtain this line mathematically? [(proof/derivation here)](#proof_bivariate)
+- we don't **need** geometric intuition for this
 
 ---
 
 ### Bivariate Regression 
 
-If we choose slope $b_1$ and intercept $b_0$ such that they minimize $\sum_{i=1}^{n} (y_i - \hat{y}_i)^2$, we can obtain these formulae:
+If we choose slope $b_1$ and intercept $b_0$ such that they minimize prediction errors $\sum_{i=1}^{n} (y_i - \hat{y}_i)^2$, we can obtain these formulae:
 
 #### The slope:
 
@@ -845,7 +839,7 @@ Shows us that at $\bar{x}$, the line goes through $\bar{y}$. The regression line
 
 ### Deriving Least Squares
 
-But to go beyond bivariate regression, need to derive more general solution:
+But to go beyond bivariate regression, need a more general solution:
 
 Rather than project the $n \times 1$-dimensional vector $\mathbf{y}$ onto one dimension (as we did with the mean), we project it into $p$ (number of coefficients/parameters) dimensional subspace. Hard to visualize, but we still end up minimizing the distance between our $n$ dimensional vector $\mathbf{\hat{y}}$ and the vector $\mathbf{y}$. 
 
@@ -862,6 +856,57 @@ and $\mathbf{X}$, an $n \times 2$ dimensional matrix ($2$ columns, $n$ observati
 $\mathbf{\hat{y}}$ is an $n \times 1$ dimensional vector of predicted values (for the mean of Y conditional on X) computed by $\mathbf{X\beta}$. $\mathbf{\beta}$ is a vector  $p\times 1$ of (coefficients) that we multiply by $\mathbf{X}$.
 
 We'll assume there are only two coefficients in $\mathbf{\beta}$: $(b_0,b_1)$ so that $\hat{y_i} = b_0 + b_1 \cdot x_i$, so $p = 2$
+
+
+---
+
+```{r echo = F, warning=F, message=F}
+require(MASS)
+require(matlib)
+require(Matrix)
+require(plotly)
+
+x1 <- rep(1,3)
+x2 <- c(2,3,6)
+y <- c(1,3,15)
+M = cbind(x1,x2)
+
+#
+
+surf = function (M, th = 0, ph = 15) 
+{
+  if (!inherits(M, "matrix") | !identical(as.numeric(dim(M)), 
+                                          c(3, 2))) 
+    stop("M must be a 3 by 2 matrix")
+  if (Matrix::rankMatrix(M) == 1) 
+    stop("Columns are dependent")
+  ec = matlib::echelon(cbind(t(M), c(0, 0)), fractions = T)[, 
+  ]
+  
+  x1 = 0:5
+  x2 = 0:5
+  eg = expand.grid(x1, x2)
+  x3 = matrix(ec[1, 3] * eg$Var1 + ec[2, 3] * eg$Var2, length(x1)) %>% t
+  #ownames(x3) = x1
+  #colnames(x3) = x2
+  plot_ly() %>% 
+    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5) 
+}
+
+y_hat = as.vector(M %*% solve(t(M) %*% M) %*% t(M) %*% y)
+e = y - y_hat
+surf(M) %>% 
+  add_paths(x = ~ c(0,M[1,1]), y = ~c(0,M[2,1]), z = ~c(0,M[3,1]), name = "x1") %>%
+  add_paths(x = ~ c(0,M[1,2]), y = ~c(0,M[2,2]), z = ~c(0,M[3,2]), name = "x2") %>%
+  add_paths(x = ~ c(0,y[1]), y = ~c(0,y[2]), z = ~c(0,y[3]), name = "y") %>%
+  add_paths(x = ~ c(0,y_hat[1]), y = ~c(0,y_hat[2]), z = ~c(0,y_hat[3]), name = "y_hat") %>%
+  add_paths(x = ~ c(y_hat[1], y_hat[1] + e[1]),
+            y = ~ c(y_hat[2], y_hat[2] + e[2]),
+              z = ~ c(y_hat[3], y_hat[3] + e[3]), name = "e"
+            )
+```
+
+
 
 ---
 
