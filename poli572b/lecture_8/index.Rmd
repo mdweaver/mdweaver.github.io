@@ -157,6 +157,68 @@ surf(M) %>%
 
 ---
 
+```{r}
+require(MASS)
+require(matlib)
+require(Matrix)
+require(plotly)
+require(magrittr)
+
+x1 <- rep(1,3)
+x2 <- c(2,3,6)
+y <- c(1,3,15)
+M = cbind(x1,x2)
+
+x3 = pracma::cross(x1, x2)
+#
+
+to_ortho = solve(cbind(x1,x2,x3))
+
+
+
+surf = function (M, th = 0, ph = 15) 
+{
+  if (!inherits(M, "matrix") | !identical(as.numeric(dim(M)), 
+                                          c(3, 2))) 
+    stop("M must be a 3 by 2 matrix")
+  if (Matrix::rankMatrix(M) == 1) 
+    stop("Columns are dependent")
+  ec = matlib::echelon(cbind(t(M), c(0, 0)), fractions = T)[, 
+  ]
+  
+  x1 = -10:10
+  x2 = -10:10
+  eg = expand.grid(x1, x2)
+  x3 = matrix(ec[1, 3] * eg$Var1 + ec[2, 3] * eg$Var2, length(x1)) %>% t
+  #ownames(x3) = x1
+  #colnames(x3) = x2
+  plot_ly() %>% 
+    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5) 
+}
+
+y_hat = as.vector(M %*% solve(t(M) %*% M) %*% t(M) %*% y)
+
+M.star = to_ortho %*% M
+x1.star = to_ortho %*% x1
+x2.star = to_ortho %*% x2
+y.star = to_ortho %*% y
+y_hat.star = to_ortho %*% y_hat
+e.star = y.star - y_hat.star
+
+surf(M.star) %>% 
+  add_paths(x = ~ c(0,M.star[1,1]), y = ~c(0,M.star[2,1]), z = ~c(0,M.star[3,1]), name = "x1") %>%
+  add_paths(x = ~ c(0,M.star[1,2]), y = ~c(0,M.star[2,2]), z = ~c(0,M.star[3,2]), name = "x2") %>%
+  add_paths(x = ~ c(0,y.star[1]), y = ~c(0,y.star[2]), z = ~c(0,y.star[3]), name = "y") %>%
+  add_paths(x = ~ c(0,y_hat.star[1]), y = ~c(0,y_hat.star[2]), z = ~c(0,y_hat.star[3]), name = "y_hat") %>%
+  add_paths(x = ~ c(y_hat.star[1], y_hat.star[1] + e.star[1]),
+            y = ~ c(y_hat.star[2], y_hat.star[2] + e.star[2]),
+            z = ~ c(y_hat.star[3], y_hat.star[3] + e.star[3]), name = "e"
+  )
+```
+
+
+---
+
 ### Deriving Least Squares
 
 Given $\mathbf{y}$, an $n \times 1$ dimensional vector of all values $y$ for $n$ observations
