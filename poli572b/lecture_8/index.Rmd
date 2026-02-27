@@ -1,12 +1,15 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "February 28, 2025"
+date: "February 27, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---    
 
 ```{r setup, include = F}
@@ -62,19 +65,91 @@ brexit = fread("analysisData.csv")
 
 - Recap: Math of Least Squares
 - Least Squares $\to$ CEF
+  - linearity?
+  - best linear approximation?
+  - properties of residuals?
 - Interpretation of Coefficients
-  - predicted values and residuals
-  - design matrix $\to$ coefficients
+  - design matrix $\to$ coefficients $\to$ predicted values
   - dummy variables
   - continuous variables
   - "controlling"
   - non-linearity
 
 
---- 
 
 ## Recap
 
+---
+
+### Conditional Expectation Function
+
+the **conditional expectation function** (Angrist and Pischke)
+
+**expectation**: because it is about the *mean*: $E[Y]$
+
+**conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
+
+**function**: because $E[Y | X] = f(X)$, there is some mathematical mapping between values of $X$ and $E[Y]$.
+
+$$E[Y | X = x] = f(x)$$
+
+
+---
+
+### Conditional Expectation Function
+
+Another way of thinking about what the **conditional expectation function** is as a **prediction function**:
+
+A prediction function takes in values of $X$ and gives us a **prediction** of $Y$ --- $\hat{y}$.
+
+>- What makes for a good prediction? Least error.
+>- What is our "rule" for judging errors? 
+>- If the rule is: prediction $\hat{y}$ have the smallest **distance** to the true values of $Y$...
+>- this leads to the CEF $$E[Y | X = x] = \hat{y} | X = x$$
+
+--- 
+
+### Orthogonality
+
+Euclidean Distance between $y$ and $\hat{y}$ (true and predicted values) is minimized when prediction errors $\mathbf{e}$ are **orthogonal** to predictors $X$
+
+- orthogonal: vectors at 90 degree angle
+- dot product of vectors is $0$ $\to$ covariance/correlation is $0$
+
+---
+
+
+### Deriving the mean:
+
+```{r, echo = F}
+ggplot() +
+  geom_abline(aes(slope = 1, intercept = 0), color = 'blue' ) + 
+  geom_segment(aes(x = c(0), y = c(0), xend = c(3), yend = c(5)), 
+               arrow = arrow(type = 'closed', length =  unit(0.05, 'npc'))) + xlim(-1,5) + ylim(-1,6) + geom_segment(aes(x = 4, y = 4, xend = 3, yend = 5),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'red', alpha = 0.75) + 
+  geom_segment(aes(x = 0, y = 0, xend = 4, yend = 4),arrow = arrow(type = 'closed', length =  unit(0.05, 'npc')),
+               colour = 'green', alpha = 0.75) +
+  coord_fixed() + xlab('x') + ylab('y') + 
+  geom_text(aes(x = c(2,2,3.5), y = c(4,1.5,4), label = c("y", "y_hat", "e"))) + 
+  theme_bw() + xlab('n1') + ylab('n2') 
+```
+
+
+--- 
+
+### Bivariate Regression
+
+Bivariate regression chooses $\hat{y}$ as closest possible prediction of $y$ **with the form**
+
+$$\mathbf{\hat{y}} = b_0 + b_1\cdot \mathbf{x}$$
+
+An intercept $b_0$ and coefficient $b_1$ multiplied by $\mathbf{x}$
+
+<br>
+ 
+A **conditional expectation function**:
+
+$$E(Y | X = x) = b_0 + b_1\cdot x$$
 
 ---
 
@@ -94,22 +169,43 @@ $$b_0 = \overline{y} - \overline{x}\cdot b_1$$
 
 ---
 
-### Multivariate Least Squares:
+To go into multivariate regression, we need linear algebra
 
-Mean and least squares are **orthogonal projection** of $y$ on $X$.
 
-Previously we predicted $Y$ as a linear function of $x$:
+### Deriving Least Squares
 
-$$\hat{y_i} = b_0 + b_1 \cdot x_i$$
+$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}; \beta = \begin{pmatrix} b_0 \\  b_1 \end{pmatrix}$$ 
 
-Now, we can imagine predicting $y$ as a linear function of many variables:
-
-$$\hat{y_i} = b_0 + b_1 x_1 + b_2 x_2 + \ldots + b_k x_k$$
+$\mathbf{X}$ is called our **design matrix**: maps to our equation
 
 ---
 
+### Deriving Least Squares
 
-```{r echo = F, warning=F, message=F}
+
+$$\widehat{y_i} = b_0 + b_1 \cdot x_i$$
+
+$$\widehat{y}_{n \times 1} = \mathbf{X}_{n \times p}\beta_{p \times 1}$$
+
+$$\begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix} \begin{pmatrix} b_0 \\  b_1 \end{pmatrix} = \begin{pmatrix} 1 \cdot b_0 + x_1\cdot b_1 \\ \vdots \\ 1\cdot b_0 + x_n \cdot b_1 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \mathbf{\widehat{y}}$$ 
+
+$\mathbf{e} = \mathbf{y} - \mathbf{\hat{y}}$ gives us the residuals (prediction errors).
+
+
+---
+
+### Solving for $\beta$
+
+Forcing residuals to be orthogonal to $X$ leads to...
+
+$$(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{Y} = \mathbf{{\beta}}$$
+
+
+---
+
+Original $n$d space
+
+```{r echo = F, warning=F, message=F, include = T}
 require(MASS)
 require(matlib)
 require(Matrix)
@@ -136,19 +232,19 @@ surf = function (M, th = 0, ph = 15)
   #ownames(x3) = x1
   #colnames(x3) = x2
   plot_ly() %>% 
-    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5) 
+    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5, showLegend = F) 
 }
 
 y_hat = as.vector(M %*% solve(t(M) %*% M) %*% t(M) %*% y)
 e = y - y_hat
-surf(M) %>% 
-  add_paths(x = ~ c(0,M[1,1]), y = ~c(0,M[2,1]), z = ~c(0,M[3,1])) %>%
-  add_paths(x = ~ c(0,M[1,2]), y = ~c(0,M[2,2]), z = ~c(0,M[3,2])) %>%
-  add_paths(x = ~ c(0,y[1]), y = ~c(0,y[2]), z = ~c(0,y[3])) %>%
-  add_paths(x = ~ c(0,y_hat[1]), y = ~c(0,y_hat[2]), z = ~c(0,y_hat[3])) %>%
+surf(M, leg) %>% 
+  add_paths(x = ~ c(0,M[1,1]), y = ~c(0,M[2,1]), z = ~c(0,M[3,1]), name = "x1") %>%
+  add_paths(x = ~ c(0,M[1,2]), y = ~c(0,M[2,2]), z = ~c(0,M[3,2]), name = 'x2') %>%
+  add_paths(x = ~ c(0,y[1]), y = ~c(0,y[2]), z = ~c(0,y[3]), name = "y") %>%
+  add_paths(x = ~ c(0,y_hat[1]), y = ~c(0,y_hat[2]), z = ~c(0,y_hat[3]), name = "y_hat") %>%
   add_paths(x = ~ c(y_hat[1], y_hat[1] + e[1]),
             y = ~ c(y_hat[2], y_hat[2] + e[2]),
-              z = ~ c(y_hat[3], y_hat[3] + e[3])
+              z = ~ c(y_hat[3], y_hat[3] + e[3]), name = "e"
             )
 
 
@@ -157,7 +253,9 @@ surf(M) %>%
 
 ---
 
-```{r}
+Column space of $\mathbf{X}$: **orthogonal** basis
+
+```{r echo = F, warning=F, message=F, include = T}
 require(MASS)
 require(matlib)
 require(Matrix)
@@ -193,7 +291,7 @@ surf = function (M, th = 0, ph = 15)
   #ownames(x3) = x1
   #colnames(x3) = x2
   plot_ly() %>% 
-    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5) 
+    add_surface(x = ~ x1, y = ~ x2, z = ~x3, opacity = 0.5, showLegend = F) 
 }
 
 y_hat = as.vector(M %*% solve(t(M) %*% M) %*% t(M) %*% y)
@@ -219,44 +317,38 @@ surf(M.star) %>%
 
 ---
 
-### Deriving Least Squares
+### Multivariate Least Squares:
 
-Given $\mathbf{y}$, an $n \times 1$ dimensional vector of all values $y$ for $n$ observations
+Mean and least squares are **orthogonal projection** of $y$ on $X$.
 
-and $\mathbf{X}$, an $n \times 2$ dimensional matrix ($2$ columns, $n$ observations). We call this the **design matrix**. A vector of $\mathbf{1}$ (for an intercept), a vector $x$ for our other variable.
+Previously we predicted $Y$ as a linear function of $x$:
 
-$\mathbf{\hat{y}}$ is an $n \times 1$ dimensional vector of predicted values (for the mean of Y conditional on X) computed by $\mathbf{X\beta}$. $\mathbf{\beta}$ is a vector  $p\times 1$ of (coefficients) that we multiply by $\mathbf{X}$.
+$$\hat{y_i} = b_0 + b_1 \cdot x_i$$
 
-We'll assume there are only two coefficients in $\mathbf{\beta}$: $(b_0,b_1)$ so that $\hat{y_i} = b_0 + b_1 \cdot x_i$, so $p = 2$
+Now, we can imagine predicting $y$ as a linear function of many variables:
 
----
-
-### Deriving Least Squares
-
-$$\mathbf{X} = \begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix}; \mathbf{Y} = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix}; \beta = \begin{pmatrix} b_0 \\  b_1 \end{pmatrix}$$ 
-
----
-
-### Deriving Least Squares
-
-
-$$\widehat{y_i} = b_0 + b_1 \cdot x_i$$
-
-$$\widehat{y}_{n \times 1} = \mathbf{X}_{n \times p}\beta_{p \times 1}$$
-
-$$\begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix} \begin{pmatrix} b_0 \\  b_1 \end{pmatrix} = \begin{pmatrix} 1 \cdot b_0 + x_1\cdot b_1 \\ \vdots \\ 1\cdot b_0 + x_n \cdot b_1 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \mathbf{\widehat{y}}$$ 
-
-$\mathbf{e} = \mathbf{y} - \mathbf{\hat{y}}$ gives us the residuals (prediction errors).
-
+$$\hat{y_i} = b_0 + b_1 x_1 + b_2 x_2 + \ldots + b_k x_k$$
 
 
 ---
 
-$$\widehat{y_i} = b_0 + b_1 \cdot x_{1i} + b_2 \cdot x_{2i} $$
+### Multivariate Least Squares:
 
+- When we calculated the mean using matrix algebra, we **orthogonal**ly projected the $n$ dimensional vector $Y$ onto a point on a one-dimensional line.
+- When we calculated the bivariate regression line, we **orthogonal**ly  projected the $n$ dimensional vector $Y$ onto a $2$-dimensional space (one for $b_0$ and one for $b_1$)
+- When we use multi-variate regression, we **orthogonal**ly  project the $n$ dimensional vector $Y$ onto a $p$ dimensional space (one for each coefficient)
 
-$$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vdots \\ 1 & x_{1n} & x_{2n} \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \\ b_2 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \hat{Y}$$
+---
 
+### Multivariate Least Squares:
+
+What is  "**orthogonal**ly projecting onto $p$ dimensions"
+
+When we project into two dimensions, these dimensions are **precisely like** the $x$ and $y$ axes on a graph: perpendicular/**orthogonal** to each other. 
+
+In multivariate regression, because we are going to project $y$ onto $p$ **orthogonal** dimensions in $\mathbf{X}$. ($(\mathbf{X}'\mathbf{X})^{-1}$ transforms to orthogonal basis)
+
+- "under the hood", regression creates a new version of $\mathbf{X}$ where each column is **orthogonal to the others**
 
 ---
 
@@ -271,37 +363,54 @@ $$\mathbf{X}\beta = \begin{pmatrix} 1 & x_{11} & x_{21} \\ \vdots & \vdots & \vd
     
 2. $n \geq p$: we need to have more data points than variables in our equation
   - no longer trivial with multiple regression
-  
+
+---
+
+### Multivariate Least Squares:
+
+Examples: **Linear Dependence**?
+
+```{r, echo = F}
+
+cbind(1, c(1,0,0), c(0,1,0), c(0,0,1)) %>% kable
+
+```
+
+---
+
+### Multivariate Least Squares:
+
+Examples: **Linear Dependence**?
+
+```{r, echo = F}
+
+cbind(1, c(2,0,0), c(0,2,0), c(0,0,2)) %>% kable
+
+```
+
+
+---
+
+### Multivariate Least Squares:
+
+Examples: **Linear Dependence**?
+
+```{r, echo = F}
+
+cbind(1, c(0.5,0.25,0.25), c(0.25,0.5,0.25), c(0.25,0.25,0.5)) %>% kable
+
+```
+
+
 
 # Regression and CEF
 
 ---
 
-### Conditional Expectation Function
-
-the **conditional expectation function** (Angrist and Pischke)
-
-**expectation**: because it is about the *mean*: $E[Y]$
-
-**conditional**: because it is conditional on values of $X$ ... $E[Y |X]$
-
-**function**: because $E[Y | X] = f(X)$, there is some mathematical mapping between values of $X$ and $E[Y]$.
-
-$$E[Y | X = x] = f(x)$$
+### What is the relationship between least squares and CEF?
 
 ---
 
-### Conditional Expectation Function
-
-Another way of thinking about what the **conditional expectation function** is:
-
-$$E[Y | X = x] = \hat{y} | X = x$$
-
-What is our predicted value $\hat{y}$, where $X = x$, such that our prediction of $Y$, $\hat{y}$ has the least error?
-
-- With the CEF, we choose a particular definition of what it means to have the "least error": minimum (Euclidean) distance
-
----
 
 ### Conditional Expectation Function
 
@@ -317,9 +426,8 @@ $$E[Y | X = x_i] = b_0 + b_1x_i$$
 We want to understand:
 
 1. What do we mean by "linear"?
-2. What is the relationship between $\hat{y}$ and $E[Y|X=x]$?
-3. How to generate predicted values
-4. Properties of 'residuals' $\mathbf{e}$/prediction errors
+2. What do we mean by "best" linear approximation? (What is the relationship between $\hat{y}$ and $E[Y|X=x]$?)
+3. What are the properties of 'residuals' $\mathbf{e}$/prediction errors
 
 ---
 
@@ -331,7 +439,7 @@ earnings = read.csv('https://raw.githubusercontent.com/mdweaver/mdweaver.github.
 
 ```
 
-Data contains:
+Data contains average earnings by age group: (so it is the CEF of Earnings by Age)
 
 `AGE`: the age of survey respondents in years
 
@@ -350,7 +458,6 @@ In pairs:
 5. Calculate $e$, the residuals using $y$ and $\hat{y}$
 5. Plot points for $Y$ by `AGE`; plot a line of $\hat{y}$ by `AGE`: is this a perfect fit of the CEF?
 
-
 --- 
 
 ```{r, echo=F}
@@ -360,7 +467,7 @@ ggplot(earnings, aes(x = AGE, y = INCEARN)) + geom_point(alpha = 0.75, aes( size
 
 ```
 
-CEF is not linear
+Is the CEF actually linear?
 
 --- 
 
@@ -373,10 +480,11 @@ Does the regression line fit all values of $E[Y|X=x]$ equally well?
 
 ---
 
-### Take aways:
+### Least Squares and CEF, take-away (1)
 
-- Least squares is "linear" in that we approximate $Y$ using a linear combination of $X$ (sum $X$ multiplied by coefficients: in the span/column space of $X$)
+- Least squares is "linear" in that we approximate CEF of $Y$ using a linear combination of $X$ (sum $X$ multiplied by coefficients: in the span/column space of $X$)
 
+- linear in the sense that we can multiply each element in $X$ by a scalar (coefficient) and add them up
 
 ---
 
@@ -397,11 +505,11 @@ ggplot(father.son, aes(x = fheight, y = sheight)) +
   geom_point(aes(x = bin, y = m, size = count), data = means, alpha = 0.5) + theme_bw()
 ```
 
-
+Sometimes CEF is mostly linear. Are some points better approximated than others?
 
 ---
 
-When we use *individual* data...
+When we use *individual* data to look at age and earnings...
 
 ```{r}
 X = cbind(1, acs_data$AGE)
@@ -413,14 +521,6 @@ beta
 ```
 
 Do your estimates agree? Why or why not?
-
----
-
-### Take aways:
-
-- Least squares is "linear" in that we approximate $Y$ using a linear combination of $X$ (sum $X$ multiplied by coefficients: in the span/column space of $X$)
-- It is the **best** linear approximation: prediction $\hat{y}$ is closest to $y$ in $n$ dimensional space. It will make **better** predictions where there are more observations with specific value of $X = x$
-
 
 ---
 
@@ -439,19 +539,26 @@ beta
 
 ---
 
-### Least Squares and CEF
+### Least Squares and CEF, take-away (2a)
 
-Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the smallest mean-squared error (minimum distance to the true $E(Y_i | X_i)$).
+Even if true CEF is non-linear...
 
->- It is "best" linear approximation in that the overall set of predictions $\hat{y}$ has least distance to $y$
->- Least Squares could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**, but we need to account for number of observations.
+
+Least Squares predictions $\widehat{Y} = X'\beta$ gives the linear approximation of $E(Y_i | X_i)$ that has the minimum distance to the true $E(Y_i | X_i)$ in $n$d space.
+
+Because it minimizes distance in $n$d space:
+
+- it makes **better** predictions for values of $X = x$ where there are more observations
+- could equivalently fit a line for the mean of Y: $E(Y) | X$ rather than prediction for each $Y_i$. **We could use $E(Y_i | X_i)$ as the dependent variable**, but we need to account for number of observations.
 
 ---
 
 
-### Least Squares and CEF
+### Least Squares and CEF, take-away (2b)
 
-Alternatively, least squares is a *particular* weighted average of derivative of non-linear CEF (board)
+Even if true CEF is non-linear...
+
+Alternatively, least squares can be interpreted as a *particular* weighted average of derivative of non-linear CEF (see *Mostly Harmless*) (board)
 
 - weights greater closer to median of $x$ 
 
@@ -520,10 +627,22 @@ This **also means** that residuals $e$ are **always** <u>perfectly uncorrelated<
 
 ---
 
-We want to:
+We want to understand:
 
-- Understand link between design matrix, $\hat{y}$, and coefficients
-- Understand dummy variables
+- How to generate predicted values: $\hat{y}$
+- The link between design matrix, $\hat{y}$, and coefficients
+- How to interpret coefficients for dummy variables
+- How to interpret coefficients for continuous variables
+
+---
+
+### Regression and Predicted Values
+
+$$\widehat{y_i} = b_0 + b_1 \cdot x_i$$
+
+$$\widehat{y}_{n \times 1} = \mathbf{X}_{n \times p}\beta_{p \times 1}$$
+
+$$\begin{pmatrix} 1 & x_1 \\ \vdots & \vdots \\ 1 & x_n \end{pmatrix} \begin{pmatrix} b_0 \\  b_1 \end{pmatrix} = \begin{pmatrix} 1 \cdot b_0 + x_1\cdot b_1 \\ \vdots \\ 1\cdot b_0 + x_n \cdot b_1 \end{pmatrix} = \begin{pmatrix} \hat{y_1} \\ \vdots \\ \hat{y_n} \end{pmatrix} = \mathbf{\widehat{y}}$$ 
 
 ---
 
@@ -534,8 +653,9 @@ Suppose we fit the following equation using least squares?:
 $Earnings_i = b_0$
 
 - What is the design matrix?
-- What is the coefficient $b_0$ (solve for it; what is it equivalent to?)
-- What is $\hat{y}$ in this case?
+- How do we calculate $\hat{y}$ for any case $i$? 
+- What is the coefficient $b_0$ (what is it equivalent to?)
+
 
 ---
 
@@ -545,10 +665,11 @@ Suppose we want to estimate earnings as a function of gender
 
 $Earnings_i = b_0 + b_1 \ Female_i$
 
-assuming, as the survey data does, the gender binary
 
 1. What does the design matrix $X$ in this regression look like?
+2. How do we calculate $\hat{y}$ when $Female_i = 0$?
 2. What is the interpretation of $\hat{y}$ when $Female_i = 0$?
+2. How do we calculate $\hat{y}$ when $Female_i = 1$?
 4. What is the interpretation of $\hat{y}$ when $Female_i = 1$?
 3. What does the $b_0$ tell us? 
 3. What does the $b_1$ tell us? 
@@ -562,27 +683,31 @@ summary(m1) %>% .$coefficients
 
 ---
 
-What would change if we changed the design matrix so that instead of a vector of $1$ and  indicated Female ($1$) vs Male ($0$), we used a vector of $2$ and indicated Female ($2$) vs Male ($0$)?
+What would change if we changed the design matrix so that instead of a vector of $1$s and a vector for Female ($1$) vs Male ($0$), we used a vector of $2$s and indicate Female ($2$) vs Male ($0$)?
 
+1. How do we calculate $\hat{y}$ when $Female_i = 0$?
 2. What is the interpretation of $\hat{y}$ when $Female_i = 0$?
+2. How do we calculate $\hat{y}$ when $Female_i = 2$?
 4. What is the interpretation of $\hat{y}$ when $Female_i = 2$?
 3. What does the $b_0$ tell us? 
 3. What does the $b_1$ tell us? 
 
 ---
 
-
 ### Least Squares and Group Means
 
 $Earnings_i = b_0 + b_1 \ Female_i + \ b_2 Male_i$
 
 1. What does the design matrix $X$ in this regression look like?
+2. How do we calculate $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
 2. What is the interpretation of $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
+2. How do we calculate $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 4. What is the interpretation of $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
 4. What does the $b_2$ tell us?
 
+---
 
 ```{r}
 m2 = lm(INCEARN ~ FEMALE + MALE, acs_data)
@@ -597,10 +722,14 @@ $Earnings_i =  b_0 \ Female_i + \ b_1 Male_i$
 
 
 1. What does the design matrix $X$ in this regression look like?
+2. How do we calculate $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
 2. What is the interpretation of $\hat{y}$ when $Female_i = 0$ and $Male_i = 1$?
+2. How do we calculate $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 4. What is the interpretation of $\hat{y}$ when $Female_i = 1$ and $Male_i = 0$?
 2. What does the $b_0$ tell us?
 3. What does the $b_1$ tell us?
+
+---
 
 ```{r}
 m3 = lm(INCEARN ~ -1 + FEMALE + MALE, acs_data)
@@ -618,7 +747,7 @@ Would the $\hat{y}$ be different in these three models?
 
 --- 
 
-$Earnings_i = b_0 + b_1 \ Female_i $
+$Earnings_i = b_0 + b_1 \ Female_i$
 
 ```{r, }
 #Design matrix
@@ -627,6 +756,27 @@ model.matrix(m1) %>% head
 #Interpret:
 coefficients(m1)
 ```
+
+---
+
+$Earnings_i = b_0 + b_1 \ Female_i$, multiplying design matrix by $2$
+
+```{r, include = F}
+mm_m1_2 = model.matrix(m1) %>% `*` (2)
+
+m1.2 = lm(acs_data$INCEARN ~ -1 +  mm_m1_2, acs_data)
+```
+
+
+```{r}
+#Design matrix
+mm_m1_2 %>% head
+
+#Interpret:
+coefficients(m1.2)
+```
+
+
 
 --- 
 
@@ -652,16 +802,15 @@ model.matrix(m3) %>% head
 coefficients(m3)
 ```
 
-
 ---
 
 ### Least Squares and Group Means
 
 Lessons from these examples:
 
-1. Despite different coefficients, least squares can make **identical predictions** $\hat{y}$; changes interpretation of coefficients
+1. Despite different coefficients, least squares can make **identical predictions** $\hat{y}$; care in interpretation of coefficients
 
-2. We need to specify design matrix/model to get estimates of interest. (e.g. difference in means)
+2. We need to specify design matrix/model to get estimates of interest. (e.g. difference in means, vs. group averages)
 
 3. If we have **exclusive** indicator variables for belonging to distinct categories (sometimes called "dummy variables"), must drop one group if we fit an intercept. (Why?)
 
@@ -670,6 +819,8 @@ Lessons from these examples:
 ---
 
 ### Dummy Variables
+
+Binary variables (0/1) for membership in exclusive categories. (e.g. province of residence)
 
 If there is an intercept
 
@@ -703,12 +854,15 @@ brexit = read.csv("https://raw.githubusercontent.com/mdweaver/mdweaver.github.io
 
 ### Exercise:
 
+<small> 
+
 Using the `lm` function: (`lm(y ~ x, data = data)`)
 
 1. Tabulate `Region` using `table` to see what values there are.
 1. Regress `Pct_Lev` on `Region`
-2. Interpret the coefficients. (`summary(your_model)`)
+1. (Look at the results: `summary(your_model)`) Write the design matrix.
 3. (Without looking at them) What would the predicted values $\widehat{Y}$ from this regression be - with respect to the regions?
+2. Interpret the coefficients. 
 4. How should we interpret the residuals $e$?
 5. Now, run the following:
 
@@ -718,6 +872,8 @@ brexit$Region2 = factor(brexit$Region, levels = regions[c(12, 1:11)])
 ```
 
 Repeat the regression. How has the interpretation of coefficients changed?
+
+</small> 
 
 ---
 
@@ -730,11 +886,13 @@ m = lm(INCEARN ~ AGE, data = earnings, weights = earnings$respondents)
 summary(m)$coefficients
 ```
 
-How do we interpret `(Intercept)`?
+
+- How do we generate predicted values of earnings?
+- How do we interpret `(Intercept)`?
 
 >- does this make sense?
 
-How do we interpret `AGE`?
+- How do we interpret `AGE`?
 
 ---
 
@@ -761,7 +919,6 @@ So far, we have considered fitting group means.
 - indicator/dummy variables have been for exclusive membership in groups
 - what happens if we control for membership in different groups?
 
-
 ---
 
 ### Interpreting w/ Controls
@@ -778,11 +935,11 @@ Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if
 
 ### Interpreting w/ Controls
 
-1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Medicine_i$ and intercept, and $Earnings$
+1. Geometric approach showed us $b_1$ tells us relationship between $Female_i^*$ --- component of $Female_i$ orthogonal to $Medicine_i$ and intercept --- and $Earnings$
 
-- What is residual $Female_i^*$ in this case? (Think about residuals in models with group dummies above)
+- What will be the value of residual $Female_i^*$ in this case? (Think about residuals in models with group dummies above)
 
->- Residual $Female_i^*$ will be deviation from mean level of $Female$ in law and medicine
+>- Residual $Female_i^*$ will be deviation from mean value of $Female$ in law and medicine
 
 ---
 
@@ -791,6 +948,8 @@ Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if
 2. Slope is $\frac{Cov(x^*, y)}{Var(x^*)}$: Variance of residuals might differ across $Medicine_i$.
 
 - What would happen to $Var(Female^*)$ among doctors if ALL doctors were female?
+- What would be the mean of $Female$ among doctors?
+- What would $Female^*$ be?
 
 >- No variation left - no observations differ from the mean of $1$, do not contribute to the slope (zero weight)
 
@@ -798,7 +957,7 @@ Where $Female_i$ is $1$ if person is female, $0$ if male. $Medicine_i$ is $1$ if
 
 ### Example
 
-Let's now find the (approximate) linear conditional expectation function of earnings, across gender and profession:
+Let's now find the linear conditional expectation function of earnings, across gender and profession:
 
 ```{r}
 ls = lm(INCEARN ~ FEMALE + MEDICINE , acs_data)
@@ -820,7 +979,7 @@ plot_data[, FEMALE := as.numeric(FEMALE)]
 plot_data[type == 'Residual', FEMALE := residual_hrswork]
 ```
 
-How do we make sense of, e.g., the slope on `FEMALE`?
+How do we make sense of  the slope on `FEMALE`?
 
 ---
 
@@ -855,9 +1014,10 @@ ls = lm(INCEARN ~ FEMALE + UHRSWORK , acs_data)
 
 ### Interpreting w/ Controls
 
-1. Linear algebra showed us $b_1$ tells us relationship between $Female_i$ orthogonal to $Hours_i$ and intercept, and $Earnings$
+1. Geometric approach showed us $b_1$ tells us relationship between $Female_i^*$ --- component of $Female_i$ orthogonal to $Hours_i$ and intercept --- and $Earnings$
 
-- What is the residual/orthogonal $Female_i^*$ in this case? ()
+
+- What are the values of the residual $Female_i^*$ in this case? 
 
 >- Residual $Female_i^*$ will have perfectly $0$ covariance/correlation with $Hours_i$
 
@@ -923,9 +1083,9 @@ ggplot(plot_data, aes(x = FEMALE, y = INCEARN)) + geom_point(alpha = 0.01) + geo
 
 What could we do if we really wanted to "hold hours worked constant"? 
 
-- Compare earnings by gender **within** groups where hours are the same  (think about our indicator variables from earlier)?
+>- Compare earnings by gender **within** groups where hours are the same  (think about our indicator variables from earlier)?
 
-- We can ensure that gender is exactly unrelated to each year of age by fitting an intercept for each age.
+>- We can ensure that gender is exactly unrelated to each year of age by fitting an intercept for each age.
 
 
 >- In this case, we have `r nrow(acs_data)` observations, so this is doable. Not always so lucky
@@ -944,7 +1104,7 @@ If a straight-line relationship between $X$ and $Y$ is clearly wrong, we can mod
 
 $Earnings_i = b_0 + b_1 Female + b_2 Hours + b_3 Hours^2$
 
-It is "linear" in that we still multiply values of $X$ by $\beta$ and sum, but we use non-linear transformations of the data.
+It is "linear" in that we still multiply values of $X$ by $\beta$ and sum, but we use **non-linear transformations** of the data.
 
 ---
 
@@ -1013,6 +1173,7 @@ We can incorporate all kinds of non-linearity:
 - logarithms (natural log very common)
 - exponents
 - square-roots
+- sine/cosine
 
 But there are trade-offs...
 
@@ -1050,8 +1211,7 @@ ggplot(galton_s, aes(parent, child)) +
 
 ```
 
-
-
+These prediction errors are intolerable!
 
 ---
 
