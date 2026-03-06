@@ -7,6 +7,9 @@ output:
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 
@@ -78,7 +81,7 @@ ds2000 = read.csv("https://www.dropbox.com/s/4miay9ezzjp03w7/ds2000.csv?dl=1") %
   - Interpolation Bias (Conditional Independence Assumption)
   - Extrapolation Bias (Positivity Assumption)
 
-4. How to Practically Addres these Problems
+4. How to  Address these Problems
 
 
 
@@ -132,7 +135,10 @@ In order for conditioning to estimate the $ACE$ without bias, we must assume
 
 We find effect of $D$ on $Y$ within each subset of the data uniquely defined by values of $X_i$. 
 
+<small>
+
 $\widehat{ACE}[X = x] = E[Y(1) | D=1, X = x] - E[Y(0) | D=0, X = x]$ 
+
 
 for each value of $x$ in the data.
 
@@ -140,11 +146,24 @@ Under the Conditional Independence Assumption, $E[Y(1) | D=1, X=x] = \color{red}
 
 We **impute** the missing potential outcomes... with the **expected value** of the outcome of observed cases with same values of $x$, different values of $D$.
 
+</small>
+
 ---
 
 ### Conditioning by Imputation
 
 $E[Y(0) | D=0, X=x]$ is a conditional expectation function; something we can estimate using regression
+
+---
+
+### Regression for Conditioning
+
+- How does regression relate to our causal **estimands**?
+- Curse of dimensionality $\to$ regression:
+
+    - how does regression impute?
+    - what challenges arise with conditional independence in LS?
+    - how is common support an issue in LS?
 
 # A Causal Model for Least Squares
 
@@ -200,22 +219,28 @@ $$Y_i(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
 
 Here $Y_i(D_i = d)$ is the potential outcome of case $i$ for a value of $D = d$. 
 
+
+
+---
+
+$$Y_i(D_i = d) = \beta_0 + \beta_1 D_i + \epsilon_i$$
+
 - this response schedule says that $E[Y(D = d)]$, on average, changes by $\beta_1$ for a unit changes in $D$ (or a weighted average of non-linear effects of $D$... the average partial derivative)
 - $\epsilon_i$ is unit $i$ deviation from $Y_i(D=d) - E[Y_i(D = d)]$ 
 - We are using $\beta$ rather than $b$ because we are interpreting coefficients as **estimands**/**parameters** (giving a causal interpretation)
 
----
 
-### Response Schedule
 
-If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta}_1$ that we can give a **causal** interpretation? (On average, change in $D$ **causes** $\widehat{\beta}_1$ change in $Y$)
+<!-- ### Response Schedule -->
 
-**We must assume**
+<!-- If we don't know parameters $\beta_0, \beta_1$, what do we need to assume to obtain an estimate $\widehat{\beta}_1$ that we can give a **causal** interpretation? -->
 
-- $Y_i$ actually produced according to the response schedule (equation is correctly specified; e.g., linear and additive)
-- $D_i$ is independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$.
+<!-- **We must assume** -->
 
-In this scenario, if $D$ were binary and we had randomization, this is equivalent to estimating the $ACE$ for an experiment.
+<!-- - $Y_i$ actually produced according to the response schedule (equation is correctly specified) -->
+<!-- - $D_i$ is independent of $\epsilon_i$:  $D_i \perp \!\!\! \perp \epsilon_i$. (equivalent to randomly assigned) -->
+
+<!-- In this scenario, if $D$ were binary and we had randomization, this is equivalent to estimating the $ACE$ for an experiment. -->
 
 ---
 
@@ -223,7 +248,7 @@ In this scenario, if $D$ were binary and we had randomization, this is equivalen
 
 If we want to use regression for *conditioning*, then the model would look different:
 
-$$E[Y_i(D_i = d, X_i = x)] = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i}$$
+$$E[Y_i(D_i = d, X_i = x)] = \beta_0 + \beta_1 D_i + \mathbf{X_i\beta_i} + \epsilon_i$$
 
 - here we add conditioning variables $\mathbf{X_i}$ to the model. 
 - regression is estimating the conditional expectation function $E[Y(d) | D = d, X = x]$: this is what we need for conditioning 
@@ -242,13 +267,14 @@ Given what we have learned about regression so far...
 
 Classic "matching" to impute...
 
-$\widehat{ACE} = \sum\limits_{x \in X} \underbrace{Pr[X = x]}_{\text{Fraction } X = x}\overbrace{(E[Y_i(1) | D_i=1, X_i = x] - E[Y_i(0) | D_i = 0, X_i = x])}^{\text{Treated - Untreated, same in x}}$ 
+$$\begin{aligned} \widehat{ACE} = \sum\limits_{x \in X} \overbrace{Pr[X = x]}^{\text{Fraction} X = x}&(E[Y_i(1) | D_i=1, X_i = x] - \\ & E[Y_i(0) | D_i = 0, X_i = x]) \end{aligned}$$
+
+
 
 
 How does Regression differ?
 
 ---
-
 
 ### Regression: Causal Effect Weights
 
@@ -257,17 +283,16 @@ Positivity requirement speaks to **what subsets of the data** contribute to our 
 - in exact matching, subsets of $X$ without variation in $D$ get weight of $0$
 - otherwise, in proportion to number of cases in strata of $X$.
 
-If regression returns weighted average partial derivative of $ACRF$...
 
->- What are the weights?
+>- What are the weights in regression?
 
 ---
 
 ### Regression: Causal Effect Weights
 
-[Aronow and Samii (2016)](https://doi.org/10.1111/ajps.12185) discuss how regression weights cases:
+[Aronow and Samii (2016)](https://doi.org/10.1111/ajps.12185) discuss how regression weights cases, with a binary treatment.
 
-In a regression context, cases contribute to estimating $\beta_D$ (causal effect of $D$) as a weighted average:
+Cases contribute to estimating $\beta_D$ (causal effect of $D$) as a weighted average:
 
 $$\beta_D = \frac{1}{\sum\limits_i^n w_i}\sum\limits_i^n \tau_iw_i$$
 Where $w_i = [D_i - E(D_i | X_i)]^2$: the square of $D$ residual on $\hat{D}$ predicted by $X$.
@@ -279,13 +304,13 @@ $\tau_i = Y(D_i = 1) - Y(D_i = 0)$ (unit causal effect)
 
 ### Regression: Causal Effect Weights
 
-These weights are **lower** when $D$ is well predicted by $X$.
+These weights are **lower** for values $x$ where $D$ is well predicted by $X$.
 
-These weights are **higher** when $D$ is less well predicted by $X$.
+These weights are **higher** for values $x$ when $D$ is less well predicted by $X$.
 
 Thus, for cases where values of $X$ nearly perfectly predict $D$, there is close to zero positivity, and weights are closer to zero:
 
-- in the best case scenario where $D$ is truly linear in $X$, these weights make sense
+- in the best case scenario where $D$ is truly linear in $X$, these weights make sense (more weight when more variation in $D$, conditioning on $X$)
 - if $D$ is not linear in $X$, then these weights also reflect errors in model and **upweight** cases which are fit poorly.
 
 ---
@@ -294,12 +319,14 @@ Thus, for cases where values of $X$ nearly perfectly predict $D$, there is close
 
 Regression weights may behave usefully (less weight where we have less variation in $D$, so less information), but they **change** causal estimand:
 
-- we need to ask, for what set of cases are we estimating effects?
-- the weights used are only easily interpreted under specific conditions
+- we need to ask, for **what set of cases** are we estimating effect of $D$?
+- the weights used are only **easily interpreted** under specific conditions
+
+Ask: which cases, defined in terms of $X$, get more or less weight?
 
 ---
 
-### Regression and Weights
+### Regression: Causal Effect Weights
 
 If $D$ is *continuous*, regression **also** places more or less weight on different values of $d$:
 
@@ -307,14 +334,33 @@ If $D$ is *continuous*, regression **also** places more or less weight on differ
 
 <img src="./angrist_krueger.png" width = 55%>
 
-
 ---
-
 
 <img src="./angrist_pischke.jpeg" width = 80%>
 
+---
+
+### Regression: Causal Effect Weights
+
+If $D$ is *continuous*, regression **also** places more or less weight on different values of $d$:
+
+- weights only easily interpreted under specific conditions
+- more weights on values of $d$ near the median; less well predicted by $X$
+- consider also: common support... are **all values** of $d$ present at near all values of $X$?
+
+
 
 # Conditioning w/ Regression
+
+---
+
+### Conditioning with Regression
+
+We want to know... how do conditional independence and common support translate to regression context?
+
+What new problems could arise? (We'll assume that we have the right variables to block backdoor path)
+
+>- To see this, need to see how regression imputes.
 
 ---
 
@@ -353,7 +399,6 @@ ggplot(plot_data[!(variable %in% c('untype4'))], aes(x = value, group = Peacekee
 
 Using just `treaty` (2 values), `decade` (6 values), `factnum` (8 values), `wardur` (43 values), we have only one exact match... 
 
-
 ---
 
 Without perfect matches on possible confounders, we don't have cases without a Peacekeeping operation that we can use to substitute for the counterfactual outcome in conflicts with a Peacekeeping force.
@@ -373,8 +418,9 @@ ds2000 = read.csv("https://www.dropbox.com/s/4miay9ezzjp03w7/ds2000.csv?dl=1")
 
 1. Regress `success` on `untype4` ($D$) and `logcost`, `wardur`, `factnum`, `trnsfcap`, `treaty'`, `develop`, `exp`, `decade`, using `lm()`, save this as `m`
 2. Use model to predict *counterfactual* potential outcomes for each conflict:
-  - Create a copy of `ds2000`, `ds2000_cf`, and flip the value of `untype4` (0 to 1, 1 to 0).
+  - Create a copy of `ds2000` called `ds2000_cf`, and flip the value of `untype4` (0 to 1, 1 to 0).
   - Use the `predict(m, newdata = ds2000_cf)` to add a new column called `y_hat` to `ds2000`.
+
 
 ---
 
@@ -487,7 +533,7 @@ k_dat_full[, list(`$i$`,
 **How it works**:
 
 - Rather than "fill" missing potential outcomes of $Y(d)$ with observed outcomes that cases that **match** exactly on $X$, we fit the linear conditional expectation function, plug in the predicted value for counterfactual potential outcome
-- Rather than **hold confounders constant**, we obtain "plug-in" equation by requiring conditioning variables and $D$ to be orthogonal (perfectly $0$ linear correlation).
+- Rather than **hold confounders constant**, we obtain "plug-in" equation coefficients requiring $X$ and $D$ to be orthogonal (perfectly $0$ linear correlation).
 
 ---
 
@@ -552,7 +598,7 @@ If we are imputing missing potential outcomes of earnings for different hours wo
 We need to ask...
 
 - Are relationships between age ($X$) and hours($D$), age ($X$) and income earned ($Y$) **linear**?
-- Are the earnings ($Y$) related to gender and age ($X$) in an **additive** way? (relationship between age and earnings the same for men and women?)
+- Are the earnings ($Y$) related to gender and age ($X$) in an **additive** way? (relationship between age and earnings the same for men as for women?)
 - Are the effects of hours worked linear? The same, regardless of gender and age?
 
 ---
@@ -693,6 +739,8 @@ We have chosen $X$ to block backdoor paths out of $D$. At a minimum...
 - $D$ may be a collider. 
 - We have not blocked backdoor paths out of $X$.
 
+Don't interpret coefficients other than for $D$
+
 ---
 
 ```{r echo = F, message=F, warning=F}
@@ -737,7 +785,7 @@ Non-linear dependence between D and X, despite regression
 
 ---
 
-Assuming neither linearity or additivity: fit an intercept for every combination of gender, profession, and age in years. (linear, but not by assumption)
+Assuming neither linearity or additivity: fit an intercept for every unique combination of gender, profession, and age in years. (linear, by specification not by assumption)
 
 ```{r}
 m_full = lm(INCEARN ~ UHRSWORK + as.factor(Gender)*as.factor(AGE) + LAW, data = acs_data)
@@ -761,7 +809,7 @@ modelsummary(list(`Linear/Additive` = m_linear_additive, `Linear/Interactive` = 
 
 ```{r echo = F, message=F, warning=F}
 
-ggplot(plot_data, aes(x = AGE, y = r_hours_3 %>% round, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + geom_hline(yintercept = 0) + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)")
+ggplot(plot_data, aes(x = AGE, y = r_hours_3 %>% round, colour = Gender, group = Gender, weight = n, size = n) ) + geom_point() + geom_smooth() + xlab("Age (years)") + ylab("Mean Residual Hours Worked") + geom_hline(yintercept = 0) + ggtitle("Residual Hours Worked (Assuming neither Linearity nor Additivity)") + theme_bw()
 
 ```
 
@@ -771,21 +819,29 @@ No dependence between $D$ and $X$, after regression
 
 ###  Conditional Independence in Regression
 
-Even if we included **all** variables on backdoor path between $D$ and $Y$, regression may still produce  biased estimate:
+Even if we included **all** variables on backdoor path between $D$ and $Y$, regression may still produce biased estimate:
 
 - we assume the conditional expectation function is linear and additive. 
 - but the world might be non-linear and interactive 
 - **our decisions** about how to **specify the regression equation** can lead to bias: $\Rightarrow$ **model dependence**
 - Our imputation of missing potential outcomes is biased due to choices we make about **how to impute** (linear/additive)
 
-
 This bias can take two forms.
 
 ---
 
-### (2) Interpolation Bias: 
+Bias due to model dependence:
 
-Typically: we approximate the relationship between variables in $X$ and $D$ to be additive and linear. If this approximation is wrong, we can have bias.
+(1) Interpolation bias: model dependence $\to$ failure of conditional independence, even if backdoor paths "blocked"
+
+(2) Extrapolation bias: model dependence + lack of common support $\to$ bias
+
+---
+
+### (1) Interpolation Bias: 
+
+Typically: to impute missing potential outcomes of $Y$, remove dependence between $D$ and $X$, we assume relationships are additive and linear. If this approximation is wrong, we can have bias.
+
 
 - By forcing relationship between $X$ and $D$ to be linear and additive, conditioning on $X$ may not remove non-linear association between $X$ and $D$, $X$ and $Y$. $\to$ bias.
 - This unmodeled relationship will become part of $\epsilon_i$ (because $X$ affects $Y$), and will not be independent of $D_i$ (because there is a non-linear dependence between $X$ and $D$).
@@ -845,7 +901,8 @@ geom_line(data = dens_data, aes(x = x, y = raw * 2), inherit.aes = F) +
   geom_line(data = dens_data, aes(x = x, y = adj * 2), inherit.aes = F, color = 'red')
 
 ```
-Actual (black) vs Regression (red) weights
+
+Actual (black) vs Regression (red) weights; mean of $D$ by $X$ (blue)
 
 
 ---
@@ -1084,6 +1141,20 @@ ggplot(plot_data[(variable %in% c('treaty', 'develop'))], aes(x = value, group =
 
 Is there common support here? Let's just condition on these two variables
 
+---
+
+```{r echo = F, message=F, warning=F}
+
+vars = c('untype4', 'logcost', 'wardur', 'factnum', 'trnsfcap', 'treaty', 'develop', 'exp', 'decade')
+
+
+ds2000[, Peacekeeping := factor(untype4, levels = c(0,1), labels = c('No', 'Yes'))]
+ggplot(ds2000, aes(x = treaty, y = develop, group = Peacekeeping, fill = Peacekeeping, colour = Peacekeeping)) +
+  geom_point(alpha = 0.5) + 
+  theme_bw() +
+  theme(legend.position="bottom")
+
+```
 
 ---
 
@@ -1120,6 +1191,7 @@ In the linear context, the estimated average treatment effect of peacekeeping is
 
 What if we permit a more flexible model: we model effect of peacekeeping as possibly different across treaty, economic development (we permit treaty and development to interact with peacekeeping)?
 
+$$Success_i = b_0 + b_1 Peacekeeping_i + b_2 Treaty_i + b_3 Development_i + b_4 P_i \times D_i  + b_5 P_i \times T_i + b_6 P_i \times T_i \times D_i$$
 
 ```{r echo = F, warning = F, message = F}
 m_alt = lm(success ~ untype4 * treaty * develop ,
@@ -1161,6 +1233,8 @@ Regression will **extrapolate** coefficients beyond the support of the data to "
 - extrapolation is **unconstrained** and can be wildly wrong
 - no warning that this is happening.
 
+Regression can permit lack of **exact** common support, but need overlapping values of $X$ and $D$
+
 
 # Conditioning with Regression in Practice
 
@@ -1173,30 +1247,35 @@ Regression will **extrapolate** coefficients beyond the support of the data to "
 - ~~Weighting~~ (another time)
 
 
+---
 
 
-what to do about...
+### What to do about... Interpolation bias:
 
-  interpolation bias:
-    - flexible functional forms... polynomials not a great choice (show slide from last week)
-    - natural splines:
-        - splines: fit different slopes for different segments of the data...
-        - basics: cubic polynomial that are "piece-wise", but must be continuous at cutpoints; linear at ends
-        - example... hours worked
-        - choice of knots...
-            - how do we choose? cross validation
-            - cross-validation explained
+- flexible functional forms... polynomials not a great choice (show slide from last week)
   
-  extrapolation bias:
-    - convex hull? 
-    - histogram of covariates by treatment group (what to do if treatment is continuous?... not clear)
+- natural splines:
+
+    - splines: fit different slopes for different segments of the data...
+    - basics: cubic polynomial that are "piece-wise", but must be continuous at cutpoints; linear at ends
+    - example... hours worked
+    - choice of knots...
+        - how do we choose? cross validation
+        - cross-validation explained
+
+---
+
+
+### What to do about... Extrapolation bias:
+
+- convex hull? 
+
+- histogram of covariates by treatment group (what to do if treatment is continuous?... not clear)
     
-    
-  saturated regression... 
+- saturated regression... 
   
     - what is it?
     - how does it work?
-    - limits extrapolation
 
 ---
 
@@ -1215,20 +1294,25 @@ Before running a regression, scatterplots and histograms of variables. Looking t
 
 `ggpairs` in `GGally` package is nice.
 
-```ggpairs(ds2000)```
+`ggpairs(ds2000)`
 
 
 ---
+
 
 ```{r echo = F, message=F, warning=F}
 require(GGally)
 my_fn <- function(data, mapping, method="loess", ...){
       p <- ggplot(data = data, mapping = mapping) + 
       geom_point() + 
-      geom_smooth(method=method, ...)
+      geom_smooth(method=method, ...) +
+        theme_bw()
       p
     }
-ggpairs(ds2000[,ncol(ds2000):1], lower = list(continuous = my_fn))
+gg1 = ggpairs(ds2000[,1:10], upper = list(continuous = my_fn))
+gg1$plots = gg1$plots[1:20]
+gg1$yAxisLabels = gg1$yAxisLabels[1:2]
+gg1
 ```
 
 ---
@@ -1348,9 +1432,7 @@ If treatment is binary:
 
 If treatment is continuous:
 
-- Not any really great tools.
-
-
+- Not really any great tools.
 
 
 ---
