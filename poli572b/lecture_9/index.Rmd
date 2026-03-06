@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 7, 2025"
+date: "March 6, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -81,7 +81,7 @@ ds2000 = read.csv("https://www.dropbox.com/s/4miay9ezzjp03w7/ds2000.csv?dl=1") %
   - Interpolation Bias (Conditional Independence Assumption)
   - Extrapolation Bias (Positivity Assumption)
 
-4. How to  Address these Problems
+4. How to Address these Problems
 
 
 
