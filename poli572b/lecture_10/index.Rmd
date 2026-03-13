@@ -1,12 +1,15 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 15, 2025"
+date: "March 13, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 
@@ -18,6 +21,7 @@ require(ggplot2)
 require(grid)
 require(data.table)
 require(UsingR)
+require(sensemakr)
 require(modelsummary)
 require(tidyverse)
 require(haven)
@@ -206,7 +210,7 @@ What if there are unblocked confounders?
 
 ---
 
-### A problem
+### The problem
 
 You present/submit a paper, and discussant/reviewer says: "I don't believe this causal estimate, because there is some confounding variable you've not accounted for."
 
@@ -214,31 +218,35 @@ What do we do?
 
 ---
 
-### A problem
+### The problem
 
 $1.$ They identify a **specific** confounding variable.
 
 - If you can measure it, include in your model to see if estimates change.
 - If you cannot measure it:
-    - Create a DAG with this variable added. Is it already blocked?
+    - Create a DAG for their story: Is this variable already blocked?
     - What is implied direction of the bias? Does it lead you to over-estimate or under-estimate the effect of $D$?
     - If it over-estimates the effect... can you **benchmark** by how much?
 
 ---
 
-### A problem
+### The problem
 
 $2.$ They propose an **unknown** confounding variable.
 
 - Annoying. Cannot be measured; no proposed story of bias.
-- Can you **benchmark** how big it would have to be to explain away the estimated effect you've found?
+- Can you **benchmark** how "important" this confounder would have to be to explain away the estimated effect you've found?
+- Can you argue that it is unlikely such a "large" unknown confounder exists?
 
 ---
 
 ### Solutions
 
-- Getting implied direction of bias requires we understand **omitted variable bias**.
-- Benchmarking possible bias size involves **sensitivity analyses**.
+- **Adding a variable**: you already can do this
+- **Drawing a DAG**: you already can do this
+- **Direction of bias**: requires we understand **omitted variable bias**.
+- **Size of unknown confounder**:  leads to **sensitivity analyses**.
+
 
 # Omitted Variable Bias
 
@@ -283,7 +291,7 @@ dagify(
   tidy_dagitty() %>%
   ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 geom_dag_edges() +
-geom_dag_text(aes(label = label), color ='black') +
+geom_dag_text(aes(label = label), color ='black', parse = T) +
 theme_dag()
 ```
 
@@ -409,7 +417,9 @@ ggplot(analysis_df[!is.nan(svy_sh_anti_muslim_prejudice_average)],
 
 ---
 
-Income is not randomly assigned, and so there may be confounding. To find the effect of income on prejudice, we can condition on the following:
+### Possible confounding
+
+Income is not randomly assigned; we can condition on the following:
 
 - Gender (0/1 for Female)
 - Age (10 year age bins)
@@ -420,7 +430,9 @@ Income is not randomly assigned, and so there may be confounding. To find the ef
 
 --- 
   
-Estimate Effect of income on Anti-Muslim Prejudice in Myanmar
+### Estimate
+
+Effect of income on Anti-Muslim Prejudice in Myanmar
 
 ```{r}
 m_linear = lm(svy_sh_anti_muslim_prejudice_all ~ svy_sh_income_rc + 
@@ -443,16 +455,6 @@ modelsummary(list(linear = m_linear),
 </small>
 
 
----
-
-Income is not assigned at random; so condition on these variables to "block" confounding paths:
-
-- Gender (0/1 for Female)
-- Age (10 year age bins)
-- Education (primary, middle, secondary, graduate, post-graduate)
-- Ethnicity (categorical variable)
-- Profession (categories)
-- Source of Income (categories)
 
 ---
 
@@ -485,7 +487,8 @@ geom_dag_edges(curvature = 0.5) +
 geom_dag_text(aes(label = label), color ='black') +
 theme_dag()
 ```
-Anything that might be MISSING from this DAG?
+
+Anything MISSING from this DAG?
 
 ---
 
@@ -495,7 +498,7 @@ If we can **know** and can **measure** specific possible confounders, we just ad
 
 [Cinelli and Hazlett (2020)](https://carloscinelli.com/files/Cinelli%20and%20Hazlett%20(2020)%20-%20Making%20Sense%20of%20Sensitivity.pdf) provide a more general take on omitted variable bias...
 
-But the intuition is similar. If there is an unknown confounder $U$, the bias induced is a function of the relationship between $Y \sim U$ and $D \sim  U$, just like in omitted variable bias.
+But the intuition is similar. If there is an unknown confounder $U$, the bias induced is a function of the relationship between $Y \sim f(U)$ and $D \sim  f(U)$, just like in omitted variable bias.
 
 ---
 
@@ -510,24 +513,127 @@ $$|bias| = \widehat{se}(\widehat{\beta_D})\sqrt{\frac{R^2_{Y \sim U | D,X} \cdot
 
 ---
 
+### What is $R^2$?
+
+(1) Proportion of Variance "explained" (predicted):
+
+We have a model where we predict $y$ with $\hat{y}$. 
+
+$Var_{total} = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \bar{y})^2$
+
+$Var_{residual} = \frac{1}{n}\sum\limits_{i=1}^n (y_i - \hat{y}_i)^2$
+
+$R^2 = 1 - \frac{Var_{residual}}{Var_{total}}$
+
+As fraction $\to 0$, residuals are smaller, $\hat{y}$ is closer to $y$.
+
+- if we just guess $\bar{y}$ as $\hat{y}$, we get $R^2$ of 0
+
+
+---
+
+### What is $R^2$?
+
+(2) Cosine similarity of vector $y$ and $\hat{y}$:
+
+- vectors are in $n$ dimensional space
+- form a right triangle when we include residuals $e$
+- what is the *angle* $\theta$ between $y$ and $\hat{y}$?
+- $cos(\theta)$ is $\frac{length(adjacent)}{length(hypotenuse)}$
+
+---
+
+```{r, echo = F, message=F, warning=F}
+library(ggplot2)
+library(ggforce)
+library(geomtextpath)
+
+# 1. Define vectors
+y <- c(3, 4)
+y_hat <- c(5, 1)
+
+proj_scalar <- sum(y * y_hat) / sum(y_hat * y_hat)
+y_proj <- proj_scalar * y_hat
+y_hat = y_proj
+# 2. Calculate oriented angles for start and end points
+# atan2(y, x) is preferred for oriented angles
+angle_y <- atan2(y[2], y[1])
+angle_yhat <- atan2(y_hat[2], y_hat[1])
+
+# Calculate midpoint for theta label placement
+mid_angle <- (angle_y + angle_yhat) / 2
+label_r <- 1.3 # Slightly further out than the arc radius
+
+ggplot() +
+  # Draw vectors y and y_hat
+  geom_textsegment(aes(x = 0, y = 0, xend = y[1], yend = y[2], label = "hypotenuse"), 
+               arrow = arrow(length = unit(0.3, "cm")), color = "blue", size = 4) +
+  geom_textsegment(aes(x = 0, y = 0, xend = y_hat[1], yend = y_hat[2], label = "adjacent"), 
+               arrow = arrow(length = unit(0.3, "cm")), color = "red", size = 4) +
+  geom_segment(aes(x = y_proj[1], y = y_proj[2], xend = y[1], yend = y[2]), 
+               arrow = arrow(length = unit(0.3, "cm")), color = "green", size = 1) +
+  # Draw the arc between them (Radius = 1)
+  geom_arc(aes(x0 = 0, y0 = 0, r = 1, 
+               start = angle_y + .45, 
+               end = angle_yhat + .45), 
+           color = "black", size = 0.8) +
+  
+  # Add labels using parse = TRUE for mathematical notation
+  annotate("text", x = y[1]*.9, y = y[2]*.9, label = "y", vjust = 1, hjust = -1, color = "blue") +
+  annotate("text", x = y_hat[1], y = y_hat[2], label = "hat(y)", 
+           vjust = 1.5, color = "red", parse = TRUE) +
+  
+  # Place theta exactly in the middle of the arc
+  annotate("text", x = label_r * cos(mid_angle), y = label_r * sin(mid_angle), 
+           label = "theta", parse = TRUE) +
+  
+  # Maintain coordinate ratio so the arc remains circular
+  coord_equal() +
+  theme_minimal() +
+  labs(title = expression("Angle between y and " * hat(y)), x = "x", y = "y")
+
+```
+
+When $cos(\theta) = 1$, $\theta = 0 \to$ $y$ and $\hat{y}$ are the identical
+
+---
+
+### What is $R^2$?
+
+(2) Cosine similarity of vector $y$ and $\hat{y}$:
+
+- $cos(\theta) = R$
+- $R^2 = cos(\theta)^2$
+
+Implication:
+
+- when $y$ and $\hat{y}$ orthogonal, $R^2$ is $0
+- when $y$ and $\hat{y}$ approach each other, $R^2 \to 1$
+- "how well does $\hat{y}$ approximate the *direction* of $y$"
+- not **distance** between $y$ and $\hat{y}$; scale-less: though distance is $0$ when $\theta = 0$
+
+
+---
+
 ### Sensitivity
 
 $$|bias| = \widehat{se}(\widehat{\beta_D})\sqrt{\frac{R^2_{Y \sim U | D,X} \cdot R^2_{D\sim U | X}}{1- R^2_{D\sim U | X}}}$$
 
 What matters here are:
 
-$R^2_{Y \sim U | D,X}$: how much **residual variance** in outcome $Y$ (after projecting onto $D,X$) is explained by $U$
+$R^2_{Y \sim U | D,X}$: how much **residual variance** in outcome $Y$ (after projecting onto $D,X$) is "explained" by $U$
 
-$R^2_{D\sim U | X}$: how much **residual variance** in treatment $D$ (after projecting onto $X$) is explained by $U$
+$R^2_{D\sim U | X}$: how much **residual variance** in treatment $D$ (after projecting onto $X$) is "explained" by $U$
 
 ---
-  
+
 ### Sensitivity
 
-These $R^2_{Y \sim U | D,X}$ and $R^2_{D\sim U | X}$ (or "partial" $R^2$) can correspond to linear or non-linear relationships.
+These $R^2_{Y \sim U | D,X}$ and $R^2_{D\sim U | X}$ (or "partial" $R^2$) can correspond to any $Y \sim f(U)$: how well any function of $U$ "predicts" $Y$/$D$
 
-- Less restrictive than simple OVB formula; accounts for wider sources of bias.
-
+- but now we choose **cosine similarity**: same angle, not distance
+- Less restrictive than simple OVB formula
+- agnostic about functional form/interactions in the confounding
 
 ---
 
@@ -541,11 +647,11 @@ We can reason about partial $R^2$ to think about extent of bias under different 
 
 ### Sensitivity
 
-One major limitation with this approach is... what counts as "a lot" of residual variance explained? What counts as "a little"?
+One major limitation with this approach is... what counts as "a lot" of residual variance explained? What counts as "a little"? WTF is $cos^2(\theta)$?
 
-To make these easier to interpret, we want to get an interpretable benchmark. 
+>- To make these easier to interpret, we want an interpretable benchmark. 
 
-What is a "known" important confounder in our model that we can compare against?
+>- What is a "known" important confounder in our model that we can compare against?
 
 >- In this context, we might expect education to explain both income and prejudice.
 
@@ -673,6 +779,8 @@ suffrage = read.csv("https://www.dropbox.com/scl/fi/y5wvmmhhknzbpdufaql9p/refere
 
 ---
 
+Next...
+
 <ol start=4>
 <li> Interpret the results of `summary(enlist_sensitivity)`
 <li> Interpret results of the three plots you can make with `plot(enlist_summary)` (see previous slides)
@@ -706,6 +814,7 @@ Instead:
 
 - **Condition on variables that have causal paths toward $D$ and $Y$**: "pre-treatment"
 - **Show Results are Robust to Different Choices of conditioning variables**: not sensitive to a specific "DAG" that may or may not be true.
+- Effectively: **consider all plausible DAGs** given a set of possible confounders
 
 ---
 
@@ -720,16 +829,18 @@ Best practice here is to identify the many reasonable choices you could make:
 
 Then you can conduct analyses using **all** combinations.
 
+>- sometimes that is a lot of combinations
+
 ---
 
 ### Reporting Robustness
 
 How do you report "a million f-ing regressions"?
 
-- histogram of coefficients (not fully informative)
+- histogram of coefficient estimates (not fully informative)
 - histogram of $p$ values (can be misleading)
 - histogram of $t$ statistics (better)
-- specification curve (increasingly my favorite)
+- specification curve (my favorite)
 
 ---
 
@@ -739,7 +850,7 @@ Two parts:
 
 1. Plot of coefficients w/ confidence intervals (color coded for rejection of null), sorted by coefficient size.
 
-2. "Rug plots" for each attribute of a model, with lines
+2. "Rug plots" indicating each attribute of a model, with lines
 
 ---
 
