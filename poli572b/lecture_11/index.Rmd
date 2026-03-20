@@ -270,11 +270,11 @@ First:
 
 if the unknown is about a **population** $\to$  a descriptive inference
 
-- $\to$ randomness in which cases in the population are sampled
+- randomness in which cases in the population are sampled
 
 if the unknown is about **potential outcomes** $\to$  a causal inference
 
-- $\to$ randomness in which potential outcomes are observed for cases
+-  randomness in which potential outcomes are observed for cases
 
 ---
 
@@ -480,7 +480,6 @@ $$Y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i + \epsilon_i$$
 
 This is the **population model**: 
 
->- We've seen some of this ($Y$, and $\beta$) before. What is this $\epsilon_i$?
 
 ${n.b.:}$ We **do not** need to assume the that true relationship between $D$ and $Y$ is linear. $\beta_1$ is just the average partial derivative/best linear approximation of the (possibly non-linear) CEF.
 
