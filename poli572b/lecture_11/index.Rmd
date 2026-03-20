@@ -1,12 +1,15 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 21, 2025"
+date: "March 20, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 
@@ -60,7 +63,7 @@ options("kableExtra.html.bsTable" = T)
     - confidence intervals
     - equivalence tests
 
----
+
 
 # Uncertainty
 
@@ -72,7 +75,7 @@ So far...
 
 - We have considered the **ways this can go wrong** $\to$ choices we can make in analyses to see if our conclusion of a causal effect is wrong
 
-- But we have not considered whether we could see observed effects **by chance**
+- But we have not considered whether we could see observed effects **by chance** (probability of finding this evidence, when there is no effect)
 
 ---
 
@@ -80,13 +83,17 @@ To see what could have happened by chance, we need "sampling distributions"
 
  > "You give me the rule, and I consider its latitude for erroneous outputs. We're actually looking at the probability distribution of the rule, over outcomes in the sample space. This distribution is called a sampling distribution." (Mayo 2018)
 
-What are the other (*counterfactual*) outcomes that we could have observed through implementing this procedure/test?
+What are the other (**counterfactual**) outcomes that we could have observed through implementing this procedure/test **due to random process**?
 
 
 ---
 
+Severe testing in political science $\to$
 
-**unbiased**  causal effect estimates; correctly describing **sampling distributions** 
+1. **unbiased**  causal effect estimates
+
+2. correctly describing **sampling distributions** 
+
 
 both require **correctly describing counterfactuals**
 
@@ -222,7 +229,7 @@ What are the other (counterfactual) outcomes that we could have observed through
 
 What process produces the sampling distribution?
 
-We want to compare what we observe in our test against what we **might have observed** counterfactually, under the **assumed data-generating process**.
+We want to compare what we observe in our test against what we **might have observed** counterfactually, under the (assumed) **data-generating process**.
 
 - compare what we observe against what we could have observed (if null hypothesis were true, e.g.)
 
@@ -235,7 +242,7 @@ Hypothesis tests, Confidence intervals, Equivalence tests involve:
 
 - estimate some parameter/estimand
 - **estimate** sampling distribution (under an ASSUMED data generating process): we estimate standard errors
-- what is probability of observing this estimate, using this process, assuming some true value of the parameter/estimand. (or what is probability that we draw conclusion of effect **in error**)
+- what is probability of observing this estimate, using this process, assuming some true value of the parameter/estimand. (or what is probability that we draw conclusion **in error**)
 
 ---
 
@@ -243,7 +250,7 @@ Hypothesis tests, Confidence intervals, Equivalence tests involve:
 
 But, we never know the **true sampling distribution**.
 
-We can only estimate and use these estimated sampling distribution...
+We can only estimate and use these estimated sampling distributions...
 
 **if they emerge from some random/stochastic process**
 
@@ -259,9 +266,15 @@ First:
 
 **What** do we want to make **inferences** about? $\to$ different SOURCES of randomness
 
-- statistics is to make inferences about unknown quantities. 
-- if the unknown is about a **population** $\to$ it is a descriptive inference
-- if the unknown is about **potential outcomes** $\to$ it is a causal inference
+- aim of statistics is to make inferences about unknown quantities. 
+
+if the unknown is about a **population** $\to$  a descriptive inference
+
+- $\to$ randomness in which cases in the population are sampled
+
+if the unknown is about **potential outcomes** $\to$  a causal inference
+
+- $\to$ randomness in which potential outcomes are observed for cases
 
 ---
 
@@ -271,9 +284,10 @@ What kinds of assumptions do we make?
 
 Second:
 
-At what **level of analysis** does randomness occur? (at what level are we taking **independent** draws?) $\to$ different sampling distributions
+At what **level of analysis** does random selection occur? (at what level are we taking **independent** draws?) $\to$ different sampling distributions
 
-- do we sample **individuals** or **groups of individuals**? Are individuals randomized into treatment? Or are villages (with many individuals) randomized into treatment.
+- do we sample **individuals** or **groups of individuals**? Are individuals randomized into treatment? Or are villages (with many individuals together) randomized into treatment?
+
 
 ---
 
@@ -285,9 +299,10 @@ Third:
 
 What are the assumptions/properties of the **estimator** (for our sampling distribution)?
 
-- There are analytical solutions; bootstrap methods; etc.
-- All estimators involve specific assumptions to "work"
-- **and** "working well" depends on the attributes of the analysis (e.g. sample size, number of clusters, degree of spatial correlation, etc.)
+- There are analytic estimators (equations); bootstrap methods; randomization inference; etc..
+- All variance/sampling distribution estimators involve specific assumptions to "work"
+- **and** "working well" depends on the attributes of the data and context (e.g. sample size, number of clusters, degree of spatial correlation, etc.)
+
 
 ---
 
@@ -357,7 +372,7 @@ If we want to infer **descriptively** the difference in mean support for increas
 
 - among **All Canadian adults**
 
->- Where does the sampling distribution come from in this case?
+>- Where does the randomness making the sampling distribution come from?
 >- What happens to the sampling distribution as the number of people surveyed approaches the total population of all Canadians? (does it get narrower? wider? not change?)
 
 ---
@@ -369,7 +384,7 @@ If we want to infer **causally** the effect of a refugee neighbor on  mean suppo
 - among **All Canadian adults**
 
 
->- Where does the sampling distribution come from in this case?
+>- Where does the randomness making the sampling distribution come from?
 >- What happens to the sampling distribution as the number of people surveyed approaches the total population of all Canadians?
 
 ---
@@ -380,7 +395,7 @@ If we want to infer **causally** the effect of a refugee neighbor on  mean suppo
 
 - among **those in the survey**
 
->- Where does the sampling distribution come from in this case?
+>- Where does the randomness making the sampling distribution come from?
 >- What happens to the sampling distribution as the number of people surveyed approaches the total population of all Canadians?
 
 ---
@@ -389,7 +404,7 @@ If we want to infer **causally** the effect of a refugee neighbor on  mean suppo
 
 Some randomness comes from a **random process** of **sampling cases** from a population. As the sample approaches the full population, this variability goes to 0.
 
-Some randomness comes from a **random process** of realizing some **potential outcomes** versus other potential outcomes. As the sample approaches the full population, this variability does not approach 0.
+Some randomness comes from a **random process** of realizing some **potential outcomes** versus other potential outcomes. As the sample approaches the full population, this variability does not approach 0 (though it gets smaller).
 
 ---
 
@@ -397,7 +412,7 @@ Some randomness comes from a **random process** of realizing some **potential ou
 
 In practice...
 
-we have one realization of the data generation process. We attempt to estimate the sampling distribution of what---counterfactually---would have happened in other applications of this process.
+we have one realization of the data generation process. We attempt to estimate the sampling distribution.
 
 ... we claim/argue that data are produced by a random process. In absence of an experiment, or actual random sample, we must be careful in making this argument.
 
@@ -781,6 +796,7 @@ $(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'$ is the "bread"; $E(\epsilon\epsilon'|X
 
 The bread is always the same. As we change assumptions about the random process, we make different choices of "meat". (Insert your own charcuterie analogy here)
 
+
 ---
 
 ### Variance-Covariance Matrix
@@ -821,6 +837,13 @@ If we plug in $e_i^2$ in for $\epsilon\epsilon'$, we get:
 
 (Return to matrix on Board)
 
+
+
+---
+
+<img src="https://www.denardi.ca/media/1_25180.jpg">
+
+
 ---
 
 ### Robust Standard Errors:
@@ -839,8 +862,8 @@ These should be our default standard errors (see Aronow and Miller pp. 153-154)
 The $ehw$ SE estimator generates **estimates**, not miracles.
 
 - only applies if assumptions are correct, asymptotic properties "kick in"
-- this estimator is not **unbiased** but **consistent** are $n \to \infty$
-- If $n$ is too small, $ehw$ SEs can be too small (see Angrist and Pischke section )
+- this estimator is not **unbiased** but **consistent** as $n \to \infty$
+- If $n$ is too small, $ehw$ SEs can be too small (see Angrist and Pischke section 8.1)
 
 ---
 
@@ -866,6 +889,13 @@ In "ordinary" least squares (OLS)  we assume:
 These are the default standard errors in `lm`, most software.
 
 [note on multi-collinearity](#collinear)
+
+
+---
+
+<img src="https://images.cdn.saveonfoods.com/detail/00287990000009.jpg">
+
+
 
 ---
 
@@ -991,6 +1021,11 @@ Ignoring dependence of errors usually **underestimates** sampling variability of
 
 >- Luckily we have a solution: change the "meat" in our variance-covariance matrix.
 
+
+---
+
+<img src="https://tasteofartisan.com/wp-content/uploads/2020/05/Salame-Toscano-Tuscan-Salami.jpg">
+
 ---
 
 ### Clustered Standard Errors:
@@ -1110,10 +1145,19 @@ What if treatment $D$ is a function of spatial distance to something (e.g., Kumb
 What do we do?
 
 - Conley Standard Errors update "meat" matrix to permit dependence of errors in nearby units
+- Conley-Kelly 2025 introduce spatial placebos and spatial clustering  [R package](https://morganwkelly.github.io/spatInfer_tutor/tutorial.html)
 - Generate **placebo distributions**: create simulated "spatial noise" similar to actual spatial dependence in the data
     - because it is "random noise", it creates a sampling distribution **under the null**
 
+
 ---
+
+
+<img src="./kumbh_design.png">
+
+
+---
+
 
 
 <img src="./kumbh_placebo.png">
@@ -1197,8 +1241,17 @@ Keep in mind:
 
 - Which SE estimator corresponds to the estimand of interest? (causal, descriptive): see [Abadie et al (2020)](https://doi.org/10.3982/ECTA12675)
 - Does this estimator reflect the level at which observations are produced  independently though random process? (units, clusters, spatial, etc.) See [Conley and Kelly (2025)](https://academic.oup.com/qje/article/138/1/1/6750017) and [More details](https://www.sciencedirect.com/science/article/abs/pii/S0022199624001545)
+
+---
+
+### Estimating Standard Errors
+
+There are many choices to make, constant updates to best practices.
+
+Keep in mind:
+
 - Does my application meet requirements for **asymptotic properties** of estimator to apply?
-   - standard errors invoke asymptotic **consistency** under specified conditions (how many observations/clusters/etc)
+   - standard errors invoke asymptotic **consistency** under specified conditions (how many observations/clusters/etc?)
    - application of standard errors appeals to asymptotic normality
 - If the "right" choice isn't obvious, try all "plausible" options.
 
