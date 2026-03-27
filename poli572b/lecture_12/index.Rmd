@@ -1,12 +1,15 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "March 28, 2025"
+date: "March 27, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
     highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
     mathjax: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
 
@@ -431,6 +434,8 @@ Different intercepts (means) for each group:
 | Pre | `Intercept` | `Intercept + Treated` |
 | Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
 
+$\displaylines{Y_{it} = \beta_0 + \beta_1 \mathrm{Treated}_{i} + \beta_2 \text{Post}_{t} +\\\beta_3 \text{Treated}_{i}\cdot \text{Post}_{t}}$
+
 `lm(Y ~ Treated*Post, data = data)`
 
 ---
@@ -529,7 +534,7 @@ In this context, we are more interested in **marginal effects**:
 
 - What is the effect of INC Win when ENP is at (some value)? 
 - Is this different from 0? 
-- Is this different from effect fo INC win when ENP at (lower/higher value)?
+- Is this different from effect of INC win when ENP at (lower/higher value)?
 
 We also want to be careful assuming that the effect of INC Win changes **linearly** with ENP?
 
@@ -733,7 +738,7 @@ If we don't proceed from theoretical arguments and look at heterogeneous effects
 There methods to account for looking at multiple hypothesis tests:
 
 - Bonferroni correction (adjusts for Family Wise Error Rate): we update $p$ values so that $\alpha$ is the probability of making at least one type I error (falsely reject the null of differential subgroup effect) among all tests. (Conservative)
-- Benjamini Hochberg (adjusts for FDR): update $p$ values so that $\alpha$ is proportion of false rejections of the null over all rejections of the null (less stringent)
+- Benjamini-Hochberg (adjusts for FDR): update $p$ values so that $\alpha$ is proportion of false rejections of the null over all rejections of the null (less stringent)
 
 These and other corrections available in `p.adjust` function. 
 
@@ -760,7 +765,7 @@ If we find there is a difference between sub-groups, we cannot (typically) say t
 
 - Authors argue it is slavery $\to$ preservation of political/economic power $\to$ racist norms/institutions $\to$ contemporary attitudes
 
-- But it could also be that there are OTHER mechanisms: slavery $\to$ greater contemporary African American population $\to$ contemporary perceived "racial threat" $\to$ conteporary attitudes
+- But it could also be that there are OTHER mechanisms: slavery $\to$ greater contemporary African American population $\to$ contemporary perceived "racial threat" $\to$ contemporary attitudes
 
 ---
 
@@ -956,7 +961,7 @@ theme_dag()
 
 If, e.g., Slave Population $\to$ Property values $\to$ Attitudes. And Property Value $\to$ Black Population (M), $M$ is confounded.
 
-Basically, if there **other ways** treatment can affect outcome, and those other paths possibly affect mediator $M$, there will be bias. This is almost alway possible.
+Basically, if there **other ways** treatment can affect outcome, and those other paths possibly affect mediator $M$, there will be bias. This is almost always possible.
 
 
 ---
@@ -1002,3 +1007,10 @@ One one hand you have [Acharya et al 2016](https://scholar.harvard.edu/sites/sch
 On the other hand you have [Bullock and Green 2010](https://www2.psych.ubc.ca/~schaller/528Readings/BullockGreenHa2010.pdf) who basically suggest that we can't do it at all.
 
 
+---
+
+### Mediation
+
+Bullock and Green: simple rules
+
+<img src="bullock_green.png">
