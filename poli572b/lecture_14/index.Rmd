@@ -6,7 +6,9 @@ widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
     theme: white
-    highlight: haddock
+    reveal_options:
+      width: 1200
+      height: 800
 ---
 
 ```{r setup, include = F}
@@ -112,19 +114,30 @@ Causal evidence varies in terms of complexity of math/restrictiveness of assumpt
 ### Challenges
 
 1. Finding Natural Experiments
-    - relevance of intervention; relevance of randomly assigned group; where is there actually randomness?
     
-    - random vs as-if random: known random process (lottery), something that is "as-if" random... (in what way)
-    
+- where is there actually randomness? is it known random process (lottery) or "as-if" random?
+- relevance of intervention; relevance of randomly assigned group
+- random vs as-if random: known random process (lottery), something that is "as-if" random... (in what way)
+  
+---
+
+### Challenges
+
 2. Arguing for Randomness
 
-- how do we know its random? lotteries maybe (but you need to know whether rules followed... protocol correct)
-- qualitative evidence
-- balance tests... shouldn't see pre-treatment differences (in what, though?)
+How do we know this is random? 
+
+- qualitative evidence: how was treatment assigned? If a lottery, what was the process? Were the rules followed? If "as-if" random, how did treatment occur?
+- balance tests: if treatment is random, should be independent of pre-treatment attributes
+
+--- 
+
+### Challenges
 
 3. How simple is the design?
 
-- Isolating the random exposure sometimes involves complicated models as well... not always so simple to understand
+- In some cases, very simple random process $\to$ simple statistical model (like experiments)
+- sometimes, we claim randomness, conditional on other factors. $\to$ complicated models, harder to understand
 
 
 ---
@@ -139,52 +152,86 @@ Causal evidence varies in terms of complexity of math/restrictiveness of assumpt
 
 # Instrumental Variables
 
+---
+
+### Instrumental Variables
+
+What is it? Extends logic of $CACE$ to 
+
+- continuous treatments $D$ 
+- continuous "assignment-to-treatment" $Z$
+- possibility of including controls ($Z$ is random, conditional on $X$
+
+How?
+
+- 2SLS, IVLS (generalizations of least squares)
+- "first stage" is effect of $Z$ on $D$
+- "second stage" is effect of $\widehat{D}$ on $Y$
+- "reduced form" is effect of $Z$ on $Y$
 
 ---
 
-### IV 
+### Instrumental Variables
 
-- basically extends CACE: continuous treatments/instruments; random assignment conditional on other variables
+**Assumptions**:
 
-assumes random $Z$, exclusion restriction, monotonicity (no defiers)
-
-- for "compliers"... harder to define with continuous treatment
-- can add controls
-
-2sls also assumes linearity; if treatment is continuous... which values of $D$ are contributing to effect estimate?
-
+- instrument $Z$ is independent of potential outcomes of $Y$
+- $Z$ only affects $Y$ through $D$ (exclusion restriction)
+- monotonicity: $Z$ can only increase (decrease) $D$ (equivalent to no defiers)
+- $Z$ must actually affect $D$ (there must be SOME compliers)
 
 ---
 
-### IV Example: QJPS paper
+### Instrumental Variables
 
+**Issues**:
 
-equation... 
+- What is a "complier" when we have continuous $Z$ and $D$? (orthogonal projection of $D$ onto $Z$) ($\widehat{D}$ from regressing $D$ on $Z$)
+- Least Squares problems still apply:
+  - assume linearity $\to$ interpolation/extrapolation issues
+  - which values of $D$ are contributing to estimated effect?
+  
+---
 
-explain the logic
+### IV Issues 
+
+Recent work by [Lal et al (2024)](https://yiqingxu.org/papers/english/2021_iv/LLXZ.pdf) finds two major issues:
+
+1. Weak Instruments a problem:
+
+- "first stage" (effect of $Z$ on $D$, assignment on taking treatment) is weak
+- CACE remains biased in larger samples (longer for consistency to kick in)
+- large standard errors
+- normal approximation of sampling distribution is wrong
+
+---
+
+### IV Issues 
+
+1. Weak Instruments a problem: What to do? 
+
+- rule of thumb: $F$ statistic for $Z$ on $D$ should be $> 10$. 
+
+Lal et al show we must: 
+
+- Correctly test for strength of $Z \to D$ (Effective F) 
+- Use significance tests that adjust $t$ statistics: bootstrap or $tF$ procedure
+- Use weak-instrument procedures (AR test)
+
+all in `ivDiag` package.
 
 
 ---
 
 ### IV Issues 
 
-PAPER LINK
+2. Exclusion Restriction Violations
 
-weak instruments => big standard errors
+If exclusion restriction is violated, weak instruments $\to$ amplified bias
 
-fix your standard errors: main suggested tests
 
----
+- Zero First Stage: test effect of $Z$ on $Y$ for "never takers"/"always takers" (cases that don't change $D$ because of $Z$). Should find no effect. 
 
-### IV Issues 
-
-weak instruments => bias amplification (exclusion restriction problems)
-
-zero first stage; affect possible excluded paths?; 
-
----
-
-reduced form tests
 
 # RDD
 
@@ -194,91 +241,162 @@ reduced form tests
 
 Classic example: 
 
-Effect of criminal vs. non-criminal politicians winning elections... compare places with criminal candidate as winner or runner up.
+What is the effect of electing a criminal vs. non-criminal politician on provision of government handouts?
 
-there is a continuous variable (forcing variable): margin of victory (criminal - non-criminal vote share)
+- places that elect criminals vs not likely different in many ways.
+- what if we compare places in which criminal candidate bare won or lost against non-criminal politician?
 
-When margin of victory reaches 0 (vs next candidate) move from untreated to treated.
-
----
-
-FIGURE 1 from titiunik
-
-
----
-
-Move from all untreated to all treated (sharp RD; fuzzy RD does this with IV or reduced form)
-
-E[Y_i(1) - Y_i(0) | X = c]
-
-
----
-
-fig 2 from titiunik
-
----
-
-Key assumption:
-
-- continuity at cutoff conditional expectation functions of Y(1), Y(0) across forcing variable (vote share)
-- it can be changing... but expected to change SMOOTHLY at the cutoff
-
-
-E[Y_i(1)|X] E[Y_i(0) | x]
-
----
-
-How do we get the CEF further out?
-
-fpci; figure from titiunik
-
-
----
-
-Only need to estimate it at the cutoff...
-
-=> local polynomial regression; estimate the slope of E[Y(0) | x] AT x = c; vice versa
-
-
----
-
-CHoices
-
-- polynomial order
-- kernel
-- bandwidth
-
----
-
-- choosing polynomial order
-
----
-
-- choosing kernel
 
 --- 
 
+### Regression Discontinuity
 
-choosing bandwidth
+Classic example: 
+
+When criminal either won or came in second...
+
+- there is a continuous variable (**forcing variable**) $X$: $\text{margin of victory} = voteshare_{crim} - voteshare_{noncrim}$ 
+- when margin of victory reaches 0 (a cutoff, $c$), $D$ goes from 0 to 1
+
+---
+
+<img src='./rdd_fig1.png'>
+
+---
+
+### Regression Discontinuity
+
+**Sharp RD**: Move from all untreated to all treated at the cutoff
+
+$\tau_{SRD} = E[Y_i(1) - Y_i(0) | X_i = c]$
+
+**Fuzzy RD**: Some units shift from untreated to treated at cutoff $c$
+
+- turns into instrumental variables problem.
+
+---
+
+### Regression Discontinuity
+
+Key assumption:
+
+**continuity at cutoff**: 
+
+- CEFs of $E[Y_i(1) | X_i =]$, $E[Y_i(0) | X_i =]$ are continuous and smooth across forcing variable (e.g., vote share)
+- functions can have non-zero slope at the cutoff, but must be continuous/smooth
 
 
 ---
 
-standard errors:
+<img src='./rdd_fig2.png'>
 
-- correct choice is bias corrected (see what is recommended)
+>- How do we get the CEF? FPCI
+
+---
+
+### Regression Discontinuity
+
+Only need to estimate $CEF$ at the cutoff, $c$...
+
+- estimate the slope of $E[Y(0) | X_i = c]$ using data where $X < 0$, $D=0$
+- estimate the slope of $E[Y(1) | X_i = c]$ using data where $X > 1$, $D=1$
+
+How?
+
+- want the best fit AT the cutoff; don't want to estimate CEF for all values $X < 0$
+- **local** polynomial regression:
+  - fit CEF $Y = f(X)$ as **polynomials** of $X$ for $X<c$ and $X>c$); get difference in $Y$ at $c$.
+  - estimate this putting more weight on data near $c$ (**local**)
+
+---
+
+### Regression Discontinuity
+
+Choices to make: 
+
+- polynomials of $X$: 0, 1, 2, 3...?
+- kernel: how to assign weights to cases?
+- bandwidth: how far can data be from $c$ to get non-zero weight?
+
+---
+
+### Regression Discontinuity
+
+Choosing polynomial order
+
+- typically 1, sometimes 2. 
+- local LINEAR model is good approximation
+
+---
+
+<img src='./rdd_fig14.png'>
+
+---
+
+### Regression Discontinuity
+
+Choosing kernel (not super consequential)
+
+- Triangular: default, preferred
+- Epanechikov
+- Uniform
+
+--- 
+
+<img src='./rdd_fig13.png'>
+
+---
+
+### Regression Discontinuity
+
+Choosing bandwidth (most consequential)
+
+- choice of bandwidth affects bias and variance of the estimate
+- choose bandwidth to minimize MSE of estimate (MSE a function of bias and variance)
+- essentially check different bandwidths to see which has lower MSE
+
+---
+
+### Regression Discontinuity
+
+Standard Errors (consequential)
+
+- selection of bandwidth $\to$ optimal effect estimates
+- selection of bandwidth $\to$ incorrect standard errors b/c bias remains
+- "normal" standard errors are incorrect
+- robust bias corrected: estimate bias, account for variance of effect estimate and bias estimate
 
 
 ---
 
-checks:
 
-pre-treat covariates: run with their own RDD... do you observe discontinuities... if so... possibly not continuous
+### Regression Discontinuity
 
-density tests (sorting test): 
+Check continuity
 
-"donut": leave out cases right on the cutoff (possible sorting)
+- examine effect of $D$ on pre-treatment covariates, using RD
 
+Check sorting/manipulation:
+
+- density tests: is there clumping of cases on one or the other side of the cutoff (b/c it is advantageous to manipulate $X$ to change $D$) 
+- "donut tests": leave out cases right at the cutoff
+
+# Example Paper: Nellis et al
+
+---
+
+### What is the research design:
+
+- What is the instrument? 
+- What is in the regression model for 2SLS? Why?
+- What do the assumptions mean in this context? Do they make sense?
+- Is there any reason to be worried about weak instruments?
+
+---
+
+### What is the research design:
+
+- How is this related to regression discontinuity?
 
 # Assessing Random Assignment
 
@@ -286,185 +404,79 @@ density tests (sorting test):
 
 ### Balance Tests
 
-Logic: if random, we should not see significant differences in other attributes
+Logic: if $D$ (or $Z$) is random, then independent of other causes of $Y$. Should not observed differences in pre-treatment variables across $D$/$Z$.
 
-- t-tests/regressions; ks tests
-- classically, hypothesis tests. should so significant differences at rate of alpha
-- equivalence tests are better: what range of differences can you exclude?
-- pre-treatment covariates
-
----
-
-But which covariates?
-
-Qualitative evidence...
-
+- regression of $X$ on $D/Z$; Komolgorov-Smirnov tests (differences in distribution) 
+- null hypothesis tests: expect to reject the null with frequency of $\alpha$ among all tests.
+- equivalence tests are better: reject null of differences greater than $\epsilon$ 
+- how big of a difference? 1/10th, 1/20th standard deviation. 
+- report balance on STANDARDIZED variarables (mean 0, sd 1)
 
 ---
 
+Nellis et al appendix:
 
-Qualitative evidence: causal process observation of treatment assignment.
-
-How is treatment actually assigned in reality?
-
-Ask about units being treated/actors contrlling treatment...
-
-
-information
-
-incentives
-
-capacities
+- Let's go through these tests... what do they do? Why?
 
 
 ---
 
+### Balance Tests
 
-Papers:
+But which covariates should you examine?
 
-Discussion of Kocher and Monteiro vs Ferwerda and Miller.
+Variables plausibly linked to:
+
+- stories about confounding (so somehow causes of $Y$)
+- processes that might determine treatment (even in the "natural experiment")
+
+This requires theoretical knowledge and **qualitative contextual** knowledge about your cases
+
+---
+
+### Qualitative Evidence:
+
+Dunning highlights importance of **causal process observation** of treatment assignment.
+
+- How is treatment actually assigned/received?
 
 
 ---
 
-Papers: QJPS... what is the design, what are the tests doing...
+### Qualitative Evidence:
 
+Key questions to ask are:
 
+1.) which actors/processes are involved to assigning / receiving treatment?
 
+- humans have incentives/motivation to allocate resources in specific ways
+- some natural experiments appeal to "nature" as random. But... natural processes still follow specific processes; humans adapt to/respond to "natural" conditions. (e.g. rough terrain, crop suitability)
 
+---
 
+### Qualitative Evidence:
 
+For actors:
 
+- *information*: Do units / actors controlling treatment know which cases are getting exposed to treatment?
+- *incentives*: Do units / actors have incentives to self-select into or other control allocation of treatment?
+- *capacities*: Do units / actors have the capacity to self-select or allocate treatment to particular units?
 
+---
 
+Paper Dialogue:
 
+- What is the natural experiment in Ferwerda and Miller?
+- How do they justify random assignment?
+- What are Kocher and Monteiro's critiques? How do they align with the causal process observations laid out by Dunning?
 
+---
 
-## Natural Experiments:
+### What is random?
 
-### Regression Discontinuity
+Things that seem arbitrary/beyond human control not necessarily random: really make the case for HOW the random assignment process would work (if it is 'as-if' random)
 
-- "Treatment" occurs for cases on one side of threshold, not to cases on other side
-- Near the "threshold", cases are arbitrarily assigned.
-    - treatment can be for ALL cases on the "Treated" side (sharp RD) 
-    - treatment can increase at the threshold ("fuzzy" RD) (e.g. Mo 2018)
-   
-   
-## Natural Experiments
-
-```{r, echo = F, message=F}
-n = 5000
-x = runif(n, -1,1)
-y = 3 + 1*x + 2*(x>0) + rnorm(n)
-
-d = data.frame(x,y, d = x>0)
-ggplot(d, aes(x = x, y = y, group = d)) + 
-  geom_point() + 
-  geom_smooth() +
-  geom_vline(xintercept = 0)
-  theme_bw()
-
-```
-    
-## Natural Experiments:
-
-### Regression Discontinuity
-
-Two approaches:
-
-- Potential outcomes of $Y$ are approximately **linear** near the threshold; treatment shifts outcomes
-    - so we (flexibly) model $Y$ on either side of the cut-off
-- Potential outcomes of $Y$ are random near the cut-off
-    - difference in means near the cutoff
-
-## Natural Experiments:
-
-### Regression Discontinuity
-
-Decisions:
-
-- model outcome around cutoff
-    - bias/variance trade-off
-    - how do you model it? linear? quadratic? cubic? quartic? local linear?
-    - how do you choose the "bandwidth" around the cutoff to use?
-    - typically recommend local linear, automatic choice of 'optimal bandwidth'
-
-- difference in means at cutoff
-    - how do you choose the "bandwidth" around the cutoff to use?
-
-## Natural Experiments:
-
-### Regression Discontinuity
-
-Assumptions:
-
-- assignment to treatment at the threshold is random
-- AND
-    - either we have correctly modeled potential outcomes of $Y$ on either side of cutoff 
-    - or we have used "bandwidth" around cutoff within which treatment is as-if random assigned (difference in means)
-
-## Natural Experiments:
-
-### Instrumental Variables
-
-Follows from Wald estimator for non-compliance:
-
-- Instrumental Variables Least Squares uses variance "explained" in $X$ by  randomly induced $Z$
-    - $X$ is "treatment", $Z$ is "random assignment to treatment"
-    - easy to understand when $Z$ is binary
-    - when $Z$ is continuous, it is more complicated (and depends on assumptions of linearity)
-
-## Natural Experiments:
-
-### Instrumental Variables
-
-Decisions
-
-- is variation induced in $X$ by $Z$ linear?
-- does $Z$ actually predict change in $X$?
-    - "weak instruments problem": identical to when there are very few compliers in an experiment: inference becomes very hard
-    - typically do $F$ test of regression of $Y$ on $X$; $F$ statistic $> 10$.
-
-
-## Natural Experiments:
-
-### Instrumental Variables
-
-Assumptions:
-
-1. $Z$ is randomly assigned
-2. Exclusion Restriction
-    - no other causal path from $Z$ to $Y$, other than $X$
-3. Monotonicity
-    - increasing $Z$ uniformly increases or decreases values of $X$
-
-## Natural Experiments:
-
-### Choices
-
-- Sometimes natural experiments only random conditional on some other variables (Nellis, et al.)
-    - What is the correct functional form for the conditioning variables?
-- Standard Errors:
-    - What is the unit at which treatment is assigned?
-    - Cluster/Randomization inference
-
-## Natural Experiments:
-
-### Limitations
-
-- Effects are "local" or for "compliers"
-    - like in non-compliance, we find subset of cases that are randomly induced into treatment/responsive
-    - cases may be different
-
-- Causal exposures may be different
-    - cause applied at cutoff might be different than elsewhere
-    - cause applied at random might be different (e.g. rainfall as instrument for economic growth)
-    
-## Natural Experiments:
-
-### What to do:
-
-- Show robustness to choices of analysis
-- Evidence that randomization took place
-    - statistical tests of implication
-    - qualitative evidence: "causal process observation"
+- rainfall, geological formations not in human control. But people /institutions select into these conditions
+- geographic/natural features often bad instruments because they affect lots of things
+- geographic discontinuities are similar: lots of things change in different jurisdictions
+- sometimes these issues fixed when combined with DiDs
