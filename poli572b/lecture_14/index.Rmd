@@ -1,7 +1,7 @@
 ---
 title: "POLI 572B"
 author: "Michael Weaver"
-date: "April 12, 2024"
+date: "April 10, 2026"
 widgets: [bootstrap]
 output: 
   revealjs::revealjs_presentation:
@@ -18,25 +18,10 @@ require(grid)
 require(data.table)
 require(UsingR)
 require(lfe)
-require(sandwich)
-require(modelsummary)
-require(interflex)
 
 options("kableExtra.html.bsTable" = T)
 ```
 
-```{r, include = F, echo = F, message = F}
-riots = fread("analysisPanelBW1.csv")
-riots = riots[rd_INC_closenum %in% 1, 
-              list(DISTRICT_ID_61, election_year,
-                   INC_win = rd_INC_ivnum, any_riot = COUNT.bin,
-                   ENP)]
-riots[, high_enp := ENP > median(ENP,na.rm = T)]
-
-analysis_df <- 
-    readRDS("/home/mdweaver/Dropbox/myanmar-prejudice/02-replication/analysis_df.rds")
-
-```
 
 <style type="text/css">
   .reveal h2,h3,h4,h5,h6 {
@@ -56,723 +41,430 @@ analysis_df <-
   }
 </style>
 
-## Plan for Today
 
-### Interaction Effects
+## Outline
 
-### Robustness
+### Natural Experiments
 
-1. Discussion of Papers
-2. Review
-    - McGrath
-    - Truex
-    - Fowler and Hall
+- Motivation/Definition
+- Challenges
+- IV
+- RDD
+- Qualitative Evidence
+- Balance Tests
+- Papers
 
 
-# Robustness
 
-# McGrath
-
-# Truex
-
-# Fowler and Hall
-
-# Interaction Effects
-   
----
-
-### Interaction Effects
-
-Is the effect of some cause different for different sets of cases?
-
-- heterogeneous treatment effects
-- "moderators": factors that intensify/weaken some causal effect
-- differences-in-differences
+# Natural Experiments
 
 ---
 
-### Interaction: **Example**
+### What do we mean by natural experiment?
 
-Did the local success of an explicitly secular political party, Indian National Congress (INC), reduce the likelihood of religious riots between Hindus and Muslims in India?
+An **observational study** where causal inference comes from the design that draws on randomization of treatment.
 
----
+- no manipulation of treatment by researcher
+- random or "as-if" random assignment takes place in the "real world"
 
-### Example
 
-[Nellis et al](https://www.nowpublishers.com/article/Details/QJPS-15051) compare the incidence of riots in districts in which the INC barely won and barely lost MLA elections (w/ in 1 ppt).
+**experiment**: because it has **randomization**
 
-They estimate the model:
-
-$$\mathrm{Any \ Riot}_{it} = \alpha + \beta_1 \mathrm{INC \  Victory}_{it} + \epsilon_{it}$$
+**natural**: because it occurs without researcher intervention in real-world
 
 ---
 
-```{r echo = F, results='asis'}
-m1 = lm(any_riot ~ INC_win, data = riots)
+### Why?
 
-modelsummary(list("Any Riot" = m1),
-          output = 'html',
-          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
-          coef_rename = c('INC_win' = "INC Win", "(Intercept)" = "Intercept"))
+1. solution to confounding
 
-```
-
----
-
-### Example
-
-Wilkinson (2004) argues that political parties work to stop religious riots in India when Muslims are electorally pivotal.
-
-- Muslims are typically victims in riots; will vote against parties to punish them
-- Muslims more pivotal when the effective number of parties is higher
-
----
-
-### Example
-
-If the INC was responsive to this electoral logic, we should expect causal effect of INC victory on riots to be stronger when the ENP was above the median:
-
-This is a **Binary by Binary** interaction:
-
-- INC win/lose is **binary**
-- High/Low ENP is **binary**
-
----
-
-### Interaction Effects
-
-**How do we estimate an interaction effect?**
-
-Include both causal variable and interacting variable, **AND** their product.
-
-$y_i = \beta_0 + \beta_1 D_i + \beta_2 X_i+ \beta_3 D_iX_i + \epsilon_i$
-
----
-
-### Interaction Effects | Example
-
-Easy to do in `R`:
-
-```{r}
-m2 = lm(any_riot ~ INC_win*high_enp, data = riots)
-m3 = lm(any_riot ~ INC_win + high_enp + INC_win:high_enp, 
-        data = riots)
-```
-
-`*` expands out the 'main' effects and interaction effects
-
-`:` just multiplies two variables together, no 'main' effects
-   
----
-
-### Interaction Effects | Interpretation?
-
-```{r echo = F, results='asis'}
-modelsummary(list("Any Riot" = m2),
-          output = 'html',
-          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
-          coef_rename = c( "(Intercept)" = "Intercept", 'INC_win' = "INC Win", 'high_enpTRUE' = "High ENP", "INC_win:high_enpTRUE" = "INC Win x High ENP"))
-
-```
-
-
----
-
-### Interaction Effects | Example
-
-Different intercepts (means) for each group:
-
-|        | INC Lose | INC Win |
-|--------|------|--------|
-| ENP Low | `Intercept` | `Intercept + INC_win` |
-| ENP High | `Intercept + high_enp` | `Intercept + high_enp +` <br/> `INC_win + INC_win:high_enp` |
-
----
-
-### Interaction Effects | Example
-
-Interpretation:
-
-Interaction Effects: Effect of INC victory differs across ENP?
-
-- `INC_win:high_enp` tells us how much more likely riots are (on average) when INC wins vs loses in High ENP districts, compared to when INC wins vs loses in Low ENP districts.
-
-"Main Effects": 
-
-- `INC_win`: change probability of riot when INC wins (vs loses) in low ENP areas.
-- `hign_enp`: difference in probability of riot in high vs low ENP areas where INC loses.
-
----
-
-### Interaction Effects | DiD
-
-Different intercepts (means) for each group:
-
-|        | Untreated | Treated |
-|--------|------|--------|
-| Pre | `Intercept` | `Intercept + Treated` |
-| Post | `Intercept + Post` | `Intercept + Treated +` <br/> `Post + Treated:Post` |
-
-`lm(Y ~ Treated*Post, data = data)`
-
-
----
-
-### Interaction Effects | DiD
-
-If we have many treated, many untreated units $i$, across multiple time periods $t$, it is common to do this:
-
-```{r eval=F, echo = T}
-lm(Y ~ Treated*Post + dummy_i + dummy_t, data = data)
-feols(Y ~ Treated*Post | dummy_i + dummy_t, data = data)
-```
-
-Which of these four coefficients will we be able to actually estimate? (think about linear independence)
-
-`Intercept + Treated + Post + Treated:Post`
-
----
-
-### Interaction Effects
-
-#### **Continuous by Binary variable**
-
-Rather than fitting different intercepts for groups:
-
-- Slope of $x_1$ depends on binary indicator ($x_2$)
-- effect of binary treatment ($x_2$) depends on level of continuous variable
-- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
-- $\hat{\beta_2}$ for $x_2$ will be mean of $x_2 = 1$ when $x_1 = 0$
-
-**Assumptions** 
-
-- We assume the change is linear 
-- Both levels of binary variable present across all levels of continuous variable (common support)
-      
-## Interaction Effects
-
-#### **Continuous by Continuous variable**
-
-- Slope of $x_1$ depends on value of $x_2$
-- Slope of $x_2$ depends on value of $x_1$
-- $\hat{\beta_1}$ for $x_1$ will be slope of $x_1$ when $x_2 = 0$
-- $\hat{\beta_2}$ for $x_2$ will be slope of $x_2$ when $x_1 = 0$
- 
-**Assumptions** 
-
-- We assume the change is linear 
-- all levels of one variable present across all levels of other variable (common support)
-- This is much harder to achieve!
-
----
-
-### Interaction Effects
-
-```{r, echo = F, include = F, message = F}
-iowa = fread('iowa_suffrage.csv')[enlist_pct < 1]
-
-```
-
-We can look at voting for Black Suffrage in Iowa. 
-
-Recall: investigation of effect of enlistment rates in the Civil War and on change in voting for suffrage between 1857 and 1868 (pre- and post- war). 
-
-Does the effect of having veterans in a county depend on what happened during their military service?
-
->- Does combat experience matter?
-
----
-
-### Example:
-
-```{r, echo = F, results='asis'}
-lm_iowa = lm(Suffrage_Diff ~ enlist_pct*mean_combat_days, iowa)
-
-modelsummary(list("Suffrage Change" = lm_iowa),
-          output = 'html',
-          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
-          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct' = "Enlist Rate", 'mean_combat_days' = "Combat Days", "enlist_pct:mean_combat_days" = "Enlist X Combat"))
-
-```
-
----
-
-### Example:
-
-We can center both variables at $0$ to make it easier to interpret:
-
-```{r}
-iowa$enlist_pct_c = iowa$enlist_pct %>% scale(scale = F)
-iowa$mean_combat_days_c = iowa$mean_combat_days %>% scale(scale = F)
-lm_iowa_c = lm(Suffrage_Diff ~ enlist_pct_c*mean_combat_days_c, iowa)
-
-```
-
----
-
-
-```{r echo = F, results='asis'}
-
-modelsummary(list("Suffrage Change" = lm_iowa_c),
-          output = 'html',
-          gof_omit = 'DF|Deviance|AIC|BIC|Adj|Lik|F|RMSE',
-          coef_rename = c( "(Intercept)" = "Intercept", 'enlist_pct_c' = "Enlist Rate (0-", 'mean_combat_days_c' = "Combat Days (0)", "enlist_pct_c:mean_combat_days_c" = "Enlist X Combat"))
-```
-
-Now main effects are interpretable.    
+2. no complex estimands (hopefully!), simple and transparent statistical models
   
----
-
-### Marginal Effects       
-
-For continuous interactions, we need to calculate the **marginal effect**
-
-**marginal effect**: unit effect of $x$ on $y$ at a given value of $z$.
-
-$y_i = \beta_0 + \beta_1 x_i+ \beta_2 z_i+ \beta_3 x_iz_i + \epsilon_i$
+  - fewer worries about common support, interpolation/extrapolation
 
 
----
+## Compare and contrast
 
-### Marginal Effects       
+> Piccardi et al use simple $t$ tests (in a regression context) to compare differences in means
 
-Marginal effects have their own standard errors.
+> "The power of multiple regression analysis is that it allows us to do in non-experimental environments what natural scientists are able to do in a controlled laboratory setting: keep other factors fixed" (Wooldridge 2009: 77)
 
-- Must be computed using variance-covariance matrix
-- Why?: marginal effect is $\beta_1 + \beta_3 z_i$
+## Design vs. Model-based inferences
 
-$Var(aX + bZ) = a^2 Var(X) + b^2 Var(Z) + 2ab Cov(X,Z)$
+A matter of **degree**
 
-$Var(\beta_1 + z_i \beta_3) = Var(\beta_1) + z_i^2 Var(\beta_3) + 2z_i Cov(\beta_1,\beta_3)$
+Statistical evidence for causality combines **observed data** and a **mathematical model** of the world.
 
----
+>- mathematical model makes inferences about reality
+>- model always involves assumptions about how observed data are generated
+>- can almost always apply the model, even if it is wrong
 
-### Marginal Effects example:
+## Design vs. Model-based inferences
 
-```{r}
-combat_seq = seq(min(iowa$mean_combat_days), 
-                 max(iowa$mean_combat_days),
-                 length.out = 100)
-mfx = lm_iowa$coefficients['enlist_pct'] + 
-      lm_iowa$coefficients['enlist_pct:mean_combat_days']*combat_seq
-```
+Causal evidence varies in terms of complexity of math/restrictiveness of assumptions: a matter of **degree**
+
+- **Model-based** inferences about causality involve many choices in complex statistical models with many difficult-to-assess assumptions
+
+- **Design-based** inferences about causality use carefully controlled comparisons with simple models and transparent assumptions
 
 ---
 
-### Marginal Effects example:
+### Challenges
 
-```{r, echo = F}
-plot(combat_seq, mfx, 
-     ylab = 'Marginal Effect of Enlistment %',
-     xlab = 'Mean Days of Combat',
-     main = 'Marginal Effect of Enlistment across\nCombat Experience',
-     type = 'l')
-rug(iowa$mean_combat_days)
-```
-
----
-
-### Marginal Effects example:
-
-Standard Errors:
-
-```{r}
-cov_mat = vcov(lm_iowa)
-
-m_var = diag(cov_mat)['enlist_pct'] +
-  combat_seq^2*diag(cov_mat)['enlist_pct:mean_combat_days'] +
-  combat_seq*2*cov_mat['enlist_pct','enlist_pct:mean_combat_days']
-mse = sqrt(m_var)
-
-l = mfx - 1.96*mse
-u = mfx + 1.96*mse
-```
-
----
-
-### Marginal Effects example:
-
-```{r, echo = F}
-plot(combat_seq, mfx, 
-     ylab = 'Marginal Effect of Enlistment %',
-     xlab = 'Mean Days of Combat',
-     main = 'Marginal Effect of Enlistment across\nCombat Experience',
-     type = 'l', ylim = range(c(l,u)))
-rug(iowa$mean_combat_days)
-lines(combat_seq, l, lty= 2)
-lines(combat_seq, u, lty = 2)
-abline(h = 0, col = 'red')
-```
-
----
-
-### Continuous Interactions
-
-Hainmueller et al show this can go wrong:
-
-`interflex` [package](https://yiqingxu.org/packages/interflex/articles/continuous.html) helpful for:
-
-- checking linearity assumptions
-- plotting linear and non-linear marginal effects
-- no need to calculate marginal effects w/ SEs
-
----
-
-```{r, echo = F, message=F, warning =F}
-
-inter_f = interflex("raw",
-                    iowa, 
-                        Y = "Suffrage_Diff",
-                        D = 'enlist_pct',
-                        X = 'mean_combat_days',
-                        na.rm = T,
-                        full.moderate = F,
-                        Ylabel = 'Suffrage Difference',
-                        Dlabel = "Enlistment (%)",
-                        Xlabel = "Mean Combat Days",
-                        theme.bw = T)
-
-inter_f
-
-```
-
----
-
-```{r, echo = F, message =F, warning =F}
-
-inter_f = interflex("binning",iowa, 
-                        Y = "Suffrage_Diff",
-                        D = 'enlist_pct',
-                        X = 'mean_combat_days',
-                        na.rm = T,
-                        full.moderate = F,
-                        Ylabel = 'Suffrage Difference',
-                        Dlabel = "Enlistment (%)",
-                        Xlabel = "Mean Combat Days",
-                        theme.bw = T)
-
-inter_f$figure
-
-```
-
----
-
-### Interactions:
-
-- For **binary**-**binary** interactions, interpretation and estimation is straightforward.
-- For any **continuous** interactions, estimation is tricky and we must calculate marginal effects. 
-    - Use `interflex` package to handle this
-    - Check for common support
-    - Get tests of linearity, non-linear interactions, SEs, plots
-
-
-# Sensitivity
-
----
-
-### Conditional Independence
-
-Main identifying assumption (for unbiased estimates of causal effects) is:
-
-- **Conditional Independence Assumption**: we have conditioned on all relevant confounding variables
-- Because we do not know nature of confounding, this is untestable
-- Must argue that:
-  - relevant confounders included in conditioning
-  - remaining possible confounders are unlikely to alter conclusions
-  
-- These arguments based on:
-  - case/theoretical knowledge
-  - tests of **sensitivity**
-
----
-
-### Sensitivity
-
-Cinella and Hazlett (2020) develop tools to analyze **sensitivity** of regression results to **violations** of conditional independence assumption:
-
-- assuming there is an unmeasured confounding variable, how "large" would it have to be alter the results?
-  - how strongly is the confounder related to **treatment**? to **outcome**?
-  - "strength" measured in terms of partial $R^2$: variation "explained" by the confounder
-
----
-
-### Sensitivity
-
-Link to partial identification:
-
-- Can be used to set bounds on causal effect in worst-case scenario, where **all remaining variation** in treatment and outcome explained by a confounder
-- Can establish "how big" that confounding is relative to **known confounders** to make an argument for plausible values
-  - comparison to "known confounder" creates standard candle
-
----
-
-### Sensitivity
-
-Effect of income on Anti-Muslim Prejudice in Myanmar
-
-```{r}
-m_linear = lm(svy_sh_anti_muslim_prejudice_all ~ svy_sh_income_rc + 
-                svy_sh_female_rc + svy_sh_age_rc + 
-                svy_sh_education_rc + svy_sh_ethnicity_rc +  
-                svy_sh_religion_rc + svy_sh_profession_type_rc + 
-                svy_sh_income_source_rc, data = analysis_df)
-```
-
----
-
-```{r echo = F, warning = F, message = F}
-modelsummary(list(linear = m_linear), 
-             estimate  = "{estimate}{stars} ({std.error})",
-             statistic = NULL,
-             gof_omit = 'Log.Lik.|F|AIC|BIC|Adj', stars = T
-             )
-```
-
----
-
-```{r warning = F, message = F}
-require(sensemakr)
-require(stringr)
-covars = model.matrix(m_linear) %>% colnames
-covars_edu = covars %>% str_detect("education") %>% covars[.]
-myanmar.sensitivity <- sensemakr(model = m_linear, 
-                                treatment = "svy_sh_income_rc",
-                                benchmark_covariates = list('education' = covars_edu),
-                                kd = 1:3,
-                                ky = 1:3, 
-                                q = 1,
-                                alpha = 0.05, 
-                                reduce = TRUE)
-
-```
-
-
----
-
-```{r echo = F}
-plot(myanmar.sensitivity)
-```
-
-Adjusted effect for confounder 1-3 times larger than education.
-
----
-
-```{r echo = F}
-plot(myanmar.sensitivity, type = 'extreme')
-```
-
-Adjusted effect if confounder explained **all** or **most** of the outcome
-
----
-
-### Practice:
-
-Using the `veterans` data:
-
-1. Regress `suff65_yes` on `enlist_rate`, `suff57_yes`, and `state`.
-2. Using `sensemakr`, examine the sensitivity of `enlist_rate`, using `suff57_yes` as the 'benchmark'
-3. Interpret the results of `plot(enlist_sensitivity)`
-
-
-
-# Measurement Error
-
----
-
-### Measurement Error
-
-We have previously assumed we measured variables without error. Not a reasonable assumption. How does this affect estimated effects of $D$?
-
-- if errors in measurements (of $D$ or $Y$) correlated with causal variable $D$, estimates will be **biased** (can even be confounding)
-
-- if measurements have **random error**, it **depends**...
-
----
-
-### Measurement Error
-
-First, the good news:
-
-> If we have **random** measurement error in $Y$ or $D$, problems are manageable.
-
----
-
-### Measurement Error
-
-
-This is our model:
-
-$$Y^* = \alpha + \beta D^* + \epsilon$$
-
-$Y^*$ is the true value of the variable that we observe as $Y$.
-
-- $E(\nu)=0$, $\nu$ independent of $Y^*, D^*$, i.i.d. with variance $\sigma^2_\nu$
-
-$$Y = Y^* + \nu$$
-
----
-
-$D^*$ is the true value of the variable that we observe as $D$.
-
-- $E(\eta)=0$, $\eta$ independent of $D^*, Y^*$, i.i.d. with variance $\sigma^2_\eta$
-
-$$D = D^* + \eta$$
-
----
-
-### Measurement Error
-
-What happens when we have measurement error in $Y$? 
-
-$$Y = \alpha + \beta D^* + \epsilon + \nu$$
-
-Recall: $E(\nu) = 0; Cov(D^*,\nu) = 0$. So, estimate $\widehat{\beta}$ for $\beta$ is **unbiased**.
-
-Standard errors **are affected**:
-
-- Variance Covariance matrix is now:  
-- $Var(\epsilon + \nu)(D^{*\prime} D^{*})^{-1}$, not $Var(\epsilon)(D^{*\prime} D^{*})^{-1}$
-- Thus, variances, SEs will be **larger** due to random measurement error.
-
----
-
-### Measurement Error
-
-What happens when we have measurement error in $D$? 
-
-$$Y^* = \alpha + \beta (D - \eta) + \epsilon$$
-
-If we estimate the model using just $D$, not $D^*$
-
-$$Y^* = \alpha + \beta D + \rho$$
-
-- $\rho = (\epsilon - \beta\eta)$. 
-- This produces **bias** in $\widehat{\beta}$, because:
-
-$$cov(D, \rho) = cov(D^* + \eta, \epsilon - \beta\eta) = -\beta \sigma^2_\eta \neq 0$$
-
----
-
-### Measurement Error
-
-What happens when we have measurement error in $D$? 
-
-We get **bias**... but what does this bias look like?
-
-$$\small\begin{eqnarray} 
-\widehat{\beta} &=& \frac{Cov(D, Y^*)}{Var(D)}    \\
-&=& \frac{Cov(D^* + \eta, \alpha + \beta D^* + \epsilon)}{Var(D^* + \eta)} \\
-&=& \frac{\beta Cov(D^*, D^*)}{Var(D^*) + Var(\eta)}   \\
-&=& \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}  \\
-\end{eqnarray}$$
-
----
-
-### Measurement Error
-
-Attenuation bias!
-
-$$\widehat{\beta} = \beta \frac{Var(D^*)}{Var(D^*) + Var(\eta)}$$
-
-This is $\beta$ times a ratio of variance of true value over that of the observed. (Signal to noise). As the errors $\eta$ increase, this ratio goes toward $0$. So $\widehat{\beta}$ suffers from **attenuation** bias.
-
-Our estimates of $\beta$ will be biased toward **zero**, which may be "conservative".
-
----
-
-### Measurement Error
-
-#### The good news:
-
-- Measurement error in $Y$ produces wider standard errors; no bias
-- Measurement error in $D$ produces bias toward zero (*for* $D$); (known direction and bounds)
-
-#### But...
-
-What if we to estimate the causal effect of $D$ on $Y$, conditioning on $X$?
-
----
-
-### Measurement Error:
-
-Imagine we evaluate the effect of COVID vaccination for people who **self select** into the vaccine.
-
-What is the effect of the vaccine? We can naively compare people who select into vaccination... 
-
-```{r, echo = F}
-data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
-           Conspiracy = rep(c("Yes", "No"), 2),
-           N = c(100, 400, 400, 100),
-           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
-           ) %>%
-kable()
-```
-
-What is the naive (without conditioning) estimated effect of vaccination?
-
----
-
-### Measurement Error:
-
-Or we can condition on, e.g., belief in conspiracies about COVID/vaccines that might relate to vaccine uptake and other COVID propensities...
-
-```{r, echo = F}
-data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
-           Conspiracy = rep(c("Yes", "No"), 2),
-           N = c(100, 400, 400, 100),
-           `COVID Rate` = c(0.01, 0.005, 0.1, 0.05)
-           ) %>%
-kable()
-```
-
----
-
-
-### Measurement Error:
-
-In this example:
-
-Failing to condition on conspiracy beliefs leads us to overstate the effect of vaccines, because...
-
-- Conspiracists less likely to take vaccine, have higher propensity to be exposed to/infected by COVID in absence of treatment.
-
----
-
-### Measurement Error:
-
-What if we measure conspiracy beliefs **with error**: 40 percent chance of incorrect classification. We observe this data:
-
-```{r, echo = F}
-data.frame(Vaccine = rep(c("Yes", "No"), each = 2),
-           Conspiracy = rep(c("Yes", "No"), 2),
-           N = c(220, 280, 280, 220),
-           `COVID Rate` = c(0.0064, 0.0057, 0.093, 0.086)
-           ) %>%
-kable()
-```
-
-What is the naive (no conditioning) estimate of the effect of the vaccine?
-
-What is the estimated  effect of the vaccine conditioning on conspiracy-belief?
-
-
----
-
-### Measurement Error:
-
-- Measurement error in $X$ can lead to bias in estimated slope on $D$ ($\widehat{\beta_{D}} \neq \beta_{D}$)
-- A problem if $X$ is really needed for conditioning.
-
----
-
-### Measurement Error
-
-#### The good news:
-
-- Measurement error in $Y$ produces wider standard errors; no bias
-- Measurement error in $X$ produces bias toward zero; (known direction and bounds)
-    - true in bivariate, multivariate cases
+1. Finding Natural Experiments
+    - relevance of intervention; relevance of randomly assigned group; where is there actually randomness?
     
-#### The bad news:
+    - random vs as-if random: known random process (lottery), something that is "as-if" random... (in what way)
+    
+2. Arguing for Randomness
 
-- Conditioning will fail to remove bias if **conditioning variables** measured with error.
+- how do we know its random? lotteries maybe (but you need to know whether rules followed... protocol correct)
+- qualitative evidence
+- balance tests... shouldn't see pre-treatment differences (in what, though?)
+
+3. How simple is the design?
+
+- Isolating the random exposure sometimes involves complicated models as well... not always so simple to understand
+
+
+---
+
+### Varieties:
+
+1. "Standard natural experiments": treatment $D$ is randomized for some units
+
+2. Instrumental Variables: some instrument $Z$ is randomized and affects treatment $D$
+
+3. Regression Discontinuity: treatment assignment of $D$  takes place at cutoff $c$, random close to $c$
+
+# Instrumental Variables
+
+
+---
+
+### IV 
+
+- basically extends CACE: continuous treatments/instruments; random assignment conditional on other variables
+
+assumes random $Z$, exclusion restriction, monotonicity (no defiers)
+
+- for "compliers"... harder to define with continuous treatment
+- can add controls
+
+2sls also assumes linearity; if treatment is continuous... which values of $D$ are contributing to effect estimate?
+
+
+---
+
+### IV Example: QJPS paper
+
+
+equation... 
+
+explain the logic
+
+
+---
+
+### IV Issues 
+
+PAPER LINK
+
+weak instruments => big standard errors
+
+fix your standard errors: main suggested tests
+
+---
+
+### IV Issues 
+
+weak instruments => bias amplification (exclusion restriction problems)
+
+zero first stage; affect possible excluded paths?; 
+
+---
+
+reduced form tests
+
+# RDD
+
+--- 
+
+### Regression Discontinuity
+
+Classic example: 
+
+Effect of criminal vs. non-criminal politicians winning elections... compare places with criminal candidate as winner or runner up.
+
+there is a continuous variable (forcing variable): margin of victory (criminal - non-criminal vote share)
+
+When margin of victory reaches 0 (vs next candidate) move from untreated to treated.
+
+---
+
+FIGURE 1 from titiunik
+
+
+---
+
+Move from all untreated to all treated (sharp RD; fuzzy RD does this with IV or reduced form)
+
+E[Y_i(1) - Y_i(0) | X = c]
+
+
+---
+
+fig 2 from titiunik
+
+---
+
+Key assumption:
+
+- continuity at cutoff conditional expectation functions of Y(1), Y(0) across forcing variable (vote share)
+- it can be changing... but expected to change SMOOTHLY at the cutoff
+
+
+E[Y_i(1)|X] E[Y_i(0) | x]
+
+---
+
+How do we get the CEF further out?
+
+fpci; figure from titiunik
+
+
+---
+
+Only need to estimate it at the cutoff...
+
+=> local polynomial regression; estimate the slope of E[Y(0) | x] AT x = c; vice versa
+
+
+---
+
+CHoices
+
+- polynomial order
+- kernel
+- bandwidth
+
+---
+
+- choosing polynomial order
+
+---
+
+- choosing kernel
+
+--- 
+
+
+choosing bandwidth
+
+
+---
+
+standard errors:
+
+- correct choice is bias corrected (see what is recommended)
+
+
+---
+
+checks:
+
+pre-treat covariates: run with their own RDD... do you observe discontinuities... if so... possibly not continuous
+
+density tests (sorting test): 
+
+"donut": leave out cases right on the cutoff (possible sorting)
+
+
+# Assessing Random Assignment
+
+---
+
+### Balance Tests
+
+Logic: if random, we should not see significant differences in other attributes
+
+- t-tests/regressions; ks tests
+- classically, hypothesis tests. should so significant differences at rate of alpha
+- equivalence tests are better: what range of differences can you exclude?
+- pre-treatment covariates
+
+---
+
+But which covariates?
+
+Qualitative evidence...
+
+
+---
+
+
+Qualitative evidence: causal process observation of treatment assignment.
+
+How is treatment actually assigned in reality?
+
+Ask about units being treated/actors contrlling treatment...
+
+
+information
+
+incentives
+
+capacities
+
+
+---
+
+
+Papers:
+
+Discussion of Kocher and Monteiro vs Ferwerda and Miller.
+
+
+---
+
+Papers: QJPS... what is the design, what are the tests doing...
+
+
+
+
+
+
+
+
+
+
+
+
+## Natural Experiments:
+
+### Regression Discontinuity
+
+- "Treatment" occurs for cases on one side of threshold, not to cases on other side
+- Near the "threshold", cases are arbitrarily assigned.
+    - treatment can be for ALL cases on the "Treated" side (sharp RD) 
+    - treatment can increase at the threshold ("fuzzy" RD) (e.g. Mo 2018)
+   
+   
+## Natural Experiments
+
+```{r, echo = F, message=F}
+n = 5000
+x = runif(n, -1,1)
+y = 3 + 1*x + 2*(x>0) + rnorm(n)
+
+d = data.frame(x,y, d = x>0)
+ggplot(d, aes(x = x, y = y, group = d)) + 
+  geom_point() + 
+  geom_smooth() +
+  geom_vline(xintercept = 0)
+  theme_bw()
+
+```
+    
+## Natural Experiments:
+
+### Regression Discontinuity
+
+Two approaches:
+
+- Potential outcomes of $Y$ are approximately **linear** near the threshold; treatment shifts outcomes
+    - so we (flexibly) model $Y$ on either side of the cut-off
+- Potential outcomes of $Y$ are random near the cut-off
+    - difference in means near the cutoff
+
+## Natural Experiments:
+
+### Regression Discontinuity
+
+Decisions:
+
+- model outcome around cutoff
+    - bias/variance trade-off
+    - how do you model it? linear? quadratic? cubic? quartic? local linear?
+    - how do you choose the "bandwidth" around the cutoff to use?
+    - typically recommend local linear, automatic choice of 'optimal bandwidth'
+
+- difference in means at cutoff
+    - how do you choose the "bandwidth" around the cutoff to use?
+
+## Natural Experiments:
+
+### Regression Discontinuity
+
+Assumptions:
+
+- assignment to treatment at the threshold is random
+- AND
+    - either we have correctly modeled potential outcomes of $Y$ on either side of cutoff 
+    - or we have used "bandwidth" around cutoff within which treatment is as-if random assigned (difference in means)
+
+## Natural Experiments:
+
+### Instrumental Variables
+
+Follows from Wald estimator for non-compliance:
+
+- Instrumental Variables Least Squares uses variance "explained" in $X$ by  randomly induced $Z$
+    - $X$ is "treatment", $Z$ is "random assignment to treatment"
+    - easy to understand when $Z$ is binary
+    - when $Z$ is continuous, it is more complicated (and depends on assumptions of linearity)
+
+## Natural Experiments:
+
+### Instrumental Variables
+
+Decisions
+
+- is variation induced in $X$ by $Z$ linear?
+- does $Z$ actually predict change in $X$?
+    - "weak instruments problem": identical to when there are very few compliers in an experiment: inference becomes very hard
+    - typically do $F$ test of regression of $Y$ on $X$; $F$ statistic $> 10$.
+
+
+## Natural Experiments:
+
+### Instrumental Variables
+
+Assumptions:
+
+1. $Z$ is randomly assigned
+2. Exclusion Restriction
+    - no other causal path from $Z$ to $Y$, other than $X$
+3. Monotonicity
+    - increasing $Z$ uniformly increases or decreases values of $X$
+
+## Natural Experiments:
+
+### Choices
+
+- Sometimes natural experiments only random conditional on some other variables (Nellis, et al.)
+    - What is the correct functional form for the conditioning variables?
+- Standard Errors:
+    - What is the unit at which treatment is assigned?
+    - Cluster/Randomization inference
+
+## Natural Experiments:
+
+### Limitations
+
+- Effects are "local" or for "compliers"
+    - like in non-compliance, we find subset of cases that are randomly induced into treatment/responsive
+    - cases may be different
+
+- Causal exposures may be different
+    - cause applied at cutoff might be different than elsewhere
+    - cause applied at random might be different (e.g. rainfall as instrument for economic growth)
+    
+## Natural Experiments:
+
+### What to do:
+
+- Show robustness to choices of analysis
+- Evidence that randomization took place
+    - statistical tests of implication
+    - qualitative evidence: "causal process observation"
