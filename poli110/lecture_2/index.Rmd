@@ -1,8 +1,12 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "September 9, 2025"
-output: ioslides_presentation
+date: "September 15, 2026"
+output:
+  ioslides_presentation:
+    css: styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -32,17 +36,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ---
 
-<img src="https://static01.nytimes.com/newsgraphics/bk-d2GzaImfkdlbVw/D7ZjNs7aY3NYazkYHj2z9uv5tU0/_assets/trump-signature-six-examples-medium.jpg" width=60%>
 
 ## (1) Truth is Fragile
-
-
-<iframe width="315" height="560"
-src="https://youtube.com/embed/8VW2W0CWxbM?si=WzW1ZXfpKm5oaIn1"
-title="YouTube video player"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen></iframe>
 
 
 
@@ -56,17 +51,6 @@ Arendt tells us in *Truth and Politics*
 
 
 <iframe width="315" height="560"
-src="https://youtube.com/embed/4Ph4potRxkM"
-title="YouTube video player"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-allowfullscreen></iframe>
-
-
-## (2) Truthtellers are Unpopular
-
-
-<iframe width="315" height="560"
 src="https://youtube.com/embed/XhrwH17ploM"
 title="YouTube video player"
 frameborder="0"
@@ -75,8 +59,7 @@ allowfullscreen></iframe>
 
 ## (3) Fiction/Lies are More Palatable
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qh9HCwvEDe8?si=bKISeKN9vFZd2xY6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WhR3i2UAGSQ?si=yl1FTT_e63lKn1Uf&amp;start=34" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 # Why does Truth matter in politics?
 
@@ -97,10 +80,9 @@ Three answers
 # (1) Max Weber
 
 
-## Weber on the Value of Science
+## Weber on the Value of Science (Truth)
 
 Essay on "Science as a Vocation" ultimately takes up the question of "what is the value of science?"
-
 
 >- Rejects several possible answers before giving his own.
 
@@ -113,9 +95,7 @@ Essay on "Science as a Vocation" ultimately takes up the question of "what is th
 
 ## Weber on the Value of Science
 
-
 ### **Scientific knowledge and mastery over our lives leads to happiness?**
-
 
 ---
 
@@ -171,13 +151,6 @@ Aligning the **means** (what we do) with the **ends** (what we intend to achieve
 - What are the "ends"? What are the "means"?
 - What kinds of truths would tell us this if this is "instrumentally rational"? 
 
----
-
-<iframe width="560" height="315" src="https://player.vimeo.com/video/1104510656?h=7d173d5e27&texttrack=en-x-autogen&autoplay=0&loop=0&title=1&byline=1&portrait=1&color&dnt=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-- What do we do if we value both economic security for Canada and First Nations rights?
-
-
 ## Weber on the Value of Science
 
 Answer 2: **clarity**
@@ -199,7 +172,13 @@ Libertarian utopian community in rural New Hampshire.
 
 <img src ="https://ichef.bbci.co.uk/news/976/cpsprodpb/B7AB/production/_95991074_img_asdf31875.jpg" width=80%>
 
+---
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wZaYyNAXHK4?si=SXP2-p5G78R_62ZW&amp;start=1550" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wZaYyNAXHK4?si=T-ut7s7O3fGeJAAT&amp;start=2148" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 # (2) Forst
 
@@ -234,7 +213,6 @@ Forst argues that **power** always gives **reasons** (justifications) to motivat
 - factual claims about the state of the world
 - factual claims about what causes various phenomena
 
-
 ---
 
 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@elle.cordova/video/7313013492691389739" data-video-id="7313013492691389739" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@elle.cordova" href="https://www.tiktok.com/@elle.cordova?refer=embed">@elle.cordova</a> <p>Seasons greetings from our little multinational empire 🎄</p> <a target="_blank" title="♬ original sound - Elle Cordova" href="https://www.tiktok.com/music/original-sound-7313013556759300906?refer=embed">♬ original sound - Elle Cordova</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
@@ -256,30 +234,31 @@ Forst argues that **power** always gives **reasons** (justifications) to motivat
  
 That is, either the **reasons** given are poor or the **process of giving reasons** is flawed
 
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wZaYyNAXHK4?si=T-ut7s7O3fGeJAAT&amp;start=2148" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Domination:
 
 when reasons are "coercive": bodily, material, emotional threats
 
-<img src="https://houstoncriminalfirm.com/wp-content/uploads/2016/02/armed-robbery.jpg" width=80%>
-
 ## Domination:
 
-when reasons given to show there is "a problem" to be fixed are false or exclude other "problems" we might consider fixing:
+when reasons given to show there is "a problem" are false (or exclude other "problems" we might consider fixing):
 
 <img src="dc_murder.png">
 
 ## Domination:
 
-when the proposed actions are known to not solve the "problem"
+when the proposed "solutions" are known to not solve the "problem"
 
-- during measles outbreak this year, HHS Secretary RFK, Jr. asked people to take vitamin A and cod liver oil, which do not prevent measles
+- during measles outbreak last year, HHS Secretary RFK, Jr. asked people to take vitamin A and cod liver oil, which do not prevent measles
 
 ## Domination:
 
-- when reasons/our compliance with power depends on naturalizing something that is not natural
+when we are denied participation in questioning/challenging reasons
 
-- when we are denied participation in questioning/challenging reasons
-
+- Lawsuits against Meta revealed that behind closed doors: knew that apps addictive, caused poor outcomes, made deliberately ineffective safeguards, etc.
 
 ---
 
@@ -331,7 +310,7 @@ the details of **rational truths** are irrelevant to most politics (unless you'r
 
 For Arendt, the opposite of factual truth is **lying**. 
 
-- lying is aimed to CHANGING reality.
+- lying is aimed at CHANGING reality.
 
 
 
@@ -345,15 +324,15 @@ It is most dangerous when it is **organized lying**
 
 If we think everything is a lie, does the idea of truth matter?
 
-- pick whatver lie you like, is loudest, is most recent
+- pick whatever lie you like, is loudest, is most recent
 
 >- This incapacitates working toward something durable together: politics itself
 
 ## Arendt: Truth is Foundation of Politics
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7_omekVr9fE?si=lCt0ZOtJZrq3jnvH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="315" height="560" src="https://youtube.com/embed/ZMmmz1THz6M?si=33_S6iWhvdFoKDy_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-#
+
 
 # Conclusion
 
