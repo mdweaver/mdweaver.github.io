@@ -34,11 +34,6 @@ knitr::opts_chunk$set(echo = FALSE)
 - depends on something being witnessed
 - witnesses may be wrong, disagree, misrepresent
 
----
-
-
-## (1) Truth is Fragile
-
 
 
 ## (2) Truthtellers are Unpopular
@@ -236,7 +231,7 @@ That is, either the **reasons** given are poor or the **process of giving reason
 
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wZaYyNAXHK4?si=T-ut7s7O3fGeJAAT&amp;start=2148" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MbPLHuFCIZs?si=_LKZc2bG7SOxc-YV&amp;start=13" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Domination:
 
