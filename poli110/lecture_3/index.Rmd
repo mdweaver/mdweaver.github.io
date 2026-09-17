@@ -1,8 +1,12 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "September 11, 2025"
-output: ioslides_presentation
+date: "September 17, 2025"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -26,11 +30,7 @@ But what is "truth"?
 
 ## Three Reasons we need Truth in Politics
 
-1. Weber: Value of science is that it gives us **truth** about whether means achieve our ends
 
-2. Forst: access to **truth** is necessary in order to exercise freedom as autonomy (informed decisions)
-
-3. Arendt: without **truth**, we build a world together on a foundation of shifting lies (which will be chaotic and fall apart)
 
 ## But what do we mean by **truth**?
 
@@ -43,7 +43,6 @@ But what is "truth"?
 ### **What is our approach to *knowing* or *finding* truth?**
 
 
-
 # Reasons and Claims
 
 ## Power involves giving Reasons
@@ -51,6 +50,8 @@ But what is "truth"?
 Forst says that power involves *giving reasons* to motivate people to change what they think and do.
 
 Those *reasons* can be thought of a *claims* about what is true.
+
+Whether a reason is *good* depends on the *basis* for the claim.
 
 ## Two Key definitions
 
@@ -90,7 +91,8 @@ What are the **assumptions** linking that evidence to the claim?
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cnw1ohwxQi4?si=BC3RMSk-iuwCG2Qo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
----
+What claims are in this ad? Bases for these claims?
+
 
 ## Varieties of Claims
 
@@ -127,13 +129,9 @@ Return to the board: look at the reasons/claims given in the ad
 
 - which are empirical? which are normative?
 
-
-
 # Empirical Claims
 
 ## Descriptive claims:
-
-### **descriptive claims:**
 
 claims about what exists (or has existed/will exist) in the world: 
 
@@ -141,7 +139,7 @@ claims about what exists (or has existed/will exist) in the world:
 - **what is the type of a specific phenomenon** (what is this thing?)
 - **amount/frequency of phenomena** (how much of something is there?)
 - **relative amount/frequency of phenomena across different places/times** (how much of something is there here vs. there/now vs. then?)
-- **what patterns are there in the shared appearance/non-appearance of different phenomena** (does this thing usually appear together with that other thing?)
+- **what patterns are there in the shared appearance of different phenomena** (does *this* thing usually appear together with *that* other thing?)
 
 
 ## Causal claims:
@@ -158,16 +156,11 @@ are claims about the how one phenomena ($X$) affects or causes another phenomena
 
 ## Causal or Descriptive?
 
-(1) Canada is not experiencing an increase in immigration 
-
-(2) Above average immigration rates do not lead to political conflict
-
-(3) New immigrants are employed at rates higher than native born citizens
-
-(4) Below average immigration slows economic growth 
-
-(5) Canada *should* admit 100,000 more immigrants per year
-
+(1) Canada's trade surplus with the United States has grown over the past decade.
+(2) The 2018 steel and aluminum tariffs caused Canadian producers to shift their sales toward domestic and overseas markets.
+(3) Canadian provinces most dependent on U.S. exports have higher unemployment rates than those with more diversified trade relationships.
+(4) U.S. tariffs on Canadian softwood lumber have reduced Canadian forestry employment.
+(5) Canada *should* deepen its trade partnership with the European Union rather than trying to restore access to U.S. markets.
 
 # Normative Claims
 
@@ -175,12 +168,11 @@ are claims about the how one phenomena ($X$) affects or causes another phenomena
 
 #### **value judgments**:
 
-<br>
-
 are normative claims that
 
 - state what goal or ideal is "right" or "good" 
 - or provide criteria/rules for judging what is "better" or "worse".
+- often implied.
 
 <br>
 
@@ -195,18 +187,26 @@ are normative claims that
 
 ## Flat Earth?
 
-<img src="./curvature.jpg" width = 100%>
+<img src="./curvature.jpg" width = 90%>
+
 
 ---
 
-<smaller>
-"Vancouver is a city on the edge. It seems politicians and the police are unable, unwilling or incapable of stopping what has turned into a version of Dante's Hell on the Downtown Eastside — illicit drug sales, open drug use, the stolen property bazaar, garbage, weapons, assaults, rape.
+[‘Associate member’ of the EU? Why not, Canada?](https://www.theglobeandmail.com/business/commentary/article-associate-member-of-the-eu-why-not-canada/)
 
-Vancouver no longer has a public health crisis that can be solved by needle exchanges, supervised injection sites, a naloxone-carting population, and pharmaceuticals substituted for illicit drugs. It is going to take more to solve the housing crisis by repurposing older hotels and simply putting roofs over people’s heads — a lot more.
 
-Solving it requires bold leadership and a willingness to go beyond what has been done in the past, using evidence-based solutions that are in the best interests of all residents. Everyone deserves to feel safe, protected and respected, regardless of which neighbourhood they live in."</smaller>
+<tiny>
+But taking into account both the benefits and costs, there exists considerable potential for EU associate membership to be a net win for Canada.
 
-- Editorial in the [Vancouver Sun](https://vancouversun.com/news/daphne-bramham-vancouver-needs-compassionate-solutions-to-street-chaos)
+<tiny>
+Integrating our military production with the EU would benefit our industry since Canadian manufacturing is struggling with the Trump tariffs. If Canada were part of EU defence procurement, we might see the commercial demand that would justify using defence manufacturing to replace declining auto manufacturing. ...The EU seems to want countries such as Canada to expand supply of these commodities. So, I would expect a satisfactory arrangement could be made allowing Canada to have higher than normal carbon emissions. Would the EU tolerate our provincial restrictions on trade and labour mobility given that equivalent restrictions are not allowed within the EU? Probably not and it actually could be a really good thing for Canada. ... These domestic restrictions are a major drag on the Canadian economy.
+
+<tiny>
+The European bureaucracy and complex regulations spring to mind as a key cost. It is possible that EU red tape might further slow innovation in Canada, but the reality is that we already have a lot of red tape and slow innovation, so negotiations may not lead to much growth in red tape. It could in fact lead to less red tape because Canada, which has resolved to cut red tape, has the potential to nudge the EU bureaucracy in a better direction.
+
+<tiny>
+However much U.S. President Trump would be displeased by Canada’s closer ties to the EU, it is unclear that he would further punish us in terms of tariffs, for fear of a backlash by his own voters already worried about affordability. Mr. Carney should continue to pursue closer ties with the EU.
+
 
 
 ## Prescriptive Claims
@@ -238,7 +238,7 @@ Return to the board: look at the reasons/claims given in the ad
 
 What shapes do you see?
 
-<img src="./coffer.jpeg" width=70%">
+<img src="./coffer.jpeg" width=60%">
 
 ---
 
@@ -250,7 +250,7 @@ What color are these fruits?
 
 What color are these chess pieces?
 
-<img src="./chess_illusion.jpeg" width=70%">
+<img src="./chess_illusion.jpeg" width=60%">
 
 ---
 
@@ -288,12 +288,12 @@ Immanuel Kant in the *Critique of Pure Reason* distinguishes between:
 This puts limits on what we can know to be true:
 
 - We can **never** **know** the *noumena*. We can only seek to make inferences about the independent reality based on the **phenomena**. 
+
 >- "Immanuel Kant, the arch-destroyer in the realm of thought, far surpassed in terrorism Maximilian Robespierre." - Heinrich Heine
 
 ## Scientific Truth
 
-We are interested in **scientific truth** attainable through the faculty of Reason. 
-
+We are interested in **scientific truth** attainable through the faculties of Understanding and Reason. 
 
 **scientific truth** *assumes*:
 
@@ -306,9 +306,18 @@ We are interested in **scientific truth** attainable through the faculty of Reas
 
 ## Scientific Truth
 
+Reason gives us the assumptions 2 and 3:
+
+- we assume that, in principle, everything can be explained by a set of unified rules.
+
+This is **dangerous** if we let Reason go, untethered to experience (need 4).
+
+
+## Scientific Truth
+
 Weber (a Kant stan) distinguishes science from "theology" in that 
 
-**In "theology"**: specific facts or values are taken as "revelation" or "faith" and cannot be questioned; other values or facts must be made to fit them.
+**In "theology"**: specific facts or values are taken as "revelation" or "faith" and cannot be questioned; other values or facts must be made to fit them. (Always a move to reason about things we can't experience)
 
 It makes **more assumptions** than science.
 
