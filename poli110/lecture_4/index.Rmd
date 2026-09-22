@@ -1,7 +1,11 @@
 ---
 title: "POLI 110"
-output: ioslides_presentation
-date: "September 16, 2025"
+date: "September 22, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -14,12 +18,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 1. Review
 
-2. What is scientific evidence?
+2. What claims can science test?
+
+3. What is scientific evidence?
 
   - confirmation vs. falsification
   - weak severity requirement
-  - attributes of scientific evidence
-  
+
   
 # Recap
 
@@ -55,38 +60,37 @@ knitr::opts_chunk$set(echo = FALSE)
 colloquially, we refer to both parts as "evidence"
 
 
-## Empirical or Normative?
+## Empirical or Normative? {.smaller}
 
-(1) **About 1.1 million refugees entered Germany during 2015.**
+(1) **Since 2023, 90,000 people have been laid off by U.S. employers attributing the cuts to AI adoption.**
 
-(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.**
+(2) **The occupations most exposed to AI automation are concentrated in clerical, administrative, and customer-support roles.**
 
-(3) **Alexander Gauland: "we don’t like the values of Islam based on sharia [law] that are not compatible with our Basic Law." **
+(3) **Tech industry executive: "Companies that refuse to use AI to cut labor costs will be left behind, and that's simply the cost of progress."**
 
-(4) **Large waves of immigration reduce employment and social services for low-income native Germans.**
+(4) **Widespread AI adoption reduces bargaining power and job security for low-wage workers in customer service and data-entry roles.**
 
-(5) **This influx in refugees *increased* violent crime.**
+(5) **AI adoption has increased overall employment by creating more new jobs than it has displaced.**
 
-(6) **Germany should admit far fewer refugees/immigrants.**
-
-
-## Empirical or Normative?
+(6) **Governments should heavily regulate or slow AI deployment in the workplace to protect existing jobs.**
 
 
-(1) **About 1.1 million refugees entered Germany during 2015.** (empirical)
-
-(2) **The vast majority of these refugees came from Syria and other parts of the Middle East.** (empirical)
-
-(3) **Alexander Gauland: "we don’t like the values of Islam based on sharia [law] that are not compatible with our Basic Law."** (normative)
-
-(4) **Large waves of immigration reduce employment and social services for low-income native Germans.** (empirical)
-
-(5) **This influx in refugees *increased* violent crime.** (empirical)
-
-(6) **Germany should admit far fewer refugees/immigrants.** (normative)
+## Empirical or Normative? {.smaller}
 
 
-## Scientific Truth
+(1) **Since 2023, 90,000 people have been laid off by U.S. employers attributing the cuts to AI adoption.** (empirical)
+
+(2) **The occupations most exposed to AI automation are concentrated in clerical, administrative, and customer-support roles.** (empirical)
+
+(3) **Tech industry executive: "Companies that refuse to use AI to cut labor costs will be left behind, and that's simply the cost of progress."** (normative)
+
+(4) **Widespread AI adoption reduces bargaining power and job security for low-wage workers in customer service and data-entry roles.** (empirical)
+
+(5) **AI adoption has increased overall employment by creating more new jobs than it has displaced.** (empirical)
+
+(6) **Governments should heavily regulate or slow AI deployment in the workplace to protect existing jobs.** (normative)
+
+## Scientific Truth 
 
 **scientific truth** *assumes*:
 
@@ -105,26 +109,43 @@ colloquially, we refer to both parts as "evidence"
 
 <br>
 
-*(last class)*: only **empirical claims** can be tested through science. **normative claims** cannot.
-
 
 #### (2) Has special rules for using evidence and making assumptions to evaluate claims
 
 <br>
 
-*(today)*
 
+
+# Which claims?
+
+## What is the best music?
+
+Think, then write down...
+
+- genre, artist, or song 
+
+## What is the best music?
+
+In groups, discuss your beliefs about the best music.
+
+Discuss: how would you prove who is right... **scientifically**?
+
+## Scientific Truth and Values
+
+Normative claims always reach **beyond empirical experience**.
+
+- thus, we cannot use our sense experiences (phenomena) to learn about them.
+
+Only **empirical claims** can be judged using **scientific evidence**.
 
 
 # What is makes evidence <br> "scientific"?
 
-## Attributes of Scientific Evidence?
+---
 
-Go to [menti.com](https://www.menti.com/fknajkidk8) and enter the code $4826 \ 6654$ 
+**What are key attributes of "scientific evidence"?**
 
-## Attributes of Scientific Evidence?
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/e6bab70316b70b6bc7e3c34baf856c7f/4e6f3e3deed9' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+(Respond with only a word or two)
 
 ---
 
@@ -140,7 +161,7 @@ Go to [menti.com](https://www.menti.com/fknajkidk8) and enter the code $4826 \ 6
 
 - [Cato Institute](https://www.alexnowrasteh.com/p/politically-motivated-violence-is) found that since 1975, of murders in terrorist attacks (excluding 9/11), 63 percent committed by right-wing, 10 percent by left-wing
 
->- What would help you know whether this evidence is "scientific"?
+>- Is this evidence persuasive? Why or why not?
 
 
 ## 2020 Election Fraud
@@ -155,7 +176,6 @@ Reasons:
 
 $Claim:$ **"Presidential Election in Georgia was fraudulently stolen from Donald Trump"**. "counting of [absentee] ballots [in Fulton county - Atlanta] took place in secret after Republican Party observers were dismissed because they were advised that the tabulation center was shutting down for the night."
 
->- Whether claim is correct or not should be very important: was Jan. 6 protest justified? Or was criminal prosecution justified?
 
 
 ## 2020 Election Fraud
@@ -172,27 +192,26 @@ $Claim:$ **Presidential Election in Georgia was fraudulently stolen from Donald 
 
 1. If the claim were true, **then** $\xrightarrow{implies}$ absentee ballots from precincts in Fulton County should be pro-Biden more than absentee ballots from neighboring voting precincts just across the county line in **other counties** (where tabulation did not allegedly take place is secret)
 
-2. Researcher finds absentee ballots from Fulton county precincts were more pro-Biden than neighboring counties: [see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988)
+2. Researcher found absentee ballots from Fulton county precincts were more pro-Biden than neighboring counties: [see here](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3756988)
 
 3. Therefore, concludes: "Fraud in Georgia Election"
 
 
 ## 2020 Election Fraud
 
-**DISCUSS**
 
-Is this scientific evidence of voting fraud? Why or why not?
+Is this evidence persuasive? Why or why not?
 
 
 ## An illustration
 
-<img src="veritasium_1.png" width=90%>
+<img src="veritasium_1.png" width=80%>
 
 Imagine two groups of cities: Some passed restrictions on handgun purchasing and ownership; some did not. Then we counted number of cities where crime increased or decreased
 
 ---
 
-<img src="veritasium_2.png" width=80%>
+<img src="veritasium_2.png" width=60%>
 
 Did gun control increase or decrease crime?
 
@@ -203,7 +222,10 @@ Did gun control increase or decrease crime?
 
 ## Confirmation Bias
 
-Our ability to evaluate and interpret evidence about claims is influenced by a desire to draw conclusions that align with our views.
+We evaluate/interpret evidence in a way that aligns with our existing views...
+
+- we look for evidence that supports our beliefs (b/c it feels good), discount/explain away evidence that does not.
+- how can we avoid this limitation?
 
 
 # Scientific Evidence
@@ -212,67 +234,66 @@ Our ability to evaluate and interpret evidence about claims is influenced by a d
 
 ### **confirmation**
 
-If we have an empirical claim, $H_1$ ($H$ for hypothesis)
+If we have an empirical claim, $C_1$ ($C$ for claim)
 
-and, if $H_1$ (**claim**) were true, then it implies we should make certain empirical **observations** $O_1$
+and, if $C_1$ (**claim**) were true, then it implies we should make certain empirical **observations** $O_1$
 
 Confirmation says that
 
-1. $H_1 \xrightarrow{implies}$ we see $O_1$
+1. $C_1 \xrightarrow{implies}$ we see $O_1$
 
 2. If we see $O_1$
 
-3. Then, $H_1$ is true (or, more "likely" to be true)
+3. Then, $C_1$ is true (or, more "likely" to be true)
 
 ## Confirmation
 
-$H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump** 
+$C_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump** 
 
-1. If $H_1$ were true, **then** $\xrightarrow{implies}$ $O_1:$ absentee ballots from precincts in Fulton County should be pro-Biden more than absentee ballots from neighboring voting precincts just across the county line in **other counties** (where tabulation did not allegedly take place is secret)
+1. If $C_1$ were true, **then** $\xrightarrow{implies}$ $O_1:$ absentee ballots from precincts in Fulton County should be pro-Biden more than absentee ballots from neighboring voting precincts just across the county line in **other counties** (where tabulation did not allegedly take place is secret)
 
 2. $O_1:$ Researcher finds absentee ballots from Fulton county precincts were more pro-Biden than neighboring counties.
 
-3. Therefore, concludes: "Fraud in Georgia Election", $H_1$ is true
+3. Therefore, concludes: "Fraud in Georgia Election", $C_1$ is true
 
 
 ## Confirmation
 
-Many reject **confirmation** because **many different**, incompatible **claims** are **consistent with the same observed evidence**. We are prone to **confirmation bias.**
+Many reject **confirmation:** because **many different**, incompatible **claims** are **consistent with the same observed evidence**. We are prone to **confirmation bias.**
 
-1. $(H_1, H_2, \ldots, H_k) \xrightarrow{imply}$ we see $O_1$
+1. $(C_1, C_2, \ldots, C_k) \xrightarrow{imply}$ we see $O_1$
 
 2. If we see $O_1$
 
-3. Then, $H_1$ is *not proven*
+3. Then, $C_1$ is *not proven*
 
 <br>
 
->- Because we would observe $O_1$ if, e.g. $H_2$ were true and $H_1$ false.
+>- Because we would observe $O_1$ if, e.g. $C_2$ were true and $C_1$ false.
 
 ## 2020 Election Fraud
 
-$H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump** 
+$C_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump** 
 
 <u>**Confirmation?**</u>
 
-1. $H_1 \xrightarrow{implies}$ absentee ballots from precincts in Fulton County should be pro-Biden more than absentee ballots from neighboring voting precincts just across the county line in **other counties**
+1. $C_1 \xrightarrow{implies}$ absentee ballots from precincts in Fulton County should be pro-Biden more than absentee ballots from neighboring voting precincts just across the county line in **other counties**
 
 2. Researcher finds absentee ballots from Fulton county precincts were more pro-Biden than neighboring counties.
 
 3. Therefore, "Fraud in Georgia Election"
 
-## 2020 Election Fraud
+---
 
-- $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump**
-- $H_2:$ **People select residence based on partisanship**
-- $H_3:$ **People select residence based on racial composition of schools**   
+- $C_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Trump**
+- $C_2:$ **People select residence based on partisanship**
+- $C_3:$ **People select residence based on racial composition of schools**   
 
-1. $(H_1, H_2, H_3) \xrightarrow{imply}$: Absentee ballots in Fulton County more Pro-Biden than neighboring counties
+1. $(C_1, C_2, C_3) \xrightarrow{imply}$: Absentee ballots in Fulton County more Pro-Biden than neighboring counties
 
 2. Researcher finds absentee ballots from Fulton county precincts were more pro-Biden than neighboring counties.
 
-3. Therefore, $H_1, H_2, or H_3$ could be valid
-
+3. Therefore, $C_1, C_2, or \ C_3$ could be true
 
 
 ## Falsification vs Confirmation
@@ -291,18 +312,15 @@ $H_1:$ **Presidential Election in Georgia was fraudulently stolen from Donald Tr
 
 Logic of **falsification**: what is implication $O_1$ that we **should not see** if claim is true?
 
-1. $H_1 \xrightarrow{implies}$ we do not see $O_1$
-2. If we see $O_1$
-3. Then, reject $H_1$
-
-
-(board)
+1. $C_1 \xrightarrow{implies}$ we do **not** see $O_1$
+2. If we **see** $O_1$
+3. Then, reject $C_1$
 
 ## Falsification
 
-1. $H_1$ all swans are white $\xrightarrow{implies}$ we do not see black swans ($O_1$)
+1. $C_1$ all swans are white $\xrightarrow{implies}$ we do not see black swans ($O_1$)
 2. If we see $O_1$ (a black swan)
-3. Then, reject $H_1$
+3. Then, reject $C_1$
 
 >- Is it really so easy?
 
@@ -311,19 +329,39 @@ Logic of **falsification**: what is implication $O_1$ that we **should not see**
 <iframe width="560" height="315" src="https://www.youtube.com/embed/7vrP8EplfP0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
+## Falsification
+
+It is hard to use falsification to disprove a claim in one test:
+
+- the claim could be wrong
+- the evidence could be flawed
+- the assumptions for the evidence could be wrong
+
+
+>- but it points us to good rules for scientific evidence
+
 ## Severity Requirement
 
 **weak severity requirement:** 
 
 > "one does not have evidence for a claim if nothing has been done to rule out the ways the claim may be false."
 
-> "If data *x* agree with a claim C, but the method is ... guaranteed to find such agreement, and had little or no capability of finding flaws with C even if they exist, they we have bad evidence, no test"
+> "If data *x* agree with a claim C, but the method is ... guaranteed to find such agreement, and had little or no capability of finding flaws with C even if they exist, they we have **bad evidence, no test**"
 
 (Mayo 2018)
 
-<br>
-
 If evidence fails to meet **weak severity requirement**, it is **not scientific**
+(sniff test)
+
+
+## Severity Requirement
+
+Severity requirement comes from assumptions for scientific truth:
+
+1. there is an **objective reality** (*noumena*) outside of our perceptions $\to$ must give reality opportunity to "push back" against our claim
+2. we all *experience* the ***same*** objective reality with others $\to$ others need to be able to replicate
+3. this reality operates under consistent rules
+4. we can only learn about this objective reality **through our sense experiences** (*phenomena*) as filtered through our minds. $\to$ due to confirmation bias, flawed perception, must **actively** seek out where we may be wrong
 
 
 ## Evidence?
@@ -334,7 +372,7 @@ If evidence fails to meet **weak severity requirement**, it is **not scientific*
 
 <img src="https://thefederalist.com/wp-content/uploads/2015/02/Guns-Dont-Kill-People.jpg">
 
-Does evidence meet severity requirement?
+Does evidence meet weak severity requirement?
 
 ## Evidence?
 
@@ -344,7 +382,7 @@ Does evidence meet severity requirement?
 
 <img src="./covid_meme_2.jpg" width=55%>
 
-Does evidence meet severity requirement?
+Does evidence meet weak severity requirement?
 
 ---
 
@@ -359,37 +397,14 @@ Does evidence meet severity requirement?
 
 ---
 
-<iframe src="https://truthsocial.com/@realDonaldTrump/115049974697549520/embed" class="truthsocial-embed" style="max-width: 100%; border: 0" width="600" allowfullscreen="allowfullscreen"></iframe><script src="https://truthsocial.com/embed.js" async="async"></script>
+Claim: ["US tariffs Worked, with little downside"](https://americancompass.org/the-tariff-tally/)
 
----
-
-Mayo (2018) says: "there is no logical inconsistency with invoking a hypothesis from *conspiracy*: all these instruments conspire to produce results as if H were true but in fact H is false"
-
-This is the "rigged" hypothesis: Something else other than H actually explains the data and that the data appears to align with H.
-
->- This isn't the logic of falsification! One can **always** invoke the conspiracy, even if it is wrong. It fails the **weak severity** requirement.
-
-
-## Scientific Evidence
-
-Mayo (2018) also gives us:
-
-**(strong) Severity Requirement**:
-
-> "We have evidence for a claim C just to the extent it survives a stringent scrutiny. If C passes a test that was highly capable of finding flaws or discrepancies from C, and yet none or few are found, then the passing result, x, is evidence for C"
-
->- evidence is scientific to extent it survives stringent scrutiny
->- we have interrogated whether evidence is sensitive to the possibly flawed **warrants**/**assumptions**
-
-## Scientific Evidence
-
-Severity requirement comes from assumptions for scientific truth:
-
-1. there is an **objective reality** (*noumena*) outside of our perceptions $\to$ must give reality opportunity to "push back" against our claim
-2. we all *experience* the ***same*** objective reality with others $\to$ others need to be able to replicate
-3. this reality operates under consistent rules
-4. we can only learn about this objective reality **through our sense experiences** (*phenomena*) as filtered through our minds. $\to$ due to confirmation bias, flawed perception, must **actively** seek out where we may be wrong
-
+| Causal Link |  Evidence Cited | Evidence Ignored/Downplayed |
+|---|---|---|
+| **Investment** — tariffs should spur capital investment |  | Investment flat/mixed; blamed on AI boom, policy shifts, "instability" |
+| **GDP Growth** — should hold up despite short-term costs | Cited 2.9% growth in last 3 quarters of 2025 | Excluded Q1 2025 (-0.3%, import front-loading); full-year growth (2.1%) below 2024 (2.8%) |
+| **Manufacturing Jobs & Wages** — should rise with domestic demand | Cited late-2025 upticks in job openings, real wages | Manufacturing lost 88K jobs; wage uptick not tested against low-wage job losses |
+| **Trade Deficit** — should shrink over time | Cited falling bilateral deficit with China | Overall deficit flat/record-high; China imports just shifted to other countries |
 
 ## Scientific Evidence
 
@@ -397,28 +412,11 @@ Severity requirement comes from assumptions for scientific truth:
 
 - does not mean the evidence is without flaw; does not mean that the claim is true
 - refers to **procedures** and **assumptions** involved in generating evidence
-- evidence seriously investigates whether claim itself or the assumptions underpinning the evidence are wrong
+- evidence seriously **investigates whether** *claim* itself or the *assumptions* underpinning the evidence are **wrong**
 
 "unscientific evidence":
 
 - bad evidence does not mean claim is false.
-
-
-## Attributes of Scientific Evidence:
-
-**severity** implies that we need:
-
-1. **Systematic use of evidence**: did we use evidence/procedures that stack the deck in favor of supporting/rejecting the claim?
-2. **Acknowledgement of uncertainty**: could evidence arise by chance even if claim is false?
-3. **Consideration of alternatives**: could the claim be false and we see the evidence for *other reasons*?
-
-## Attributes of Scientific Evidence:
-
-To be able to assess **severity** of evidence, we need
-
-**Transparent Procedures**
-
-> "How much and how correctly would we *think* if we did not think as it were in community with others to whom we *communicate* our thoughts, and who communicate theirs with us!" - Kant, *What Does it Mean to Orient Oneself in Thinking*
 
 # Conclusion
 
@@ -426,227 +424,14 @@ To be able to assess **severity** of evidence, we need
 
 Pursuit of scientific truth:
 
+- limits us to **empirical** claims
 - points us to pursue **falsification** rather than **confirmation**
-- evidence judged by **severity requirement**
-- requires transparency and community engagement
+- scientific evidence judged by **severity requirement**
 
-## Conclusion
 
-To know whether evidence meets weak or strong **severity** requirements, we need to know..
+Next time: 
 
-- **what** kind of claims we are dealing with
-- **how** and **why** evidence may lead us to make the **wrong judgment** of a claim
-- **assumptions** that permit evidence to support or reject a claim
+How to use weak severity requirement.
+How scientific evidence is relevant to power.
 
-# Extra Material
 
-## Illustrative Example
-
-Prejudice a group of people is the result of a lack of meaningful contact with members of that group.
-
-*Does inter-group contact reduce prejudice?*
-
-Are efforts to **change the minds** of opponents same-sex marriage through a short conversation **more successful** when those conversations are with gay (rather than heterosexual) canvassers?
-
-## Illustrative Example
-
-### 2014 paper in *Science*: 
-
-Researchers conducted an experiment to answer this question:
-
-<img src="./lacour_title.png" width = 100%>
-
-## Transparent procedures 
-
-### How did you arrive at your conclusion?
-
-- What data / observations did you use?
-- What comparisons did you make?
-- What choices as a researcher did you make, and why?
-
-### Why?
-
-- Others can know the **assumptions** required to find result
-- Others can challenge your choices/assumptions
-- Others can replicate your work (objectivity)
-
-## Transparent procedures 
-
-Treatments:
-
-<img src="./lacour_3.png" height = 100%>
-
-## Transparent procedures 
-
-Who was treated?
-
-<img src="./lacour_2.png" height = 100%>
-
-
-## Transparent procedures 
-
-How did they get treated?
-
-<img src="./lacour_4.png" height = 100%>
-
-## Transparent procedures 
-
-What were the survey questions?
-
-<img src="./lacour_5.png" width = 100%>
-
-
-## Consider alternatives 
-
-### Test claim against other competing claims
-
-- Whichever claim "survives" many different tests is best
-
-### Why?
-
-- Openness to being wrong (no assumption above challenge)
-- Evidence consistent with **different** assumptions (objectivity)
-- One piece of evidence can be consistent with many claims; Best claim generates most useful predictions
-
-
-## Consider alternatives 
-
-**Could it be that people who are less prejudiced more open to making gay friends and acquaintances?**
-
->- Randomized experiment where contact controlled by researchers
-
-## Consider alternatives 
-
-**Could it be any effect is simply from having someone come to the door?**
-
-<br>
-
->- Control group with "recycling canvasser" addresses this concern
-
-## Consider alternatives 
-
-**What if gay canvassers are different than straight in *other* ways?**
-
-<br>
-
-- More articulate? More motivated? More attractive? $\to$ more persuasive
-
->- Authors control or test for these differences, but find none
-
-## Systematic Use of Evidence 
-
-### When we make observations, we have...
-
-- Clear rules for **what** we observe
-- Clear rules for **how** we observe
-- Clear rules for **comparison** of observations
-- Avoid "cherry-picking"
-
-### Why?
-
-- Cherry picking assumes a truth, picks data to support it (not severe)
-- Systematic rules allows others to investigate for themselves
-    - No "secret sauce": (objectivity, enables challenging assumptions)
-
-## Systematic use of evidence:
-
-**What was the sample?**
-
-<img src="./lacour_8.png" width = 100%>
-
-## Systematic use of evidence:
-
-**What were the comparisons?**
-
-<img src="./lacour_9.png" width = 100%>
-
-## Acknowledge uncertainty
-
-### Limitations of finding:
-
-- What questions remain unanswered after the study (what didn't it tell us)?
-- What **assumptions** were made that might not be true?
-
-### How certain or precise are the answers? 
-
-(directly tied to assumptions we make about evidence)
-
-- Acknowledge possibility of results being driven by chance
-- Acknowledge possibility of spurious relationships
-
-
-## Acknowledge uncertainty
-
-**Results have confidence intervals**
-
-<img src="./lacour_11.png" width = 100%>
-
-## Acknowledge uncertainty
-
-**Results leave questions**
-
-<br>
-
-- **Why were indirect effects larger for gay canvassers?**
-- **Would this work for other identity groups?**
-
-
-## Poll
-
-### **Which of these four do you think is the most important part of scientific evidence?**
-
-Go to [menti.com](https://www.menti.com/2d1vgtctsx) and enter the code $4139 \  2801$ 
-
----
-
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/70f9c33dca6f09e27e05c38db082b82a/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
-
-
-## Results:
-
-### Canvassing for same-sex marriage (compared to recycling) **reduced prejudice**
-
-<br> 
-
-### Reductions in prejudice **larger** and **last longer** with **gay-identified canvassers**
-
-# Do you believe these results? 
-
-Poll:
-
-- **NO**: no hands
-- **YES**: one hand
-- **HELP!**: two hands
-
-
----
-
-<img src="./lacour_17.png" width = 100%>
-
-## How was he caught?
-
-<img src="./lacour_irreg.png" width = 100%>
-
-## What of these is most important?
-
-### **Systematic use of evidence**
-
-### **Transparent procedures**
-
-### **Acknowledge uncertainty**
-
-### **Test claim against alternatives**
-
-## Conclusion:
-
-### <u>**Transparent procedures**</u>
-
-### **Systematic use of evidence**
-
-### **Acknowledge uncertainty**
-
-### **Test claim against alternatives**
-
-## Appendix
-
-For the story of the fraud and replication, listen [here](https://www.thisamericanlife.org/584/for-your-reconsideration)
