@@ -1,8 +1,12 @@
 ---
 title: "POLI 110<br>Investigating Politics"
 author: "Michael Weaver"
-date: "September 18, 2025"
-output: ioslides_presentation
+date: "September 24, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Outline
 
 - Recap
+- How to use weak severity
 - Scientific Evidence and Diagnostic Frames
 - Scientific Evidence and Prescriptive Claims
 - Outline of Remainder of the Course
@@ -40,6 +45,7 @@ The reasons given to use greater enforcement powers involve claims:
 - "political violence is illegitimate"
 - "US government should use investigations to target organizations producing the rhetoric that leads to violence"
 
+
 ## Reasons
 
 Some of these reasons are **empirical** claims; some are **normative claims**
@@ -47,15 +53,17 @@ Some of these reasons are **empirical** claims; some are **normative claims**
 - **diagnostic frames**: there is a "problem" to be fixed. 
 - **prescriptive claims**: there is a "solution" we should use. 
 
-
 ## Science and Reasons
 
 Scientific Evidence can only be used with **empirical** claims:
 
 - "most political violence is perpetrated by the left"
-- "rhetoric  from left-leaning organzations led to the assassination"
+- "rhetoric from left-leaning organzations led to the assassination"
 
->- Is this still worthwhile?
+>- How do we check for scientific evidence?
+>- Is this useful?
+
+# Scientific Evidence?
 
 ## Probing Claims
 
@@ -73,8 +81,105 @@ involve value judgments. But they also involve empirical claims.
 
 If the evidence we are given to accept power over us **would always** support the claims, even if the claims are false, we are not **free**. Bad evidence $\to$ Bad reasons
 
-# Science and Diagnostic Frames
+## Severity Requirement
 
+**weak severity requirement:** 
+
+> "one does not have evidence for a claim if nothing has been done to rule out the ways the claim may be false."
+
+> "If data *x* agree with a claim C, but the method is ... guaranteed to find such agreement, and had little or no capability of finding flaws with C even if they exist, they we have **bad evidence, no test**"
+
+(Mayo 2018)
+
+If evidence fails to meet **weak severity requirement**, it is **not scientific**
+(sniff test)
+
+## Severity Requirement
+
+What leads evidence to not meet the bar of *weak severity*? 
+
+Common reasons are: 
+
+- Lack of transparency
+- Unsystematic use of evidence (cherry picking)
+- Failure to consider alternative stories (e.g., this evidence ALWAYS can be found)
+
+---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/akhXd0NVY3s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+What is the claim? What is the evidence? Meet weak severity?
+
+## Evidence?
+
+<img src="https://thefederalist.com/wp-content/uploads/2015/02/Guns-Dont-Kill-People.jpg">
+
+What is the claim? What is the evidence? Meet weak severity?
+
+## Evidence?
+
+<img src="./gun_meme.jpeg">
+
+---
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">White House senior advisor doubles down on voter fraud claims: “Voter fraud is a serious problem in this country” <a href="https://t.co/DC6lVPQznz">pic.twitter.com/DC6lVPQznz</a></p>&mdash; ABC News (@ABC) <a href="https://twitter.com/ABC/status/830787890309369856?ref_src=twsrc%5Etfw">February 12, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+What is the claim? What is the evidence? Meet weak severity?
+
+
+## Evidence?
+
+<img src="./covid_meme_2.jpg" width=55%>
+
+What is the claim? What is the evidence? Meet weak severity?
+
+## Evidence? {.smaller}
+
+[Studies Show That You Should Come Into This Room Right Over Here, And That You Should Come Alone](https://the-toast.net/2015/06/24/studies-show-that-you-should-come-into-this-room-right-over-here-and-that-you-should-come-alone/)
+
+> Recent studies suggest that it's very important that you come into this room right over here just now. Studies also suggest that it's equally important you do not waste time asking questions ... but just step this way through the door very quickly and by yourself, immediately. 
+>
+> The studies were conducted, and the evidence is conclusive: this room just over here is where you should go next, without anyone coming with you. Scientists did them, the studies. Which ones? Yes.
+>
+>The studies are all finished now, and you don’t need to see them. The studies suggested that it’s not important you see the studies at all, but it is important that you hurry along, quickly now, because time is of the essence. The studies say now is the best time for you to be alone in that room.
+
+
+---
+
+Claim: ["US tariffs Worked, with little downside"](https://americancompass.org/the-tariff-tally/)
+
+| Causal Link |  Evidence Used | Evidence Ignored/Downplayed |
+|---|---|---|
+| **Investment** — tariffs should spur capital investment |  | Investment flat/mixed; blamed on AI boom, policy shifts, "instability" |
+| **GDP Growth** — should hold up despite short-term costs | Cited 2.9% growth in last 3 quarters of 2025 | Excluded Q1 2025 (-0.3%, import front-loading); full-year growth (2.1%) below 2024 (2.8%) |
+| **Manufacturing Jobs & Wages** — should rise with domestic demand | Cited late-2025 upticks in job openings, real wages | Manufacturing lost 88K jobs; wage uptick not tested against low-wage job losses |
+| **Trade Deficit** — should shrink over time | Cited falling bilateral deficit with China | Overall deficit flat/record-high; China imports just shifted to other countries |
+
+## Scientific Evidence
+
+"scientific evidence":
+
+- does not mean the evidence is without flaw; does not mean that the claim is true
+- refers to **procedures** and **assumptions** involved in generating evidence
+- evidence seriously **investigates whether** *claim* itself or the *assumptions* underpinning the evidence are **wrong**
+
+"unscientific evidence":
+
+- bad evidence does not mean claim is false.
+
+## Scientific Evidence
+
+Mayo (2018) also gives us:
+
+***strong* severity sequirement**:
+
+> "We have evidence for a claim C just to the extent it survives a stringent scrutiny. If C passes a test that was highly capable of finding flaws or discrepancies from C, and yet none or few are found, then the passing result, x, is evidence for C"
+
+>- evidence is **scientific** to extent it survives stringent scrutiny
+>- we have checked whether evidence relies on flawed **assumptions**
+>- considered whether evidence supports OTHER rival claims
+
+# Science and Diagnostic Frames
 
 ## Science and Diagnostic Frames
 
@@ -161,8 +266,6 @@ $\checkmark$ if science could test:
 
 #### **prescriptive claims**: 
 
-<br>
-
 are normative claims that assert what kinds of actions **should** be taken 
 
 - hint: like a doctor or pharmacist, it *prescribes* a course of action. 
@@ -196,7 +299,7 @@ For it to be true...
 
 ### Even if 1-4 are true: we need to assume that **economic growth** is **desirable** to conclude that (5) is true.
 
-## Revisit our Starting Example
+---
 
 #### **(5) America *should* admit 1 million more immigrants per year**
 
@@ -284,8 +387,6 @@ then science cannot help us, because the disagreement is rooted in **value judge
 ##  Another Example
 
 **"We should donate money for mosquito nets"** is a prescriptive claim.
-
-<br>
 
 - Scientific evidence for empirical claim that "Mosquito nets (A) prevent malaria (B)" 
     - NOT enough to conclude that does not imply "we should do (A)": it depends on how we **value** B
