@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "September 23 2025"
-output: ioslides_presentation
+date: "September 29 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -13,30 +17,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Outline
 
-- Assignments
 - Evaluating Descriptive Claims
 - Concepts
-
-## Assignments:
-
-Assignment 1
-    
-- Recognize when people are attempting to motivate you to do something (look at your actual news/information sources)
-- Recognize what **kinds** of claims they are using
-- **Show us** you know can distinguish between claims
-- Don't quote a claim directly; paraphrase it to make the claim more clear.
-    
-
-## Assignments:
-
-Group Project
-    
-- Revise your topic, if needed, based on TA feedback
-- Causal claim that is linked to the prescriptive claim for your topic
-- Must be able to  "test" the causal claim by surveying students in our class
-- You need to be able to measure the "cause" and the "effect" with survey questions
-- Students in the class must differ in how much of the "cause" they are exposed to
-
 
 ## Objectives
 
@@ -54,9 +36,7 @@ Group Project
 # Descriptive Claims
 
 
-## Descriptive Claims:
-
-### **descriptive claims:**
+## Descriptive Claims: {.smaller}
 
 claims about what exists (or has existed/will exist) in the world: 
 
@@ -79,6 +59,9 @@ claims about what exists (or has existed/will exist) in the world:
 
 (5) **"Countries around the world have become less democratic since 2016."**
 
+(6) **"Countries experiencing higher inflation have had greater declines in democracy."**
+
+
 ## Descriptive Claims:
 
 Why do we care about using science to assess descriptive claims?
@@ -90,27 +73,17 @@ Why do we care about using science to assess descriptive claims?
 
 ## Example
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qeWBy9qFwUc?si=r9amwChhBEs-f--I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
+<iframe src="https://truthsocial.com/@realDonaldTrump/117310724294153031/embed" class="truthsocial-embed" style="max-width: 100%; border: 0" width="600" allowfullscreen="allowfullscreen"></iframe><script src="https://truthsocial.com/embed.js" async="async"></script>
 
 ## Example
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NVpJs1Zf97Q?si=elSdiHNhomQRSIWV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[https://www.instagram.com/reel/DU81DvkDe7r/](Click here)
 
-
-## Example
-
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/arxKu6LWgiA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Example
 
 **How can we decide which claim about "threat to democracy" is right?**
 
-## Descriptive Claims:
-
-<img src='https://api.time.com/wp-content/uploads/2021/01/TIM210118_Capital.CoverFINAL.jpg?quality=85&w=840' width = 50%>
 
 ## Descriptive Claims:
 
@@ -149,19 +122,26 @@ or conversely...
 
 - what are the ways in which evidence may erroneously lead us to accept claims that are false?
 
+---
+
+Claim: "House is not on fire"
+Evidence: smoke detector
+
+| | The House is SAFE <br>*(Claim is True)* | The House is ON FIRE <br>*(Claim is False / Error Exists)* |
+| :--- | :--- | :--- |
+| **ALARM *says*: "SAFE"** <br>*(Claim passes test)* | **True Safety** <br>• Correct result. | **False Pass (Type II Error)** <br>• The alarm stayed silent during a fire. <br>• **This is a blind test!** |
+| **ALARM *says*: "FIRE!"** <br>*(Claim fails test)* | **False Alarm (Type I Error)** <br>• It went off because of burnt toast. | **Fire Detected (Recall/Sensitivity)** <br>• Correctly caught the danger. |
+
 
 ## Our "Toolbox"
 
-### **Concepts**: 
-
+**Concepts:**
 define our terms in a way that is **transparent** and can be used **systematically**. If concepts are opaque or idiosyncratic $\to$ STOP! 
 
-### **Variables**:
-
+**Variables:**
 translate concepts into something that we can (in principle) **observe**. If variables do not correspond to the concept / correspond to *other* concepts $\to$ STOP!
 
-### **Measurement**:
-
+**Measurement:**
 devise **transparent** and **systematic** procedures with known **uncertainty** to observe those attributes of specific cases. If measurement procedure is opaque, likely to suffer from bias, or has high degree of uncertainty $\to$ STOP!  
 
 ## Evaluating Descriptive Claims: 
@@ -176,7 +156,9 @@ In social science we discuss "cases", not in the legal sense, but in this sense:
 
 We are often interested in identifying what general categories this specific **case** belongs to, what is its "type". Or measuring **attributes** of that case. (How much of something it has, e.g.)
 
-## Cases
+---
+
+What cases are relevant to these claims?
 
 (1) "Democracy is a type of political regime."
 
@@ -187,6 +169,8 @@ We are often interested in identifying what general categories this specific **c
 (4) **"Countries in Western Europe are more democratic than those in Eastern Europe."**
 
 (5) **"Countries around the world have become less democratic since 2016."**
+
+(6) **"Countries experiencing higher inflation have had greater declines in democracy."**
 
 
 # Concepts
@@ -270,20 +254,20 @@ Without concepts/abstraction:
 
 Our concepts may abstract too much, with possibly bad consequences.
 
-- Forests
-- Boundaries of countries
+- Imposing abstract concepts onto reality (Forests)
+- Reality pushes back against abstraction (Boundaries of countries)
 
 ## {.centering}
 
-<img src="https://philebersole.files.wordpress.com/2013/07/scottforestry.jpg" width=90%>
+<img src="https://philebersole.files.wordpress.com/2013/07/scottforestry.jpg" width=70%>
 
 ## Conceptual Limits {.centered}
 
-<img src="syria_boundary_map.png" width = 80%>
+<img src="syria_boundary_map.png" width = 60%>
 
 ## Conceptual Limits {.centered}
 
-<img src="syria_control_map.png" width = 70%>
+<img src="syria_control_map.png" width = 60%>
 
 
 ## Concepts
@@ -299,68 +283,57 @@ Our concepts may abstract too much, with possibly bad consequences.
 
 If I claim...
 
-**"Countries around the world have become less democratic since 2016."**
+> "Countries around the world have become less democratic since 2016."
 
-<br>
 
 And I tell you that my definition of "democracy" is"
 
-**"I know democracy when I see it"**
+>"I know democracy when I see it"
 
-<br> 
 
-Can this be "scientific evidence"?
+**Can this be "scientific evidence"?**
 
 ## Concepts and Science
 
 If I claim...
 
-**"Countries around the world have become less democratic since 2016."**
+> "Countries around the world have become less democratic since 2016."
 
-<br>
+And I tell you that my definition of "democracy" is
 
-And I tell you that my definition of "democracy" is"
+>"A democracy is country where leaders are chosen by free and fair elections and everyone is  equal before the law, or the country is the United States."
 
-**"A democracy is country where leaders are chosen by free and fair elections and everyone is  equal before the law, or the country is the United States."**
 
-<br> 
-
-Can this be "scientific evidence"?
+**Can this be "scientific evidence"?**
 
 ## Concepts and Science
 
 If I claim...
 
-**"Countries around the world have become less democratic since 2016."**
-
-<br>
+> "Countries around the world have become less democratic since 2016."
 
 And I tell you that my definition of "democracy" is"
 
-**"A democracy is a country where the leader implements the Will of the People."**
-
-<br> 
-
-Can this be "scientific evidence"?
+> "A democracy is a country where the leader implements the Will of the People."
 
 
+**Can this be "scientific evidence"?**
 
-## Concepts and Science:
 
-Building on our insights about/criteria for science:
 
-#### (1) Concepts need to be **transparent**: 
+## Concepts and Scientific Evidence:
+
+**(1) Concepts need to be *transparent***
 
 clear and accessible definition. Even if we disagree over the label, we can all assess whether a case meets the definition.
 
-#### (2) Concepts must be formulated to be used **systematically**
+**(2) Concepts must be formulated to be used *systematically***
 
 Science is about systematic evidence. Cannot define concepts that include loopholes for one case. Definitions must be tied to attributes that are observable
 
-#### (3) Concepts should be tied to prediction (not strictly necessary to evaluate claims)
+**(3) Concepts should be *useful*:** 
 
-science is fundamentally about prediction, finding regularities. Concepts that do not bring together cases that have some shared behavior/action do not help us understand. 
-
+helpful in understanding patterns
 
 
 ## Concepts and Science:
@@ -386,7 +359,7 @@ For concepts to be useful in testing claims scientifically...
 
 For concepts to be useful in building theories (not our focus):
 
-- traits are **relevant to predicting** how cases described by the concept affect other things or are affected by other things. **Relevant** to ordinary use of the word
+- traits are **relevant to predicting**
 
 ## An example:
 
@@ -411,15 +384,13 @@ Claim: **Countries around the world have become less democratic since 2016.**
 
 >- How do we define "democracy"? 
 >- What definition is Trump using?
->- What definition is Schumer using?
+>- What definition is the Center for American Progress using?
 
 ## An example: Democracy?
 
 Claim: **Countries around the world have become less democratic since 2016.**
 
-Answer: No, the number of democratic states has not changed since 2016.
-
->- Of 193 UN member states, **9 were democratic in 2016** and are all still democratic today
+>- Evidence: No, the number of democratic states has not changed since 2016. Of 193 UN member states, **9 were democratic in 2016** and are all still democratic today
 
 ---
 
@@ -427,7 +398,7 @@ Answer: No, the number of democratic states has not changed since 2016.
 ```{r, echo = F, warning = F, message = F}
 require(ggplot2)
 require(data.table)
-
+require(vdemdata)
 d1 = data.table(year = 2000:2022, democracies = 9)
 
 ggplot(d1, aes(x = year, y = democracies)) +
@@ -490,7 +461,7 @@ ggplot(d2, aes(x = year, y = democracy*100)) +
 
 ### V Dem definition of **democracy**:
 
-Countries where elections are free, fair, and reoccurring; elected officials wield political power de facto; suffrage is universal; political parties and candidates can form freely and compete; and the environment around elections make for a reasonably level playing field with speech, media, and civil society freedom; there are constraints on the executive by the legislature and the judiciary, and the rule of law ensuring respect for civil liberties.
+> Countries where elections are free, fair, and reoccurring; elected officials wield political power de facto; suffrage is universal; political parties and candidates can form freely and compete; the environment around elections make for a reasonably level playing field with speech, media, and civil society freedom; there are constraints on the executive by the legislature and the judiciary; and a strong rule of law ensuring that equal civil liberties are respected.
 
 ---
 
@@ -533,9 +504,9 @@ Which definition of "democracy" is right?
 
 2. **Minimal: "government in which political decisions are made by people who acquire power through competitive elections, the results of which are respected."**
 
-3. **Freedom House**
+3. **Varieties of Democracy**: 
 
-4. **Varieties of Democracy**
+<smaller>Countries where elections are free, fair, and reoccurring; elected officials wield political power de facto; suffrage is universal; political parties and candidates can form freely and compete; the environment around elections make for a reasonably level playing field with speech, media, and civil society freedom; there are constraints on the executive by the legislature and the judiciary; and a strong rule of law ensuring that equal civil liberties are respected.</smaller>
 
 ## Scientific Concepts: An Example {.centered}
 
@@ -553,7 +524,7 @@ Each definition could be used in scientific evidence
 - traits are observable
 - though, not all definitions relevant to prediction (elaborate)
 
-**Choice** of which definition ought to be labeled **"democracy"** reflects **value judgment** and common usage
+**Choice** of which should be labeled **"democracy"** reflects **value judgment** and common usage
 
 - e.g., from the perspective of physics, the name "electron" is not relevant to how we define the properties electrons.
 
