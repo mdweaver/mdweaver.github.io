@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "September 25, 2025"
-output: ioslides_presentation
+date: "October 1, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -14,61 +18,52 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### (1) **Concept Review**
 
-### (2) **Evaluating Descriptive Claims**
+### (2) **Variables and Measures**
 
 ### (3) **Variables**
-
 
 - **Validity**
 
 
-# Misinformation
+# An example
 
-## What is the "Problem"?
+---
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q5V0yap77yg?si=s1BqU4QG0S8ZpNST" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+## Example
 
->- How do we know that misinformation is widespread?
+>- What is the "problem" they are trying fix?
+
+>- What are some descriptive claims implied by the "problem"
+
+>- What do we need to "check" these claims? 
+
+>- What concepts? Definition?
 
 ## Need to use our tools:
 
-### **Concepts**: 
+**Concepts**: define our terms in a way that is **transparent** and can be used **systematically**. If concepts are opaque or idiosyncratic $\to$ STOP!  (board)
 
-define our terms in a way that is **transparent** and can be used **systematically**. If concepts are opaque or idiosyncratic $\to$ STOP! 
+**Variables**: translate concepts into something that we can (in principle) **observe**. If variables do not correspond to the concept / correspond to *other* concepts $\to$ STOP!
 
-### **Variables**:
-
-translate concepts into something that we can (in principle) **observe**. If variables do not correspond to the concept / correspond to *other* concepts $\to$ STOP!
-
-### **Measurement**:
-
-devise **transparent** and **systematic** procedures with known **uncertainty** to observe those attributes of specific cases. If measurement procedure is opaque, likely to suffer from bias, or has high degree of uncertainty $\to$ STOP!  
-
-## Defining Misinformation:
-
-What is **misinformation**?
-
-What is **disinformation**?
+**Measurement**: devise **transparent** and **systematic** procedures with known **uncertainty** to variable in specific cases. If procedure is opaque, suffers from bias, has high uncertainty $\to$ STOP!  
 
 
 ## Defining Misinformation:
-
 
 "Misinformation is know it when I see it":
 
->- If I want to show that misinformation has gotten worse... no transparent and systematic definition let's me label content in line with my claim $\to$ fails weak severity
-
+>- If I want to show that misinformation has gotten worse... no transparent and systematic definition let's me label content in line with my claim $\to$ **fails weak severity**
 
 ## Defining Misinformation:
 
 
 "Misinformation is factually inaccurate information OR whatever is on social media":
 
->- If I want to show that misinformation has gotten worse... absence of systematic definition (loophole for social media) leads me to find more misinformation whenever there is more social media (even if social media content were truthful) $\to$ fails weak severity
+>- If I want to show misinformation has gotten worse... absence of systematic definition (loophole for social media) leads me to find more misinformation whenever there is more social media (even if social media content were truthful) $\to$ **fails weak severity**
 
 ## Defining Misinformation:
-
-concepts must be **transparent**, **systematic**, and about **observable** traits
 
 What is **misinformation**?
 
@@ -82,39 +77,52 @@ What is **disinformation**?
 
 How can we **observe** misinformation in a way that lets us evaluate whether:
 
-"Misinformation has become more widespread in the past decade."
+"Misinformation has become more widespread in recent years."
 
 How can we **observe** disinformation in a way that lets us evaluate whether:
 
-"Disinformation has become more widespread in the past decade."
+"Disinformation has become more widespread in recent years."
 
 <br>
 
->- this points us toward **variables**
-
+>- this points us toward **variables** and **measures**
 
 # Variables <br> and Measures
 
 ## Variables and Measures:
 
-### **variable**(s):
+**variable**: A ***measurable* property** of cases that corresponds to a **concept** or part of a concept and can *potentially* take on different **values** across cases and time (it *vari*es across cases).
 
-A **measurable property** of cases that corresponds to a **concept** or part of a concept and can *potentially* take on different **values** across cases and time (it *vari*es across cases).
-
-- something we could observe **in principle**
+- something we *could* observe **in principle**
 - Chosen to indicate membership in category/presence of attribute (concepts)
-- Variables take on values for cases at a specific point in time
+- take on *values* for cases at a specific point in time
 - *Vari*ation across **cases** and/or over **time**.
 - General (e.g., "fraction of shared news that is false", not "fraction of shared news on Facebook in Canada in 2024 that was false.")
 
 ## Variables and Measures:
 
-### **measure**(s)
+**measure**: A **procedure** for determining the *value* a variable takes for **specific cases** through **observation**.
 
-A **procedure** for determining the *value* a variable takes for **specific cases** based on **observation**.
+- Measures aim to determine the **values** a variable takes for some cases
+- Target some some specific cases we want to know about (e.g., a procedure for estimating the fraction of shared news on Facebook in Canada in 2024 that was false.)
 
-- Measures are proposed to determine the **value** a variable takes for some cases
-- They are always for some specific cases we want to know about (e.g., a procedure for estimating the fraction of shared news on Facebook in Canada in 2024 that was false.)
+## Variables and Measures:
+
+**NOTE**: whats the difference?
+
+Variables can be more or less precise: "level of democracy" vs "ratio of price per area of ads vs classified ads in printed newspapers"
+
+- precise variables may **look** like a measure.
+- but measures always say  **how** we see something
+
+ 
+## A Trivial Example:
+
+**What is the tallest mountain on Earth?** 
+ 
+---
+
+<img src=https://oceanservice.noaa.gov/facts/highestpoint.jpg width=100%> 
 
 ## A Trivial Example:
 
@@ -124,13 +132,10 @@ What is the tallest mountain on the North Shore?
 
 ### **We need to:**
 
-- define a the concept of "tall"
-- create a variable that matches that definition and is observable
-- develop a procedure to obtain **values** of that variable for mountains on the North Shore
+- define a the **concept** of "tall"
+- create a **variable** that matches that definition
+- develop a procedure to obtain **values** for mountains on the North Shore (**measure**)
 
----
-
-<img src=https://oceanservice.noaa.gov/facts/highestpoint.jpg width=100%>
 
 ## Concept to Measurement: 
 
@@ -138,10 +143,9 @@ What is the tallest mountain on the North Shore?
 
 Elevation (distance from peak to sea level)
 
-
 ### $\xrightarrow{}$ Variable: 
 
-Vertical distance in meters from mean sea level to the top of the peak
+Vertical distance in meters from [mean sea level](https://en.wikipedia.org/wiki/Sea_level) to the top of the peak
 
 ### $\xrightarrow{}$  Measure:
 
@@ -185,95 +189,166 @@ Different Answer:
 
 # Variables
 
+## Variables: Example 1
+
+**Claim**: "Canadian exposure to misinformation has increased in recent years."
+
+>- What concepts do we need to define?
+
 
 ## Variables: Example 1
 
-Claim: "Canadian exposure to misinformation has increased in recent years."
+**Claim**: "Canadian exposure to misinformation has increased in recent years."
 
-Concept: **exposure to misinformation** 
+**Concept**: exposure to misinformation
 
-Variable: Proportion of people who believe it is harder to distinguish between true and false information now compared to three years ago  (Statistics Canada Report in 2023)
+**Variable**: Proportion of people who believe it is hard for them to distinguish between true and false information.
 
-Measure: Ask a sample of Canadians to indicate their belief that distinguishing true vs. false information  has gotten "harder", "easier", or "unchanged"
+**Measure**: Ask random sample of Canadians to answer whether they find distinguishing true vs. false information is "harder", "easier", or "unchanged" now compared to 3 years ago.
 
->- Does it fit with "exposure to misinformation"? What kinds of **values** does this variable take?
-
-## Variables: Example 2
-
-Claim: "Canadian exposure to misinformation has increased in recent years."
-
-Concept: **exposure to misinformation** 
-
-Variable: Proportion of people who believe it is harder to distinguish between true and false information now compared to three years ago  (Statistics Canada Report in 2023)
-
-Measure: Ask a sample of Canadians to indicate their belief that distinguishing true vs. false information  has gotten "harder", "easier", or "unchanged"
-
->- Does this variable fit with "exposure to misinformation"? What kinds of **values** does this variable take?
+>- What values can this variable take? What could go wrong here? (Any risk of incorrectly accepting claim ?)
 
 ## Variables: Example 2
 
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
+**Claim**: "Conservative Twitter/X users are exposed to more misinformation."
 
-Concept: **exposure to misinformation**
+>- What concepts do we need to define?
 
-Variable: The average falseness of messages by elite (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) X users followed by a person, weighted by the number of Tweets made by each elite.
+## Variables: Example 2
 
->- Does this variable fit with "exposure to misinformation"? Are there other concepts/variables we need here? 
+**Claim**: "Conservative Twitter/X users are exposed to more misinformation."
+
+**Concept**: **falseness of a message**
+
+**Variable**: rating of a statement on a scale of (True, Mostly True, Half True, Mostly False, False, Pants on Fire)
+
+**Measure**: Ratings of Fact-checked statements on [PolitiFact.com. Methodology Here.](https://www.politifact.com/article/2018/feb/12/principles-truth-o-meter-politifacts-methodology-i/)
+
+>- What values can this variable take? What could go wrong here? (Any risk of incorrectly accepting claim ?)
+
+## Variables: Example 2
+
+**Claim**: "Conservative Twitter/X users are exposed to more misinformation."
+
+**Concept**: **message exposure**
+
+**Variable**: Number of tweets posted by "elite" (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) accounts followed by the user
+
+**Measure**: Twitter/X API to find follows, tweets.
+
+>- What values can this variable take? What could go wrong here? (Any risk of incorrectly accepting claim ?)
+
+## Variables: Example 2
+
+**Concept**: **exposure to misinformation**
+
+**Variable**: The average falseness of messages by elite (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) X users followed by a person, weighted by the number of Tweets made by each elite.
+
+>- What could go wrong here?
 
 [Check your "exposure to misinformation" here!](https://misinfoexpose.com/)
 
-## Variables: Example 2
-
-Variables for one concept may depend on other concepts and their variables:
-
-
-**exposure to misinformation**: variable requires:
-
-- concept and variable for whether a message is "misinformation"
-- concept and variable for "exposure"
 
 ## Variables: Example 2
 
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
+**Claim**: "Conservative Twitter/X users are exposed to more misinformation."
 
-Concept: **falseness of a message**
+**Concept**: **political ideology**
 
-Variable: rating of a statement on a scale of (True, Mostly True, Half True, Mostly False, False, Pants on Fire)
+**Variable**: A score between -1 (liberal) to 1 (conservative) based on the ideology of accounts a user follows on Twitter.
 
-Measure: Ratings of Fact-checked statements on [PolitiFact.com. Methodology Here.](https://www.politifact.com/article/2018/feb/12/principles-truth-o-meter-politifacts-methodology-i/)
+**Measure**: Elite accounts labeled with known ideology; users scored by ideology of accounts they follow.
 
->- Does this variable fit with "falseness of a message"? What kinds of **values** does this variable take?
-
-## Variables: Example 2
-
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
-
-Concept: **message exposure**
-
-Variable: Number of tweets posted by "elite" (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) accounts followed by the user
-
->- Does this variable fit with "message exposure"? What kinds of **values** does this variable take?
-
-## Variables: Example 2
-
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
-
-Concept: **political ideology**
-
-Variable: A score between -1 (liberal) to 1 (conservative) based on the accounts a user follows on Twitter (assuming that they are more likely to follow accounts with similar political views, less like to follow accounts with dissimilar views)
-
->- Does this variable fit with **political ideology**? What kinds of **values** does this variable take?
+>- What values can this variable take? What could go wrong here? (Any risk of incorrectly accepting claim ?)
 
 
-## Variables: Examples
 
-Two issues:
+## Problems
 
-- different variables take on different kinds of values $\to$ depending on the claim, variables with different **levels of measurement** are appropriate 
+Different issues:
 
-- variables may not capture the concept $\to$ variables lack **validity**
+- variables may not capture the concept we want.
+- variables may capture OTHER concepts, as well.
+- measures may be poor.
 
 
+# Validity
+
+## Variables can fail:
+
+Even if we develop a concept that is transparent and systematic...
+
+### **variables may not correspond to the concept**
+
+This may mean...
+
+- at best: what we observe is irrelevant.
+- at worst: regardless of measurement procedure, we are going to find claim to be true, even when it is not (fails weak severity)
+
+## Variable Trouble: Validity
+
+**validity**:  Degree of "fit" between a variables the concept the variable is intended to capture.
+
+- When a variable  "captures" or "maps onto" the concept we want to observe in $\to$ "validity"
+- When a variable "captures" or "maps onto" other concepts we do **not want to observe**  $\to$  lack of "validity"
+- lack of validity *may* $\to$  make incorrect conclusions
+
+## Variable Trouble: Validity
+
+In our discussion: some of the concerns were about **measurement**:
+
+How do you know if the problem is with **validity**:
+
+> **even if** we are able to  **perfectly observe** (**measure**) something, we think still don't capture the concept from the claim.
+
+## Variable Trouble: Validity
+
+"State of Bihar isn't the most politically corrupt in India"
+
+**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
+
+**Variable**: Fraction of political officeholders in a place prosecuted for corruption
+
+**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
+
+>- What factors influence what we'd see for this variable?
+
+---
+
+### **Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
+
+### **Variable**: Fraction of political officeholders in a place prosecuted for corruption
+
+### **Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
+
+### Problems
+
+- Places with lots of corruption do not prosecute corruption
+- Places with low corruption successfully prosecute corruption
+- Places low corruption have stricter corruption laws.
+- Yet **measure** will give correct values for the **variable**
+
+(board)
+
+## Variable Trouble: Weak Severity
+
+**Claim**: "The risk of being a victim of a violent crime is less in Canada than the United States"
+
+**Variable**: Number of violent crimes
+
+>- What factors influence what we would see with this variable?
+>- Would using this variable permit us to find the claim wrong? (board)
+
+## Validity
+
+Where do validity problems come from?
+
+- failure to correspond to the concept
+- attributes other than our concept affect what we observe.
+
+    - sometimes this is due to wrong level of measurement.
+    
+    
 
 # Levels of Measurement
 
@@ -292,9 +367,9 @@ The **kinds** of **values** taken by a variable is called its **level of measure
 
 #### Not to be confused with **measures**
 
-## Levels of measurement: <u>nominal</u>
+## Levels of measurement: <u>nominal</u> {.smaller}
 
-**nominal** levels of measurement: 
+### **nominal** levels of measurement: 
 
 - place cases into **unranked** categories
 - discrete groups based on presence/absence of attribute(s)
@@ -309,9 +384,9 @@ The **kinds** of **values** taken by a variable is called its **level of measure
 - Regime type (e.g. minimalist democracy vs non-democracy)
 - Misinformation/Not Misinformation
 
-## Levels of measurement: <u>ordinal</u>
+## Levels of measurement: <u>ordinal</u> {.smaller}
 
-**ordinal** levels of measurement 
+### **ordinal** levels of measurement 
 
 - place cases into categories that are ranked
 - may have a number attached (or not)
@@ -326,9 +401,9 @@ The **kinds** of **values** taken by a variable is called its **level of measure
 - Ideology (very liberal, somewhat liberal, neither, somewhat conservative, very conservative)
 - Level of democracy
 
-## Levels of measurement: <u>interval</u>
+## Levels of measurement: <u>interval</u> {.smaller}
 
-**interval** levels of measurement 
+### **interval** levels of measurement 
 
 - assign cases **numbers** that **rank** the cases 
 - have intervals between values are meaningful and consistent (1 unit change is the same size each time)
@@ -342,9 +417,9 @@ The **kinds** of **values** taken by a variable is called its **level of measure
 - Date of first COVID-19 vaccination
 - ideological score 
 
-## Levels of measurement: <u>ratio</u>
+## Levels of measurement: <u>ratio</u> {.smaller}
 
-**ratio** levels of measurement 
+### **ratio** levels of measurement 
 
 - assign cases **numbers** that **rank** the cases
 - have **intervals** that are **meaningful** and consistent
@@ -392,104 +467,35 @@ claims about what exists (or has existed/will exist) in the world:
 - what is the **type** of this case? (**nominal**)
 - how much of something is there? (**ordinal**, **interval**, **ratio**)
 - how much of something is there here vs. there/now vs. then? (ordinal, interval , **ratio**)
-- what patterns are there in the co-occurrence of different phenomena (all)
-
-
-# Validity
-
-## Variables can fail:
-
-Even if we develop a concept that is transparent and systematic...
-
-### **variables may not correspond to the concept**
-
-This may mean...
-
-- at best: what we observe is potentially irrelevant.
-- at worst: regardless of measurement procedure, we are going to find claim to be true, even when it is not (fails weak severity)
-
-We have to develop variables that better match the concepts in the claim.
-
-## Variable Trouble: Validity
-
-**validity**:  Degree of "fit" between a variables the concept the variable is intended to capture.
-
-- When a variable  "captures" or "maps onto" the concept we are interested in, then we say they have "validity"
-- When a variable "captures" or "maps onto" other concepts we are not interested in, then we say they lack "validity"
-- **Sometimes** lack of validity$\to$ consistently make incorrect conclusions
-- How to know we are talking about validity problems?: **even if** we are able to  **perfectly observe** (**measure**) something, it doesn't match the concept from the claim.
-
-## Variable Trouble: Validity
-
-"Country X isn't the most politically corrupt"
-
-**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
-
-**Variable**: Fraction of political officeholders in a place prosecuted for corruption
-
-**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
-
-### Does this variable have **validity**? (Does it correspond *only* to the intended concept?)
-
----
-
-"Country X isn't the most politically corrupt"
-
-**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
-
-**Variable**: Fraction of political officeholders in a place prosecuted for corruption
-
-**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
-
-### Problems
-
-- Places with lots of corruption do not prosecute corruption
-- Places with low corruption successfully prosecute corruption
-- Places low corruption have stricter corruption laws.
-- Yet **measure** will give correct values for the **variable**
-
----
-
-"Country X isn't the most politically corrupt"
-
-**Concept**: <u>Political Corruption</u> or "the use of power by government officials for illegitimate private gain"
-
-**Variable**: Fraction of political officeholders in a place prosecuted for corruption
-
-**Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
-
-### Fails Weak Severity:
-
-If problems are real: Country $X$ will not be found "most corrupt" even when it is. (Claim will not be found to be wrong even when it is wrong)
-
+- what patterns are there in the co-occurrence of different phenomena (all, **ratio**)
 
 ## Variable Trouble: Weak Severity
 
-Claim: "The risk of being a victim of a violent crime is less in Canada than the United States"
+**Claim**: "The risk of being a victim of a violent crime is less in Canada than the United States"
 
-Variable: Number of violent crimes
+**Variable**: Number of violent crimes
 
->- Does using this variable permit us to find the claim wrong?
+>- What would be a better variable?
+
+# Wrap up
 
 ## Misinformation: Example 1
 
-
-Stats Canada found that in 2023: 43% of Canadians said "it was becoming more difficult that it was three years earlier to distinguish between true and false information"
+Stats Canada found that in 2025: 47% of Canadians said "it was ... more difficult than it was three years earlier to distinguish between true and false information"
 
 Can we conclude that "misinformation is getting worse"?
 
-## Misinformation: Example 1
+## Variables: Example 1
 
-Claim: "Canadian exposure to misinformation has increased in recent years."
+**Claim**: "Canadian exposure to misinformation has increased in recent years."
 
-Concept: **exposure to misinformation** 
+**Concept**: exposure to misinformation
 
-Variable: Proportion of people who believe it is harder to distinguish between true and false information now compared to three years ago  (Statistics Canada Report in 2023)
+**Variable**: Proportion of people who believe it is hard for them to distinguish between true and false information.
 
-Measure: Ask a sample of Canadians to indicate their belief that distinguishing true vs. false information  has gotten "harder", "easier", or "unchanged"
+**Measure**: Ask random sample of Canadians to answer whether they find distinguishing true vs. false information is "harder", "easier", or "unchanged" now compared to 3 years ago.
 
->- Does this variable lack **validity**? Could it lead us to accept the claim even when its wrong?
-
+>- Do you have validity concerns here?
 
 ## Misinformation: Example 2
 
@@ -498,49 +504,28 @@ Measure: Ask a sample of Canadians to indicate their belief that distinguishing 
 
 <img src="./misinformation_ideology.png" width=55%>
 
-
 ## Misinformation: Example 2
 
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
+**Concept**: **exposure to misinformation**
 
-Concept: **falseness of a message**
+**Variable**: The average falseness of messages by elite (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) X users followed by a person, weighted by the number of Tweets made by each elite.
 
-Variable: rating of fact-checked statements on a scale of (True, Mostly True, Half True, Mostly False, False, Pants on Fire)
+>- Do you have validity concerns here?
 
-Measure: Ratings of Fact-checked statements on [PolitiFact.com. Methodology Here.](https://www.politifact.com/article/2018/feb/12/principles-truth-o-meter-politifacts-methodology-i/)
-
->- Does this variable lack **validity**? Could it lead us to accept the claim even when its wrong?
-
-## Misinformation: Example 2
-
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
-
-Concept: **message exposure**
-
-Variable: Number of tweets posted by "elite" (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) accounts followed by the user
-
->- Does this variable lack **validity**? Could it lead us to accept the claim even when its wrong?
-
-## Misinformation: Example 2
-
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
-
-Concept: **exposure to misinformation**
-
-Variable: The average falseness of fact-checked statements by elite (e.g., politicians, bureaucrats, famous personalities, advocacy groups, and media organizations) X users followed by a person, weighted by the number of Tweets made by each elite.
-
->- Does this variable lack **validity**? Could it lead us to accept the claim even when its wrong?
+[Check your "exposure to misinformation" here!](https://misinfoexpose.com/)
 
 
 ## Misinformation: Example 2
 
-Claim: "Conservative Twitter/X users are exposed to more misinformation."
+**Claim**: "Conservative Twitter/X users are exposed to more misinformation."
 
-Concept: **political ideology**
+**Concept**: **political ideology**
 
-Variable: A score between -1 (liberal) to 1 (conservative) based on the accounts a user follows on Twitter (assuming that they are more likely to follow accounts with similar political views, less like to follow accounts with dissimilar views)
+**Variable**: A score between -1 (liberal) to 1 (conservative) based on the ideology of accounts a user follows on Twitter.
 
->- Does this variable lack **validity**? Could it lead us to accept the claim even when its wrong?
+**Measure**: Elite accounts labeled with known ideology; users scored by ideology of accounts they follow.
+
+>- Do you have validity concerns here?
 
 ## Validity and Strong Severity
 
@@ -562,3 +547,7 @@ It is not enough to just *imagine* that there might be a validity problem:
 - different levels of measurement 
 - variables may lack **validity**: even if data perfectly captures what we want to observe, our conclusions are flawed
 - lack of validity *may* lead to failure to meet weak severity
+
+
+
+
