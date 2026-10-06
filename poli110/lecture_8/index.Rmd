@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "October 2, 2025"
-output: ioslides_presentation
+date: "October 6, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -24,11 +28,6 @@ TeX: {extensions: ["cancel.js"]}
 
 ### (1) **Recap**
 
-- Evaluating Descriptive Claims
-- Variables vs. Measures
-- Validity
-
-
 ### (2) **Validity**
 
 - recognizing it
@@ -36,8 +35,8 @@ TeX: {extensions: ["cancel.js"]}
 
 ### (3) **Measurement Error**
 
-- **Bias**
-- **Random**
+- Bias
+- Random
 
 
 
@@ -46,13 +45,13 @@ TeX: {extensions: ["cancel.js"]}
 
 ---
 
-### In 2020
+### In 2020: Breonna Taylor
 
 <img src="./say_her_name_0.jpg" width=80%>
 
 ---
 
-### In 2024
+### In 2024: Laken Riley
 
 <img src="./say_her_name_1.jpg"  width=80%>
 
@@ -60,79 +59,50 @@ TeX: {extensions: ["cancel.js"]}
 
 ### Two "diagnostic claims"
 
-1. "There is racial bias in the use of police violence against Black Americans."
-2. "There is widespread violence perpetrated by illegal immigrants."
+1. "There is racial bias in the use of police violence against Black Americans." (**EXAMPLE 1**)
+2. "There is widespread violence perpetrated by illegal immigrants." (**EXAMPLE 2**)
 
 
 - Activists point to **highly publicized events** as **evidence** for their claims.
 
 >- Are these individual deaths compelling evidence for the descriptive claims? Why/Why not?
 
----
-
-### Severity and Evidence for Descriptive Claims
+## Severity and Descriptive Claims
 
 We want our evidence to:
 
 - be *capable* of showing claim to be wrong (*weak* severity)
 - stand up to multiple checks on where it could be wrong (*strong* severity): 
-- pass "severe" tests that can EASILY find claim to be wrong.
+- pass tests that can EASILY find claim to be wrong.
 
+
+## Severity and Descriptive Claims
 
 We want to be sensitive to:
 
 - what properties of evidence $\to$ absence of *weak* severity
-- what are the multiple failure points that we can check $\to$ *strong* severity
+- what are the failure points that we can check $\to$ *strong* severity
 
----
 
-### Descriptive Claim 
+## Variables
 
-**Concepts not transparent/systematic** $\xrightarrow{\xcancel{weak \ severity}}$
+**variable**: A ***measurable* property** of cases that corresponds to a **concept** or part of a concept and can *potentially* take on different **values** across cases and time (it *vari*es across cases).
 
-Variable does not map onto concept **(lack of validity)** $\xrightarrow{\xcancel{weak \ severity}}$
-
-Procedure does not return the true values **(measurement error)** $\xrightarrow{\xcancel{weak \ severity}}$ 
-
-## Variables and Measures:
-
-### **variable**(s):
-
-A **measurable property** of cases that corresponds to a **concept** or part of a concept and can *potentially* take on different **values** across cases and time (it *vari*es across cases).
-
-- something we could observe **in principle**
+- something we *could* observe **in principle**
 - Chosen to indicate membership in category/presence of attribute (concepts)
-- Variables take on values for cases at a specific point in time
+- take on *values* for cases at a specific point in time
 - *Vari*ation across **cases** and/or over **time**.
 - General (e.g., "fraction of shared news that is false", not "fraction of shared news on Facebook in Canada in 2024 that was false.")
 
-## Variables and Measures:
+## Measures
 
-### **measure**(s)
+**measure**: A **procedure** for determining the *value* a variable takes for **specific cases** through **observation**.
 
-A **procedure** for determining the *value* a variable takes for **specific cases** based on **observation**.
-
-- Measures are proposed to determine the **value** a variable takes for some cases
-- They are always for some specific cases we want to know about (e.g., a procedure for estimating the fraction of shared news on Facebook in Canada in 2024 that was false.)
+- Measures aim to determine the **values** a variable takes for some cases
+- Target some some specific cases we want to know about (e.g., a procedure for estimating the fraction of shared news on Facebook in Canada in 2024 that was false.)
 
 
-## Validity
-
-**validity** is the extent to which variable (what we hope to **observe**) matches the concept:
-
-**lack of validity**  arises when:
-
-- what we **observe** in the variable is partly or wholly due to a **different** concept than intended
-  
-    - lack of validity involves an explanation for **why** cases would take values on a variable that is due to something other than the concept.
-
-- what we **observe** in the variable is only **partially** captures the concept 
-
-    - lack of validity involves an explanation for **why** important part of concept does not influence the values we would observe 
-
-
-## Variable Trouble: Validity
-
+## Variable Trouble
 
 "Country X isn't the most politically corrupt"
 
@@ -143,7 +113,32 @@ A **procedure** for determining the *value* a variable takes for **specific case
 **Measure**: Match criminal court defendants in corruption prosecutions to list of politicians.
 
 
-## Variable Trouble: Weak Severity
+## Variable Trouble
+
+| | Country X is NOT corrupt <br>*(Claim is True)* | Country X IS highly corrupt <br>*(Claim is False / Error)* |
+| :--- | :--- | :--- |
+| **Data *says*: "NOT CORRUPT"** <br>*(Claim passes test / Low prosecutions)* | **True Honesty** <br>• Correct result. <br>• Low prosecutions. accurately reflects low corruption | **False Pass (Type II Error)** <br>• **Weak Severity Fail!** <br>• Highly corrupt, but system does not prosecute corruption. |
+| **Data *says*: "CORRUPT!"** <br>*(Claim fails test / High prosecutions)* | **False Fail (Type I Error)** <br>• Low corruption, but strict laws and successful enforcement create high prosecutions. | **Corruption Detected** <br>• Highly corrupt, and the system  prosecutes them. |
+
+
+
+---
+
+**validity** is the extent to which variable (what we hope to **observe**) matches the concept:
+
+**lack of validity**  arises when:
+
+- what we **observe** in the variable is partly or wholly due to a **different** concept than intended
+  
+    - must have explanation for **why** what we observe is due to some other concept.
+
+- what we **observe** in the variable only **partially** captures the concept 
+
+    - must have explanation for **why** important part of concept does not influence the what we would observe 
+
+
+
+## Validity
 
 "The risk of being a victim of a violent crime is less in Canada than the United States"
 
@@ -154,13 +149,25 @@ A **procedure** for determining the *value* a variable takes for **specific case
 **Measure**: Tabulations of violent crimes created by police agencies
 
 
+>- Any problems with validity here? (Board: make a table!)
+
+
+# Why do validity problems arise?
+
+## Example
+
+1. "There is racial bias in the use of police violence against Black Americans." (**EXAMPLE 1**)
+
+
 ---
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">For every 10,000 black people arrested for violent crime, 3 are killed<br><br>For every 10,000 white people arrested for violent crime, 4 are killed<br><br>I&#39;m going to keep tweeting this until someone can explain to me how this is possible if there is truly pervasive racial bias in policing</p>&mdash; Leonydus Johnson (leave/me/alone) (@LeonydusJohnson) <a href="https://twitter.com/LeonydusJohnson/status/1267466345844740098?ref_src=twsrc%5Etfw">June 1, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
+>- Claim? Concepts? Variables? Measures?
+
 ## Validity
 
-**Claim**: "Racial bias in policing is not pervasive" 
+**Claim**: "Racial bias in policing is **not** pervasive" 
 
 **Concept**: racial bias in policing defined as racial disparity in police use of force *in excess* of "reasonable" considerations such as "objective threat" posed by suspect
 
@@ -170,47 +177,56 @@ A **procedure** for determining the *value* a variable takes for **specific case
 
 ### Discuss: Does this variable have **validity**?
 
-
-# Board
-
 ## Validity
 
-**Claim**: "Racial bias in policing is not pervasive" 
-
-**Concept**: racial bias in policing defined as racial disparity in police use of force *in excess* of "reasonable" considerations such as "objective threat" posed by suspect
-
-**Variable**: difference by race in number of people killed by police per persons arrested for violent crimes
-
-**Measure**: count press-reported police-shootings by race, FBI data on arrests by crime-type and race
-
-
-Even if we perfectly measure violent crime arrests by race, does variable match concept?
-
-## Validity
-
-**Claim**: "Racial bias in policing against Black Americans is not pervasive." 
-
-**Concept**: racial bias in policing defined as racial disparity in police use of force *in excess* of "reasonable" considerations such as "objective threat" posed by suspect
-
-**Variable**: difference by race in number of people killed by police per persons arrested for violent crimes
-
-
-If our **alternative story** of **how this variable is generated** (how are values produced) is correct, then fail weak severity: variable cannot show claim to be wrong
+### **BOARD**
 
 
 ---
 
-### Board
 
-Variable "overlaps" multiple concepts.
-
-1) Average propensity for violent crime
-
-2) Racial bias in arrests/charges 
+| | Racial Bias is NOT Pervasive <br>*(Claim is True)* | Racial Bias IS Pervasive <br>*(Claim is False / Error Exists)* |
+| :--- | :--- | :--- |
+| **Data *says*: "NOT PERVASIVE"** <br>*(Claim passes test / No racial difference per arrest)* | **True Equality** <br>• Correct result. <br>• Racial bias is genuinely low, accurately reflected by equitable treatment per arrest. | **False Pass (Type II Error)** <br>• **Weak Severity Fail!** <br>• Racial bias is high, but racial bias in arrests/charges inflated the denominator, masking excessive force. |
+| **Data *says*: "PERVASIVE!"** <br>*(Claim fails test / High racial difference per arrest)* | **False Alarm (Type I Error)** <br>• Disparities look high in the data, but are not. | **Racial Bias Detected** <br>• Correct result. <br>• Systemic bias is pervasive, and the disproportionate use of deadly force per arrest correctly flags the danger. |
 
 
+## Why Lack of Validity?
 
-## Validity
+1. Variable "overlaps" multiple concepts. 
+2. Different factors cause or produce what we observe!
+
+(board)
+
+## Lack of Validity
+
+**lack of validity**:
+
+- requires a **story** about why what we would see as values of the **variable** are the result of something **other** than the concept we are interested in.
+
+
+## Lack of Validity
+
+**lack of validity**:
+
+Just because we have a **story** about why variable lacks validity:
+
+- does not mean we are right: $\to$ must collect new evidence capable of seeing if **this story** is false.
+- "checking" this story $\to$ "strong severity"
+
+>- Test: [do police discriminate against Black Americans in stops/charges?](https://sites.stat.columbia.edu/gelman/research/published/frisk9.pdf)
+
+## Lack of Validity
+
+**lack of validity**:
+
+Just because variable lacks validity:
+
+- does **not** *necessarily* mean absence of **weak severity**
+- if lack of validity makes it **harder** to accept claim/**easier** to reject claim: evidence **for** the claim passed a **hard** test
+
+
+## Example
 
 **Claim**: "Illegal immigrants commit murder at higher rates" 
 
@@ -241,7 +257,7 @@ ggplot(d, aes(x = undocumented_pct, y = murder_pct)) +
   ggtitle("Evidence against Undocumented Migrants as Murderers?")
 ```
 
->- Assume we correctly count undocumented migrants and murders: Does this have validity?
+>- Does this have validity?
 
 ---
 
@@ -251,8 +267,7 @@ One common **type** of validity problem:
 
 **ecological inference**: using correlations of attributes at **aggregate** levels (e.g. country, province, city) to making inferences about **individual** behaviors. (undocumented migrants in a city, murderers in a city)
 
-- If **assumptions correct**, this *can* work: if behaviors (murder) of individuals of different "types" (undocumented migrants, everyone else) are the same across contexts (proportion of people that are undocumented migrants)
-
+- If **assumptions correct**, this *can* work, but usually not.$^*$
 
 ---
 
@@ -266,41 +281,16 @@ One common **type** of validity problem:
 - even if we have **perfect data** on aggregate variables (e.g. undocumented migrants, murders), aggregate patterns $\to$ incorrect conclusions about individual patterns
 - relationship between these attributes look different at **individual** vs **aggregate** level, because individual behaviors differ across and within cities/provinces/countries 
 
----
+
+# New Example 
+
+## Example
+
+"There is widespread violence perpetrated by illegal immigrants." (**EXAMPLE 2**)
 
 
-```{r include = T, echo = F, message=F, warning=F}
 
-require(data.table)
-require(ggplot2)
-d = fread("./migrant_crime.csv")
-d[, murder_pct := murder_rate/100000*100]
-d[, undocumented_pct := undocumented_pct*100]
-ggplot(d, aes(x = undocumented_pct, y = murder_pct)) +
-  geom_point() + 
-  geom_smooth(method = 'lm', se = F) +
-  xlab("Undocumented Percent") +
-  ylab("Murderer Percent") +
-  theme_bw() +
-  ggtitle("Evidence against Undocumented Migrants as Murderers?")
-```
-
->- What are some possible stories for "what could go wrong" with this variable?
-
-## Validity
-
-**lack of validity**:
-
-- requires a **story** about why what we would see as values of the **variable** are the result of something **other** than the concept we are interested in.
-- just because we have a story about why variable lacks validity does not mean we are right: $\to$ must collect new evidence capable of seeing if this story is false.
-- just because variable lacks validity does not **necessarily** mean absence of **weak severity**
-
-
-# Example
-
----
-
-### Undocumented Migrants and Murder
+## Undocumented Migrants and Crime
 
 [Light et al 2020](https://doi.org/10.1073/pnas.2014704117)  investigate claim: "undocumented migrants are prone to violent crime"
 
@@ -312,9 +302,9 @@ ggplot(d, aes(x = undocumented_pct, y = murder_pct)) +
 
 ---
 
-<img src="./light_et_al.jpg" width=55%>
+<img src="./light_et_al.jpg" width=45%>
 
----
+## Undocumented Migrants and Crime
 
 Not the end of the story: [Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality) at Center for Immigration Studies dispute these findings:
 
@@ -331,7 +321,7 @@ Complaints focus on:
 - It takes time for undocumented immigrants in custody to be identified. 
 
     - $\to$ **undercounting** of arrested undocumented
-    - $\to$ more **undercounting** in recently arrested
+    - $\to$ more undercounting in *recently* arrested
 
 - Only people in custody for longer periods of time for serious crimes likely to be thoroughly checked:
 
@@ -341,12 +331,13 @@ Complaints focus on:
 
 >- Are Kennedy et al pointing to a **lack of validity** in the "undocumented" variable?
 
----
-
-<img src="./cis.jpg" width=80%>
+## Undocumented Migrants and Crime
 
 
->- Argue that by "fixing" measurement procedures, conclusions reversed.
+<img src="./cis.jpg" width=50%>
+
+
+>- By "fixing" measurement procedures, conclusions reversed.
 >- This is a claim about **measurement error**
 
 ## Measurement Error
@@ -383,7 +374,7 @@ Let's say a **variable** is the number of breaches of Sexual Misconduct Policy i
 
 ---
 
-<img src="./ubc_io.png" width=75%>
+<img src="./ubc_io.png" width=70%>
 
 ## Measurement Error
 
@@ -393,9 +384,9 @@ Let's say a **variable** is the number of breaches of Sexual Misconduct Policy i
 
 **Measure**: Reporting from the [UBC Investigations Office](https://io.ubc.ca/).
 
-That implies $13$ incidents in 2024-2025 Academic Year (last available data). 
+That implies $15$ incidents in 2025-2026 Academic Year (last available data). 
 
-39 reports $\to$ 21 investigations $\to$ 19 completed investigations $\to$ 13 breaches found
+45 reports $\to$ 26 investigations $\to$ 20 completed investigations $\to$ 15 breaches found
 
 >- Is this observed value **too high**? **too low**? **correct**? Why?
 
@@ -427,11 +418,9 @@ Measures may suffer from **both**.
 - can have an *upward* (observed value too high) or *downward* (observed value too low) bias
 - can occur for nominal/categorical values: e.g., systematically misclassifying undocumented migrants as legal
 - **not** "politically" biased
-- bias might not be the same for all cases or different across subgroups
-    - example: economic evaluations and partisanship in surveys
 
 
-## Measurement Error
+## Measurement Error: Bias
 
 [Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality) argue that [Light et al](https://doi.org/10.1073/pnas.2014704117)'s measurement procedures lead to, on average:
 
@@ -442,9 +431,9 @@ $$\xrightarrow{then} \mathrm{measurement \ bias}$$
 Though, this debate over measurement isn't over.
 
 
----
+## Measurement Error: Bias
 
-<img src=https://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/jqdpkwv9_uyxmhowjz7gew.png width=100%>
+<img src=https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/SR_25.10.03_econ_1.png?w=640 width=50%>
 
 bias different in different subgroups
 
