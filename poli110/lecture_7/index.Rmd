@@ -349,6 +349,7 @@ Where do validity problems come from?
     - sometimes this is due to wrong level of measurement.
     
     
+<!-- 
 
 # Levels of Measurement
 
@@ -476,6 +477,8 @@ claims about what exists (or has existed/will exist) in the world:
 **Variable**: Number of violent crimes
 
 >- What would be a better variable?
+
+-->
 
 # Wrap up
 
