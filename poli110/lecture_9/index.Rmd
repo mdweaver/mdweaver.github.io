@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "October 7, 2025"
-output: ioslides_presentation
+date: "October 8, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -30,9 +34,7 @@ TeX: {extensions: ["cancel.js"]}
 
 # Example
 
----
-
-### Undocumented Migrants and Murder
+## Undocumented Migrants and Crime
 
 [Light et al 2020](https://doi.org/10.1073/pnas.2014704117)  investigate claim: "undocumented migrants are prone to violent crime"
 
@@ -44,9 +46,9 @@ TeX: {extensions: ["cancel.js"]}
 
 ---
 
-<img src="./light_et_al.jpg" width=55%>
+<img src="./light_et_al.jpg" width=45%>
 
----
+## Undocumented Migrants and Crime
 
 Not the end of the story: [Kennedy et al](https://cis.org/Report/Misuse-Texas-Data-Understates-Illegal-Immigrant-Criminality) at Center for Immigration Studies dispute these findings:
 
@@ -63,7 +65,7 @@ Complaints focus on:
 - It takes time for undocumented immigrants in custody to be identified. 
 
     - $\to$ **undercounting** of arrested undocumented
-    - $\to$ more **undercounting** in recently arrested
+    - $\to$ more undercounting in *recently* arrested
 
 - Only people in custody for longer periods of time for serious crimes likely to be thoroughly checked:
 
@@ -71,14 +73,13 @@ Complaints focus on:
     - $\to$ need to use DHS **and** Texas prison (TDCJ) checks on migration status
 
 
->- Are Kennedy et al pointing to a **lack of validity** in the "undocumented" variable?
-
----
-
-<img src="./cis.jpg" width=80%>
+## Undocumented Migrants and Crime
 
 
->- Argue that by "fixing" measurement procedures, conclusions reversed.
+<img src="./cis.jpg" width=50%>
+
+
+>- By "fixing" measurement procedures, conclusions reversed.
 >- This is a claim about **measurement error**
 
 ## Measurement Error
@@ -90,6 +91,14 @@ Complaints focus on:
 #### **Measurement Error** is about link between **measure** and **variable**.
 
 <hr style="height:8px; visibility:hidden;" />
+
+## Goals
+
+You should be able to:
+  
+1. Recognize the **type** of measurement error (bias vs random) from the pattern of errors
+2. Tell **stories** about why a specific measure might produce bias or random error
+3. Judge whether an error's **direction** and **magnitude** affect the severity of evidence for a claim
 
 # Measurement Error
 
@@ -103,14 +112,6 @@ $$\mathrm{Value}_{observed} - \mathrm{Value}_{true} \neq 0 \xrightarrow{then} \m
 
 If what we observe is **different** from the true value for a case (difference is not 0), then there is measurement **ERROR**
 
-(note: we don't usually *know* the true value!)
-
-## Measurement Error
-
-Kennedy et al are saying that using the incorrect procedures leads to:
-
-$$\mathrm{Migrant \ Crime \ Rate}_{observed} < \mathrm{Migrant \ Crime \ Rate}_{true} \\\xrightarrow{then} \\ \mathrm{measurement \ error}$$
-
 
 ## Measurement Error
 
@@ -122,7 +123,7 @@ Let's say a **variable** is the number of breaches of Sexual Misconduct Policy i
 
 ---
 
-<img src="./ubc_io.png" width=75%>
+<img src="./ubc_io.png" width=70%>
 
 ## Measurement Error
 
@@ -132,9 +133,9 @@ Let's say a **variable** is the number of breaches of Sexual Misconduct Policy i
 
 **Measure**: Reporting from the [UBC Investigations Office](https://io.ubc.ca/).
 
-That implies $13$ incidents in 2024-2025 Academic Year (last available data). 
+That implies $15$ incidents in 2025-2026 Academic Year (last available data). 
 
-39 reports $\to$ 21 investigations $\to$ 19 completed investigations $\to$ 13 breaches found
+45 reports $\to$ 26 investigations $\to$ 20 completed investigations $\to$ 15 breaches found
 
 >- Is this observed value **too high**? **too low**? **correct**? Why?
 
@@ -154,27 +155,9 @@ $$\xrightarrow{then} \mathrm{measurement \ error}$$
 - **bias**/**systematic measurement error**
 - **random measurement error**
 
-Different the patterns of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ that we see.
-
-Different implications for severity of evidence.
+Differ in the patterns of $\mathrm{Value}_{observed} - \mathrm{Value}_{true}$ that we see.
 
 Measures may suffer from **both**.
-
-## Types of Measurement Error
-
-1. We have definitions for **what** these two types of errors are
-2. But there are **many** reasons **why** these errors can arise
-3. Similar validity, concerns about measurement error involves a **story** about how the data we collect records the **wrong values**
-4. Severe testing involves **checking out** these stories
-5. Measurement error may or may not be a problem for **weak severity**
-
-## Types of Measurement Error
-
-You need to:
-
-1. Recognize two types of measurement error, by definition/attributes
-2. Recognize/tell stories about why these errors might arise for a **specific** measure
-3. Identify whether a specific story about measurement error affects the severity of evidence for a claim
 
 ## Measurement Error: Bias
 
@@ -184,7 +167,6 @@ You need to:
 - can have an *upward* (observed value too high) or *downward* (observed value too low) bias
 - can occur for nominal/categorical values: e.g., systematically misclassifying undocumented migrants as legal
 - **not** "politically" biased
-- bias might not be the same for all cases/ may differ across subgroups
 
 
 ## Measurement Error: Bias
@@ -195,24 +177,27 @@ $$\mathrm{Migrant \ Homicide \ Rate }_{observed} - \mathrm{Migrant \ Homicide \ 
 
 $$\xrightarrow{then} \mathrm{measurement \ bias}$$
 
----
 
-<img src=https://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/POLL/jqdpkwv9_uyxmhowjz7gew.png width=100%>
+
+## Measurement Error: Bias
+
+<img src=https://www.pewresearch.org/wp-content/uploads/sites/20/2025/10/SR_25.10.03_econ_1.png?w=640 width=50%>
 
 bias different in different subgroups
 
+
 ## Measurement Error: Random
 
-**random measurement error**: errors that occur due to *random* features of measurement process. Even if observed values are sometimes wrong, they are, **on average**, correct
+**random measurement error**: errors that occur due to *random* features of measurement process or phenomenon. So even if observed values are sometimes wrong, they are, **on average**, correct
 
 - Due to chance, we get values that are too high or too low
-- There is no tilt one way or another (no bias): errors are only "noise"
+- There is no tilt one way or another (no bias): "noise"
 - **random** here means: errors **unrelated** to true value; errors **equally likely** to be over- or under- estimate.
 - In aggregate, values that are "too high" are balanced out by values that are "too low" compared to the truth
 
 ## Measurement Error: Random
 
-**Variable**: relative change in COVID-19 infections
+**Variable**: incidence of COVID-19 infections
 
 **Measure**: "Composite wastewater influent is collected over a 24-hour period from wastewater treatment plants (WWTPs). Samples are collected 2-3x per week at each WWTP and are transported by the BCCDC PHL for analysis. Wastewater samples are concentrated by ultracentrifugal filtration, nucleic acids extracted and SARS-CoV-2 envelope gene (E gene) is detected by real-time quantitative polymerase chain reaction (RT-qPCR)."
 
@@ -234,13 +219,6 @@ can lead to errors in measurement, but these errors...
 - *probably* unrelated to amount of true rate of COVID infections
 - *probably* equally likely to lead to over and under count
 - likely cancel out in the long run.
-
-## Measurement Error: Bias vs Random Errors
-
-We don't usually **know** for sure whether measurement errors are **bias** or **random**:
-
-- either we need to test for bias (against a better data collection process)
-- or we need to know more about the **process** creating the data we observe
 
 
 ## Digression: Histograms
@@ -274,6 +252,7 @@ ggplot(bc_data, aes(x = age)) + geom_histogram(breaks = seq(0,90,10), col = "whi
 Histograms of **measurement errors** for many cases help us tell us what **type** of measurement error
 
 - we can pretend we are omniscient/have "gold standard" data and compared "observed" and against "true" values.
+- different patterns $\to$ random error vs bias
 
 ---
 
@@ -291,118 +270,43 @@ ggplot(plot_data, aes(value, fill = Measure)) +
   geom_histogram(bins = 100, alpha = 0.5, position = 'identity') +
   labs(title = 'Measurement error for\ndifferent measures of variable X') + xlab("Observed Value X - True Value X") + ylab("# of Cases") + 
   theme_bw() +
-  geom_vline(xintercept = 0, colour = 'red')
+  geom_vline(xintercept = 0, colour = 'red') +
+  geom_text(aes(x=-0.5, label="No Error", y=2000), colour="red", angle=90, size = 4, fontface = "plain") 
 ```
 
 
-## How do we know...
-
-...if there is measurement error?
-
-We only observe what we observe, how do we know procedure does not return the **true** value?
-
-1. comparison with known quantities or better measurement procedures (e.g., comparing scales)
-2. we understand **process** of observation to identify limitations and incentives that might lead to errors.
-
-## What do we do...
-
-...if there is measurement error?
-
-Measurement error is everywhere. Does not mean we can say nothing about descriptive claims.
-
-1. Depending on the descriptive claim, some types of measurement error are tolerable.
-2. Depending on the **direction** of the measurement error, we may still be able to evaluate claims with **weak severity**
-3. Depending on the **magnitude** of the measurement error, errors may be irrelevant to **weak severity**
-
-## Goals:
-
-1. Understand **reasons** measurement error occurs, so we can recognize it.
-2. Know what the **pattern** of errors are: so we can identify the **type**, **direction** (if biased), and  **magnitude** of the error.
-3. Guidelines for how errors affect evidence for claims.
 
 
-## Example: Facebook and Hate Crime
+# Can we measure that?
 
-### [**Mueller and Schwarz (2021)**](https://doi.org/10.1093/jeea/jvaa045) ask:
+## Descriptive Claim
 
-<br>
+Something relevant to politics today
 
-#### **Do hate-crimes occur more frequently at times when there is more social-media hate speech?**
-
-<br>
-
-- Are there higher levels of **anti-refugee** violence in weeks with more social media anti-refugee hate speech?
-- Address this question in the context of Germany (2015-2017)
-
-## Example: Facebook and Hate Crime
-
-Need two concepts/variables/measures:
-
-1. Anti-refugee violence
-2. Anti-refugee rhetoric on Facebook
-
-<br>
-
-For each one, what are possible kinds of measurement error?
-
-## Example: Facebook and Hate Crime
-
-**concept**: Anti-refugee Violence
-
-<br>
-
-**variable**: Number of attacks against refugee persons and property
-
-<br>
-
-**measure**: (for each week)
-
-<br>
-<img src='./mueller_data_1.png'>
-
-## Example: Facebook and Hate Crime
-
-**concept**: Anti-refugee speech on social media
-
-<br>
-
-**variable**: Number of anti-refugee posts on Facebook per week
-
-<br>
-
-**measure**:
-
-<br>
-
-<img src='./mueller_data_2.png'>
-
-## Example: Facebook and Hate Crime
-
-Example Facebook posts:
-
-<br>
-
-<img src='./mueller_post_1.png'>
-
-<br>
-
-<img src='./mueller_post_2.png'>
+## Variable
 
 
----
-
-What pattern do we see here between anti-refugee Facebook posts and anti-refugee violence over time?
-
-<img src='./mueller_fig.png' width =80%>
-
----
-
-Could the sources of measurement error we lead us to observe shared trends between anti-refugee posts and anti-refugee violence when they in fact don't?
-
-<img src='./mueller_fig.png' width =80%>
+## Measure
 
 
-# Why measurement error?
+## Measurement Error
+
+
+# How do we know there is error?
+
+## How Do We Know There Is Error?
+
+We only observe what we observe, so how do we know a procedure misses the **true** value?
+
+1. **Compare** with known quantities or a better procedure (e.g., comparing scales). This lets us test directly for error and bias.
+2. **Understand the process** that generates the data, including its limitations and incentives. 
+    - this is often our only option, because we usually don't *know* for sure whether there bias or random error is present.
+
+>- Understand kinds of reasons measurement errors arise (different stories)
+
+
+
+
 
 ## Why bias happens:
 
@@ -411,10 +315,10 @@ Measurement Bias arises from observations  made by and of people:
 - humans involved in observation process may have mis-perceptions
 - humans who are being observed have motives/incentives to mis-represent things
 - humans use measurement tools for purposes other than intended
+- available measurement tool prone to over/under-count
 
-## Systematic Measurement Error/Bias
 
-### Causes
+## Why bias happens:
 
 **($1$) Subjectivity/Perspective**: Researcher/data collector systematically perceives and evaluates cases incorrectly
 
@@ -424,46 +328,52 @@ Examples:
 - Perceptions of "objective threat" written in police reports
 - Little and Meng (2024) on democracy scores.
 
----
-
-### Systematic Measurement Error/Bias Causes
+## Why bias happens:
 
 **($2$) Motives/Incentives to mis-represent**: beyond researchers, people *generating* the data
 
 - **social norms** may discourage revelation of information; downward bias in "undesirable" phenomena
     - e.g. survey measure of racism or drug use $\xrightarrow{}$ **social desirability bias**
-    - e.g. values in society about what is important/interesting affects news reporting
 - **incentives to hide/misrepresent**: political actors have strategic reasons to conceal information from each other
-    - e.g. police use-of-force encounter reports on "objective threat" of black suspects [(Fryer 2019)](https://scholar.harvard.edu/files/fryer/files/empirical_analysis_tables_figures.pdf) (upward bias)
+    - e.g. police use-of-force encounter reports 
     - e.g. wealthy people may misrepresent assets to avoid taxation (downward bias)
     
-## Example: Immigration
+## Example: Gender Bias in Politics
 
-If we surveyed Canadians and asked them:
-    
-**"And would you oppose stopping all immigration into Canada?"**
+Consider the following statement: "Men are naturally better leaders than women." Do you...
 
-They can choose "oppose", "support", "neither support nor oppose"
+<ol type="A">
+  <li>Strongly disagree</li>
+  <li>Disagree</li>
+  <li>Neither agree nor disagree</li>
+  <li>Agree</li>
+  <li>Strongly agree</li>
+</ol>
 
-> **Do you think this survey response would suffer from measurement bias?**
+## Example: Gender Bias in Politics
 
->- What **direction** of measurement bias?
+[Chen et al (2023)](https://doi.org/10.1017/S0008423922000890) ask this of sample of Canadians in 2018. They find that $15.5$ percent of Canadians agreed with this statement.
 
-## Example: Immigration
+>- Do you believe this measurement has bias? Why or why not?
+>- What do you think the *direction* of the bias would be?
 
-**List experiments**
+## Example: Gender Bias in Politics
 
-<img src="./immig_2.png" width=100%>
+**List experiment**: *How many* statements do you agree with?
 
-(board)
+1. Cooperation between politicians and parties produces better public policy.
+2. Recreational marijuana consumption should be legalized.
+3. When necessary for public safety, police should have access to cell phone records without a warrant.
+4. All politicians can be trusted to spend the public's money wisely.
 
-## Example: Immigration
+>- Random subset also include the sexist statement
 
-**List experiments** in US vs Canada
+## Example: Gender Bias in Politics
 
-<img src="./immig_3.png"  width=100%>
+[Chen et al (2023)](https://doi.org/10.1017/S0008423922000890):
 
-How many people are **opposed** to **stopping** immigration?
+$20.1$ percent agreed that "Men are naturally better leaders than women", when counting how many items they agreed with.
+
 
 ## Example: Immigration
 
@@ -472,9 +382,7 @@ When discussing crime rates for natural-born citizens, legal immigrants, and und
 Why might it be difficult to correctly count?
 
 
-## Systematic Measurement Error/Bias
-
-### Causes
+## Why bias happens:
 
 **($3$) Use of data beyond its intended purposes**: without knowing how data is produced, unanticipated errors can arise.
 
@@ -494,23 +402,16 @@ Why might it be difficult to correctly count?
 - Only people in custody for longer periods of time for serious crimes likely to be thoroughly checked:
 
     - $\to$ undercounting is lower/minimal for **homicide convictions**
-    - $\to$ need to use DHS **and** Texas prison (TDCJ) checks on migration status
-
----
-
-<img src="./cis.jpg" width=80%>
-
-
->- Argue that "fixing" measurement problems, conclusions reversed.
+    - $\to$ need to use ICE **and** Texas prison (TDCJ) checks on migration status
 
 ---
 
 [Alex Nowsrateh](https://www.alexnowrasteh.com/p/illegal-immigrants-have-a-low-homicide) shows that these conclusions came from misunderstanding of the Texas data:
 
-- people labelled as undocumented by DHS also labeled as undocumented by TDCJ
-- some people labelled as undocumented by DHS later discovered to be legal by TDCJ
+- people labelled as undocumented by ICE **also** labeled as undocumented by TDCJ
+- some people labelled as undocumented by DHS later **discovered to be legal** by TDCJ
 
-Kennedy et al takes **count** of all incidents where people labelled as undocumented from DHS and TDCJ. May **double count** individuals.
+Kennedy et al takes **count** of all incidents where people labelled as undocumented from ICE or TDCJ. May **double count** individuals.
 
 ---
 
@@ -523,9 +424,7 @@ Kennedy et al takes **count** of all incidents where people labelled as undocume
 <img src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F919ac29e-cc37-4adc-9924-a72edde951c3_712x468.png">
 
 
-## Random Measurement Error
-
-### Causes
+## Why Random Measurement Error?
 
 - Imperfect memory (survey/interviews)
 - Mistakes (mis-click on a survey)
@@ -534,21 +433,21 @@ Kennedy et al takes **count** of all incidents where people labelled as undocume
 - Researcher interpretation 
     - e.g. random differences in classifying cases (like flipping a coin when you can't tell how to classify case)
 
-Anything  that is **unrelated** to the actual values for the cases we want to observe and may **equally** over-/under-estimate. Unless the error is literally generated by e.g. rolling dice, we only *assume*/*argue* that it is random
+Anything  that is (a) **unrelated** to the actual values for cases, and (b) may **equally** over-/under-estimate. Unless the error is literally generated by e.g. rolling dice, we only *assume*/*argue* that it is random
     
-## If errors, then...
-
-1. We need to distinguish between **random** and **systematic** errors. Does the **source** of the error suggest a **systematic** direction to the error?
-
-2. Is the **magnitude** of the error likely to be large or small? Is it possible to assess how wrong it could be?
-
-3. If the error is a **bias**, what is the systematic pattern that is produced? (upward?, downward?)
     
-These answers can inform us whether measurement error affects whether evidence has weak severity. (next lecture)
+# Conclusion
 
-## If errors, then...
+## What Do We Do About It?
 
+Measurement error is everywhere, but we can still say something about descriptive claims.
 
+Need to know: 
+
+1. **Type**: some types of error are tolerable for some claims
+2. **Direction**: if the bias works against the claim, we can still evaluate it with **weak severity**
+3. **Magnitude**: small errors may be irrelevant to **weak severity**
+    
     
 ## Conclusion:
 
