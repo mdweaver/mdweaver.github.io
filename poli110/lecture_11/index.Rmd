@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "October 14, 2025"
-output: ioslides_presentation
+date: "October 15, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +26,6 @@ TeX: {extensions: ["cancel.js"]}
 
 ## Objectives
 
-
 ### (1) **Sampling Error**
 
 - **Sampling** key ideas
@@ -34,7 +37,9 @@ TeX: {extensions: ["cancel.js"]}
 
 ---
 
-### Are you concerned about your employment prospects upon graduations?
+<br>
+
+**What are your feelings about your employment prospects after graduating?**
 
 ---
 
@@ -50,13 +55,14 @@ Take this survey on your current work status
 
 ---
 
-### How can we know that unemployment is higher for young adults?
+<br>
 
----
+**How can we know whether unemployment is higher for young adults?**
 
-### Example
 
-Unemployment rates:
+
+## Unemployment rates
+
 
 **"What proportion of Canadians who are in the labour force are unable to find a job?"**
 
@@ -64,49 +70,45 @@ Unemployment rates:
 
 We can't interview **all Canadians**. Can't interview **all Canadians ages 20-24**
 
----
-
-### Example
+## Unemployment rates
 
 How do we know about unemployment rates?
 
->- Labour Force Survey
+>- [Labour Force Survey](https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&SDDS=3701)
 
 ---
 
-<img src="https://www150.statcan.gc.ca/pub/71-543-g/2025001/fig/fig2.1-eng.png" width=50%>
+<img src="https://www150.statcan.gc.ca/pub/71-543-g/2025001/fig/fig2.1-eng.png" width=40%>
 
----
+## Unemployment rates
 
-### Example
+Survey ~ 65,000 households across Canada:
 
-Survey ~ 65,000 households across Canada
+- selected via stratified random sampling
 
 Surveyed household member reports employment information on all household members
 
-Conducted via: in person interview, telephone interview, or online survey
+Interviews conducted via: in person, telephone, or online survey
 
 ---
 
-<img src="lfs_unemployment.png" width=90%>
+<img src="./lfs_unemployment.png" width = 90%>
 
----
-
-### Example
+## Unemployment rates
 
 How might this procedure go wrong?
 
+>- Specifically for people your age?
 
 # Sampling and Sampling Error
 
 ## Sampling
 
-### **Sometimes we cannot answer descriptive claims directly**
+**Sometimes we cannot answer descriptive claims directly**
 
 We would have to observe **too many** cases.
 
 Can we say something about **all cases** based on **a few cases**?
-
 
 ## Sampling
 
@@ -118,13 +120,9 @@ Can we say something about **all cases** based on **a few cases**?
 
 **inference**: description of the (unmeasured) **population** we make *based on the (measured) **sample***
 
-and there is **uncertainty** about what is true about the population, because we **only measure a sample**
+and there is *uncertainty* about what is true about the population, because we *only measure a sample*
 
----
-
-### Example:
-
-Since the Federal elections earlier this year:
+## PM Approval
 
 **"What proportion of Canadians approve of Mark Carney's performance as PM?"**
 
@@ -132,51 +130,47 @@ Since the Federal elections earlier this year:
 
 We can't interview **all Canadians**...
 
-## Sampling
+## PM Approval
 
-Survey of  $1562$ Canadian adults (October 3-5 2025)
+Survey of  $1538$ Canadian adults (September 5-7 2026)
 
 <img src="./carney_poll.png" width=80%>
 
 
-## Example:
+---
 
-[Measuring PM approval](https://leger360.com/wp-content/uploads/2025/10/Fed_Pol_September2025.pdf)
 
 The **population**:
 
-- All Canadian adults (18 years of age or older)
+> All Canadian adults (18 years of age or older)
 
-The **sample**: 
+The **[sample](https://documents.leger360.com/hubfs/%C3%89tudes%20M%C3%A9diatiques/%C3%89tudes%20M%C3%A9diatiques%20-%202026/9.%20%C3%89tudes%20m%C3%A9diatiques%20septembre%202026/Fed%20Poll%208%20sept/Leger_Fed_Pol_september_2026_EN.pdf)**: 
 
-- $1562$ Canadians interviewed online. Randomly chosen from online panel of Canadians recruited to participate in online surveys through random invitation. Weighted according to age, gender, education, mother tongue, children in the household, and geographic region, as per 2021 Census.
+> $1538$ Canadians interviewed online. Randomly chosen from online panel recruited for online surveys by random invitation. Weighted by to age, gender, education, mother tongue, children in the household, and region, as per 2021 Census.
 
 The **inference**:
 
-- 47% ($\pm 2.5\%$, 19 times out of 20) of Canadians say they approve of the job Mark Carney has done as PM. 41% disapprove. 11% don't know.
+> 57% ($\pm 2.5\%$, 19 times out of 20) of Canadians say they approve of the job Mark Carney has done as PM. 36% disapprove. 7% don't know.
 
----
-
-### **sampling error**:
+## Sampling error
 
 The difference between the value of the measure for the sample and the true value of the measure for the population
 
 $$\mathrm{Value}_{sample} - \mathrm{Value}_{population} \neq 0 \xrightarrow{then} \mathrm{sampling \ error}$$
 
->- With surveys, it is the answer we got in the sample vs. if we could survey EVERYONE
+>- With surveys, it is the answer we got in the sample vs. answer if we could survey EVERYONE
+>- Sampling error is a **measurement error** where we draw incorrect *inferences* about a *population* from a *sample*
 >- Just like **measurement error**, there are two types: one that is **bias** and one that is **random**
->- Sampling error is a **kind of measurement error**
 
 
----
+## Sampling error
 
-### **sampling error**:
+$1$. **sampling bias**: cases in the sample are not representative of the population
 
-$1$. **sampling bias**: cases in the sample are not representative of the population: not every member of population has equal chance of being in sample. Error is consistently in the same direction.
+- not every member of population has *equal chance* of being in sample. 
+- as results, error is consistently in the same direction.
 
----
-
-### **sampling error**:
+## Sampling error
 
 $2$. **random sampling error**: in choosing cases for a sample, by chance, we get samples where the average is **too high** or **too low** compared to the population average
 
@@ -184,27 +178,20 @@ $2$. **random sampling error**: in choosing cases for a sample, by chance, we ge
 - but these errors would cancel out (if we repeated the sampling procedure). 
 - this produces the **uncertainty** of sampling (e.g., margin of error).
 
-
 ---
 
-### What might drive **sampling bias** here? **random sampling error**?
-
-The **population**:
-
-- All Canadian adults (18 years of age or older)
+**What might drive *sampling bias* here? *random sampling error*?**
 
 The **sample**: 
 
-- $1562$ Canadians interviewed online. Randomly chosen from online panel of Canadians recruited to participate in online surveys through random invitation. Weighted according to age, gender, education, mother tongue, children in the household, and geographic region, as per 2021 Census.
+> $1538$ Canadians interviewed online. Randomly chosen from online panel recruited for online surveys by random invitation. Weighted by to age, gender, education, mother tongue, children in the household, and region, as per 2021 Census.
 
 The **inference**:
 
-- 47% ($\pm 2.5\%$, 19 times out of 20) of Canadians say they approve of the job Mark Carney has done as PM. 41% disapprove. 11% don't know.
+> 57% ($\pm 2.5\%$, 19 times out of 20) of Canadians say they approve of the job Mark Carney has done as PM. 36% disapprove. 7% don't know.
 
 
----
-
-### **sampling error**:
+## Sampling error
 
 To understand **random sampling error** and **sampling bias**, need to understand...
 
@@ -214,15 +201,12 @@ the **sampling distribution**:
 - we only ever get the result from the **one sample** we draw, but can **imagine** the results could have been different (counterfactually)
 - it is **not** something we actually know, except in simulations
 
-(e.g., the percent of survey respondents who approve of PM Carney in every possible sample of $1562$ drawn from online survey pool)
-
----
+## Sampling error
 
 We can visualize a **sampling distribution** using a **histogram** to illustrate:
 
 - what generates **sampling bias**
 - what influences the **random sampling error**
-
 
 ## Random Sampling
 
@@ -231,13 +215,12 @@ We can visualize a **sampling distribution** using a **histogram** to illustrate
 This procedure creates **samples** that:
 
 - on average, give **unbiased** inferences about the population (**regardless of sample size**) (no sampling bias)
-    - **unbiased** in that, across all samples, on average the sample average are the same as the population average
+    - **unbiased** in that, across *all possible samples*, on average the sample averages are the same as the population average
 - come from knowable **sampling distribution**: produces **known uncertainty** (described by the field of statistics)
 
 (board: intuitions as to *why*)
 
-
-## Example: {.build}
+## Example: Employment {.build}
 
 Let's say we want to understand employment among students in this course.
 
@@ -274,30 +257,22 @@ When samples are  **not random** they may suffer from sampling **bias** and the 
 
 >- we don't know the random element in sampling process $\to$ unknown sampling distribution
 
----
-
-### **Random Sampling**
+## Random Sampling
 
 Let's now imagine that the **population** is students in class today who completed the survey...
 
 To illustrate random sampling error: We can simulate taking **random samples** of students in class and plot the **sampling distribution**
 
-[See here](https://mdweaver.shinyapps.io/shiny_sampling_110/)
+[See here](https://mdweaver.shinyapps.io/survey_sampling/)
 
-histogram = Sampling distribution (the averages of different random samples)
 
-Blue line = Population Mean (true in-class average)
 
-Red line = Sampling Distribution Mean (average of SAMPLE averages)
-
----
-
-### **Random Sampling**
+## Random Sampling
 
 Takeaways:
 
 1. With random sampling, **random sampling errors** balance out, sampling procedure returns true population values *on average* $\to$  **no sampling bias!**
-2. If sampling is not random, we get **sampling bias**, errors do not cancel out
+2. If sampling is not random $\to$ **sampling bias**
 2. **Random sampling errors** get smaller as the sample size increases $\to$ **known uncertainty**
 3. Sampling distributions are **often** "bell curves" ([normal distribution, due to CLT](https://www.youtube.com/watch?v=zeJD6dqJ5lo)) $\to$ **known uncertainty**/**can estimate sampling distribution**
 
@@ -309,33 +284,35 @@ Random sampling **always** involves **random sampling error** $\to$ uncertainty
 How might interpretation of evidence for claims be changed due to this random sampling error?
 
 >- We want to know whether we find evidence in support of some claim, EVEN IF THAT CLAIM WERE FALSE, due to **random sampling error** (by chance).
->- We want to know "how severe" is this evidence? **How likely** could it lead us to wrong conclusions, **due to chance**?
+>- We want to know "how severe" is this evidence? **How likely** could it lead us to wrong conclusions, **due to chance**? 
+
+(board, contrast w/ bias)
 
 ## Random Sampling Error and Severity
-
-Random sampling **always** involves **random sampling error**.
 
 How might our conclusions be changed due to this random sampling error?
 
-
 - We want to know: what fraction of Canadian adults approve of  Carney as PM? 
-- We observe 47% approval in the sample.
+- We observe 57% approval in the sample.
 - Based on this sample and known random sampling errors: what **range of values** are likely to contain the **true** approval rate for the population?
 
->- **Margin of error/Confidence Interval**: range of values that have some **advertised probability** of containing the truth.
+>- **Margin of error/Confidence Interval**: range of values that have some **advertised probability** of being an error.
 
 ---
 
-**inference**: 47% ($\pm 2.5\%$, 19 times out of 20) approve of Carney as PM. 
+**inference**: 57% ($\pm 2.5\%$, 19 times out of 20) approve of Carney as PM. 
 
-This implies that true population approval of Carney is in:
+This implies that **true approval** of Carney in the population is:
 
-- the range between 44.5% and 49.5%
-- the advertised probability that this is correct 95%; 5% chance truth is **outside** this range
+- within the range between 54.5% and 59.5%
+- the advertised probability that this is correct 95%; 
+- 5% chance that this is in error (truth  is **outside** this range)
+
+<br>
+
+>- severity focuses on **error probabilities**
 
 ## Random Sampling Error and Severity
-
-Random sampling **always** involves **random sampling error**.
 
 How might our conclusions be changed due to this random sampling error?
 
@@ -348,12 +325,17 @@ How might our conclusions be changed due to this random sampling error?
 
 **hypothesis tests**: compare an "alternative" (claim is correct) versus a "null" hypothesis (claim is not correct). Tell us probability of observing data for a claim **by chance**, if the claim were false. (**error probability**)
 
-**alternative hypothesis**: young adult unemployment in 2025 $>$ young adult unemployment in 2005
+**alternative hypothesis (claim is correct)**: young adult unemployment in 2025 $>$ young adult unemployment in 2005
 
-**null hypothesis**: young adult unemployment in 2025 $\leq$ young adult unemployment in 2005
+**null hypothesis (claim is incorrect)**: young adult unemployment in 2025 $\leq$ young adult unemployment in 2005
+
+## Random Sampling Error and Severity
+
+**hypothesis tests**: compare an "alternative" (claim is correct) versus a "null" hypothesis (claim is not correct). Tell us probability of observing data for a claim **by chance**, if the claim were false. (**error probability**)
+
 
 >- Asks: what is the **probability** of observing, e.g. 2.9% higher unemployment in 2025 vs 2005, in survey samples, *assuming* **null hypothesis** were true.
->- this probability is the **$p$-value**: probability of accepting claim due to chance, if it were false
+>- this probability is the **$p$-value**: probability of accepting claim *due to chance*, if it were false
 
 ## Random Sampling Error and Severity
 
@@ -361,23 +343,22 @@ How might our conclusions be changed due to this random sampling error?
 
 - what is the random sampling procedure?
 - was this random sampling actually followed?
-- is there non-response/missingness? 
+- is there non-response/missingness? [(see here for US election polls)](https://www.nytimes.com/article/times-siena-poll-methodology.html)
+>- they totally ignore sampling bias
 
 ## Random Sampling Error?
 
 <img src="./538_2.png" width=90%>
 
-Each dot is the result of a survey of voters during the 2020 US Presidential Election. These surveys suggested that by election day voters preferred Biden to Trump by $8.4$ percent. Biden **actually** won by only $4.5$ points.
-
-Is this **sampling error**? Is this a **random error** or a **bias**? 
+Surveys said voters preferred Biden to Trump by $8.4$ percent. Biden **actually** won by only $4.5$ points. **Sampling Error**? **Random error** or **Bias**?
 
 ## Random Sampling Error?
 
-<img src="./poll_4.png" width=100%>
+<img src="./poll_4.png" width=90%>
 
 ## Random Sampling Error?
 
-<img src="./poll_5.png" width=100%>
+<img src="./poll_5.png" width=90%>
 
 >- These examples point to **sampling bias**
 
