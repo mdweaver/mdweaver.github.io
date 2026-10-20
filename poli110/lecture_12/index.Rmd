@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "October 16, 2025"
-output: ioslides_presentation
+date: "October 20, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -44,22 +48,21 @@ require(magrittr)
 
 and there is **uncertainty** about what is true about the population, because we **only measure a sample**
 
-## Example:
+---
 
 The **population**:
 
-- All American adults (18 years of age or older)
+> All American adults (18 years of age or older)
 
 The **sample**: 
 
-- $1381$,$1477$ Americans 18 years of age and older were "contacted through a multi-mode design: By text or online. All potential respondents were screened for age. Probability-based sampling frames include random-digit-dialing cell phone sample plus cellphone sample based on billing address."
+> $1381$ (June 2025), $1477$ (September 2025) Americans 18+ "contacted ... by text or online. Probability-based sampling frames include random-digit-dialing cell phone sample plus cellphone sample based on billing address."
 
 The **inference**:
 
-Americans say politically-motivated violence is a major problem:
-
-- 73% ($\pm 2.3$%) in June 2025
-- 77% ($\pm 2.1$%)  in September 2025
+> Americans say politically-motivated violence is a major problem:
+> - 73% ($\pm 2.3$%) in June 2025
+> - 77% ($\pm 2.1$%)  in September 2025
 
 
 ## Sampling
@@ -90,13 +93,12 @@ $$\mathrm{Value}_{sample} - \mathrm{Value}_{population} \neq 0 \xrightarrow{then
 
 When thinking about **random sampling error** and **sampling bias**, we should think about...
 
-the **sampling distribution**:
+the **sampling distribution**: [See here](https://mdweaver.shinyapps.io/survey_sampling/)
 
 - the results (e.g., sample average) from all possible samples we **could have gotten**, using this sampling procedure.
 - we only ever get the result from the **one sample** we draw, but can **imagine** the results could have been different (counter-factually)
 - it is **not** something we **actually know**, except in simulations
 
-(e.g., the percent of survey respondents who think political violence is a major problem across all possible samples of $1477$)
 
 ---
 
@@ -110,7 +112,7 @@ Americans say politically-motivated violence is a major problem:
 
 Can we say concern about politically-motivated violence has gone up?
 
->- What might a skeptic say? (What might make us see this increased concern, even if concern has not increased?)
+>- What might a skeptic say?
 
 ---
 
@@ -121,15 +123,49 @@ Skeptic might say:
 
 > "It could be that concern about political violence remained at 73%, and the increase is due to random sampling error!"
 
-**null hypothesis**: there has been NO increase in concern (claim of an increase is wrong)
 
----
+## Random Sampling Error and Severity
+
+Random sampling **always** involves **random sampling error** $\to$ uncertainty
+
+How might interpretation of evidence for claims be changed due to this random sampling error?
+
+>- We want to know whether we find evidence in support of some claim, EVEN IF THAT CLAIM WERE FALSE, due to **random sampling error** (by chance).
+>- We want to know "how severe" is this evidence? **How likely** could it lead us to wrong conclusions, **due to chance**? 
+
+(board, contrast w/ bias)
+
+## Random Sampling Error and Severity
+
+Unlike sampling bias, random sampling error $\to$ a *knowable* uncertainty:
+
+When sample size ($n$) $\uparrow$...
+
+- random errors $\downarrow$ in size
+- *sampling distribution* $\to$ approximately *normal*/"bell-shaped"
+
+[See here](https://mdweaver.shinyapps.io/survey_sampling/)
+
+
+## Random Sampling Error and Severity
+
+One approach to assess severity is:
+
+**hypothesis tests**: compare an "alternative" (claim is true) versus a "null" hypothesis (claim is false). Tell us probability of observing data for a claim **by chance**, if the claim were false. (**error probability**)
+
+**alternative hypothesis (claim is correct)**
+
+**null hypothesis (claim is incorrect)**
+
+
+## Random Sampling Error and Severity
+
 
 **hypothesis test** asks: "how likely are we to see this evidence for the claim, **assuming** that the claim **is false**"
 
 - we **assume** the null hypothesis is right $\to$ true concern is 73%
 - we **assume** a random sampling procedure $\to$ take random samples of $1477$
-- with these two assumptions, we "make" the **sampling distribution** (in stats, you plug into equations)
+- with these two assumptions, we "make" the **sampling distribution** (in stats class, you plug into formulas)
 
 
 ---
@@ -166,31 +202,37 @@ ggplot(pdata, aes(x = m, fill = `Above 77%`)) +
   annotate("text", x = 73, y = 50000, label = "Null Hypothesis: 73%", angle = 90, vjust = 1.2) +
   geom_vline(xintercept = 77) + 
   annotate("text", x = 77, y = 50000, label = "Observed Survey", angle = 90, vjust = 1.2) +
-  theme_bw() 
+  theme_bw() +
+   scale_fill_manual(values = c(
+    `TRUE` = "#3182bd",  # Blue
+    `FALSE` = "#e31a1c"          # Red
+  )) 
 ```
 
 If true concern about political violence is 73%, by chance we see 77% concern or more with probability of `r mean(m >= 0.77) %>% format(nsmall = 6)`.
 
----
+## Random Sampling Error and Severity
+
 
 **hypothesis test** asks: "how likely are we to see this evidence, **assuming** that the claim **is false**"
 
-- **$p$-value**: probability of accepting claim (rejecting the null hypothesis) due to chance, if it were false
+- **$p$-value**: probability of accepting claim (rejecting the null hypothesis) due to chance, *if it were false*
 - probability of **incorrectly** concluding that concern about political violence increased, due to random sampling error. (error is `r mean(m >= 0.77)*100`% of the time)
 
 
----
+## Random Sampling Error and Severity
+
 
 $p$ values: 
 
 - it is an **error probability** (probability of incorrectly accepting the claim) 
-- it is **advertised** severity of evidence (against random sampling error)
-- $p$ value of $< 0.05$ is not magic. $\to$ "could observe this 1 in 20 times if null hypothesis is true"
-- only meaningful if assumptions are correct
+- it is **advertised** *severity* of evidence (against random sampling error)
+- $p$ value of $< 0.05$ is not magic. $\to$ "could observe this 1 in 20 times if null hypothesis is true/claim is wrong"
+- only meaningful if assumptions are correct (here: no bias, random sampling)
 
----
+## Random Sampling Error and Severity
 
-If we **assume** random sampling, no **sampling bias** (or at least, the *same* sampling bias):
+If we **assume** random sampling, no **sampling bias**:
 
 Skeptic might say:
 
@@ -203,11 +245,12 @@ But we can respond:
 > "We saw 77% of people concerned about political violence. If you were right, we'd see this only `r mean(m >= 0.77)*100`% of the time
 
 
----
+## Random Sampling Error and Severity
 
-What *is* a **margin of error**/**confidence interval** then?
 
-- We **choose** an error probability that is "acceptable" $\to$ say, 1% (how **severe** do we want our evidence to be?)
+What is a **margin of error**/**confidence interval**, then?
+
+- We **choose** an *error probability* that is "acceptable" $\to$ 1% (how **severe** do we want our evidence to be?)
 - Compare observed data (77% concerned about political violence) against **all possible** null hypotheses (0% to 100%). 
 
 ---
@@ -227,25 +270,137 @@ ggplot(pdata, aes(x = m, fill = `Above 77%`)) +
   annotate("text", x = 75, y = 50000, label = "Null Hypothesis: 75%", angle = 90, vjust = 1.2) +
   geom_vline(xintercept = 77) + 
   annotate("text", x = 77, y = 50000, label = "Observed Survey", angle = 90, vjust = 1.2) +
-  theme_bw() 
+  theme_bw() +
+   scale_fill_manual(values = c(
+    `TRUE` = "#3182bd",  # Blue
+    `FALSE` = "#e31a1c"          # Red
+  )) 
 ```
 
 If true concern about political violence is 75%, by chance we see 77% concern or more with probability of `r mean(m >= 0.77)`. Error rate of  `r 100*mean(m >= 0.77)`$\%$ $> 1\%$ $\to$ cannot reject 75%.
 
+
 ---
 
-What *is* a **margin of error**/**confidence interval** then?
+```{r, echo = F, warning=F, message=F, fig.width=11, fig.height=5.2, out.width="90%"}
+# Load required library
+library(ggplot2)
 
-- We **choose** an error probability that is "acceptable" $\to$ say, 1% (how **severe** do we want our evidence to be?)
+# 1. Define fixed parameters
+n <- 1477
+p_observed <- 0.77
+alpha <- 0.01      # Alpha for 99% Confidence Level
+
+# 2. Generate a dense grid of null hypotheses across the x-axis (0% to 100%)
+# We use a fine grid (e.g., 2000 points) to get smooth curves, rather than just integer steps.
+null_p_seq <- seq(0.001, 0.999, length.out = 2000)
+
+# Calculate two-sided z-test p-value for each null hypothesis point
+p_values <- sapply(null_p_seq, function(p_null) {
+  # Standard error calculated under the null hypothesis (standard for score test / inversion)
+  se_null <- sqrt((p_null * (1 - p_null)) / n)
+  z_stat <- (p_observed - p_null) / se_null
+  
+  # Two-sided p-value
+  2 * (1 - pnorm(abs(z_stat)))
+})
+
+# 3. Build data frame for ggplot
+plot_data <- data.frame(
+  Null_Hypothesis_Pct = null_p_seq * 100,
+  p_value = p_values
+)
+
+# Label regions based on whether the null hypothesis is rejected at alpha = 0.01
+plot_data$Decision <- ifelse(plot_data$p_value >= alpha, 
+                             "Fail to Reject Null (Inside 99% CI)", 
+                             "Reject Null (Outside 99% CI)")
+
+# Find exact intersections where p-value crosses alpha = 0.01 (the CI boundaries)
+# Using standard normal approximation formulas for exact alignment
+z_crit <- qnorm(1 - alpha/2)
+se_obs <- sqrt((p_observed * (1 - p_observed)) / n)
+lower_bound <- (p_observed - z_crit * se_obs) * 100
+upper_bound <- (p_observed + z_crit * se_obs) * 100
+
+# 4. Generate the ggplot
+ggplot(plot_data, aes(x = Null_Hypothesis_Pct, y = p_value)) +
+  # Line colored by the rejection decision
+  geom_errorbarh(
+  aes(
+    xmin = lower_bound, 
+    xmax = upper_bound, 
+    y = 0.5
+  ),
+  height = 0.04,          # Adjusts the vertical height of the 'T' caps
+  linewidth = 1,          # Thickness of the line
+  color = "#3182bd"       # Blue color to match your "Inside CI" theme
+)+ 
+  geom_line(aes(color = Decision, group = 1), linewidth = 1) +
+  
+  # Horizontal reference threshold line for alpha = 0.01
+  geom_hline(yintercept = alpha, linetype = "dashed", color = "darkred", linewidth = 0.7) +
+  annotate("text", x = 50, y = alpha, label = "Error Threshold (0.01)", 
+           vjust = -0.5, color = "darkred", size = 3.5, fontface = "italic") +
+  
+  # Vertical indicator for the observed survey point (77%)
+  geom_vline(xintercept = p_observed * 100, linetype = "solid", color = "black", linewidth = 0.7) +
+  annotate("text", x = p_observed * 100, y = 0.35, label = "Observed Survey (77%)", 
+           angle = 90, vjust = -0.5, fontface = "bold", size = 3.5) +
+  
+  # Specific styling and scales
+  scale_color_manual(values = c(
+    "Fail to Reject Null (Inside 99% CI)" = "#3182bd",  # Blue
+    "Reject Null (Outside 99% CI)" = "#e31a1c"          # Red
+  )) +
+  scale_x_continuous(
+    limits = c(71, 83), # Zooming in on the relevant visual range around 77% instead of a flat 0-100% line
+    breaks = seq(71, 83, by = 2),
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1.05), 
+    breaks = c(0, 0.01, 0.25, 0.50, 0.75, 1.00)
+  ) +
+  labs(
+    title = "Error Probability across different Nulls → Confidence Interval",
+    subtitle = sprintf("Observed Sample: 77%% (n = %s) | Range: %.1f%% to %.1f%% | Error Cut-off: 1%%", n, lower_bound, upper_bound),
+    x = "Political Violence a Major Problem (%): Null Hypotheses",
+    y = "p-value: error probability",
+    color = "Decision:"
+  ) +
+  theme_bw(base_size = 15) +
+  theme(
+    legend.position = "top",
+    plot.title = element_text(face = "bold", size = 14),
+    panel.grid.minor = element_blank()
+  )
+
+```
+
+
+
+
+## Random Sampling Error and Severity
+
+What is a **margin of error**/**confidence interval**, then?
+
+- We **choose** an error probability that is "acceptable" $\to$ 1% (how **severe** do we want our evidence to be?)
 - Compare observed data (77% concerned about political violence) against **all possible** null hypotheses (0% to 100%). 
 - Range of values for "null hypotheses" we **cannot reject** with chosen error rate.
 - Still assumes no sampling bias and use of random sampling
 
->- 77% concerned $\to$ reject truth being outside of range from 74.4% to 79.6% with error rate of 1% or less 
+>- 77% concerned $\to$ reject truth being outside of range from 74.2% to 79.8% with error rate of 1% or less 
 
----
+## Random Sampling Error and Severity
+ 
+What is a "margin of error" or "confidence interval":
 
-### Random Sampling Error and Severity
+- If survey says it is $50\% \pm 2\%$ with $95\%$ confidence 
+
+>- The true value is in the range of $48-52$ with $5\%$ *error probability*
+
+## Random Sampling Error and Severity
 
 If we have **random sampling errors**:
 
@@ -257,11 +412,11 @@ If we have **sampling bias**...
 
 ## Sampling Error?
 
-<img src="./538_2.png" width=90%>
+<img src="./538_2.png" width=80%>
 
-Each dot is the result of a survey of voters during the 2020 US Presidential Election. These surveys suggested that by election day voters preferred Biden to Trump by $8.4$ percent. Biden **actually** won by only $4.5$ points.
+Surveys said voters preferred Biden to Trump by $8.4$ percent. Biden **actually** won by only $4.5$ points.
 
-Is this **sampling error**? Is this a **random error** or a **bias**? 
+What might explain this? 
 
 ## Sampling Error?
 
@@ -342,6 +497,8 @@ Richman et al:
 - count who among the "non-citizen sample" voted ($13$) (validated voting measure - matched to public voter file)
 - conclude that 3.5% of non-citizens voted in 2010 (~700k), up to 14.7% in 2008 (~2.8 million people)
 
+## Voter Fraud
+
 ### So, was Trump right?
 
 **Discuss: Do you find this persuasive? Why or why not?**
@@ -399,6 +556,13 @@ authors make incorrect inference that hundreds of thousands of non-citizens vote
 2. The **sample** is generated based on individual survey responses to a questions that are **wrong** for $0.1\%$ of individuals (individual **measurement error**)
 3. This generates **sampling bias** as the sample systematically includes **citizens** in sample of "non-citizens"
 4. Because Richman et al/ Trump are using the sample to make inferences about the **population** of non-citizens, the **sampling bias** produces **measurement bias** (of population): systematically over-estimating non-citizen voting.
+
+
+## Example 2:
+
+When is **sampling error** *not* **measurement error**?
+
+>- If you are not trying to make an inference about a population, sampling error doesn't generate measurement error.
 
 # Conclusion
 
