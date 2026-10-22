@@ -43,7 +43,7 @@ require(magrittr)
 
 ---
 
-<img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width = 90%>
+<img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width = 85%>
 
 
 
@@ -69,7 +69,7 @@ Want to explain something specific that has happened/we observe (**the effect**)
 
 - Why did Russia invade Ukraine?
 - Why is housing expensive in Vancouver?
-- **Why has political polarization increased?**d
+- **Why has political polarization increased?**
 
 ## Causal claims answer causal questions
 
@@ -85,7 +85,7 @@ We want to know what happens if we do some action or some action (**the cause**)
 
 ## Two ways of asking causal questions
 
-### Looking at **effects of causes** versus **causes of effects**  leads to different approaches to scientific investigation
+Looking at **effects of causes** versus **causes of effects**  leads to different approaches to scientific investigation
 
 **causes of effects**
 $$\textrm{?} \xrightarrow{} \textrm{effect}$$
@@ -135,15 +135,14 @@ Causal claims linked to reasons given for **what we should do**
 
 ## What is causality?
 
-> **Homelessness increased in Canadian cities because of a Federal government headed by Justin Trudeau.**
+> **Homelessness increased in Canadian cities because of Justin Trudeau's actions as PM.**
 
 - What are the two descriptive claims in this causal claim?
 
 ## What is causality?
 
-> **And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
+> And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And **we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
 
->- What is the main causal claim?
 >- What are the two descriptive claims in this causal claim?
 
 ## What is causality?
@@ -154,13 +153,6 @@ The **descriptive claims** embedded in **causal claims** are of a specific type:
 2. One is a claim about how the world *would* be, if something were changed (**counterfactual**)
 
 ### **counterfactuals** are the key to causality
-
-## What is causality?
-
-> **And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
-
-- What is the main causal claim? (on the board)
-- What are the two descriptive claims in this causal claim? (on the board)
 
 
 # Counterfactuals
@@ -249,7 +241,7 @@ then **potential outcomes** are the values of $Y$ that a **specific case** ($i$)
 
 Where $i$ corresponds to a specific case (e.g., **you**, Gwyneth Paltrow)
 
-$\text{Use Social Media}$ ($X$) is the causal variable (and can take different values, e.g. $yes, no$), then the potential outcomes of $\text{Date across party lines}$ ($Y_i$) are:
+$\text{Social Media}$ ($X$) is the causal variable (e.g. $yes, no$), then the potential outcomes of $\text{Date across party lines}$ ($Y_i$) are:
 
 $$\text{Date across party lines}_{i}(\text{Social media} = yes),\\ \text{Date across party lines}_i(\text{Social Media} = no)$$
 
@@ -325,7 +317,7 @@ Counterfactuals Example
 
 Counterfactuals Example
 
-> **And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
+> And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And **we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
 
 
 - What are the **potential outcomes** implied by the causal claim? (return to board)?
@@ -359,7 +351,7 @@ $$\textrm{Murders}_{\textrm{DC}}(\textrm{Nat'l Guard}) = \color{red}{\textrm{Mur
 
 ## Counterfactuals and Potential Outcomes
 
-> **And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
+> And we're also straightening out our cities. You know, Washington D.C., our beautiful capital, was a, a killing mess. People getting killed all the time. It was very high crime. And **we sent in our National Guard ... And now it's a very safe, now it's considered a very safe. The crime is down to almost nothing.** - Donald Trump
 
 Implies:
 
