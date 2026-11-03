@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "October 30, 2025"
-output: ioslides_presentation
+date: "November 3, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +45,7 @@ require(magrittr)
 
 ---
 
-<img src="https://static01.nyt.com/images/2025/10/29/multimedia/29LAMP-CLUB-03-chfl/29LAMP-CLUB-03-chfl-superJumbo.jpg?quality=75&auto=webp" width=80%>
+<img src="https://static01.nyt.com/images/2025/10/29/multimedia/29LAMP-CLUB-03-chfl/29LAMP-CLUB-03-chfl-superJumbo.jpg?quality=75&auto=webp" width=70%>
 
 
 
@@ -51,13 +55,13 @@ $S$cathing $H$atred of $I$nformation $T$echnology and the
 
 ---
 
-<img src="https://static01.nyt.com/images/2025/10/29/multimedia/29LAMP-CLUB-04-chfl/29LAMP-CLUB-04-chfl-superJumbo.jpg?auto=webp&quality=90" width=40%>
+<img src="https://static01.nyt.com/images/2025/10/29/multimedia/29LAMP-CLUB-04-chfl/29LAMP-CLUB-04-chfl-superJumbo.jpg?auto=webp&quality=90" width=30%>
 
 Chanting: "We must free the iPad babies, even if it gives us rabies"
 
 ---
 
-<video loop autoplay src="https://vp.nyt.com/video/2025/10/28/153054_1_29LAMP-CLUB-12936_wg_1080p.mp4" type="video/mp4" width=50%>
+<video loop autoplay src="https://vp.nyt.com/video/2025/10/28/153054_1_29LAMP-CLUB-12936_wg_1080p.mp4" type="video/mp4" width=40%>
 
 
 ## Causal Claims
@@ -131,7 +135,7 @@ If NATO did not expand (the "cause" is not present), Russia would not have invad
 
 - a variable (labelled $Y$) corresponding to what is "affected" or the "**outcome**"
 - a variable (labelled $X$) for the "cause"  $\to$ different **potential** "universes"  
-- the **values** that $Y$ would take **for a particular case** $i$
+- the **values** that $Y$ would take **for a particular case** $i$, st some value of $X$
 
 Take the form of $Y_i(X)$ or $Outcome_{case}(Cause)$
 
@@ -216,22 +220,21 @@ There are several varieties **and** combinations
 
 ## Example
 
-A claim: "If Germany had not had an economic collapse during the Great Depression, Hitler and the Nazi Party would not have come to power."
+"If Germany had not had an economic collapse during the Great Depression, Hitler and the Nazi Party would not have come to power." *implies which of the following*:
 
-Head to [menti.com](menti.com) and use code $1587 \ 4520$
+(A) The Great Depression made Nazi rise to power inevitable.
 
----
+(B) Great Depression did not make Nazi rise to power inevitable.
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/bc1597f5eddf982927631e3cc6c7f3c8/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
 
 ## Example
 
-If this claim is true: "If Germany had not had an economic collapse during the Great Depression, Hitler and the Nazi Party would not have come to power."...
+"If Germany had not had an economic collapse during the Great Depression, Hitler and the Nazi Party would not have come to power." *implies*:
 
-The fact that there was an economic collapse in Germany during the Great Depression **does not mean** that the the Nazi takeover was inevitable. 
+An economic collapse in Germany during the Great Depression **does not mean** that the the Nazi takeover was inevitable. 
 
 >- This is a "necessary condition"
->- Presence of necessary condition $\not\to$ effect must happen. Instead, *absence* of necessary condition $\to$ effect does not happen
+>- Presence of necessary condition $\not\to$ effect must happen. Instead, ***absence*** of necessary condition $\to$ effect ***does not*** happen
 
 
 ## Necessary Conditions
@@ -250,8 +253,6 @@ Claims about necessary conditions have specific implications about potential out
 
 If we say that: "The Great Depression was a necessary condition for the Nazis to take power in Germany."
 
-<br>
-
 What are the implied potential outcomes?
 
 ## Necessary Conditions: Potential Outcomes
@@ -260,10 +261,9 @@ Claims about necessary conditions have specific implications about potential out
 
 If we say that: "The Great Depression was a necessary condition for the Nazis to take power in Germany."
 
-
 What are the implied potential outcomes?
 
-$\mathrm{Nazis}_{Germany} \ (\mathrm{Economic \ Crisis = No}) = \mathrm{No}$
+$\color{red}{\mathrm{Nazis}_{Germany} \ (\mathrm{Economic \ Crisis = No}) = \mathrm{No}}$
 
 $\mathrm{Nazis}_{Germany} \ (\mathrm{Economic \ Crisis = Yes}) = \mathrm{Yes} \ or \ \mathrm{No}$
 
@@ -286,6 +286,8 @@ Something else might have had to happen, in addition to economic crisis, for Naz
 
 **"Doug Ford running ads criticizing tariffs was a sufficient condition for Trump to increase tariff on Canada by 10 percentage points."**
 
+>- by themselves, these ads were enough to lead to tariff increases
+
 #### Generally, single causes that are sufficient conditions are **rare** in social sciences
 
 ## Sufficient Conditions: Example
@@ -294,7 +296,7 @@ Sufficient conditions also imply specific potential outcomes:
 
 **"Doug Ford running ads criticizing tariffs was a sufficient condition for Trump to increase tariff on Canada by 10 percentage points."** implies:
 
-$\mathrm{Raise \ Tariffs}_{Canada} \ (\mathrm{Reagan \ Ad = No}) = \mathrm{No \ or \ Yes}$
+$\color{red}{\mathrm{Raise \ Tariffs}_{Canada} \ (\mathrm{Reagan \ Ad = No}) = \mathrm{No \ or \ Yes}}$
 
 $\mathrm{Raise \ Tariffs}_{Canada} \ (\mathrm{Reagan \ Ad = Yes}) = \mathrm{Yes}$
 
@@ -326,15 +328,20 @@ dd = data.frame(h = c(55.1, 52.5),
                 cond = factor(c("Emotional Language Inoculation", "Control"), levels = c("Emotional Language Inoculation", "Control"))
 )
                 
-ggplot(dd, aes(x = cond, y = h)) + geom_bar(stat = "identity") + ylab("% recognize Emotional Language") + xlab("Treatments") + ggtitle("Misinformation Recognition by Experimental Group") + theme_bw() 
+ggplot(dd, aes(x = cond, y = h)) + geom_bar(stat = "identity") + ylab("% recognize Emotional Language") + xlab("Treatments") + ggtitle("Misinformation Recognition by Experimental Group") + theme_bw() + ylim(0,60) + scale_y_continuous(breaks = seq(0, 60, by = 5)) + geom_hline(yintercept = 0, color = "black")
 
 ```
 
-[menti.com](menti.com) $4680 \ 9916$
-
 ---
 
-<div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'><iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/ac3a397793c03a7da0fd73d7a2350faa/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'></iframe></div>
+Based on the evidence from this experiment, which of the following makes sense? (select all that apply)
+
+(A) Inoculation is a **NECESSARY condition** for spotting misinformation.
+
+(B) Inoculation is a **SUFFICIENT condition** for spotting misinformation.
+
+(C) Inoculation is **neither** necessary **nor** sufficient for spotting misinformation.
+
 
 ## Misinformation Experiment
 
@@ -356,7 +363,7 @@ But in reality, it is almost always **complex**
 - **multiple** factors might be necessary (conjunctural causality)
 - different causes produce same effect (multiple causality)
 - different groups of factors might, together be sufficient (multiple and conjunctural)
-- (INUS/SUIN conditions: [see here](https://doi.org/10.1111/1468-4446.12340))
+- [INUS](https://simple.wikipedia.org/wiki/INUS_condition)/[SUIN](https://doi.org/10.1111/1468-4446.12340) conditions: 
 
 
 ---
@@ -365,7 +372,7 @@ Rather than spell out **complex** deterministic causal claims, easier to make
 
 ### **probabilistic causal claims**
 
-are claims that the presence/absence of a cause $C$ makes an effect $E$ more or less likely to occur. Or cause $C$ increases/decreases effect $E$ **on average**
+are claims that the presence/absence of a cause $C$ makes an effect $E$ more or less **likely** to occur. Or cause $C$ increases/decreases effect $E$ **on average**
 
 - In contrast to **deterministic causal claims** this implies
     - effect $E$ can happen when $C$ is absent
@@ -387,31 +394,30 @@ $C$ appears to only cause a change in the **probability** or **likelihood** of s
 
 Which are probabilistic causal claims?
 
-#### **A) It's probably true that having a left-wing government causes public sector unions make demands for higher wages.**
+#### **A) It's probably true that social media platforms that use algorithmic rather than chronological feeds cause users to be exposed to online misinformation.**
 
 <hr style="height:8px; visibility:hidden;" />
 
-#### **B) Electing a left-wing, rather than right-wing, government increases the likelihood that public sector unions make demands for higher wages.**
+#### **B) Social media platforms that use algorithmic rather than chronological feeds increase the likelihood that users are exposed to online misinformation.**
 
 <hr style="height:8px; visibility:hidden;" />
 
-#### **C) Public sector unions make demands for higher wages more frequently under left-wing governments than right-wing governments.**
-
+#### **C) Users are exposed to online misinformation more frequently on social media platforms that use algorithmic rather than chronological feeds.**
 
 ## Examples
 
-Which is a probabilistic causal claim?
+Which are probabilistic causal claim?
 
-#### ~~**A) It's probably true that having a left-wing government causes public sector unions make demands for higher wages.**~~
-
-<hr style="height:8px; visibility:hidden;" />
-
-#### **B) Electing a left-wing, rather than right-wing, government increases the likelihood that public sector unions make demands for higher wages.**
+#### ~~**A) It's probably true that social media platforms that use algorithmic rather than chronological feeds cause users to be exposed to online misinformation.**~~
 
 <hr style="height:8px; visibility:hidden;" />
 
-#### ~~**C) Public sector unions make demands for higher wages more frequently under left-wing governments than right-wing governments.**~~
-    
+#### **B) Social media platforms that use algorithmic rather than chronological feeds increase the likelihood that users are exposed to online misinformation.**
+
+<hr style="height:8px; visibility:hidden;" />
+
+#### ~~**C) Users are exposed to online misinformation more frequently on social media platforms that use algorithmic rather than chronological feeds.**~~
+
 ## Recognizing probabilistic causal claims
 
 Not every probabilistic statement is **causal**
