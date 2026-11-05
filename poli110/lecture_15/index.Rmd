@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "November 4, 2025"
-output: ioslides_presentation
+date: "November 5, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -35,30 +39,20 @@ require(magrittr)
 <img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width =80%>
 </div>
 
-If we identify polarization as a problem, addressing it requires understanding what are its causes.
 
 
----
+## Social Media and Polarization:
 
-<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPUw3cBDg7k/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/reel/DPUw3cBDg7k/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/reel/DPUw3cBDg7k/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Kate Snow (@tvkatesnow)</a></p></div></blockquote>
-<script async src="//www.instagram.com/embed.js"></script>
+**Claim:** "Reliance on social media for political information increases political polarization."
 
----
 
-### Social Media and Polarization:
+- What is the counterfactual claim?
+- What potential outcomes does it imply?
 
-**Claim:** "Getting political information social media increases political polarization."
 
-<br>
 
-Evidence for this claim?
 
->- outcome/dependent variable: US has affective polarization
->- independent variable: US has widespread social media news consumption
-
----
-
-### Independent/Dependent Variables
+## Independent/Dependent Variables
 
 **Independent variable:**
 
@@ -72,24 +66,32 @@ The variable capturing the alleged **outcome** (what is affected) in a causal cl
 
 - often denoted as $Y$
 
-**Potential Outcomes** are the values of **dependent variable** a case would take if exposed to different values of the **independent variable**
 
 ---
 
 **Dependent Variable:** Polarization
 
 <div class="centered">
-<img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width =80%>
+<img src="https://goodauthority.org/wp-content/uploads/2025/06/SIDES-Americans-views-of-the-opposite-party-1024x744.png" width =70%>
 </div>
 
 
 ---
 
-**Independent Variable:** Polarization
+**Independent Variable:** News from Social Media
 
 <img src="./social_media_usage.png">
 
----
+
+## Evidence for Causal Claims
+
+Which potential outcome does this evidence give us? (Board)
+
+Can this evidence tell us whether social media caused polarization?
+
+## Evidence for Causal Claims
+
+**Severity...**
 
 Even if social media use **didn't** increase polarization...
 
@@ -97,21 +99,17 @@ Could we see this evidence (US has both social media use and polarization)?
 
 >- If we want to find the **cause** of polarization, starting from case of **high polarization** like the US is **selection on dependent variable**
 
----
-
-### Selection on the Dependent Variable
+## Selection on the Dependent Variable
 
 when attempting to provide evidence for causal claims, **selectively** observing cases based on the **outcome** they experience
 
 - two problems $\to$ absence of weak severity
 
----
-
-### Selection on the Dependent Variable
+## Selection on the Dependent Variable
 
 **Problem 1**: creates opportunity for "Texas Sharpshooter Fallacy"
 
-<img src="https://www.bayesianspectacles.org/wp-content/uploads/2018/01/TexasSharpShooter-768x646.png" width=40%>
+<img src="https://www.bayesianspectacles.org/wp-content/uploads/2018/01/TexasSharpShooter-768x646.png" width=25%>
 
 "Fence" is case with outcome "high polarization"; "bullet holes" are attributes of that case
 
@@ -121,30 +119,63 @@ when attempting to provide evidence for causal claims, **selectively** observing
 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUcpFoe17tg8HMA6CqWgcLTnWh99HZ9LFbaQ&s" width = 50%>
 
----
-
-### Selection on the Dependent Variable
+## Selection on the Dependent Variable
 
 **Problem 2**: Causality is counterfactual. Outcome should be different when **independent variable** changes. Selecting on dependent variable: never observe outcome under different exposure to the "cause".
 
 - **outcome** (polarization) could have occurred **without** the alleged "cause" (social media). Without observing the counterfactual, we can't rule this out.
 
 
----
+## Evidence for Causal Claims
 
-### Evidence for Causality
+Based on what we see in 2024...
 
-Causality is counterfactual: Need to observe the **outcome**/dependent variable in a case at **different levels** of the **cause**/independent variable.
+$\text{Polarization}_{USA}(\text{Social Media}) = 54$ 
 
-$$\text{Polarization}_{USA} (\text{High Social Media Use}) = High \\ \color{red}{\text{Polarization}_{USA} (\text{Low Social Media Use}) = ?} $$
-but we can never observe the $\color{red}{\text{counterfactual}}$...
-$\to$ **Fundamental Problem of Causal Inference**
+$\color{red}{\text{Polarization}_{USA}(\text{Social Media})} = \ \mathbf{????}$:
 
----
+>- How could we know what this is?
+>- We can **never know** what polarization would have been, absent social media usage
 
-### Solving the FPCI?
+## What is the problem here?
 
-If getting news from social media increased polarization
+### **Fundamental Problem of Causal Inference**
+
+1. For the US, where people use social media: we can **only** observe the potential outcome of $\text{Polarization}_{USA}$ for where the value of $\text{Social Media} = High$: what **actually** happened.
+
+2. We can **never observe** the other, **counterfactual**, potential outcomes of $\color{red}{\text{Polarization}_{USA}}$ where $\color{red}{\text{Social Media} = Low}$, because that was not what happened.
+
+3. We can never **empirically** observe, for the US, whether $\text{Social Media}$ usage caused $\uparrow \text{Polarization}$.
+
+## What is the problem here?
+
+### **Fundamental Problem of Causal Inference**
+
+1. By definition, $X$ causes $Y$ if the potential outcomes of $Y_i(X)$ were different if we changed $X$ for the exact same case.
+
+2. For a specific case, we can **only** observe the potential outcome of $Y$ for the value of $X$ it **actually takes**. 
+
+3. We **never observe** the **counterfactual** potential outcomes of $Y$ for different possible values of $X$ that the case did not experience.
+
+4. We can never **empirically** observe, for a specific case, whether $X$ causes $Y$.
+
+#
+
+<img src='https://www.roypumphrey.com/wp-content/uploads/2018/04/jiFfM.jpg'>
+
+
+
+## You might be asking...
+
+**I thought evidence for empirical claims based on *observing the world*?!**
+
+**If we can never see the counterfactual... does this mean that *all* evidence for causal claims fails *weak severity*?**
+
+**Are there "solutions" to this fundamental problem?**
+
+## Solving the FPCI?
+
+If getting news from social media increases polarization, it must true that:
 
 $\color{red}{\mathrm{Polarization}_{USA}(\mathrm{Higher \ Social \ Media})} >$
 $\mathrm{Polarization}_{USA}(\mathrm{High \ Social \ Media}) >$
@@ -157,21 +188,20 @@ In order to provide evidence for causal claims, we need to find ways around the 
 - We need to find something we **can see** that can **stand in** for the missing **counterfactual**
 
 
----
-
-### Social Media and Polarization
+## Social Media and Polarization
 
 | $\mathrm{Country}_i$ | $\mathrm{Social \ Media}_i$ | $\mathrm{Polar.}_i(\mathrm{Low \ S.M.})$ | $\mathrm{Polar.}_i(\mathrm{High \ S.M.})$  |
 |---|---------|--------|-------|
 | USA | **High** | $\color{red}{\mathrm{Polar.}_{USA}(\mathrm{Low \ S.M.}) = ?}$ | $\mathrm{Polar.}_{USA}(\mathrm{High \ S.M.})$ |
 
+
+<br>
+
 How could we observe "$\color{red}{?}$", the unknown counterfactual?
 
 >- We could to find **another country** where there **was lower social media use**
 
----
-
-### Social Media and Polarization
+## Social Media and Polarization
 
 We **cannot observe**: $\color{red}{\mathrm{Polar.}_{USA}(\mathrm{Low \ S. M.})}$
 
@@ -309,21 +339,18 @@ ggplot(polarization[plot_order[1:12]], aes(x = social_media, y = polarization, l
 ```
 
 
----
-
-### Solving the FPCI
+## Solving the FPCI
 
 Every solution to the FPCI involves:
 
 1. Comparing the **observed** values of outcome $Y$ in cases that **factually** have different values of cause $X$
       
-2. Making assumption that **factual** (observed) potential outcomes from one case as *equivalent to* **counterfactual** (unobserved) potential outcomes of another case.
+2. **Assuming** that **factual** (observed) potential outcomes from one case as *equivalent to* **counterfactual** (unobserved) potential outcomes of another case.
 
 >- The **observed** patterns of the association between the independent variable $X$ and dependent variable $Y$ we call **correlations**
 
----
 
-### **Correlation**
+## **Correlation**
 
 **Correlation** is the association/relationship between the **observed**/**factual** values of $X$ (the independent variable) and $Y$ (the dependent variable)
 
@@ -331,15 +358,13 @@ Every solution to the FPCI involves:
 - formally: mathematical definitions for specific kinds of associations.
 
 
----
-
-### **Correlation**
+## **Correlation**
 
 **All empirical evidence for causal claims** relies on **correlation** between the independent and dependent variables. 
 
 But, you've all heard this:
 
-<img src="https://imgs.xkcd.com/comics/correlation.png" width=100%>
+<img src="https://imgs.xkcd.com/comics/correlation.png" width=80%>
 
 ---
 
@@ -355,13 +380,11 @@ ggplot(polarization[plot_order[1:12]], aes(x = social_media, y = polarization, l
 
 ```
 
->- Think how we filled in the $\color{red}{\text{counterfactuals}}$ for the US: could anything go wrong?
+>- Think about how we filled in the $\color{red}{\text{counterfactuals}}$ for the US: could anything go wrong?
 
 # Correlation
 
----
-
-### **Correlation**
+## **Correlation**
 
 Many different ways of assessing correlation, but shared attributes:
 
@@ -393,9 +416,7 @@ ggplot(polarization[plot_order[1:12]], aes(x = social_media, y = polarization, l
   ylab("Y: Affective Polarization")
 ```
 
----
-
-### **Correlation**
+## **Correlation**
 
 Many different ways of assessing correlation, but shared attributes:
 
@@ -410,15 +431,13 @@ Many different ways of assessing correlation, but shared attributes:
 - correlations have a **magnitude**: 
     - *how much* $Y$ changes with $X$. 
 
----
-
-### **Correlation**
+## **Correlation**
 
 Many ways of examining correlations:
 
-- scatterplots (plot each case on an x-y coordinates)
-- bar plots 
-- trends
+- scatterplots (point for each case on an x-y coordinates)
+- bar plots (average Y for different values of X)
+- trends (how do Y and X move together over time)
 - tables of coefficients
 
 ---
@@ -440,7 +459,7 @@ ggplot(polarization[plot_order[1:12]], aes(x = social_media, y = polarization, l
 
 Bar plot
 
-```{r echo = F, message = F, warning = F}
+```{r echo = F, message = F, warning = F, out.width="70%"}
 anes = fread("./anes_2024.csv")
 ggplot(anes, aes(x = as.factor(social_media), y = affective_polarization_pid)) +
 geom_bar(stat = 'summary', fun.y = 'mean') + 
@@ -458,11 +477,10 @@ Individual data on social media use and affective polarization from ANES 2024
 
 Trend lines
 
-<img src="mueller_fig.png" width=80%>
+<img src="mueller_fig.png" width=70%>
 
----
 
-### **Correlation**
+## **Correlation**
 
 ### Formally...
 
@@ -473,9 +491,7 @@ common **mathematical** definition: correlation is the degree of **linear** asso
 - Values close to $0$ suggest **weak** degree of *linear* association
 - Value of correlation does **not** tell us **how much** $Y$ changes with $X$ (no magnitude)
 
----
-
-### **Correlation**
+## **Correlation**
 
 ### What is it?
 
@@ -489,15 +505,12 @@ common **mathematical** definition: correlation is the degree of **linear** asso
 - higher values of $X$ appear with higher values of $Y$
 - lower values of $X$ appear with lower values of $Y$
 
----
-
-### **Correlation**
+## **Correlation**
 
 <img src="./correlation_examples.svg" width=100%>
 
----
 
-### **Correlation**
+## **Correlation**
 
 - It is possible to see **perfect correlation** but small (magnitude) change in $Y$ across $X$
 
@@ -505,9 +518,7 @@ common **mathematical** definition: correlation is the degree of **linear** asso
 
 - It is possible to see **perfect nonlinear relationship** between $X$ and $Y$ with $0$ correlation
 
----
-
-### **Correlation**
+## **Correlation**
 
 **weak correlation**: values for $X$ and $Y$ do not cluster along line
 
@@ -581,7 +592,7 @@ Correlation: `r rho`, Magnitude: `r beta.hat`. Does this correlation prove that 
 
 - **bias** (spurious correlation, **confounding**): $X$ and $Y$ are correlated but the correlation does not result from **causal** relationship between those variables
 
-Solving these problems involves making **assumptions**: what are those assumptions? how plausible are they?
+Avoiding these problems involves making **assumptions**: what are those assumptions? how plausible are they?
 
 # Random Association 
 
@@ -661,7 +672,7 @@ What do we do about this problem?
     - Patterns that are **stronger** are **less likely** to happen by chance
 2. How many **cases** do we have?
     - Patterns with **many cases** are **less likely** to happen by chance
-3. Assign a probability that observed correlation would have happened by chance, **assuming claim is wrong (no correlation)**
+3. Assign a probability that observed correlation would have happened by chance, **assuming claim is wrong (no real correlation)**
 
 ## Random association: Statistics
 
@@ -814,13 +825,13 @@ p = cor.test(cage_data$cage_films, cage_data$pool_deaths)$p.value
 Correlation: `r rho`, $p \le$ `r round(p,3)`: 1 in 40 chance is easy to find when you look at 25 thousand possible correlations.
 
 
-## Random Association: Recap
+---
 
 1. Correlations can appear by chance
 2. We can assess **probability** of observing correlation by chance if we know:
     - **strength** of correlation (close to $1,-1$)
     - **size** of the sample ($N$)
-    - we assume we know the **chance process** generating our observations
+    - the **chance process** at work
 3. $p$-values:
     - Obtained using mathematical formulae
     - Given same $N$, stronger correlation has lower $p$
