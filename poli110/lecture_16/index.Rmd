@@ -1,8 +1,12 @@
 ---
 title: "POLI 110"
 author: "Michael Weaver"
-date: "November 6, 2025"
-output: ioslides_presentation
+date: "November 12, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -59,7 +63,7 @@ Correlations have
 
 ---
 
-<img src='./scatter_2.svg' width = 75% class = 'center'>
+<img src='./scatter_2.svg' width = 60% class = 'center'>
 
 ## Correlation
 
@@ -93,24 +97,27 @@ What is the **problem**?
 If correlation can occur by chance: 
 
 - we can observe a positive correlation between $X$ and $Y$ and conclude that $X$ causes $Y$, even if $X$ has no effect on $Y$
-- failure of weak severity
+- $\to$ failure of weak severity
 
 ## Random assocation
 
 What is the **solution**?
 
-2. Obtain **probability** of observing *this* correlation by chance:
+Obtain **probability** of observing *this* correlation by chance:
     - **strength** of correlation
     - **size** of the sample ($N$)
     - assume we know the **random process** generating our observations
-3. $p$-values: probability of *this* correlation by chance
-    - Given same $N$, stronger correlation has lower $p$
-    - Given same strength, correlation with more $N$ has lower $p$
-    - probability we incorrectly infer a *real* relationship (due to chance), if used correctly
     
---- 
+## Random assocation
 
-### $p$ hacking:
+What is the **solution**?
+
+$p$-values: probability of *this* correlation by chance
+    - For a given $N$, stronger correlation has lower $p$
+    - For a given strength, correlation with more $N$ has lower $p$
+    - probability we incorrectly infer a *real* relationship (due to chance), if used correctly (**error probability** $\to$ assess weak severity)
+    
+## $p$ hacking:
 
 What is the problem with looking at many correlations and reporting only those that are "significant"? ($p < 0.05$)
 
@@ -119,6 +126,29 @@ What is the problem with looking at many correlations and reporting only those t
 - What is the probability you win if you roll twenty times?
 
 >- 64%! Looking at lots of correlations, you are likely to find at some "unlikely" correlations
+
+
+---
+
+```{r, echo = F, message = F, message=F}
+ggplot(cage_data, aes(x =cage_films, y = pool_deaths)) + 
+  geom_point(position = position_jitter(w = 0, h = 1)) + 
+  geom_smooth(method = 'lm', fullrange = T, se = F) +
+  theme_bw() +
+  ggtitle("Nic Cage films cause Pool Drownings") +
+  xlab("Nic Cage Films per Year") + 
+  ylab("Pool Drownings per Year (US)") + 
+  theme(plot.title = element_text(size = 24, face = "bold"),
+        axis.title=element_text(size=14,face="bold"))
+
+
+p = cor.test(cage_data$cage_films, cage_data$pool_deaths)$p.value
+rho = cor(cage_data)[1,2] %>% round(2)
+
+```
+
+Correlation: `r rho`, $p \le$ `r round(p,3)`: 1 in 40 chance is easy to find when you look at 25 thousand possible correlations.
+
 
 ---
 
@@ -132,7 +162,7 @@ What is the problem with looking at many correlations and reporting only those t
 
 **Practice**
 
-<img src='./scatter_2.svg' width = 75% class = 'center'>
+<img src='./scatter_2.svg' width = 60% class = 'center'>
 
 
 # Example
@@ -165,7 +195,7 @@ We can't observe the US in the absence of Trump tweeting against Muslims, so aut
 
 $X$ (Independent Variable): Trump's Twitter gained attention after he announced run for President (2015-2017)
 
-<img src='./mueller_2.png' width=70%>
+<img src='./mueller_2.png' width=50%>
 
 ---
 
@@ -173,7 +203,7 @@ $X$ (Independent Variable): Trump's Twitter gained attention after he announced 
 
 $Y$ (Dependent variable): When Trump gained prominence, anti-Muslim hate crimes increased
 
-<img src='./mueller_1.png' width=60%>
+<img src='./mueller_1.png' width=50%>
 
 ## Trump's Twitter and Hate Crimes
 
@@ -277,7 +307,7 @@ Cases with different levels of cause $X$
 
 Does social media use cause increased polarization?
 
-```{r echo = F, message = F, warning = F}
+```{r echo = F, message = F, warning = F, out.width="70%"}
 anes = fread("./anes_2024.csv")
 ggplot(anes, aes(x = as.factor(social_media), y = affective_polarization_pid)) +
 geom_bar(stat = 'summary', fun.y = 'mean') + 
@@ -291,7 +321,7 @@ geom_bar(stat = 'summary', fun.y = 'mean') +
 
 Individual data on social media use and affective polarization from ANES 2024
 
-## Confounding
+---
 
 **Why does confounding happen?** 
 
@@ -303,7 +333,7 @@ What does that look like in the context of social media consumption and polariza
 
 ::BOARD::
 
-## Confounding
+---
 
 **Why does confounding happen?** 
 
@@ -318,7 +348,7 @@ Cases that actually receive cause $X$...
 
 ... than cases **not** actually receiving $X$
 
-## Confounding
+---
 
 ### **Explanation 2**:
 
