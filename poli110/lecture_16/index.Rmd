@@ -104,9 +104,10 @@ If correlation can occur by chance:
 What is the **solution**?
 
 Obtain **probability** of observing *this* correlation by chance:
-    - **strength** of correlation
-    - **size** of the sample ($N$)
-    - assume we know the **random process** generating our observations
+
+- **strength** of correlation
+- **size** of the sample ($N$)
+- assume we know the **random process** generating our observations
     
 ## Random assocation
 
@@ -162,7 +163,7 @@ Correlation: `r rho`, $p \le$ `r round(p,3)`: 1 in 40 chance is easy to find whe
 
 **Practice**
 
-<img src='./scatter_2.svg' width = 60% class = 'center'>
+<img src='./scatter_2.svg' width = 50% class = 'center'>
 
 
 # Example
