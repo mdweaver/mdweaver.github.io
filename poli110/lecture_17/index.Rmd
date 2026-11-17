@@ -1,8 +1,12 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "November 13, 2025"
-output: ioslides_presentation
+date: "November 17, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +22,7 @@ require(ggdag)
 
 ## Outline
 
-- Midterm Grades
+- Midterm Grades (preliminary: re-grade + curve to come)
 
 - Recap:
 
@@ -36,21 +40,21 @@ require(ggdag)
 ---
 
 ```{r echo = F, warning=F, message=FALSE}
-max_pts = 30
+max_pts = 35
 cutpoints = c(0, 0.5, 0.55, 0.6, 0.64, 0.68, 0.72, 0.76, 0.8, 0.85, 0.9, 1)
 
 g_cut = data.table(start = (cutpoints %>% head(-1))*max_pts,
                    end = (cutpoints %>% tail(-1)) * max_pts,
                    grade = factor(c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), levels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"))
 )
-g = fread("./midterm_grades.csv")
+g = fread("./midterm_grades_2026.csv")
 
 g[, grade := cut(midterm, max_pts*cutpoints, right = F, labels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), include.lowest = T)]
 
 ggplot(g, aes(x = midterm, fill = grade)) + 
   geom_histogram(data =g, aes(x = midterm, fill = grade)) +
   theme_bw() +    scale_fill_viridis_d() +
-  ggtitle("Midterm Grade Distribution") + 
+  ggtitle("Preliminary Midterm Grade Distribution") + 
   xlab("Score")
 
 ```
@@ -70,7 +74,8 @@ ggplot(g[!is.na(grade)], aes(x = grade, fill = grade)) +
 ---
 
 ```{r }
-g_old = fread("./midterm_grades_2024.csv")
+g_2024 = fread("./midterm_grades_2024.csv")
+g_2025 = fread("./midterm_grades_2025.csv")
 
 ggplot(g[!is.na(midterm)], aes(x = midterm)) + 
   geom_rect(data = g_cut, aes(xmin = start , xmax = end, ymin = -Inf, ymax = Inf, fill = grade),
@@ -78,40 +83,49 @@ ggplot(g[!is.na(midterm)], aes(x = midterm)) +
   geom_text(data = g_cut, aes(x = (start+end)/2, y = 0.95, label = grade), alpha = 0.3) +
   scale_fill_viridis_d() +
   geom_step(aes(y = 1 - after_stat(y)), stat='ecdf') + 
-  geom_step(data = g_old[!is.na(midterm)], aes(x=midterm/25*30 , y =  1 - after_stat(y)), stat = 'ecdf', colour = 'darkgrey') +
+  geom_step(data = g_2024[!is.na(midterm)], aes(x=midterm/25*35 , y =  1 - after_stat(y)), stat = 'ecdf', colour = 'darkgrey') +
+  geom_step(data = g_2025[!is.na(midterm)], aes(x=midterm/30*35 , y =  1 - after_stat(y)), stat = 'ecdf', colour = 'darkgrey') +
   theme_bw() + 
   ggtitle("Midterm Grade Distribution") + 
   xlab("Score") + 
   ylab("Fraction with score > than X") +   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, by = 0.1))
 ```
 
+## Midterm Post-Mortem
+
+1. Be **precise** in use of concepts
+
+2. Use (don't repeat) definitions when explaining your answers
+
+3. Link to specifics in question
+
+4. Explain why an answer/why not another answer
+
 # Confounding
 
-    
 ## Example:
 
-> "BC's face-mask mandate reduced COVID mortality in the province over the course of the pandemic."
+**causal claim**: "BC's face-mask mandate reduced COVID mortality in the province over the course of the pandemic."
 
+>- $\text{COVID Deaths}_{BC}(\text{Masking}) < \color{red}{\text{COVID Deaths}_{BC}(\text{No Masking})}$
 >- Fundamental Problem of Causal Inference means we can't observe BC in the counter-factual world without face-masks.
 
 ## Example:
 
 [Karaivanov et al (2020)](https://www.nber.org/system/files/working_papers/w27891/w27891.pdf), economists at SFU, investigate:
 
-> Did indoor mask mandates reduced COVID cases, on average? If masks reduce COVID cases, could reduce mortality.
+> Did indoor mask mandates reduced COVID cases, on average? (If masks reduce COVID cases, could reduce mortality.)
 
 ## Example:
 
-They compare COVID cases in Ontario Public Health Units (PHU) with and without mask mandates
+They compare **COVID cases** in Ontario **Public Health Units** (PHU) **with** and **without mask** mandates
 
 - Not all Ontario PHUs imposed mask mandates at the same time
-- Can compare PHUs with and without mandates
-- Correlation of mask mandates and COVID cases across PHUs
+- Correlation of mask mandates ($X$) and COVID cases ($Y$) across PHUs ($i$)
 
 ## Example:
 
-They find that PHUs with mask mandates have **slower** COVID case growth than PHUs without mask mandates...
-
+They find that PHUs with mask mandates have **fewer** COVID cases than PHUs without mask mandates...
 
 >- Is there any reason to doubt that this **correlation** is the true **causal effect** of mask mandates?
 
@@ -128,15 +142,15 @@ They find that PHUs with mask mandates have **slower** COVID case growth than PH
 
 ---
 
-It's summer of 2020... the correlation Karaivanov et al use effectively compares...
+It's summer of 2020... the correlation in Karaivanov et al  compares...
 
 <p><a href="https://commons.wikimedia.org/wiki/File:Toronto_Skyline_Summer_2020.jpg#/media/File:Toronto_Skyline_Summer_2020.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/6/65/Toronto_Skyline_Summer_2020.jpg" alt="Toronto Skyline Summer 2020.jpg" width=80%></a><br></p>
 
-COVID caseload in PHUs in Toronto area (with mask mandates)...
+COVID cases in PHUs in Toronto area (with mask mandates)...
 
 ---
 
-... with  COVID caseload in PHUs like North Bay (without a mask mandate)
+... with  COVID cases in PHUs like North Bay (without a mask mandate)
 
 <img src="https://www.vmcdn.ca/f/files/baytoday/images/city-of-north-bay/20181207-north-bay-population-sign-winter-turl.JPG;w=960" width = 80%>
 
@@ -153,19 +167,15 @@ Correlation means we "plug in" missing counterfactuals from other cases:
 
 If this equivalence $(=)$ is false, then confounding (bias)
 
----
-
-### Why Confounding?
+## Why Confounding?
 
 Confounding occurs because:
 
-We use outcome in case B (North Bay) to stand in for counterfactual outcome from case A (Toronto). But outcomes in case B are **not the same** as in counterfactual case A. 
+We use $outcome$ in case B (North Bay) to stand in for counterfactual $\color{red}{outcome}$ from case A (Toronto)... but **observed outcomes** in case B are **not the same** as in counterfactual case A.
 
-Two ways of thinking about why this produces a bias; unifying idea is that case A and B are **different in ways *other than* X**. These other differences affect *X* and *Y*.
+Two ways of thinking about why this produces a bias: key is that case A and B are **different in ways *other than* X** that affect *X* and *Y*.
 
----
-
-### Confounding and Causal Graphs
+## Confounding and Causal Graphs
 
 Explanation 1: visual
 
@@ -177,11 +187,15 @@ The easiest way to understand this is **visually**.
 
 Causal graphs represent a model of the **true causal relationships** between variables.
 
-the **nodes** or **dots** correspond to **variables**
+the **nodes**/**vertices**  correspond to **variables**
 
-- can be labeled with generic names for independent/dependent variables ($X$, $Y$) or meaningful names (e.g. "Trump Tweets", "Hate Crimes")
+- labeled with generic names ($X$, $Y$) or specific variables (e.g. "Covid Cases", "Mask Mandates")
 
-the **arrows** convey the **direction** of the flow of **causality**
+## Causal Graphs
+
+Causal graphs represent a model of the **true causal relationships** between variables.
+
+the **arrows** convey the **direction** of the flow of **causality**. (No loops permitted)
 
 - $X \rightarrow Y$ means that $X$ causes changes in $Y$
 - $X \leftarrow W$ means that $W$ causes changes in $X$
@@ -190,25 +204,35 @@ Arrows alone do not indicate whether $X$, e.g., increases or decreases $Y$.
 
 ## Causal Graphs
 
-A *model* of true causal relationships, because:
+Arrows make paths between variables:
+
+- $X \rightarrow Z \rightarrow Y$ is a **causal** path from $X$ to $Y$
+- $X \leftarrow U \leftarrow W$ is a **non-causal** path from $X$ to $W$; **causal** from $W$ to $X$
+
+## Causal Graphs
+
+A *model* of/story about true causal relationships, because:
 
 - we don't know the true causal relationships for sure
 - graphs permit us to think whether there is confounding, **assuming a particular story** about what causes what
+
+>- just like validity problems, measurement bias: need a story about **why confounding**. Graphs let us state the story formally
 
 ## Causal Graphs
 
 ### **For example**
 
-PHUs in Toronto (that had a mask mandate) may more university educated adults than PHUs in North Bay (no mask mandate).
+PHUs in Toronto ($X = \text{mask mandate}$) have more university educated adults than PHUs in North Bay ($X = \text{no mandate}$).
 
-- University educated residents might be more likely to work from home $\xrightarrow{causes}$ mask mandate affects fewer people $\xrightarrow{causes}$ more likely to mandate masks
-- University educated residents $\xrightarrow{causes}$ work from home $\xrightarrow{causes}$ fewer social contacts $\xrightarrow{causes}$ lower COVID cases
+- University educated residents $\xrightarrow{causes}$ working from home $\xrightarrow{causes}$ fewer people affected by mandate $\xrightarrow{causes}$ PHU mandates masks ($X$)
+- University educated residents $\xrightarrow{causes}$ working from home $\xrightarrow{causes}$ fewer social contacts $\xrightarrow{causes}$ lower COVID cases ($Y$)
 
 ---
 
 ```{r, echo = F}
 dagify(work_home ~ education,
-       mandate ~ work_home,
+       affected ~ work_home,
+       mandate ~ affected,
        contact ~ work_home,
        covid ~ mask + contact ,
        mask ~ mandate,
@@ -219,7 +243,8 @@ dagify(work_home ~ education,
                   "mandate" = "Mask\nMandate (X)",
                   "covid" = "COVID\nCases (Y)",
                   "work_home" = "Work from\nHome",
-                  'mask' = 'Wear\nMask')
+                  'mask' = 'Wear\nMask',
+                  'affected' = '% Affected\nby Mandate')
                   ) %>%
   tidy_dagitty(layout='tree') %>%
 ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -234,7 +259,7 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 In a causal graph, there is **confounding** of correlation of $X$ and $Y$ if...
 
-1. any variable $W$ has a causal path (of any length) toward $X$ and $Y$
+1. a variable $W$ has a **causal** path (of any length) toward $X$ **and** $Y$
 2. (equivalently) there is **backdoor** path or **non-causal** path from $X$ to $Y$
     - a chain of **two** or more arrows that follows arrows **backwards** from of $X$, changes direction **once** and follows arrows **toward** $Y$: $X \leftarrow W \leftarrow Z \rightarrow Y$ 
 
@@ -244,7 +269,8 @@ Confounding?
 
 ```{r, echo = F}
 dagify(work_home ~ education,
-       mandate ~ work_home,
+       affected ~ work_home,
+       mandate ~ affected,
        contact ~ work_home,
        covid ~ mask + contact ,
        mask ~ mandate,
@@ -255,7 +281,8 @@ dagify(work_home ~ education,
                   "mandate" = "Mask\nMandate (X)",
                   "covid" = "COVID\nCases (Y)",
                   "work_home" = "Work from\nHome",
-                  'mask' = 'Wear\nMask')
+                  'mask' = 'Wear\nMask',
+                  'affected' = '% Affected\nby Mandate')
                   ) %>%
   tidy_dagitty(layout='tree') %>%
 ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -271,7 +298,8 @@ Why do backdoor paths produce confounding? Why is it systematic?
 
 ```{r, echo = F}
 dagify(work_home ~ education,
-       mandate ~ work_home,
+       affected ~ work_home,
+       mandate ~ affected,
        contact ~ work_home,
        covid ~ mask + contact ,
        mask ~ mandate,
@@ -282,7 +310,8 @@ dagify(work_home ~ education,
                   "mandate" = "Mask\nMandate (X)",
                   "covid" = "COVID\nCases (Y)",
                   "work_home" = "Work from\nHome",
-                  'mask' = 'Wear\nMask')
+                  'mask' = 'Wear\nMask',
+                  'affected' = '% Affected\nby Mandate')
                   ) %>%
   tidy_dagitty(layout='tree') %>%
 ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
@@ -301,7 +330,7 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 Confounding happens when cases that experience **different levels of $X$** have **systematically different** (factual and counterfactual) potential outcomes of $Y$.
 
-- this happens because some other factor $W$ affects $X$ and potential outcomes of $Y$
+- this happens because some other factor $W$ affects $X$ **and** potential outcomes of $Y$
 
 
 ---
@@ -472,7 +501,7 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 - intervening variables ($M$) **do not** produce confounding because they are on the  **causal path** from $X$ to $Y$. They do not produce backdoor path.
 
-## Intervening Variable
+## Confounding?
 
 ```{r, echo = F}
 dagify(
@@ -497,7 +526,7 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ```
 
-- No backdoor path. Mask mandate affects COVID **through** mask wearing, avoiding indoor spaces.
+>- No. Mask mandate affects COVID **through** mask wearing, avoiding indoor spaces.
 
 ## Reverse Causality
 
@@ -528,6 +557,11 @@ Gun violence in Miami Beach has led to state of emergency and curfew during Spri
 
 > “We haven’t been able to figure out how to stop spring break from coming,” Mr. Gelber said. “We don’t want spring break here, but they keep coming.”
 
+
+## Example:
+
+Miami Beach policy-makers need to know:
+
 ### **Does reducing the number of guns reduce firearms violence (deaths)?**
 
 >- Correlation of gun ownership and firearms homicides for US states.
@@ -543,7 +577,7 @@ crime = crime[gun_murder_percapita<10,]
 ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides , label = State)) +
   geom_text() +
   xlab("Gun Owners (%)") +  ylab("Firearms Homicides Per Capita") + 
-  ggtitle('No/Negative effect of gun ownership\n on Gun Homicide?') + 
+  ggtitle('Effect of gun ownership\n on Gun Homicide?') + 
   geom_smooth(method = 'lm', se = F, fullrange = T) + 
   theme_bw()
 ```
@@ -552,47 +586,53 @@ Can we conclude gun ownership **increase** firearms homicides? [hands]
 
 ## Direction of Bias 
 
-Let's say Miami Beach is considering imposing gun control policies to reduce gun deaths during Spring Break. To make their decision, they look at the correlation on the previous slide...
+You work for Miami Beach and want to reduce gun deaths. To decide on whether to impose gun restrictions, you consult correlation on previous slide.
 
-If that correlation suffered from confounding (bias), how might it affect the policy decision and its  consequences...
-
-- if the confounding induced an **upward** bias (observed correlation between gun ownership and firearms deaths **more positive** than true causal relationship)?
+Could you make the **wrong decision** if the confounding induced an **upward** bias (**observed** correlation between gun ownership and firearms deaths **more positive** than **true** causal relationship)? If so, why? [discuss]
 
 ---
 
 ```{r, echo = F, message=F, warning=F}
-
 coefs = lm(cdc_gun_homicides ~ gun_ownership_rand, crime) %>% coefficients
-ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides , label = State)) +
+
+ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides, label = State)) +
   geom_text() +
-  xlab("Gun Owners (%)") +  ylab("Firearms Homicides Per Capita") + 
-  ggtitle('What if true causal effect is the red line?\nAnd correlation is in blue?') + 
-  geom_smooth(method = 'lm', se = F, fullrange = T) + 
-  geom_abline(intercept = coefs[1], slope = coefs[2] - 0.05, color = 'red' ) +
+  xlab("Gun Owners (%)") +  
+  ylab("Firearms Homicides Per Capita") + 
+  ggtitle('What if Upward Bias?') + 
+  # Map color inside aes() to create legend entries
+  geom_smooth(aes(color = "Observed Effect"), method = 'lm', se = FALSE, fullrange = TRUE) + 
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2] - 0.05, color = "True Effect"), key_glyph = "path") +
   geom_segment(aes(x = 60, 
                    y = coefs[1] + (coefs[2] - 0.05)*60, 
                    xend = 60, 
                    yend = coefs[1] + (coefs[2])*60),
-    arrow = arrow()
-  ) +
-  geom_abline(intercept = coefs[1], slope = coefs[2] - 0.1, color = 'red' ) +
+               arrow = arrow()) +
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2] - 0.1, color = "True Effect"), key_glyph = "path") +
   geom_segment(aes(x = 55, 
                    y = coefs[1] + (coefs[2] - 0.1)*55, 
                    xend = 55, 
                    yend = coefs[1] + (coefs[2])*55),
-    arrow = arrow()
-  ) +
-  theme_bw()
+               arrow = arrow()) +
+  # Add text labels for the two red lines
+    annotate("label", x = 50, y = coefs[1] + (coefs[2] - 0.05)*50, 
+           label = "(a) no effect", color = "red", 
+           fill = alpha("white", 0.5), label.size = 0, vjust = -0.5) +
+  annotate("label", x = 30, y = coefs[1] + (coefs[2] - 0.1)*30, 
+           label = "(b) negative effect", color = "red", 
+           fill = alpha("white", 0.5), label.size = 0, vjust = 1.3)  +
+  # Define the legend title and colors
+  scale_color_manual(name = "Relationship", 
+                     values = c("Observed Effect" = "blue", "True Effect" = "red")) +
+  theme_bw() + theme(legend.position = "bottom")
 ```
 
 
 ## Direction of Bias 
 
-Let's say Miami Beach is considering imposing gun control policies to reduce gun deaths during Spring Break. To make their decision, they look at the correlation on the previous slide...
+You work for Miami Beach and want to reduce gun deaths. To decide on whether to impose gun restrictions, you consult the correlation between gun ownership and gun deaths.
 
-If that correlation suffered from confounding (bias), how might it affect the policy decision and its  consequences...
-
-- if the confounding induced a **downward** bias (observed correlation between gun ownership and firearms deaths **more negative** than true causal relationship)?
+Could you make the **wrong decision** if the confounding induced a **downward** bias (**observed** correlation between gun ownership and firearms deaths **more negative** than **true** causal relationship)? If so, why? [discuss]
 
 
 ---
@@ -600,26 +640,38 @@ If that correlation suffered from confounding (bias), how might it affect the po
 ```{r, echo = F, message=F, warning=F}
 
 coefs = lm(cdc_gun_homicides ~ gun_ownership_rand, crime) %>% coefficients
-ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides , label = State)) +
+
+ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides, label = State)) +
   geom_text() +
-  xlab("Gun Owners (%)") +  ylab("Firearms Homicides Per Capita") + 
-  ggtitle('What if true causal effect is the red line?\nAnd correlation is in blue?') + 
-  geom_smooth(method = 'lm', se = F, fullrange = T) + 
-  geom_abline(intercept = coefs[1], slope = coefs[2] + 0.05, color = 'red' ) +
+  xlab("Gun Owners (%)") +  
+  ylab("Firearms Homicides Per Capita") + 
+  ggtitle('What if Downward Bias?') + 
+  # Map color inside aes() to create legend entries
+  geom_smooth(aes(color = "Observed Effect"), method = 'lm', se = FALSE, fullrange = TRUE) + 
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2] + 0.05, color = "True Effect"), key_glyph = "path") +
   geom_segment(aes(x = 60, 
                    y = coefs[1] + (coefs[2] + 0.05)*60, 
                    xend = 60, 
                    yend = coefs[1] + (coefs[2])*60),
-    arrow = arrow()
-  ) +
-  geom_abline(intercept = coefs[1], slope = coefs[2] + 0.1, color = 'red' ) +
+               arrow = arrow()) +
+  geom_abline(aes(intercept = coefs[1], slope = coefs[2] + 0.1, color = "True Effect"), key_glyph = "path") +
   geom_segment(aes(x = 55, 
                    y = coefs[1] + (coefs[2] + 0.1)*55, 
                    xend = 55, 
                    yend = coefs[1] + (coefs[2])*55),
-    arrow = arrow()
-  ) +
-  theme_bw()
+               arrow = arrow()) +
+  # Add text labels for the two red lines
+  annotate("label", x = 50, y = coefs[1] + (coefs[2] + 0.05)*50, 
+           label = "(a) larger positive effect", color = "red", 
+           fill = alpha("white", 0.5), label.size = 0, vjust = 1.3) +
+  annotate("label", x = 30, y = coefs[1] + (coefs[2] + 0.1)*30, 
+           label = "(b) even larger positive effect", color = "red", 
+           fill = alpha("white", 0.5), label.size = 0, vjust = -0.5) +
+  # Define the legend title and colors
+  scale_color_manual(name = "Relationship", 
+                     values = c("Observed Effect" = "blue", "True Effect" = "red")) +
+  theme_bw() + 
+  theme(legend.position = "bottom")
 ```
 
 
@@ -629,24 +681,20 @@ ggplot(crime, aes(x = gun_ownership_rand, y = cdc_gun_homicides , label = State)
 
 As with measurement bias, we need to apply **weak severity** principle to judge whether bias would present a problem.
 
->- If bias is **upward** and correlation is **positive**, true causal effect direction is **unknown**. $\to$ Unclear what policy to choose. (Fails weak severity --- confounding may lead to positive correlation even if truth is negative causal effect)
+>- If bias is **upward** and correlation is **positive**, true causal effect direction is **unknown**. $\to$ Unclear what policy to choose. (**Fails weak severity**: confounding may lead to $\uparrow$ correlation even if truth is $\downarrow$ causal effect)
 
->- If bias is **downward** and correlation is **positive**, true causal effect direction is **positive**. $\to$ Definitely impose gun restrictions. (confounding makes it **harder** to find this effect: strong severity) 
+>- If bias is **downward** and correlation is **positive**, true causal effect direction is **positive**. $\to$ Definitely impose gun restrictions. (**strong severity**: confounding makes it **harder** to find this effect) 
 
 
 ## Direction of Bias 
 
 As with measurement bias:
 
-1. If confounding induces **bias** in **opposite direction of the correlation** $\to$ true causal effect in same direction as correlation (no failure of weak severity)
+1. If confounding $\to$ **bias** in **opposite direction of the correlation** $\to$ true causal effect in same direction as correlation (meets weak severity)
 
-
-2. If confounding induces **bias** in **same direction as the correlation** $\to$ true causal effect may be zero or opposite direction of correlation (possible failure of weak severity)
-
-<br>
+2. If confounding  $\to$ **bias** in **same direction as the correlation** $\to$ true causal effect may be zero or opposite direction of correlation (possible failure of weak severity)
 
 In situation $(2)$: our conclusions depend on the **magnitude** or **size** of the bias induced by confounding. Not a topic for this class.
-
 
 ## Direction of Bias 
 
@@ -704,8 +752,8 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 |  | $W \xrightarrow{+} X$ | $W \xrightarrow{-} X$ |
 |-----------------------|-------------------------------------|--------------------------------|
-| $W \xrightarrow{+} Y$ | $Correlation(X,Y)$<br>Biased (+) | $Correlation(X,Y)$<br>Biased (-) |
-| $W \xrightarrow{-} Y$ | $Correlation(X,Y)$<br>Biased (-) | $Correlation(X,Y)$<br>Biased (+) |
+| $W \xrightarrow{+} Y$ | $Correlation(X,Y)$<br>Biased ($+$) | $Correlation(X,Y)$<br>Biased ($-$) |
+| $W \xrightarrow{-} Y$ | $Correlation(X,Y)$<br>Biased ($-$) | $Correlation(X,Y)$<br>Biased ($+$) |
 
 $^*:$ this only works for a **single** backdoor path; not multiple backdoor paths. Then we would need more information.
 
@@ -916,6 +964,18 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 # Conclusion
 
+## Conclusion
+
+**Confounding**
+
+1. **bias**: observed correlation $\neq$ true casual relationship
+2. Why?
+    - cases with different values of $X$, also differ in $\text{factual}, \color{red}{\text{counterfactual}}$ values of $Y$
+    - when "third" variable affects $X$, affects $Y$ $\to$ confounding.
+3. Causal graphs help us diagnose possible sources of confounding.
+4. Causal graphs help us diagnose the expected **direction** of bias (does confounding $\to$ evidence failing weak severity?)
+
+
 ## Solutions?
 
 We now know what confounding is and how it arises...
@@ -941,17 +1001,6 @@ If **something else** ($W$) changes $X$ and $Y$, leading to confounding...
     - how do we break this connection?
 
 
-## Conclusion
 
-**Confounding**
-
-1. **bias**: observed correlation $\neq$ true casual relationship
-2. Why?
-    - cases with different values of $X$, also differ in $\text{factual}, \color{red}{\text{counterfactual}}$ values of $Y$
-    - when "third" variable affects $X$, affects $Y$ $\to$ confounding.
-3. Causal graphs help us diagnose possible sources of confounding.
-4. Causal graphs help us diagnose the expected **direction** of bias (does confounding $\to$ evidence failing weak severity?)
-
->- Causal graphs also point to **possible solutions** for confounding
 
 
