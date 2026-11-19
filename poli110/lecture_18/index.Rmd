@@ -1,8 +1,12 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "November 18, 2025"
-output: ioslides_presentation
+date: "November 19, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -68,16 +72,16 @@ This correlation compares the levels of polarization for people using more and l
 
 What if we:
 
-- use social media usage history to see if they were exposed to political content on their feed
-- survey people and ask questions to measure affective polarization toward other political parties
+- use social media usage history  to see if they were exposed to political content on their feed $(X)$
+- survey people and ask questions to measure affective polarization toward other political parties $(Y)$
 
->- Discuss: Why might there be confounding here? (Causes of $Y$, Causes of $X$)
+>- In groups: Why might there be confounding here? (Causes of $Y$, Causes of $X$, draw causal graph)
 
 ---
 
-Let's make a causal graph:
+Let's make some causal graphs:
 
-- which variables are confounders?
+- which variables are confounders (produce bias/confounding)?
 - direction of bias?
 
 ---
@@ -130,11 +134,10 @@ This is a common source of confounding:
 
 **"Exposure to social media increases political polarization."**
 
-In the lead-up to the 2025 Canadian Election,  platforms owned by Meta (Facebook, Instagram, WhatsApp) blocked users access to content from Canadian news organizations while simultaneously ending fact-checking ([source](https://dfrlab.org/2025/04/29/how-social-media-shaped-the-2025-canadian-election/)). This "enabled hyper-partisan content to dominate in the absence of balanced media coverage."
 
-"**causal variable**": exposure to social media during the election
+"**causal variable**"/ Independent variable: exposure to social media during the election
 
-**outcome variable**: political polarization $\to$ willingness to go on a date with someone who supports an opposing political party.
+**outcome variable**/ Dependent variable: political polarization $\to$ willingness to go on a date with someone who supports an opposing political party.
 
 ---
 
@@ -156,12 +159,11 @@ Imagine: If you did not use social media during the election, would you go on a 
 <br>
 
 
-If we just examined the correlation between **using** social media and willingness to date across party lines...
+If we just examined the correlation between **using** social media (X) and willingness to date across party lines (Y)...
 
 What could be sources of confounding?
 
 ---
-
 
 ```{r, echo = F, message=F, warning=F}
 x_lab = "(X) Social\nMedia"
@@ -244,12 +246,11 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 What if Meta (the monopolist corporation formally known as Facebook) did the following:
 
-- for a **random** subset of users, deactivate their accounts for one month prior to an election?
-- for a different **random** subset of users, **did not** deactivate their accounts for one month prior to an election?
+- for a **random** subset of users, **deactivate** accounts for one month prior to an election?
+- for a different **random** subset of users, **do not** deactivate accounts for one month prior to an election?
 
->- This **random assignment** of the account deactivation **affects** social media: $\text{random assigment} \to \text{social media use}$
+>- **Random assignment** of the account deactivation **affects** social media: $\text{random assigment} \to \text{social media use}$
 >- **Randomness** of deactivation means no other variables affect it: $W \not\to \text{random assigment}$
->- Because Meta controls deactivation, and it is random no other variables affect social media use: $W \not\to \text{social media use}$
 
 ---
 
@@ -289,8 +290,11 @@ ggplot(aes(x = x, y = y, xend = xend, yend = yend)) +
 
 ### Solution 1: **Experiments**
 
-We can't know the causal effect for individual cases... but what would happen **on average** if we switched EVERYONE from "no social media" to "social media" exposure?
+We can't know the causal effect for individual cases...
 
+but what would happen **on average** if we switched EVERYONE from "no social media" to "social media" exposure?
+
+>- **average causal effect**
 
 ---
 
@@ -303,7 +307,7 @@ We would like to:
 
 What permits us to use **sample** as **unbiased** **inference** about the **population**?
 
->- **random sampling**
+>- **random sampling**   ::board::
 
 ---
 
@@ -314,7 +318,7 @@ What is an experiment?
 **Experiment**:
 
 - examine correlation between $X$ and $Y$ for cases where level of $X$ is **assigned at random**
-- **compare** outcomes for cases with higher/lower values of $X$, *only* for cases where $X$ is assigned at random
+- **compare** outcomes ($Y$) for cases with higher/lower values of $X$, *only* for cases where $X$ is assigned at random
 
 
 ---
@@ -332,7 +336,7 @@ $2$. **Exclusion Restriction**: only one thing is changing -- $X$
 - Must carefully consider the experimental design
 
 <br>
-<small>$^*$Technically, there are other assumptions, but not important for this class</small>
+<small>$^*$Technically, more assumptions, but not important for this class</small>
 
 ---
 
@@ -345,6 +349,8 @@ How do experiments **solve** confounding? Three ways to think about it...
 - Randomization breaks the link $W \to X$
 
 Removes **all** confounding: even from variables we have not thought of.
+
+::board::
 
 ---
 
@@ -387,11 +393,9 @@ Small reduction in affective polarization.
 
 **Recruitment**: study invitation appeared on their feed. Asked if willing to deactivate for 1 week (for \$25) or 6 weeks (for \$150).
 
-**Random Assignment**: those willing to deactive: 27% given \$150 and deactivated for 6 weeks; 73% given \$25 and deactivated for 1 week.
+**Random Assignment**: those willing to deactivate: 27% given \$150 and deactivated for 6 weeks; 73% given \$25 and deactivated for 1 week.
 
-**Outcome**: Surveyed on political polarization
-
->- Discuss: What questions/concerns do you have about this experiment that affect the credibility of this evidence?
+>- Discuss: What questions/concerns do you have about evidence from this experiment?
 
 ---
 
@@ -405,7 +409,7 @@ Small reduction in affective polarization.
 ### Assumption: **Random Assignment**?
 
 
-<img src="deactivation_compliance_2.jpg" width = 45%>
+<img src="deactivation_compliance_2.jpg" width = 35%>
 
 
 ---
@@ -515,6 +519,10 @@ Experiments are the **best** solution to confounding/FPCI
 - If we can manipulate $X$ **at random**, we can find the unbiased **average** causal effect of $X$ on $Y$ (**no confounding**)
 - If we manipulate $X$ **at random**, we also easily can calculate chance correlations (known risk of **random correlation**)
 
+---
+
+### Gold Standard
+
 
 **strong severity** says that evidence is convincing to extent assumptions are checked:
 
@@ -561,7 +569,7 @@ But experiments have their limits:
 
 ### External Validity: 
 
-<img src="./vaccine_4.jpg" width=40%>
+<img src="./vaccine_4.jpg" width=30%>
 
 **Does the efficacy of vaccines in clinical trials translate to real world use??**
 
@@ -615,3 +623,79 @@ More internal validity (unbiased estimate of causal effect) comes at the cost of
   - assuming: Random Assignment
   - assuming: Exclusion Restriction
   - High internal validity; low external validity
+
+
+# Midterms
+
+---
+
+```{r, echo = F, message=F, warning=F}
+max_pts = 35
+cutpoints = c(0, 0.5, 0.55, 0.6, 0.64, 0.68, 0.72, 0.76, 0.8, 0.85, 0.9, 1)
+
+g_cut = data.table(start = (cutpoints %>% head(-1))*max_pts,
+                   end = (cutpoints %>% tail(-1)) * max_pts,
+                   grade = factor(c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), levels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"))
+)
+g = fread("./midterm_2026.csv")
+
+g[, pre_regrade_letter := cut(pre_regrade, max_pts*cutpoints, right = F, labels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), levels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), include.lowest = T)]
+g[,regrade_letter := cut(regrade, max_pts*cutpoints, right = F, labels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), include.lowest = T)]
+g[,w_curve_letter := cut(w_curve, max_pts*cutpoints, right = F, labels = c("F", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A", "A+"), include.lowest = T)]
+g[, id := 1:.N]
+g_long_letter = g %>% melt.data.table("id", measure.vars = patterns("_letter$"), value.factor = T)
+#g_long_letter[, value := factor(value, levels = rev(levels(value)))]
+g_long_letter[variable %in% "pre_regrade_letter", variable := "Pre-Regrade"]
+g_long_letter[variable %in% "regrade_letter", variable := "Regrade"]
+g_long_letter[variable %in% "w_curve_letter", variable := "Regrade + Curve"]
+
+tab = g[,lapply(.SD, function(c) (c(mean(c, na.rm = T)/35, median(c, na.rm = T)/35 )*100) %>% round(1)) , .SDcols = c("pre_regrade", 'regrade','w_curve')]
+tab[, type := c("Mean", "Median")]
+
+require(kableExtra)
+tab[, c(4,1:3)] %>%
+  kbl(
+    caption = "Midterm Performance",
+    col.names = c("Metric", "Pre-Regrade", "Regrade", "Regrade + Curve"),
+    align = "c"
+  ) %>%
+  # Apply a clean, modern theme with hover and stripe effects
+  kable_classic(full_width = FALSE, html_font = "Cambria") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+---
+
+```{r  echo = F, message=F, warning=F, out.width="100%"}
+ggplot(g_long_letter[!is.na(value)], aes(x = value, fill = value)) + 
+      geom_bar(aes(y = after_stat(count / tapply(count, PANEL, sum)[PANEL]))) +
+  theme_bw() +    scale_fill_viridis_d() +
+    scale_y_continuous(labels = scales::percent) +
+  facet_wrap(~variable) +
+  ggtitle("Midterm Grade Distribution") + 
+  xlab("Grade") + ylab("% of Class")
+
+```
+
+
+---
+
+
+```{r  echo = F, message=F, warning=F, out.width="100%"}
+ggplot(g[!is.na(pre_regrade)], aes(x = pre_regrade)) + 
+  geom_rect(data = g_cut, aes(xmin = start , xmax = end, ymin = -Inf, ymax = Inf, fill = grade),
+            inherit.aes=FALSE, alpha = 0.3) +
+  geom_text(data = g_cut, aes(x = (start+end)/2, y = 0.95, label = grade), alpha = 0.3) +
+  scale_fill_viridis_d() +
+  geom_step(aes(y = 1 - after_stat(y)), stat='ecdf', colour = "red") + 
+  geom_step(data = g[!is.na(pre_regrade)], aes(x=regrade , y =  1 - after_stat(y)), stat = 'ecdf', colour = 'gray30') +
+  geom_step(data = g[!is.na(pre_regrade)], aes(x=w_curve , y =  1 - after_stat(y)), stat = 'ecdf', colour = 'black') +
+  theme_bw() + 
+  ggtitle("Midterm Grade Distribution") + 
+  xlab("Score") + 
+  ylab("Fraction with score > than X") +   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, by = 0.1))
+
+```
+
+
