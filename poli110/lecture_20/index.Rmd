@@ -1,8 +1,12 @@
 ---
 title: "POLI 110: Confounding"
 author: "Michael Weaver"
-date: "November 25, 2025"
-output: ioslides_presentation
+date: "November 26, 2026"
+output:
+  ioslides_presentation:
+    css: ../styles.css
+    widescreen: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -525,7 +529,117 @@ Imagine we want to condition on gun ownership, when examining correlation of mas
 
 What if we measure **gun ownership** with random measurement error?
 
-Let's see what happens... BOARD
+## What Happens When We Mismeasure Gun Ownership?
+
+```{r, echo=FALSE}
+person_use <- function(is_owner, mislabelled = FALSE, scale = 1) {
+  ref <- if (is_owner) "#me-owner" else "#me-non"
+  w <- round(30 * scale)
+  h <- round(32 * scale)
+  bg <- if (mislabelled) "border:1.5px dashed #64748b; border-radius:5px; background:#fef9c3;" else "border:1.5px solid transparent;"
+  sprintf('<span style="padding:1px; %s display:inline-flex;"><svg width="%d" height="%d" viewBox="0 0 34 36"><use href="%s"/></svg></span>', bg, w, h, ref)
+}
+
+make_grid <- function(n_o, n_n, owner_box = NA, scale = 0.88) {
+  o_html <- if (n_o > 0) paste(replicate(n_o, person_use(TRUE, identical(owner_box, FALSE), scale)), collapse = "") else ""
+  n_html <- if (n_n > 0) paste(replicate(n_n, person_use(FALSE, identical(owner_box, TRUE), scale)), collapse = "") else ""
+  paste0(o_html, n_html)
+}
+
+make_panel <- function(id, no, fo, nn, fn, bg, bd, col, txt) {
+  box <- function(title, counts, is_o, color_txt, border_col) {
+    pct <- if (is_o) round(counts[1] / sum(counts) * 100) else round(counts[2] / sum(counts) * 100)
+    lbl <- if (is_o) "True Owners" else "True Non-Owners"
+    sprintf('<div style="background:#fff; border:1px solid %s; border-radius:8px; padding:6px;">
+      <div style="font-weight:bold; font-size:12px; text-align:center; color:#0f172a;">%s</div>
+      <div style="font-size:11px; color:%s; text-align:center; margin-bottom:4px;"><b>%d O / %d N</b> (%d%% %s)</div>
+      <div style="display:flex; flex-wrap:wrap; gap:2px; justify-content:center; min-height:70px; align-content:flex-start;">%s</div>
+    </div>', border_col, title, color_txt, counts[1], counts[2], pct, lbl, make_grid(counts[1], counts[2], is_o, 0.88))
+  }
+  sprintf('<div class="me-panel me-panel-%s">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div style="background:#fff7ed; border:2px dashed #ea580c; border-radius:10px; padding:8px 10px;">
+        <div style="font-weight:bold; color:#9a3412; font-size:13.5px; text-align:center; margin-bottom:6px;">Observed &ldquo;Gun Owners&rdquo;</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">%s%s</div>
+      </div>
+      <div style="background:#eff6ff; border:2px dashed #2563eb; border-radius:10px; padding:8px 10px;">
+        <div style="font-weight:bold; color:#1e40af; font-size:13.5px; text-align:center; margin-bottom:6px;">Observed &ldquo;Non-Owners&rdquo;</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">%s%s</div>
+      </div>
+    </div>
+    <div style="margin-top:10px; padding:8px 12px; border-radius:8px; font-weight:bold; text-align:center; font-size:13px; background:%s; border:1px solid %s; color:%s;">%s</div>
+  </div>',
+  id,
+  box("Near Shooting", no, TRUE, "#c2410c", "#fed7aa"),
+  box("Far From Shooting", fo, TRUE, "#c2410c", "#fed7aa"),
+  box("Near Shooting", nn, FALSE, "#1d4ed8", "#bfdbfe"),
+  box("Far From Shooting", fn, FALSE, "#1d4ed8", "#bfdbfe"),
+  bg, bd, col, txt)
+}
+
+knitr::raw_html(paste0('
+<style>
+  #me-demo .me-row-label { font-size:11.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#475569; margin:8px 0 5px 0; }
+  #me-demo input.me-radio { display:none; }
+  #me-demo label.me-btn { display:inline-block; padding:6px 12px; border-radius:6px; border:1px solid #cbd5e1; background:#fff; color:#0f172a; font-weight:bold; cursor:pointer; font-size:13px; margin-right:6px; user-select:none; }
+  #me-demo #me-err-0:checked ~ .me-toolbar label[for="me-err-0"] { background:#16a34a; color:#fff; border-color:#16a34a; }
+  #me-demo #me-err-25:checked ~ .me-toolbar label[for="me-err-25"] { background:#dc2626; color:#fff; border-color:#dc2626; }
+  #me-demo .me-panel { display:none; }
+  #me-demo #me-err-0:checked ~ .me-panel-0 { display:block; }
+  #me-demo #me-err-25:checked ~ .me-panel-25 { display:block; }
+</style>
+<svg style="display:none;" aria-hidden="true"><defs>
+  <symbol id="me-owner" viewBox="0 0 34 36">
+    <circle cx="14" cy="5.8" r="3.6" fill="#ea580c"/>
+    <rect x="10.8" y="10.5" width="6.4" height="11.5" rx="3.0" fill="#ea580c"/>
+    <line x1="12.4" y1="21" x2="10.5" y2="33" stroke="#ea580c" stroke-width="2.9" stroke-linecap="round"/>
+    <line x1="15.6" y1="21" x2="17.5" y2="33" stroke="#ea580c" stroke-width="2.9" stroke-linecap="round"/>
+    <path d="M11.5 12.2 L8.2 16.5 L12.2 17.8" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M16.5 12.2 L19.2 16.2 L21.2 14.0" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <g transform="rotate(-24 16 16)"><path d="M5,14.5 L10,15.0 L19.5,15.0 L19.5,15.4 L29,15.4 L29,16.5 L19.5,16.5 L19.5,17.2 L16.2,17.2 L15.5,20.2 L13.8,20.2 L14.2,17.2 L10,17.2 L5,18.2 Z" fill="#1e293b" stroke="#ffffff" stroke-width="0.6" stroke-linejoin="round"/></g>
+    <circle cx="12.2" cy="17.8" r="1.4" fill="#ea580c"/>
+    <circle cx="21.2" cy="14.0" r="1.4" fill="#ea580c"/>
+  </symbol>
+  <symbol id="me-non" viewBox="0 0 34 36">
+    <circle cx="14" cy="5.8" r="3.6" fill="#2563eb"/>
+    <rect x="10.8" y="10.5" width="6.4" height="11.5" rx="3.0" fill="#2563eb"/>
+    <line x1="12.4" y1="21" x2="10.5" y2="33" stroke="#2563eb" stroke-width="2.9" stroke-linecap="round"/>
+    <line x1="15.6" y1="21" x2="17.5" y2="33" stroke="#2563eb" stroke-width="2.9" stroke-linecap="round"/>
+    <path d="M11.2 12.2 L8.5 20.5" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+    <path d="M16.8 12.2 L19.5 20.5" stroke="#2563eb" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  </symbol>
+</defs></svg>
+<div id="me-demo" style="font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:13px; color:#0f172a; line-height:1.3;">
+  <input class="me-radio" type="radio" name="me_err" id="me-err-0" checked>
+  <input class="me-radio" type="radio" name="me_err" id="me-err-25">
+  <div class="me-toolbar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+    <div><label class="me-btn" for="me-err-0">0% Error</label><label class="me-btn" for="me-err-25">25% Random Error</label></div>
+    <div style="display:flex; gap:12px; font-size:12.5px; align-items:center; flex-wrap:wrap;">
+      <span style="display:inline-flex; align-items:center; gap:4px;">', person_use(TRUE, FALSE, 0.8), '<b>True Gun Owner</b></span>
+      <span style="display:inline-flex; align-items:center; gap:4px;">', person_use(FALSE, FALSE, 0.8), '<b>True Non-Owner</b></span>
+      <span style="color:#64748b; font-size:11.5px;">(Yellow box = mislabelled)</span>
+    </div>
+  </div>
+  <div class="me-row-label">Truth</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+    <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:8px 10px;">
+      <div style="font-weight:bold; font-size:13.5px; text-align:center; margin-bottom:2px;">Near Shooting (N = 12)</div>
+      <div style="font-size:12px; color:#475569; text-align:center; margin-bottom:6px;">4 True Owners (33%) &middot; 8 True Non-Owners (67%)</div>
+      <div style="display:flex; flex-wrap:wrap; gap:3px; justify-content:center;">', make_grid(4, 8, NA, 0.95), '</div>
+    </div>
+    <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:8px 10px;">
+      <div style="font-weight:bold; font-size:13.5px; text-align:center; margin-bottom:2px;">Far From Shooting (N = 12)</div>
+      <div style="font-size:12px; color:#475569; text-align:center; margin-bottom:6px;">8 True Owners (67%) &middot; 4 True Non-Owners (33%)</div>
+      <div style="display:flex; flex-wrap:wrap; gap:3px; justify-content:center;">', make_grid(8, 4, NA, 0.95), '</div>
+    </div>
+  </div>
+  <div class="me-row-label" style="margin-top:10px;">Observed (Holding Gun Ownership Constant)</div>',
+  make_panel("0", c(4,0), c(8,0), c(0,8), c(0,4), "#f0fdf4", "#16a34a", "#166534",
+    "With 0% error, Observed &ldquo;Owners&rdquo; are 100% True Owners in both Near and Far (and Observed &ldquo;Non-Owners&rdquo; are 100% True Non-Owners). We compare like-with-like!"),
+  make_panel("25", c(3,2), c(6,1), c(1,6), c(2,3), "#fef2f2", "#dc2626", "#991b1b",
+    "With 25% random error, Observed &ldquo;Owners&rdquo; are 60% True Owners (Near) vs. 86% (Far), and Observed &ldquo;Non-Owners&rdquo; are 86% True Non-Owners (Near) vs. 60% (Far). Not like-with-like!"),
+'</div>'))
+```
 
 
 ## Conditioning Assumptions
